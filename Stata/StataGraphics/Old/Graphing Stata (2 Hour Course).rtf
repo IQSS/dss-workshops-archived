@@ -1,0 +1,452 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1138\cocoasubrtf510
+{\fonttbl\f0\fnil\fcharset0 Calibri;}
+{\colortbl;\red255\green255\blue255;\red137\green137\blue137;\red255\green0\blue0;\red0\green176\blue240;
+}
+\vieww16200\viewh13200\viewkind0
+\deftab720
+\pard\pardeftab720\qc
+
+\f0\fs88 \cf0 Introduction to Graphics with Stata\
+\pard\pardeftab720\qc
+
+\fs64 \cf2 Ista Zahn\
+Harvard MIT Data Center\
+\pard\pardeftab720\qc
+
+\fs88 \cf0 Organization\
+\pard\pardeftab720\li540\fi-540
+
+\fs64 \cf0 Please feel free to ask questions at any point if they are relevant to the current topic (or if you are lost!)\
+There will be a Q&A after class for more specific, personalized questions\
+Collaboration with your neighbors is encouraged\
+If you are using a laptop, you will need to adjust paths accordingly\
+\pard\pardeftab720\qc
+
+\fs88 \cf0 Organization\
+\pard\pardeftab720\li540\fi-540
+
+\fs64 \cf0 Make comments in your Do-file rather than on hand-outs\
+\pard\pardeftab720\li1170\fi-450
+
+\fs56 \cf0 Save on flash drive or email to yourself\
+\pard\pardeftab720\li540\fi-540
+
+\fs64 \cf0 Stata commands will always appear in \cf3 red\
+\cf0 \'93Var\'94 simply refers to \'93variable\'94 (e.g., var1, var2, var3, varname)\
+\'93pathname\'94 should be replace with the path specific to your computer and folders\
+\pard\pardeftab720\qc
+
+\fs88 \cf0 Assumptions and Disclaimers\
+\pard\pardeftab720\li540\fi-540
+
+\fs64 \cf0 This is an 
+\b INTRODUCTION 
+\b0 to graphing in Stata\
+Assumes basic knowledge of Stata\
+Not appropriate for people already well familiar with graphing in Stata\
+If you are catching on before the rest of the class, experiment with command features described in help files\
+\pard\pardeftab720\qc
+
+\fs88 \cf0 Assumptions and Disclaimers\
+\pard\pardeftab720\li540\fi-540
+
+\fs64 \cf0 I\'92m going to give you an overview of Stata\'92s capabilities\
+I won\'92t be able to cover every graphing capability you\'92ll ever need!\
+Take these skills \'96 build on them and find what works for you\
+\pard\pardeftab720\qc
+
+\fs88 \cf0 Graphing Strategies\
+\pard\pardeftab720\li540\fi-540
+
+\fs64 \cf0 Keep it simple\
+Labels, labels, labels!!\
+Avoid cluttered graphs\
+Every part of the graph should be meaningful\
+Avoid:\
+\pard\pardeftab720\li1170\fi-450
+
+\fs56 \cf0 Shading\
+Distracting colors\
+Decoration\
+\pard\pardeftab720\qc
+
+\fs88 \cf0 Terrible Graphs\
+Less Terrible\
+Better Graph\
+Opening Stata\
+\pard\pardeftab720\li540\fi-540
+
+\fs64 \cf0 Once you have Stata open, let\'92s call up the datafile for today\
+\pard\pardeftab720\li1170\fi-450
+
+\fs56 \cf0 Step 1: tell Stata where to find data:\
+\pard\pardeftab720\li1800\fi-360
+
+\fs48 \cf3 cd \'93~/StataGraphics\'94\
+\pard\pardeftab720\li1170\fi-450
+
+\fs56 \cf0 Step 2: call up our dataset:\
+\pard\pardeftab720\li1800\fi-360
+
+\fs48 \cf3 use states.dta\
+\pard\pardeftab720\qc
+
+\fs88 \cf0 Basic Graphing\
+\pard\pardeftab720\li540\fi-540
+
+\fs64 \cf0 Always know what you\'92re working with before you get started\
+\pard\pardeftab720\li1170\fi-450
+
+\fs56 \cf0 Recognize scale of data\
+If you\'92re using multiple variables \'96 how do their scales align?\
+\pard\pardeftab720\li540\fi-540
+
+\fs64 \cf0 Before any graphing procedure review variables with \cf3 codebook\cf0 , \cf3 sum\cf0 , \cf3 tab\cf0 , etc.\
+\
+\pard\pardeftab720\li540\fi-540
+\cf4 HELPFUL STATA HINT:  If you want your command to go on multiple lines use \'93 ///\'94 at end of each line\
+\pard\pardeftab720\qc
+
+\fs88 \cf0 Basic Graphing: Single Continuous Variables\
+\pard\pardeftab720\li540\fi-540\qc
+
+\fs64 \cf4 Example: Histograms\
+\pard\pardeftab720\li540\fi-540
+\cf0 Stata assumes you\'92re working with continuous data\
+Very simple syntax: \
+\pard\pardeftab720\li1170\fi-450
+
+\fs56 \cf3 hist\cf0  \cf3 varname\
+\pard\pardeftab720\li540\fi-540
+
+\fs64 \cf0 Put a comma after your varname and start adding options\
+\pard\pardeftab720\li1170\fi-450
+
+\fs56 \cf3 bin(#) : \cf0 change the number of bars that the graph displays\cf3 \
+normal : \cf0 overlay normal curve\cf3 \
+addlabels : \cf0 add actual values to bars\cf3 \
+\pard\pardeftab720\li540\fi-540
+
+\fs64 \cf0 \
+\pard\pardeftab720\qc
+
+\fs88 \cf0 Our First Dataset\
+\pard\pardeftab720\li540\fi-540
+
+\fs64 \cf0 Time Magazine Public School Poll\
+Based on survey of 1,000 adults in U.S.\
+Conducted in August 2010\
+Questions regarding feelings about parental involvement, teachers union, current potential for reform\
+\pard\pardeftab720\qc
+
+\fs88 \cf0 Basic Graphing: Single Continuous Variables\
+\pard\pardeftab720\li540\fi-540\qc
+
+\fs64 \cf4 Example: Histograms\
+\pard\pardeftab720\li540\fi-540
+\cf0 Change the numeric depiction of your data\
+Add these options after the comma \
+\pard\pardeftab720\li1170\fi-450
+
+\fs56 \cf0 Choose one: \cf3 density fraction frequency percent\
+\pard\pardeftab720\li1800\fi-360
+
+\fs48 \cf3 hist varname, percent\
+\pard\pardeftab720\li540\fi-540
+
+\fs64 \cf0 \
+\
+\pard\pardeftab720\qc
+
+\fs88 \cf0 Basic Graphing: Single Continuous Variables\
+\pard\pardeftab720\li540\fi-540\qc
+
+\fs64 \cf4 Example: Histograms\
+\pard\pardeftab720\li540\fi-540
+\cf0 Be sure to properly describe your histogram:\
+\pard\pardeftab720\li1170\fi-450
+
+\fs56 \cf3 title(
+\i insert name of graph
+\i0 )\
+subtitle(
+\i insert subtitle of graph
+\i0 )\
+note(
+\i insert note to appear at bottom of graph
+\i0 )\
+caption(
+\i insert caption to appear below notes
+\i0 )\
+\pard\pardeftab720\li540\fi-540
+
+\fs64 \cf0 \
+\
+\
+\pard\pardeftab720\qc
+
+\fs88 \cf0 Basic Graphing: Single Continuous Variables\
+Basic Graphing: Single Continuous Variables\
+\pard\pardeftab720\li540\fi-540\qc
+
+\fs64 \cf4 Example: Histograms\
+\pard\pardeftab720\li540\fi-540
+\cf0 Axis title options (default is variable label):\
+\pard\pardeftab720\li1170\fi-450
+
+\fs56 \cf3 xtitle(
+\i insert x axis name
+\i0 )\
+ytitle(
+\i insert y axis name
+\i0 )\
+\pard\pardeftab720\li540\fi-540
+
+\fs64 \cf0 Don\'92t want axis titles?\
+\pard\pardeftab720\li1170\fi-450
+
+\fs56 \cf3 xtitle(
+\i \'93\'94
+\i0 )\
+ytitle(
+\i \'93\'94
+\i0 )\
+\
+\pard\pardeftab720\li540\fi-540
+
+\fs64 \cf0 \
+\
+\
+\pard\pardeftab720\qc
+
+\fs88 \cf0 Basic Graphing: Single Continuous Variables\
+\pard\pardeftab720\li540\fi-540\qc
+
+\fs64 \cf4 Example: Histograms\
+\pard\pardeftab720\li540\fi-540
+\cf0 Add labels to X or Y axis:\
+\pard\pardeftab720\li1170\fi-450
+
+\fs56 \cf3 xlabel(
+\i insert x axis label)\
+
+\i0 ylabel(
+\i insert y axis label)\
+\pard\pardeftab720\li540\fi-540
+
+\i0\fs64 \cf0 Tell Stata how to scale each axis\
+\pard\pardeftab720\li1170\fi-450
+
+\fs56 \cf3 xlabel(
+\i start#(increment)end#)\
+
+\i0 xlabel(0(5)100)\
+\pard\pardeftab720\li1800\fi-360
+
+\fs48 \cf0 This would label x-axis from 0-100 in increments of 5\
+\
+\
+\pard\pardeftab720\li540\fi-540
+
+\fs64 \cf0 \
+\pard\pardeftab720\qc
+
+\fs88 \cf0 Basic Graphing: Single Continuous Variables\
+Basic Graphing: Single Categorical Variables\
+\pard\pardeftab720\li540\fi-540\qc
+
+\fs64 \cf4 Example: Histograms\
+\pard\pardeftab720\li540\fi-540
+\cf0 What if my variable is not continuous?\
+\pard\pardeftab720\li1170\fi-450
+
+\fs56 \cf0 Simply specify \'93\cf3 discrete\cf0 \'94 with options \
+\pard\pardeftab720\li540\fi-540
+
+\fs64 \cf0 Stata will produce one bar for each level (i.e. category) of variable\
+Use \cf3 xlabel\cf0  command to insert names of individual categories\
+\pard\pardeftab720\li1170\fi-450
+
+\fs56 \cf3 \'85,\cf0  \cf3 xlabel(1 "White" 2 "Black" 3 "Asian" 4 "Hispanic" 5 "Other") \cf0 \
+\
+\cf3 \
+\
+\pard\pardeftab720\li540\fi-540
+
+\fs64 \cf0 \
+\
+\
+\pard\pardeftab720\qc
+
+\fs88 \cf0 Basic Graphing: Single Categorical Variables\
+Comparing Responses Across Categorical Variables\
+Comparing Responses Across Categorical Variables\
+Exercise 1: Histograms and Tab Plots\
+The Twoway Family\
+\pard\pardeftab720\li540\fi-540
+
+\fs64 \cf0 Next Dataset:\
+\pard\pardeftab720\li1170\fi-450
+
+\fs56 \cf0 National  Neighborhood Crime Study (NNCS)\
+N=9,593 census tracts in 2000\
+Explore sources of variation in crime for communities in the United States\
+\pard\pardeftab720\li1800\fi-360
+
+\fs48 \cf0 Tract-level data: crime, social disorganization, disadvantage, socioeconomic inequality\
+City-level data: labor market, socioeconomic inequality, population change\
+\pard\pardeftab720\li1170\fi-450
+
+\fs56 \cf0 \
+\pard\pardeftab720\qc
+
+\fs88 \cf0 The Twoway Family\
+\pard\pardeftab720\li540\fi-540
+
+\fs64 \cf3 twoway\cf0  is basic Stata command for all twoway graphs\
+Use \cf3 twoway\cf0  anytime you want to make comparisons among variables\
+Can be used to combine graphs (i.e., overlay one graph with another\
+\pard\pardeftab720\li1170\fi-450
+
+\fs56 \cf0 e.g., insert line of best fit over a scatter plot\
+\pard\pardeftab720\li540\fi-540
+
+\fs64 \cf0 \
+\pard\pardeftab720\qc
+
+\fs88 \cf0 The Twoway Family\
+\pard\pardeftab720\li540\fi-540
+
+\fs64 \cf0 Most basic:\
+\pard\pardeftab720\li1170\fi-450
+
+\fs56 \cf3 tw scatter T_PERCAP T_VIOLNT\
+tw dropline T_PERCAP T_VIOLNT\
+tw  lfitci T_PERCAP T_VIOLNT\
+\
+\
+\
+\
+\pard\pardeftab720\qc
+
+\fs88 \cf0 Twoways and the By Statement\
+Twoway Title Options\
+\pard\pardeftab720\li540\fi-540
+
+\fs64 \cf0 Same title options as with histogram\
+\pard\pardeftab720\li1170\fi-450
+
+\fs56 \cf3 title(
+\i insert name of graph
+\i0 )\
+subtitle(
+\i insert subtitle of graph
+\i0 )\
+note(
+\i insert note to appear at bottom of graph
+\i0 )\
+caption(
+\i insert caption to appear below notes
+\i0 )\
+\pard\pardeftab720\li540\fi-540
+
+\fs64 \cf0 \
+\pard\pardeftab720\qc
+
+\fs88 \cf0 Twoway Title Options\
+Twoway Title Options\
+Twoway Symbol Options\
+Twoway Symbol Options\
+Twoway Symbol Options\
+Overlaying Twoway Graphs\
+\pard\pardeftab720\li540\fi-540
+
+\fs64 \cf0 Very simple to combine multiple graphs\'85just put each graph command in parentheses\
+\pard\pardeftab720\li1170\fi-450
+
+\fs56 \cf3 twoway (scatter var1 var2) (lfit var1 var2)\
+\pard\pardeftab720\li540\fi-540
+
+\fs64 \cf0 Add individual options to each graph within the parentheses\
+Add overall graph options as usual following the comma \
+\pard\pardeftab720\li1170\fi-450
+
+\fs56 \cf3 twoway (scatter var1 var2) (lfit var1 var2), options\
+\pard\pardeftab720\qc
+
+\fs88 \cf0 Overlaying Twoway Graphs\
+Overlaying Twoway Graphs\
+Exercise 2: The TwoWay Family\
+Bonus Material!\
+Line Graphs\
+\pard\pardeftab720\li540\fi-540
+
+\fs64 \cf0 Line graphs helpful for a variety of data\
+\pard\pardeftab720\li1170\fi-450
+
+\fs56 \cf0 Especially any type of time series data\
+\pard\pardeftab720\li540\fi-540
+
+\fs64 \cf0 We\'92ll use data on US life expectancy from 1900-1999\
+\pard\pardeftab720\li1170\fi-450
+
+\fs56 \cf3 webuse uslifeexp, clear\
+\pard\pardeftab720\qc
+
+\fs88 \cf0 Line Graphs\
+Line Graphs\
+Line Graphs: Adding Options\
+\pard\pardeftab720\li540\fi-540
+
+\fs64 \cf0 As usual\'85just keep adding options after the comma!\
+Same rules apply for titles that we\'92ve already seen for histograms and the twoway graphs\
+Let\'92s review how we can play with the appearance of our lines\
+Full listing of options type \'93\cf3 help line_options\cf0 \'94\
+\
+\pard\pardeftab720\qc
+
+\fs88 \cf0 Line Graphs: Changing Options\
+Stata Graphing Lines\
+Line Graphs: Changing Options\
+Profile Plots\
+\pard\pardeftab720\li540\fi-540
+
+\fs64 \cf0 Great way for comparing outcomes on continuous variables across different levels of categorical variables\
+Example: math, science and reading scores (continuous variables) across different curriculum programs\
+Profile plots is a Stata add-on (not in base package)\
+\pard\pardeftab720\li1170\fi-450
+
+\fs56 \cf3 findit profileplot\
+\pard\pardeftab720\qc
+
+\fs88 \cf0 Profile Plot\
+\pard\pardeftab720\li540\fi-540
+
+\fs64 \cf0 Let\'92s go back to the National Crime Survey and look at crime rates across different levels of unemployment at the tract level\
+First, create categorical variable separating unemployment rates into quartiles\
+\pard\pardeftab720\li1170\fi-450
+
+\fs56 \cf0 *pay attention to what happens with missing data\
+\pard\pardeftab720\li540\fi-540
+
+\fs64 \cf0 Label new variable\
+\pard\pardeftab720\qc
+
+\fs88 \cf0 Profile Plots\
+Profile Plots\
+Exporting Graphs\
+\pard\pardeftab720\li540\fi-540
+
+\fs64 \cf0 From Stata, right click on image and select \'93save as\'94 or try syntax:\
+\pard\pardeftab720\li1170\fi-450
+
+\fs56 \cf3 cd \'93~/StataGraphics\'94\
+graph export myfig.esp, replace\
+\pard\pardeftab720\li540\fi-540
+
+\fs64 \cf0 In Microsoft Word: 
+\b insert > picture > from file\
+\pard\pardeftab720\li1170\fi-450
+
+\b0\fs56 \cf0 Or, right click on graph in Stata and copy and paste into Word\
+}

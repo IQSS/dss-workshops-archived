@@ -1,0 +1,193 @@
+## 	    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+## 	     INTRODUCTION TO CATEGORICAL DATA ANLAYSIS IN R
+
+
+## 			       Ista Zahn
+## 	    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+
+## Table of Contents
+## ─────────────────
+
+## 1 Workshop materials and introduction
+## 2 Data storage and manipulation
+## 3 Tests of independence
+## 4 Graphical displays
+## 5 Wrap-up
+
+
+
+## 1 Workshop materials and introduction
+## ═════════════════════════════════════
+
+## 1.1 Materials and setup                                       :labsetup:
+## ───────────────────────
+
+##   • Materials for this workshop include slides, example data sets, and
+##     example code.
+##     • Download materials from [http://j.mp/r-cat]
+##     • Extract the zip file containing the materials to your desktop
+
+##   Workshop notes are available in .hmtl and .pdf format. Navigate to
+##   your desktop and open either Rintro.pdf or Rintro.html.
+
+
+
+##   • Find class materials at
+##   [[[http://projects.iq.harvard.edu/rtc/event/int]]
+
+##   • *Download the zip file at the bottom of the page and unzip on your
+##      desktop!*
+
+
+## 2 Data storage and manipulation
+## ═══════════════════════════════
+
+## 2.1 Levels of measurement
+## ─────────────────────────
+
+##   The well-known typology of nominal, ordinal, interval, and ratio
+##   scales provides a useful framework. However, a simpler way to think
+##   about it is to distinguish between categorical scales and quantitative
+##   scales, where the later can be measured with varying levels of
+##   precision. In this workshop we will focues on nominal and ordinal
+##   data.
+
+
+## 2.2 R packages
+## ──────────────
+
+##   There are several R packages that make it easier to work with
+##   categorical data. Let's start by loading several of them.
+
+
+library(vcd)
+library(vcdExtra)
+library(MASS)
+
+
+
+## 2.3 Categorical data representations
+## ────────────────────────────────────
+
+##   There are several ways of representing categorical data, and there are
+##   R functions for converting from one representation to another.
+
+##   case form: each observation is in a separate row with column(s) of
+##              categories.
+##   frequency form: each category group is in a separaty row, with a column
+##                   of counts.
+##   table form: categories are represented in the row and column names of a
+##               matrix, with counts in the body of the matix.
+
+
+## 2.4 Converting from one representation to another
+## ─────────────────────────────────────────────────
+
+##   Convert from case from to table from using `table()':
+
+(arth.tab <- table(Arthritis[c("Improved")]))
+
+
+##   Convert from table to frequency form using `as.data.frame()'
+
+as.data.frame(arth.tab)
+
+
+##   Convert from frequency or table form to case form using `expand.dft()'
+
+head(expand.dft(table(Arthritis[c("Treatment", "Improved")])))
+
+
+##   See also `?ftable' and `?structable'
+
+
+## 3 Tests of independence
+## ═══════════════════════
+
+## 3.1 Indepence of two factors
+## ────────────────────────────
+
+##   The `chisq.test()' function can be used to test the independence of
+##   two-way tables.
+
+chisq.test(table(Arthritis[c("Treatment", "Improved")]))
+
+
+##   Alternatively, the `fisher.test()' function can be used to calculate
+##   an exact test of independence.
+
+fisher.test(table(Arthritis[c("Treatment", "Improved")]))
+
+
+
+## 3.2 Testing independence when there are more than two factors of interest
+## ─────────────────────────────────────────────────────────────────────────
+
+##   The `mantelhaen.test()' function can be used to test the indepence of
+##   two factors within each level of a third factor.
+
+
+mantelhaen.test(table(Arthritis[c("Treatment", "Improved", "Sex")]))
+
+
+
+## 3.3 Loglinear models
+## ────────────────────
+
+##   The `loglm()' function (in the `MASS' package) can be used to test
+##   indepence in multi-dimensional tables.
+
+
+loglm(~ Improved + Treatment + Sex,
+      data = table(Arthritis[c("Treatment", "Improved", "Sex")]))
+
+## See http://ww2.coastal.edu/kingw/statistics/R-tutorials/loglin.html for are really nice tutorial.
+
+
+## 4 Graphical displays
+## ════════════════════
+
+## 4.1 Mosaic plots
+## ────────────────
+
+##   The `mosaic()' function can be used to plot tables or loglm models.
+
+
+mosaic(table(Arthritis[c("Treatment", "Improved")]), gp = shading_max)
+
+
+
+
+mosaic(loglm(~ Improved + Treatment + Sex,
+      data = table(Arthritis[c("Treatment", "Improved", "Sex")])))
+
+
+
+## 5 Wrap-up
+## ═════════
+
+## 5.1 Additional resources
+## ────────────────────────
+
+##   • IQSS workshops:
+##     [http://projects.iq.harvard.edu/rtc/filter_by/workshops]
+
+##   • IQSS statistical consulting: [http://rtc.iq.harvard.edu]
+
+##   • Software (all free!):
+##     • R and R package download: [http://cran.r-project.org]
+##     • Rstudio download: [http://rstudio.org]
+##     • ESS (emacs R package): [http://ess.r-project.org/]
+
+##   • Online tutorials
+##     • [http://www.codeschool.com/courses/try-r]
+##     • [http://www.datamind.org]
+
+##   • Getting help:
+##     • Documentation and tutorials:
+##       [http://cran.r-project.org/other-docs.html]
+##     • Recommended R packages by topic:
+##       [http://cran.r-project.org/web/views/]
+##     • Mailing list: [https://stat.ethz.ch/mailman/listinfo/r-help]
+##     • StackOverflow: [http://stackoverflow.com/questions/tagged/r]

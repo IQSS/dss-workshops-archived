@@ -1,0 +1,1144 @@
+# -*- eval: (save-excursion (org-babel-goto-named-src-block "workshopPreamble") (org-babel-execute-src-block)) -*-
+#+TITLE:     Introduciton to R Graphics with =ggplot2=
+#+AUTHOR:    
+#+EMAIL:     izahn@iq.harvard.edu
+#+DATE:      
+
+# NOTE: refer to the README file if you are unfamiliar with emacs or orgmode.
+
+# Customize the PROPERTY and EXCLUDE_TAGS below depending on the type
+# of export (see the README file for details). After setting the exports 
+# property and/or the EXCLUDE_TAGS, place the curser on the poperty line 
+# and press C-c C-c
+
+#+PROPERTY: exports code
+#+EXCLUDE_TAGS: noexport setup mitsetup
+
+
+
+
+
+
+
+#+SETUPFILE: ../workshopPreamble.org
+
+#+name: setUp
+#+begin_src R :results silent :exports none :tangle no
+  rm(list=ls())
+  .First <- function() {
+    options(width=70)
+    options(useFancyQuotes=FALSE)
+    options(show.signif.stars=FALSE)
+    options(scipen = 10)
+    options(digits = 3)
+    require(ascii)
+    require(xtable)
+    require(ggplot2)
+    require(scales)
+    require(reshape2)
+    require(plyr)
+    theme_set(theme_bw())
+  }
+#+end_src
+
+#+name: workshopPreamble
+#+begin_src emacs-lisp :exports none :results silent :tangle no
+  (set (make-local-variable 'org-confirm-babel-evaluate) nil)
+  (load-file "../setupEnvironment.el")
+#+end_src
+
+
+* Introduction
+
+** Materials and setup						   :setup:
+
+Everyone should have R installed on their laptop--if not:
+
+- Open a web browser and go to [[http://cran.r-project.org]] and download and install it
+- In R, type ~install.packages("ggplot2") to install the ggplot2 package
+- Also helpful to install RStudo (download from [[http://rstudio.com]])
+
+Materials for this workshop include slides, example data sets, and example code.
+
+- Download materials from [[http://j.mp/r-graphics]]
+- Extract the zip file containing the materials to your desktop
+
+Workshop notes are available in .hmtl and .pdf format. Open a file browser, navigate to your desktop and open either Rgraphics.html Rgraphics.pdf.
+
+
+** Class Files And Administrative Details			   :labsetup:
+
+- User name: dataclass
+- Password: dataclass
+- Copy *Rgraphics* folder from shared drive to your desktop
+- Class Structure and Organization
+  - Ask questions at any time. Really!
+  - Collaboration is encouraged
+  - This is your class! Special requests are encouraged
+- This is an intermediate R course
+  - Assumes working knowledge of R
+  - Relatively fast-paced
+  - Focus is on =ggplot2= graphics--other packages will not be covered
+
+** Copy the workshop materials to your home directory		   :mitsetup:
+- *Log in to an Athena workstation* using your Athena user name and password
+- *Click on the "Ubuntu" button* on the upper-left and type "term" as shown below
+#+attr_latex: width=.8\textwidth
+ [[./images/OpenTerminal.png]]
+- *Click on the "Terminal" icon* as shown above
+- In the terminal, *type this line exactly as shown*:
+: cd; wget j.mp.r-grphics; unzip r-graphics
+- If you see "ERROR 404: Not Found", then you mistyped the command -- try again, making sure to type the command exactly as shown
+
+** Launch RStudio on Athena					   :mitsetup:
+- To start R *type these commands in the terminal*:
+:     add r
+:     rstudio
+- Open up today's R script
+  - In RStudio, Go to *File => Open Script*
+  - Locate and open the =Rgraphics.R= script in the Rgraphics folder in your home directory
+- Go to *Tools => Set working directory => To source file location* (more on the working directory later)
+- I encourage you to add your own notes to this file!
+
+** Starting A The End
+My goal: by the end of the workshop you will be able to reproduce this graphic from the Economist:
+
+#+ATTR_LATEX: width=3.5in
+[[file:images/Economist1.pdf]]
+
+
+** Why =ggplot2=?
+- Advantages of ggplot2
+  - Consistent underlying =grammar of graphics= (Wilkinson, 2005)
+  - Plot specification at a high level of abstraction
+  - Very flexible
+  - Theme system for polishing plot appearance
+  - Active maintenance and development--getting better all the time
+  - Many users, active mailing list
+- Things you cannot do With ggplot2
+  - 3-dimensional graphics
+  - Graph-theory type graphs (nodes/edges layout)
+
+** What Is The Grammar Of Graphics?
+
+- The basic idea: independently specify plot building blocks
+- Anatomy of a plot:
+   - data
+   - aesthetic mapping
+   - geometric object
+   - statistical transformations
+   - scales
+   - coordinate system
+   - position adjustments
+   - faceting
+
+** The structure of a =ggplot=
+
+The  =ggplot()= function is used to initialize the basic graph structure, then we add to it. The structure of a ggplot looks like this:
+#+LaTeX: \begin{columns} \column{.85\textwidth}
+#+name: ggplotIntro
+#+begin_src R :eval never :exports code :tangle no
+  ggplot(data = <default data set>, 
+         aes(x = <default x axis variable>,
+             y = <default y axis variable>,
+             ... <other default aesthetic mappings>),
+         ... <other plot defaults>) +
+         geom_<geom type>(aes(size = <size variable for this geom>, 
+                        ... <other aesthetic mappings>),
+                    data = <data for this point geom>,
+                    stat = <statistic string or function>,
+                    position = <position string or function>,
+                    color = <"fixed color specification">,
+                    <other arguments, possibly passed to the _stat_ function) +
+    scale_<aesthetic>_<type>(name = <"scale label">,
+                       breaks = <where to put tick marks>,
+                       labels = <labels for tick marks>,
+                       ... <other options for the scale>) +
+    theme(plot.background = element_rect(fill = "gray"),
+          ... <other theme elements>)
+#+end_src
+#+latex: \vspace{-2em}
+#+LaTeX: \end{columns}
+- Don't be afraid, you will understand this by the end of the workshop!
+- The basic idea is that you specify different parts of the plot, and add them together using the "+" operator
+
+** Example data I: =mtcars=
+#+LATEX: \tiny
+
+#+name: mtcars1
+#+begin_src R
+  print(head(mtcars, 4))
+#+end_src
+#+latex: \vspace{-2em}
+
+#+RESULTS: mtcars1
+#+begin_example
+> print(head(mtcars, 4))
+                mpg cyl disp  hp drat   wt qsec vs am gear carb
+Mazda RX4      21.0   6  160 110 3.90 2.62 16.5  0  1    4    4
+Mazda RX4 Wag  21.0   6  160 110 3.90 2.88 17.0  0  1    4    4
+Datsun 710     22.8   4  108  93 3.85 2.32 18.6  1  1    4    1
+Hornet 4 Drive 21.4   6  258 110 3.08 3.21 19.4  1  0    3    1
+> 
+#+end_example
+
+#+begin_example
+  mpg	Miles/(US) gallon			 
+  cyl	Number of cylinders			 
+  disp	Displacement (cu.in.)			 
+  hp	Gross horsepower			 
+  drat	Rear axle ratio				 
+  wt	Weight (lb/1000)			 
+  qsec	1/4 mile time				 
+  vs	V/S					 
+  am	Transmission (0 = automatic, 1 = manual) 
+  gear	Number of forward gears			 
+  carb	Number of carburetors			 
+#+end_example
+
+#+LATEX: \normalsize
+
+** =ggplot2= VS Base Graphics
+- Compared to base graphics, =ggplot2=
+  - is more verbose for simple / canned graphics
+  - is less verbose for complex / custom graphics
+  - does not have methods (data should always be in a =data.frame=)
+  - uses a different system for adding plot elements
+
+** =ggplot2= VS Base Graphics
+
+Base graphics VS =ggplot= for simple graphs:
+*** Base histogram 						      :BMCOL:
+     :PROPERTIES:
+     :BEAMER_col: 0.5
+     :END:                                          
+
+#+LATEX: \begin{columns} \column{.85\textwidth} \begin{block}{}
+
+#+name: baseHist1
+#+begin_src R :results graphics :exports both :file images/baseHist1.png :width 3 :height 3 :R-dev-args res=250, units = "in"
+  hist(mtcars$mpg)
+
+#+end_src
+
+#+ATTR_LATEX: width=2in
+#+RESULTS: baseHist1
+[[file:images/baseHist1.png]]
+#+LATEX: \end{block} \end{columns}
+*** =ggplot2= histogram 					      :BMCOL:
+     :PROPERTIES:
+     :BEAMER_col: 0.5
+     :END:
+
+#+LATEX: \begin{columns} \column{.85\textwidth} \begin{block}{}
+
+#+name: ggplotHist1
+#+begin_src R :results graphics :exports both :file images/ggplotHist1.png :width 3 :height 2 :R-dev-args res=250, units = "in"
+  ggplot(mtcars, aes(x = mpg)) +
+    geom_histogram(binwidth = 5)
+#+end_src
+
+#+ATTR_LATEX: width=2in
+#+RESULTS: ggplotHist1
+[[file:images/ggplotHist1.png]]
+#+LATEX: \end{block} \end{columns}
+
+*** Base wins! 							      :BMCOL:
+    :PROPERTIES:
+    :BEAMER_col: 1.0
+    :END:
+
+** =ggplot2= VS Base Graphics
+
+Base graphics VS =ggplot= for complex graphs:
+*** Base colored scatter plot 					      :BMCOL:
+     :PROPERTIES:
+     :BEAMER_col: 0.5
+     :END:
+
+#+LATEX: \begin{columns} \column{.85\textwidth} \begin{block}{}
+
+#+name: baseComplex1
+#+begin_src R :results graphics :exports both :file images/baseComplex1.png :width 4 :height 2.5 :R-dev-args res=250, units = "in"
+  par(mar = c(4,4,.1,.1))
+  plot(mpg ~ hp,
+       data=subset(mtcars, am==1),
+       xlim=c(50, 450),ylim=c(5, 40))
+  points(mpg ~ hp, col="red",
+         data=subset(mtcars, am==0))
+  legend(350, 40,
+         c("1", "0"), title="am",
+         col=c("black", "red"),
+         pch=c(1, 1))
+#+end_src
+
+#+ATTR_LATEX: height=.8in
+#+RESULTS: baseComplex1
+[[file:images/baseComplex1.png]]
+
+#+LATEX: \end{block} \end{columns}
+*** =ggplot2= colored scatter plot 				      :BMCOL:
+     :PROPERTIES:
+     :BEAMER_col: 0.5
+     :END:
+
+#+LATEX: \begin{columns} \column{.85\textwidth} \begin{block}{}
+
+#+name: ggplotComplex1
+#+begin_src R :results graphics :exports both :file images/ggplotComplex1.png :width 3.8 :height 1.8 :R-dev-args res=250, units = "in"
+  ggplot(mtcars, aes(x=hp,
+                y=mpg,
+                color=factor(am)))+
+  geom_point()
+  
+  
+  
+  
+  #
+#+end_src
+
+#+ATTR_LATEX: height=1in
+#+RESULTS: ggplotComplex1
+[[file:images/ggplotComplex1.png]]
+
+#+LATEX: \end{block} \end{columns}
+
+ 
+*** =ggplot2=  wins! 						      :BMCOL:
+    :PROPERTIES:
+    :BEAMER_col: 1.0
+    :END:
+
+* Geometric Objects And Aesthetics
+
+** Aesthetic Mapping
+- In ggplot land /aesthetic/ means "something you can see"
+- Examples include:
+  - position (i.e., on the x and y axes)
+  - color ("outside" color)
+  - fill ("inside" color)
+  - shape (of points)
+  - linetype
+  - size
+- Each type of geom accepts only a subset of all aesthetics--refer to the geom help pages to see what mappings each geom accepts
+- Aesthetic mappings are set with the =aes()= function
+
+** Geometic Objects (=geom=)
+- Geometric objects are the actual marks we put on a plot
+- Examples include:
+  - points (=geom_point=, for scatter plots, dot plots, etc)
+  - lines (=geom_line=, for time series, trend lines, etc)
+  - boxplot (=geom_boxplot=, for, well, boxplots!)
+- A plot must have at least one geom; there is no upper limit
+- Add a geom to a plot using the =+= operator
+- You can get a list of available geometric objects:
+#+name: getListOfGeoms
+#+begin_src R
+  geoms <- help.search("geom_", package = "ggplot2")
+  geoms$matches[1:4, 1:2]
+#+end_src
+
+#+RESULTS: getListOfGeoms
+#+begin_example
+> geoms <- help.search("geom_", package = "ggplot2")
+> geoms$matches[1:4, 1:2]
+     topic         title                                   
+[1,] "geom_abline" "Line specified by slope and intercept."
+[2,] "geom_area"   "Area plot."                            
+[3,] "geom_bar"    "Bars, rectangles with bases on x-axis" 
+[4,] "geom_bin2d"  "Add heatmap of 2d bin counts."         
+> 
+#+end_example
+
+** Points (Scatterplot)
+- Now that we know about geometric objects and aesthetic mapping, we can make a ggplot
+*** =geom_point= requires mappings for x and y, all others are optional 						      :BMCOL:
+     :PROPERTIES:
+     :BEAMER_col: 0.5
+     :END:
+
+#+LATEX: \begin{columns} \column{.85\textwidth} \begin{block}{}
+
+#+name: ourFirstScatterplot
+#+begin_src R :results output graphics :exports both :file images/firstScatter.png :width 2.5 :height 1.5 :R-dev-args res=250, units = "in"
+  ggplot(mtcars, aes(x = hp, y = mpg)) +
+    geom_point()
+#+end_src
+
+#+ATTR_LATEX: width=2in
+#+RESULTS: ourFirstScatterplot
+[[file:images/firstScatter.png]]
+#+LATEX: \end{block} \end{columns}
+
+*** Remember that =ggplot()= only sets defaults--we can override these :BMCOL:
+     :PROPERTIES:
+     :BEAMER_col: 0.5
+     :END:
+
+#+LATEX: \begin{columns} \column{.85\textwidth} \begin{block}{}
+
+#+name: OverRideScatterplotDefault
+#+begin_src R :results output graphics :exports both :file images/overrideScatterDefault.png :width 2.5 :height 1.5 :R-dev-args res=250, units = "in"
+  ggplot(mtcars, aes(x = hp, y = mpg)) +
+    geom_point(aes(y=log10(mpg)))
+#+end_src
+
+#+ATTR_LATEX: width=2in
+#+RESULTS: OverRideScatterplotDefault
+[[file:images/overrideScatterDefault.png]]
+#+LATEX: \end{block} \end{columns}
+
+** Lines (Prediction Line)
+- A plot constructed with =ggplot= can have more than one geom
+
+- Our =hp= vs =mpg= plot could use a regression line:
+
+#+LATEX: \begin{columns} \column{.85\textwidth} \begin{block}{}
+
+#+name: multipleLayers
+#+begin_src R :results output graphics :exports both :file images/mtcarsLayers.png :width 4 :height 2 :R-dev-args res=250, units = "in"
+  mtcars$pred.mpg <- predict(lm(mpg ~ hp, data = mtcars))
+  
+  p1 <- ggplot(mtcars, aes(x = hp, y = mpg))
+  
+  p1 + geom_point(aes(color = wt)) +
+    geom_line(aes(y = pred.mpg))
+#+end_src
+
+#+ATTR_LATEX: width=2.75in
+#+RESULTS: multipleLayers
+[[file:images/mtcarsLayers.png]]
+
+#+LATEX: \end{block} \end{columns}
+
+** Smoothers 
+- Not all geometric objects are simple shapes--the smooth geom includes a line and a ribbon 
+
+#+LATEX: \begin{columns} \column{.85\textwidth} \begin{block}{}
+
+#+name: multipleLayers2
+#+begin_src R :results output graphics :exports both :file images/mtcarsLayers2.png :width 4 :height 2  :R-dev-args res=250, units = "in"
+  p2 <- ggplot(mtcars, aes(x = hp, y = mpg))
+  
+  p2 + geom_point(aes(color = wt)) +
+    geom_smooth()
+#+end_src
+
+#+ATTR_LATEX: width=2.75in
+#+RESULTS: multipleLayers2
+[[file:images/mtcarsLayers2.png]]
+#+LATEX: \end{block} \end{columns}
+
+** Text (Label Points)
+- Each =geom= accepts a particualar set of mappings--for example =geom_text()= accepts a =labels= mapping
+
+#+LATEX: \begin{columns} \column{.85\textwidth} \begin{block}{}
+
+#+name: textGeomMapping2
+#+begin_src R :results output graphics :exports both :file images/textGeomMapping.png :width 4 :height 2  :R-dev-args res=250, units = "in"
+  p2 + geom_point(aes(color = wt)) +
+    geom_smooth() +
+    geom_text(aes(label=rownames(mtcars)), size=2)
+#+end_src
+
+#+ATTR_LATEX: width=2.75in
+#+RESULTS: textGeomMapping2
+[[file:images/textGeomMapping.png]]
+
+#+LATEX: \end{block} \end{columns}
+
+** Aesthetic Mapping VS Assignment
+- Note that variables are mapped to aesthetics with the =aes()= function, while fixed aesthetics are set outside the aes() call
+- This sometimes leads to confusion, as in this example:
+
+#+LATEX: \begin{columns} \column{.85\textwidth} \begin{block}{}
+
+#+name: mtcarsMapping
+#+begin_src R :results output graphics :exports both :file images/mtcars2.png :width 4 :height 2 :R-dev-args res=250, units = "in"
+  ggplot(mtcars, aes(x = hp, y = mpg)) +
+    geom_point(aes(size = 2),# incorrect! 2 is not a variable
+               color="red") # this is fine -- all points red
+#+end_src
+
+#+ATTR_LATEX: width=2.75in
+#+RESULTS: mtcarsMapping
+[[file:images/mtcars2.png]]
+
+#+LATEX: \end{block} \end{columns}
+
+** Mapping Variables To Other Aesthetics 
+- Other aesthetics are mapped in the same way as x and y in the previous example
+
+#+LATEX: \begin{columns} \column{.85\textwidth} \begin{block}{}
+
+#+name: colorAndSizeAes
+#+begin_src R :results output graphics :exports both :file images/addColorAndShapeMapping.png :width 4 :height 2.5 :R-dev-args res=250, units = "in"
+  ggplot(mtcars, aes(x = hp, y = mpg)) +
+    geom_point(aes(color=wt, shape = factor(am)))
+#+end_src
+
+#+ATTR_LATEX: width=3.5in
+#+RESULTS: colorAndSizeAes
+[[file:images/addColorAndShapeMapping.png]]
+
+#+LATEX: \end{block} \end{columns}
+
+** Exercise I
+
+1. Create a scatter plot with displacement on the =x= axis and horse power on the y axis
+2. Color the points in the previous plot blue
+3. Color the points in the previous plot according to miles per gallon
+
+** Exercise I prototype 					   :prototype:
+
+#+name: ex1Prototype
+#+begin_src R :exports code
+                                          # ex1.1
+  (p.ex1 <- ggplot(mtcars, aes(x = disp, y = hp)) + geom_point())
+                                          # ex1.2
+  p.ex1 + geom_point(color = "blue")
+                                          # ex1.3
+  p.ex1 + geom_point(aes(color = mpg))
+#+end_src
+
+#+RESULTS: ex1Prototype
+#+begin_example
+>                                         # ex1.1
+> (p.ex1 <- ggplot(mtcars, aes(x = disp, y = hp)) + geom_point())
+>                                         # ex1.2
+> p.ex1 + geom_point(color = "blue")
+>                                         # ex1.3
+> p.ex1 + geom_point(aes(color = mpg))
+> 
+#+end_example
+
+* Statistical Transformations
+
+** Statistical Transformations
+- Some plot types (such as scatterplots) do not require transformations--each point is plotted at x and y coordinates equal to the original value
+- Other plots, such as boxplots, histograms, prediction lines etc. require statistical transformations
+  - For a boxplot the y values must be transformed to the median and 1.5(IQR)
+  - For a smoother smother the y values must be transformed into predicted values
+- Each =geom= has a default statistic, but these can be changed
+- For example, the default statistic for =geom_bar= is =stat_bin=
+#+name: geomHistorgramArgs
+#+begin_src R
+  args(geom_bar)
+  # ?stat_bin
+#+end_src
+
+#+RESULTS: geomHistorgramArgs
+#+begin_example
+> args(geom_bar)
+function (mapping = NULL, data = NULL, stat = "bin", position = "stack", 
+    ...) 
+NULL
+> # ?stat_bin
+> 
+#+end_example
+
+** Setting Statistical Transformation Arguments
+- Arguments to =stat_= functions are passed through =geom_= functions
+- Slightly annoying because in order to change it you have to first determine which stat the geom uses, then determine the arguments to that stat
+
+*** Here is the default histogram of miles per gallon 						      :BMCOL:
+     :PROPERTIES:
+     :BEAMER_col: 0.5
+     :END:
+
+#+LATEX: \begin{columns} \column{.85\textwidth} \begin{block}{}
+
+#+name: GeomBinDefaults
+#+begin_src R :results output graphics :exports both :file images/GeomBinDefaults.png :width 2.5 :height 1.5  :R-dev-args res=250, units = "in"
+  ggplot(mtcars, aes(x = mpg)) +
+    geom_bar()
+#+end_src
+
+#+ATTR_LATEX: width=2in
+#+RESULTS: GeomBinDefaults
+[[file:images/GeomBinDefaults.png]]
+
+#+LATEX: \end{block} \end{columns}
+
+*** Here we change the bin width  						      :BMCOL:
+     :PROPERTIES:
+     :BEAMER_col: 0.5
+     :END:
+
+#+LATEX: \begin{columns} \column{.85\textwidth} \begin{block}{}
+
+#+name: ChangeStatBinArgs
+#+begin_src R :results output graphics :exports both :file images/ChangeStatBinArgs.png :width 2.5 :height 1.5  :R-dev-args res=250, units = "in"
+  ggplot(mtcars, aes(x = mpg)) +
+    geom_bar(stat = "bin", binwidth=4)
+#+end_src
+
+#+ATTR_LATEX: width=2in
+#+RESULTS: ChangeStatBinArgs
+[[file:images/ChangeStatBinArgs.png]]
+#+LATEX: \end{block} \end{columns}
+
+** Changing The Statistical Transformation
+- Sometimes the default statistical transformation is not what you need
+- Often the case with pre-summarized data
+#+name: summarizeMTC
+#+begin_src R
+    (mtc.sum <- aggregate(mtcars["mpg"], mtcars["gear"], FUN=mean))
+#+end_src
+
+#+RESULTS: summarizeMTC
+#+begin_example
+> (mtc.sum <- aggregate(mtcars["mpg"], mtcars["gear"], FUN=mean))
+  gear  mpg
+1    3 16.1
+2    4 24.5
+3    5 21.4
+> 
+#+end_example
+
+*** Bar plot with summarized data 				      :BMCOL:
+     :PROPERTIES:
+     :BEAMER_col: 0.5
+     :END:
+
+#+begin_example
+> ggplot(mtc.sum, aes(x=gear, y=mpg)) + 
+    geom_bar()
+Mapping a variable to y and also 
+using stat="bin".
+Error in pmin(y, 0) : object 
+'y' not found
+
+.
+#+end_example
+
+*** Bar plot with stat="identity" 				      :BMCOL:
+     :PROPERTIES:
+     :BEAMER_col: 0.5
+     :END:
+
+#+LATEX: \begin{columns} \column{.85\textwidth} \begin{block}{}
+
+#+name: BarPlotSum1
+#+begin_src R :results output graphics :exports both :file images/ChangeStat.png :width 2.5 :height 1.5  :R-dev-args res=250, units = "in"
+  ggplot(mtc.sum, aes(x=gear, y=mpg)) + 
+    geom_bar(stat="identity")
+#+end_src
+
+#+ATTR_LATEX: width=2in
+#+RESULTS: BarPlotSum1
+[[file:images/ChangeStat.png]]
+
+#+LATEX: \end{block} \end{columns}
+
+** Exercise II
+
+1. Create boxplots of mpg by gear
+2. Overlay points on top of the box plots
+3. Create a scatter plot of weight vs. horsepower
+4. Overlay a linear regression line on top of the scatter plot
+
+
+** Exercise II Prototype					  :prototype:
+#+name: Exercise2Prototype
+#+begin_src R :exports code
+                                          #Ex2.1
+  (p <- ggplot(mtcars, aes(x = factor(gear), y = mpg)) + geom_boxplot())
+                                          #Ex2.2
+  p + geom_point()
+                                          #Ex2.3
+  (p <- ggplot(mtcars, aes(x = wt, y = hp)) + geom_point())
+                                          #Ex2.4
+  p + geom_smooth(method = "lm")
+#+end_src
+
+
+* Scales
+
+** Scales: Controlling Aesthetic Mapping
+
+- In =ggplot2= *scales* include
+  - position
+  - color and fill
+  - size
+  - shape
+  - line type
+- Modified with =scale_<aesthetic>_<type>=
+
+** Common Scale Arguments
+- *name*: the first argument gives the axis or legend title
+- *limits*: the minimum and maximum of the scale
+- *breaks*: the points along the scale where labels should appear
+- *labels*: the labels that appear at each break
+
+** Scale Modification Examples
+
+#+LATEX: \begin{columns} \column{.85\textwidth} \begin{block}{}
+
+#+name: modifyScales1
+#+begin_src R #+begin_src R :results output graphics :exports both :file images/modifyScales1.png :width 4 :height 2.5 :R-dev-args res=250, units = "in"
+  p6 <- ggplot(mtcars, aes(x = factor(gear), y = mpg))
+  p6 + geom_point(aes(color = wt))
+#+end_src
+
+#+ATTR_LATEX: width=3.5in
+#+RESULTS: modifyScales1
+[[file:images/modifyScales1.png]]
+
+#+LATEX: \end{block} \end{columns}
+
+** Scale breaks and labels
+
+#+LATEX: \begin{columns} \column{.85\textwidth} \begin{block}{}
+
+#+name: modifyScales2
+#+begin_src R #+begin_src R :results output graphics :exports both :file images/modifyScales2.png  :width 5 :height 2.5 :R-dev-args res=250, units = "in"
+  p7 <- p6 + geom_point(aes(color = wt)) +
+    scale_x_discrete("Number of Gears",
+                     breaks = c("3", "4", "5"),
+                     labels = c("Three", "Four", "Five"))
+  p7 + scale_color_continuous("Weight",
+                           breaks = with(mtcars, c(min(wt), median(wt), max(wt))),
+                           labels = c("Light", "Medium", "Heavy"))
+#+end_src
+
+#+ATTR_LATEX: width=3.5in
+#+RESULTS: modifyScales2
+[[file:images/modifyScales2.png]]
+
+#+LATEX: \end{block} \end{columns}
+
+** Scale breaks and labels
+
+#+LATEX: \begin{columns} \column{.85\textwidth} \begin{block}{}
+
+#+name: modifyScales3
+#+begin_src R #+begin_src R :results output graphics :exports both :file images/modifyScales3.png :width 4 :height 2.5 :R-dev-args res=250, units = "in"
+  p7 + scale_color_continuous("Weight",
+                           breaks = with(mtcars, c(min(wt), median(wt), max(wt))),
+                           labels = c("Light", "Medium", "Heavy"),
+                           low = "black",
+                           high = "gray80")
+#+end_src
+
+#+ATTR_LATEX: width=3.5in
+#+RESULTS: modifyScales3
+[[file:images/modifyScales3.png]]
+
+#+LATEX: \end{block} \end{columns}
+
+** Using different color scales
+
+#+LATEX: \begin{columns} \column{.85\textwidth} \begin{block}{}
+
+#+name: modifyScales4
+#+begin_src R #+begin_src R :results output graphics :exports both :file images/modifyScales4.png :width 4 :height 2.5 :R-dev-args res=250, units = "in"
+  p7 + scale_color_gradient2("Weight",
+                            breaks = with(mtcars, c(min(wt), median(wt), max(wt))),
+                            labels = c("Light", "Medium", "Heavy"),
+                            low = "blue",
+                            mid = "black",
+                            high = "red",
+                            midpoint = median(mtcars$wt))
+#+end_src
+
+#+ATTR_LATEX: width=3.5in
+#+RESULTS: modifyScales4
+[[file:images/modifyScales4.png]]
+
+#+LATEX: \end{block} \end{columns}
+
+** Scale Modification Examples
+
+#+LATEX: \begin{columns} \column{.85\textwidth} \begin{block}{}
+
+#+name: modifyScales5
+#+begin_src R :results output graphics :exports both :file images/modifyScales5.png :width 4 :height 2.5 :R-dev-args res=250, units = "in"
+  p8 <- ggplot(mtcars, aes(x = factor(gear), y = mpg))
+  p8 + geom_point(aes(size = wt))
+#+end_src
+
+#+ATTR_LATEX: width=3.5in
+#+RESULTS: modifyScales5
+[[file:images/modifyScales5.png]]
+
+#+LATEX: \end{block} \end{columns}
+
+** Scale range
+
+#+LATEX: \begin{columns} \column{.85\textwidth} \begin{block}{}
+
+#+name: modifyScales6
+#+begin_src R #+begin_src R :results output graphics :exports both :file images/modifyScales6.png :width 4 :height 2.5 :R-dev-args res=250, units = "in"
+  p8 + geom_point(aes(size = wt)) +
+    scale_size_continuous("Weight",
+                          range = c(2, 10))
+#+end_src
+
+#+ATTR_LATEX: width=3.5in
+#+RESULTS: modifyScales6
+[[file:images/modifyScales6.png]]
+
+#+LATEX: \end{block} \end{columns}
+
+** Available Scales
+- Partial combination matrix of available scales
+| *Scale*         | *Types*    | *Examples*               |
+|-----------------+------------+--------------------------|
+| scale_color_    | identity   | scale_fill_continuous    |
+| scale_fill_     | manual     | scale_color_discrete     |
+| scale_size_     | continuous | scale_size_manual        |
+|                 | discrete   | scale_size_discrete      |
+|                 |            |                          |
+| scale_shape_    | discrete   | scale_shape_discrete     |
+| scale_linetype_ | identity   | scale_shape_manual       |
+|                 | manual     | scale_linetype_discrete  |
+|                 |            |                          |
+| scale_x_        | continuous | scale_x_continuous       |
+| scale_y_        | discrete   | scale_y_discrete         |
+|                 | reverse    | scale_x_log              |
+|                 | log        | scale_y_reverse          |
+|                 | date       | scale_x_date             |
+|                 | datetime   | scale_y_datetime         |
+
+** Exercise III
+1) Experiment with color, size, and shape aesthetics / scales
+2) What happens when you map more than one aesthetic to a variable?
+3) Which aesthetics are good for continuous variables? Which work better for discrete variables?
+
+* Faceting
+
+** Faceting
+- Faceting is =ggplot2= parlance for *small multiples*
+- The idea is to create separate graphs for subsets of data
+- =ggplot2= offers two functions for creating small multiples:
+ 1. =facet_wrap()=: define subsets as the levels of a single grouping variable
+ 2. =facet_grid()=: define subsets as the crossing of two grouping variables
+- Facilitates comparison among plots, not just of geoms within a plot
+    
+** Example Data II: =Housing prices=
+#+name: housingData
+#+begin_src R
+  housing <- read.csv("dataSets/landdata-states.csv")
+  head(housing[1:5])
+#+end_src
+
+#+RESULTS: housingData
+#+begin_example
+> housing <- read.csv("dataSets/landdata-states.csv")
+> head(housing[1:5])
+  State  Date Home.Value Structure.Cost Land.Value
+1    AL 19751      24648          23416       1232
+2    AL 19752      24970          23721       1248
+3    AL 19753      25342          24075       1267
+4    AL 19754      25779          24490       1289
+5    AL 19761      26343          25026       1317
+6    AL 19762      26981          25631       1349
+> 
+#+end_example
+
+(Data from https://www.lincolninst.edu/subcenters/land-values/land-prices-by-state.asp)
+
+** What is the trend in housing prices?
+- Start by using a technique we already know--map State to color
+
+#+LATEX: \begin{columns} \column{.85\textwidth} \begin{block}{}
+
+#+name: housingscatter
+#+begin_src R :results output graphics :exports both :file images/housing1.png :width 5 :height 3 :R-dev-args res=250, units = "in"
+  p8 <- ggplot(housing, aes(x = Date, y = Home.Value))
+  p8 + geom_line(aes(color = State))  
+#+end_src
+
+#+ATTR_LATEX: width=3in
+#+RESULTS: housingscatter
+[[file:images/housing1.png]]
+
+#+LATEX: \end{block} \end{columns}
+- There are two problems here--there are too many states to distinguish each one by color, and the lines obscure one another
+
+** Faceting to the rescue
+- We can remedy the deficiencies of the previous plot by faceting by state rather than mapping state to color
+
+#+LATEX: \begin{columns} \column{.85\textwidth} \begin{block}{}
+
+#+name: housingscatter2
+#+begin_src R :results output graphics :exports both :file images/housing2.png :width 5 :height 3 :R-dev-args res=200, units = "in"
+  p8 + geom_line() +
+      facet_wrap(~State, ncol = 10)
+#+end_src
+
+#+ATTR_LATEX: width=3in,height=2in
+#+RESULTS: housingscatter2
+[[file:images/housing2.png]]
+
+#+LATEX: \end{block} \end{columns}
+
+- There is also a ~facet_grid()~ function for faceting in two dimensions
+
+* Themes
+
+** Themes
+- The ~ggplot2~ theme system handles non-data plot elements such as
+  - Axis labels
+  - Plot background
+  - Facet label backround
+  - Legend appearance
+- Two built-in themes:
+  - ~theme_gray()~ (default)
+  - ~theme_bw()~
+  - More available on the wiki:
+https://github.com/hadley/ggplot2/wiki/Themes
+
+** Overriding theme defaults
+- Specific theme elements can be overridden using ~theme()~
+- Example:
+
+#+LATEX: \begin{columns} \column{.85\textwidth} \begin{block}{}
+
+#+name: opts
+#+begin_src R :results output graphics :exports both :file images/opts.png :width 5 :height 2.5 :R-dev-args res=250, units = "in"
+    p7 + theme(plot.background = element_rect(
+                fill = "blue",
+                colour = "gray40"))
+#+end_src
+
+#+ATTR_LATEX: width=2.5in,height=2in
+#+RESULTS: opts
+[[file:images/opts.png]]
+
+#+LATEX: \end{block} \end{columns}
+- You can see available options by printing ~theme_gray()~ or ~theme_bw()~
+
+** Creating and saving new themes
+- You can create new themes, as in the following example:
+
+#+LATEX: \begin{columns} \column{.85\textwidth} \begin{block}{}
+
+#+name: themes
+#+begin_src R :results output graphics :exports both :file images/themes.png :width 5 :height 2.5 :R-dev-args res=250, units = "in"
+  theme_new <- theme_bw() +
+    theme(text=element_text(size = 12, family = ""),
+          axis.text.x = element_text(colour = "red"),
+          panel.background = element_rect(fill = "pink"))
+  
+  p7 + theme_new
+#+end_src
+
+#+ATTR_LATEX: width=2in,height=2in
+
+#+RESULTS: themes
+[[file:images/themes.png]]
+
+#+LATEX: \end{block} \end{columns}
+
+* The #1 FAQ
+** Map Aesthetic To Different Columns
+The most frequently asked question goes something like this: /I have two variables in my data.frame, and I'd like to plot them as separate points, with different color depending on which variable it is. How do I do that?/
+*** Wrong  				      :BMCOL:
+     :PROPERTIES:
+     :BEAMER_col: 0.5
+     :END:
+
+#+LATEX: \begin{columns} \column{.85\textwidth} \begin{block}{}
+
+#+name: WrongWayNoMelt
+#+begin_src R :results output graphics :exports both :file images/WrongWayNoMelt.png :width 2 :height 1.5 :R-dev-args res=250, units = "in"
+  ggplot(mtcars, aes(x=wt)) +
+    geom_point(aes(y=disp), color="red") +
+    geom_point(aes(y=hp), color="blue")
+  
+  
+  #
+#+end_src
+
+#+ATTR_LATEX: width=2in,height=1.15in
+
+#+RESULTS: WrongWayNoMelt
+[[file:images/WrongWayNoMelt.png]]
+
+#+LATEX: \end{block} \end{columns}
+
+*** Right 							      :BMCOL:
+     :PROPERTIES:
+     :BEAMER_col: 0.5
+     :END:
+
+#+LATEX: \begin{columns} \column{.85\textwidth} \begin{block}{}
+
+#+name: meltingDataExe
+#+begin_src R :results output graphics :exports both :file images/meltingDataExe.png :width 3 :height 1.75 :R-dev-args res=250, units = "in"
+  library(reshape2)
+  mtc.m <- melt(mtcars,
+                measure.vars=c("disp", 
+                               "hp"))
+  ggplot(mtc.m,
+         aes(x=wt,
+             y=value,
+             color=variable)) +
+    geom_point()
+#+end_src
+
+#+ATTR_LATEX: width=2in,height=1.15in
+
+#+RESULTS: meltingDataExe
+[[file:images/meltingDataExe.png]]
+
+#+LATEX: \end{block} \end{columns}
+
+* Putting It All Together
+
+** Challenge: Recreate This =Economist= Graph
+#+ATTR_LATEX: width=2.5in
+[[file:images/Economist1.pdf]]
+
+#+LATEX: \small
+- Data
+The data is available in the ~dataSets/EconomistData.csv~ file. Read it in with ~dat <- read.csv("dataSets/EconomistData.csv")~
+Original sources are
+
+#+LATEX: \tiny
+
+  http://www.transparency.org/content/download/64476/1031428
+  http://hdrstats.undp.org/en/indicators/display_cf_xls_indicator.cfm?indicator_id=103106&lang=en
+
+#+LATEX: \small
+- Graph source: 
+
+#+LATEX: \tiny
+
+http://www.economist.com/node/21541178
+
+#+LATEX: \small
+
+** Data Prep 							  :noexport:
+
+1. Download, extract, and load data
+
+Use spreadsheet program to export the data to .csv, import .csv to R
+
+#+name: saveEconCsvData
+#+begin_src R :results silent :exports code :tangle no :cache yes
+  options(stringsAsFactors=FALSE)  
+  cpi.dat <- read.csv("dataSets/CPIdata.csv")
+  hdi.dat <- read.csv("dataSets/HDIdata.csv")
+  dat <- merge(hdi.dat, cpi.dat, by = "Country")
+  write.csv(dat, file = "dataSets/EconomistData.csv")
+#+end_src
+
+** Challenge data
+1. Load the data:
+#+name: loadEconCsvData
+#+begin_src R :results silent :exports code
+  dat <- read.csv("dataSets/EconomistData.csv")
+#+end_src
+
+2. Recreate this graph:
+[[file:images/Economist1.png]]
+
+** Challenge Solution						  :prototype:
+
+Create basic scatter plot
+
+#+LATEX: \begin{columns} \column{.85\textwidth} \begin{block}{}
+
+#+name: econDatScatter
+#+begin_src R :results output graphics :exports both :file images/econScatter1.png :width 6 :height 2.5 :R-dev-args res=250, units = "in"
+    pc1 <- ggplot(dat, aes(x = CPI, y = HDI, color = Region))
+    (pc1 <- pc1 + geom_point(shape = 1))
+    
+    
+   
+  
+  #
+#+end_src
+
+#+ATTR_LATEX: width=3in
+#+RESULTS: econDatScatter
+[[file:images/econScatter1.png]]
+
+#+LATEX: \end{block} \end{columns}
+
+** Challenge Solution						  :prototype:
+
+Add labels
+
+#+LATEX: \begin{columns} \column{.85\textwidth} \begin{block}{}
+
+#+name: econDatScatter2
+#+begin_src R :results output graphics :exports both :file images/econScatter2.png :width 6 :height 2.5 :R-dev-args res=250, units = "in"
+  label.these <- c("Congo", "Sudan", "Afghanistan", "Greece", "China",
+                   "India", "Rwanda", "Spain", "France", "United States",
+                   "Japan", "Norway", "Singapore")
+  (pc2 <- pc1 +
+   geom_text(aes(label = Country),
+             color = "black", size = 3, hjust = 1.1,
+             data = dat[dat$Country %in% label.these, ]))
+#+end_src
+
+#+ATTR_LATEX: width=3in
+#+RESULTS: econDatScatter2
+[[file:images/econScatter2.png]]
+
+#+LATEX: \end{block} \end{columns}
+
+** Challenge Solution						  :prototype:
+
+ Add smoothing line
+
+#+LATEX: \begin{columns} \column{.85\textwidth} \begin{block}{}
+
+#+name: econDatScatter3
+#+begin_src R :results output graphics :exports both :file images/econScatter3.png :width 6 :height 2.5 :R-dev-args res=250, units = "in"
+  (pc3 <- pc2 +
+   geom_smooth(aes(group = 1),
+               method = "lm",
+               color = "black",
+               formula = y~ poly(x, 2),
+               se = FALSE))
+#
+#+end_src
+
+#+ATTR_LATEX: width=3in
+#+RESULTS: econDatScatter3
+[[file:images/econScatter3.png]]
+
+#+LATEX: \end{block} \end{columns}
+
+** Challenge Solution						  :prototype:
+
+Finishing touches
+
+#+LATEX: \begin{columns} \column{.85\textwidth} \begin{block}{}
+
+#+name: econDatScatter4
+#+begin_src R :results output graphics :exports both :file images/econScatter4.png :width 7 :height 3.5 :R-dev-args res = 120, units = "in"
+  (pc4 <- pc3 + theme_bw() +
+    scale_x_continuous("Corruption Perceptions Index, 2011\n(10 = least corrupt)") +
+    scale_y_continuous("Human Development Index, 2011\n(1 = best)") +
+    theme(legend.position = "top", legend.direction = "horizontal"))
+#+end_src
+
+#+RESULTS: econDatScatter4
+[[file:images/econScatter4.png]]
+
+#+ATTR_LATEX: width=3.5in
+#+LATEX: \end{block} \end{columns}
+
+* Wrap-up
+
+** Help Us Make This Workshop Even Better!
+- Please take a moment to fill out a very short feedback form 
+- These workshops exist for you -- tell us what you need! 
+- http://tinyurl.com/R-graphics-feedback
+
+** Additional resources
+- ggplot2 resources
+  - Mailing list: http://groups.google.com/group/ggplot2
+  - Wiki: https://github.com/hadley/ggplot2/wiki
+  - Website: http://had.co.nz/ggplot2/
+  - StackOverflow: http://stackoverflow.com/questions/tagged/ggplot
+- IQSS resources
+  - Research technology consulting: [[http://projects.iq.harvard.edu/rtc]]
+  - Workshops: http://projects.iq.harvard.edu/rtc/filter_by/workshops
+

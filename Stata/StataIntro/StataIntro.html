@@ -1,0 +1,1027 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<title>Introduction to Stata</title>
+<!-- 2014-03-13 Thu 17:37 -->
+<meta  http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta  name="generator" content="Org-mode" />
+<meta  name="author" content="Ista Zahn" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { color: green; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  pre.src-sh:before    { content: 'sh'; }
+  pre.src-bash:before  { content: 'sh'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-R:before     { content: 'R'; }
+  pre.src-perl:before  { content: 'Perl'; }
+  pre.src-java:before  { content: 'Java'; }
+  pre.src-sql:before   { content: 'SQL'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.right  { text-align: center;  }
+  th.left   { text-align: center;   }
+  th.center { text-align: center; }
+  td.right  { text-align: right;  }
+  td.left   { text-align: left;   }
+  td.center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara:nth-child(2) { display: inline; }
+  .footpara { display: block; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  /*]]>*/-->
+</style>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2013 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+</head>
+<body>
+<div id="content">
+<h1 class="title">Introduction to Stata</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#sec-1">1. Introduction</a>
+<ul>
+<li><a href="#sec-1-1">1.1. Documents for today&#xa0;&#xa0;&#xa0;<span class="tag"><span class="labsetup">labsetup</span></span></a></li>
+<li><a href="#sec-1-2">1.2. Organization</a></li>
+<li><a href="#sec-1-3">1.3. Workshop descripton</a></li>
+<li><a href="#sec-1-4">1.4. Why stata?</a></li>
+<li><a href="#sec-1-5">1.5. Stata interface</a></li>
+<li><a href="#sec-1-6">1.6. Do-files</a></li>
+<li><a href="#sec-1-7">1.7. Stata help</a></li>
+<li><a href="#sec-1-8">1.8. General Stata command syntax</a></li>
+<li><a href="#sec-1-9">1.9. Commenting and formatting syntax</a></li>
+<li><a href="#sec-1-10">1.10. Let's get started</a></li>
+<li><a href="#sec-1-11">1.11. How to start every do-file</a></li>
+</ul>
+</li>
+<li><a href="#sec-2">2. Getting data into Stata</a>
+<ul>
+<li><a href="#sec-2-1">2.1. Data file commands</a></li>
+<li><a href="#sec-2-2">2.2. A note about path names</a></li>
+<li><a href="#sec-2-3">2.3. Where's my data?</a></li>
+<li><a href="#sec-2-4">2.4. What if my data is not a Stata file?</a></li>
+<li><a href="#sec-2-5">2.5. What if my data is from another statistical software program?</a></li>
+<li><a href="#sec-2-6">2.6. Exercise 1: Importing data</a></li>
+</ul>
+</li>
+<li><a href="#sec-3">3. Statistics and graphs</a>
+<ul>
+<li><a href="#sec-3-1">3.1. Frequently used commands</a></li>
+<li><a href="#sec-3-2">3.2. Basic graphing commands</a></li>
+<li><a href="#sec-3-3">3.3. The "by" command</a></li>
+<li><a href="#sec-3-4">3.4. Exercise 2: Descriptive statistics</a></li>
+</ul>
+</li>
+<li><a href="#sec-4">4. Basic data management</a>
+<ul>
+<li><a href="#sec-4-1">4.1. Labels</a></li>
+<li><a href="#sec-4-2">4.2. Variable and value labels</a></li>
+<li><a href="#sec-4-3">4.3. Exercise 3: Variable labels and value labels</a></li>
+<li><a href="#sec-4-4">4.4. Working on subsets</a></li>
+<li><a href="#sec-4-5">4.5. Generating and replacing variables</a></li>
+<li><a href="#sec-4-6">4.6. Recoding, dropping variables</a></li>
+<li><a href="#sec-4-7">4.7. Exercise 4: Manipulating variables</a></li>
+</ul>
+</li>
+<li><a href="#sec-5">5. Wrap-up</a>
+<ul>
+<li><a href="#sec-5-1">5.1. Help us make this workshop better!</a></li>
+<li><a href="#sec-5-2">5.2. Additional resources</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> Introduction</h2>
+<div class="outline-text-2" id="text-1">
+</div><div id="outline-container-sec-1-1" class="outline-3">
+<h3 id="sec-1-1"><span class="section-number-3">1.1</span> Documents for today&#xa0;&#xa0;&#xa0;<span class="tag"><span class="labsetup">labsetup</span></span></h3>
+<div class="outline-text-3" id="text-1-1">
+<p>
+USERNAME: dataclass
+PASSWORD: dataclass
+</p>
+<ul class="org-ul">
+<li>Find class materials at <a href="http://j.mp/intro-stata">http://j.mp/intro-stata</a>
+</li>
+<li>Download and extract to your desktop!
+</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-sec-1-2" class="outline-3">
+<h3 id="sec-1-2"><span class="section-number-3">1.2</span> Organization</h3>
+<div class="outline-text-3" id="text-1-2">
+<ul class="org-ul">
+<li>Please feel free to ask questions at any point if they are relevant to the current topic (or if you are lost!)
+<ul class="org-ul">
+<li>There will be a Q&amp;A after class for more specific, personalized questions
+</li>
+</ul>
+</li>
+<li>Collaboration with your neighbors is encouraged
+</li>
+<li>If you are using a laptop, you will need to adjust paths accordingly
+</li>
+<li>Make comments in your Do-file rather than on hand-outs  
+<ul class="org-ul">
+<li>save on flash drive or email to yourself
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-sec-1-3" class="outline-3">
+<h3 id="sec-1-3"><span class="section-number-3">1.3</span> Workshop descripton</h3>
+<div class="outline-text-3" id="text-1-3">
+<ul class="org-ul">
+<li>This is an <b>introduction</b> to Stata
+</li>
+<li>Assumes no/very little knowledge of Stata
+</li>
+<li>Not appropriate for people already well familiar with Stata
+</li>
+<li>Learning Objectives:
+<ul class="org-ul">
+<li>Familiarize yourself with the Stata interface
+</li>
+<li>Get data in and out of Stata
+</li>
+<li>Compute statistics and construct graphical displays
+</li>
+<li>Compute new variables and transformations
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-sec-1-4" class="outline-3">
+<h3 id="sec-1-4"><span class="section-number-3">1.4</span> Why stata?</h3>
+<div class="outline-text-3" id="text-1-4">
+<ul class="org-ul">
+<li>Used in a variety of disciplines
+</li>
+<li>User-friendly
+</li>
+<li>Great guides available on web (as well as in HMDC computer lab library)
+</li>
+<li>Student and other discount packages available at reasonable cost
+</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-sec-1-5" class="outline-3">
+<h3 id="sec-1-5"><span class="section-number-3">1.5</span> Stata interface</h3>
+<div class="outline-text-3" id="text-1-5">
+
+<div class="figure">
+<p><img src="images/StataInterface.png" alt="StataInterface.png" />
+</p>
+</div>
+
+<ul class="org-ul">
+<li>Review and Variable windows can be closed (user preference)
+</li>
+<li>Command window can be shortened (recommended)
+</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-sec-1-6" class="outline-3">
+<h3 id="sec-1-6"><span class="section-number-3">1.6</span> Do-files</h3>
+<div class="outline-text-3" id="text-1-6">
+<ul class="org-ul">
+<li>You can type all the same commands into the Do-file that you would type into the command window
+</li>
+<li>BUT&#x2026;the Do-file allows you to <b>save</b> your commands
+</li>
+<li>Your Do-file should contain ALL commands you executed &#x2013; at least all the "correct" commands!
+</li>
+<li>I recommend never using the command window or menus to make CHANGES to data
+</li>
+<li>Saving commands in Do-file allows you to keep a written record of everything you have done to your data
+<ul class="org-ul">
+<li>Allows easy replication
+</li>
+<li>Allows you to go back and re-run commands,  analyses and make modifications
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-1-7" class="outline-3">
+<h3 id="sec-1-7"><span class="section-number-3">1.7</span> Stata help</h3>
+<div class="outline-text-3" id="text-1-7">
+<ul class="org-ul">
+<li>Easiest way to get help in Stata - just type <b>help</b> followed by topic or command, e.g., 
+<b>help regress</b>
+</li>
+<li>Falls back to "search" if command not found
+</li>
+<li>Generally, if you google "Stata [topic]," you'll get some helpful hits
+</li>
+<li>UCLA website:
+<a href="http://www.ats.ucla.edu/stat/Stata/">http://www.ats.ucla.edu/stat/Stata/</a>
+</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-sec-1-8" class="outline-3">
+<h3 id="sec-1-8"><span class="section-number-3">1.8</span> General Stata command syntax</h3>
+<div class="outline-text-3" id="text-1-8">
+<ul class="org-ul">
+<li>Most Stata commands follow the same underlying principles
+<b>Command varlist, options</b>, e.g., <b>sum var1 var2, detail</b>
+<ul class="org-ul">
+<li>CAUTION - in some cases, if you type a command and don't specify a variable, Stata will perform the command on all variables in your dataset
+</li>
+</ul>
+</li>
+<li>You can find command-specific syntax in the help files
+</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-sec-1-9" class="outline-3">
+<h3 id="sec-1-9"><span class="section-number-3">1.9</span> Commenting and formatting syntax</h3>
+<div class="outline-text-3" id="text-1-9">
+<ul class="org-ul">
+<li>Start with comment describing your Do-file and use comments throughout
+</li>
+<li>Single line and block comments
+</li>
+</ul>
+<div class="org-src-container">
+
+<pre class="src src-stata" id="commentSyntax"><span style="color: #b22222;">// comment</span>
+ <span style="color: #008b8b;">describe</span> var
+ <span style="color: #b22222;">/*</span>
+<span style="color: #b22222;"> comment block comment block comment block comment</span>
+<span style="color: #b22222;"> block comment block comment block </span>
+<span style="color: #b22222;">*/</span>
+</pre>
+</div>
+<ul class="org-ul">
+<li>Use <i>/</i> to break varlists over multiple lines:
+</li>
+</ul>
+<div class="org-src-container">
+
+<pre class="src src-stata" id="breakLines"><span style="color: #b22222;">// break commands over multible lines</span>
+describe var1 var2 var2 <span style="color: #b22222;">///</span>
+var4 var5 var6
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-1-10" class="outline-3">
+<h3 id="sec-1-10"><span class="section-number-3">1.10</span> Let's get started</h3>
+<div class="outline-text-3" id="text-1-10">
+<ul class="org-ul">
+<li>Launch the Stata program (MP or SE, does not matter unless doing computationally intensive work)
+<ul class="org-ul">
+<li>Open up a new Do-file
+</li>
+<li>Run our first Stata code!
+</li>
+</ul>
+</li>
+</ul>
+
+<div class="org-src-container">
+
+<pre class="src src-stata" id="firstSteps"><span style="color: #b22222;">// change directory</span>
+<span style="color: #a020f0;">cd</span> <span style="color: #8b2252;">"C://Users/dataclass/Desktop/StataIntro"</span>
+<span style="color: #b22222;">// start a log file to record your stata session</span>
+log <span style="color: #008b8b;">using</span> myStataLog.txt, text <span style="color: #a020f0;">replace</span>
+<span style="color: #b22222;">// Pause / resume logging with "log on" / "log off"</span>
+<span style="color: #b22222;">// Close lot with "log close"</span>
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-1-11" class="outline-3">
+<h3 id="sec-1-11"><span class="section-number-3">1.11</span> How to start every do-file</h3>
+<div class="outline-text-3" id="text-1-11">
+<ol class="org-ol">
+<li>Describe what the file does
+</li>
+<li>Change directory
+</li>
+<li>Begin log file
+</li>
+<li>Call up data
+</li>
+<li>Do stuff: Data manipulation, statistics etc.
+</li>
+<li>Save data under new name (if making changes to dataset)
+</li>
+</ol>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-sec-2" class="outline-2">
+<h2 id="sec-2"><span class="section-number-2">2</span> Getting data into Stata</h2>
+<div class="outline-text-2" id="text-2">
+</div><div id="outline-container-sec-2-1" class="outline-3">
+<h3 id="sec-2-1"><span class="section-number-3">2.1</span> Data file commands</h3>
+<div class="outline-text-3" id="text-2-1">
+<ul class="org-ul">
+<li>Next, we want to open our data file
+</li>
+<li>Open/save data sets with "use" and "save":
+</li>
+</ul>
+
+<div class="org-src-container">
+
+<pre class="src src-stata" id="getData"><span style="color: #b22222;">// open the gss.dta data set</span>
+<span style="color: #a020f0;">use</span> dataSets/gss.dta
+<span style="color: #b22222;">// saving your data file:</span>
+<span style="color: #a020f0;">save</span> newgss.dta, <span style="color: #a020f0;">replace</span>
+<span style="color: #b22222;">/* </span><span style="color: #b22222;">the "replace" option tells stata it's OK to </span>
+<span style="color: #b22222;">   write over an existing file </span><span style="color: #b22222;">*/</span>
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-2-2" class="outline-3">
+<h3 id="sec-2-2"><span class="section-number-3">2.2</span> A note about path names</h3>
+<div class="outline-text-3" id="text-2-2">
+<ul class="org-ul">
+<li>If your path has no spaces in the name (that means all directories, folders, file names, etc. can have no spaces), you can write the path as is
+</li>
+<li>If there are spaces, you need to put your pathname in quotes
+</li>
+<li>Best to get in the habit of quoting paths
+</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-sec-2-3" class="outline-3">
+<h3 id="sec-2-3"><span class="section-number-3">2.3</span> Where's my data?</h3>
+<div class="outline-text-3" id="text-2-3">
+<ul class="org-ul">
+<li>Data editor (<b>browse</b>)
+</li>
+<li>Data editor (<b>edit</b>)
+<ul class="org-ul">
+<li>Using the data editor is discouraged (why?)
+</li>
+</ul>
+</li>
+<li>Always keep any changes to your data in your Do-file
+</li>
+<li>Avoid temptation of making manual changes by viewing data via the browser rather than editor
+</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-sec-2-4" class="outline-3">
+<h3 id="sec-2-4"><span class="section-number-3">2.4</span> What if my data is not a Stata file?</h3>
+<div class="outline-text-3" id="text-2-4">
+<ul class="org-ul">
+<li>Import delimited text files
+</li>
+</ul>
+<div class="org-src-container">
+
+<pre class="src src-stata" id="insheet"><span style="color: #b22222;">/* </span><span style="color: #b22222;">import data from a .csv file </span><span style="color: #b22222;">*/</span>
+<span style="color: #a020f0;">insheet</span> <span style="color: #008b8b;">using</span> gss.csv, <span style="color: #a020f0;">clear</span>
+<span style="color: #b22222;">/* </span><span style="color: #b22222;">save data to a .csv file </span><span style="color: #b22222;">*/</span>
+<span style="color: #a020f0;">outsheet</span> <span style="color: #008b8b;">using</span> gss_new.csv, <span style="color: #a020f0;">replace</span> comma
+</pre>
+</div>
+<ul class="org-ul">
+<li>Import data from SAS and Excel
+</li>
+</ul>
+<div class="org-src-container">
+
+<pre class="src src-stata" id="loadSAStransport"><span style="color: #b22222;">/* </span><span style="color: #b22222;">import/export SAS xport files </span><span style="color: #b22222;">*/</span>
+import sasxport gss.xpt
+export sasxport newFileName
+
+<span style="color: #b22222;">/* </span><span style="color: #b22222;">import/export data from Excel </span><span style="color: #b22222;">*/</span>
+import excel <span style="color: #008b8b;">using</span> gss.xls, firstrow
+export excel newFileName.xls
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-2-5" class="outline-3">
+<h3 id="sec-2-5"><span class="section-number-3">2.5</span> What if my data is from another statistical software program?</h3>
+<div class="outline-text-3" id="text-2-5">
+<ul class="org-ul">
+<li>SPSS/PASW will allow you to save your data as a Stata file
+<ul class="org-ul">
+<li>Go to: file &gt; save as &gt; Stata (use most   recent version available)
+</li>
+<li>Then you can just go into Stata and   open it
+</li>
+</ul>
+</li>
+<li>Another option is <b>StatTransfer</b>, a program that converts data from/to many common formats, including SAS, SPSS, Stata, and many more
+</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-sec-2-6" class="outline-3">
+<h3 id="sec-2-6"><span class="section-number-3">2.6</span> Exercise 1: Importing data</h3>
+<div class="outline-text-3" id="text-2-6">
+<ol class="org-ol">
+<li>Close down Stata and open a new session
+</li>
+<li>Go through the three steps for starting each Stata  session that we reviewed
+<ul class="org-ul">
+<li>Begin a log file
+</li>
+<li>Open your Stata dataset (gss.dta)
+</li>
+<li>Save your Stata dataset using a different name
+</li>
+</ul>
+</li>
+<li>Try opening the following files:
+<ul class="org-ul">
+<li>A comma separated value file: gss.csv
+</li>
+<li>A SPSS file: gss.sav
+</li>
+<li>A SAS transport file: gss.xpt
+</li>
+</ul>
+</li>
+</ol>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-3" class="outline-2">
+<h2 id="sec-3"><span class="section-number-2">3</span> Statistics and graphs</h2>
+<div class="outline-text-2" id="text-3">
+</div><div id="outline-container-sec-3-1" class="outline-3">
+<h3 id="sec-3-1"><span class="section-number-3">3.1</span> Frequently used commands</h3>
+<div class="outline-text-3" id="text-3-1">
+<ul class="org-ul">
+<li>Commands for reviewing and inspecting data:
+<ul class="org-ul">
+<li>describe // labels, storage type etc.
+</li>
+<li>sum // statistical summary (mean, sd, min/max etc.)
+</li>
+<li>codebook // storage type, unique values, labels
+</li>
+<li>list // print actuall values
+</li>
+<li>tab // (cross) tabulate variables
+</li>
+<li>browse // view the data in a spreadsheet-like window
+</li>
+</ul>
+</li>
+
+<li>Examples
+</li>
+</ul>
+<div class="org-src-container">
+
+<pre class="src src-stata" id="commonDescriptiveCommands"> <span style="color: #b22222;">/* </span><span style="color: #b22222;">commands useful for inspecting data </span><span style="color: #b22222;">*/</span>
+sum educ <span style="color: #b22222;">// statistical summary of education </span>
+<span style="color: #008b8b;">codebook</span> region <span style="color: #b22222;">// information about how region is coded</span>
+tab sex <span style="color: #b22222;">// numbers of male and female participants</span>
+</pre>
+</div>
+<ul class="org-ul">
+<li>Remember, if you run these commands without specifying variables, Stata will produce output for every variable
+</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-sec-3-2" class="outline-3">
+<h3 id="sec-3-2"><span class="section-number-3">3.2</span> Basic graphing commands</h3>
+<div class="outline-text-3" id="text-3-2">
+<ul class="org-ul">
+<li>Univariate distribution(s) using <b>hist</b>
+</li>
+</ul>
+<div class="org-src-container">
+
+<pre class="src src-stata" id="histograms"> <span style="color: #b22222;">/* </span><span style="color: #b22222;">Histograms </span><span style="color: #b22222;">*/</span>
+ <span style="color: #008b8b;">hist</span> educ
+ <span style="color: #b22222;">/* </span><span style="color: #b22222;">Interested in normality of your data? You can tell</span>
+<span style="color: #b22222;">Stata to draw the normal curve over your histogram</span><span style="color: #b22222;">*/</span>
+ <span style="color: #008b8b;">hist</span> age, normal
+</pre>
+</div>
+<ul class="org-ul">
+<li>View bivariate distributions with scatterplots
+</li>
+</ul>
+<div class="org-src-container">
+
+<pre class="src src-stata" id="bivariateDisplay"><span style="color: #b22222;">/* </span><span style="color: #b22222;">scatterplots </span><span style="color: #b22222;">*/</span>
+twoway (scatter educ age)
+graph matrix educ age inc
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-3-3" class="outline-3">
+<h3 id="sec-3-3"><span class="section-number-3">3.3</span> The "by" command</h3>
+<div class="outline-text-3" id="text-3-3">
+<ul class="org-ul">
+<li>Sometimes, you'd like to generate  output based on different categories of a grouping variable
+</li>
+<li>The "by" command does just this
+</li>
+</ul>
+
+<div class="org-src-container">
+
+<pre class="src src-stata" id="byprocess"><span style="color: #b22222;">/* </span><span style="color: #b22222;">tabulate happy separately for men and women </span><span style="color: #b22222;">*/</span>
+bysort sex: <span style="color: #008b8b;">tab</span> happy
+<span style="color: #b22222;">/* </span><span style="color: #b22222;">not all commands can be used with the by prefix.</span>
+<span style="color: #b22222;">   some, (like hist) have a "by" option instead </span><span style="color: #b22222;">*/</span>
+hist happy, <span style="color: #228b22;">by</span>(sex)
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-3-4" class="outline-3">
+<h3 id="sec-3-4"><span class="section-number-3">3.4</span> Exercise 2: Descriptive statistics</h3>
+<div class="outline-text-3" id="text-3-4">
+<ol class="org-ol">
+<li>Use the dataset, gss.dta 
+</li>
+<li>Examine a few selected variables using the describe, sum and codebook commands
+</li>
+<li>Tabulate the variable, "marital," with and without labels
+</li>
+<li>Summarize the variable, "income" separately participants based on marital status
+</li>
+<li>Cross-tabulate marital with region and show gender percent by region
+</li>
+<li>Summarize the variable, "happy" for married individuals only
+</li>
+<li>Generate a histogram of income
+</li>
+<li>Generate a second histogram of income, but this time, split income based on participants sex and ask Stata to print the normal curve on your histograms
+</li>
+</ol>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-4" class="outline-2">
+<h2 id="sec-4"><span class="section-number-2">4</span> Basic data management</h2>
+<div class="outline-text-2" id="text-4">
+</div><div id="outline-container-sec-4-1" class="outline-3">
+<h3 id="sec-4-1"><span class="section-number-3">4.1</span> Labels</h3>
+<div class="outline-text-3" id="text-4-1">
+<ul class="org-ul">
+<li>You never know why and when your data may be reviewed
+</li>
+<li>ALWAYS label every variable no matter how insignificant it may seem
+</li>
+<li>Stata uses two sets of labels: <b>variable labels</b> and <b>value labels</b>
+</li>
+<li>Variable labels are very easy to use &#x2013; value labels are a little more complicated
+</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-sec-4-2" class="outline-3">
+<h3 id="sec-4-2"><span class="section-number-3">4.2</span> Variable and value labels</h3>
+<div class="outline-text-3" id="text-4-2">
+<ul class="org-ul">
+<li>Variable labels
+</li>
+</ul>
+<div class="org-src-container">
+
+<pre class="src src-stata" id="variableLabels"><span style="color: #b22222;">/* </span><span style="color: #b22222;">Label variable inc "household income" </span><span style="color: #b22222;">*/</span>
+label var inc <span style="color: #8b2252;">"household income"</span>
+
+<span style="color: #b22222;">/* </span><span style="color: #b22222;">Want to change the name of your variable? </span><span style="color: #b22222;">*/</span>
+<span style="color: #a020f0;">rename</span> oldvarname newvarname
+</pre>
+</div>
+<ul class="org-ul">
+<li>Value labels are a two step process: define a value label, then assign defined label to variable(s) 
+</li>
+</ul>
+
+<div class="org-src-container">
+
+<pre class="src src-stata" id="valueLabels"><span style="color: #b22222;">/*</span><span style="color: #b22222;">define a value label for sex </span><span style="color: #b22222;">*/</span>
+label define mySexLabel 1 <span style="color: #8b2252;">"Male"</span> 2 <span style="color: #8b2252;">"Female"</span>
+<span style="color: #b22222;">/* </span><span style="color: #b22222;">assign our "example" label to var1 through var3 </span><span style="color: #b22222;">*/</span>
+label val sex  mySexLabel
+<span style="color: #b22222;">/* </span><span style="color: #b22222;">Label define particularly useful when you have</span>
+<span style="color: #b22222;">  multiple variables with the same value structure  </span><span style="color: #b22222;">*/</span>
+<span style="color: #b22222;">/* </span><span style="color: #b22222;">If you have many variables, you can search labels </span>
+<span style="color: #b22222;">   using lookfor </span><span style="color: #b22222;">*/</span>
+lookfor income
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-4-3" class="outline-3">
+<h3 id="sec-4-3"><span class="section-number-3">4.3</span> Exercise 3: Variable labels and value labels</h3>
+<div class="outline-text-3" id="text-4-3">
+<ol class="org-ol">
+<li>Open the data set <b>gss.csv</b> 
+</li>
+<li>Familiarize yourself with the  data using describe, sum, etc.
+</li>
+<li>Rename and label variables using the following codebook:
+</li>
+</ol>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left"><b>var</b></th>
+<th scope="col" class="left"><b>rename to</b></th>
+<th scope="col" class="left"><b>label with</b></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left">v1</td>
+<td class="left">marital</td>
+<td class="left">marital status</td>
+</tr>
+
+<tr>
+<td class="left">v2</td>
+<td class="left">age</td>
+<td class="left">age of respondent</td>
+</tr>
+
+<tr>
+<td class="left">v3</td>
+<td class="left">educ</td>
+<td class="left">education</td>
+</tr>
+
+<tr>
+<td class="left">v4</td>
+<td class="left">sex</td>
+<td class="left">respondent's sex</td>
+</tr>
+
+<tr>
+<td class="left">v5</td>
+<td class="left">inc</td>
+<td class="left">household income</td>
+</tr>
+
+<tr>
+<td class="left">v6</td>
+<td class="left">happy</td>
+<td class="left">general happiness</td>
+</tr>
+
+<tr>
+<td class="left">v7</td>
+<td class="left">region</td>
+<td class="left">region of interview</td>
+</tr>
+</tbody>
+</table>
+<ol class="org-ol">
+<li>Add value labels to your "marital" variable using this codebook:
+</li>
+</ol>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="right" />
+
+<col  class="left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="right"><b>value</b></th>
+<th scope="col" class="left"><b>label</b></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="right">1</td>
+<td class="left">"married"</td>
+</tr>
+
+<tr>
+<td class="right">2</td>
+<td class="left">"widowed"</td>
+</tr>
+
+<tr>
+<td class="right">3</td>
+<td class="left">"divorced"</td>
+</tr>
+
+<tr>
+<td class="right">4</td>
+<td class="left">"separated"</td>
+</tr>
+
+<tr>
+<td class="right">5</td>
+<td class="left">"never married"</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="outline-container-sec-4-4" class="outline-3">
+<h3 id="sec-4-4"><span class="section-number-3">4.4</span> Working on subsets</h3>
+<div class="outline-text-3" id="text-4-4">
+<ul class="org-ul">
+<li>It is often useful to select just those rows of your data where some condition holds&#x2013;for example select only rows where sex is 1 (male)
+</li>
+<li>The following operators allow you to do this:
+<dl class="org-dl">
+<dt> == </dt><dd>equal to 
+</dd>
+<dt> != </dt><dd>not equal to
+</dd>
+<dt> &gt; </dt><dd>greater than
+</dd>
+<dt> &lt; </dt><dd>less than
+</dd>
+<dt> &gt;= </dt><dd>greater than or equal to
+</dd>
+<dt> &lt;= </dt><dd>less than or equal to
+</dd>
+<dt> &amp; </dt><dd>and
+</dd>
+<dt> | </dt><dd>or
+</dd>
+</dl>
+</li>
+<li>Note the double equals signs for testing equality
+</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-sec-4-5" class="outline-3">
+<h3 id="sec-4-5"><span class="section-number-3">4.5</span> Generating and replacing variables</h3>
+<div class="outline-text-3" id="text-4-5">
+<ul class="org-ul">
+<li>Create new variables using "gen"
+</li>
+</ul>
+<div class="org-src-container">
+
+<pre class="src src-stata" id="genNewVars"><span style="color: #b22222;">/* </span><span style="color: #b22222;">create a new variable named mc_inc"</span>
+<span style="color: #b22222;">   equal to inc minus the mean of inc </span><span style="color: #b22222;">*/</span>
+<span style="color: #a020f0;">gen</span> mc_inc = inc - 15.37
+</pre>
+</div>
+<ul class="org-ul">
+<li>Sometimes useful to start with blank values and fill them in based on values of existing variables
+</li>
+</ul>
+
+<div class="org-src-container">
+
+<pre class="src src-stata" id="replaceExample"><span style="color: #b22222;">/* </span><span style="color: #b22222;">generate a column of missings </span><span style="color: #b22222;">*/</span> 
+<span style="color: #a020f0;">gen</span> age_wealth = .
+<span style="color: #b22222;">/* </span><span style="color: #b22222;">Next, start adding your qualifications </span><span style="color: #b22222;">*/</span>
+<span style="color: #a020f0;">replace</span> age_wealth=1 if age&lt;30 &amp; inc &lt; 10
+<span style="color: #a020f0;">replace</span> age_wealth=2 if age&lt;30 &amp; inc &gt; 10
+<span style="color: #a020f0;">replace</span> age_wealth=3 if age&gt;30 &amp; inc &lt; 10
+<span style="color: #a020f0;">replace</span> age_wealth=4 if age&gt;30 &amp; inc &gt; 10
+
+<span style="color: #b22222;">/* </span><span style="color: #b22222;">conditions can also be combined with "or" </span><span style="color: #b22222;">*/</span>
+<span style="color: #a020f0;">gen</span> young=0
+<span style="color: #a020f0;">replace</span> young=1 if age_wealth==1 | age_wealth==2
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-4-6" class="outline-3">
+<h3 id="sec-4-6"><span class="section-number-3">4.6</span> Recoding, dropping variables</h3>
+<div class="outline-text-3" id="text-4-6">
+<ul class="org-ul">
+<li>Recoding variables
+</li>
+</ul>
+<div class="org-src-container">
+
+<pre class="src src-stata" id="recodeVars"><span style="color: #b22222;">/* </span><span style="color: #b22222;">recode happy into sad </span><span style="color: #b22222;">*/</span>
+<span style="color: #a020f0;">recode</span> happy (1=3) (3=1), <span style="color: #a020f0;">gen</span>(sad)
+</pre>
+</div>
+<ul class="org-ul">
+<li>Deleting variables
+</li>
+</ul>
+<div class="org-src-container">
+
+<pre class="src src-stata" id="dropkeep"><span style="color: #a020f0;">drop</span> region  <span style="color: #b22222;">// delete region </span>
+<span style="color: #a020f0;">keep</span> age-inc <span style="color: #b22222;">// keep age, educ, sex, and inc</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-4-7" class="outline-3">
+<h3 id="sec-4-7"><span class="section-number-3">4.7</span> Exercise 4: Manipulating variables</h3>
+<div class="outline-text-3" id="text-4-7">
+<ol class="org-ol">
+<li>Use the dataset, gss.dta
+</li>
+<li>Generate a new variable, age2 equal to age squared
+</li>
+<li>Generate a new "high income" variable that will take on a value of "1" if a person has an income value greater than "15" and "0" otherwise
+</li>
+<li>Generate a new divorced/separated dummy variable that will take on a value of "1" if a person is either divorced or separated and "0" otherwise
+</li>
+</ol>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-5" class="outline-2">
+<h2 id="sec-5"><span class="section-number-2">5</span> Wrap-up</h2>
+<div class="outline-text-2" id="text-5">
+</div><div id="outline-container-sec-5-1" class="outline-3">
+<h3 id="sec-5-1"><span class="section-number-3">5.1</span> Help us make this workshop better!</h3>
+<div class="outline-text-3" id="text-5-1">
+<ul class="org-ul">
+<li>Please take a moment to fill out a very short feedback form
+</li>
+
+<li>These workshops exist for you – tell us what you need!
+</li>
+
+<li><a href="http://tinyurl.com/6h3cxnz">http://tinyurl.com/6h3cxnz</a>
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-5-2" class="outline-3">
+<h3 id="sec-5-2"><span class="section-number-3">5.2</span> Additional resources</h3>
+<div class="outline-text-3" id="text-5-2">
+<ul class="org-ul">
+<li>IQSS workshops: <a href="http://projects.iq.harvard.edu/rtc/filter_by/workshops">http://projects.iq.harvard.edu/rtc/filter_by/workshops</a>
+</li>
+
+<li>IQSS statistical consulting: <a href="http://rtc.iq.harvard.edu">http://rtc.iq.harvard.edu</a>
+</li>
+
+<li>The RCE
+<ul class="org-ul">
+<li>Research Computing Enviroment (RCE) service available to Harvard &amp; MIT users
+</li>
+<li><i>www.iq.harvard.edu/research_computing</i>
+</li>
+<li>Wonderful resource for organizing data, running analyses efficiently
+</li>
+<li>Creates a centralized place to store data and run analysis
+</li>
+<li>Supplies persistent desktop environment accessible from any computer with an internet connection
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="author">Author: Ista Zahn</p>
+<p class="date">Created: 2014-03-13 Thu 17:37</p>
+<p class="creator"><a href="http://www.gnu.org/software/emacs/">Emacs</a> 24.3.3 (<a href="http://orgmode.org">Org</a> mode 8.2.5h)</p>
+<p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>

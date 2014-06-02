@@ -1,0 +1,1732 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<title>Introduciton to R Graphics with <code>ggplot2</code></title>
+<!-- 2014-04-26 Sat 00:03 -->
+<meta  http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta  name="generator" content="Org-mode" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { color: green; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  pre.src-sh:before    { content: 'sh'; }
+  pre.src-bash:before  { content: 'sh'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-R:before     { content: 'R'; }
+  pre.src-perl:before  { content: 'Perl'; }
+  pre.src-java:before  { content: 'Java'; }
+  pre.src-sql:before   { content: 'SQL'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.right  { text-align: center;  }
+  th.left   { text-align: center;   }
+  th.center { text-align: center; }
+  td.right  { text-align: right;  }
+  td.left   { text-align: left;   }
+  td.center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara:nth-child(2) { display: inline; }
+  .footpara { display: block; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  /*]]>*/-->
+</style>
+<link rel="stylesheet" type="text/css" href="style.css" />
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2013 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+</head>
+<body>
+<div id="content">
+<h1 class="title">Introduciton to R Graphics with <code>ggplot2</code></h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#sec-1">1. Introduction</a>
+<ul>
+<li><a href="#sec-1-1">1.1. Class Files And Administrative Details&#xa0;&#xa0;&#xa0;<span class="tag"><span class="labsetup">labsetup</span></span></a></li>
+<li><a href="#sec-1-2">1.2. Starting A The End</a></li>
+<li><a href="#sec-1-3">1.3. Why <code>ggplot2</code>?</a></li>
+<li><a href="#sec-1-4">1.4. What Is The Grammar Of Graphics?</a></li>
+<li><a href="#sec-1-5">1.5. The structure of a <code>ggplot</code></a></li>
+<li><a href="#sec-1-6">1.6. Example data I: <code>mtcars</code></a></li>
+<li><a href="#sec-1-7">1.7. <code>ggplot2</code> VS Base Graphics</a></li>
+<li><a href="#sec-1-8">1.8. <code>ggplot2</code> VS Base Graphics</a></li>
+<li><a href="#sec-1-9">1.9. <code>ggplot2</code> VS Base Graphics</a></li>
+</ul>
+</li>
+<li><a href="#sec-2">2. Geometric Objects And Aesthetics</a>
+<ul>
+<li><a href="#sec-2-1">2.1. Aesthetic Mapping</a></li>
+<li><a href="#sec-2-2">2.2. Geometic Objects (<code>geom</code>)</a></li>
+<li><a href="#sec-2-3">2.3. Points (Scatterplot)</a></li>
+<li><a href="#sec-2-4">2.4. Lines (Prediction Line)</a></li>
+<li><a href="#sec-2-5">2.5. Smoothers</a></li>
+<li><a href="#sec-2-6">2.6. Text (Label Points)</a></li>
+<li><a href="#sec-2-7">2.7. Aesthetic Mapping VS Assignment</a></li>
+<li><a href="#sec-2-8">2.8. Mapping Variables To Other Aesthetics</a></li>
+<li><a href="#sec-2-9">2.9. Exercise I</a></li>
+<li><a href="#sec-2-10">2.10. Exercise I prototype&#xa0;&#xa0;&#xa0;<span class="tag"><span class="prototype">prototype</span></span></a></li>
+</ul>
+</li>
+<li><a href="#sec-3">3. Statistical Transformations</a>
+<ul>
+<li><a href="#sec-3-1">3.1. Statistical Transformations</a></li>
+<li><a href="#sec-3-2">3.2. Setting Statistical Transformation Arguments</a></li>
+<li><a href="#sec-3-3">3.3. Changing The Statistical Transformation</a></li>
+<li><a href="#sec-3-4">3.4. Exercise II</a></li>
+<li><a href="#sec-3-5">3.5. Exercise II Prototype&#xa0;&#xa0;&#xa0;<span class="tag"><span class="prototype">prototype</span></span></a></li>
+</ul>
+</li>
+<li><a href="#sec-4">4. Scales</a>
+<ul>
+<li><a href="#sec-4-1">4.1. Scales: Controlling Aesthetic Mapping</a></li>
+<li><a href="#sec-4-2">4.2. Common Scale Arguments</a></li>
+<li><a href="#sec-4-3">4.3. Scale Modification Examples</a></li>
+<li><a href="#sec-4-4">4.4. Scale breaks and labels</a></li>
+<li><a href="#sec-4-5">4.5. Scale breaks and labels</a></li>
+<li><a href="#sec-4-6">4.6. Using different color scales</a></li>
+<li><a href="#sec-4-7">4.7. Scale Modification Examples</a></li>
+<li><a href="#sec-4-8">4.8. Scale range</a></li>
+<li><a href="#sec-4-9">4.9. Available Scales</a></li>
+<li><a href="#sec-4-10">4.10. Exercise III</a></li>
+</ul>
+</li>
+<li><a href="#sec-5">5. Faceting</a>
+<ul>
+<li><a href="#sec-5-1">5.1. Faceting</a></li>
+<li><a href="#sec-5-2">5.2. Example Data II: <code>Housing prices</code></a></li>
+<li><a href="#sec-5-3">5.3. What is the trend in housing prices?</a></li>
+<li><a href="#sec-5-4">5.4. Faceting to the rescue</a></li>
+</ul>
+</li>
+<li><a href="#sec-6">6. Themes</a>
+<ul>
+<li><a href="#sec-6-1">6.1. Themes</a></li>
+<li><a href="#sec-6-2">6.2. Overriding theme defaults</a></li>
+<li><a href="#sec-6-3">6.3. Creating and saving new themes</a></li>
+</ul>
+</li>
+<li><a href="#sec-7">7. The #1 FAQ</a>
+<ul>
+<li><a href="#sec-7-1">7.1. Map Aesthetic To Different Columns</a></li>
+</ul>
+</li>
+<li><a href="#sec-8">8. Putting It All Together</a>
+<ul>
+<li><a href="#sec-8-1">8.1. Challenge: Recreate This <code>Economist</code> Graph</a></li>
+<li><a href="#sec-8-2">8.2. Challenge data</a></li>
+<li><a href="#sec-8-3">8.3. Challenge Solution&#xa0;&#xa0;&#xa0;<span class="tag"><span class="prototype">prototype</span></span></a></li>
+<li><a href="#sec-8-4">8.4. Challenge Solution&#xa0;&#xa0;&#xa0;<span class="tag"><span class="prototype">prototype</span></span></a></li>
+<li><a href="#sec-8-5">8.5. Challenge Solution&#xa0;&#xa0;&#xa0;<span class="tag"><span class="prototype">prototype</span></span></a></li>
+<li><a href="#sec-8-6">8.6. Challenge Solution&#xa0;&#xa0;&#xa0;<span class="tag"><span class="prototype">prototype</span></span></a></li>
+</ul>
+</li>
+<li><a href="#sec-9">9. Wrap-up</a>
+<ul>
+<li><a href="#sec-9-1">9.1. Help Us Make This Workshop Even Better!</a></li>
+<li><a href="#sec-9-2">9.2. Additional resources</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> Introduction</h2>
+<div class="outline-text-2" id="text-1">
+</div><div id="outline-container-sec-1-1" class="outline-3">
+<h3 id="sec-1-1"><span class="section-number-3">1.1</span> Class Files And Administrative Details&#xa0;&#xa0;&#xa0;<span class="tag"><span class="labsetup">labsetup</span></span></h3>
+<div class="outline-text-3" id="text-1-1">
+<ul class="org-ul">
+<li>User name: dataclass
+</li>
+<li>Password: dataclass
+</li>
+<li>Copy <b>Rgraphics</b> folder from shared drive to your desktop
+</li>
+<li>Class Structure and Organization
+<ul class="org-ul">
+<li>Ask questions at any time. Really!
+</li>
+<li>Collaboration is encouraged
+</li>
+<li>This is your class! Special requests are encouraged
+</li>
+</ul>
+</li>
+<li>This is an intermediate R course
+<ul class="org-ul">
+<li>Assumes working knowledge of R
+</li>
+<li>Relatively fast-paced
+</li>
+<li>Focus is on <code>ggplot2</code> graphics&#x2013;other packages will not be covered
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-1-2" class="outline-3">
+<h3 id="sec-1-2"><span class="section-number-3">1.2</span> Starting A The End</h3>
+<div class="outline-text-3" id="text-1-2">
+<p>
+My goal: by the end of the workshop you will be able to reproduce this graphic from the Economist:
+</p>
+
+<p>
+<a href="images/Economist1.pdf">images/Economist1.pdf</a>
+</p>
+</div>
+</div>
+
+
+<div id="outline-container-sec-1-3" class="outline-3">
+<h3 id="sec-1-3"><span class="section-number-3">1.3</span> Why <code>ggplot2</code>?</h3>
+<div class="outline-text-3" id="text-1-3">
+<ul class="org-ul">
+<li>Advantages of ggplot2
+<ul class="org-ul">
+<li>Consistent underlying <code>grammar of graphics</code> (Wilkinson, 2005)
+</li>
+<li>Plot specification at a high level of abstraction
+</li>
+<li>Very flexible
+</li>
+<li>Theme system for polishing plot appearance
+</li>
+<li>Active maintenance and development&#x2013;getting better all the time
+</li>
+<li>Many users, active mailing list
+</li>
+</ul>
+</li>
+<li>Things you cannot do With ggplot2
+<ul class="org-ul">
+<li>3-dimensional graphics
+</li>
+<li>Graph-theory type graphs (nodes/edges layout)
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-1-4" class="outline-3">
+<h3 id="sec-1-4"><span class="section-number-3">1.4</span> What Is The Grammar Of Graphics?</h3>
+<div class="outline-text-3" id="text-1-4">
+<ul class="org-ul">
+<li>The basic idea: independently specify plot building blocks
+</li>
+<li>Anatomy of a plot:
+<ul class="org-ul">
+<li>data
+</li>
+<li>aesthetic mapping
+</li>
+<li>geometric object
+</li>
+<li>statistical transformations
+</li>
+<li>scales
+</li>
+<li>coordinate system
+</li>
+<li>position adjustments
+</li>
+<li>faceting
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-1-5" class="outline-3">
+<h3 id="sec-1-5"><span class="section-number-3">1.5</span> The structure of a <code>ggplot</code></h3>
+<div class="outline-text-3" id="text-1-5">
+<p>
+The  <code>ggplot()</code> function is used to initialize the basic graph structure, then we add to it. The structure of a ggplot looks like this:
+</p>
+<div class="org-src-container">
+
+<pre class="src src-R" id="ggplotIntro"><span style="color: #0000ff;">ggplot</span>(data <span style="color: #008b8b;">=</span> <span style="color: #008b8b;">&lt;</span>default data set<span style="color: #008b8b;">&gt;</span>, 
+       <span style="color: #0000ff;">aes</span>(x <span style="color: #008b8b;">=</span> <span style="color: #008b8b;">&lt;</span>default x axis variable<span style="color: #008b8b;">&gt;</span>,
+           y <span style="color: #008b8b;">=</span> <span style="color: #008b8b;">&lt;</span>default y axis variable<span style="color: #008b8b;">&gt;</span>,
+           ... <span style="color: #008b8b;">&lt;</span>other default aesthetic mappings<span style="color: #008b8b;">&gt;</span>),
+       ... <span style="color: #008b8b;">&lt;</span>other plot defaults<span style="color: #008b8b;">&gt;</span>) <span style="color: #008b8b;">+</span>
+       geom_<span style="color: #008b8b;">&lt;</span>geom type<span style="color: #008b8b;">&gt;</span>(<span style="color: #0000ff;">aes</span>(size <span style="color: #008b8b;">=</span> <span style="color: #008b8b;">&lt;</span>size variable <span style="color: #a020f0;">for</span> this geom<span style="color: #008b8b;">&gt;</span>, 
+                      ... <span style="color: #008b8b;">&lt;</span>other aesthetic mappings<span style="color: #008b8b;">&gt;</span>),
+                  data <span style="color: #008b8b;">=</span> <span style="color: #008b8b;">&lt;</span>data <span style="color: #a020f0;">for</span> this point geom<span style="color: #008b8b;">&gt;</span>,
+                  stat <span style="color: #008b8b;">=</span> <span style="color: #008b8b;">&lt;</span>statistic string or <span style="color: #a020f0;">function</span><span style="color: #008b8b;">&gt;</span>,
+                  position <span style="color: #008b8b;">=</span> <span style="color: #008b8b;">&lt;</span>position string or <span style="color: #a020f0;">function</span><span style="color: #008b8b;">&gt;</span>,
+                  color <span style="color: #008b8b;">=</span> <span style="color: #008b8b;">&lt;</span><span style="color: #8b2252;">"fixed color specification"</span><span style="color: #008b8b;">&gt;</span>,
+                  <span style="color: #008b8b;">&lt;</span>other arguments, possibly passed to the _stat_ <span style="color: #a020f0;">function</span>) <span style="color: #008b8b;">+</span>
+  scale_<span style="color: #008b8b;">&lt;</span>aesthetic<span style="color: #008b8b;">&gt;</span>_<span style="color: #008b8b;">&lt;</span>type<span style="color: #008b8b;">&gt;</span>(name <span style="color: #008b8b;">=</span> <span style="color: #008b8b;">&lt;</span><span style="color: #8b2252;">"scale label"</span><span style="color: #008b8b;">&gt;</span>,
+                     breaks <span style="color: #008b8b;">=</span> <span style="color: #008b8b;">&lt;</span>where to put tick marks<span style="color: #008b8b;">&gt;</span>,
+                     labels <span style="color: #008b8b;">=</span> <span style="color: #008b8b;">&lt;</span>labels <span style="color: #a020f0;">for</span> tick marks<span style="color: #008b8b;">&gt;</span>,
+                     ... <span style="color: #008b8b;">&lt;</span>other options <span style="color: #a020f0;">for</span> the scale<span style="color: #008b8b;">&gt;</span>) <span style="color: #008b8b;">+</span>
+  <span style="color: #0000ff;">theme</span>(plot.background <span style="color: #008b8b;">=</span> <span style="color: #0000ff;">element_rect</span>(fill <span style="color: #008b8b;">=</span> <span style="color: #8b2252;">"gray"</span>),
+        ... <span style="color: #008b8b;">&lt;</span>other theme elements<span style="color: #008b8b;">&gt;</span>)
+</pre>
+</div>
+<ul class="org-ul">
+<li>Don't be afraid, you will understand this by the end of the workshop!
+</li>
+<li>The basic idea is that you specify different parts of the plot, and add them together using the "+" operator
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-1-6" class="outline-3">
+<h3 id="sec-1-6"><span class="section-number-3">1.6</span> Example data I: <code>mtcars</code></h3>
+<div class="outline-text-3" id="text-1-6">
+<div class="org-src-container">
+
+<pre class="src src-R" id="mtcars1"><span style="color: #0000ff;">print</span>(<span style="color: #0000ff;">head</span>(mtcars, <span style="color: #228b22;">4</span>))
+</pre>
+</div>
+<pre class="example">
+mpg	Miles/(US) gallon			 
+cyl	Number of cylinders			 
+disp	Displacement (cu.in.)			 
+hp	Gross horsepower			 
+drat	Rear axle ratio				 
+wt	Weight (lb/1000)			 
+qsec	1/4 mile time				 
+vs	V/S					 
+am	Transmission (0 = automatic, 1 = manual) 
+gear	Number of forward gears			 
+carb	Number of carburetors
+</pre>
+</div>
+</div>
+
+<div id="outline-container-sec-1-7" class="outline-3">
+<h3 id="sec-1-7"><span class="section-number-3">1.7</span> <code>ggplot2</code> VS Base Graphics</h3>
+<div class="outline-text-3" id="text-1-7">
+<ul class="org-ul">
+<li>Compared to base graphics, <code>ggplot2</code>
+<ul class="org-ul">
+<li>is more verbose for simple / canned graphics
+</li>
+<li>is less verbose for complex / custom graphics
+</li>
+<li>does not have methods (data should always be in a <code>data.frame</code>)
+</li>
+<li>uses a different system for adding plot elements
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-1-8" class="outline-3">
+<h3 id="sec-1-8"><span class="section-number-3">1.8</span> <code>ggplot2</code> VS Base Graphics</h3>
+<div class="outline-text-3" id="text-1-8">
+<p>
+Base graphics VS <code>ggplot</code> for simple graphs:
+</p>
+</div>
+<ol class="org-ol"><li>Base histogram&#xa0;&#xa0;&#xa0;<span class="tag"><span class="BMCOL">BMCOL</span></span><br  /><div class="outline-text-4" id="text-1-8-1">
+
+<div class="org-src-container">
+
+<pre class="src src-R" id="baseHist1"><span style="color: #0000ff;">hist</span>(mtcars$mpg)
+</pre>
+</div>
+
+
+<div class="figure">
+<p><img src="images/baseHist1.png" alt="baseHist1.png" />
+</p>
+</div>
+</div>
+</li>
+<li><code>ggplot2</code> histogram&#xa0;&#xa0;&#xa0;<span class="tag"><span class="BMCOL">BMCOL</span></span><br  /><div class="outline-text-4" id="text-1-8-2">
+
+<div class="org-src-container">
+
+<pre class="src src-R" id="ggplotHist1"><span style="color: #0000ff;">ggplot</span>(mtcars, <span style="color: #0000ff;">aes</span>(x <span style="color: #008b8b;">=</span> mpg)) <span style="color: #008b8b;">+</span>
+  <span style="color: #0000ff;">geom_histogram</span>(binwidth <span style="color: #008b8b;">=</span> <span style="color: #228b22;">5</span>)
+</pre>
+</div>
+
+
+<div class="figure">
+<p><img src="images/ggplotHist1.png" alt="ggplotHist1.png" />
+</p>
+</div>
+</div>
+</li>
+
+<li>Base wins!&#xa0;&#xa0;&#xa0;<span class="tag"><span class="BMCOL">BMCOL</span></span><br  /><div class="outline-text-4" id="text-1-8-3">
+</div>
+</li></ol>
+</div>
+
+<div id="outline-container-sec-1-9" class="outline-3">
+<h3 id="sec-1-9"><span class="section-number-3">1.9</span> <code>ggplot2</code> VS Base Graphics</h3>
+<div class="outline-text-3" id="text-1-9">
+<p>
+Base graphics VS <code>ggplot</code> for complex graphs:
+</p>
+</div>
+<ol class="org-ol"><li>Base colored scatter plot&#xa0;&#xa0;&#xa0;<span class="tag"><span class="BMCOL">BMCOL</span></span><br  /><div class="outline-text-4" id="text-1-9-1">
+
+<div class="org-src-container">
+
+<pre class="src src-R" id="baseComplex1"><span style="color: #0000ff;">par</span>(mar <span style="color: #008b8b;">=</span> <span style="color: #0000ff;">c</span>(<span style="color: #228b22;">4</span>,<span style="color: #228b22;">4</span>,<span style="color: #228b22;">.1</span>,<span style="color: #228b22;">.1</span>))
+<span style="color: #0000ff;">plot</span>(mpg ~ hp,
+     data<span style="color: #008b8b;">=</span><span style="color: #0000ff;">subset</span>(mtcars, am<span style="color: #008b8b;">==</span><span style="color: #228b22;">1</span>),
+     xlim<span style="color: #008b8b;">=</span><span style="color: #0000ff;">c</span>(<span style="color: #228b22;">50</span>, <span style="color: #228b22;">450</span>),ylim<span style="color: #008b8b;">=</span><span style="color: #0000ff;">c</span>(<span style="color: #228b22;">5</span>, <span style="color: #228b22;">40</span>))
+<span style="color: #0000ff;">points</span>(mpg ~ hp, col<span style="color: #008b8b;">=</span><span style="color: #8b2252;">"red"</span>,
+       data<span style="color: #008b8b;">=</span><span style="color: #0000ff;">subset</span>(mtcars, am<span style="color: #008b8b;">==</span><span style="color: #228b22;">0</span>))
+<span style="color: #0000ff;">legend</span>(<span style="color: #228b22;">350</span>, <span style="color: #228b22;">40</span>,
+       <span style="color: #0000ff;">c</span>(<span style="color: #8b2252;">"1"</span>, <span style="color: #8b2252;">"0"</span>), title<span style="color: #008b8b;">=</span><span style="color: #8b2252;">"am"</span>,
+       col<span style="color: #008b8b;">=</span><span style="color: #0000ff;">c</span>(<span style="color: #8b2252;">"black"</span>, <span style="color: #8b2252;">"red"</span>),
+       pch<span style="color: #008b8b;">=</span><span style="color: #0000ff;">c</span>(<span style="color: #228b22;">1</span>, <span style="color: #228b22;">1</span>))
+</pre>
+</div>
+
+
+<div class="figure">
+<p><img src="images/baseComplex1.png" alt="baseComplex1.png" />
+</p>
+</div>
+</div>
+</li>
+<li><code>ggplot2</code> colored scatter plot&#xa0;&#xa0;&#xa0;<span class="tag"><span class="BMCOL">BMCOL</span></span><br  /><div class="outline-text-4" id="text-1-9-2">
+
+<div class="org-src-container">
+
+<pre class="src src-R" id="ggplotComplex1"><span style="color: #0000ff;">ggplot</span>(mtcars, <span style="color: #0000ff;">aes</span>(x<span style="color: #008b8b;">=</span>hp,
+              y<span style="color: #008b8b;">=</span>mpg,
+              color<span style="color: #008b8b;">=</span><span style="color: #0000ff;">factor</span>(am)))<span style="color: #008b8b;">+</span>
+<span style="color: #0000ff;">geom_point</span>()
+
+
+
+
+<span style="color: #b22222;">#</span>
+</pre>
+</div>
+
+
+<div class="figure">
+<p><img src="images/ggplotComplex1.png" alt="ggplotComplex1.png" />
+</p>
+</div>
+</div>
+</li>
+
+
+<li><code>ggplot2</code>  wins!&#xa0;&#xa0;&#xa0;<span class="tag"><span class="BMCOL">BMCOL</span></span><br  /><div class="outline-text-4" id="text-1-9-3">
+</div>
+</li></ol>
+</div>
+</div>
+
+<div id="outline-container-sec-2" class="outline-2">
+<h2 id="sec-2"><span class="section-number-2">2</span> Geometric Objects And Aesthetics</h2>
+<div class="outline-text-2" id="text-2">
+</div><div id="outline-container-sec-2-1" class="outline-3">
+<h3 id="sec-2-1"><span class="section-number-3">2.1</span> Aesthetic Mapping</h3>
+<div class="outline-text-3" id="text-2-1">
+<ul class="org-ul">
+<li>In ggplot land <i>aesthetic</i> means "something you can see"
+</li>
+<li>Examples include:
+<ul class="org-ul">
+<li>position (i.e., on the x and y axes)
+</li>
+<li>color ("outside" color)
+</li>
+<li>fill ("inside" color)
+</li>
+<li>shape (of points)
+</li>
+<li>linetype
+</li>
+<li>size
+</li>
+</ul>
+</li>
+<li>Each type of geom accepts only a subset of all aesthetics&#x2013;refer to the geom help pages to see what mappings each geom accepts
+</li>
+<li>Aesthetic mappings are set with the <code>aes()</code> function
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-2-2" class="outline-3">
+<h3 id="sec-2-2"><span class="section-number-3">2.2</span> Geometic Objects (<code>geom</code>)</h3>
+<div class="outline-text-3" id="text-2-2">
+<ul class="org-ul">
+<li>Geometric objects are the actual marks we put on a plot
+</li>
+<li>Examples include:
+<ul class="org-ul">
+<li>points (<code>geom_point</code>, for scatter plots, dot plots, etc)
+</li>
+<li>lines (<code>geom_line</code>, for time series, trend lines, etc)
+</li>
+<li>boxplot (<code>geom_boxplot</code>, for, well, boxplots!)
+</li>
+</ul>
+</li>
+<li>A plot must have at least one geom; there is no upper limit
+</li>
+<li>Add a geom to a plot using the <code>+</code> operator
+</li>
+<li>You can get a list of available geometric objects:
+</li>
+</ul>
+<div class="org-src-container">
+
+<pre class="src src-R" id="getListOfGeoms">geoms <span style="color: #008b8b;">&lt;-</span> <span style="color: #0000ff;">help.search</span>(<span style="color: #8b2252;">"geom_"</span>, package <span style="color: #008b8b;">=</span> <span style="color: #8b2252;">"ggplot2"</span>)
+geoms$matches[<span style="color: #228b22;">1</span>:<span style="color: #228b22;">4</span>, <span style="color: #228b22;">1</span>:<span style="color: #228b22;">2</span>]
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-2-3" class="outline-3">
+<h3 id="sec-2-3"><span class="section-number-3">2.3</span> Points (Scatterplot)</h3>
+<div class="outline-text-3" id="text-2-3">
+<ul class="org-ul">
+<li>Now that we know about geometric objects and aesthetic mapping, we can make a ggplot
+</li>
+</ul>
+</div>
+<ol class="org-ol"><li><code>geom_point</code> requires mappings for x and y, all others are optional&#xa0;&#xa0;&#xa0;<span class="tag"><span class="BMCOL">BMCOL</span></span><br  /><div class="outline-text-4" id="text-2-3-1">
+
+<div class="org-src-container">
+
+<pre class="src src-R" id="ourFirstScatterplot"><span style="color: #0000ff;">ggplot</span>(mtcars, <span style="color: #0000ff;">aes</span>(x <span style="color: #008b8b;">=</span> hp, y <span style="color: #008b8b;">=</span> mpg)) <span style="color: #008b8b;">+</span>
+  <span style="color: #0000ff;">geom_point</span>()
+</pre>
+</div>
+
+
+<div class="figure">
+<p><img src="images/firstScatter.png" alt="firstScatter.png" />
+</p>
+</div>
+</div>
+</li>
+
+<li>Remember that <code>ggplot()</code> only sets defaults&#x2013;we can override these&#xa0;&#xa0;&#xa0;<span class="tag"><span class="BMCOL">BMCOL</span></span><br  /><div class="outline-text-4" id="text-2-3-2">
+
+<div class="org-src-container">
+
+<pre class="src src-R" id="OverRideScatterplotDefault"><span style="color: #0000ff;">ggplot</span>(mtcars, <span style="color: #0000ff;">aes</span>(x <span style="color: #008b8b;">=</span> hp, y <span style="color: #008b8b;">=</span> mpg)) <span style="color: #008b8b;">+</span>
+  <span style="color: #0000ff;">geom_point</span>(<span style="color: #0000ff;">aes</span>(y<span style="color: #008b8b;">=</span><span style="color: #0000ff;">log10</span>(mpg)))
+</pre>
+</div>
+
+
+<div class="figure">
+<p><img src="images/overrideScatterDefault.png" alt="overrideScatterDefault.png" />
+</p>
+</div>
+</div>
+</li></ol>
+</div>
+
+<div id="outline-container-sec-2-4" class="outline-3">
+<h3 id="sec-2-4"><span class="section-number-3">2.4</span> Lines (Prediction Line)</h3>
+<div class="outline-text-3" id="text-2-4">
+<ul class="org-ul">
+<li>A plot constructed with <code>ggplot</code> can have more than one geom
+</li>
+
+<li>Our <code>hp</code> vs <code>mpg</code> plot could use a regression line:
+</li>
+</ul>
+
+<div class="org-src-container">
+
+<pre class="src src-R" id="multipleLayers">mtcars$pred.mpg <span style="color: #008b8b;">&lt;-</span> <span style="color: #0000ff;">predict</span>(<span style="color: #0000ff;">lm</span>(mpg ~ hp, data <span style="color: #008b8b;">=</span> mtcars))
+
+p1 <span style="color: #008b8b;">&lt;-</span> <span style="color: #0000ff;">ggplot</span>(mtcars, <span style="color: #0000ff;">aes</span>(x <span style="color: #008b8b;">=</span> hp, y <span style="color: #008b8b;">=</span> mpg))
+
+p1 <span style="color: #008b8b;">+</span> <span style="color: #0000ff;">geom_point</span>(<span style="color: #0000ff;">aes</span>(color <span style="color: #008b8b;">=</span> wt)) <span style="color: #008b8b;">+</span>
+  <span style="color: #0000ff;">geom_line</span>(<span style="color: #0000ff;">aes</span>(y <span style="color: #008b8b;">=</span> pred.mpg))
+</pre>
+</div>
+
+
+<div class="figure">
+<p><img src="images/mtcarsLayers.png" alt="mtcarsLayers.png" />
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-2-5" class="outline-3">
+<h3 id="sec-2-5"><span class="section-number-3">2.5</span> Smoothers</h3>
+<div class="outline-text-3" id="text-2-5">
+<ul class="org-ul">
+<li>Not all geometric objects are simple shapes&#x2013;the smooth geom includes a line and a ribbon 
+</li>
+</ul>
+
+<div class="org-src-container">
+
+<pre class="src src-R" id="multipleLayers2">p2 <span style="color: #008b8b;">&lt;-</span> <span style="color: #0000ff;">ggplot</span>(mtcars, <span style="color: #0000ff;">aes</span>(x <span style="color: #008b8b;">=</span> hp, y <span style="color: #008b8b;">=</span> mpg))
+
+p2 <span style="color: #008b8b;">+</span> <span style="color: #0000ff;">geom_point</span>(<span style="color: #0000ff;">aes</span>(color <span style="color: #008b8b;">=</span> wt)) <span style="color: #008b8b;">+</span>
+  <span style="color: #0000ff;">geom_smooth</span>()
+</pre>
+</div>
+
+
+<div class="figure">
+<p><img src="images/mtcarsLayers2.png" alt="mtcarsLayers2.png" />
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-2-6" class="outline-3">
+<h3 id="sec-2-6"><span class="section-number-3">2.6</span> Text (Label Points)</h3>
+<div class="outline-text-3" id="text-2-6">
+<ul class="org-ul">
+<li>Each <code>geom</code> accepts a particualar set of mappings&#x2013;for example <code>geom_text()</code> accepts a <code>labels</code> mapping
+</li>
+</ul>
+
+<div class="org-src-container">
+
+<pre class="src src-R" id="textGeomMapping2">p2 <span style="color: #008b8b;">+</span> <span style="color: #0000ff;">geom_point</span>(<span style="color: #0000ff;">aes</span>(color <span style="color: #008b8b;">=</span> wt)) <span style="color: #008b8b;">+</span>
+  <span style="color: #0000ff;">geom_smooth</span>() <span style="color: #008b8b;">+</span>
+  <span style="color: #0000ff;">geom_text</span>(<span style="color: #0000ff;">aes</span>(label<span style="color: #008b8b;">=</span><span style="color: #0000ff;">rownames</span>(mtcars)), size<span style="color: #008b8b;">=</span><span style="color: #228b22;">2</span>)
+</pre>
+</div>
+
+
+<div class="figure">
+<p><img src="images/textGeomMapping.png" alt="textGeomMapping.png" />
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-2-7" class="outline-3">
+<h3 id="sec-2-7"><span class="section-number-3">2.7</span> Aesthetic Mapping VS Assignment</h3>
+<div class="outline-text-3" id="text-2-7">
+<ul class="org-ul">
+<li>Note that variables are mapped to aesthetics with the <code>aes()</code> function, while fixed aesthetics are set outside the aes() call
+</li>
+<li>This sometimes leads to confusion, as in this example:
+</li>
+</ul>
+
+<div class="org-src-container">
+
+<pre class="src src-R" id="mtcarsMapping"><span style="color: #0000ff;">ggplot</span>(mtcars, <span style="color: #0000ff;">aes</span>(x <span style="color: #008b8b;">=</span> hp, y <span style="color: #008b8b;">=</span> mpg)) <span style="color: #008b8b;">+</span>
+  <span style="color: #0000ff;">geom_point</span>(<span style="color: #0000ff;">aes</span>(size <span style="color: #008b8b;">=</span> <span style="color: #228b22;">2</span>),<span style="color: #b22222;"># </span><span style="color: #b22222;">incorrect! 2 is not a variable</span>
+             color<span style="color: #008b8b;">=</span><span style="color: #8b2252;">"red"</span>) <span style="color: #b22222;"># </span><span style="color: #b22222;">this is fine -- all points red</span>
+</pre>
+</div>
+
+
+<div class="figure">
+<p><img src="images/mtcars2.png" alt="mtcars2.png" />
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-2-8" class="outline-3">
+<h3 id="sec-2-8"><span class="section-number-3">2.8</span> Mapping Variables To Other Aesthetics</h3>
+<div class="outline-text-3" id="text-2-8">
+<ul class="org-ul">
+<li>Other aesthetics are mapped in the same way as x and y in the previous example
+</li>
+</ul>
+
+<div class="org-src-container">
+
+<pre class="src src-R" id="colorAndSizeAes"><span style="color: #0000ff;">ggplot</span>(mtcars, <span style="color: #0000ff;">aes</span>(x <span style="color: #008b8b;">=</span> hp, y <span style="color: #008b8b;">=</span> mpg)) <span style="color: #008b8b;">+</span>
+  <span style="color: #0000ff;">geom_point</span>(<span style="color: #0000ff;">aes</span>(color<span style="color: #008b8b;">=</span>wt, shape <span style="color: #008b8b;">=</span> <span style="color: #0000ff;">factor</span>(am)))
+</pre>
+</div>
+
+
+<div class="figure">
+<p><img src="images/addColorAndShapeMapping.png" alt="addColorAndShapeMapping.png" />
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-2-9" class="outline-3">
+<h3 id="sec-2-9"><span class="section-number-3">2.9</span> Exercise I</h3>
+<div class="outline-text-3" id="text-2-9">
+<ol class="org-ol">
+<li>Create a scatter plot with displacement on the <code>x</code> axis and horse power on the y axis
+</li>
+<li>Color the points in the previous plot blue
+</li>
+<li>Color the points in the previous plot according to miles per gallon
+</li>
+</ol>
+</div>
+</div>
+
+<div id="outline-container-sec-2-10" class="outline-3">
+<h3 id="sec-2-10"><span class="section-number-3">2.10</span> Exercise I prototype&#xa0;&#xa0;&#xa0;<span class="tag"><span class="prototype">prototype</span></span></h3>
+<div class="outline-text-3" id="text-2-10">
+<div class="org-src-container">
+
+<pre class="src src-R" id="ex1Prototype">                                        <span style="color: #b22222;"># </span><span style="color: #b22222;">ex1.1</span>
+(p.ex1 <span style="color: #008b8b;">&lt;-</span> <span style="color: #0000ff;">ggplot</span>(mtcars, <span style="color: #0000ff;">aes</span>(x <span style="color: #008b8b;">=</span> disp, y <span style="color: #008b8b;">=</span> hp)) <span style="color: #008b8b;">+</span> <span style="color: #0000ff;">geom_point</span>())
+                                        <span style="color: #b22222;"># </span><span style="color: #b22222;">ex1.2</span>
+p.ex1 <span style="color: #008b8b;">+</span> <span style="color: #0000ff;">geom_point</span>(color <span style="color: #008b8b;">=</span> <span style="color: #8b2252;">"blue"</span>)
+                                        <span style="color: #b22222;"># </span><span style="color: #b22222;">ex1.3</span>
+p.ex1 <span style="color: #008b8b;">+</span> <span style="color: #0000ff;">geom_point</span>(<span style="color: #0000ff;">aes</span>(color <span style="color: #008b8b;">=</span> mpg))
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-3" class="outline-2">
+<h2 id="sec-3"><span class="section-number-2">3</span> Statistical Transformations</h2>
+<div class="outline-text-2" id="text-3">
+</div><div id="outline-container-sec-3-1" class="outline-3">
+<h3 id="sec-3-1"><span class="section-number-3">3.1</span> Statistical Transformations</h3>
+<div class="outline-text-3" id="text-3-1">
+<ul class="org-ul">
+<li>Some plot types (such as scatterplots) do not require transformations&#x2013;each point is plotted at x and y coordinates equal to the original value
+</li>
+<li>Other plots, such as boxplots, histograms, prediction lines etc. require statistical transformations
+<ul class="org-ul">
+<li>For a boxplot the y values must be transformed to the median and 1.5(IQR)
+</li>
+<li>For a smoother smother the y values must be transformed into predicted values
+</li>
+</ul>
+</li>
+<li>Each <code>geom</code> has a default statistic, but these can be changed
+</li>
+<li>For example, the default statistic for <code>geom_bar</code> is <code>stat_bin</code>
+</li>
+</ul>
+<div class="org-src-container">
+
+<pre class="src src-R" id="geomHistorgramArgs"><span style="color: #0000ff;">args</span>(geom_bar)
+<span style="color: #b22222;"># </span><span style="color: #b22222;">?stat_bin</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-3-2" class="outline-3">
+<h3 id="sec-3-2"><span class="section-number-3">3.2</span> Setting Statistical Transformation Arguments</h3>
+<div class="outline-text-3" id="text-3-2">
+<ul class="org-ul">
+<li>Arguments to <code>stat_</code> functions are passed through <code>geom_</code> functions
+</li>
+<li>Slightly annoying because in order to change it you have to first determine which stat the geom uses, then determine the arguments to that stat
+</li>
+</ul>
+</div>
+
+<ol class="org-ol"><li>Here is the default histogram of miles per gallon&#xa0;&#xa0;&#xa0;<span class="tag"><span class="BMCOL">BMCOL</span></span><br  /><div class="outline-text-4" id="text-3-2-1">
+
+<div class="org-src-container">
+
+<pre class="src src-R" id="GeomBinDefaults"><span style="color: #0000ff;">ggplot</span>(mtcars, <span style="color: #0000ff;">aes</span>(x <span style="color: #008b8b;">=</span> mpg)) <span style="color: #008b8b;">+</span>
+  <span style="color: #0000ff;">geom_bar</span>()
+</pre>
+</div>
+
+
+<div class="figure">
+<p><img src="images/GeomBinDefaults.png" alt="GeomBinDefaults.png" />
+</p>
+</div>
+</div>
+</li>
+
+<li>Here we change the bin width&#xa0;&#xa0;&#xa0;<span class="tag"><span class="BMCOL">BMCOL</span></span><br  /><div class="outline-text-4" id="text-3-2-2">
+
+<div class="org-src-container">
+
+<pre class="src src-R" id="ChangeStatBinArgs"><span style="color: #0000ff;">ggplot</span>(mtcars, <span style="color: #0000ff;">aes</span>(x <span style="color: #008b8b;">=</span> mpg)) <span style="color: #008b8b;">+</span>
+  <span style="color: #0000ff;">geom_bar</span>(stat <span style="color: #008b8b;">=</span> <span style="color: #8b2252;">"bin"</span>, binwidth<span style="color: #008b8b;">=</span><span style="color: #228b22;">4</span>)
+</pre>
+</div>
+
+
+<div class="figure">
+<p><img src="images/ChangeStatBinArgs.png" alt="ChangeStatBinArgs.png" />
+</p>
+</div>
+</div>
+</li></ol>
+</div>
+
+<div id="outline-container-sec-3-3" class="outline-3">
+<h3 id="sec-3-3"><span class="section-number-3">3.3</span> Changing The Statistical Transformation</h3>
+<div class="outline-text-3" id="text-3-3">
+<ul class="org-ul">
+<li>Sometimes the default statistical transformation is not what you need
+</li>
+<li>Often the case with pre-summarized data
+</li>
+</ul>
+<div class="org-src-container">
+
+<pre class="src src-R" id="summarizeMTC">(mtc.sum <span style="color: #008b8b;">&lt;-</span> <span style="color: #0000ff;">aggregate</span>(mtcars[<span style="color: #8b2252;">"mpg"</span>], mtcars[<span style="color: #8b2252;">"gear"</span>], FUN<span style="color: #008b8b;">=</span>mean))
+</pre>
+</div>
+</div>
+
+<ol class="org-ol"><li>Bar plot with summarized data&#xa0;&#xa0;&#xa0;<span class="tag"><span class="BMCOL">BMCOL</span></span><br  /><div class="outline-text-4" id="text-3-3-1">
+
+<pre class="example">
+&gt; ggplot(mtc.sum, aes(x=gear, y=mpg)) + 
+    geom_bar()
+Mapping a variable to y and also 
+using stat="bin".
+Error in pmin(y, 0) : object 
+'y' not found
+
+.
+</pre>
+</div>
+</li>
+
+<li>Bar plot with stat="identity"&#xa0;&#xa0;&#xa0;<span class="tag"><span class="BMCOL">BMCOL</span></span><br  /><div class="outline-text-4" id="text-3-3-2">
+
+<div class="org-src-container">
+
+<pre class="src src-R" id="BarPlotSum1"><span style="color: #0000ff;">ggplot</span>(mtc.sum, <span style="color: #0000ff;">aes</span>(x<span style="color: #008b8b;">=</span>gear, y<span style="color: #008b8b;">=</span>mpg)) <span style="color: #008b8b;">+</span> 
+  <span style="color: #0000ff;">geom_bar</span>(stat<span style="color: #008b8b;">=</span><span style="color: #8b2252;">"identity"</span>)
+</pre>
+</div>
+
+
+<div class="figure">
+<p><img src="images/ChangeStat.png" alt="ChangeStat.png" />
+</p>
+</div>
+</div>
+</li></ol>
+</div>
+
+<div id="outline-container-sec-3-4" class="outline-3">
+<h3 id="sec-3-4"><span class="section-number-3">3.4</span> Exercise II</h3>
+<div class="outline-text-3" id="text-3-4">
+<ol class="org-ol">
+<li>Create boxplots of mpg by gear
+</li>
+<li>Overlay points on top of the box plots
+</li>
+<li>Create a scatter plot of weight vs. horsepower
+</li>
+<li>Overlay a linear regression line on top of the scatter plot
+</li>
+</ol>
+</div>
+</div>
+
+
+<div id="outline-container-sec-3-5" class="outline-3">
+<h3 id="sec-3-5"><span class="section-number-3">3.5</span> Exercise II Prototype&#xa0;&#xa0;&#xa0;<span class="tag"><span class="prototype">prototype</span></span></h3>
+<div class="outline-text-3" id="text-3-5">
+<div class="org-src-container">
+
+<pre class="src src-R" id="Exercise2Prototype">                                        <span style="color: #b22222;">#</span><span style="color: #b22222;">Ex2.1</span>
+(p <span style="color: #008b8b;">&lt;-</span> <span style="color: #0000ff;">ggplot</span>(mtcars, <span style="color: #0000ff;">aes</span>(x <span style="color: #008b8b;">=</span> <span style="color: #0000ff;">factor</span>(gear), y <span style="color: #008b8b;">=</span> mpg)) <span style="color: #008b8b;">+</span> <span style="color: #0000ff;">geom_boxplot</span>())
+                                        <span style="color: #b22222;">#</span><span style="color: #b22222;">Ex2.2</span>
+p <span style="color: #008b8b;">+</span> <span style="color: #0000ff;">geom_point</span>()
+                                        <span style="color: #b22222;">#</span><span style="color: #b22222;">Ex2.3</span>
+(p <span style="color: #008b8b;">&lt;-</span> <span style="color: #0000ff;">ggplot</span>(mtcars, <span style="color: #0000ff;">aes</span>(x <span style="color: #008b8b;">=</span> wt, y <span style="color: #008b8b;">=</span> hp)) <span style="color: #008b8b;">+</span> <span style="color: #0000ff;">geom_point</span>())
+                                        <span style="color: #b22222;">#</span><span style="color: #b22222;">Ex2.4</span>
+p <span style="color: #008b8b;">+</span> <span style="color: #0000ff;">geom_smooth</span>(method <span style="color: #008b8b;">=</span> <span style="color: #8b2252;">"lm"</span>)
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-sec-4" class="outline-2">
+<h2 id="sec-4"><span class="section-number-2">4</span> Scales</h2>
+<div class="outline-text-2" id="text-4">
+</div><div id="outline-container-sec-4-1" class="outline-3">
+<h3 id="sec-4-1"><span class="section-number-3">4.1</span> Scales: Controlling Aesthetic Mapping</h3>
+<div class="outline-text-3" id="text-4-1">
+<ul class="org-ul">
+<li>In <code>ggplot2</code> <b>scales</b> include
+<ul class="org-ul">
+<li>position
+</li>
+<li>color and fill
+</li>
+<li>size
+</li>
+<li>shape
+</li>
+<li>line type
+</li>
+</ul>
+</li>
+<li>Modified with <code>scale_&lt;aesthetic&gt;_&lt;type&gt;</code>
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-4-2" class="outline-3">
+<h3 id="sec-4-2"><span class="section-number-3">4.2</span> Common Scale Arguments</h3>
+<div class="outline-text-3" id="text-4-2">
+<ul class="org-ul">
+<li><b>name</b>: the first argument gives the axis or legend title
+</li>
+<li><b>limits</b>: the minimum and maximum of the scale
+</li>
+<li><b>breaks</b>: the points along the scale where labels should appear
+</li>
+<li><b>labels</b>: the labels that appear at each break
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-4-3" class="outline-3">
+<h3 id="sec-4-3"><span class="section-number-3">4.3</span> Scale Modification Examples</h3>
+<div class="outline-text-3" id="text-4-3">
+<div class="org-src-container">
+
+<pre class="src src-R" id="modifyScales1">p6 <span style="color: #008b8b;">&lt;-</span> <span style="color: #0000ff;">ggplot</span>(mtcars, <span style="color: #0000ff;">aes</span>(x <span style="color: #008b8b;">=</span> <span style="color: #0000ff;">factor</span>(gear), y <span style="color: #008b8b;">=</span> mpg))
+p6 <span style="color: #008b8b;">+</span> <span style="color: #0000ff;">geom_point</span>(<span style="color: #0000ff;">aes</span>(color <span style="color: #008b8b;">=</span> wt))
+</pre>
+</div>
+
+
+<div class="figure">
+<p><img src="images/modifyScales1.png" alt="modifyScales1.png" />
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-4-4" class="outline-3">
+<h3 id="sec-4-4"><span class="section-number-3">4.4</span> Scale breaks and labels</h3>
+<div class="outline-text-3" id="text-4-4">
+<div class="org-src-container">
+
+<pre class="src src-R" id="modifyScales2">p7 <span style="color: #008b8b;">&lt;-</span> p6 <span style="color: #008b8b;">+</span> <span style="color: #0000ff;">geom_point</span>(<span style="color: #0000ff;">aes</span>(color <span style="color: #008b8b;">=</span> wt)) <span style="color: #008b8b;">+</span>
+  <span style="color: #0000ff;">scale_x_discrete</span>(<span style="color: #8b2252;">"Number of Gears"</span>,
+                   breaks <span style="color: #008b8b;">=</span> <span style="color: #0000ff;">c</span>(<span style="color: #8b2252;">"3"</span>, <span style="color: #8b2252;">"4"</span>, <span style="color: #8b2252;">"5"</span>),
+                   labels <span style="color: #008b8b;">=</span> <span style="color: #0000ff;">c</span>(<span style="color: #8b2252;">"Three"</span>, <span style="color: #8b2252;">"Four"</span>, <span style="color: #8b2252;">"Five"</span>))
+p7 <span style="color: #008b8b;">+</span> <span style="color: #0000ff;">scale_color_continuous</span>(<span style="color: #8b2252;">"Weight"</span>,
+                         breaks <span style="color: #008b8b;">=</span> <span style="color: #0000ff;">with</span>(mtcars, <span style="color: #0000ff;">c</span>(<span style="color: #0000ff;">min</span>(wt), <span style="color: #0000ff;">median</span>(wt), <span style="color: #0000ff;">max</span>(wt))),
+                         labels <span style="color: #008b8b;">=</span> <span style="color: #0000ff;">c</span>(<span style="color: #8b2252;">"Light"</span>, <span style="color: #8b2252;">"Medium"</span>, <span style="color: #8b2252;">"Heavy"</span>))
+</pre>
+</div>
+
+
+<div class="figure">
+<p><img src="images/modifyScales2.png" alt="modifyScales2.png" />
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-4-5" class="outline-3">
+<h3 id="sec-4-5"><span class="section-number-3">4.5</span> Scale breaks and labels</h3>
+<div class="outline-text-3" id="text-4-5">
+<div class="org-src-container">
+
+<pre class="src src-R" id="modifyScales3">p7 <span style="color: #008b8b;">+</span> <span style="color: #0000ff;">scale_color_continuous</span>(<span style="color: #8b2252;">"Weight"</span>,
+                         breaks <span style="color: #008b8b;">=</span> <span style="color: #0000ff;">with</span>(mtcars, <span style="color: #0000ff;">c</span>(<span style="color: #0000ff;">min</span>(wt), <span style="color: #0000ff;">median</span>(wt), <span style="color: #0000ff;">max</span>(wt))),
+                         labels <span style="color: #008b8b;">=</span> <span style="color: #0000ff;">c</span>(<span style="color: #8b2252;">"Light"</span>, <span style="color: #8b2252;">"Medium"</span>, <span style="color: #8b2252;">"Heavy"</span>),
+                         low <span style="color: #008b8b;">=</span> <span style="color: #8b2252;">"black"</span>,
+                         high <span style="color: #008b8b;">=</span> <span style="color: #8b2252;">"gray80"</span>)
+</pre>
+</div>
+
+
+<div class="figure">
+<p><img src="images/modifyScales3.png" alt="modifyScales3.png" />
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-4-6" class="outline-3">
+<h3 id="sec-4-6"><span class="section-number-3">4.6</span> Using different color scales</h3>
+<div class="outline-text-3" id="text-4-6">
+<div class="org-src-container">
+
+<pre class="src src-R" id="modifyScales4">p7 <span style="color: #008b8b;">+</span> <span style="color: #0000ff;">scale_color_gradient2</span>(<span style="color: #8b2252;">"Weight"</span>,
+                          breaks <span style="color: #008b8b;">=</span> <span style="color: #0000ff;">with</span>(mtcars, <span style="color: #0000ff;">c</span>(<span style="color: #0000ff;">min</span>(wt), <span style="color: #0000ff;">median</span>(wt), <span style="color: #0000ff;">max</span>(wt))),
+                          labels <span style="color: #008b8b;">=</span> <span style="color: #0000ff;">c</span>(<span style="color: #8b2252;">"Light"</span>, <span style="color: #8b2252;">"Medium"</span>, <span style="color: #8b2252;">"Heavy"</span>),
+                          low <span style="color: #008b8b;">=</span> <span style="color: #8b2252;">"blue"</span>,
+                          mid <span style="color: #008b8b;">=</span> <span style="color: #8b2252;">"black"</span>,
+                          high <span style="color: #008b8b;">=</span> <span style="color: #8b2252;">"red"</span>,
+                          midpoint <span style="color: #008b8b;">=</span> <span style="color: #0000ff;">median</span>(mtcars$wt))
+</pre>
+</div>
+
+
+<div class="figure">
+<p><img src="images/modifyScales4.png" alt="modifyScales4.png" />
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-4-7" class="outline-3">
+<h3 id="sec-4-7"><span class="section-number-3">4.7</span> Scale Modification Examples</h3>
+<div class="outline-text-3" id="text-4-7">
+<div class="org-src-container">
+
+<pre class="src src-R" id="modifyScales5">p8 <span style="color: #008b8b;">&lt;-</span> <span style="color: #0000ff;">ggplot</span>(mtcars, <span style="color: #0000ff;">aes</span>(x <span style="color: #008b8b;">=</span> <span style="color: #0000ff;">factor</span>(gear), y <span style="color: #008b8b;">=</span> mpg))
+p8 <span style="color: #008b8b;">+</span> <span style="color: #0000ff;">geom_point</span>(<span style="color: #0000ff;">aes</span>(size <span style="color: #008b8b;">=</span> wt))
+</pre>
+</div>
+
+
+<div class="figure">
+<p><img src="images/modifyScales5.png" alt="modifyScales5.png" />
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-4-8" class="outline-3">
+<h3 id="sec-4-8"><span class="section-number-3">4.8</span> Scale range</h3>
+<div class="outline-text-3" id="text-4-8">
+<div class="org-src-container">
+
+<pre class="src src-R" id="modifyScales6">p8 <span style="color: #008b8b;">+</span> <span style="color: #0000ff;">geom_point</span>(<span style="color: #0000ff;">aes</span>(size <span style="color: #008b8b;">=</span> wt)) <span style="color: #008b8b;">+</span>
+  <span style="color: #0000ff;">scale_size_continuous</span>(<span style="color: #8b2252;">"Weight"</span>,
+                        range <span style="color: #008b8b;">=</span> <span style="color: #0000ff;">c</span>(<span style="color: #228b22;">2</span>, <span style="color: #228b22;">10</span>))
+</pre>
+</div>
+
+
+<div class="figure">
+<p><img src="images/modifyScales6.png" alt="modifyScales6.png" />
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-4-9" class="outline-3">
+<h3 id="sec-4-9"><span class="section-number-3">4.9</span> Available Scales</h3>
+<div class="outline-text-3" id="text-4-9">
+<ul class="org-ul">
+<li>Partial combination matrix of available scales
+</li>
+</ul>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left"><b>Scale</b></th>
+<th scope="col" class="left"><b>Types</b></th>
+<th scope="col" class="left"><b>Examples</b></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left">scale<sub>color</sub>_</td>
+<td class="left">identity</td>
+<td class="left">scale<sub>fill</sub><sub>continuous</sub></td>
+</tr>
+
+<tr>
+<td class="left">scale<sub>fill</sub>_</td>
+<td class="left">manual</td>
+<td class="left">scale<sub>color</sub><sub>discrete</sub></td>
+</tr>
+
+<tr>
+<td class="left">scale<sub>size</sub>_</td>
+<td class="left">continuous</td>
+<td class="left">scale<sub>size</sub><sub>manual</sub></td>
+</tr>
+
+<tr>
+<td class="left">&#xa0;</td>
+<td class="left">discrete</td>
+<td class="left">scale<sub>size</sub><sub>discrete</sub></td>
+</tr>
+
+<tr>
+<td class="left">&#xa0;</td>
+<td class="left">&#xa0;</td>
+<td class="left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="left">scale<sub>shape</sub>_</td>
+<td class="left">discrete</td>
+<td class="left">scale<sub>shape</sub><sub>discrete</sub></td>
+</tr>
+
+<tr>
+<td class="left">scale<sub>linetype</sub>_</td>
+<td class="left">identity</td>
+<td class="left">scale<sub>shape</sub><sub>manual</sub></td>
+</tr>
+
+<tr>
+<td class="left">&#xa0;</td>
+<td class="left">manual</td>
+<td class="left">scale<sub>linetype</sub><sub>discrete</sub></td>
+</tr>
+
+<tr>
+<td class="left">&#xa0;</td>
+<td class="left">&#xa0;</td>
+<td class="left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="left">scale<sub>x</sub>_</td>
+<td class="left">continuous</td>
+<td class="left">scale<sub>x</sub><sub>continuous</sub></td>
+</tr>
+
+<tr>
+<td class="left">scale<sub>y</sub>_</td>
+<td class="left">discrete</td>
+<td class="left">scale<sub>y</sub><sub>discrete</sub></td>
+</tr>
+
+<tr>
+<td class="left">&#xa0;</td>
+<td class="left">reverse</td>
+<td class="left">scale<sub>x</sub><sub>log</sub></td>
+</tr>
+
+<tr>
+<td class="left">&#xa0;</td>
+<td class="left">log</td>
+<td class="left">scale<sub>y</sub><sub>reverse</sub></td>
+</tr>
+
+<tr>
+<td class="left">&#xa0;</td>
+<td class="left">date</td>
+<td class="left">scale<sub>x</sub><sub>date</sub></td>
+</tr>
+
+<tr>
+<td class="left">&#xa0;</td>
+<td class="left">datetime</td>
+<td class="left">scale<sub>y</sub><sub>datetime</sub></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div id="outline-container-sec-4-10" class="outline-3">
+<h3 id="sec-4-10"><span class="section-number-3">4.10</span> Exercise III</h3>
+<div class="outline-text-3" id="text-4-10">
+<ol class="org-ol">
+<li>Experiment with color, size, and shape aesthetics / scales
+</li>
+<li>What happens when you map more than one aesthetic to a variable?
+</li>
+<li>Which aesthetics are good for continuous variables? Which work better for discrete variables?
+</li>
+</ol>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-5" class="outline-2">
+<h2 id="sec-5"><span class="section-number-2">5</span> Faceting</h2>
+<div class="outline-text-2" id="text-5">
+</div><div id="outline-container-sec-5-1" class="outline-3">
+<h3 id="sec-5-1"><span class="section-number-3">5.1</span> Faceting</h3>
+<div class="outline-text-3" id="text-5-1">
+<ul class="org-ul">
+<li>Faceting is <code>ggplot2</code> parlance for <b>small multiples</b>
+</li>
+<li>The idea is to create separate graphs for subsets of data
+</li>
+<li><code>ggplot2</code> offers two functions for creating small multiples:
+<ol class="org-ol">
+<li><code>facet_wrap()</code>: define subsets as the levels of a single grouping variable
+</li>
+<li><code>facet_grid()</code>: define subsets as the crossing of two grouping variables
+</li>
+</ol>
+</li>
+<li>Facilitates comparison among plots, not just of geoms within a plot
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-5-2" class="outline-3">
+<h3 id="sec-5-2"><span class="section-number-3">5.2</span> Example Data II: <code>Housing prices</code></h3>
+<div class="outline-text-3" id="text-5-2">
+<div class="org-src-container">
+
+<pre class="src src-R" id="housingData">housing <span style="color: #008b8b;">&lt;-</span> <span style="color: #0000ff;">read.csv</span>(<span style="color: #8b2252;">"dataSets/landdata-states.csv"</span>)
+<span style="color: #0000ff;">head</span>(housing[<span style="color: #228b22;">1</span>:<span style="color: #228b22;">5</span>])
+</pre>
+</div>
+
+<p>
+(Data from <a href="https:www.lincolninst.edu/subcenters/land-values/land-prices-by-state.asp">https:www.lincolninst.edu/subcenters/land-values/land-prices-by-state.asp</a>)
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-5-3" class="outline-3">
+<h3 id="sec-5-3"><span class="section-number-3">5.3</span> What is the trend in housing prices?</h3>
+<div class="outline-text-3" id="text-5-3">
+<ul class="org-ul">
+<li>Start by using a technique we already know&#x2013;map State to color
+</li>
+</ul>
+
+<div class="org-src-container">
+
+<pre class="src src-R" id="housingscatter">p8 <span style="color: #008b8b;">&lt;-</span> <span style="color: #0000ff;">ggplot</span>(housing, <span style="color: #0000ff;">aes</span>(x <span style="color: #008b8b;">=</span> Date, y <span style="color: #008b8b;">=</span> Home.Value))
+p8 <span style="color: #008b8b;">+</span> <span style="color: #0000ff;">geom_line</span>(<span style="color: #0000ff;">aes</span>(color <span style="color: #008b8b;">=</span> State))
+</pre>
+</div>
+
+
+<div class="figure">
+<p><img src="images/housing1.png" alt="housing1.png" />
+</p>
+</div>
+
+<ul class="org-ul">
+<li>There are two problems here&#x2013;there are too many states to distinguish each one by color, and the lines obscure one another
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-5-4" class="outline-3">
+<h3 id="sec-5-4"><span class="section-number-3">5.4</span> Faceting to the rescue</h3>
+<div class="outline-text-3" id="text-5-4">
+<ul class="org-ul">
+<li>We can remedy the deficiencies of the previous plot by faceting by state rather than mapping state to color
+</li>
+</ul>
+
+<div class="org-src-container">
+
+<pre class="src src-R" id="housingscatter2">p8 <span style="color: #008b8b;">+</span> <span style="color: #0000ff;">geom_line</span>() <span style="color: #008b8b;">+</span>
+    <span style="color: #0000ff;">facet_wrap</span>(~State, ncol <span style="color: #008b8b;">=</span> <span style="color: #228b22;">10</span>)
+</pre>
+</div>
+
+
+<div class="figure">
+<p><img src="images/housing2.png" alt="housing2.png" />
+</p>
+</div>
+
+<ul class="org-ul">
+<li>There is also a <code>facet_grid()</code> function for faceting in two dimensions
+</li>
+</ul>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-6" class="outline-2">
+<h2 id="sec-6"><span class="section-number-2">6</span> Themes</h2>
+<div class="outline-text-2" id="text-6">
+</div><div id="outline-container-sec-6-1" class="outline-3">
+<h3 id="sec-6-1"><span class="section-number-3">6.1</span> Themes</h3>
+<div class="outline-text-3" id="text-6-1">
+<ul class="org-ul">
+<li>The <code>ggplot2</code> theme system handles non-data plot elements such as
+<ul class="org-ul">
+<li>Axis labels
+</li>
+<li>Plot background
+</li>
+<li>Facet label backround
+</li>
+<li>Legend appearance
+</li>
+</ul>
+</li>
+<li>Two built-in themes:
+<ul class="org-ul">
+<li><code>theme_gray()</code> (default)
+</li>
+<li><code>theme_bw()</code>
+</li>
+<li>More available on the wiki:
+</li>
+</ul>
+</li>
+</ul>
+<p>
+<a href="https:github.com/hadley/ggplot2/wiki/Themes">https:github.com/hadley/ggplot2/wiki/Themes</a>
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-6-2" class="outline-3">
+<h3 id="sec-6-2"><span class="section-number-3">6.2</span> Overriding theme defaults</h3>
+<div class="outline-text-3" id="text-6-2">
+<ul class="org-ul">
+<li>Specific theme elements can be overridden using <code>theme()</code>
+</li>
+<li>Example:
+</li>
+</ul>
+
+<div class="org-src-container">
+
+<pre class="src src-R" id="opts">p7 <span style="color: #008b8b;">+</span> <span style="color: #0000ff;">theme</span>(plot.background <span style="color: #008b8b;">=</span> <span style="color: #0000ff;">element_rect</span>(
+            fill <span style="color: #008b8b;">=</span> <span style="color: #8b2252;">"blue"</span>,
+            colour <span style="color: #008b8b;">=</span> <span style="color: #8b2252;">"gray40"</span>))
+</pre>
+</div>
+
+
+<div class="figure">
+<p><img src="images/opts.png" alt="opts.png" />
+</p>
+</div>
+
+<ul class="org-ul">
+<li>You can see available options by printing <code>theme_gray()</code> or <code>theme_bw()</code>
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-6-3" class="outline-3">
+<h3 id="sec-6-3"><span class="section-number-3">6.3</span> Creating and saving new themes</h3>
+<div class="outline-text-3" id="text-6-3">
+<ul class="org-ul">
+<li>You can create new themes, as in the following example:
+</li>
+</ul>
+
+<div class="org-src-container">
+
+<pre class="src src-R" id="themes">theme_new <span style="color: #008b8b;">&lt;-</span> <span style="color: #0000ff;">theme_bw</span>() <span style="color: #008b8b;">+</span>
+  <span style="color: #0000ff;">theme</span>(text<span style="color: #008b8b;">=</span><span style="color: #0000ff;">element_text</span>(size <span style="color: #008b8b;">=</span> <span style="color: #228b22;">12</span>, family <span style="color: #008b8b;">=</span> <span style="color: #8b2252;">""</span>),
+        axis.text.x <span style="color: #008b8b;">=</span> <span style="color: #0000ff;">element_text</span>(colour <span style="color: #008b8b;">=</span> <span style="color: #8b2252;">"red"</span>),
+        panel.background <span style="color: #008b8b;">=</span> <span style="color: #0000ff;">element_rect</span>(fill <span style="color: #008b8b;">=</span> <span style="color: #8b2252;">"pink"</span>))
+
+p7 <span style="color: #008b8b;">+</span> theme_new
+</pre>
+</div>
+
+
+<div class="figure">
+<p><img src="images/themes.png" alt="themes.png" />
+</p>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-7" class="outline-2">
+<h2 id="sec-7"><span class="section-number-2">7</span> The #1 FAQ</h2>
+<div class="outline-text-2" id="text-7">
+</div><div id="outline-container-sec-7-1" class="outline-3">
+<h3 id="sec-7-1"><span class="section-number-3">7.1</span> Map Aesthetic To Different Columns</h3>
+<div class="outline-text-3" id="text-7-1">
+<p>
+The most frequently asked question goes something like this: <i>I have two variables in my data.frame, and I'd like to plot them as separate points, with different color depending on which variable it is. How do I do that?</i>
+</p>
+</div>
+<ol class="org-ol"><li>Wrong&#xa0;&#xa0;&#xa0;<span class="tag"><span class="BMCOL">BMCOL</span></span><br  /><div class="outline-text-4" id="text-7-1-1">
+
+<div class="org-src-container">
+
+<pre class="src src-R" id="WrongWayNoMelt"><span style="color: #0000ff;">ggplot</span>(mtcars, <span style="color: #0000ff;">aes</span>(x<span style="color: #008b8b;">=</span>wt)) <span style="color: #008b8b;">+</span>
+  <span style="color: #0000ff;">geom_point</span>(<span style="color: #0000ff;">aes</span>(y<span style="color: #008b8b;">=</span>disp), color<span style="color: #008b8b;">=</span><span style="color: #8b2252;">"red"</span>) <span style="color: #008b8b;">+</span>
+  <span style="color: #0000ff;">geom_point</span>(<span style="color: #0000ff;">aes</span>(y<span style="color: #008b8b;">=</span>hp), color<span style="color: #008b8b;">=</span><span style="color: #8b2252;">"blue"</span>)
+
+
+<span style="color: #b22222;">#</span>
+</pre>
+</div>
+
+
+<div class="figure">
+<p><img src="images/WrongWayNoMelt.png" alt="WrongWayNoMelt.png" />
+</p>
+</div>
+</div>
+</li>
+
+<li>Right&#xa0;&#xa0;&#xa0;<span class="tag"><span class="BMCOL">BMCOL</span></span><br  /><div class="outline-text-4" id="text-7-1-2">
+
+<div class="org-src-container">
+
+<pre class="src src-R" id="meltingDataExe"><span style="color: #008b8b;">library</span>(reshape2)
+mtc.m <span style="color: #008b8b;">&lt;-</span> <span style="color: #0000ff;">melt</span>(mtcars,
+              measure.vars<span style="color: #008b8b;">=</span><span style="color: #0000ff;">c</span>(<span style="color: #8b2252;">"disp"</span>, 
+                             <span style="color: #8b2252;">"hp"</span>))
+<span style="color: #0000ff;">ggplot</span>(mtc.m,
+       <span style="color: #0000ff;">aes</span>(x<span style="color: #008b8b;">=</span>wt,
+           y<span style="color: #008b8b;">=</span>value,
+           color<span style="color: #008b8b;">=</span>variable)) <span style="color: #008b8b;">+</span>
+  <span style="color: #0000ff;">geom_point</span>()
+</pre>
+</div>
+
+
+<div class="figure">
+<p><img src="images/meltingDataExe.png" alt="meltingDataExe.png" />
+</p>
+</div>
+</div>
+</li></ol>
+</div>
+</div>
+
+<div id="outline-container-sec-8" class="outline-2">
+<h2 id="sec-8"><span class="section-number-2">8</span> Putting It All Together</h2>
+<div class="outline-text-2" id="text-8">
+</div><div id="outline-container-sec-8-1" class="outline-3">
+<h3 id="sec-8-1"><span class="section-number-3">8.1</span> Challenge: Recreate This <code>Economist</code> Graph</h3>
+<div class="outline-text-3" id="text-8-1">
+<p>
+<a href="images/Economist1.pdf">images/Economist1.pdf</a>
+</p>
+
+<ul class="org-ul">
+<li>Data
+</li>
+</ul>
+<p>
+The data is available in the <code>dataSets/EconomistData.csv</code> file. Read it in with <code>dat &lt;- read.csv("dataSets/EconomistData.csv")</code>
+Original sources are
+</p>
+
+<p>
+<a href="http:www.transparency.org/content/download/64476/1031428">http:www.transparency.org/content/download/64476/1031428</a>
+<a href="http:hdrstats.undp.org/en/indicators/display_cf_xls_indicator.cfm?indicator_id=103106&lang=en">http:hdrstats.undp.org/en/indicators/display_cf_xls_indicator.cfm?indicator_id=103106&lang=en</a>
+</p>
+
+<ul class="org-ul">
+<li>Graph source: 
+</li>
+</ul>
+
+<p>
+<a href="http:www.economist.com/node/21541178">http:www.economist.com/node/21541178</a>
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-8-2" class="outline-3">
+<h3 id="sec-8-2"><span class="section-number-3">8.2</span> Challenge data</h3>
+<div class="outline-text-3" id="text-8-2">
+<ol class="org-ol">
+<li>Load the data:
+</li>
+</ol>
+<div class="org-src-container">
+
+<pre class="src src-R" id="loadEconCsvData">dat <span style="color: #008b8b;">&lt;-</span> <span style="color: #0000ff;">read.csv</span>(<span style="color: #8b2252;">"dataSets/EconomistData.csv"</span>)
+</pre>
+</div>
+
+<ol class="org-ol">
+<li>Recreate this graph:
+</li>
+</ol>
+
+<div class="figure">
+<p><img src="images/Economist1.png" alt="Economist1.png" />
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-8-3" class="outline-3">
+<h3 id="sec-8-3"><span class="section-number-3">8.3</span> Challenge Solution&#xa0;&#xa0;&#xa0;<span class="tag"><span class="prototype">prototype</span></span></h3>
+<div class="outline-text-3" id="text-8-3">
+<p>
+Create basic scatter plot
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-R" id="econDatScatter">  pc1 <span style="color: #008b8b;">&lt;-</span> <span style="color: #0000ff;">ggplot</span>(dat, <span style="color: #0000ff;">aes</span>(x <span style="color: #008b8b;">=</span> CPI, y <span style="color: #008b8b;">=</span> HDI, color <span style="color: #008b8b;">=</span> Region))
+  (pc1 <span style="color: #008b8b;">&lt;-</span> pc1 <span style="color: #008b8b;">+</span> <span style="color: #0000ff;">geom_point</span>(shape <span style="color: #008b8b;">=</span> <span style="color: #228b22;">1</span>))
+
+
+
+
+<span style="color: #b22222;">#</span>
+</pre>
+</div>
+
+
+<div class="figure">
+<p><img src="images/econScatter1.png" alt="econScatter1.png" />
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-8-4" class="outline-3">
+<h3 id="sec-8-4"><span class="section-number-3">8.4</span> Challenge Solution&#xa0;&#xa0;&#xa0;<span class="tag"><span class="prototype">prototype</span></span></h3>
+<div class="outline-text-3" id="text-8-4">
+<p>
+Add labels
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-R" id="econDatScatter2">label.these <span style="color: #008b8b;">&lt;-</span> <span style="color: #0000ff;">c</span>(<span style="color: #8b2252;">"Congo"</span>, <span style="color: #8b2252;">"Sudan"</span>, <span style="color: #8b2252;">"Afghanistan"</span>, <span style="color: #8b2252;">"Greece"</span>, <span style="color: #8b2252;">"China"</span>,
+                 <span style="color: #8b2252;">"India"</span>, <span style="color: #8b2252;">"Rwanda"</span>, <span style="color: #8b2252;">"Spain"</span>, <span style="color: #8b2252;">"France"</span>, <span style="color: #8b2252;">"United States"</span>,
+                 <span style="color: #8b2252;">"Japan"</span>, <span style="color: #8b2252;">"Norway"</span>, <span style="color: #8b2252;">"Singapore"</span>)
+(pc2 <span style="color: #008b8b;">&lt;-</span> pc1 <span style="color: #008b8b;">+</span>
+ <span style="color: #0000ff;">geom_text</span>(<span style="color: #0000ff;">aes</span>(label <span style="color: #008b8b;">=</span> Country),
+           color <span style="color: #008b8b;">=</span> <span style="color: #8b2252;">"black"</span>, size <span style="color: #008b8b;">=</span> <span style="color: #228b22;">3</span>, hjust <span style="color: #008b8b;">=</span> <span style="color: #228b22;">1.1</span>,
+           data <span style="color: #008b8b;">=</span> dat[dat$Country <span style="color: #008b8b;">%</span><span style="color: #a020f0;">in</span><span style="color: #008b8b;">%</span> label.these, ]))
+</pre>
+</div>
+
+
+<div class="figure">
+<p><img src="images/econScatter2.png" alt="econScatter2.png" />
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-8-5" class="outline-3">
+<h3 id="sec-8-5"><span class="section-number-3">8.5</span> Challenge Solution&#xa0;&#xa0;&#xa0;<span class="tag"><span class="prototype">prototype</span></span></h3>
+<div class="outline-text-3" id="text-8-5">
+<p>
+Add smoothing line
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-R" id="econDatScatter3">  (pc3 <span style="color: #008b8b;">&lt;-</span> pc2 <span style="color: #008b8b;">+</span>
+   <span style="color: #0000ff;">geom_smooth</span>(<span style="color: #0000ff;">aes</span>(group <span style="color: #008b8b;">=</span> <span style="color: #228b22;">1</span>),
+               method <span style="color: #008b8b;">=</span> <span style="color: #8b2252;">"lm"</span>,
+               color <span style="color: #008b8b;">=</span> <span style="color: #8b2252;">"black"</span>,
+               formula <span style="color: #008b8b;">=</span> y~ <span style="color: #0000ff;">poly</span>(x, <span style="color: #228b22;">2</span>),
+               se <span style="color: #008b8b;">=</span> <span style="color: #228b22;">FALSE</span>))
+<span style="color: #b22222;">#</span>
+</pre>
+</div>
+
+
+<div class="figure">
+<p><img src="images/econScatter3.png" alt="econScatter3.png" />
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-8-6" class="outline-3">
+<h3 id="sec-8-6"><span class="section-number-3">8.6</span> Challenge Solution&#xa0;&#xa0;&#xa0;<span class="tag"><span class="prototype">prototype</span></span></h3>
+<div class="outline-text-3" id="text-8-6">
+<p>
+Finishing touches
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-R" id="econDatScatter4">(pc4 <span style="color: #008b8b;">&lt;-</span> pc3 <span style="color: #008b8b;">+</span> <span style="color: #0000ff;">theme_bw</span>() <span style="color: #008b8b;">+</span>
+  <span style="color: #0000ff;">scale_x_continuous</span>(<span style="color: #8b2252;">"Corruption Perceptions Index, 2011\n(10 = least corrupt)"</span>) <span style="color: #008b8b;">+</span>
+  <span style="color: #0000ff;">scale_y_continuous</span>(<span style="color: #8b2252;">"Human Development Index, 2011\n(1 = best)"</span>) <span style="color: #008b8b;">+</span>
+  <span style="color: #0000ff;">theme</span>(legend.position <span style="color: #008b8b;">=</span> <span style="color: #8b2252;">"top"</span>, legend.direction <span style="color: #008b8b;">=</span> <span style="color: #8b2252;">"horizontal"</span>))
+</pre>
+</div>
+
+
+<div class="figure">
+<p><img src="images/econScatter4.png" alt="econScatter4.png" />
+</p>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-9" class="outline-2">
+<h2 id="sec-9"><span class="section-number-2">9</span> Wrap-up</h2>
+<div class="outline-text-2" id="text-9">
+</div><div id="outline-container-sec-9-1" class="outline-3">
+<h3 id="sec-9-1"><span class="section-number-3">9.1</span> Help Us Make This Workshop Even Better!</h3>
+<div class="outline-text-3" id="text-9-1">
+<ul class="org-ul">
+<li>Please take a moment to fill out a very short feedback form 
+</li>
+<li>These workshops exist for you &#x2013; tell us what you need! 
+</li>
+<li><a href="http:tinyurl.com/R-graphics-feedback">http:tinyurl.com/R-graphics-feedback</a>
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-9-2" class="outline-3">
+<h3 id="sec-9-2"><span class="section-number-3">9.2</span> Additional resources</h3>
+<div class="outline-text-3" id="text-9-2">
+<ul class="org-ul">
+<li>ggplot2 resources
+<ul class="org-ul">
+<li>Mailing list: <a href="http:groups.google.com/group/ggplot2">http:groups.google.com/group/ggplot2</a>
+</li>
+<li>Wiki: <a href="https:github.com/hadley/ggplot2/wiki">https:github.com/hadley/ggplot2/wiki</a>
+</li>
+<li>Website: <a href="http:had.co.nz/ggplot2/">http:had.co.nz/ggplot2/</a>
+</li>
+<li>StackOverflow: <a href="http:stackoverflow.com/questions/tagged/ggplot">http:stackoverflow.com/questions/tagged/ggplot</a>
+</li>
+</ul>
+</li>
+<li>IQSS resources
+<ul class="org-ul">
+<li>Research technology consulting: <a href="http:projects.iq.harvard.edu/rtc">http:projects.iq.harvard.edu/rtc</a>
+</li>
+<li>Workshops: <a href="http:projects.iq.harvard.edu/rtc/filter_by/workshops">http:projects.iq.harvard.edu/rtc/filter_by/workshops</a>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="date">Created: 2014-04-26 Sat 00:03</p>
+<p class="creator"><a href="http://www.gnu.org/software/emacs/">Emacs</a> 24.3.1 (<a href="http://orgmode.org">Org</a> mode 8.2.5h)</p>
+<p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>

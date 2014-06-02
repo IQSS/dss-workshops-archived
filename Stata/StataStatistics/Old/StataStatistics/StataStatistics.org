@@ -1,0 +1,424 @@
+
+#+TITLE:     Regression in Stata
+#+AUTHOR:    Ista Zahn
+#+EMAIL:     dataclass@help.hmdc.harvard.edu
+#+DATE:      April 12 2013
+
+#+OPTIONS:   H:2 toc:t \n:nil d:nil
+#+startup: beamer inlineimages
+#+COLUMNS: %20ITEM %13BEAMER_env(Env) %6BEAMER_envargs(Args) %4BEAMER_col(Col) %7BEAMER_extra(Extra)
+#+PROPERTY: BEAMER_col_ALL 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 0.0 :ETC
+#+PROPERTY: cache no
+#+PROPERTY: exports code
+#+PROPERTY: results output
+#+PROPERTY: comments no
+#+PROPERTY: session nil
+#+PROPERTY: tangle StataStatisticsCodeOnly.do
+
+#+LaTeX_CLASS: beamer
+#+LaTeX_CLASS_OPTIONS: [table,smaller]
+
+#+LaTeX_HEADER: \usepackage{tikz}
+#+LaTeX_HEADER: \usepackage{minted}
+#+LaTeX_HEADER: \usepackage{fancyvrb}
+#+LaTeX_HEADER: \usemintedstyle{perldoc}
+#+LaTeX_HEADER: \definecolor{lightgray}{gray}{0.96}
+#+LaTeX_HEADER: \setlength{\tabcolsep}{1ex}
+#+LaTeX_HEADER: \institute{Harvard MIT Data Center}
+#+latex_header: \usetheme{Warsaw}
+#+latex_header: \useoutertheme{infolines}
+#+latex_header: \setbeamercolor{block body}{bg=lightgray}
+#+latex_header: \titlegraphic{\includegraphics[width=.75\textwidth]{images/IQSSNewLogo.pdf}}
+#+LaTex_header: \setbeamersize{text margin left=2em,text margin right=2em}
+#+latex_header: \AtBeginSection[]{\begin{frame}<beamer>\frametitle{Topic}\tableofcontents[currentsection]\end{frame}}
+
+* Setup								   :noexport:
+
+#+LaTeX: \setbeamertemplate{blocks}[default][shadow=false]
+
+#+name: setup-minted
+#+begin_src emacs-lisp :exports none :results silent :tangle no
+  (set (make-local-variable 'org-babel-stata-command) "stata -q")
+
+  (set (make-local-variable 'org-latex-listings) 'minted)
+  (set (make-local-variable 'org-latex-minted-options) '(("fontsize" "\\footnotesize")))
+  (set (make-local-variable 'org-latex-pdf-process) '("pdflatex -shell-escape -interaction nonstopmode -output-directory %o %f" 
+                                "pdflatex -shell-escape -interaction nonstopmode -output-directory %o %f"))
+  (set (make-local-variable 'LaTeX-command) "pdflatex -shell-escape")
+  (set (make-local-variable 'org-latex-image-default-option) "")
+  (set (make-local-variable 'org-babel-min-lines-for-block-output) 0)
+  (set (make-local-variable 'org-export-babel-evaluate) nil)
+  
+  (add-to-list 'org-latex-minted-langs '(stata "c"))
+  
+  (add-hook 'org-babel-after-execute-hook 'org-display-inline-images)
+  
+  (defun my-latex-fixed-width-start (fixed-width backend info)
+    (when (org-export-derived-backend-p backend 'latex)
+      (replace-regexp-in-string
+       "\\(begin{verbatim\\)}"
+       "vspace{-.5em}
+  \\\\begin{columns}
+  \\\\column{.95\\\\linewidth}
+  \\\\begin{block}{}
+  \\\\begin{minted}[linenos=false, fontsize=\\\\footnotesize]{c" fixed-width nil nil 1)))
+  
+  (defun my-latex-fixed-width-end (fixed-width backend info)
+    (when (org-export-derived-backend-p backend 'latex)
+      (replace-regexp-in-string
+       "\\(end\\){\\(verbatim\\)}"
+       "minted}
+  \\\\end{block}
+  \\\\end{columns}
+  \\\\vspace{.5em" fixed-width nil nil 2)))
+  
+  (make-local-variable 'org-export-filter-final-output-functions)
+  
+  (add-to-list 'org-export-filter-final-output-functions
+               'my-latex-fixed-width-start)
+  (add-to-list 'org-export-filter-final-output-functions
+               'my-latex-fixed-width-end)
+#+end_src
+
+* Introduction
+#+LaTeX: \rowcolors{1}{blue!15}{blue!3}
+#+LaTeX: \definecolor{bg}{rgb}{0.95,0.95,0.95}
+#+LaTeX: \definecolor{cbg}{cmyk}{0,0,.1,0}
+
+** Documents for today
+USERNAME: dataclass
+PASSWORD: dataclass
+- Find class materials at:  Scratch > StataStatistics
+- FIRST THING: copy this folder to your desktop!
+
+
+** Organization
+- Please feel free to ask questions at any point if they are relevant to the current topic (or if you are lost!)
+- There will be a Q&A after class for more specific, personalized questions
+- Collaboration with your neighbors is encouraged
+- If you are using a laptop, you will need to adjust paths accordingly
+- Make comments in your Do-file rather than on hand-outs
+- Save on flash drive or email to yourself
+
+** COMMENT Copy the workshop materials to your home directory
+
+- *Log in to an Athena workstation* using your Athena user name and password
+
+- *Click on the "Ubuntu" button* on the upper-left and type "term" as shown below
+#+attr_latex: width=.8\textwidth
+[[./images/OpenTerminal.png]]
+
+- *Click on the "Terminal" icon* as shown above
+
+- In the terminal, *type this line exactly as shown*:
+#+LaTeX: {\footnotesize
+: cd; wget http://tinyurl.com/stata-stats-zip; unzip stata-stats-zip
+#+LaTeX: \normalsize}
+
+- If you see "ERROR 404: Not Found", then you mistyped the command -- try again, making sure to type the command exactly as shown
+
+** COMMENT Launch Stata on Athena
+
+- To start Stata *type these commands in the terminal*:
+:     add stata
+:     xstata
+- Open up today's Stata script
+
+  - In Stata, go to *Window => New do file => Open*
+
+  - Locate and open the =StatStatistics.do= script in the StataStatistics folder in your home directory
+
+- I encourage you to add your own notes to this file!
+
+
+** Today's Dataset
+- We have data on a variety of variables for all 50 states
+- Population, density, energy use, voting tendencies, graduation rates, income, etc.
+- We're going to be predicting SAT scores
+- Univariate Regression: SAT scores and Education Expenditures
+- Does the amount of money spent on education affect the mean SAT score in a state?
+- Dependent variable: csat
+- Independent variable: expense
+
+** Opening Files in Stata
+- Look at bottom left hand corner of Stata screen -- This is the directory Stata is currently reading from
+- Files are located in the StataDatMan folder
+- Start by changing directory and loading the data
+
+
+#+LATEX: \vspace{-.5em} \begin{columns} \column{.85\linewidth} \begin{block}{}
+#+name: changeDirCommand
+#+begin_src stata
+  // change directory
+  cd "C:/Users/dataclass/Desktop/StataStatistics"
+  // use dir to see what is in the directory:
+  dir
+  // tell Stata to use the states data set
+  use states.dta
+#+end_src
+#+LATEX: \end{block} \end{columns}
+
+** Steps for Running Regression
+  1. Examine descriptive statistics
+  2. Look at relationship graphically and test correlation(s)
+  3. Run and interpret regression
+  4. Test regression assumptions
+
+* Univariate regression
+
+** Univariate Regression: Preliminaries
+- We want to predict csat scores from expense
+- First, let's look at some descriptives
+
+#+LATEX: \vspace{-.5em} \begin{columns} \column{.85\linewidth} \begin{block}{}
+#+name:sumStates
+#+begin_src stata 
+  // generate summary statistics for csat and expense
+  sum csat expense
+  // look at codebok
+  codebook csat expense
+#+end_src
+#+LATEX: \end{block} \end{columns}
+
+** Univariate Regression
+- Look at scatterplots, compute correlation matrix, and regress SAT scores on expenditures
+
+#+LATEX: \vspace{-.5em} \begin{columns} \column{.85\linewidth} \begin{block}{}
+#+name: scatterplot1
+#+begin_src stata 
+  // graph expense by csat
+  twoway scatter expense csat
+  
+  // correlate csat and expense
+  pwcorr csat expense, star(.05)
+
+  // run the regression
+  regress csat expense
+#+end_src
+#+LATEX: \end{block} \end{columns}
+
+
+** Postestimation Commands--Predicted and Residual Values
+- Modeling functions in Stata usually save the results so you can do further computations with them--see ~help regress~ for the list of saved values
+- We can use postestimation commands to do computations on the results
+- For example, histogram of the residuals can be informative
+
+#+LATEX: \vspace{-.5em} \begin{columns} \column{.85\linewidth} \begin{block}{}
+#+name: normalitytest1
+#+begin_src stata 
+  // graph the residual values of csat
+  predict resid, residual
+  histogram resid, normal 
+#+end_src
+
+#+LATEX: \vspace{-2em}
+
+#+attr_latex: :width .6\textwidth
+[[file:images/normalHist1.png]]
+
+#+LATEX: \end{block} \end{columns}
+
+** Postestimation Commands: rvfplot
+- We could do this manually with the predicted and residual values we saved earlier, or we can have Stata do it for us with the ~rvfplot~ postestimation command:
+
+#+LATEX: \vspace{-.5em} \begin{columns} \column{.85\linewidth} \begin{block}{}
+#+name: homoscedasticityTest1
+#+begin_src stata 
+  rvfplot
+#+end_src
+
+#+LATEX: \vspace{-2em}
+
+#+attr_latex: :width .6\textwidth
+[[file:images/fittedResidual1.png]]
+
+#+LATEX: \end{block} \end{columns}
+
+* Multiple regression
+
+** Multiple Regression
+- Just keep adding predictors
+- Let's try adding some predictors to the model of SAT scores
+- income :: % students taking SATs 
+- percent :: % adults with HS diploma (high)
+
+** Multiple Regression Preliminaries
+- As before, start with descriptive statistics and correlations
+
+#+LATEX: \vspace{-.5em} \begin{columns} \column{.85\linewidth} \begin{block}{}
+#+name: statsCorrelations1
+#+begin_src stata 
+  // descriptive statistics
+  sum income percent high
+
+  // generate correlation matrix
+  pwcorr csat expense income percent high
+  
+  // regress csat on exense, income, percent, and high\
+  regress csat expense income percent high
+#+end_src
+#+LATEX: \end{block} \end{columns}
+
+** Exercise 1: Multiple Regression
+
+Open the datafile, states.dta.
+1. Select a few variables to use in a multiple regression of your own.  Before running the regression, examine descriptive of the variables and generate a few scatterplots.
+2. Run your regression 
+3. Examine the plausibility of the assumptions of normality and homogeneity
+
+* Interactions and Categorical IV
+
+** Interactions
+- What if we wanted to test an interaction between percent & high?
+- Stata uses the ~#~ sign to represent interactions--see ~help fvvarlist~ for details
+
+
+#+LATEX: \vspace{-.5em} \begin{columns} \column{.85\linewidth} \begin{block}{}
+#+name: genprodbauto
+#+begin_src stata 
+  // use the # sign to represent interactions 
+  regress csat percent high c.percent#c.high
+  // same as . regress csat c.percent##high
+#+end_src
+#+LATEX: \end{block} \end{columns}
+
+- Alternatively we can use the ~##~ operator to automatically include the lower-order terms:
+
+#+LATEX: \vspace{-.5em} \begin{columns} \column{.85\linewidth} \begin{block}{}
+#+name: genprodbauto2
+#+begin_src stata 
+  // use the # sign to represent interactions 
+  regress csat percent high c.percent#c.high
+  // same as . regress csat c.percent##high
+#+end_src
+#+LATEX: \end{block} \end{columns}
+
+
+** Categorical Predictors
+- For categorical variables, we first need to dummy code
+- Use region as example
+  - Option 1: create dummy codes before fitting regression model
+
+#+LATEX: \vspace{-.5em} \begin{columns} \column{.85\linewidth} \begin{block}{}
+#+name: makedummycodes1
+#+begin_src stata
+  // create region dummy codes using tab 
+  tab region, gen(region) // could also use gen / replace
+  
+  //regress csat on region
+  regress csat region1 region2 region3
+#+end_src
+#+LATEX: \end{block} \end{columns}
+
+** Categorical Predictors
+- For categorical variables, we first need to dummy code using ~i.~ notation--see ~help fvvarlist~ for details
+- Use region as example:
+
+
+#+LATEX: \vspace{-.5em} \begin{columns} \column{.85\linewidth} \begin{block}{}
+#+name: regressdummycodes
+#+begin_src stata
+  // regress csat on region using fvvarlist syntax
+  // see help fvvarlist for details
+  regress csat i.region
+#+end_src
+#+LATEX: \end{block} \end{columns}
+
+- You can change the reference level using ~ib#~ notation:
+#+LATEX: \vspace{-.5em} \begin{columns} \column{.85\linewidth} \begin{block}{}
+#+name: regressdummycodes
+#+begin_src stata
+  // regress csat on region using fvvarlist syntax
+  // see help fvvarlist for details
+  regress csat ib4.region
+#+end_src
+#+LATEX: \end{block} \end{columns}
+
+
+** Exercise 2: Regression, Categorical Predictors, & Interactions
+Open the datafile, states.dta.
+1. Add on to the regression equation that you created in exercise 1 by generating an interaction term and testing the interaction.
+2. Try adding a categorical variable to your regression. You could use region or high25, or generate a new categorical variable from one of the continuous variables in the data set.
+
+* Exporting and saving results
+
+** Saving and exporting regression tables
+- Usually when we're running regression, we'll be testing multiple models at a time
+- Can be difficult to compare results
+- Stata offers several user-friendly options for storing and viewing regression output from multiple models
+- First, download the necessary packages:
+
+#+LATEX: \vspace{-.5em} \begin{columns} \column{.85\linewidth} \begin{block}{}
+#+name: getesttaboutreg
+#+begin_src stata 
+ * install outreg2 package
+ findit outreg2
+#+end_src
+#+LATEX: \end{block} \end{columns}
+
+** Saving and replaying
+- You can store regression model results in Stata
+
+
+#+LATEX: \vspace{-.5em} \begin{columns} \column{.85\linewidth} \begin{block}{}
+#+name: storerecall
+#+begin_src stata 
+  // fit two regression models and store the results
+  regress csat expense income percent high
+  estimates store Model1
+  regress csat expense income percent high i.region
+  estimates store Model2
+#+end_src
+#+LATEX: \end{block} \end{columns}
+
+** Saving and replaying
+- Stored models can be recalled
+
+#+LATEX: \vspace{-.5em} \begin{columns} \column{.85\linewidth} \begin{block}{}
+#+name: storerecall2
+#+begin_src stata 
+  // Display Model1
+  estimates replay Model1
+#+end_src
+#+LATEX: \end{block} \end{columns}
+
+** Saving and replaying
+- Stored models can be compared
+
+#+LATEX: \vspace{-.5em} \begin{columns} \column{.85\linewidth} \begin{block}{}
+#+name: storerecall2
+#+begin_src stata 
+  // Compare Model1 and Model2 coefficients
+  estimates table Model1 Model2
+#+end_src
+#+LATEX: \end{block} \end{columns}
+
+** Exporting into Excel
+- Avoid human error when transferring coefficients into tables
+- Excel can be used to format publication-ready tables
+
+#+LATEX: \vspace{-.5em} \begin{columns} \column{.85\linewidth} \begin{block}{}
+#+name: outregdemo
+#+begin_src stata 
+  outreg2 [Model1 Model2] using csatprediction.xls, replace
+#+end_src
+#+LATEX: \end{block} \end{columns}
+
+* Wrap-up
+
+** Help Us Make This Workshop Better
+- Please take a moment to fill out a very short feedback form
+- These workshops exist for you--tell us what you need!
+- [[ttp://tinyurl.com/StataRegressionFeedback]]
+
+** Additional resources
+- training and consulting
+  - IQSS workshops: http://projects.iq.harvard.edu/rtc/filter_by/workshops
+  - IQSS statistical consulting: http://rtc.iq.harvard.edu
+
+- Stata resources
+  - UCLA website: http://www.ats.ucla.edu/stat/Stata/
+  - Great for self-study
+  - Links to resources
+- Stata website: http://www.stata.com/help.cgi?contents
+- Email list: http://www.stata.com/statalist/

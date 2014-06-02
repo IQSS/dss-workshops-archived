@@ -1,0 +1,954 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<title>Stata Graphics</title>
+<!-- 2014-01-16 Thu 22:30 -->
+<meta  http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta  name="generator" content="Org-mode" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { color: green; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  pre.src-sh:before    { content: 'sh'; }
+  pre.src-bash:before  { content: 'sh'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-R:before     { content: 'R'; }
+  pre.src-perl:before  { content: 'Perl'; }
+  pre.src-java:before  { content: 'Java'; }
+  pre.src-sql:before   { content: 'SQL'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.right  { text-align: center;  }
+  th.left   { text-align: center;   }
+  th.center { text-align: center; }
+  td.right  { text-align: right;  }
+  td.left   { text-align: left;   }
+  td.center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara:nth-child(2) { display: inline; }
+  .footpara { display: block; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  /*]]>*/-->
+</style>
+<link rel="stylesheet" type="text/css" href="style.css" />
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2013 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+</head>
+<body>
+<div id="content">
+<h1 class="title">Stata Graphics</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#sec-1">1. Introduction</a>
+<ul>
+<li><a href="#sec-1-1">1.1. Copy the workshop materials to your home directory</a></li>
+<li><a href="#sec-1-2">1.2. Launch Stata on Athena</a></li>
+<li><a href="#sec-1-3">1.3. Organization</a></li>
+</ul>
+</li>
+<li><a href="#sec-2">2. Univariate Graphics</a>
+<ul>
+<li><a href="#sec-2-1">2.1. Our First Dataset</a></li>
+<li><a href="#sec-2-2">2.2. Single Continuous Variables</a></li>
+<li><a href="#sec-2-3">2.3. Histogram Options</a></li>
+<li><a href="#sec-2-4">2.4. Histogram Example</a></li>
+<li><a href="#sec-2-5">2.5. Axis Titles and Labels</a></li>
+<li><a href="#sec-2-6">2.6. Axis Labels Example</a></li>
+<li><a href="#sec-2-7">2.7. Basic Graphing: Single Categorical Variables</a></li>
+<li><a href="#sec-2-8">2.8. Exercise 1: Histograms Bar Graphs</a></li>
+<li><a href="#sec-2-9">2.9. Next Dataset:</a></li>
+</ul>
+</li>
+<li><a href="#sec-3">3. Bivariate Graphics</a>
+<ul>
+<li><a href="#sec-3-1">3.1. The Twoway Family</a></li>
+<li><a href="#sec-3-2">3.2. Twoway and the "by" Statement</a></li>
+<li><a href="#sec-3-3">3.3. Twoway Title Options</a></li>
+<li><a href="#sec-3-4">3.4. Twoway Title Options Example</a></li>
+<li><a href="#sec-3-5">3.5. Twoway Symbol Options</a></li>
+<li><a href="#sec-3-6">3.6. Twoway Symbol Options</a></li>
+<li><a href="#sec-3-7">3.7. Overlaying Twoway Graphs</a></li>
+<li><a href="#sec-3-8">3.8. Overlaying Points and Lines</a></li>
+<li><a href="#sec-3-9">3.9. Overlaying Points and Labels</a></li>
+<li><a href="#sec-3-10">3.10. Exercise 2: The TwoWay Family</a></li>
+</ul>
+</li>
+<li><a href="#sec-4">4. More Fun with Twoway Line Graphs</a>
+<ul>
+<li><a href="#sec-4-1">4.1. Line Graphs</a></li>
+<li><a href="#sec-4-2">4.2. Line Graphs</a></li>
+<li><a href="#sec-4-3">4.3. Line Graphs</a></li>
+<li><a href="#sec-4-4">4.4. Stata Graphing Lines</a></li>
+<li><a href="#sec-4-5">4.5. Exporting Graphs</a></li>
+</ul>
+</li>
+<li><a href="#sec-5">5. Wrap-up</a>
+<ul>
+<li><a href="#sec-5-1">5.1. Help Us Make This Workshop Better</a></li>
+<li><a href="#sec-5-2">5.2. Additional resources</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> Introduction</h2>
+<div class="outline-text-2" id="text-1">
+</div>
+
+<div id="outline-container-sec-1-1" class="outline-3">
+<h3 id="sec-1-1"><span class="section-number-3">1.1</span> Copy the workshop materials to your home directory</h3>
+<div class="outline-text-3" id="text-1-1">
+<ul class="org-ul">
+<li><b>Log in to an Athena workstation</b> using your Athena user name and password
+</li>
+
+<li><b>Click on the "Ubuntu" button</b> on the upper-left and type "term" as shown below
+</li>
+</ul>
+
+<div class="figure">
+<p><img src="./images/OpenTerminal.png" alt="OpenTerminal.png" />
+</p>
+</div>
+
+<ul class="org-ul">
+<li><b>Click on the "Terminal" icon</b> as shown above
+</li>
+
+<li>In the terminal, <b>type this line exactly as shown</b>:
+</li>
+</ul>
+<pre class="example">
+cd; wget j.mp/stata-graph; unzip stata-graph
+</pre>
+<ul class="org-ul">
+<li>If you see "ERROR 404: Not Found", then you mistyped the command &#x2013; try again, making sure to type the command exactly as shown. If it still doesn't work, open <a href="http://j.mp/stata-graph">http://j.mp/stata-graph</a> in a web browser and extract the zip file to your home directory.
+</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-sec-1-2" class="outline-3">
+<h3 id="sec-1-2"><span class="section-number-3">1.2</span> Launch Stata on Athena</h3>
+<div class="outline-text-3" id="text-1-2">
+<ul class="org-ul">
+<li>To start Stata <b>type these commands in the terminal</b>:
+</li>
+</ul>
+<pre class="example">
+add stata
+xstata
+</pre>
+<ul class="org-ul">
+<li>Open up today's Stata script
+
+<ul class="org-ul">
+<li>In Stata, go to <b>Window =&gt; New do file =&gt; Open</b>
+</li>
+
+<li>Locate and open the <code>StataGraphics.do</code> script in the StataGraphics folder in your home directory
+</li>
+</ul>
+</li>
+
+<li>I encourage you to add your own notes to this file!
+</li>
+</ul>
+</div>
+</div>
+
+
+<div id="outline-container-sec-1-3" class="outline-3">
+<h3 id="sec-1-3"><span class="section-number-3">1.3</span> Organization</h3>
+<div class="outline-text-3" id="text-1-3">
+<ul class="org-ul">
+<li>Please feel free to ask questions at any point if they are relevant to the current topic (or if you are lost!)
+</li>
+<li>There will be a Q&amp;A after class for more specific, personalized questions
+</li>
+<li>Collaboration with your neighbors is encouraged
+</li>
+<li>If you are using a laptop, you will need to adjust paths accordingly
+</li>
+<li>Make comments in your Do-file rather than on hand-outs
+</li>
+<li>Save on flash drive or email to yourself
+</li>
+</ul>
+</div>
+
+
+<ol class="org-ol"><li>Graphing Strategies<br  /><div class="outline-text-4" id="text-1-3-1">
+<ul class="org-ul">
+<li>Keep it simple
+</li>
+<li>Labels, labels, labels!!
+</li>
+<li>Avoid cluttered graphs
+</li>
+<li>Every part of the graph should be meaningful
+</li>
+<li>Avoid:
+<ul class="org-ul">
+<li>Shading
+</li>
+<li>Distracting colors
+</li>
+<li>Decoration
+</li>
+</ul>
+</li>
+
+<li>Always know what you’re working with before you get started
+<ul class="org-ul">
+<li>Recognize scale of data
+</li>
+<li>If you’re using multiple variables – how do their scales align?
+</li>
+</ul>
+</li>
+<li>Before any graphing procedure review variables with <code>codebook</code>, <code>sum</code>, <code>tab</code>, etc.
+</li>
+<li>HELPFUL STATA HINT:  If you want your command to go on multiple lines use <code>///</code> at end of each line
+</li>
+</ul>
+</div>
+</li>
+
+<li>Terrible Graph<br  /><div class="outline-text-4" id="text-1-3-2">
+
+<div class="figure">
+<p><img src="./images/Terrible.png" alt="Terrible.png" />
+</p>
+</div>
+</div>
+</li>
+<li>Much Better Graph<br  /><div class="outline-text-4" id="text-1-3-3">
+
+<div class="figure">
+<p><img src="./images/Good.png" alt="Good.png" />
+</p>
+</div>
+</div>
+</li></ol>
+</div>
+</div>
+
+
+
+<div id="outline-container-sec-2" class="outline-2">
+<h2 id="sec-2"><span class="section-number-2">2</span> Univariate Graphics</h2>
+<div class="outline-text-2" id="text-2">
+</div><div id="outline-container-sec-2-1" class="outline-3">
+<h3 id="sec-2-1"><span class="section-number-3">2.1</span> Our First Dataset</h3>
+<div class="outline-text-3" id="text-2-1">
+<ul class="org-ul">
+<li>Time Magazine Public School Poll
+<ul class="org-ul">
+<li>Based on survey of 1,000 adults in U.S.
+</li>
+<li>Conducted in August 2010
+</li>
+<li>Questions regarding feelings about parental involvement, teachers union, current potential for reform
+</li>
+</ul>
+</li>
+
+<li>Open Stata and call up the datafile for today
+</li>
+</ul>
+
+<div class="org-src-container">
+
+<pre class="src src-stata" id="OpenData"><span style="color: #b22222;">// Step 1: tell Stata where to find data:</span>
+<span style="color: #a020f0;">cd</span> /Users/dataclass/Desktop/StataGraphics/dataSets
+<span style="color: #b22222;">// Step 2: call up our dataset:</span>
+<span style="color: #a020f0;">use</span> TimePollPubSchools.dta
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-2-2" class="outline-3">
+<h3 id="sec-2-2"><span class="section-number-3">2.2</span> Single Continuous Variables</h3>
+<div class="outline-text-3" id="text-2-2">
+<p>
+Example: Histograms
+</p>
+<ul class="org-ul">
+<li>Stata assumes you’re working with continuous data
+</li>
+<li>Very simple syntax: 
+<ul class="org-ul">
+<li><code>hist varname</code>
+</li>
+</ul>
+</li>
+<li>Put a comma after your varname and start adding options
+<ul class="org-ul">
+<li><code>bin(#)</code> : change the number of bars that the graph displays
+</li>
+<li><code>normal</code> : overlay normal curve
+</li>
+<li><code>addlabels</code> : add actual values to bars
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-2-3" class="outline-3">
+<h3 id="sec-2-3"><span class="section-number-3">2.3</span> Histogram Options</h3>
+<div class="outline-text-3" id="text-2-3">
+<ul class="org-ul">
+<li>To change the numeric depiction of your data add these options after the comma 
+<ul class="org-ul">
+<li>Choose one: density fraction frequency percent
+</li>
+</ul>
+</li>
+<li>Be sure to properly describe your histogram:
+<ul class="org-ul">
+<li><code>title(insert name of graph)</code>
+</li>
+<li><code>subtitle(insert subtitle of graph)</code>
+</li>
+<li><code>note(insert note to appear at bottom of graph)</code>
+</li>
+<li><code>caption(insert caption to appear below notes)</code>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-sec-2-4" class="outline-3">
+<h3 id="sec-2-4"><span class="section-number-3">2.4</span> Histogram Example</h3>
+<div class="outline-text-3" id="text-2-4">
+<div class="org-src-container">
+
+<pre class="src src-stata" id="hist1">hist F1, bin(10) percent title(TITLE) <span style="color: #b22222;">///</span>
+  subtitle(SUBTITLE) caption(CAPTION) <span style="color: #008b8b;">note</span>(NOTES)
+</pre>
+</div>
+
+
+<div class="figure">
+<p><img src="./images/hist1.png" alt="hist1.png" />
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-2-5" class="outline-3">
+<h3 id="sec-2-5"><span class="section-number-3">2.5</span> Axis Titles and Labels</h3>
+<div class="outline-text-3" id="text-2-5">
+<p>
+Example: Histograms
+</p>
+<ul class="org-ul">
+<li>Axis title options (default is variable label):
+<ul class="org-ul">
+<li><code>xtitle(insert x axis name)</code>
+</li>
+<li><code>ytitle(insert y axis name)</code>
+</li>
+</ul>
+</li>
+<li>Don’t want axis titles?
+<ul class="org-ul">
+<li><code>xtitle("")</code>
+</li>
+<li><code>ytitle("")</code>
+</li>
+</ul>
+</li>
+
+<li>Add labels to X or Y axis:
+<ul class="org-ul">
+<li>xlabel(insert x axis label)
+</li>
+<li>ylabel(insert y axis label)
+</li>
+</ul>
+</li>
+<li>Tell Stata how to scale each axis
+<ul class="org-ul">
+<li>xlabel(start#(increment)end#)
+</li>
+<li>xlabel(0(5)100)
+</li>
+</ul>
+</li>
+<li>This would label x-axis from 0-100 in increments of 5
+</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-sec-2-6" class="outline-3">
+<h3 id="sec-2-6"><span class="section-number-3">2.6</span> Axis Labels Example</h3>
+<div class="outline-text-3" id="text-2-6">
+<div class="org-src-container">
+
+<pre class="src src-stata" id="hist2">hist F1, bin(10) percent title(TITLE) subtitle(SUBTITLE) <span style="color: #b22222;">///</span>
+    caption(CAPTION) <span style="color: #008b8b;">note</span>(NOTES) <span style="color: #b22222;">///</span>
+    xtitle(Here's your x-axis title) <span style="color: #b22222;">///</span>
+ytitle(here's your y-axis title)
+</pre>
+</div>
+
+
+<div class="figure">
+<p><img src="./images/hist2.png" alt="hist2.png" />
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-2-7" class="outline-3">
+<h3 id="sec-2-7"><span class="section-number-3">2.7</span> Basic Graphing: Single Categorical Variables</h3>
+<div class="outline-text-3" id="text-2-7">
+<ul class="org-ul">
+<li>We can also use the <code>hist</code> command for bar graphs
+<ul class="org-ul">
+<li>Simply specify "discrete" with options 
+</li>
+</ul>
+</li>
+<li>Stata will produce one bar for each level (i.e. category) of variable
+</li>
+<li>Use <code>xlabel</code> command to insert names of individual categories
+</li>
+</ul>
+
+
+<div class="org-src-container">
+
+<pre class="src src-stata" id="bargraph">hist F4, title(Racial breakdown of Time Poll Sample) xtitle(Race) <span style="color: #b22222;">///</span>
+ytitle(Percent) <span style="color: #228b22;">xlabel</span>(1 <span style="color: #8b2252;">"White"</span> 2 <span style="color: #8b2252;">"Black"</span> 3 <span style="color: #8b2252;">"Asian"</span> 4 <span style="color: #8b2252;">"Hispanic"</span> <span style="color: #b22222;">///</span>
+ 5 <span style="color: #8b2252;">"Other"</span>) discrete percent addlabels
+</pre>
+</div>
+
+
+<div class="figure">
+<p><img src="./images/bargraph.png" alt="bargraph.png" />
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-2-8" class="outline-3">
+<h3 id="sec-2-8"><span class="section-number-3">2.8</span> Exercise 1: Histograms Bar Graphs</h3>
+<div class="outline-text-3" id="text-2-8">
+<ol class="org-ol">
+<li>Open the datafile, NatNeighCrimeStudy.dta.
+</li>
+<li>Create a histogram of the tract-level poverty rate (variable name: <code>T_POVRTY</code>).
+</li>
+<li>Insert the normal curve over the histogram
+</li>
+<li>Change the numeric representation on the Y-axis to "percent"
+</li>
+<li>Add appropriate titles to the overall graph and the x axis and y axis.  Also, add a note that states the source of this data.
+</li>
+<li>Open the datafile, TimePollPubSchools.dta
+</li>
+<li>Create  a histogram of the question, "What grade would you give your child’s school" (variable name: Q11).  Be sure to tell Stata that this is a categorical variable.
+</li>
+<li>Format this graph so that the axes have proper titles and labels.  Also, add an appropriate title to the overall graph that goes onto two lines.  Add a note stating the source of the data.
+</li>
+</ol>
+</div>
+</div>
+
+<div id="outline-container-sec-2-9" class="outline-3">
+<h3 id="sec-2-9"><span class="section-number-3">2.9</span> Next Dataset:</h3>
+<div class="outline-text-3" id="text-2-9">
+<ul class="org-ul">
+<li>National  Neighborhood Crime Study (NNCS)
+<ul class="org-ul">
+<li>N=9,593 census tracts in 2000
+</li>
+<li>Explore sources of variation in crime for communities in the United States
+</li>
+<li>Tract-level data: crime, social disorganization, disadvantage, socioeconomic inequality
+</li>
+<li>City-level data: labor market, socioeconomic inequality, population change
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-3" class="outline-2">
+<h2 id="sec-3"><span class="section-number-2">3</span> Bivariate Graphics</h2>
+<div class="outline-text-2" id="text-3">
+</div><div id="outline-container-sec-3-1" class="outline-3">
+<h3 id="sec-3-1"><span class="section-number-3">3.1</span> The Twoway Family</h3>
+<div class="outline-text-3" id="text-3-1">
+<ul class="org-ul">
+<li><code>twoway</code> is basic Stata command for all twoway graphs
+</li>
+<li>Use <code>twoway</code> anytime you want to make comparisons among variables
+</li>
+<li>Can be used to combine graphs (i.e., overlay one graph with another
+<ul class="org-ul">
+<li>e.g., insert line of best fit over a scatter plot
+</li>
+</ul>
+</li>
+
+<li>Some basic examples:
+</li>
+</ul>
+<div class="org-src-container">
+
+<pre class="src src-stata" id="twowayBasic"><span style="color: #a020f0;">use</span> NatNeighCrimeStudy.dta
+twoway scatter T_PERCAP T_VIOLNT
+twoway dropline T_PERCAP T_VIOLNT
+twoway  lfitci T_PERCAP T_VIOLNT
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-3-2" class="outline-3">
+<h3 id="sec-3-2"><span class="section-number-3">3.2</span> Twoway and the "by" Statement</h3>
+<div class="outline-text-3" id="text-3-2">
+<div class="org-src-container">
+
+<pre class="src src-stata" id="XXX">twoway scatter T_PERCAP T_VIOLNT, <span style="color: #228b22;">by</span>(DIVISION)
+</pre>
+</div>
+
+
+
+
+<div class="figure">
+<p><img src="./images/twowayby.png" alt="twowayby.png" />
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-3-3" class="outline-3">
+<h3 id="sec-3-3"><span class="section-number-3">3.3</span> Twoway Title Options</h3>
+<div class="outline-text-3" id="text-3-3">
+<ul class="org-ul">
+<li>Same title options as with histogram
+<ul class="org-ul">
+<li><code>title(insert name of graph)</code>
+</li>
+<li><code>subtitle(insert subtitle of graph)</code>
+</li>
+<li><code>note(insert note to appear at bottom of graph)</code>
+</li>
+<li><code>caption(insert caption to appear below notes)</code>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-sec-3-4" class="outline-3">
+<h3 id="sec-3-4"><span class="section-number-3">3.4</span> Twoway Title Options Example</h3>
+<div class="outline-text-3" id="text-3-4">
+<div class="org-src-container">
+
+<pre class="src src-stata" id="TwowayTitleOptinsExample">twoway scatter T_PERCAP T_VIOLNT, <span style="color: #b22222;">///</span>
+    title(Comparison of Per Capita Income <span style="color: #b22222;">///</span>
+          and Violent Crime Rate at Tract level) <span style="color: #b22222;">///</span>
+xtitle(Violent Crime Rate) ytitle(Per Capita Income) <span style="color: #b22222;">///</span>
+    <span style="color: #008b8b;">note</span>(Source: National Neighborhood Crime Study 2000)
+</pre>
+</div>
+
+<ul class="org-ul">
+<li>The title is a bit cramped&#x2013;let's fix that:
+</li>
+</ul>
+
+<div class="org-src-container">
+
+<pre class="src src-stata" id="TwowayTitleOptinsExample2">twoway scatter T_PERCAP T_VIOLNT, <span style="color: #b22222;">///</span>
+    title(<span style="color: #8b2252;">"Comparison of Per Capita Income"</span> <span style="color: #b22222;">///</span>
+<span style="color: #8b2252;">"and Violent Crime Rate at Tract level"</span>) <span style="color: #b22222;">///</span>
+xtitle(Violent Crime Rate) ytitle(Per Capita Income) <span style="color: #b22222;">///</span>
+note(Source: National Neighborhood Crime Study 2000)
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-3-5" class="outline-3">
+<h3 id="sec-3-5"><span class="section-number-3">3.5</span> Twoway Symbol Options</h3>
+<div class="outline-text-3" id="text-3-5">
+<ul class="org-ul">
+<li>A variety of symbol shapes are available: use <code>palette symbolpalette</code> to seem them and <code>msymbol()</code> to set them
+</li>
+</ul>
+
+<div class="figure">
+<p><img src="./images/Symbol.png" alt="Symbol.png" />
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-3-6" class="outline-3">
+<h3 id="sec-3-6"><span class="section-number-3">3.6</span> Twoway Symbol Options</h3>
+<div class="outline-text-3" id="text-3-6">
+<div class="org-src-container">
+
+<pre class="src src-stata" id="TwowaySymbolOptinsExample">twoway scatter T_PERCAP T_VIOLNT, <span style="color: #b22222;">///</span>
+    title(<span style="color: #8b2252;">"Comparison of Per Capita Income"</span> <span style="color: #b22222;">///</span>
+<span style="color: #8b2252;">"and Violent Crime Rate at Tract level"</span>) <span style="color: #b22222;">///</span>
+xtitle(Violent Crime Rate) ytitle(Per Capita Income) <span style="color: #b22222;">///</span>
+note(Source: National Neighborhood Crime Study 2000) <span style="color: #b22222;">///</span>
+msymbol(Sh) mcolor(<span style="color: #8b2252;">"red"</span>)
+</pre>
+</div>
+
+
+<div class="figure">
+<p><img src="./images/msymbol_mcolor.png" alt="msymbol_mcolor.png" />
+</p>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-sec-3-7" class="outline-3">
+<h3 id="sec-3-7"><span class="section-number-3">3.7</span> Overlaying Twoway Graphs</h3>
+<div class="outline-text-3" id="text-3-7">
+<ul class="org-ul">
+<li>Very simple to combine multiple graphs…just put each graph command in parentheses
+<ul class="org-ul">
+<li><code>twoway (scatter var1 var2) (lfit var1 var2)</code>
+</li>
+</ul>
+</li>
+<li>Add individual options to each graph within the parentheses
+</li>
+<li>Add overall graph options as usual following the comma 
+<ul class="org-ul">
+<li><code>twoway (scatter var1 var2) (lfit var1 var2), options</code>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-sec-3-8" class="outline-3">
+<h3 id="sec-3-8"><span class="section-number-3">3.8</span> Overlaying Points and Lines</h3>
+<div class="outline-text-3" id="text-3-8">
+<div class="org-src-container">
+
+<pre class="src src-stata" id="TwowayPointsLinesExample">twoway (scatter T_PERCAP T_VIOLNT) <span style="color: #b22222;">///</span>
+    (lfit T_PERCAP T_VIOLNT), <span style="color: #b22222;">///</span>
+    title(<span style="color: #8b2252;">"Comparison of Per Capita Income"</span> <span style="color: #b22222;">///</span>
+          <span style="color: #8b2252;">"and Violent Crime Rate at Tract level"</span>) <span style="color: #b22222;">///</span>
+    xtitle(Violent Crime Rate) ytitle(Per Capita Income) <span style="color: #b22222;">///</span>
+    <span style="color: #008b8b;">note</span>(Source: National  Neighborhood Crime Study 2000)
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-3-9" class="outline-3">
+<h3 id="sec-3-9"><span class="section-number-3">3.9</span> Overlaying Points and Labels</h3>
+<div class="outline-text-3" id="text-3-9">
+<div class="org-src-container">
+
+<pre class="src src-stata" id="TwowayPointsLabelsExample">twoway (scatter T_PERCAP T_VIOLNT if T_VIOLNT==1976, <span style="color: #b22222;">///</span>
+        mlabel(CITY)) (scatter T_PERCAP T_VIOLNT), <span style="color: #b22222;">///</span>
+    title(<span style="color: #8b2252;">"Comparison of Per Capita Income"</span> <span style="color: #b22222;">///</span>
+          <span style="color: #8b2252;">"and Violent Crime Rate at Tract level"</span>) <span style="color: #b22222;">///</span>
+    <span style="color: #228b22;">xlabel</span>(0(200)2400) <span style="color: #008b8b;">note</span>(Source: National Neighborhood <span style="color: #b22222;">///</span>
+                            Crime Study 2000) legend(off)
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-3-10" class="outline-3">
+<h3 id="sec-3-10"><span class="section-number-3">3.10</span> Exercise 2: The TwoWay Family</h3>
+<div class="outline-text-3" id="text-3-10">
+<p>
+Open the datafile, NatNeighCrimeStudy.dta.
+</p>
+<ol class="org-ol">
+<li>Create a basic twoway scatterplot that compares the city unemployment rate (<code>C_UNEMP</code>) to the percent secondary sector low-wage jobs (<code>C_SSLOW</code>)
+</li>
+<li>Generate the same scatterplot, but this time, divide the plot by the dummy variable indicating whether the city is located in the south or not (<code>C_SOUTH</code>)
+</li>
+<li>Change the color of the symbol that you use in this scatter plot
+</li>
+<li>Change the type of symbol you use to a marker of your choice
+</li>
+<li>Notice in your scatterplot that is broken down by <code>C_SOUTH</code>  that there is an outlier in the upper right hand corner of the "Not South" graph.  Add the city name label to this marker. 
+</li>
+<li>Review the options available under "help twoway<sub>options</sub>" and change one aspect of your graph using an option that we haven’t already reviewed
+</li>
+</ol>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-4" class="outline-2">
+<h2 id="sec-4"><span class="section-number-2">4</span> More Fun with Twoway Line Graphs</h2>
+<div class="outline-text-2" id="text-4">
+</div><div id="outline-container-sec-4-1" class="outline-3">
+<h3 id="sec-4-1"><span class="section-number-3">4.1</span> Line Graphs</h3>
+<div class="outline-text-3" id="text-4-1">
+<ul class="org-ul">
+<li>Line graphs helpful for a variety of data
+<ul class="org-ul">
+<li>Especially any type of time series data
+</li>
+</ul>
+</li>
+<li>We’ll use data on US life expectancy from 1900-1999
+<ul class="org-ul">
+<li><code>webuse uslifeexp, clear</code>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-sec-4-2" class="outline-3">
+<h3 id="sec-4-2"><span class="section-number-3">4.2</span> Line Graphs</h3>
+<div class="outline-text-3" id="text-4-2">
+<div class="org-src-container">
+
+<pre class="src src-stata" id="TwowayLinegraphExample2">webuse uslifeexp, <span style="color: #a020f0;">clear</span>
+twoway (line le_wm year, mcolor(<span style="color: #8b2252;">"red"</span>)) <span style="color: #b22222;">///</span>
+    (line le_bm year, mcolor(<span style="color: #8b2252;">"green"</span>))
+</pre>
+</div>
+
+
+<div class="figure">
+<p><img src="./images/lineGraph1.png" alt="lineGraph1.png" />
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-4-3" class="outline-3">
+<h3 id="sec-4-3"><span class="section-number-3">4.3</span> Line Graphs</h3>
+<div class="outline-text-3" id="text-4-3">
+<div class="org-src-container">
+
+<pre class="src src-stata" id="TwowayLineGraphExample2">twoway (line (le_wfemale le_wmale le_bf le_bm) year, <span style="color: #b22222;">///</span>
+    lpattern(dot solid dot solid))
+</pre>
+</div>
+
+
+<div class="figure">
+<p><img src="./images/linegraph2.png" alt="linegraph2.png" />
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-4-4" class="outline-3">
+<h3 id="sec-4-4"><span class="section-number-3">4.4</span> Stata Graphing Lines</h3>
+<div class="outline-text-3" id="text-4-4">
+<div class="org-src-container">
+
+<pre class="src src-stata" id="TwowayPointsLinesExample">palette linepalette
+</pre>
+</div>
+
+
+<div class="figure">
+<p><img src="./images/linepalette.png" alt="linepalette.png" />
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-4-5" class="outline-3">
+<h3 id="sec-4-5"><span class="section-number-3">4.5</span> Exporting Graphs</h3>
+<div class="outline-text-3" id="text-4-5">
+<ul class="org-ul">
+<li>From Stata, right click on image and select "save as" or try syntax:
+<ul class="org-ul">
+<li><code>graph export myfig.esp, replace</code>
+</li>
+</ul>
+</li>
+<li>In Microsoft Word: insert &gt; picture &gt; from file
+<ul class="org-ul">
+<li>Or, right click on graph in Stata and copy and paste into Word
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-sec-5" class="outline-2">
+<h2 id="sec-5"><span class="section-number-2">5</span> Wrap-up</h2>
+<div class="outline-text-2" id="text-5">
+</div><div id="outline-container-sec-5-1" class="outline-3">
+<h3 id="sec-5-1"><span class="section-number-3">5.1</span> Help Us Make This Workshop Better</h3>
+<div class="outline-text-3" id="text-5-1">
+<ul class="org-ul">
+<li>Please take a moment to fill out a very short feedback form
+</li>
+<li>These workshops exist for you&#x2013;tell us what you need!
+</li>
+<li><a href="http://tinyurl.com/StataGraphicsFeedback">http://tinyurl.com/StataGraphicsFeedback</a>
+</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-sec-5-2" class="outline-3">
+<h3 id="sec-5-2"><span class="section-number-3">5.2</span> Additional resources</h3>
+<div class="outline-text-3" id="text-5-2">
+<ul class="org-ul">
+<li>training and consulting
+<ul class="org-ul">
+<li>IQSS workshops: <a href="http://projects.iq.harvard.edu/rtc/filter_by/workshops">http://projects.iq.harvard.edu/rtc/filter_by/workshops</a>
+</li>
+<li>IQSS statistical consulting: <a href="http://rtc.iq.harvard.edu">http://rtc.iq.harvard.edu</a>
+</li>
+</ul>
+</li>
+
+<li>Stata resources
+<ul class="org-ul">
+<li>UCLA website: <a href="http://www.ats.ucla.edu/stat/Stata/">http://www.ats.ucla.edu/stat/Stata/</a>
+</li>
+<li>Great for self-study
+</li>
+<li>Links to resources
+</li>
+</ul>
+</li>
+<li>Stata website: <a href="http://www.stata.com/help.cgi?contents">http://www.stata.com/help.cgi?contents</a>
+</li>
+<li>Email list: <a href="http://www.stata.com/statalist/">http://www.stata.com/statalist/</a>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="date">Created: 2014-01-16 Thu 22:30</p>
+<p class="creator"><a href="http://www.gnu.org/software/emacs/">Emacs</a> 24.3.1 (<a href="http://orgmode.org">Org</a> mode 8.2.5c)</p>
+<p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>
