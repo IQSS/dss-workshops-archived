@@ -97,10 +97,10 @@ R is a programming language designed for statistical computing. Notable characte
 ** Coming to R
 Comming from...
 #+LATEX: {\footnotesize
-- matlab :: http://www.math.umaine.edu/~hiebeler/comp/matlabR.pdf
-- SciPy :: http://mathesaurus.sourceforge.net/matlab-python-xref.pdf
+- Stata :: http://www.princeton.edu/~otorres/RStata.pdf
 - SAS/SPSS :: http://www.et.bs.ehu.es/~etptupaf/pub/R/RforSAS&SPSSusers.pdf 
-- Stata :: http://www.dss.princeton.edu/training/RStata.pdf
+- matlab :: http://www.math.umaine.edu/~hiebeler/comp/matlabR.pdf
+- Python :: http://mathesaurus.sourceforge.net/matlab-python-xref.pdf
 #+LATEX: }
 
 * Graphical User Interfaces
@@ -165,7 +165,7 @@ Emacs + ESS is a very powerful combination, but can be difficult to set up
   - Very helpful if you are absentminded like me and frequently forget what names you gave your data!
 
 
-** Launch RStudio on Athena					   :noexport:
+** Launch RStudio on Athena					   :mitsetup:
 
 - To start R *type these commands in the terminal*:
 :     add r
@@ -181,9 +181,9 @@ Emacs + ESS is a very powerful combination, but can be difficult to set up
 - I encourage you to add your own notes to this file!
 
 
-** Launch RStudio 						   :noexport:
+** Launch RStudio 						   :labsetup:
 
-- Open the RStudio program from the Windows start menu
+- Open the RStudio program
 
 - Open up today's R script
 
@@ -194,42 +194,6 @@ Emacs + ESS is a very powerful combination, but can be difficult to set up
 - Go to *Tools => Set working directory => To source file location* (more on the working directory later)
 
 - I encourage you to add your own notes to this file!
-  
-** Asking R for help
-
-- Start html help, search/browse using web browser
-  - at the R console:
-    src_R[:exports code :eval no]{help.start()}
-
-  - or use the help menu from you GUI
-
-- Look up the documentation for a function
-  src_R[:exports code :eval no]{help(topicName)}
-
-  src_R[:exports code :eval no]{?topicName}
-
-- Look up documentation for a package
-  src_R[:exports code :eval no]{help(package="packageName")}
-
-- Search documentation from R (not always the best way... google often works better)
-  src_R[:exports code :eval no]{help.search("topicName")}
-
-** R packages and libraries
-
-There are thousands of R packages that extend R's capabilities.
-
-- To view available packages: 
-  src_R[:exports code :eval no]{library()}
-
-- To see what packages are loaded: 
-  src_R[:exports code :eval no]{search()}
-
-- To load a package: 
-  src_R[:exports code :eval no]{library("packageName")}
-
-- Install new package: 
-  src_R[:exports code :eval no]{install.packages("packageName")}
-
 
 ** Things to keep in mind
 
@@ -257,7 +221,6 @@ There are thousands of R packages that extend R's capabilities.
 2. See if you can find the help page for the "mean" topic
 3. Using any means available, try to figure out how to run a linear regression model in R
 4. Go to [[http://cran.r-project.org/web/views/]] and skim the topic closest to your field/interests
-
 
 
 * Data and Functions
@@ -348,6 +311,45 @@ Examples:
 [1] 3.4641
 > 
 #+end_example
+
+
+* Help and package management
+  
+** Asking R for help
+
+- Start html help, search/browse using web browser
+  - at the R console:
+    src_R[:exports code :eval no]{help.start()}
+
+  - or use the help menu from you GUI
+
+- Look up the documentation for a function
+  src_R[:exports code :eval no]{help(topicName)}
+
+  src_R[:exports code :eval no]{?topicName}
+
+- Look up documentation for a package
+  src_R[:exports code :eval no]{help(package="packageName")}
+
+- Search documentation from R (not always the best way... google often works better)
+  src_R[:exports code :eval no]{help.search("topicName")}
+
+** R packages and libraries
+
+There are thousands of R packages that extend R's capabilities.
+
+- To view available packages: 
+  src_R[:exports code :eval no]{library()}
+
+- To see what packages are loaded: 
+  src_R[:exports code :eval no]{search()}
+
+- To load a package: 
+  src_R[:exports code :eval no]{library("packageName")}
+
+- Install new package: 
+  src_R[:exports code :eval no]{install.packages("packageName")}
+
 
 
 * Getting data into R
@@ -532,7 +534,8 @@ character(0)
 
 When you close R you will be asked if you want to save your workspace -- if you choose yes then your workspace will be restored next time you start R
 
-** Exercise 2: loading and manipulating data
+
+** Exercise 1
 
 1. Load the foreign package if you haven't already done so (~library(foreign)~)
 
@@ -697,9 +700,18 @@ Now that we have made some changes to our GSS data set, we might want to save th
 #+end_src
 
 #+RESULTS: dataExportExamples
+#+begin_example
+> # write data to a .csv file
+> write.csv(datGSS, file = "gss.csv")
+> # write data to a Stata file
+> write.dta(datGSS, file = "gss.dta")
+> # write data to an R file
+> saveRDS(datGSS, file = "gss.rds")
+> 
+#+end_example
 
 
-** Exercise 3: Data manipulation
+** Exercise 2: Data manipulation
 Use the gss.rds data set
 
 1. Generate the following variables:
@@ -711,6 +723,7 @@ Use the gss.rds data set
    - How many columns does it have?
    - What is the class of the "satjob" variable?
 4. BONUS (hard): Generate a variable named "dual.earn" equal to 1 if both wkftwife = 1 and wkfthusb = 1, and zero otherwise
+
 
 
 * Basic Statistics and Graphs
