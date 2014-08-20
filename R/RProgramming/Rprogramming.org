@@ -134,6 +134,7 @@ Vectors have a \emph{class} which determines how functions treat them
 #+HTML: <!-- MD: *** =sample_code-->
 #+name: classComputations
 #+begin_src R
+  num.var <- "a"
   class(num.var)
   mean(num.var) # take the mean of a numeric vector
   class(char.var)
@@ -143,10 +144,11 @@ Vectors have a \emph{class} which determines how functions treat them
 
 #+RESULTS: classComputations
 #+begin_example
+> num.var <- "a"
 > class(num.var)
-[1] "numeric"
+[1] "character"
 > mean(num.var) # take the mean of a numeric vector
-[1] 2.5
+[1] NA
 > class(char.var)
 [1] "character"
 > mean(char.var) # cannot average characters

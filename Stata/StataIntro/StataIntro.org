@@ -27,6 +27,11 @@
   (load-file "../setupEnvironment.el")
 #+end_src
 
+#+name: stataPreamble
+#+begin_src stata :exports none :results silent :tangle no
+  set more off
+#+end_src
+
 
 * Introduction
 
@@ -95,9 +100,9 @@ PASSWORD: dataclass
 ** Commenting and formatting syntax
 - Start with comment describing your Do-file and use comments throughout
 - Single line and block comments
-#+LATEX: \vspace{-.5em} \begin{columns} \column{.85\linewidth} \begin{block}{}
+{{{bstart}}}
 #+name: commentSyntax
-#+begin_src stata :exports code
+#+begin_src stata :exports code :eval no
     
   // comment
    describe var
@@ -106,17 +111,17 @@ PASSWORD: dataclass
    block comment block comment block 
   */
 #+end_src
-#+LATEX: \end{block} \end{columns}
+{{{bend}}}
 
 - Use /// to break varlists over multiple lines:
-#+LATEX: \vspace{-.5em} \begin{columns} \column{.85\linewidth} \begin{block}{}
+{{{bstart}}}
 #+name: breakLines
-#+begin_src stata
+#+begin_src stata :exports code :eval no
   // break commands over multible lines
   describe var1 var2 var2 ///
   var4 var5 var6  
 #+end_src
-#+LATEX: \end{block} \end{columns}
+{{{bend}}}
 
 
 ** Let's get started
@@ -124,9 +129,9 @@ PASSWORD: dataclass
   - Open up a new Do-file
   - Run our first Stata code!
  
-#+LATEX: \vspace{-.5em} \begin{columns} \column{.85\linewidth} \begin{block}{}
+{{{bstart}}}
 #+name: firstSteps
-#+begin_src stata
+#+begin_src stata :exports code :eval no
   // change directory
   cd "C://Users/dataclass/Desktop/StataIntro"
   // start a log file to record your stata session
@@ -134,7 +139,7 @@ PASSWORD: dataclass
   // Pause / resume logging with "log on" / "log off"
   // Close lot with "log close"
 #+end_src
-#+LATEX: \end{block} \end{columns}
+{{{bend}}}
 
 ** How to start every do-file
 1. Describe what the file does
@@ -153,20 +158,32 @@ PASSWORD: dataclass
 - Next, we want to open our data file
 - Open/save data sets with "use" and "save":
 
-#+LATEX: \vspace{-.5em} \begin{columns} \column{.85\linewidth} \begin{block}{}
+{{{bstart}}}
 #+name: getData
 #+begin_src stata
+  cd dataSets
   // open the gss.dta data set
-  use dataSets/gss.dta
+  use gss.dta
   // saving your data file:
   save newgss.dta, replace
-  /* the "replace" option tells stata it's OK to 
-     write over an existing file */
+  // the "replace" option tells stata it's OK to 
+  //   write over an existing file
 #+end_src
 
 #+RESULTS: getData
+#+begin_example
+cd dataSets
+/nfs/home/I/izahn/StataIntro/dataSets
 
-#+LATEX: \end{block} \end{columns}
+use gss.dta
+
+save newgss.dta, replace
+(note: file newgss.dta not found)
+file newgss.dta saved
+
+#+end_example
+
+{{{bend}}}
 
 ** A note about path names
 - If your path has no spaces in the name (that means all directories, folders, file names, etc. can have no spaces), you can write the path as is
@@ -182,7 +199,7 @@ PASSWORD: dataclass
 
 ** What if my data is not a Stata file?
 - Import delimited text files
-#+LATEX: \vspace{-.5em} \begin{columns} \column{.85\linewidth} \begin{block}{}
+{{{bstart}}}
 #+name: insheet
 #+begin_src stata
   /* import data from a .csv file */
@@ -190,21 +207,50 @@ PASSWORD: dataclass
   /* save data to a .csv file */
   outsheet using gss_new.csv, replace comma  
 #+end_src
-#+LATEX: \end{block} \end{columns}
+
+#+RESULTS: insheet
+#+begin_example
+
+insheet using gss.csv, clear
+(7 vars, 451 obs)
+
+outsheet using gss_new.csv, replace comma
+#+end_example
+
+{{{bend}}}
 
 - Import data from SAS and Excel
-#+LATEX: \vspace{-.5em} \begin{columns} \column{.85\linewidth} \begin{block}{}
+{{{bstart}}}
 #+name: loadSAStransport
 #+begin_src stata
     /* import/export SAS xport files */
+    clear
     import sasxport gss.xpt
-    export sasxport newFileName
+    export sasxport newFileName, replace
 
     /* import/export data from Excel */
-    import excel using gss.xls, firstrow
-    export excel newFileName.xls
+    import excel using gss.xlsx, firstrow clear
+    export excel newFileName.xls, replace
 #+end_src
-#+LATEX: \end{block} \end{columns}
+
+#+RESULTS: loadSAStransport
+#+begin_example
+
+clear
+import sasxport gss.xpt
+export sasxport newFileName, replace
+warning:  internally recorded dataset name was shortened to newFileN in
+          newFileName.xpt
+
+file newFileName.xpt saved
+
+
+import excel using gss.xlsx, firstrow clear
+export excel newFileName.xls, replace
+file newFileName.xls saved
+#+end_example
+
+{{{bend}}}
   
 ** What if my data is from another statistical software program?
 - SPSS/PASW will allow you to save your data as a Stata file
@@ -226,7 +272,7 @@ PASSWORD: dataclass
 
 * Statistics and graphs 
 
-** Frequently used commands
+** COMMENT Frequently used commands
 - Commands for reviewing and inspecting data:
   - describe // labels, storage type etc.
   - sum // statistical summary (mean, sd, min/max etc.)
@@ -236,55 +282,185 @@ PASSWORD: dataclass
   - browse // view the data in a spreadsheet-like window
 
 - Examples
-#+LATEX: \vspace{-.5em} \begin{columns} \column{.85\linewidth} \begin{block}{}
+{{{bstart}}}
 #+name: commonDescriptiveCommands
 #+begin_src stata
-    /* commands useful for inspecting data */
-   sum educ // statistical summary of education 
-   codebook region // information about how region is coded
-   tab sex // numbers of male and female participants
+  use gss.dta, clear
+   /* commands useful for inspecting data */
+  //  statistical summary of education
+  sum educ
+  // information about how region is coded
+  codebook region 
+  // numbers of male and female participants
+  tab sex 
 #+end_src
-#+LATEX: \end{block} \end{columns}
+
+#+RESULTS: commonDescriptiveCommands
+#+begin_example
+use gss.dta, clear
+
+
+sum educ
+
+    Variable |       Obs        Mean    Std. Dev.       Min        Max
+-------------+--------------------------------------------------------
+        educ |       217    13.52995      3.0687          1         20
+
+codebook region 
+
+-------------------------------------------------------------------------------
+region                                                              (unlabeled)
+-------------------------------------------------------------------------------
+
+                  type:  string (str5)
+
+         unique values:  4                        missing "":  0/217
+
+            tabulation:  Freq.  Value
+                            54  "east"
+                            48  "north"
+                            48  "south"
+                            67  "west"
+
+tab sex
+
+respondents |
+        sex |      Freq.     Percent        Cum.
+------------+-----------------------------------
+       male |        114       52.53       52.53
+     female |        103       47.47      100.00
+------------+-----------------------------------
+      Total |        217      100.00
+#+end_example
+
+{{{bend}}}
 
 - Remember, if you run these commands without specifying variables, Stata will produce output for every variable
 
 ** Basic graphing commands
 - Univariate distribution(s) using *hist*
-#+LATEX: \vspace{-.5em} \begin{columns} \column{.85\linewidth} \begin{block}{}
+{{{bstart}}}
 #+name: histograms
 #+begin_src stata
   /* Histograms */
   hist educ
-  /* Interested in normality of your data? You can tell
- Stata to draw the normal curve over your histogram*/
+  // histogram with normal curve; see 'help hist' for other options
   hist age, normal  
 #+end_src
-#+LATEX: \end{block} \end{columns}
+
+#+RESULTS: histograms
+#+begin_example
+
+hist educ
+(bin=14, start=1, width=1.3571429)
+
+hist age, normal
+(bin=14, start=18, width=4.2142857)
+#+end_example
+
+{{{bend}}}
 
 - View bivariate distributions with scatterplots
-#+LATEX: \vspace{-.5em} \begin{columns} \column{.85\linewidth} \begin{block}{}
+{{{bstart}}}
 #+name: bivariateDisplay
 #+begin_src stata
    /* scatterplots */
    twoway (scatter educ age)
    graph matrix educ age inc
 #+end_src
-#+LATEX: \end{block} \end{columns}
+
+#+RESULTS: bivariateDisplay
+#+begin_example
+
+twoway (scatter educ age)
+graph matrix educ age inc
+#+end_example
+
+{{{bend}}}
 
 ** The "by" command
 - Sometimes, you'd like to generate  output based on different categories of a grouping variable
 - The "by" command does just this
 
-#+LATEX: \vspace{-.5em} \begin{columns} \column{.85\linewidth} \begin{block}{}
+{{{bstart}}}
 #+name: byprocess
 #+begin_src stata
-  /* tabulate happy separately for men and women */
+  /* By Processing */
+  // tabulate happy separately for men and women
   bysort sex: tab happy
-  /* not all commands can be used with the by prefix.
-     some, (like hist) have a "by" option instead */
-  hist happy, by(sex)  
+  // summarize eudcation by marital status
+  bysort marital: sum educ
 #+end_src
-#+LATEX: \end{block} \end{columns}
+
+#+RESULTS: byprocess
+#+begin_example
+
+
+bysort sex: tab happy
+
+-------------------------------------------------------------------------------
+-> sex = male
+
+      general |
+    happiness |      Freq.     Percent        Cum.
+--------------+-----------------------------------
+   very happy |         32       28.07       28.07
+ pretty happy |         68       59.65       87.72
+not too happy |         14       12.28      100.00
+--------------+-----------------------------------
+        Total |        114      100.00
+
+-------------------------------------------------------------------------------
+-> sex = female
+
+      general |
+    happiness |      Freq.     Percent        Cum.
+--------------+-----------------------------------
+   very happy |         33       32.04       32.04
+ pretty happy |         61       59.22       91.26
+not too happy |          9        8.74      100.00
+--------------+-----------------------------------
+        Total |        103      100.00
+
+bysort marital: sum educ
+
+-------------------------------------------------------------------------------
+-> marital = married
+
+    Variable |       Obs        Mean    Std. Dev.       Min        Max
+-------------+--------------------------------------------------------
+        educ |       103    13.65049    3.374381          1         20
+
+-------------------------------------------------------------------------------
+-> marital = widowed
+
+    Variable |       Obs        Mean    Std. Dev.       Min        Max
+-------------+--------------------------------------------------------
+        educ |         6    12.33333     1.36626         11         15
+
+-------------------------------------------------------------------------------
+-> marital = divorced
+
+    Variable |       Obs        Mean    Std. Dev.       Min        Max
+-------------+--------------------------------------------------------
+        educ |        39    13.46154    2.501012          6         19
+
+-------------------------------------------------------------------------------
+-> marital = separate
+
+    Variable |       Obs        Mean    Std. Dev.       Min        Max
+-------------+--------------------------------------------------------
+        educ |         9    12.11111    2.803767          6         14
+
+-------------------------------------------------------------------------------
+-> marital = never ma
+
+    Variable |       Obs        Mean    Std. Dev.       Min        Max
+-------------+--------------------------------------------------------
+        educ |        60        13.7    3.004516          6         20
+#+end_example
+
+{{{bend}}}
 
 
 ** Exercise 2: Descriptive statistics
@@ -308,33 +484,60 @@ PASSWORD: dataclass
 
 ** Variable and value labels
 - Variable labels
-#+LATEX: \vspace{-.5em} \begin{columns} \column{.85\linewidth} \begin{block}{}
+{{{bstart}}}
 #+name: variableLabels
 #+begin_src stata
-  /* Label variable inc "household income" */
+  /* Labelling and renaming */
+  // Label variable inc "household income"
   label var inc "household income"
 
-  /* Want to change the name of your variable? */
-  rename oldvarname newvarname
+  // change the name 'educ' to 'education'
+  rename educ education
+
+  // you can search names and labels with 'lookfor' 
+  lookfor household
 #+end_src
-#+LATEX: \end{block} \end{columns}
+
+#+RESULTS: variableLabels
+#+begin_example
+
+
+label var inc "household income"
+
+
+rename educ education
+
+
+lookfor household
+
+              storage   display    value
+variable name   type    format     label      variable label
+-------------------------------------------------------------------------------
+inc             byte    %8.0g      rincom06   household income
+#+end_example
+
+{{{bend}}}
 
 - Value labels are a two step process: define a value label, then assign defined label to variable(s) 
 
-#+LATEX: \vspace{-.5em} \begin{columns} \column{.85\linewidth} \begin{block}{}
+{{{bstart}}}
 #+name: valueLabels
 #+begin_src stata 
   /*define a value label for sex */
   label define mySexLabel 1 "Male" 2 "Female"
-  /* assign our "example" label to var1 through var3 */
+  /* assign our label set to the sex variable*/
   label val sex  mySexLabel
-  /* Label define particularly useful when you have
-    multiple variables with the same value structure  */
-  /* If you have many variables, you can search labels 
-     using lookfor */
-  lookfor income
 #+end_src
-#+LATEX: \end{block} \end{columns}
+
+#+RESULTS: valueLabels
+#+begin_example
+
+label define mySexLabel 1 "Male" 2 "Female"
+
+label val sex  mySexLabel
+#+end_example
+
+{{{bend}}}
 
 ** Exercise 3: Variable labels and value labels
 1. Open the data set *gss.csv* 
@@ -379,54 +582,65 @@ PASSWORD: dataclass
 
 ** Generating and replacing variables
 - Create new variables using "gen"
-#+LATEX: \vspace{-.5em} \begin{columns} \column{.85\linewidth} \begin{block}{}
+{{{bstart}}}
 #+name: genNewVars
 #+begin_src stata
-  /* create a new variable named mc_inc"
-     equal to inc minus the mean of inc */
+  // create a new variable named mc_inc
+  //   equal to inc minus the mean of inc
   gen mc_inc = inc - 15.37  
 #+end_src
-#+LATEX: \end{block} \end{columns}
+
+#+RESULTS: genNewVars
+#+begin_example
+
+
+gen mc_inc = inc - 15.37
+#+end_example
+
+{{{bend}}}
 
 - Sometimes useful to start with blank values and fill them in based on values of existing variables
 
-#+LATEX: \vspace{-.5em} \begin{columns} \column{.85\linewidth} \begin{block}{}
+{{{bstart}}}
 #+name: replaceExample
 #+begin_src stata
-  /* generate a column of missings */ 
+  /* the 'generate and replace' strategy */ 
+  // generate a column of missings
   gen age_wealth = .
-  /* Next, start adding your qualifications */
+  // Next, start adding your qualifications
   replace age_wealth=1 if age<30 & inc < 10
   replace age_wealth=2 if age<30 & inc > 10
   replace age_wealth=3 if age>30 & inc < 10
   replace age_wealth=4 if age>30 & inc > 10
 
-  /* conditions can also be combined with "or" */
+  // conditions can also be combined with "or"
   gen young=0
   replace young=1 if age_wealth==1 | age_wealth==2
 #+end_src
-#+LATEX: \end{block} \end{columns}
 
-** Recoding, dropping variables
+#+RESULTS: replaceExample
+#+begin_example
 
-- Recoding variables
-#+LATEX: \vspace{-.5em} \begin{columns} \column{.85\linewidth} \begin{block}{}
-#+name: recodeVars
-#+begin_src stata
-  /* recode happy into sad */
-  recode happy (1=3) (3=1), gen(sad)
-#+end_src
-#+LATEX: \end{block} \end{columns}
 
-- Deleting variables
-#+LATEX: \vspace{-.5em} \begin{columns} \column{.85\linewidth} \begin{block}{}
-#+name: dropkeep
-#+begin_src stata
-   drop region  // delete region 
-   keep age-inc // keep age, educ, sex, and inc
-#+end_src
-#+LATEX: \end{block} \end{columns}
+gen age_wealth = .
+(217 missing values generated)
 
+replace age_wealth=1 if age<30 & inc < 10
+(19 real changes made)
+replace age_wealth=2 if age<30 & inc > 10
+(26 real changes made)
+replace age_wealth=3 if age>30 & inc < 10
+(22 real changes made)
+replace age_wealth=4 if age>30 & inc > 10
+(134 real changes made)
+
+
+gen young=0
+replace young=1 if age_wealth==1 | age_wealth==2
+(45 real changes made)
+#+end_example
+
+{{{bend}}}
 
 ** Exercise 4: Manipulating variables
 1. Use the dataset, gss.dta

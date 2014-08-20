@@ -1,4 +1,4 @@
-% Created 2014-03-13 Thu 17:08
+% Created 2014-08-20 Wed 16:11
 \documentclass[table,smaller]{beamer}
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
@@ -36,7 +36,7 @@
 \hypersetup{
   pdfkeywords={},
   pdfsubject={},
-  pdfcreator={Emacs 24.3.3 (Org mode 8.2.5h)}}
+  pdfcreator={Emacs 24.3.1 (Org mode 8.2.7c)}}
 \begin{document}
 
 \maketitle
@@ -49,7 +49,16 @@
 \section{Introduction}
 \label{sec-1}
 
-\begin{frame}[label=sec-1-1]{Organization}
+\begin{frame}[label=sec-1-1]{Documents for today}
+USERNAME: dataclass
+PASSWORD: dataclass
+\begin{itemize}
+\item Find class materials at \url{http://j.mp/intro-stata}
+\item Download and extract to your desktop!
+\end{itemize}
+\end{frame}
+
+\begin{frame}[label=sec-1-2]{Organization}
 \begin{itemize}
 \item Please feel free to ask questions at any point if they are relevant to the current topic (or if you are lost!)
 \begin{itemize}
@@ -63,7 +72,8 @@
 \end{itemize}
 \end{itemize}
 \end{frame}
-\begin{frame}[label=sec-1-2]{Workshop descripton}
+
+\begin{frame}[label=sec-1-3]{Workshop descripton}
 \begin{itemize}
 \item This is an \alert{introduction} to Stata
 \item Assumes no/very little knowledge of Stata
@@ -77,7 +87,8 @@
 \end{itemize}
 \end{itemize}
 \end{frame}
-\begin{frame}[label=sec-1-3]{Why stata?}
+
+\begin{frame}[label=sec-1-4]{Why stata?}
 \begin{itemize}
 \item Used in a variety of disciplines
 \item User-friendly
@@ -85,7 +96,8 @@
 \item Student and other discount packages available at reasonable cost
 \end{itemize}
 \end{frame}
-\begin{frame}[label=sec-1-4]{Stata interface}
+
+\begin{frame}[label=sec-1-5]{Stata interface}
 \includegraphics[width=.9\linewidth]{images/StataInterface.png}
 
 \begin{itemize}
@@ -93,7 +105,8 @@
 \item Command window can be shortened (recommended)
 \end{itemize}
 \end{frame}
-\begin{frame}[label=sec-1-5]{Do-files}
+
+\begin{frame}[label=sec-1-6]{Do-files}
 \begin{itemize}
 \item You can type all the same commands into the Do-file that you would type into the command window
 \item BUT\ldots{}the Do-file allows you to \alert{save} your commands
@@ -107,7 +120,8 @@
 \end{itemize}
 \end{frame}
 
-\begin{frame}[label=sec-1-6]{Stata help}
+
+\begin{frame}[label=sec-1-7]{Stata help}
 \begin{itemize}
 \item Easiest way to get help in Stata - just type \alert{help} followed by topic or command, e.g., 
 \alert{help regress}
@@ -117,7 +131,8 @@
 \url{http://www.ats.ucla.edu/stat/Stata/}
 \end{itemize}
 \end{frame}
-\begin{frame}[label=sec-1-7]{General Stata command syntax}
+
+\begin{frame}[label=sec-1-8]{General Stata command syntax}
 \begin{itemize}
 \item Most Stata commands follow the same underlying principles
 \alert{Command varlist, options}, e.g., \alert{sum var1 var2, detail}
@@ -127,7 +142,8 @@
 \item You can find command-specific syntax in the help files
 \end{itemize}
 \end{frame}
-\begin{frame}[fragile,label=sec-1-8]{Commenting and formatting syntax}
+
+\begin{frame}[fragile,label=sec-1-9]{Commenting and formatting syntax}
  \begin{itemize}
 \item Start with comment describing your Do-file and use comments throughout
 \item Single line and block comments
@@ -155,7 +171,8 @@ var4 var5 var6
 \end{block} \end{columns}
 \end{frame}
 
-\begin{frame}[fragile,label=sec-1-9]{Let's get started}
+
+\begin{frame}[fragile,label=sec-1-10]{Let's get started}
  \begin{itemize}
 \item Launch the Stata program (MP or SE, does not matter unless doing computationally intensive work)
 \begin{itemize}
@@ -175,7 +192,8 @@ log using myStataLog.txt, text replace
 \end{minted}
 \end{block} \end{columns}
 \end{frame}
-\begin{frame}[label=sec-1-10]{How to start every do-file}
+
+\begin{frame}[label=sec-1-11]{How to start every do-file}
 \begin{enumerate}
 \item Describe what the file does
 \item Change directory
@@ -185,6 +203,7 @@ log using myStataLog.txt, text replace
 \item Save data under new name (if making changes to dataset)
 \end{enumerate}
 \end{frame}
+
 
 
 \section{Getting data into Stata}
@@ -199,16 +218,18 @@ log using myStataLog.txt, text replace
 
 \vspace{-.5em} \begin{columns} \column{.85\linewidth} \begin{block}{}
 \begin{minted}[fontsize=\footnotesize]{c}
+cd dataSets
 // open the gss.dta data set
-use dataSets/gss.dta
+use gss.dta
 // saving your data file:
 save newgss.dta, replace
-/* the "replace" option tells stata it's OK to 
-   write over an existing file */
+// the "replace" option tells stata it's OK to 
+//   write over an existing file
 \end{minted}
 
 \end{block} \end{columns}
 \end{frame}
+
 \begin{frame}[label=sec-2-2]{A note about path names}
 \begin{itemize}
 \item If your path has no spaces in the name (that means all directories, folders, file names, etc. can have no spaces), you can write the path as is
@@ -216,6 +237,7 @@ save newgss.dta, replace
 \item Best to get in the habit of quoting paths
 \end{itemize}
 \end{frame}
+
 \begin{frame}[label=sec-2-3]{Where's my data?}
 \begin{itemize}
 \item Data editor (\alert{browse})
@@ -227,6 +249,7 @@ save newgss.dta, replace
 \item Avoid temptation of making manual changes by viewing data via the browser rather than editor
 \end{itemize}
 \end{frame}
+
 \begin{frame}[fragile,label=sec-2-4]{What if my data is not a Stata file?}
  \begin{itemize}
 \item Import delimited text files
@@ -238,6 +261,7 @@ insheet using gss.csv, clear
 /* save data to a .csv file */
 outsheet using gss_new.csv, replace comma
 \end{minted}
+
 \end{block} \end{columns}
 
 \begin{itemize}
@@ -246,15 +270,18 @@ outsheet using gss_new.csv, replace comma
 \vspace{-.5em} \begin{columns} \column{.85\linewidth} \begin{block}{}
 \begin{minted}[fontsize=\footnotesize]{c}
 /* import/export SAS xport files */
+clear
 import sasxport gss.xpt
-export sasxport newFileName
+export sasxport newFileName, replace
 
 /* import/export data from Excel */
-import excel using gss.xls, firstrow
-export excel newFileName.xls
+import excel using gss.xlsx, firstrow clear
+export excel newFileName.xls, replace
 \end{minted}
+
 \end{block} \end{columns}
 \end{frame}
+
 \begin{frame}[label=sec-2-5]{What if my data is from another statistical software program?}
 \begin{itemize}
 \item SPSS/PASW will allow you to save your data as a Stata file
@@ -265,6 +292,7 @@ export excel newFileName.xls
 \item Another option is \alert{StatTransfer}, a program that converts data from/to many common formats, including SAS, SPSS, Stata, and many more
 \end{itemize}
 \end{frame}
+
 \begin{frame}[label=sec-2-6]{Exercise 1: Importing data}
 \begin{enumerate}
 \item Close down Stata and open a new session
@@ -283,48 +311,22 @@ export excel newFileName.xls
 \end{enumerate}
 \end{frame}
 
+
 \section{Statistics and graphs}
 \label{sec-3}
 
-\begin{frame}[fragile,label=sec-3-1]{Frequently used commands}
- \begin{itemize}
-\item Commands for reviewing and inspecting data:
-\begin{itemize}
-\item describe // labels, storage type etc.
-\item sum // statistical summary (mean, sd, min/max etc.)
-\item codebook // storage type, unique values, labels
-\item list // print actuall values
-\item tab // (cross) tabulate variables
-\item browse // view the data in a spreadsheet-like window
-\end{itemize}
-
-\item Examples
-\end{itemize}
-\vspace{-.5em} \begin{columns} \column{.85\linewidth} \begin{block}{}
-\begin{minted}[fontsize=\footnotesize]{c}
- /* commands useful for inspecting data */
-sum educ // statistical summary of education 
-codebook region // information about how region is coded
-tab sex // numbers of male and female participants
-\end{minted}
-\end{block} \end{columns}
-
-\begin{itemize}
-\item Remember, if you run these commands without specifying variables, Stata will produce output for every variable
-\end{itemize}
-\end{frame}
-\begin{frame}[fragile,label=sec-3-2]{Basic graphing commands}
+\begin{frame}[fragile,label=sec-3-1]{Basic graphing commands}
  \begin{itemize}
 \item Univariate distribution(s) using \alert{hist}
 \end{itemize}
 \vspace{-.5em} \begin{columns} \column{.85\linewidth} \begin{block}{}
 \begin{minted}[fontsize=\footnotesize]{c}
- /* Histograms */
- hist educ
- /* Interested in normality of your data? You can tell
-Stata to draw the normal curve over your histogram*/
- hist age, normal
+/* Histograms */
+hist educ
+// histogram with normal curve; see 'help hist' for other options
+hist age, normal
 \end{minted}
+
 \end{block} \end{columns}
 
 \begin{itemize}
@@ -336,9 +338,11 @@ Stata to draw the normal curve over your histogram*/
 twoway (scatter educ age)
 graph matrix educ age inc
 \end{minted}
+
 \end{block} \end{columns}
 \end{frame}
-\begin{frame}[fragile,label=sec-3-3]{The "by" command}
+
+\begin{frame}[fragile,label=sec-3-2]{The "by" command}
  \begin{itemize}
 \item Sometimes, you'd like to generate  output based on different categories of a grouping variable
 \item The "by" command does just this
@@ -346,16 +350,18 @@ graph matrix educ age inc
 
 \vspace{-.5em} \begin{columns} \column{.85\linewidth} \begin{block}{}
 \begin{minted}[fontsize=\footnotesize]{c}
-/* tabulate happy separately for men and women */
+/* By Processing */
+// tabulate happy separately for men and women
 bysort sex: tab happy
-/* not all commands can be used with the by prefix.
-   some, (like hist) have a "by" option instead */
-hist happy, by(sex)
+// summarize eudcation by marital status
+bysort marital: sum educ
 \end{minted}
+
 \end{block} \end{columns}
 \end{frame}
 
-\begin{frame}[label=sec-3-4]{Exercise 2: Descriptive statistics}
+
+\begin{frame}[label=sec-3-3]{Exercise 2: Descriptive statistics}
 \begin{enumerate}
 \item Use the dataset, gss.dta
 \item Examine a few selected variables using the describe, sum and codebook commands
@@ -368,6 +374,7 @@ hist happy, by(sex)
 \end{enumerate}
 \end{frame}
 
+
 \section{Basic data management}
 \label{sec-4}
 
@@ -379,18 +386,24 @@ hist happy, by(sex)
 \item Variable labels are very easy to use -- value labels are a little more complicated
 \end{itemize}
 \end{frame}
+
 \begin{frame}[fragile,label=sec-4-2]{Variable and value labels}
  \begin{itemize}
 \item Variable labels
 \end{itemize}
 \vspace{-.5em} \begin{columns} \column{.85\linewidth} \begin{block}{}
 \begin{minted}[fontsize=\footnotesize]{c}
-/* Label variable inc "household income" */
+/* Labelling and renaming */
+// Label variable inc "household income"
 label var inc "household income"
 
-/* Want to change the name of your variable? */
-rename oldvarname newvarname
+// change the name 'educ' to 'education'
+rename educ education
+
+// you can search names and labels with 'lookfor' 
+lookfor household
 \end{minted}
+
 \end{block} \end{columns}
 
 \begin{itemize}
@@ -401,16 +414,13 @@ rename oldvarname newvarname
 \begin{minted}[fontsize=\footnotesize]{c}
 /*define a value label for sex */
 label define mySexLabel 1 "Male" 2 "Female"
-/* assign our "example" label to var1 through var3 */
+/* assign our label set to the sex variable*/
 label val sex  mySexLabel
-/* Label define particularly useful when you have
-  multiple variables with the same value structure  */
-/* If you have many variables, you can search labels 
-   using lookfor */
-lookfor income
 \end{minted}
+
 \end{block} \end{columns}
 \end{frame}
+
 \begin{frame}[label=sec-4-3]{Exercise 3: Variable labels and value labels}
 \begin{enumerate}
 \item Open the data set \alert{gss.csv}
@@ -451,6 +461,7 @@ v7 & region & region of interview\\
 \end{center}
 }
 \end{frame}
+
 \begin{frame}[label=sec-4-4]{Working on subsets}
 \begin{itemize}
 \item It is often useful to select just those rows of your data where some condition holds--for example select only rows where sex is 1 (male)
@@ -468,16 +479,18 @@ v7 & region & region of interview\\
 \item Note the double equals signs for testing equality
 \end{itemize}
 \end{frame}
+
 \begin{frame}[fragile,label=sec-4-5]{Generating and replacing variables}
  \begin{itemize}
 \item Create new variables using "gen"
 \end{itemize}
 \vspace{-.5em} \begin{columns} \column{.85\linewidth} \begin{block}{}
 \begin{minted}[fontsize=\footnotesize]{c}
-/* create a new variable named mc_inc"
-   equal to inc minus the mean of inc */
+// create a new variable named mc_inc
+//   equal to inc minus the mean of inc
 gen mc_inc = inc - 15.37
 \end{minted}
+
 \end{block} \end{columns}
 
 \begin{itemize}
@@ -486,43 +499,24 @@ gen mc_inc = inc - 15.37
 
 \vspace{-.5em} \begin{columns} \column{.85\linewidth} \begin{block}{}
 \begin{minted}[fontsize=\footnotesize]{c}
-/* generate a column of missings */ 
+/* the 'generate and replace' strategy */ 
+// generate a column of missings
 gen age_wealth = .
-/* Next, start adding your qualifications */
+// Next, start adding your qualifications
 replace age_wealth=1 if age<30 & inc < 10
 replace age_wealth=2 if age<30 & inc > 10
 replace age_wealth=3 if age>30 & inc < 10
 replace age_wealth=4 if age>30 & inc > 10
 
-/* conditions can also be combined with "or" */
+// conditions can also be combined with "or"
 gen young=0
 replace young=1 if age_wealth==1 | age_wealth==2
 \end{minted}
-\end{block} \end{columns}
-\end{frame}
-\begin{frame}[fragile,label=sec-4-6]{Recoding, dropping variables}
- \begin{itemize}
-\item Recoding variables
-\end{itemize}
-\vspace{-.5em} \begin{columns} \column{.85\linewidth} \begin{block}{}
-\begin{minted}[fontsize=\footnotesize]{c}
-/* recode happy into sad */
-recode happy (1=3) (3=1), gen(sad)
-\end{minted}
-\end{block} \end{columns}
 
-\begin{itemize}
-\item Deleting variables
-\end{itemize}
-\vspace{-.5em} \begin{columns} \column{.85\linewidth} \begin{block}{}
-\begin{minted}[fontsize=\footnotesize]{c}
-drop region  // delete region 
-keep age-inc // keep age, educ, sex, and inc
-\end{minted}
 \end{block} \end{columns}
 \end{frame}
 
-\begin{frame}[label=sec-4-7]{Exercise 4: Manipulating variables}
+\begin{frame}[label=sec-4-6]{Exercise 4: Manipulating variables}
 \begin{enumerate}
 \item Use the dataset, gss.dta
 \item Generate a new variable, age2 equal to age squared
@@ -530,6 +524,7 @@ keep age-inc // keep age, educ, sex, and inc
 \item Generate a new divorced/separated dummy variable that will take on a value of "1" if a person is either divorced or separated and "0" otherwise
 \end{enumerate}
 \end{frame}
+
 
 \section{Wrap-up}
 \label{sec-5}
@@ -543,6 +538,7 @@ keep age-inc // keep age, educ, sex, and inc
 \item \url{http://tinyurl.com/6h3cxnz}
 \end{itemize}
 \end{frame}
+
 
 \begin{frame}[label=sec-5-2]{Additional resources}
 \begin{itemize}
@@ -560,5 +556,5 @@ keep age-inc // keep age, educ, sex, and inc
 \end{itemize}
 \end{itemize}
 \end{frame}
-% Emacs 24.3.3 (Org mode 8.2.5h)
+% Emacs 24.3.1 (Org mode 8.2.7c)
 \end{document}

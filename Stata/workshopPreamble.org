@@ -3,10 +3,9 @@
 #+COLUMNS: %20ITEM %13BEAMER_env(Env) %6BEAMER_envargs(Args) %4BEAMER_col(Col) %7BEAMER_extra(Extra)
 #+PROPERTY: BEAMER_col_ALL 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 0.0 :ETC
 #+PROPERTY: cache no
-#+PROPERTY: exports code
 #+PROPERTY: results output
 #+PROPERTY: comments no
-#+PROPERTY: session nil
+#+PROPERTY: session *Stata*
 
 #+LaTeX_CLASS: beamer
 #+LaTeX_CLASS_OPTIONS: [table,smaller]
@@ -28,3 +27,8 @@
 #+LaTeX: \definecolor{bg}{rgb}{0.95,0.95,0.95}
 #+LaTeX: \definecolor{cbg}{cmyk}{0,0,.1,0}
 
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="style.css" />
+
+#+MACRO: bstart #+LATEX: \vspace{-.5em} \begin{columns} \column{.85\linewidth} \begin{block}{}
+
+#+MACRO: bend #+LATEX: \end{block} \end{columns}
