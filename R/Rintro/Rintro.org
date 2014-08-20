@@ -609,82 +609,114 @@ Note the double equals signs for testing equality. The following example show ho
 
 ** Extracting subsets of data.frames
 
-You can flexibly extract subsets of data.frames using single brackets
-- The first index corresponds to rows, the second to columns
-- Empty index means "all"
+You can extract subsets of data.frames using the =subset()= function.
 
 #+name: indexingDataFrame
 #+begin_src R 
   # extracting subsets
-  # datGSS[c(1,2), ] # rows 1 and 2, all columns
-  # datGSS[ , c(1,2)] # all rows, columns 1 and 2
-  # datGSS[ , c("age", "educ")] # same as above
+  subset(datGSS,
+         # rows 1 through 3
+         subset = rownames(datGSS) %in% 1:3,
+         # column 1 to 5
+         select = 1:4)
+                                          
+  subset(datGSS,
+         # rows where age > 90
+         subset = age > 90,
+         ## sex and age columns
+         select = c("sex", "age"))
 
-  datGSS[1:5, 1] # rows 1 through 5, column 1
-  datGSS[1:5, "educ"] # rows 1-5, column "educ"
-  datGSS[datGSS[, "age"] > 90, c("sex", "age")] # rows where age > 90
+  ## the $ operator can be used to extract a single column
+  str(datGSS$age)
 #+end_src
 
 #+RESULTS: indexingDataFrame
 #+begin_example
 > # extracting subsets
-> # datGSS[c(1,2), ] # rows 1 and 2, all columns
-> # datGSS[ , c(1,2)] # all rows, columns 1 and 2
-> # datGSS[ , c("age", "educ")] # same as above
-> 
-> datGSS[1:5, 1] # rows 1 through 5, column 1
-[1] 69 27 19 21 19
-> datGSS[1:5, "educ"] # rows 1-5, column "educ"
-[1] 12 10 11  9 11
-> datGSS[datGSS[, "age"] > 90, c("sex", "age")] # rows where age > 90
+> subset(datGSS,
++        # rows 1 through 3
++        subset = rownames(datGSS) %in% 1:3,
++        # column 1 to 5
++        select = 1:4)
+  age educ emailhrs hrs1
+1  69   12       -1   -1
+2  27   10       -1   60
+3  19   11        0   32
+>                                         
+> subset(datGSS,
++        # rows where age > 90
++        subset = age > 90,
++        ## sex and age columns
++        select = c("sex", "age"))
        sex age
 315 Female  99
 665   Male  99
 > 
+> ## the $ operator can be used to extract a single column
+> str(datGSS$age)
+ num [1:1419] 69 27 19 21 19 87 42 19 78 70 ...
+> 
 #+end_example
 
-Note the use of the ~c()~ function to combine arguments
+Note that =subset()= is a convenience function; see =?Extract= for a more powerful (and complicated) way to subset data.
 
-** Replacing subsets of data.frames
+** Transforming data.frames
 
-You can flexibly create and replace subsets of data.frames using bracket notation
+You can modify data.frames using the =transform()= function. 
 
 #+name: replaceDataFrame
 #+begin_src R 
   # creating new variable mean centered age
-  datGSS[ , "ageC"] <- datGSS[, "age"] - mean(datGSS[, "age"])
+  datGSS <- transform(datGSS,
+                      ageC = age - mean(age))
 
    #education difference between wifes and husbands
-  datGSS[ , "educ.diff"] <- datGSS[ , "wifeduc"] - datGSS[, "husbeduc"]
-  
-  # replacing subsets to create young/old variable
-  datGSS[ , "young"] <- "no" # all values of young = "no"
-  datGSS[datGSS[ , "age"] < 30, "young"] <- "yes" # change to "yes" if age < 30
+  datGSS <- transform(datGSS,
+                      educ.diff = wifeduc - husbeduc)
 
-  datGSS[1:4, c("age", "ageC", "young", "wifeduc", "husbeduc", "educ.diff")]
+  ## ifelse() is also useful; note that the $ operator can
+  ## also be used to create new variables.
+  datGSS$young <- ifelse(datGSS$age < 30, "yes", "no")
+
+  ## examine our newly created variables
+  head(subset(datGSS,
+              select = c("age", "ageC", "young", "wifeduc",
+                         "husbeduc", "educ.diff")),
+       n = 8)
 #+end_src
 
 #+RESULTS: replaceDataFrame
 #+begin_example
 > # creating new variable mean centered age
-> datGSS[ , "ageC"] <- datGSS[, "age"] - mean(datGSS[, "age"])
+> datGSS <- transform(datGSS,
++                     ageC = age - mean(age))
 > 
 >  #education difference between wifes and husbands
-> datGSS[ , "educ.diff"] <- datGSS[ , "wifeduc"] - datGSS[, "husbeduc"]
+> datGSS <- transform(datGSS,
++                     educ.diff = wifeduc - husbeduc)
 > 
-> # replacing subsets to create young/old variable
-> datGSS[ , "young"] <- "no" # all values of young = "no"
-> datGSS[datGSS[ , "age"] < 30, "young"] <- "yes" # change to "yes" if age < 30
+> ## ifelse() is also useful; note that the $ operator can
+> ## also be used to create new variables.
+> datGSS$young <- ifelse(datGSS$age < 30, "yes", "no")
 > 
-> datGSS[1:4, c("age", "ageC", "young", "wifeduc", "husbeduc", "educ.diff")]
-  age      ageC young wifeduc husbeduc educ.diff
-1  69  22.36364    no      NA       NA        NA
-2  27 -19.63636   yes      13       10         3
-3  19 -27.63636   yes      NA       NA        NA
-4  21 -25.63636   yes      NA       NA        NA
+> ## examine our newly created variables
+> head(subset(datGSS,
++             select = c("age", "ageC", "young", "wifeduc",
++                        "husbeduc", "educ.diff")),
++      n = 8)
+  age       ageC young wifeduc husbeduc educ.diff
+1  69  22.363636    no      NA       NA        NA
+2  27 -19.636364   yes      13       10         3
+3  19 -27.636364   yes      NA       NA        NA
+4  21 -25.636364   yes      NA       NA        NA
+5  19 -27.636364   yes      NA       NA        NA
+6  87  40.363636    no      NA       NA        NA
+7  42  -4.636364    no      10       11        -1
+8  19 -27.636364   yes      NA       NA        NA
 > 
 #+end_example
 
+Note that =transform= is a convenience function; see =?Extract= for a more powerful way to modify data.frames.
 
 ** Exporting Data
 Now that we have made some changes to our GSS data set, we might want to save those changes to a file. Everything we have done so far has only modified the data in R; the files have remained unchanged. 
@@ -733,60 +765,45 @@ Use the gss.rds data set
 Descriptive statistics of single variables are straightforward:
 #+name: descriptiveStats1
 #+begin_src R
-  mean(datGSS[ , "educ"]) # calculate mean of x
-  sd(datGSS[, "educ"]) # calculate standard deviation of x
-  summary(datGSS[ , "educ"]) # calculate min, max, quantiles, mean
+  mean(datGSS$educ) # calculate mean value of education
+  sd(datGSS$educ) # calculate standard deviation of x
+  # calculate min, max, quantiles, mean of educ, age, and ageC
+  summary(subset(datGSS, select = c("educ", "age", "ageC")))
 #+end_src
 
 #+RESULTS: descriptiveStats1
 #+begin_example
-> mean(datGSS[ , "educ"]) # calculate mean of x
+> mean(datGSS$educ) # calculate mean value of education
 [1] 13.47498
-> sd(datGSS[, "educ"]) # calculate standard deviation of x
+> sd(datGSS$educ) # calculate standard deviation of x
 [1] 5.389476
-> summary(datGSS[ , "educ"]) # calculate min, max, quantiles, mean
-   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-   0.00   12.00   13.00   13.47   16.00   99.00 
+> # calculate min, max, quantiles, mean of educ, age, and ageC
+> summary(subset(datGSS, select = c("educ", "age", "ageC")))
+      educ            age             ageC        
+ Min.   : 0.00   Min.   :18.00   Min.   :-28.636  
+ 1st Qu.:12.00   1st Qu.:32.00   1st Qu.:-14.636  
+ Median :13.00   Median :44.00   Median : -2.636  
+ Mean   :13.47   Mean   :46.64   Mean   :  0.000  
+ 3rd Qu.:16.00   3rd Qu.:59.00   3rd Qu.: 12.364  
+ Max.   :99.00   Max.   :99.00   Max.   : 52.364  
 > 
 #+end_example
 
-If you get tired of typing the data.frame name over and over, use ~with()~ instead
-#+name: descriptiveStats2
-#+begin_src R
-  with(datGSS,
-       c(Lowest = min(educ),
-         Average = mean(educ),
-         Highest = max(educ))
-       )
-  
-#+end_src
 
-#+RESULTS: descriptiveStats2
-#+begin_example
-> with(datGSS,
-+      c(Lowest = min(educ),
-+        Average = mean(educ),
-+        Highest = max(educ))
-+      )
-  Lowest  Average  Highest 
- 0.00000 13.47498 99.00000 
-> 
-#+end_example
-
-Some of these functions (e.g., summary) will also work with data.frames and other types of objects
+Some of these functions (e.g., summary) will also work with data.frames and other types of objects, others (such as =sd=) will not.
 
 ** Counts and proportions
 Start by using the ~table()~ function to tabulate counts, then perform additional computations if needed
 #+name: tableExample
 #+begin_src R
-  sex.counts <- table(datGSS[, "sex"]) # tabulate sex categories
+  sex.counts <- table(datGSS$sex) # tabulate sex categories
   sex.counts
   prop.table(sex.counts) # convert to proportions
 #+end_src
 
 #+RESULTS: tableExample
 #+begin_example
-> sex.counts <- table(datGSS[, "sex"]) # tabulate sex categories
+> sex.counts <- table(datGSS$sex) # tabulate sex categories
 > sex.counts
 
   Male Female 
@@ -802,12 +819,12 @@ Add variables for crosstabs
 
 #+name: crosstabExample
 #+begin_src R
-  table(datGSS[, c("sex", "happy")]) # crosstab marital X happy
+  table(subset(datGSS, select = c("sex", "happy"))) # crosstab marital X happy
 #+end_src
 
 #+RESULTS: crosstabExample
 #+begin_example
-> table(datGSS[, c("sex", "happy")]) # crosstab marital X happy
+> table(subset(datGSS, select = c("sex", "happy"))) # crosstab marital X happy
         happy
 sex      NAP VERY HAPPY PRETTY HAPPY NOT TOO HAPPY  DK  NA
   Male     0        189          350            73   0  10
@@ -821,14 +838,14 @@ sex      NAP VERY HAPPY PRETTY HAPPY NOT TOO HAPPY  DK  NA
 The ~by()~ function can be used to perform a calculation separately for each level of a classifying variable
 #+name: byExample
 #+begin_src R 
-  by(datGSS[, c("income", "educ")],
+  by(subset(datGSS, select = c("income", "educ")),
      INDICES=datGSS["sex"],
      FUN=summary)
 #+end_src
 
 #+RESULTS: byExample
 #+begin_example
-> by(datGSS[, c("income", "educ")],
+> by(subset(datGSS, select = c("income", "educ")),
 +    INDICES=datGSS["sex"],
 +    FUN=summary)
 sex: Male
@@ -858,12 +875,12 @@ sex: Female
 Let's look at correlations among between age, income, and education
 #+name: corEx
 #+begin_src R 
-  cor(datGSS[ , c("age", "incomdol", "educ")])
+  cor(subset(datGSS, select =  c("age", "incomdol", "educ")))
 #+end_src
 
 #+RESULTS: corEx
 #+begin_example
-> cor(datGSS[ , c("age", "incomdol", "educ")])
+> cor(subset(datGSS, select =  c("age", "incomdol", "educ")))
                  age   incomdol        educ
 age       1.00000000 -0.1186564 -0.07362454
 incomdol -0.11865641  1.0000000  0.21013267
@@ -983,7 +1000,7 @@ Thanks to classes and methods, you can ~plot()~ many  kinds of objects:
 #+LATEX: \begin{columns} \column{.85\textwidth} \begin{block}{}
 #+name: plotExample
 #+begin_src R :results output graphics :exports both :no-expand :file images/examplePlot1.png :width 800 :height 500 :R-dev-args res=120 
-  plot(datGSS[ , "marital"]) # Plot a factor
+  plot(datGSS$marital) # Plot a factor
 #+end_src
 #+ATTR_LATEX: :width .9\textwidth
 #+attr_html: width="50%" style="display:block;margin-left:auto;margin-right:auto;"
