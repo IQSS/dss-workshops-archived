@@ -1,13 +1,8 @@
-## 			  ━━━━━━━━━━━━━━━━━━━
-## 			   INTRODUCTION TO R
+##                           ━━━━━━━━━━━━━━━━━━━
+##                            INTRODUCTION TO R
 
-
-## 			       Ista Zahn
-## 			  ━━━━━━━━━━━━━━━━━━━
-
-##             The Institute For Quantitative Social Science
-
-
+##                                Ista Zahn
+##                           ━━━━━━━━━━━━━━━━━━━
 
 ## Table of Contents
 ## ─────────────────
@@ -15,20 +10,19 @@
 ## 1 Workshop Materials and Introduction
 ## 2 Graphical User Interfaces
 ## 3 Data and Functions
-## 4 Getting data into R
-## 5 Data Manipulation
-## 6 Basic Statistics and Graphs
-## 7 Wrap-up
-
+## 4 Help and package management
+## 5 Getting data into R
+## 6 Data Manipulation
+## 7 Basic Statistics and Graphs
+## 8 Wrap-up
 
 ## 1 Workshop Materials and Introduction
 ## ═════════════════════════════════════
 
-
-## 1.1 Materials and setup
+## 1.1 Materials and setup                                          :setup:
 ## ───────────────────────
 
-##   Everyone should have R installed on their laptop–if not:
+##   Everyone should have R installed –if not:
 
 ##   • Open a web browser and go to [http://cran.r-project.org] and
 ##     download and install it
@@ -43,12 +37,11 @@
 ##   Workshop notes are available in .hmtl and .pdf format. Navigate to
 ##   your desktop and open either Rintro.pdf or Rintro.html.
 
-
 ## 1.2 What is R?
 ## ──────────────
 
-##   R is a programming language designed for statistical
-##   computing. Notable characteristics include:
+##   R is a programming language designed for statistical computing.
+##   Notable characteristics include:
 
 ##   • Vast capabilities, wide range of statistical and graphical
 ##     techniques
@@ -64,16 +57,14 @@
 
 ##   • Easy to extend by writing new functions
 
-
 ## 1.3 Coming to R
 ## ───────────────
 
 ##   Comming from…
-##   matlab: [http://www.math.umaine.edu/~hiebeler/comp/matlabR.pdf]
-##   SciPy: [http://mathesaurus.sourceforge.net/matlab-python-xref.pdf]
+##   Stata: [http://www.princeton.edu/~otorres/RStata.pdf]
 ##   SAS/SPSS: [http://www.et.bs.ehu.es/~etptupaf/pub/R/RforSAS&SPSSusers.pdf]
-##   Stata: [http://www.dss.princeton.edu/training/RStata.pdf]
-
+##   matlab: [http://www.math.umaine.edu/~hiebeler/comp/matlabR.pdf]
+##   Python: [http://mathesaurus.sourceforge.net/matlab-python-xref.pdf]
 
 ## 2 Graphical User Interfaces
 ## ═══════════════════════════
@@ -87,7 +78,6 @@
 
 ##   But hardly anybody does it that way anymore!
 
-
 ## 2.2 R GUI alternatives (Windows default)
 ## ────────────────────────────────────────
 
@@ -97,7 +87,6 @@
 ##   • No parentheses matching or syntax highlighting
 ##   • No work-space browser
 
-
 ## 2.3 R GUI Alternatives (Rstudio on Mac)
 ## ───────────────────────────────────────
 
@@ -106,7 +95,6 @@
 ##   Rstudio has many useful features, including parentheses matching and
 ##   auto-completion
 
-
 ## 2.4 R GUI Alternatives (Emacs with ESS)
 ## ───────────────────────────────────────
 
@@ -114,7 +102,6 @@
 
 ##   Emacs + ESS is a very powerful combination, but can be difficult to
 ##   set up
-
 
 ## 2.5 Components of R GUIs
 ## ────────────────────────
@@ -139,56 +126,7 @@
 ##     • Very helpful if you are absentminded like me and frequently forget
 ##       what names you gave your data!
 
-
-## 2.6 Asking R for help
-## ─────────────────────
-
-##   • Start html help, search/browse using web browser
-##     • at the R console:
-
-help.start()
-
-##     • or use the help menu from you GUI
-
-##   • Look up the documentation for a function
-
-help(topicName)
-?topicName
-
-##   • Look up documentation for a package
-
-help(package="packageName")
-
-##   • Search documentation from R (not always the best way… google often
-##     works better)
-
-help.search("topicName")
-
-
-## 2.7 R packages and libraries
-## ────────────────────────────
-
-##   There are thousands of R packages that extend R's capabilities.
-
-##   • To view available packages:
-
-library()
-
-##   • To see what packages are loaded:
-
-search()
-
-##   • To load a package:
-
-library("packageName")
-
-
-##   • Install new package:
-
-install.packages("packageName")
-
-
-## 2.8 Things to keep in mind
+## 2.6 Things to keep in mind
 ## ──────────────────────────
 
 ##   • Case sensitive, like Stata (unlike SAS)
@@ -214,8 +152,7 @@ install.packages("packageName")
 ##   • Use forward slash ("/") instead of backslash in path names, even on
 ##     Windows
 
-
-## 2.9 Exercise 0
+## 2.7 Exercise 0
 ## ──────────────
 
 ##   1. Try to get R to add 2 plus 2
@@ -224,7 +161,6 @@ install.packages("packageName")
 ##      regression model in R
 ##   4. Go to [http://cran.r-project.org/web/views/] and skim the topic
 ##      closest to your field/interests
-
 
 ## 3 Data and Functions
 ## ════════════════════
@@ -237,12 +173,10 @@ install.packages("packageName")
 ##     values
 ##   • The name on the left gets the value on the right.
 
-
 x <- 11 # Assign the value 10 to a variable named x
 x + 1 # Add 1 to x
 y <- x + 1 # Assign y the value x + 1
 y
-
 
 ##   Saved variables can be listed, overwritten and deleted
 
@@ -252,7 +186,6 @@ x <- 100 # Overwrite x. Note that no warning is given!
 x
 rm(x) # Delete x
 ls()
-
 
 ## 3.2 Functions
 ## ─────────────
@@ -268,7 +201,6 @@ ls()
 
 FunctionName(arg.1, arg.2, ... arg.n)
 
-
 ##   Arguments can be matched by position or name
 
 ##   Examples:
@@ -279,11 +211,69 @@ round(a, digits = 2) # Call round() with arguments x=x and digits=2
 # Functions can be nested so an alternative is
 round(sqrt(y), digits = 5) # Take sqrt of a and round
 
+## 4 Help and package management
+## ═════════════════════════════
 
-## 4 Getting data into R
+## 4.1 Asking R for help
+## ─────────────────────
+
+##   • Start html help, search/browse using web browser
+##     • at the R console:
+##       ╭────
+##       │ help.start()
+##       ╰────
+
+##     • or use the help menu from you GUI
+
+##   • Look up the documentation for a function
+##     ╭────
+##     │ help(topicName)
+##     ╰────
+
+##     ╭────
+##     │ ?topicName
+##     ╰────
+
+##   • Look up documentation for a package
+##     ╭────
+##     │ help(package="packageName")
+##     ╰────
+
+##   • Search documentation from R (not always the best way… google often
+##     works better)
+##     ╭────
+##     │ help.search("topicName")
+##     ╰────
+
+## 4.2 R packages and libraries
+## ────────────────────────────
+
+##   There are thousands of R packages that extend R's capabilities.
+
+##   • To view available packages:
+##     ╭────
+##     │ library()
+##     ╰────
+
+##   • To see what packages are loaded:
+##     ╭────
+##     │ search()
+##     ╰────
+
+##   • To load a package:
+##     ╭────
+##     │ library("packageName")
+##     ╰────
+
+##   • Install new package:
+##     ╭────
+##     │ install.packages("packageName")
+##     ╰────
+
+## 5 Getting data into R
 ## ═════════════════════
 
-## 4.1 The gss dataset
+## 5.1 The gss dataset
 ## ───────────────────
 
 ##   The next few examples use a subset of the General Social Survey data
@@ -292,8 +282,7 @@ round(sqrt(y), digits = 5) # Take sqrt of a and round
 head(read.csv("dataSets/gssInfo.csv")) 
 #see gssInfo.csv for rest of the variable descriptions
 
-
-## 4.2 The "working directory" and listing files
+## 5.2 The "working directory" and listing files
 ## ─────────────────────────────────────────────
 
 ##   R knows the directory it was started in, and refers to this as the
@@ -303,24 +292,20 @@ head(read.csv("dataSets/gssInfo.csv"))
 
 setwd("~/Desktop/Rintro")
 
-
 ##   We can also set the working directory using paths relative to the
 ##   current working directory:
-
 
 getwd() # get the current working directory
 setwd("dataSets") # set wd to the dataSets folder
 getwd()
 setwd("..") # set wd to enclosing folder ("up")
 
-
 ##   It can be convenient to list files in a directory without leaving R
 
 list.files("dataSets") # list files in the dataSets folder
 # list.files("dataSets", pattern = ".csv") # restrict to .csv files
 
-
-## 4.3 Importing data from files
+## 5.3 Importing data from files
 ## ─────────────────────────────
 
 ##   In order to read data from a file, you have to know what kind of file
@@ -348,8 +333,7 @@ gss.data <- read.csv("dataSets/gss.csv") # read gss data
 library(foreign) # load foreign data functions
 datGSS <- read.dta(file="dataSets/gss.dta")
 
-
-## 4.4 Checking imported data
+## 5.4 Checking imported data
 ## ──────────────────────────
 
 ##   Always a good idea to examine the imported data set–usually we want
@@ -360,8 +344,7 @@ dim(datGSS) # how many rows and columns?
 names(datGSS)[1:10] # first 10 column names
 str(datGSS[1:5]) # more details about the first 5 columns
 
-
-## 4.5 Saving and loading R  workspaces
+## 5.5 Saving and loading R  workspaces
 ## ────────────────────────────────────
 
 ##   In addition to importing individual datasets, R can save and load
@@ -373,21 +356,17 @@ save.image(file="myWorkspace.RData") # save workspace
 rm(list=ls()) # remove all objects from our workspace 
 ls() # list stored objects to make sure they are deleted
 
-
 ##   • Load the "myWorkspace.RData" file and check that it is restored
-
 
 load("myWorkspace.RData") # load myWorkspace.RData
 ls() # list objects
-
 
 ##   When you close R you will be asked if you want to save your workspace
 ##   – if you choose yes then your workspace will be restored next time you
 ##   start R
 
-
-## 4.6 Exercise 2: loading and manipulating data
-## ─────────────────────────────────────────────
+## 5.6 Exercise 1
+## ──────────────
 
 ##   1. Load the foreign package if you haven't already done so
 ##      (`library(foreign)')
@@ -404,11 +383,10 @@ ls() # list objects
 
 ##   6. BONUS: figure out how to read the Excel file "gss.xlsx" into R
 
-
-## 5 Data Manipulation
+## 6 Data Manipulation
 ## ═══════════════════
 
-## 5.1 data.frame objects
+## 6.1 data.frame objects
 ## ──────────────────────
 
 ##   • Usually data read into R will be stored as a *data.frame*
@@ -421,12 +399,10 @@ ls() # list objects
 ##   • A data.frame has two dimensions corresponding the number of rows and
 ##     the number of columns (in that order)
 
-
-## 5.2 data.frame meta-data
+## 6.2 data.frame meta-data
 ## ────────────────────────
 
 ##   A number of functions are available for inspecting data.frame objects:
-
 
 # row and column names
 head(names(datGSS)) # variable names in datGSS
@@ -436,13 +412,12 @@ dim(datGSS)
 # structure
 #str(datGSS) # get structure
 
-
-## 5.3 Logical operators
+## 6.3 Logical operators
 ## ─────────────────────
 
 ##   It is often useful to select just those rows of your data where some
-##   condition holds–for example select only rows where sex is 1
-##   (male). The following operators allow you to do this:
+##   condition holds–for example select only rows where sex is 1 (male).
+##   The following operators allow you to do this:
 
 ##   ==: equal to
 ##   !=: not equal to
@@ -457,55 +432,62 @@ dim(datGSS)
 ##   example show how to use some of these operators to extract and replace
 ##   elements matching specific conditions.
 
-
-## 5.4 Extracting subsets of data.frames
+## 6.4 Extracting subsets of data.frames
 ## ─────────────────────────────────────
 
-##   You can flexibly extract subsets of data.frames using single brackets
-##   • The first index corresponds to rows, the second to columns
-##   • Empty index means "all"
-
+##   You can extract subsets of data.frames using the `subset()' function.
 
 # extracting subsets
-# datGSS[c(1,2), ] # rows 1 and 2, all columns
-# datGSS[ , c(1,2)] # all rows, columns 1 and 2
-# datGSS[ , c("age", "educ")] # same as above
+subset(datGSS,
+       # rows 1 through 3
+       subset = rownames(datGSS) %in% 1:3,
+       # column 1 to 5
+       select = 1:4)
 
-datGSS[1:5, 1] # rows 1 through 5, column 1
-datGSS[1:5, "educ"] # rows 1-5, column "educ"
-datGSS[datGSS[, "age"] > 90, c("sex", "age")] # rows where age > 90
+subset(datGSS,
+       # rows where age > 90
+       subset = age > 90,
+       ## sex and age columns
+       select = c("sex", "age"))
 
+## the $ operator can be used to extract a single column
+str(datGSS$age)
 
-##   Note the use of the `c()' function to combine arguments
+##   Note that `subset()' is a convenience function; see `?Extract' for a
+##   more powerful (and complicated) way to subset data.
 
+## 6.5 Transforming data.frames
+## ────────────────────────────
 
-## 5.5 Replacing subsets of data.frames
-## ────────────────────────────────────
-
-##   You can flexibly create and replace subsets of data.frames using
-##   bracket notation
-
+##   You can modify data.frames using the `transform()' function.
 
 # creating new variable mean centered age
-datGSS[ , "ageC"] <- datGSS[, "age"] - mean(datGSS[, "age"])
+datGSS <- transform(datGSS,
+                    ageC = age - mean(age))
 
  #education difference between wifes and husbands
-datGSS[ , "educ.diff"] <- datGSS[ , "wifeduc"] - datGSS[, "husbeduc"]
+datGSS <- transform(datGSS,
+                    educ.diff = wifeduc - husbeduc)
 
-# replacing subsets to create young/old variable
-datGSS[ , "young"] <- "no" # all values of young = "no"
-datGSS[datGSS[ , "age"] < 30, "young"] <- "yes" # change to "yes" if age < 30
+## ifelse() is also useful; note that the $ operator can
+## also be used to create new variables.
+datGSS$young <- ifelse(datGSS$age < 30, "yes", "no")
 
-datGSS[1:4, c("age", "ageC", "young", "wifeduc", "husbeduc", "educ.diff")]
+## examine our newly created variables
+head(subset(datGSS,
+            select = c("age", "ageC", "young", "wifeduc",
+                       "husbeduc", "educ.diff")),
+     n = 8)
 
+##   Note that `transform' is a convenience function; see `?Extract' for a
+##   more powerful way to modify data.frames.
 
-## 5.6 Exporting Data
+## 6.6 Exporting Data
 ## ──────────────────
 
 ##   Now that we have made some changes to our GSS data set, we might want
 ##   to save those changes to a file. Everything we have done so far has
 ##   only modified the data in R; the files have remained unchanged.
-
 
 # write data to a .csv file
 write.csv(datGSS, file = "gss.csv")
@@ -514,8 +496,7 @@ write.dta(datGSS, file = "gss.dta")
 # write data to an R file
 saveRDS(datGSS, file = "gss.rds")
 
-
-## 5.7 Exercise 3: Data manipulation
+## 6.7 Exercise 2: Data manipulation
 ## ─────────────────────────────────
 
 ##   Use the gss.rds data set
@@ -523,87 +504,70 @@ saveRDS(datGSS, file = "gss.rds")
 ##   1. Generate the following variables:
 ##      • "rich" equal to 0 if rincdol is less than 100000, and 1 otherwise
 ##      • "sinc" equal to incomdol - rincdol
-##      • "dual.earn" equal to 1 if wkftwife = 1 and wkfthusb = 1, and zero
-##        otherwise
 ##   2. Create a subset of the data containing only rows where "usecomp" =
 ##      "Yes"
 ##   3. Examine the data.frame created in step 2, and answer the following
 ##      questions:
 ##      • How many rows does it have?
 ##      • How many columns does it have?
-##      • Is the "satjob" variable numeric?
+##      • What is the class of the "satjob" variable?
+##   4. BONUS (hard): Generate a variable named "dual.earn" equal to 1 if
+##      both wkftwife = 1 and wkfthusb = 1, and zero otherwise
 
-
-## 6 Basic Statistics and Graphs
+## 7 Basic Statistics and Graphs
 ## ═════════════════════════════
 
-## 6.1 Basic statistics
+## 7.1 Basic statistics
 ## ────────────────────
 
 ##   Descriptive statistics of single variables are straightforward:
 
-mean(datGSS[ , "educ"]) # calculate mean of x
-sd(datGSS[, "educ"]) # calculate standard deviation of x
-summary(datGSS[ , "educ"]) # calculate min, max, quantiles, mean
-
-
-##   If you get tired of typing the data.frame name over and over, use
-##   `with()' instead
-
-with(datGSS,
-     c(Lowest = min(educ),
-       Average = mean(educ),
-       Highest = max(educ))
-     )
-
+mean(datGSS$educ) # calculate mean value of education
+sd(datGSS$educ) # calculate standard deviation of x
+# calculate min, max, quantiles, mean of educ, age, and ageC
+summary(subset(datGSS, select = c("educ", "age", "ageC")))
 
 ##   Some of these functions (e.g., summary) will also work with
-##   data.frames and other types of objects
+##   data.frames and other types of objects, others (such as `sd') will
+##   not.
 
-
-## 6.2 Counts and proportions
+## 7.2 Counts and proportions
 ## ──────────────────────────
 
 ##   Start by using the `table()' function to tabulate counts, then perform
 ##   additional computations if needed
 
-sex.counts <- table(datGSS[, "sex"]) # tabulate sex categories
+sex.counts <- table(datGSS$sex) # tabulate sex categories
 sex.counts
 prop.table(sex.counts) # convert to proportions
 
-
 ##   Add variables for crosstabs
 
+table(subset(datGSS, select = c("sex", "happy"))) # crosstab marital X happy
 
-table(datGSS[, c("sex", "happy")]) # crosstab marital X happy
-
-
-## 6.3 Statistics by classification factors
+## 7.3 Statistics by classification factors
 ## ────────────────────────────────────────
 
 ##   The `by()' function can be used to perform a calculation separately
 ##   for each level of a classifying variable
 
-by(datGSS[, c("income", "educ")],
+by(subset(datGSS, select = c("income", "educ")),
    INDICES=datGSS["sex"],
    FUN=summary)
 
-
-## 6.4 Correlations
+## 7.4 Correlations
 ## ────────────────
 
 ##   Let's look at correlations among between age, income, and education
 
-cor(datGSS[ , c("age", "incomdol", "educ")])
-
+cor(subset(datGSS, select =  c("age", "incomdol", "educ")))
 
 ##   For significance tests, use cor.test()
 
 with(datGSS,
      cor.test(age, educ))
 
-
-## 6.5 Multiple regression
+## 7.5 Multiple regression
 ## ───────────────────────
 
 ##   Modeling functions generally use the /formula/ interface whith DV on
@@ -611,14 +575,12 @@ with(datGSS,
 
 help("formula")
 
-
 ##   • Predict the number of hours individuals spend on email (emailhrs)
 
 m1 <- lm(educ ~ sex + age, data = datGSS)
 summary(m1)
 
-
-## 6.6 Save R output to a file
+## 7.6 Save R output to a file
 ## ───────────────────────────
 
 ##   Earlier we learned how to write a data set to a file. But what if we
@@ -626,25 +588,21 @@ summary(m1)
 ##   the results of our regression model? For that we can use the `sink()'
 ##   function:
 
-
 sink(file="output.txt", split=TRUE) # start logging
 print("This is the result from model 1\n")
 print(summary(m1))
 sink() ## sink with no arguments turns logging off
 
-
-## 6.7 Basic graphics: Frequency bars
+## 7.7 Basic graphics: Frequency bars
 ## ──────────────────────────────────
 
 ##   Thanks to classes and methods, you can `plot()' many kinds of objects:
 
-
-plot(datGSS[ , "marital"]) # Plot a factor
+plot(datGSS$marital) # Plot a factor
 
 ##   [file:images/examplePlot1.png]
 
-
-## 6.8 Basic graphics: Boxplots by group
+## 7.8 Basic graphics: Boxplots by group
 ## ─────────────────────────────────────
 
 ##   Thanks to classes and methods, you can `plot()' many kinds of objects:
@@ -654,8 +612,7 @@ with(datGSS,
 
 ##   [file:images/examplePlot2.png]
 
-
-## 6.9 Basic graphics: Mosaic chart
+## 7.9 Basic graphics: Mosaic chart
 ## ────────────────────────────────
 
 ##   Thanks to classes and methods, you can `plot()' many kinds of objects:
@@ -665,8 +622,7 @@ with(datGSS, # Plot factor X factor
 
 ##   [file:images/examplePlot3.png]
 
-
-## 6.10 Exercise 3
+## 7.10 Exercise 3
 ## ───────────────
 
 ##   Using the datGSS data.frame
@@ -677,11 +633,10 @@ with(datGSS, # Plot factor X factor
 ##   4. Create a scatter plot with educ on the x-axis and incomdol on the
 ##      y-axis
 
-
-## 7 Wrap-up
+## 8 Wrap-up
 ## ═════════
 
-## 7.1 Help us make this workshop better!
+## 8.1 Help us make this workshop better!
 ## ──────────────────────────────────────
 
 ##   • Please take a moment to fill out a very short feedback form
@@ -690,8 +645,7 @@ with(datGSS, # Plot factor X factor
 
 ##   • [http://tinyurl.com/R-intro-feedback]
 
-
-## 7.2 Additional resources
+## 8.2 Additional resources
 ## ────────────────────────
 
 ##   • IQSS workshops:
