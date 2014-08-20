@@ -1,9 +1,9 @@
-			  ━━━━━━━━━━━━━━━━━━━
-			   INTRODUCTION TO R
+                          ━━━━━━━━━━━━━━━━━━━
+                           INTRODUCTION TO R
 
 
-			       Ista Zahn
-			  ━━━━━━━━━━━━━━━━━━━
+                               Ista Zahn
+                          ━━━━━━━━━━━━━━━━━━━
 
 
 Table of Contents
@@ -19,42 +19,43 @@ Table of Contents
 .. 2.3 R GUI Alternatives (Rstudio on Mac)
 .. 2.4 R GUI Alternatives (Emacs with ESS)
 .. 2.5 Components of R GUIs
-.. 2.6 Asking R for help
-.. 2.7 R packages and libraries
-.. 2.8 Things to keep in mind
-.. 2.9 Exercise 0
+.. 2.6 Things to keep in mind
+.. 2.7 Exercise 0
 3 Data and Functions
 .. 3.1 Assignment
 .. 3.2 Functions
-4 Getting data into R
-.. 4.1 The gss dataset
-.. 4.2 The "working directory" and listing files
-.. 4.3 Importing data from files
-.. 4.4 Checking imported data
-.. 4.5 Saving and loading R  workspaces
-.. 4.6 Exercise 2: loading and manipulating data
-5 Data Manipulation
-.. 5.1 data.frame objects
-.. 5.2 data.frame meta-data
-.. 5.3 Logical operators
-.. 5.4 Extracting subsets of data.frames
-.. 5.5 Replacing subsets of data.frames
-.. 5.6 Exporting Data
-.. 5.7 Exercise 3: Data manipulation
-6 Basic Statistics and Graphs
-.. 6.1 Basic statistics
-.. 6.2 Counts and proportions
-.. 6.3 Statistics by classification factors
-.. 6.4 Correlations
-.. 6.5 Multiple regression
-.. 6.6 Save R output to a file
-.. 6.7 Basic graphics: Frequency bars
-.. 6.8 Basic graphics: Boxplots by group
-.. 6.9 Basic graphics: Mosaic chart
-.. 6.10 Exercise 3
-7 Wrap-up
-.. 7.1 Help us make this workshop better!
-.. 7.2 Additional resources
+4 Help and package management
+.. 4.1 Asking R for help
+.. 4.2 R packages and libraries
+5 Getting data into R
+.. 5.1 The gss dataset
+.. 5.2 The "working directory" and listing files
+.. 5.3 Importing data from files
+.. 5.4 Checking imported data
+.. 5.5 Saving and loading R  workspaces
+.. 5.6 Exercise 1
+6 Data Manipulation
+.. 6.1 data.frame objects
+.. 6.2 data.frame meta-data
+.. 6.3 Logical operators
+.. 6.4 Extracting subsets of data.frames
+.. 6.5 Transforming data.frames
+.. 6.6 Exporting Data
+.. 6.7 Exercise 2: Data manipulation
+7 Basic Statistics and Graphs
+.. 7.1 Basic statistics
+.. 7.2 Counts and proportions
+.. 7.3 Statistics by classification factors
+.. 7.4 Correlations
+.. 7.5 Multiple regression
+.. 7.6 Save R output to a file
+.. 7.7 Basic graphics: Frequency bars
+.. 7.8 Basic graphics: Boxplots by group
+.. 7.9 Basic graphics: Mosaic chart
+.. 7.10 Exercise 3
+8 Wrap-up
+.. 8.1 Help us make this workshop better!
+.. 8.2 Additional resources
 
 
 
@@ -85,8 +86,8 @@ Table of Contents
 1.2 What is R?
 ──────────────
 
-  R is a programming language designed for statistical
-  computing. Notable characteristics include:
+  R is a programming language designed for statistical computing.
+  Notable characteristics include:
 
   • Vast capabilities, wide range of statistical and graphical
     techniques
@@ -107,10 +108,10 @@ Table of Contents
 ───────────────
 
   Comming from…
-  matlab: [http://www.math.umaine.edu/~hiebeler/comp/matlabR.pdf]
-  SciPy: [http://mathesaurus.sourceforge.net/matlab-python-xref.pdf]
+  Stata: [http://www.princeton.edu/~otorres/RStata.pdf]
   SAS/SPSS: [http://www.et.bs.ehu.es/~etptupaf/pub/R/RforSAS&SPSSusers.pdf]
-  Stata: [http://www.dss.princeton.edu/training/RStata.pdf]
+  matlab: [http://www.math.umaine.edu/~hiebeler/comp/matlabR.pdf]
+  Python: [http://mathesaurus.sourceforge.net/matlab-python-xref.pdf]
 
 
 2 Graphical User Interfaces
@@ -178,7 +179,140 @@ Table of Contents
       what names you gave your data!
 
 
-2.6 Asking R for help
+2.6 Things to keep in mind
+──────────────────────────
+
+  • Case sensitive, like Stata (unlike SAS)
+
+  • Comments can be put almost anywhere, starting with a hash mark
+    ('`#''); everything to the end of the line is a comment
+
+  • The command prompt "`>'" indicates that R is ready to receive
+    commands
+
+  • If a command is not complete at the end of a line, R will give a
+    different prompt, '`+'' by default
+
+  • Parentheses must always match (first thing to check if you get an
+    error)
+
+  • R Does not care about spaces between commands or arguments
+
+  • Names should start with a letter and should not contain spaces
+
+  • Can use "." in object names (e.g., "my.data")
+
+  • Use forward slash ("/") instead of backslash in path names, even on
+    Windows
+
+
+2.7 Exercise 0
+──────────────
+
+  1. Try to get R to add 2 plus 2
+  2. See if you can find the help page for the "mean" topic
+  3. Using any means available, try to figure out how to run a linear
+     regression model in R
+  4. Go to [http://cran.r-project.org/web/views/] and skim the topic
+     closest to your field/interests
+
+
+3 Data and Functions
+════════════════════
+
+3.1 Assignment
+──────────────
+
+  Values can be assigned names and used in subsequent operations
+  • The `<-' operator (less than followed by a dash) is used to save
+    values
+  • The name on the left gets the value on the right.
+
+  ╭────
+  │ x <- 11 # Assign the value 10 to a variable named x
+  │ x + 1 # Add 1 to x
+  │ y <- x + 1 # Assign y the value x + 1
+  │ y
+  ╰────
+
+  ╭────
+  │ > x <- 11 # Assign the value 10 to a variable named x
+  │ > x + 1 # Add 1 to x
+  │ [1] 12
+  │ > y <- x + 1 # Assign y the value x + 1
+  │ > y
+  │ [1] 12
+  │ >
+  ╰────
+
+
+  Saved variables can be listed, overwritten and deleted
+  ╭────
+  │ ls() # List variables in workspace
+  │ x # Print the value of x
+  │ x <- 100 # Overwrite x. Note that no warning is given!
+  │ x
+  │ rm(x) # Delete x
+  │ ls()
+  ╰────
+
+  ╭────
+  │ > ls() # List variables in workspace
+  │ [1] "x" "y"
+  │ > x # Print the value of x
+  │ [1] 11
+  │ > x <- 100 # Overwrite x. Note that no warning is given!
+  │ > x
+  │ [1] 100
+  │ > rm(x) # Delete x
+  │ > ls()
+  │ [1] "y"
+  │ >
+  ╰────
+
+
+3.2 Functions
+─────────────
+
+  Using R is mostly about applying *functions* to *variables*. Functions
+  • take *variable(s)* as input *argument(s)*
+  • perform operations
+  • *return* values which can be *assigned*
+  • optionally perform side-effects such as writing a file to disk or
+    opening a graphics window
+
+  The general form for calling R functions is
+  ╭────
+  │ FunctionName(arg.1, arg.2, ... arg.n)
+  ╰────
+
+  Arguments can be matched by position or name
+
+  Examples:
+  ╭────
+  │ #?sqrt
+  │ a <- sqrt(y) # Call the sqrt function with argument x=y
+  │ round(a, digits = 2) # Call round() with arguments x=x and digits=2
+  │ # Functions can be nested so an alternative is
+  │ round(sqrt(y), digits = 5) # Take sqrt of a and round
+  ╰────
+
+  ╭────
+  │ > #?sqrt
+  │ > a <- sqrt(y) # Call the sqrt function with argument x=y
+  │ > round(a, digits = 2) # Call round() with arguments x=x and digits=2
+  │ [1] 3.46
+  │ > # Functions can be nested so an alternative is
+  │ > round(sqrt(y), digits = 5) # Take sqrt of a and round
+  │ [1] 3.4641
+  │ >
+  ╰────
+
+
+4 Help and package management
+═════════════════════════════
+
+4.1 Asking R for help
 ─────────────────────
 
   • Start html help, search/browse using web browser
@@ -210,7 +344,7 @@ Table of Contents
     ╰────
 
 
-2.7 R packages and libraries
+4.2 R packages and libraries
 ────────────────────────────
 
   There are thousands of R packages that extend R's capabilities.
@@ -236,105 +370,10 @@ Table of Contents
     ╰────
 
 
-2.8 Things to keep in mind
-──────────────────────────
-
-  • Case sensitive, like Stata (unlike SAS)
-
-  • Comments can be put almost anywhere, starting with a hash mark
-    ('`#''); everything to the end of the line is a comment
-
-  • The command prompt "`>'" indicates that R is ready to receive
-    commands
-
-  • If a command is not complete at the end of a line, R will give a
-    different prompt, '`+'' by default
-
-  • Parentheses must always match (first thing to check if you get an
-    error)
-
-  • R Does not care about spaces between commands or arguments
-
-  • Names should start with a letter and should not contain spaces
-
-  • Can use "." in object names (e.g., "my.data")
-
-  • Use forward slash ("/") instead of backslash in path names, even on
-    Windows
-
-
-2.9 Exercise 0
-──────────────
-
-  1. Try to get R to add 2 plus 2
-  2. See if you can find the help page for the "mean" topic
-  3. Using any means available, try to figure out how to run a linear
-     regression model in R
-  4. Go to [http://cran.r-project.org/web/views/] and skim the topic
-     closest to your field/interests
-
-
-3 Data and Functions
-════════════════════
-
-3.1 Assignment
-──────────────
-
-  Values can be assigned names and used in subsequent operations
-  • The `<-' operator (less than followed by a dash) is used to save
-    values
-  • The name on the left gets the value on the right.
-
-  ╭────
-  │ x <- 11 # Assign the value 10 to a variable named x
-  │ x + 1 # Add 1 to x
-  │ y <- x + 1 # Assign y the value x + 1
-  │ y
-  ╰────
-
-
-  Saved variables can be listed, overwritten and deleted
-  ╭────
-  │ ls() # List variables in workspace
-  │ x # Print the value of x
-  │ x <- 100 # Overwrite x. Note that no warning is given!
-  │ x
-  │ rm(x) # Delete x
-  │ ls()
-  ╰────
-
-
-3.2 Functions
-─────────────
-
-  Using R is mostly about applying *functions* to *variables*. Functions
-  • take *variable(s)* as input *argument(s)*
-  • perform operations
-  • *return* values which can be *assigned*
-  • optionally perform side-effects such as writing a file to disk or
-    opening a graphics window
-
-  The general form for calling R functions is
-  ╭────
-  │ FunctionName(arg.1, arg.2, ... arg.n)
-  ╰────
-
-  Arguments can be matched by position or name
-
-  Examples:
-  ╭────
-  │ #?sqrt
-  │ a <- sqrt(y) # Call the sqrt function with argument x=y
-  │ round(a, digits = 2) # Call round() with arguments x=x and digits=2
-  │ # Functions can be nested so an alternative is
-  │ round(sqrt(y), digits = 5) # Take sqrt of a and round
-  ╰────
-
-
-4 Getting data into R
+5 Getting data into R
 ═════════════════════
 
-4.1 The gss dataset
+5.1 The gss dataset
 ───────────────────
 
   The next few examples use a subset of the General Social Survey data
@@ -344,8 +383,21 @@ Table of Contents
   │ #see gssInfo.csv for rest of the variable descriptions
   ╰────
 
+  ╭────
+  │ > head(read.csv("dataSets/gssInfo.csv")) 
+  │       var                      description
+  │ 1 marital                   marital status
+  │ 2     age                age of respondent
+  │ 3    educ highest year of school completed
+  │ 4     sex                  respondents sex
+  │ 5     inc               respondents income
+  │ 6   happy                general happiness
+  │ > #see gssInfo.csv for rest of the variable descriptions
+  │ >
+  ╰────
 
-4.2 The "working directory" and listing files
+
+5.2 The "working directory" and listing files
 ─────────────────────────────────────────────
 
   R knows the directory it was started in, and refers to this as the
@@ -366,14 +418,34 @@ Table of Contents
   │ setwd("..") # set wd to enclosing folder ("up")
   ╰────
 
+  ╭────
+  │ > getwd() # get the current working directory
+  │ [1] "/home/izahn/Documents/Work/IQSS/Classes/Workshops/R/Rintro"
+  │ > setwd("dataSets") # set wd to the dataSets folder
+  │ > getwd()
+  │ [1] "/home/izahn/Documents/Work/IQSS/Classes/Workshops/R/Rintro/dataSets"
+  │ > setwd("..") # set wd to enclosing folder ("up")
+  │ >
+  ╰────
+
   It can be convenient to list files in a directory without leaving R
   ╭────
   │ list.files("dataSets") # list files in the dataSets folder
   │ # list.files("dataSets", pattern = ".csv") # restrict to .csv files
   ╰────
 
+  ╭────
+  │ > list.files("dataSets") # list files in the dataSets folder
+  │  [1] "gss.csv"            "gss.dta"            "gssInfo.csv"       
+  │  [4] "gss.rds"            "gss.sas7bdat"       "gss.sav"           
+  │  [7] "gss.xlsx"           "statesCodebook.txt" "states.csv"        
+  │ [10] "states.dta"         "states.xlsx"       
+  │ > # list.files("dataSets", pattern = ".csv") # restrict to .csv files  
+  │ >
+  ╰────
 
-4.3 Importing data from files
+
+5.3 Importing data from files
 ─────────────────────────────
 
   In order to read data from a file, you have to know what kind of file
@@ -402,8 +474,19 @@ Table of Contents
   │ datGSS <- read.dta(file="dataSets/gss.dta")
   ╰────
 
+  ╭────
+  │ > # read gss data from the gss.rds R file
+  │ > datGSS <- readRDS("dataSets/gss.rds")
+  │ > # read gss data from the gss.csv comma separated file
+  │ > gss.data <- read.csv("dataSets/gss.csv") # read gss data
+  │ > # read a Stata dataset from gss.dta 
+  │ > library(foreign) # load foreign data functions
+  │ > datGSS <- read.dta(file="dataSets/gss.dta")
+  │ >
+  ╰────
 
-4.4 Checking imported data
+
+5.4 Checking imported data
 ──────────────────────────
 
   Always a good idea to examine the imported data set–usually we want
@@ -415,8 +498,26 @@ Table of Contents
   │ str(datGSS[1:5]) # more details about the first 5 columns
   ╰────
 
+  ╭────
+  │ > class(datGSS) # check to see that test is what we expect it to be
+  │ [1] "data.frame"
+  │ > dim(datGSS) # how many rows and columns?
+  │ [1] 1419   35
+  │ > names(datGSS)[1:10] # first 10 column names
+  │  [1] "age"      "educ"     "emailhrs" "hrs1"     "sex"      "usecomp" 
+  │  [7] "usemail"  "useweb"   "webhrs"   "hapmar"  
+  │ > str(datGSS[1:5]) # more details about the first 5 columns
+  │ 'data.frame':	1419 obs. of  5 variables:
+  │  $ age     : num  69 27 19 21 19 87 42 19 78 70 ...
+  │  $ educ    : num  12 10 11 9 11 8 11 11 7 9 ...
+  │  $ emailhrs: num  -1 -1 0 -1 50 -1 3 -1 -1 -1 ...
+  │  $ hrs1    : num  -1 60 32 20 -1 -1 -1 -1 -1 22 ...
+  │  $ sex     : Factor w/ 2 levels "Male","Female": 1 1 1 1 1 2 1 2 2 2 ...
+  │ >
+  ╰────
 
-4.5 Saving and loading R  workspaces
+
+5.5 Saving and loading R  workspaces
 ────────────────────────────────────
 
   In addition to importing individual datasets, R can save and load
@@ -429,6 +530,16 @@ Table of Contents
   │ ls() # list stored objects to make sure they are deleted
   ╰────
 
+  ╭────
+  │ > ls() # list objects in our workspace
+  │ [1] "a"        "datGSS"   "gss.data" "y"       
+  │ > save.image(file="myWorkspace.RData") # save workspace 
+  │ > rm(list=ls()) # remove all objects from our workspace 
+  │ > ls() # list stored objects to make sure they are deleted
+  │ character(0)
+  │ >
+  ╰────
+
   • Load the "myWorkspace.RData" file and check that it is restored
 
   ╭────
@@ -436,13 +547,20 @@ Table of Contents
   │ ls() # list objects
   ╰────
 
+  ╭────
+  │ > load("myWorkspace.RData") # load myWorkspace.RData
+  │ > ls() # list objects
+  │ [1] "a"        "datGSS"   "gss.data" "y"       
+  │ >
+  ╰────
+
   When you close R you will be asked if you want to save your workspace
   – if you choose yes then your workspace will be restored next time you
   start R
 
 
-4.6 Exercise 2: loading and manipulating data
-─────────────────────────────────────────────
+5.6 Exercise 1
+──────────────
 
   1. Load the foreign package if you haven't already done so
      (`library(foreign)')
@@ -460,10 +578,10 @@ Table of Contents
   6. BONUS: figure out how to read the Excel file "gss.xlsx" into R
 
 
-5 Data Manipulation
+6 Data Manipulation
 ═══════════════════
 
-5.1 data.frame objects
+6.1 data.frame objects
 ──────────────────────
 
   • Usually data read into R will be stored as a *data.frame*
@@ -477,7 +595,7 @@ Table of Contents
     the number of columns (in that order)
 
 
-5.2 data.frame meta-data
+6.2 data.frame meta-data
 ────────────────────────
 
   A number of functions are available for inspecting data.frame objects:
@@ -492,13 +610,27 @@ Table of Contents
   │ #str(datGSS) # get structure
   ╰────
 
+  ╭────
+  │ > # row and column names
+  │ > head(names(datGSS)) # variable names in datGSS
+  │ [1] "age"      "educ"     "emailhrs" "hrs1"     "sex"      "usecomp" 
+  │ > head(rownames(datGSS)) # first few rownames of datGSS
+  │ [1] "1" "2" "3" "4" "5" "6"
+  │ > # dimensions
+  │ > dim(datGSS)
+  │ [1] 1419   35
+  │ > # structure
+  │ > #str(datGSS) # get structure
+  │ >
+  ╰────
 
-5.3 Logical operators
+
+6.3 Logical operators
 ─────────────────────
 
   It is often useful to select just those rows of your data where some
-  condition holds–for example select only rows where sex is 1
-  (male). The following operators allow you to do this:
+  condition holds–for example select only rows where sex is 1 (male).
+  The following operators allow you to do this:
 
   ==: equal to
   !=: not equal to
@@ -514,49 +646,120 @@ Table of Contents
   elements matching specific conditions.
 
 
-5.4 Extracting subsets of data.frames
+6.4 Extracting subsets of data.frames
 ─────────────────────────────────────
 
-  You can flexibly extract subsets of data.frames using single brackets
-  • The first index corresponds to rows, the second to columns
-  • Empty index means "all"
+  You can extract subsets of data.frames using the `subset()' function.
 
   ╭────
   │ # extracting subsets
-  │ # datGSS[c(1,2), ] # rows 1 and 2, all columns
-  │ # datGSS[ , c(1,2)] # all rows, columns 1 and 2
-  │ # datGSS[ , c("age", "educ")] # same as above
+  │ subset(datGSS,
+  │        # rows 1 through 3
+  │        subset = rownames(datGSS) %in% 1:3,
+  │        # column 1 to 5
+  │        select = 1:4)
   │ 
-  │ datGSS[1:5, 1] # rows 1 through 5, column 1
-  │ datGSS[1:5, "educ"] # rows 1-5, column "educ"
-  │ datGSS[datGSS[, "age"] > 90, c("sex", "age")] # rows where age > 90
+  │ subset(datGSS,
+  │        # rows where age > 90
+  │        subset = age > 90,
+  │        ## sex and age columns
+  │        select = c("sex", "age"))
+  │ 
+  │ ## the $ operator can be used to extract a single column
+  │ str(datGSS$age)
   ╰────
 
-  Note the use of the `c()' function to combine arguments
+  ╭────
+  │ > # extracting subsets
+  │ > subset(datGSS,
+  │ +        # rows 1 through 3
+  │ +        subset = rownames(datGSS) %in% 1:3,
+  │ +        # column 1 to 5
+  │ +        select = 1:4)
+  │   age educ emailhrs hrs1
+  │ 1  69   12       -1   -1
+  │ 2  27   10       -1   60
+  │ 3  19   11        0   32
+  │ >                                         
+  │ > subset(datGSS,
+  │ +        # rows where age > 90
+  │ +        subset = age > 90,
+  │ +        ## sex and age columns
+  │ +        select = c("sex", "age"))
+  │        sex age
+  │ 315 Female  99
+  │ 665   Male  99
+  │ > 
+  │ > ## the $ operator can be used to extract a single column
+  │ > str(datGSS$age)
+  │  num [1:1419] 69 27 19 21 19 87 42 19 78 70 ...
+  │ >
+  ╰────
+
+  Note that `subset()' is a convenience function; see `?Extract' for a
+  more powerful (and complicated) way to subset data.
 
 
-5.5 Replacing subsets of data.frames
-────────────────────────────────────
+6.5 Transforming data.frames
+────────────────────────────
 
-  You can flexibly create and replace subsets of data.frames using
-  bracket notation
+  You can modify data.frames using the `transform()' function.
 
   ╭────
   │ # creating new variable mean centered age
-  │ datGSS[ , "ageC"] <- datGSS[, "age"] - mean(datGSS[, "age"])
+  │ datGSS <- transform(datGSS,
+  │                     ageC = age - mean(age))
   │ 
   │  #education difference between wifes and husbands
-  │ datGSS[ , "educ.diff"] <- datGSS[ , "wifeduc"] - datGSS[, "husbeduc"]
+  │ datGSS <- transform(datGSS,
+  │                     educ.diff = wifeduc - husbeduc)
   │ 
-  │ # replacing subsets to create young/old variable
-  │ datGSS[ , "young"] <- "no" # all values of young = "no"
-  │ datGSS[datGSS[ , "age"] < 30, "young"] <- "yes" # change to "yes" if age < 30
+  │ ## ifelse() is also useful; note that the $ operator can
+  │ ## also be used to create new variables.
+  │ datGSS$young <- ifelse(datGSS$age < 30, "yes", "no")
   │ 
-  │ datGSS[1:4, c("age", "ageC", "young", "wifeduc", "husbeduc", "educ.diff")]
+  │ ## examine our newly created variables
+  │ head(subset(datGSS,
+  │             select = c("age", "ageC", "young", "wifeduc",
+  │                        "husbeduc", "educ.diff")),
+  │      n = 8)
   ╰────
 
+  ╭────
+  │ > # creating new variable mean centered age
+  │ > datGSS <- transform(datGSS,
+  │ +                     ageC = age - mean(age))
+  │ > 
+  │ >  #education difference between wifes and husbands
+  │ > datGSS <- transform(datGSS,
+  │ +                     educ.diff = wifeduc - husbeduc)
+  │ > 
+  │ > ## ifelse() is also useful; note that the $ operator can
+  │ > ## also be used to create new variables.
+  │ > datGSS$young <- ifelse(datGSS$age < 30, "yes", "no")
+  │ > 
+  │ > ## examine our newly created variables
+  │ > head(subset(datGSS,
+  │ +             select = c("age", "ageC", "young", "wifeduc",
+  │ +                        "husbeduc", "educ.diff")),
+  │ +      n = 8)
+  │   age       ageC young wifeduc husbeduc educ.diff
+  │ 1  69  22.363636    no      NA       NA        NA
+  │ 2  27 -19.636364   yes      13       10         3
+  │ 3  19 -27.636364   yes      NA       NA        NA
+  │ 4  21 -25.636364   yes      NA       NA        NA
+  │ 5  19 -27.636364   yes      NA       NA        NA
+  │ 6  87  40.363636    no      NA       NA        NA
+  │ 7  42  -4.636364    no      10       11        -1
+  │ 8  19 -27.636364   yes      NA       NA        NA
+  │ >
+  ╰────
 
-5.6 Exporting Data
+  Note that `transform' is a convenience function; see `?Extract' for a
+  more powerful way to modify data.frames.
+
+
+6.6 Exporting Data
 ──────────────────
 
   Now that we have made some changes to our GSS data set, we might want
@@ -572,8 +775,18 @@ Table of Contents
   │ saveRDS(datGSS, file = "gss.rds")
   ╰────
 
+  ╭────
+  │ > # write data to a .csv file
+  │ > write.csv(datGSS, file = "gss.csv")
+  │ > # write data to a Stata file
+  │ > write.dta(datGSS, file = "gss.dta")
+  │ > # write data to an R file
+  │ > saveRDS(datGSS, file = "gss.rds")
+  │ >
+  ╰────
 
-5.7 Exercise 3: Data manipulation
+
+6.7 Exercise 2: Data manipulation
 ─────────────────────────────────
 
   Use the gss.rds data set
@@ -581,80 +794,147 @@ Table of Contents
   1. Generate the following variables:
      • "rich" equal to 0 if rincdol is less than 100000, and 1 otherwise
      • "sinc" equal to incomdol - rincdol
-     • "dual.earn" equal to 1 if wkftwife = 1 and wkfthusb = 1, and zero
-       otherwise
   2. Create a subset of the data containing only rows where "usecomp" =
      "Yes"
   3. Examine the data.frame created in step 2, and answer the following
      questions:
      • How many rows does it have?
      • How many columns does it have?
-     • Is the "satjob" variable numeric?
+     • What is the class of the "satjob" variable?
+  4. BONUS (hard): Generate a variable named "dual.earn" equal to 1 if
+     both wkftwife = 1 and wkfthusb = 1, and zero otherwise
 
 
-6 Basic Statistics and Graphs
+7 Basic Statistics and Graphs
 ═════════════════════════════
 
-6.1 Basic statistics
+7.1 Basic statistics
 ────────────────────
 
   Descriptive statistics of single variables are straightforward:
   ╭────
-  │ mean(datGSS[ , "educ"]) # calculate mean of x
-  │ sd(datGSS[, "educ"]) # calculate standard deviation of x
-  │ summary(datGSS[ , "educ"]) # calculate min, max, quantiles, mean
+  │ mean(datGSS$educ) # calculate mean value of education
+  │ sd(datGSS$educ) # calculate standard deviation of x
+  │ # calculate min, max, quantiles, mean of educ, age, and ageC
+  │ summary(subset(datGSS, select = c("educ", "age", "ageC")))
   ╰────
 
-  If you get tired of typing the data.frame name over and over, use
-  `with()' instead
   ╭────
-  │ with(datGSS,
-  │      c(Lowest = min(educ),
-  │        Average = mean(educ),
-  │        Highest = max(educ))
-  │      )
+  │ > mean(datGSS$educ) # calculate mean value of education
+  │ [1] 13.47498
+  │ > sd(datGSS$educ) # calculate standard deviation of x
+  │ [1] 5.389476
+  │ > # calculate min, max, quantiles, mean of educ, age, and ageC
+  │ > summary(subset(datGSS, select = c("educ", "age", "ageC")))
+  │       educ            age             ageC        
+  │  Min.   : 0.00   Min.   :18.00   Min.   :-28.636  
+  │  1st Qu.:12.00   1st Qu.:32.00   1st Qu.:-14.636  
+  │  Median :13.00   Median :44.00   Median : -2.636  
+  │  Mean   :13.47   Mean   :46.64   Mean   :  0.000  
+  │  3rd Qu.:16.00   3rd Qu.:59.00   3rd Qu.: 12.364  
+  │  Max.   :99.00   Max.   :99.00   Max.   : 52.364  
+  │ >
   ╰────
+
 
   Some of these functions (e.g., summary) will also work with
-  data.frames and other types of objects
+  data.frames and other types of objects, others (such as `sd') will
+  not.
 
 
-6.2 Counts and proportions
+7.2 Counts and proportions
 ──────────────────────────
 
   Start by using the `table()' function to tabulate counts, then perform
   additional computations if needed
   ╭────
-  │ sex.counts <- table(datGSS[, "sex"]) # tabulate sex categories
+  │ sex.counts <- table(datGSS$sex) # tabulate sex categories
   │ sex.counts
   │ prop.table(sex.counts) # convert to proportions
+  ╰────
+
+  ╭────
+  │ > sex.counts <- table(datGSS$sex) # tabulate sex categories
+  │ > sex.counts
+  │ 
+  │   Male Female 
+  │    622    797 
+  │ > prop.table(sex.counts) # convert to proportions
+  │ 
+  │      Male    Female 
+  │ 0.4383369 0.5616631 
+  │ >
   ╰────
 
   Add variables for crosstabs
 
   ╭────
-  │ table(datGSS[, c("sex", "happy")]) # crosstab marital X happy
+  │ table(subset(datGSS, select = c("sex", "happy"))) # crosstab marital X happy
+  ╰────
+
+  ╭────
+  │ > table(subset(datGSS, select = c("sex", "happy"))) # crosstab marital X happy
+  │         happy
+  │ sex      NAP VERY HAPPY PRETTY HAPPY NOT TOO HAPPY  DK  NA
+  │   Male     0        189          350            73   0  10
+  │   Female   0        246          447            84   1  19
+  │ >
   ╰────
 
 
-6.3 Statistics by classification factors
+7.3 Statistics by classification factors
 ────────────────────────────────────────
 
   The `by()' function can be used to perform a calculation separately
   for each level of a classifying variable
   ╭────
-  │ by(datGSS[, c("income", "educ")],
+  │ by(subset(datGSS, select = c("income", "educ")),
   │    INDICES=datGSS["sex"],
   │    FUN=summary)
   ╰────
 
+  ╭────
+  │ > by(subset(datGSS, select = c("income", "educ")),
+  │ +    INDICES=datGSS["sex"],
+  │ +    FUN=summary)
+  │ sex: Male
+  │              income         educ      
+  │  $40000 TO 49999: 59   Min.   : 4.00  
+  │  $50000 TO 59999: 56   1st Qu.:12.00  
+  │  $60000 TO 74999: 49   Median :13.00  
+  │  $35000 TO 39999: 48   Mean   :13.68  
+  │  REFUSED        : 48   3rd Qu.:16.00  
+  │  $110000 OR OVER: 43   Max.   :99.00  
+  │  (Other)        :319                  
+  │ ---------------------------------------------------- 
+  │ sex: Female
+  │              income         educ      
+  │  REFUSED        : 76   Min.   : 0.00  
+  │  $60000 TO 74999: 62   1st Qu.:12.00  
+  │  $40000 TO 49999: 60   Median :12.00  
+  │  $50000 TO 59999: 52   Mean   :13.32  
+  │  $30000 TO 34999: 49   3rd Qu.:15.00  
+  │  $25000 TO 29999: 42   Max.   :99.00  
+  │  (Other)        :456                  
+  │ >
+  ╰────
 
-6.4 Correlations
+
+7.4 Correlations
 ────────────────
 
   Let's look at correlations among between age, income, and education
   ╭────
-  │ cor(datGSS[ , c("age", "incomdol", "educ")])
+  │ cor(subset(datGSS, select =  c("age", "incomdol", "educ")))
+  ╰────
+
+  ╭────
+  │ > cor(subset(datGSS, select =  c("age", "incomdol", "educ")))
+  │                  age   incomdol        educ
+  │ age       1.00000000 -0.1186564 -0.07362454
+  │ incomdol -0.11865641  1.0000000  0.21013267
+  │ educ     -0.07362454  0.2101327  1.00000000
+  │ >
   ╰────
 
 
@@ -664,8 +944,26 @@ Table of Contents
   │      cor.test(age, educ))
   ╰────
 
+  ╭────
+  │ > with(datGSS,
+  │ +      cor.test(age, educ))
+  │ 
+  │ 	Pearson's product-moment correlation
+  │ 
+  │ data:  age and educ
+  │ t = -2.779, df = 1417, p-value = 0.005525
+  │ alternative hypothesis: true correlation is not equal to 0
+  │ 95 percent confidence interval:
+  │  -0.12518333 -0.02166916
+  │ sample estimates:
+  │         cor 
+  │ -0.07362454 
+  │ 
+  │ >
+  ╰────
 
-6.5 Multiple regression
+
+7.5 Multiple regression
 ───────────────────────
 
   Modeling functions generally use the /formula/ interface whith DV on
@@ -680,8 +978,32 @@ Table of Contents
   │ summary(m1)
   ╰────
 
+  ╭────
+  │ > m1 <- lm(educ ~ sex + age, data = datGSS)
+  │ > summary(m1)
+  │ 
+  │ Call:
+  │ lm(formula = educ ~ sex + age, data = datGSS)
+  │ 
+  │ Residuals:
+  │     Min      1Q  Median      3Q     Max 
+  │ -13.434  -1.785  -0.688   1.955  86.049 
+  │ 
+  │ Coefficients:
+  │              Estimate Std. Error t value Pr(>|t|)
+  │ (Intercept) 14.652702   0.425691  34.421  < 2e-16
+  │ sexFemale   -0.275235   0.289290  -0.951  0.34156
+  │ age         -0.021938   0.008238  -2.663  0.00783
+  │ 
+  │ Residual standard error: 5.377 on 1416 degrees of freedom
+  │ Multiple R-squared:  0.006056,	Adjusted R-squared:  0.004652 
+  │ F-statistic: 4.314 on 2 and 1416 DF,  p-value: 0.01356
+  │ 
+  │ >
+  ╰────
 
-6.6 Save R output to a file
+
+7.6 Save R output to a file
 ───────────────────────────
 
   Earlier we learned how to write a data set to a file. But what if we
@@ -696,19 +1018,46 @@ Table of Contents
   │ sink() ## sink with no arguments turns logging off
   ╰────
 
+  ╭────
+  │ > sink(file="output.txt", split=TRUE) # start logging
+  │ > print("This is the result from model 1\n")
+  │ [1] "This is the result from model 1\n"
+  │ > print(summary(m1))
+  │ 
+  │ Call:
+  │ lm(formula = educ ~ sex + age, data = datGSS)
+  │ 
+  │ Residuals:
+  │     Min      1Q  Median      3Q     Max 
+  │ -13.434  -1.785  -0.688   1.955  86.049 
+  │ 
+  │ Coefficients:
+  │              Estimate Std. Error t value Pr(>|t|)
+  │ (Intercept) 14.652702   0.425691  34.421  < 2e-16
+  │ sexFemale   -0.275235   0.289290  -0.951  0.34156
+  │ age         -0.021938   0.008238  -2.663  0.00783
+  │ 
+  │ Residual standard error: 5.377 on 1416 degrees of freedom
+  │ Multiple R-squared:  0.006056,	Adjusted R-squared:  0.004652 
+  │ F-statistic: 4.314 on 2 and 1416 DF,  p-value: 0.01356
+  │ 
+  │ > sink() ## sink with no arguments turns logging off
+  │ >
+  ╰────
 
-6.7 Basic graphics: Frequency bars
+
+7.7 Basic graphics: Frequency bars
 ──────────────────────────────────
 
   Thanks to classes and methods, you can `plot()' many kinds of objects:
 
   ╭────
-  │ plot(datGSS[ , "marital"]) # Plot a factor
+  │ plot(datGSS$marital) # Plot a factor
   ╰────
   [file:images/examplePlot1.png]
 
 
-6.8 Basic graphics: Boxplots by group
+7.8 Basic graphics: Boxplots by group
 ─────────────────────────────────────
 
   Thanks to classes and methods, you can `plot()' many kinds of objects:
@@ -719,7 +1068,7 @@ Table of Contents
   [file:images/examplePlot2.png]
 
 
-6.9 Basic graphics: Mosaic chart
+7.9 Basic graphics: Mosaic chart
 ────────────────────────────────
 
   Thanks to classes and methods, you can `plot()' many kinds of objects:
@@ -730,7 +1079,7 @@ Table of Contents
   [file:images/examplePlot3.png]
 
 
-6.10 Exercise 3
+7.10 Exercise 3
 ───────────────
 
   Using the datGSS data.frame
@@ -742,10 +1091,10 @@ Table of Contents
      y-axis
 
 
-7 Wrap-up
+8 Wrap-up
 ═════════
 
-7.1 Help us make this workshop better!
+8.1 Help us make this workshop better!
 ──────────────────────────────────────
 
   • Please take a moment to fill out a very short feedback form
@@ -755,7 +1104,7 @@ Table of Contents
   • [http://tinyurl.com/R-intro-feedback]
 
 
-7.2 Additional resources
+8.2 Additional resources
 ────────────────────────
 
   • IQSS workshops:
