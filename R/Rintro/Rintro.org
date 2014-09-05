@@ -12,10 +12,8 @@
 # property and/or the EXCLUDE_TAGS, place the curser on the poperty line 
 # and press C-c C-c
 
-#+PROPERTY: exports results
-#+EXCLUDE_TAGS: noexport labsetup mitsetup
-
-
+#+PROPERTY: exports code
+#+EXCLUDE_TAGS: noexport mitsetup
 
 
 #+SETUPFILE: ../workshopPreamble.org
@@ -24,6 +22,7 @@
 #+begin_src R :exports none :tangle no :results silent
   rm(list=ls())
   .First <- function() {
+    require(foreign)
     options(width=70)
     options(useFancyQuotes=FALSE)
     options(show.signif.stars=FALSE)
@@ -51,16 +50,6 @@ Materials for this workshop include slides, example data sets, and example code.
 - Extract the zip file containing the materials to your desktop
 
 Workshop notes are available in .hmtl and .pdf format. Navigate to your desktop and open either Rintro.pdf or Rintro.html.
-
-** Materials and setup						   :labsetup:
-
-- USERNAME: dataclass
-- PASSWORD: dataclass
-
-- Find class materials at
-[[http://projects.iq.harvard.edu/rtc/event/introduction-r]]
-
-- *Download the zip file at the bottom of the page and unzip on your desktop!*
 
 
 ** Copy the workshop materials to your home directory		   :mitsetup:
@@ -144,27 +133,6 @@ Rstudio has many useful features, including parentheses matching and auto-comple
 Emacs + ESS is a very powerful combination, but can be difficult to set up
 
 
-** Components of R GUIs
-
-- The R console
-  - Displays command history and results
-  - Commands can be typed directly in the console
-  - R Console work disappears once session is closed
-
-- A text editor
-  - A plain text editor for writing R code
-  - Good ones will have syntax highlighting, parentheses matching etc.
-  - Anything that modifies your data should be done in a text editor
-
-- Graphics windows
-  - View, re-size, and save graphics
-  - A good GUI will allow you to cycle through graph history
-
-- Work-space viewer
-  - Some GUIs have work-space browsers that allow you to see stored objects
-  - Very helpful if you are absentminded like me and frequently forget what names you gave your data!
-
-
 ** Launch RStudio on Athena					   :mitsetup:
 
 - To start R *type these commands in the terminal*:
@@ -217,10 +185,10 @@ Emacs + ESS is a very powerful combination, but can be difficult to set up
 
 
 ** Exercise 0
-1. Try to get R to add 2 plus 2
-2. See if you can find the help page for the "mean" topic
-3. Using any means available, try to figure out how to run a linear regression model in R
-4. Go to [[http://cran.r-project.org/web/views/]] and skim the topic closest to your field/interests
+1. Try to get R to add 2 plus 2.
+2. Try to figure out how evaluate lines directly from your R script.
+3. R includes extensive documentation, including a file named "An introduction to R". Try to find this help file.
+4. Go to [[http://cran.r-project.org/web/views/]] and skim the topic closest to your field/interests.
 
 
 * Data and Functions
@@ -316,7 +284,7 @@ Examples:
 * Help and package management
   
 ** Asking R for help
-
+R has extensive built-in documentation that can be accessed through R commands or through the GUI.
 - Start html help, search/browse using web browser
   - at the R console:
     src_R[:exports code :eval no]{help.start()}
@@ -324,15 +292,15 @@ Examples:
   - or use the help menu from you GUI
 
 - Look up the documentation for a function
-  src_R[:exports code :eval no]{help(topicName)}
+  src_R[:exports code :eval no]{help(plot)}
 
-  src_R[:exports code :eval no]{?topicName}
+  src_R[:exports code :eval no]{?kmeans}
 
 - Look up documentation for a package
-  src_R[:exports code :eval no]{help(package="packageName")}
+  src_R[:exports code :eval no]{help(package="stats")}
 
 - Search documentation from R (not always the best way... google often works better)
-  src_R[:exports code :eval no]{help.search("topicName")}
+  src_R[:exports code :eval no]{help.search("classification")}
 
 ** R packages and libraries
 
@@ -345,11 +313,10 @@ There are thousands of R packages that extend R's capabilities.
   src_R[:exports code :eval no]{search()}
 
 - To load a package: 
-  src_R[:exports code :eval no]{library("packageName")}
+  src_R[:exports code :eval no]{library("car")}
 
 - Install new package: 
-  src_R[:exports code :eval no]{install.packages("packageName")}
-
+  src_R[:exports code :eval no]{install.packages("stringdist")}
 
 
 * Getting data into R
@@ -397,10 +364,10 @@ We can also set the working directory using paths relative to the current workin
 #+RESULTS: getWD
 #+begin_example
 > getwd() # get the current working directory
-[1] "/home/izahn/Documents/Work/IQSS/Classes/Workshops/R/Rintro"
+[1] "/home/izahn/Documents/Work/IQSS/Classes/IQSS_Stats_Workshops/R/Rintro"
 > setwd("dataSets") # set wd to the dataSets folder
 > getwd()
-[1] "/home/izahn/Documents/Work/IQSS/Classes/Workshops/R/Rintro/dataSets"
+[1] "/home/izahn/Documents/Work/IQSS/Classes/IQSS_Stats_Workshops/R/Rintro/dataSets"
 > setwd("..") # set wd to enclosing folder ("up")
 > 
 #+end_example
@@ -537,7 +504,7 @@ When you close R you will be asked if you want to save your workspace -- if you 
 
 ** Exercise 1
 
-1. Load the foreign package if you haven't already done so (~library(foreign)~)
+1. Load the foreign package if you haven't already done so
 
 2. Look at the help page for the read.spss function
 
@@ -1082,7 +1049,246 @@ Using the datGSS data.frame
   - StackOverflow: http://stackoverflow.com/questions/tagged/r
 
 
-** Cleanup							   :noexport:
+* Exercise solutions
+  :PROPERTIES:
+  :exports:  code
+  :END:
+
+** Exercise 0 solution                                            :prototype:
+1) [@1]] Try to get R to add 2 plus 2.
+#+BEGIN_SRC R
+  2 + 2
+#+END_SRC
+
+#+RESULTS:
+#+begin_example
+> 2 + 2
+[1] 4
+> 
+#+end_example
+
+2) [@2] Try to figure out how evaluate lines directly from your R script.
+=In Rstudo this is 'Control-Enter'; may be different in another GUI=
+3) [@3] R includes extensive documentation, including a file named "An introduction to R". Try to find this help file.
+=Go to the main help page by running 'help.start() or using the GUI menu, find and click on the link to "An Introduction to R".=
+4) [@4] Go to [[http://cran.r-project.org/web/views/]] and skim the topic closest to your field/interests.
+=I like the machine learning topic!=
+
+** Exercise 1 solution                                            :prototype:
+
+1) [@1] Load the foreign package if you haven't already done so
+#+BEGIN_SRC R
+  library(foreign)
+#+END_SRC
+
+#+RESULTS:
+#+begin_example
+> library(foreign)
+> 
+#+end_example
+
+2) [@2] Look at the help page for the read.spss function
+#+BEGIN_SRC R :eval no
+  help("read.spss")
+#+END_SRC
+
+3) [@3] Read the SPSS data set in dataSets/gss.sav and assign the result to an R data object named GSS.sav
+#+BEGIN_SRC R
+  gss.data <- read.spss("dataSets/gss.sav", to.data.frame=TRUE)
+#+END_SRC
+
+#+RESULTS:
+#+begin_example
+> gss.data <- read.spss("dataSets/gss.sav", to.data.frame=TRUE)
+> 
+#+end_example
+
+4) [@4] Make sure that the data loaded in step 2 is a data.frame (hint: check the arguments documented in the help page)
+#+BEGIN_SRC R
+  class(gss.data)
+#+END_SRC
+
+#+RESULTS:
+#+begin_example
+> class(gss.data)
+[1] "data.frame"
+> 
+#+end_example
+
+5) [@5] Display the dimensions of the GSS.sav. 
+#+BEGIN_SRC R
+  dim(gss.data)
+  nrow(gss.data)
+  ncol(gss.data)
+#+END_SRC
+
+#+RESULTS:
+#+begin_example
+> dim(gss.data)
+[1] 217   7
+> nrow(gss.data)
+[1] 217
+> ncol(gss.data)
+[1] 7
+> 
+#+end_example
+
+6) [@6] BONUS: figure out how to read the Excel file "gss.xlsx" into R
+#+BEGIN_SRC R
+  library(XLConnect)
+  dat <- readWorksheetFromFile("dataSets/gss.xlsx", sheet = 1)
+  class(dat); dim(dat)
+#+END_SRC
+
+#+RESULTS:
+#+begin_example
+> library(XLConnect)
+> dat <- readWorksheetFromFile("dataSets/gss.xlsx", sheet = 1)
+> class(dat); dim(dat)
+[1] "data.frame"
+[1] 1419   47
+> 
+#+end_example
+
+
+** Exercise 2 solution                                            :prototype:
+Use the gss.rds data set
+#+BEGIN_SRC R
+  gss <- readRDS("dataSets/gss.rds")
+#+END_SRC
+
+#+RESULTS:
+#+begin_example
+> gss <- readRDS("dataSets/gss.rds")
+> 
+#+end_example
+
+1) [@1] Create a subset of the data containing only rows where "usecomp" = "Yes". How many computer users are there?
+#+BEGIN_SRC R
+  gss.usecomp <- subset(gss, usecomp == "Yes")
+  nrow(gss.usecomp)
+#+END_SRC
+
+#+RESULTS:
+#+begin_example
+> gss.usecomp <- subset(gss, usecomp == "Yes")
+> nrow(gss.usecomp)
+[1] 789
+> 
+#+end_example
+
+2) [@2] Generate the following variables:
+   - "rich" equal to 0 if rincdol is less than 100000, and 1 otherwise
+   - "sinc" equal to incomdol - rincdol
+#+BEGIN_SRC R
+  gss <- transform(gss,
+                   rich = ifelse(rincdol < 100000, 0, 1),
+                   sinc = incomdol - rincdol)
+  head(subset(gss, select = c("rincdol", "incomdol", "rich", "sinc")))
+#+END_SRC
+
+#+RESULTS:
+#+begin_example
+> gss <- transform(gss,
++                  rich = ifelse(rincdol < 100000, 0, 1),
++                  sinc = incomdol - rincdol)
+> head(subset(gss, select = c("rincdol", "incomdol", "rich", "sinc")))
+  rincdol incomdol rich   sinc
+1      -2    18750    0  18752
+2   32500    45000    0  12500
+3   11250       -2    0 -11252
+4     500     2000    0   1500
+5      -2       -2    0      0
+6      -2       -2    0      0
+> 
+#+end_example
+
+
+3) [@3] Generate a variable named "dual.earn" equal to 1 if both wkftwife = 1 and wkfthusb = 1, and zero otherwise. How many dual earners are there?
+#+BEGIN_SRC R
+  gss$dual.earn <- ifelse(gss$wkftwife == 1 & gss$wkfthusb == 1, 1, 0)
+  nrow(subset(gss, dual.earn == 1))
+#+END_SRC
+
+#+RESULTS:
+#+begin_example
+> gss$dual.earn <- ifelse(gss$wkftwife == 1 & gss$wkfthusb == 1, 1, 0)
+> nrow(subset(gss, dual.earn == 1))
+[1] 235
+> 
+#+end_example
+
+** Exercise 3 solution                                            :prototype:
+Using the datGSS data.frame
+
+1) [@1] Cross-tabulate sex and emailhrs
+#+BEGIN_SRC R
+  with(datGSS, table(sex, emailhrs))
+#+END_SRC
+
+#+RESULTS:
+#+begin_example
+> with(datGSS, table(sex, emailhrs))
+        emailhrs
+sex       -3  -2  -1   0 0.0166666666666667 0.0333333333333333
+  Male    13   1 303  29                  1                  0
+  Female  18   2 431  39                  0                  1
+        emailhrs
+sex      0.0833333333333333 0.166666666666667 0.25 0.266666666666667
+  Male                   11                11    6                 1
+  Female                  4                 5    7                 0
+        emailhrs
+sex      0.333333333333333 0.5 0.583333333333333 0.666666666666667
+  Male                   5  26                 2                 1
+  Female                10  16                 0                 0
+        emailhrs
+sex      0.75 0.833333333333333   1 1.25 1.5 1.66666666666667   2 2.5
+  Male      0                 1  47    1   5                0  32   0
+  Female    2                 0  66    0   4                1  50   3
+        emailhrs
+sex        3 3.5   4   5   6   7   8  10  12  14  15  16  18  20  21
+  Male    30   1  15  16   7  11   3  17   1   1   6   2   1   6   2
+  Female  30   3  12  24   6   8   9  15   0   3   7   0   0   8   0
+        emailhrs
+sex       25  30  35  40  50  60
+  Male     1   3   0   1   2   0
+  Female   1   2   1   8   0   1
+> 
+#+end_example
+
+2) [@2] Calculate the mean and standard deviation of incomdol by sex
+#+BEGIN_SRC R
+   by(datGSS$incomdol, datGSS$sex, mean)
+   by(datGSS$incomdol, datGSS$sex, sd)
+#+END_SRC
+
+#+RESULTS:
+#+begin_example
+> by(datGSS$incomdol, datGSS$sex, mean)
+datGSS$sex: Male
+[1] 41142.92
+---------------------------------------------------- 
+datGSS$sex: Female
+[1] 32463.11
+> by(datGSS$incomdol, datGSS$sex, sd)
+datGSS$sex: Male
+[1] 32342.16
+---------------------------------------------------- 
+datGSS$sex: Female
+[1] 30154.99
+> 
+#+end_example
+
+3) [@3] Create a scatter plot with educ on the x-axis and incomdol on the y-axis
+#+BEGIN_SRC R :results output graphics :file ex3.png
+  plot(subset(datGSS, select = c("educ", "incomdol")))
+#+END_SRC
+
+#+RESULTS:
+[[file:ex3.png]]
+
+
+* Cleanup                                                          :noexport:
 #+name: cleanup
 #+begin_src R :exports none
   system("rm dataSets/myWorkspace.RData")

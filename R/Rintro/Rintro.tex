@@ -1,4 +1,4 @@
-% Created 2014-08-20 Wed 17:42
+% Created 2014-09-04 Thu 20:43
 \documentclass[table,smaller]{beamer}
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
@@ -65,6 +65,7 @@ Materials for this workshop include slides, example data sets, and example code.
 
 Workshop notes are available in .hmtl and .pdf format. Navigate to your desktop and open either Rintro.pdf or Rintro.html.
 \end{frame}
+
 
 \begin{frame}[label=sec-1-2]{What is R?}
 R is a programming language designed for statistical computing. Notable characteristics include:
@@ -134,36 +135,23 @@ Emacs + ESS is a very powerful combination, but can be difficult to set up
 \end{frame}
 
 
-\begin{frame}[label=sec-2-5]{Components of R GUIs}
+\begin{frame}[fragile,label=sec-2-5]{Launch RStudio}
+ \begin{itemize}
+\item Open the RStudio program
+
+\item Open up today's R script
+
 \begin{itemize}
-\item The R console
-\begin{itemize}
-\item Displays command history and results
-\item Commands can be typed directly in the console
-\item R Console work disappears once session is closed
+\item In RStudio, Go to \alert{File => Open Script}
+
+\item Locate and open the \texttt{Rintro.R} script in the Rintro folder on your desktop
 \end{itemize}
 
-\item A text editor
-\begin{itemize}
-\item A plain text editor for writing R code
-\item Good ones will have syntax highlighting, parentheses matching etc.
-\item Anything that modifies your data should be done in a text editor
-\end{itemize}
+\item Go to \alert{Tools => Set working directory => To source file location} (more on the working directory later)
 
-\item Graphics windows
-\begin{itemize}
-\item View, re-size, and save graphics
-\item A good GUI will allow you to cycle through graph history
-\end{itemize}
-
-\item Work-space viewer
-\begin{itemize}
-\item Some GUIs have work-space browsers that allow you to see stored objects
-\item Very helpful if you are absentminded like me and frequently forget what names you gave your data!
-\end{itemize}
+\item I encourage you to add your own notes to this file!
 \end{itemize}
 \end{frame}
-
 
 \begin{frame}[fragile,label=sec-2-6]{Things to keep in mind}
  \begin{itemize}
@@ -190,10 +178,10 @@ Emacs + ESS is a very powerful combination, but can be difficult to set up
 
 \begin{frame}[label=sec-2-7]{Exercise 0}
 \begin{enumerate}
-\item Try to get R to add 2 plus 2
-\item See if you can find the help page for the "mean" topic
-\item Using any means available, try to figure out how to run a linear regression model in R
-\item Go to \url{http://cran.r-project.org/web/views/} and skim the topic closest to your field/interests
+\item Try to get R to add 2 plus 2.
+\item Try to figure out how evaluate lines directly from your R script.
+\item R includes extensive documentation, including a file named "An introduction to R". Try to find this help file.
+\item Go to \url{http://cran.r-project.org/web/views/} and skim the topic closest to your field/interests.
 \end{enumerate}
 \end{frame}
 
@@ -291,7 +279,8 @@ Examples:
 \label{sec-4}
 
 \begin{frame}[fragile,label=sec-4-1]{Asking R for help}
- \begin{itemize}
+ R has extensive built-in documentation that can be accessed through R commands or through the GUI.
+\begin{itemize}
 \item Start html help, search/browse using web browser
 \begin{itemize}
 \item at the R console:
@@ -304,21 +293,21 @@ help.start()
 
 \item Look up the documentation for a function
 \begin{minted}[fontsize=\scriptsize]{r}
-help(topicName)
+help(plot)
 \end{minted}
 
 \begin{minted}[fontsize=\scriptsize]{r}
-?topicName
+?kmeans
 \end{minted}
 
 \item Look up documentation for a package
 \begin{minted}[fontsize=\scriptsize]{r}
-help(package="packageName")
+help(package="stats")
 \end{minted}
 
 \item Search documentation from R (not always the best way\ldots{} google often works better)
 \begin{minted}[fontsize=\scriptsize]{r}
-help.search("topicName")
+help.search("classification")
 \end{minted}
 \end{itemize}
 \end{frame}
@@ -339,16 +328,15 @@ search()
 
 \item To load a package: 
 \begin{minted}[fontsize=\scriptsize]{r}
-library("packageName")
+library("car")
 \end{minted}
 
 \item Install new package: 
 \begin{minted}[fontsize=\scriptsize]{r}
-install.packages("packageName")
+install.packages("stringdist")
 \end{minted}
 \end{itemize}
 \end{frame}
-
 
 
 \section{Getting data into R}
@@ -388,10 +376,10 @@ We can also set the working directory using paths relative to the current workin
 \begin{block}{}
 \begin{minted}[linenos=false, fontsize=\footnotesize]{rconsole}
 > getwd() # get the current working directory
-[1] "/home/izahn/Documents/Work/IQSS/Classes/Workshops/R/Rintro"
+[1] "/home/izahn/Documents/Work/IQSS/Classes/IQSS_Stats_Workshops/R/Rintro"
 > setwd("dataSets") # set wd to the dataSets folder
 > getwd()
-[1] "/home/izahn/Documents/Work/IQSS/Classes/Workshops/R/Rintro/dataSets"
+[1] "/home/izahn/Documents/Work/IQSS/Classes/IQSS_Stats_Workshops/R/Rintro/dataSets"
 > setwd("..") # set wd to enclosing folder ("up")
 >
 \end{minted}
@@ -530,9 +518,9 @@ When you close R you will be asked if you want to save your workspace -- if you 
 \end{frame}
 
 
-\begin{frame}[fragile,label=sec-5-6]{Exercise 1}
- \begin{enumerate}
-\item Load the foreign package if you haven't already done so (\verb~library(foreign)~)
+\begin{frame}[label=sec-5-6]{Exercise 1}
+\begin{enumerate}
+\item Load the foreign package if you haven't already done so
 
 \item Look at the help page for the read.spss function
 
@@ -1063,6 +1051,161 @@ Using the datGSS data.frame
 \item StackOverflow: \url{http://stackoverflow.com/questions/tagged/r}
 \end{itemize}
 \end{itemize}
+\end{frame}
+
+
+\section{Exercise solutions}
+\label{sec-9}
+
+\begin{frame}[fragile,label=sec-9-1]{Exercise 0 solution}
+ \begin{enumerate}
+\setcounter{enumi}{0}
+\item ] Try to get R to add 2 plus 2.
+\end{enumerate}
+\begin{minted}[fontsize=\scriptsize]{r}
+2 + 2
+\end{minted}
+
+\begin{enumerate}
+\setcounter{enumi}{1}
+\item Try to figure out how evaluate lines directly from your R script.
+\end{enumerate}
+\texttt{In Rstudo this is 'Control-Enter'; may be different in another GUI}
+\begin{enumerate}
+\setcounter{enumi}{2}
+\item R includes extensive documentation, including a file named "An introduction to R". Try to find this help file.
+\end{enumerate}
+\texttt{Go to the main help page by running 'help.start() or using the GUI menu, find and click on the link to "An Introduction to R".}
+\begin{enumerate}
+\setcounter{enumi}{3}
+\item Go to \url{http://cran.r-project.org/web/views/} and skim the topic closest to your field/interests.
+\end{enumerate}
+\texttt{I like the machine learning topic!}
+\end{frame}
+
+\begin{frame}[fragile,label=sec-9-2]{Exercise 1 solution}
+ \begin{enumerate}
+\setcounter{enumi}{0}
+\item Load the foreign package if you haven't already done so
+\end{enumerate}
+\begin{minted}[fontsize=\scriptsize]{r}
+library(foreign)
+\end{minted}
+
+\begin{enumerate}
+\setcounter{enumi}{1}
+\item Look at the help page for the read.spss function
+\end{enumerate}
+\begin{minted}[fontsize=\scriptsize]{r}
+help("read.spss")
+\end{minted}
+
+\begin{enumerate}
+\setcounter{enumi}{2}
+\item Read the SPSS data set in dataSets/gss.sav and assign the result to an R data object named GSS.sav
+\end{enumerate}
+\begin{minted}[fontsize=\scriptsize]{r}
+gss.data <- read.spss("dataSets/gss.sav", to.data.frame=TRUE)
+\end{minted}
+
+\begin{enumerate}
+\setcounter{enumi}{3}
+\item Make sure that the data loaded in step 2 is a data.frame (hint: check the arguments documented in the help page)
+\end{enumerate}
+\begin{minted}[fontsize=\scriptsize]{r}
+class(gss.data)
+\end{minted}
+
+\begin{enumerate}
+\setcounter{enumi}{4}
+\item Display the dimensions of the GSS.sav.
+\end{enumerate}
+\begin{minted}[fontsize=\scriptsize]{r}
+dim(gss.data)
+nrow(gss.data)
+ncol(gss.data)
+\end{minted}
+
+\begin{enumerate}
+\setcounter{enumi}{5}
+\item BONUS: figure out how to read the Excel file "gss.xlsx" into R
+\end{enumerate}
+\begin{minted}[fontsize=\scriptsize]{r}
+library(XLConnect)
+dat <- readWorksheetFromFile("dataSets/gss.xlsx", sheet = 1)
+class(dat); dim(dat)
+\end{minted}
+\end{frame}
+
+
+\begin{frame}[fragile,label=sec-9-3]{Exercise 2 solution}
+ Use the gss.rds data set
+\begin{minted}[fontsize=\scriptsize]{r}
+gss <- readRDS("dataSets/gss.rds")
+\end{minted}
+
+\begin{enumerate}
+\setcounter{enumi}{0}
+\item Create a subset of the data containing only rows where "usecomp" = "Yes". How many computer users are there?
+\end{enumerate}
+\begin{minted}[fontsize=\scriptsize]{r}
+gss.usecomp <- subset(gss, usecomp == "Yes")
+nrow(gss.usecomp)
+\end{minted}
+
+\begin{enumerate}
+\setcounter{enumi}{1}
+\item Generate the following variables:
+\begin{itemize}
+\item "rich" equal to 0 if rincdol is less than 100000, and 1 otherwise
+\item "sinc" equal to incomdol - rincdol
+\end{itemize}
+\end{enumerate}
+\begin{minted}[fontsize=\scriptsize]{r}
+gss <- transform(gss,
+                 rich = ifelse(rincdol < 100000, 0, 1),
+                 sinc = incomdol - rincdol)
+head(subset(gss, select = c("rincdol", "incomdol", "rich", "sinc")))
+\end{minted}
+
+
+\begin{enumerate}
+\setcounter{enumi}{2}
+\item Generate a variable named "dual.earn" equal to 1 if both wkftwife = 1 and wkfthusb = 1, and zero otherwise. How many dual earners are there?
+\end{enumerate}
+\begin{minted}[fontsize=\scriptsize]{r}
+gss$dual.earn <- ifelse(gss$wkftwife == 1 & gss$wkfthusb == 1, 1, 0)
+nrow(subset(gss, dual.earn == 1))
+\end{minted}
+\end{frame}
+
+\begin{frame}[fragile,label=sec-9-4]{Exercise 3 solution}
+ Using the datGSS data.frame
+
+\begin{enumerate}
+\setcounter{enumi}{0}
+\item Cross-tabulate sex and emailhrs
+\end{enumerate}
+\begin{minted}[fontsize=\scriptsize]{r}
+with(datGSS, table(sex, emailhrs))
+\end{minted}
+
+\begin{enumerate}
+\setcounter{enumi}{1}
+\item Calculate the mean and standard deviation of incomdol by sex
+\end{enumerate}
+\begin{minted}[fontsize=\scriptsize]{r}
+by(datGSS$incomdol, datGSS$sex, mean)
+by(datGSS$incomdol, datGSS$sex, sd)
+\end{minted}
+
+\begin{enumerate}
+\setcounter{enumi}{2}
+\item Create a scatter plot with educ on the x-axis and incomdol on the y-axis
+\end{enumerate}
+\begin{minted}[fontsize=\scriptsize]{r}
+plot(subset(datGSS, select = c("educ", "incomdol")))
+\end{minted}
 \end{frame}
 % Emacs 24.3.1 (Org mode 8.2.7c)
 \end{document}

@@ -15,6 +15,7 @@
 ## 6 Data Manipulation
 ## 7 Basic Statistics and Graphs
 ## 8 Wrap-up
+## 9 Exercise solutions
 
 ## 1 Workshop Materials and Introduction
 ## ═════════════════════════════════════
@@ -24,15 +25,15 @@
 
 ##   Everyone should have R installed –if not:
 
-##   • Open a web browser and go to [http://cran.r-project.org] and
-##     download and install it
-##   • Also helpful to install RStudo (download from [http://rstudio.com])
+## • Open a web browser and go to [http://cran.r-project.org] and
+##   download and install it
+## • Also helpful to install RStudo (download from [http://rstudio.com])
 
 ##   Materials for this workshop include slides, example data sets, and
 ##   example code.
 
-##   • Download materials from [http://j.mp/intro-r]
-##   • Extract the zip file containing the materials to your desktop
+## • Download materials from [http://j.mp/intro-r]
+## • Extract the zip file containing the materials to your desktop
 
 ##   Workshop notes are available in .hmtl and .pdf format. Navigate to
 ##   your desktop and open either Rintro.pdf or Rintro.html.
@@ -43,19 +44,19 @@
 ##   R is a programming language designed for statistical computing.
 ##   Notable characteristics include:
 
-##   • Vast capabilities, wide range of statistical and graphical
-##     techniques
+## • Vast capabilities, wide range of statistical and graphical
+##   techniques
 
-##   • Very popular in academia, growing popularity in business:
-##     [http://r4stats.com/articles/popularity/]
+## • Very popular in academia, growing popularity in business:
+##   [http://r4stats.com/articles/popularity/]
 
-##   • Written primarily by statisticians
+## • Written primarily by statisticians
 
-##   • FREE (no cost, open source)
+## • FREE (no cost, open source)
 
-##   • Excellent community support: mailing list, blogs, tutorials
+## • Excellent community support: mailing list, blogs, tutorials
 
-##   • Easy to extend by writing new functions
+## • Easy to extend by writing new functions
 
 ## 1.3 Coming to R
 ## ───────────────
@@ -74,23 +75,17 @@
 
 ##   The old-school way is to run R directly in a terminal
 
-##   [file:images/Rconsole.png]
-
 ##   But hardly anybody does it that way anymore!
 
 ## 2.2 R GUI alternatives (Windows default)
 ## ────────────────────────────────────────
 
-##   [file:images/Rgui.png]
-
 ##   The default windows GUI is not very good
-##   • No parentheses matching or syntax highlighting
-##   • No work-space browser
+## • No parentheses matching or syntax highlighting
+## • No work-space browser
 
 ## 2.3 R GUI Alternatives (Rstudio on Mac)
 ## ───────────────────────────────────────
-
-##   [file:images/Rstudio.png]
 
 ##   Rstudio has many useful features, including parentheses matching and
 ##   auto-completion
@@ -98,69 +93,61 @@
 ## 2.4 R GUI Alternatives (Emacs with ESS)
 ## ───────────────────────────────────────
 
-##   [file:images/emacs.png]
-
 ##   Emacs + ESS is a very powerful combination, but can be difficult to
 ##   set up
 
-## 2.5 Components of R GUIs
-## ────────────────────────
+## 2.5 Launch RStudio                                            :labsetup:
+## ──────────────────
 
-##   • The R console
-##     • Displays command history and results
-##     • Commands can be typed directly in the console
-##     • R Console work disappears once session is closed
+## • Open the RStudio program
 
-##   • A text editor
-##     • A plain text editor for writing R code
-##     • Good ones will have syntax highlighting, parentheses matching etc.
-##     • Anything that modifies your data should be done in a text editor
+## • Open up today's R script
 
-##   • Graphics windows
-##     • View, re-size, and save graphics
-##     • A good GUI will allow you to cycle through graph history
+##   • In RStudio, Go to *File => Open Script*
 
-##   • Work-space viewer
-##     • Some GUIs have work-space browsers that allow you to see stored
-##       objects
-##     • Very helpful if you are absentminded like me and frequently forget
-##       what names you gave your data!
+##   • Locate and open the `Rintro.R' script in the Rintro folder on your
+##     desktop
+
+## • Go to *Tools => Set working directory => To source file location*
+##   (more on the working directory later)
+
+## • I encourage you to add your own notes to this file!
 
 ## 2.6 Things to keep in mind
 ## ──────────────────────────
 
-##   • Case sensitive, like Stata (unlike SAS)
+## • Case sensitive, like Stata (unlike SAS)
 
-##   • Comments can be put almost anywhere, starting with a hash mark
-##     ('`#''); everything to the end of the line is a comment
+## • Comments can be put almost anywhere, starting with a hash mark
+##   ('`#''); everything to the end of the line is a comment
 
-##   • The command prompt "`>'" indicates that R is ready to receive
-##     commands
+## • The command prompt "`>'" indicates that R is ready to receive
+##   commands
 
-##   • If a command is not complete at the end of a line, R will give a
-##     different prompt, '`+'' by default
+## • If a command is not complete at the end of a line, R will give a
+##   different prompt, '`+'' by default
 
-##   • Parentheses must always match (first thing to check if you get an
-##     error)
+## • Parentheses must always match (first thing to check if you get an
+##   error)
 
-##   • R Does not care about spaces between commands or arguments
+## • R Does not care about spaces between commands or arguments
 
-##   • Names should start with a letter and should not contain spaces
+## • Names should start with a letter and should not contain spaces
 
-##   • Can use "." in object names (e.g., "my.data")
+## • Can use "." in object names (e.g., "my.data")
 
-##   • Use forward slash ("/") instead of backslash in path names, even on
-##     Windows
+## • Use forward slash ("/") instead of backslash in path names, even on
+##   Windows
 
 ## 2.7 Exercise 0
 ## ──────────────
 
-##   1. Try to get R to add 2 plus 2
-##   2. See if you can find the help page for the "mean" topic
-##   3. Using any means available, try to figure out how to run a linear
-##      regression model in R
+##   1. Try to get R to add 2 plus 2.
+##   2. Try to figure out how evaluate lines directly from your R script.
+##   3. R includes extensive documentation, including a file named "An
+##      introduction to R". Try to find this help file.
 ##   4. Go to [http://cran.r-project.org/web/views/] and skim the topic
-##      closest to your field/interests
+##      closest to your field/interests.
 
 ## 3 Data and Functions
 ## ════════════════════
@@ -169,9 +156,9 @@
 ## ──────────────
 
 ##   Values can be assigned names and used in subsequent operations
-##   • The `<-' operator (less than followed by a dash) is used to save
-##     values
-##   • The name on the left gets the value on the right.
+## • The `<-' operator (less than followed by a dash) is used to save
+##   values
+## • The name on the left gets the value on the right.
 
 x <- 11 # Assign the value 10 to a variable named x
 x + 1 # Add 1 to x
@@ -179,7 +166,6 @@ y <- x + 1 # Assign y the value x + 1
 y
 
 ##   Saved variables can be listed, overwritten and deleted
-
 ls() # List variables in workspace
 x # Print the value of x
 x <- 100 # Overwrite x. Note that no warning is given!
@@ -191,20 +177,18 @@ ls()
 ## ─────────────
 
 ##   Using R is mostly about applying *functions* to *variables*. Functions
-##   • take *variable(s)* as input *argument(s)*
-##   • perform operations
-##   • *return* values which can be *assigned*
-##   • optionally perform side-effects such as writing a file to disk or
-##     opening a graphics window
+## • take *variable(s)* as input *argument(s)*
+## • perform operations
+## • *return* values which can be *assigned*
+## • optionally perform side-effects such as writing a file to disk or
+##   opening a graphics window
 
 ##   The general form for calling R functions is
-
-FunctionName(arg.1, arg.2, ... arg.n)
+##   FunctionName(arg.1, arg.2, ... arg.n)
 
 ##   Arguments can be matched by position or name
 
 ##   Examples:
-
 #?sqrt
 a <- sqrt(y) # Call the sqrt function with argument x=y
 round(a, digits = 2) # Call round() with arguments x=x and digits=2
@@ -217,58 +201,53 @@ round(sqrt(y), digits = 5) # Take sqrt of a and round
 ## 4.1 Asking R for help
 ## ─────────────────────
 
-##   • Start html help, search/browse using web browser
-##     • at the R console:
-##       ╭────
-##       │ help.start()
-##       ╰────
+##   R has extensive built-in documentation that can be accessed through R
+##   commands or through the GUI.
+## • Start html help, search/browse using web browser
+##   • at the R console:
 
-##     • or use the help menu from you GUI
+help.start()
 
-##   • Look up the documentation for a function
-##     ╭────
-##     │ help(topicName)
-##     ╰────
+##   • or use the help menu from you GUI
 
-##     ╭────
-##     │ ?topicName
-##     ╰────
+## • Look up the documentation for a function
 
-##   • Look up documentation for a package
-##     ╭────
-##     │ help(package="packageName")
-##     ╰────
+help(plot)
+?kmeans
 
-##   • Search documentation from R (not always the best way… google often
-##     works better)
-##     ╭────
-##     │ help.search("topicName")
-##     ╰────
+## • Look up documentation for a package
+
+help(package="stats")
+
+## • Search documentation from R (not always the best way… google often
+##   works better)
+
+help.search("classification")
 
 ## 4.2 R packages and libraries
 ## ────────────────────────────
 
 ##   There are thousands of R packages that extend R's capabilities.
 
-##   • To view available packages:
-##     ╭────
-##     │ library()
-##     ╰────
+## • To view available packages:
 
-##   • To see what packages are loaded:
-##     ╭────
-##     │ search()
-##     ╰────
+library()
 
-##   • To load a package:
-##     ╭────
-##     │ library("packageName")
-##     ╰────
 
-##   • Install new package:
-##     ╭────
-##     │ install.packages("packageName")
-##     ╰────
+## • To see what packages are loaded:
+
+search()
+
+
+## • To load a package:
+
+library("car")
+
+
+## • Install new package:
+
+install.packages("stringdist")
+
 
 ## 5 Getting data into R
 ## ═════════════════════
@@ -278,7 +257,6 @@ round(sqrt(y), digits = 5) # Take sqrt of a and round
 
 ##   The next few examples use a subset of the General Social Survey data
 ##   set. The variables in this subset include
-
 head(read.csv("dataSets/gssInfo.csv")) 
 #see gssInfo.csv for rest of the variable descriptions
 
@@ -289,7 +267,6 @@ head(read.csv("dataSets/gssInfo.csv"))
 ##   "working directory". Since our workshop examples are in the Rintro
 ##   folder on the desktop, we should all take a moment to set that as our
 ##   working directory:
-
 setwd("~/Desktop/Rintro")
 
 ##   We can also set the working directory using paths relative to the
@@ -301,7 +278,6 @@ getwd()
 setwd("..") # set wd to enclosing folder ("up")
 
 ##   It can be convenient to list files in a directory without leaving R
-
 list.files("dataSets") # list files in the dataSets folder
 # list.files("dataSets", pattern = ".csv") # restrict to .csv files
 
@@ -324,7 +300,6 @@ list.files("dataSets") # list files in the dataSets folder
 ##   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ##   Examples:
-
 # read gss data from the gss.rds R file
 datGSS <- readRDS("dataSets/gss.rds")
 # read gss data from the gss.csv comma separated file
@@ -338,7 +313,6 @@ datGSS <- read.dta(file="dataSets/gss.dta")
 
 ##   Always a good idea to examine the imported data set–usually we want
 ##   the results to be a `data.frame'
-
 class(datGSS) # check to see that test is what we expect it to be
 dim(datGSS) # how many rows and columns?
 names(datGSS)[1:10] # first 10 column names
@@ -349,14 +323,13 @@ str(datGSS[1:5]) # more details about the first 5 columns
 
 ##   In addition to importing individual datasets, R can save and load
 ##   entire workspaces
-##   • Save our entire workspace
-
+## • Save our entire workspace
 ls() # list objects in our workspace
 save.image(file="myWorkspace.RData") # save workspace 
 rm(list=ls()) # remove all objects from our workspace 
 ls() # list stored objects to make sure they are deleted
 
-##   • Load the "myWorkspace.RData" file and check that it is restored
+## • Load the "myWorkspace.RData" file and check that it is restored
 
 load("myWorkspace.RData") # load myWorkspace.RData
 ls() # list objects
@@ -369,7 +342,6 @@ ls() # list objects
 ## ──────────────
 
 ##   1. Load the foreign package if you haven't already done so
-##      (`library(foreign)')
 
 ##   2. Look at the help page for the read.spss function
 
@@ -389,15 +361,15 @@ ls() # list objects
 ## 6.1 data.frame objects
 ## ──────────────────────
 
-##   • Usually data read into R will be stored as a *data.frame*
+## • Usually data read into R will be stored as a *data.frame*
 
-##   • A data.frame is a list of vectors of equal length
-##     • Each vector in the list forms a column
-##     • Each column can be a differnt type of vector
-##     • Often the columns are variables and the rows are observations
+## • A data.frame is a list of vectors of equal length
+##   • Each vector in the list forms a column
+##   • Each column can be a differnt type of vector
+##   • Often the columns are variables and the rows are observations
 
-##   • A data.frame has two dimensions corresponding the number of rows and
-##     the number of columns (in that order)
+## • A data.frame has two dimensions corresponding the number of rows and
+##   the number of columns (in that order)
 
 ## 6.2 data.frame meta-data
 ## ────────────────────────
@@ -502,15 +474,15 @@ saveRDS(datGSS, file = "gss.rds")
 ##   Use the gss.rds data set
 
 ##   1. Generate the following variables:
-##      • "rich" equal to 0 if rincdol is less than 100000, and 1 otherwise
-##      • "sinc" equal to incomdol - rincdol
+##    • "rich" equal to 0 if rincdol is less than 100000, and 1 otherwise
+##    • "sinc" equal to incomdol - rincdol
 ##   2. Create a subset of the data containing only rows where "usecomp" =
 ##      "Yes"
 ##   3. Examine the data.frame created in step 2, and answer the following
 ##      questions:
-##      • How many rows does it have?
-##      • How many columns does it have?
-##      • What is the class of the "satjob" variable?
+##    • How many rows does it have?
+##    • How many columns does it have?
+##    • What is the class of the "satjob" variable?
 ##   4. BONUS (hard): Generate a variable named "dual.earn" equal to 1 if
 ##      both wkftwife = 1 and wkfthusb = 1, and zero otherwise
 
@@ -521,7 +493,6 @@ saveRDS(datGSS, file = "gss.rds")
 ## ────────────────────
 
 ##   Descriptive statistics of single variables are straightforward:
-
 mean(datGSS$educ) # calculate mean value of education
 sd(datGSS$educ) # calculate standard deviation of x
 # calculate min, max, quantiles, mean of educ, age, and ageC
@@ -536,7 +507,6 @@ summary(subset(datGSS, select = c("educ", "age", "ageC")))
 
 ##   Start by using the `table()' function to tabulate counts, then perform
 ##   additional computations if needed
-
 sex.counts <- table(datGSS$sex) # tabulate sex categories
 sex.counts
 prop.table(sex.counts) # convert to proportions
@@ -550,7 +520,6 @@ table(subset(datGSS, select = c("sex", "happy"))) # crosstab marital X happy
 
 ##   The `by()' function can be used to perform a calculation separately
 ##   for each level of a classifying variable
-
 by(subset(datGSS, select = c("income", "educ")),
    INDICES=datGSS["sex"],
    FUN=summary)
@@ -559,11 +528,9 @@ by(subset(datGSS, select = c("income", "educ")),
 ## ────────────────
 
 ##   Let's look at correlations among between age, income, and education
-
 cor(subset(datGSS, select =  c("age", "incomdol", "educ")))
 
 ##   For significance tests, use cor.test()
-
 with(datGSS,
      cor.test(age, educ))
 
@@ -572,11 +539,9 @@ with(datGSS,
 
 ##   Modeling functions generally use the /formula/ interface whith DV on
 ##   left followed by "~" followed by predictors–for details see
-
 help("formula")
 
-##   • Predict the number of hours individuals spend on email (emailhrs)
-
+## • Predict the number of hours individuals spend on email (emailhrs)
 m1 <- lm(educ ~ sex + age, data = datGSS)
 summary(m1)
 
@@ -599,29 +564,18 @@ sink() ## sink with no arguments turns logging off
 ##   Thanks to classes and methods, you can `plot()' many kinds of objects:
 
 plot(datGSS$marital) # Plot a factor
-
-##   [file:images/examplePlot1.png]
-
 ## 7.8 Basic graphics: Boxplots by group
 ## ─────────────────────────────────────
 
 ##   Thanks to classes and methods, you can `plot()' many kinds of objects:
-
 with(datGSS,
      plot(marital, educ)) # Plot ordinal by numeric
-
-##   [file:images/examplePlot2.png]
-
 ## 7.9 Basic graphics: Mosaic chart
 ## ────────────────────────────────
 
 ##   Thanks to classes and methods, you can `plot()' many kinds of objects:
-
 with(datGSS, # Plot factor X factor
      plot(marital, happy))
-
-##   [file:images/examplePlot3.png]
-
 ## 7.10 Exercise 3
 ## ───────────────
 
@@ -639,33 +593,120 @@ with(datGSS, # Plot factor X factor
 ## 8.1 Help us make this workshop better!
 ## ──────────────────────────────────────
 
-##   • Please take a moment to fill out a very short feedback form
+## • Please take a moment to fill out a very short feedback form
 
-##   • These workshops exist for you – tell us what you need!
+## • These workshops exist for you – tell us what you need!
 
-##   • [http://tinyurl.com/R-intro-feedback]
+## • [http://tinyurl.com/R-intro-feedback]
 
 ## 8.2 Additional resources
 ## ────────────────────────
 
-##   • IQSS workshops:
-##     [http://projects.iq.harvard.edu/rtc/filter_by/workshops]
+## • IQSS workshops:
+##   [http://projects.iq.harvard.edu/rtc/filter_by/workshops]
 
-##   • IQSS statistical consulting: [http://rtc.iq.harvard.edu]
+## • IQSS statistical consulting: [http://rtc.iq.harvard.edu]
 
-##   • Software (all free!):
-##     • R and R package download: [http://cran.r-project.org]
-##     • Rstudio download: [http://rstudio.org]
-##     • ESS (emacs R package): [http://ess.r-project.org/]
+## • Software (all free!):
+##   • R and R package download: [http://cran.r-project.org]
+##   • Rstudio download: [http://rstudio.org]
+##   • ESS (emacs R package): [http://ess.r-project.org/]
 
-##   • Online tutorials
-##     • [http://www.codeschool.com/courses/try-r]
-##     • [http://www.datamind.org]
+## • Online tutorials
+##   • [http://www.codeschool.com/courses/try-r]
+##   • [http://www.datamind.org]
 
-##   • Getting help:
-##     • Documentation and tutorials:
-##       [http://cran.r-project.org/other-docs.html]
-##     • Recommended R packages by topic:
-##       [http://cran.r-project.org/web/views/]
-##     • Mailing list: [https://stat.ethz.ch/mailman/listinfo/r-help]
-##     • StackOverflow: [http://stackoverflow.com/questions/tagged/r]
+## • Getting help:
+##   • Documentation and tutorials:
+##     [http://cran.r-project.org/other-docs.html]
+##   • Recommended R packages by topic:
+##     [http://cran.r-project.org/web/views/]
+##   • Mailing list: [https://stat.ethz.ch/mailman/listinfo/r-help]
+##   • StackOverflow: [http://stackoverflow.com/questions/tagged/r]
+
+## 9 Exercise solutions
+## ════════════════════
+
+## 9.1 Exercise 0 solution                                      :prototype:
+## ───────────────────────
+
+##   1) ] Try to get R to add 2 plus 2.
+2 + 2
+
+##   2) Try to figure out how evaluate lines directly from your R script.
+##   `In Rstudo this is 'Control-Enter'; may be different in another GUI'
+##   3) R includes extensive documentation, including a file named "An
+##    introduction to R". Try to find this help file.
+##   `Go to the main help page by running 'help.start() or using the GUI
+##   menu, find and click on the link to "An Introduction to R".'
+##   4) Go to [http://cran.r-project.org/web/views/] and skim the topic
+##      closest to your field/interests.
+##   `I like the machine learning topic!'
+
+## 9.2 Exercise 1 solution                                      :prototype:
+## ───────────────────────
+
+##   1) Load the foreign package if you haven't already done so
+library(foreign)
+
+##   2) Look at the help page for the read.spss function
+help("read.spss")
+
+##   3) Read the SPSS data set in dataSets/gss.sav and assign the result to
+##      an R data object named GSS.sav
+gss.data <- read.spss("dataSets/gss.sav", to.data.frame=TRUE)
+
+##   4) Make sure that the data loaded in step 2 is a data.frame (hint:
+##      check the arguments documented in the help page)
+class(gss.data)
+
+##   5) Display the dimensions of the GSS.sav.
+dim(gss.data)
+nrow(gss.data)
+ncol(gss.data)
+
+##   6) BONUS: figure out how to read the Excel file "gss.xlsx" into R
+library(XLConnect)
+dat <- readWorksheetFromFile("dataSets/gss.xlsx", sheet = 1)
+class(dat); dim(dat)
+
+## 9.3 Exercise 2 solution                                      :prototype:
+## ───────────────────────
+
+##   Use the gss.rds data set
+gss <- readRDS("dataSets/gss.rds")
+
+##   1) Create a subset of the data containing only rows where "usecomp" =
+##      "Yes". How many computer users are there?
+gss.usecomp <- subset(gss, usecomp == "Yes")
+nrow(gss.usecomp)
+
+##   2) Generate the following variables:
+##    • "rich" equal to 0 if rincdol is less than 100000, and 1 otherwise
+##    • "sinc" equal to incomdol - rincdol
+gss <- transform(gss,
+                 rich = ifelse(rincdol < 100000, 0, 1),
+                 sinc = incomdol - rincdol)
+head(subset(gss, select = c("rincdol", "incomdol", "rich", "sinc")))
+
+##   3) Generate a variable named "dual.earn" equal to 1 if both wkftwife =
+##      1 and wkfthusb = 1, and zero otherwise. How many dual earners are
+##      there?
+gss$dual.earn <- ifelse(gss$wkftwife == 1 & gss$wkfthusb == 1, 1, 0)
+nrow(subset(gss, dual.earn == 1))
+
+## 9.4 Exercise 3 solution                                      :prototype:
+## ───────────────────────
+
+##   Using the datGSS data.frame
+
+##   1) Cross-tabulate sex and emailhrs
+with(datGSS, table(sex, emailhrs))
+
+##   2) Calculate the mean and standard deviation of incomdol by sex
+by(datGSS$incomdol, datGSS$sex, mean)
+by(datGSS$incomdol, datGSS$sex, sd)
+
+##   3) Create a scatter plot with educ on the x-axis and incomdol on the
+##      y-axis
+plot(subset(datGSS, select = c("educ", "incomdol")))
