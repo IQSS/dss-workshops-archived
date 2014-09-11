@@ -1,4 +1,4 @@
-% Created 2014-04-18 Fri 06:56
+% Created 2014-09-11 Thu 17:07
 \documentclass[table,smaller]{beamer}
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
@@ -35,7 +35,7 @@
 \hypersetup{
   pdfkeywords={},
   pdfsubject={},
-  pdfcreator={Emacs 24.3.1 (Org mode 8.2.5h)}}
+  pdfcreator={Emacs 24.3.1 (Org mode 8.2.7c)}}
 \begin{document}
 
 \maketitle
@@ -59,19 +59,24 @@
 \item Specify factor contrasts to test specific hypotheses
 \item Perform model comparisons
 \item Run and interpret variety of regression models in R
-\item Create and use imputed data sets in regression models
 \end{itemize}
 \end{itemize}
 \end{frame}
 
 \begin{frame}[label=sec-1-2]{Materials and Setup}
+Lab computer users: Log in using the user name and password on the board to your left.
+
+Everyone should have R installed --if not:
+
 \begin{itemize}
-\item Lab computer users:
-\begin{description}
-\item[{USERNAME}] dataclass
-\item[{PASSWORD}] dataclass
-\end{description}
-\item Download materials from \url{http:j.mp/r-stats}
+\item Open a web browser and go to \url{http://cran.r-project.org} and download and install it
+\item Also helpful to install RStudo (download from \url{http://rstudio.com})
+\end{itemize}
+
+Materials for this workshop include slides, example data sets, and example code.
+
+\begin{itemize}
+\item Download materials from \url{http://tutorials.iq.harvard.edu/R/Rstatistics.zip}
 \item Extract materials from RStatistics.zip (on lab machines \emph{right-click -> WinZip -> Extract to here}) and move to your desktop.
 \end{itemize}
 \end{frame}
@@ -128,7 +133,7 @@ You might also start by listing the files in your working directory
 \end{frame}
 
 \begin{frame}[fragile,label=sec-1-5]{Load the states data}
- The \emph{states.dta} data comes from \url{http:anawida.de/teach/SS14/anawida/4.linReg/data/states.dta.txt} and appears to have originally appeared in \emph{Statistics with Stata} by Lawrence C. Hamilton.
+ The \emph{states.dta} data comes from \url{http://anawida.de/teach/SS14/anawida/4.linReg/data/states.dta.txt} and appears to have originally appeared in \emph{Statistics with Stata} by Lawrence C. Hamilton.
 \vspace{-.5em}
 \begin{columns}
 \column{.95\linewidth}
@@ -169,7 +174,8 @@ You might also start by listing the files in your working directory
 \begin{block}{}
 \begin{minted}[linenos=false, fontsize=\footnotesize]{rconsole}
 > # summary of expense and csat columns, all rows
-> summary(states.data[ , c("expense", "csat")]) 
+> sts.ex.sat <- subset(states.data, select = c("expense", "csat"))
+> summary(sts.ex.sat)
     expense          csat     
  Min.   :2960   Min.   : 832  
  1st Qu.:4352   1st Qu.: 888  
@@ -178,8 +184,10 @@ You might also start by listing the files in your working directory
  3rd Qu.:5794   3rd Qu.: 997  
  Max.   :9259   Max.   :1093  
 > # correlation between expense and csat
-> cor(states.data[ , c("expense", "csat")])[1, 2] 
-[1] -0.466
+> cor(sts.ex.sat) 
+        expense   csat
+expense   1.000 -0.466
+csat     -0.466  1.000
 >
 \end{minted}
 \end{block}
@@ -193,12 +201,11 @@ You might also start by listing the files in your working directory
 \begin{columns} \column{.9\textwidth} \begin{block}{}
 \begin{minted}[fontsize=\scriptsize]{r}
 # scatter plot of expense vs csat
-plot(states.data[ , c("expense", "csat")])
+plot(sts.ex.sat)
 \end{minted}
 
-\includegraphics[width=.9\linewidth]{images/statesCorr1.png}
-
 \includegraphics[width=2.5in]{images/statesCorr1.png}
+
 
 \end{block} \end{columns}
 \end{frame}
@@ -497,8 +504,8 @@ Use the states data set.
 
 \begin{enumerate}
 \item Add on to the regression equation that you created in exercise 1 by generating an interaction term and testing the interaction.
-\item Try adding a categorical variable to your regression (remember, it will need to be dummy coded).  You could use region or, or generate a new categorical variable from one of the continuous variables in the dataset.
-\item Are there significant differences across the four regions?
+
+\item Try adding region to the model. Are there significant differences across the four regions?
 \end{enumerate}
 \end{frame}
 
@@ -508,7 +515,7 @@ Use the states data set.
 \begin{frame}[fragile,label=sec-4-1]{Logistic regression}
  This far we have used the \texttt{lm} function to fit our regression models. \texttt{lm} is great, but limited--in particular it only fits models for continuous dependent variables. For categorical dependent variables we can use the \texttt{glm()} function.
 
-For these models we will use a different dataset, drawn from the National Health Interview Survey. From the \href{http:www.cdc.gov/nchs/nhis.htm}{CDC website}:
+For these models we will use a different dataset, drawn from the National Health Interview Survey. From the \href{http://www.cdc.gov/nchs/nhis.htm}{CDC website}:
 
 \begin{quote}
 The National Health Interview Survey (NHIS) has monitored the health of the nation since 1957. NHIS data on a broad range of health topics are collected through personal household interviews. For over 50 years, the U.S. Census Bureau has been the data collection agent for the National Health Interview Survey. Survey results have been instrumental in providing data to track health status, health care access, and progress toward achieving national health objectives.
@@ -634,14 +641,14 @@ plot(allEffects(hyp.out))
 
 
 \begin{frame}[label=sec-4-6]{Exercise 2: logistic regression}
-Use the NH11 data set.
+Use the NH11 data set that we loaded earlier.
 
 \begin{enumerate}
 \item Use glm  to conduct a logistic regression to predict ever worked (everwrk) using age (age$_{\text{p}}$) and marital status (r$_{\text{maritl}}$).
 \item Predict the probability of working for each level of marital status.
 \end{enumerate}
 
-Note that the data is not perfectly clean and ready to be modeled. You will need to clean up at leas some of the variables before fitting the model.
+Note that the data is not perfectly clean and ready to be modeled. You will need to clean up at least some of the variables before fitting the model.
 \end{frame}
 
 
@@ -736,7 +743,7 @@ Random effects:
  Groups   Name        Variance Std.Dev.
  school   (Intercept) 0.169    0.412   
  Residual             0.848    0.921   
-Number of obs: 3987, groups: school, 65
+Number of obs: 3987, groups:  school, 65
 
 Fixed effects:
             Estimate Std. Error t value
@@ -746,9 +753,9 @@ Fixed effects:
 \end{block}
 \end{columns}
 \vspace{.5em}
+
+The is .169/(.169 + .848) = .17: 17\% of the variance is at the school level.
 \end{frame}
-
-
 \begin{frame}[fragile,label=sec-5-4]{Adding fixed-effects predictors}
  Predict exam scores from student's standardized tests scores
 
@@ -776,7 +783,7 @@ Random effects:
  Groups   Name        Variance Std.Dev.
  school   (Intercept) 0.0919   0.303   
  Residual             0.5670   0.753   
-Number of obs: 3958, groups: school, 65
+Number of obs: 3958, groups:  school, 65
 
 Fixed effects:
             Estimate Std. Error t value
@@ -845,7 +852,7 @@ Random effects:
  school   (Intercept) 0.0899   0.300        
           standLRT    0.0141   0.119    0.51
  Residual             0.5552   0.745        
-Number of obs: 3958, groups: school, 65
+Number of obs: 3958, groups:  school, 65
 
 Fixed effects:
             Estimate Std. Error t value
@@ -908,134 +915,182 @@ within-group version is designated with a W. (e.g., W.HRS).
 \item Calculate the ICC for your null model
 \item Run a second multi-level model that adds two individual-level predictors, average number of hours worked ("HRS") and leadership skills ("LEAD") to the model and interpret your output.
 \item Now, add a random effect of average number of hours worked ("HRS") to the model and interpret your output.  Test the significance of this random term.
-\item Finally, add a group-level term, workplace cohesion ("G.COHES") to the model and interpret your output.
 \end{enumerate}
 \end{frame}
 
 
-\section{Multiple imputation}
+\section{Exercise solutions\hfill{}\textsc{prototype}}
 \label{sec-6}
 
-\begin{frame}[label=sec-6-1]{Multiple imputation}
-\begin{itemize}
-\item Majority of datasets contain missing data
-\item Produces a variety of problems and limitations to data analysis
-\item Multiple imputation (MI) generates multiple, complete datasets that contain estimations of missing data points
-\end{itemize}
-\end{frame}
-
-\begin{frame}[label=sec-6-2]{Multiple imputation}
-Earlier we wanted to compare a model predicting bmi from demographic variables to a model including demographics and substantive predictors. We omitted missing data so that we could fit both models to the same data. That is a common practice, but it has many problems (which we unfortunately don't have time to discuss in detail). A popular solution is to use multiple imputation to fill in the missing values with reasonable placeholders. 
-
-MI is typically thought of as involving three steps:
-\begin{itemize}
-\item Selection of imputation model
-\item Generation of imputed datasets
-\item Combining results across imputed datasets
-\end{itemize}
-
-There are a number of packages for doing this in R: we will use the Amelia package because it is powerful, fast, and easy to use. You can refer to the Amelia documentation for more information about its imputation procedures:
-\url{http:r.iq.harvard.edu/docs/amelia/amelia.pdf}
-\end{frame}
-
-
-\begin{frame}[fragile,label=sec-6-3]{Creating imputed data sets}
- We're going to create several datasets to look at a model predicting the number of days of work missed/year (wkdayr)
-
-\vspace{-.5em}
-\begin{columns}
-\column{.95\linewidth}
-\begin{block}{}
-\begin{minted}[linenos=false, fontsize=\footnotesize]{rconsole}
-> # load the Amelia package
-> library(Amelia)
-> # help(package="Amelia")
-> # load a smaller version of NH
-> NH08.mi <- readRDS("dataSets/NatHealth2008MI")
-> # generate five imputed data sets
-> amelia.log <- capture.output( # suppress amelia's chattiness
-+   NatHealth.MI <- amelia(NH08.mi,
-+                          m=5,
-+                          idvars=c("id")))
->
-\end{minted}
-\end{block}
-\end{columns}
-\vspace{.5em}
-\end{frame}
-
-\begin{frame}[fragile,label=sec-6-4]{Checking imputed values}
- Compare imputed values to observed values
-
-\begin{columns} \column{.85\textwidth} \begin{block}{}
+\begin{frame}[fragile,label=sec-6-1]{Exercise 0 prototype}
+ Use the \emph{states.rds} data set. 
 \begin{minted}[fontsize=\scriptsize]{r}
-plot(NatHealth.MI, which.vars=9:12)
+states <- readRDS("dataSets/states.rds")
 \end{minted}
 
-\includegraphics[width=.9\linewidth]{images/imputed1.png}
-
-\includegraphics[width=.9\linewidth]{images/imputed1.png}
-
-\end{block} \end{columns}
-\end{frame}
-
-
-\begin{frame}[fragile,label=sec-6-5]{Checking imputed values: overimputation}
- Overimputation strategy:
-\begin{itemize}
-\item Treat every observed value as if it was missing
-\item Impute many values for that observed value
-\item Examine the correspondence between imputed and observed values
-\end{itemize}
-
-\begin{columns} \column{.85\textwidth} \begin{block}{}
-\begin{minted}[fontsize=\scriptsize]{r}
-overimpute(NatHealth.MI, var="sleep")
-\end{minted}
-
-\includegraphics[width=.9\linewidth]{images/overImputed.png}
-
-\includegraphics[width=.9\linewidth]{images/overImputed.png}
-
-
-\end{block} \end{columns}
-\end{frame}
-
-\begin{frame}[fragile,label=sec-6-6]{Using imputed data sets in regression models}
- Zelig makes it very easy to use imputed data sets -- just point to the list of imputed data sets in the \verb~data~ argument
-
-\vspace{-.5em}
-\begin{columns}
-\column{.95\linewidth}
-\begin{block}{}
-\begin{minted}[linenos=false, fontsize=\footnotesize]{rconsole}
-> library(Zelig)
-> nhImp.out <- zelig(wkdayr ~ cigsday + modmin + sleep, model = "ls",
-+                    data = NatHealth.MI$imputations, cite = FALSE)
-> 
-> coef(summary(nhImp.out))
-              Value Std. Error t-stat p-value
-(Intercept) -6.0745     5.6803  -1.07  0.2963
-cigsday      0.0252     0.1326   0.19  0.8496
-modmin      -0.0318     0.0227  -1.40  0.1610
-sleep        1.7233     0.8624   2.00  0.0669
->
-\end{minted}
-\end{block}
-\end{columns}
-\vspace{.5em}
-
-
-For separate results, use print(summary(x), subset = i:j).
-\end{frame}
-
-\begin{frame}[label=sec-6-7]{Exercise 2: multiple imputation}
+Fit a model predicting  energy consumed per capita (energy) from the percentage of residents living in metropolitan areas (metro). Be sure to 
 \begin{enumerate}
-\item Using Amelia, generate 5 imputed versions of the Exam dataset. Make sure you tell Amelia which variables are nominal, and that school is the id variable.
-\item Create plots that compare imputed values to observed values
-\item Overimpute the variable "schavg"
+\setcounter{enumi}{0}
+\item Examine/plot the data before fitting the model
 \end{enumerate}
+\begin{minted}[fontsize=\scriptsize]{r}
+states.en.met <- subset(states, select = c("metro", "energy"))
+summary(states.en.met)
+plot(states.en.met)
+cor(states.en.met, use="pairwise")
+\end{minted}
+
+\begin{enumerate}
+\setcounter{enumi}{1}
+\item Print and interpret the model \texttt{summary}
+\end{enumerate}
+\begin{minted}[fontsize=\scriptsize]{r}
+mod.en.met <- lm(energy ~ metro, data = states)
+summary(mod.en.met)
+\end{minted}
+
+\begin{enumerate}
+\setcounter{enumi}{2}
+\item \texttt{plot} the model to look for deviations from modeling assumptions
+\end{enumerate}
+\begin{minted}[fontsize=\scriptsize]{r}
+plot(mod.en.met)
+\end{minted}
+
+Select one or more additional predictors to add to your model and repeat steps 1-3. Is this model significantly better than the model with \emph{metro} as the only predictor?
+\begin{minted}[fontsize=\scriptsize]{r}
+states.en.met.pop.wst <- subset(states, select = c("energy", "metro", "pop", "waste"))
+summary(states.en.met.pop.wst)
+plot(states.en.met.pop.wst)
+cor(states.en.met.pop.wst, use = "pairwise")
+mod.en.met.pop.waste <- lm(energy ~ metro + pop + waste, data = states)
+summary(mod.en.met.pop.waste)
+anova(mod.en.met, mod.en.met.pop.waste)
+\end{minted}
 \end{frame}
+
+\begin{frame}[fragile,label=sec-6-2]{Exercise 1: prototype}
+ Use the states data set.
+
+\begin{enumerate}
+\item Add on to the regression equation that you created in exercise 1 by generating an interaction term and testing the interaction.
+\end{enumerate}
+\begin{minted}[fontsize=\scriptsize]{r}
+mod.en.metro.by.waste <- lm(energy ~ metro * waste, data = states)
+\end{minted}
+
+\begin{enumerate}
+\item Try adding a region to the model. Are there significant differences across the four regions?
+\end{enumerate}
+\begin{minted}[fontsize=\scriptsize]{r}
+mod.en.region <- lm(energy ~ metro * waste + region, data = states)
+anova(mod.en.region)
+\end{minted}
+\end{frame}
+
+\begin{frame}[fragile,label=sec-6-3]{Exercise 2 prototype}
+ Use the NH11 data set that we loaded earlier. Note that the data is not perfectly clean and ready to be modeled. You will need to clean up at least some of the variables before fitting the model.
+
+\begin{enumerate}
+\setcounter{enumi}{0}
+\item Use glm  to conduct a logistic regression to predict ever worked (everwrk) using age (age$_{\text{p}}$) and marital status (r$_{\text{maritl}}$).
+\end{enumerate}
+\begin{minted}[fontsize=\scriptsize]{r}
+nh11.wrk.age.mar <- subset(NH11, select = c("everwrk", "age_p", "r_maritl"))
+summary(nh11.wrk.age.mar)
+NH11 <- transform(NH11,
+                  everwrk = factor(everwrk,
+                      levels = c("1 Yes", "2 No")),
+                  r_maritl = droplevels(r_maritl))
+
+mod.wk.age.mar <- glm(everwrk ~ age_p + r_maritl, data = NH11,
+                      family = "binomial")
+
+summary(mod.wk.age.mar)
+\end{minted}
+
+\begin{enumerate}
+\setcounter{enumi}{1}
+\item Predict the probability of working for each level of marital status.
+\end{enumerate}
+\begin{minted}[fontsize=\scriptsize]{r}
+library(effects)
+data.frame(Effect("r_maritl", mod.wk.age.mar))
+\end{minted}
+\end{frame}
+
+
+
+\begin{frame}[fragile,label=sec-6-4]{Exercise 3 prototype}
+ Use the dataset, bh1996:
+\begin{minted}[fontsize=\scriptsize]{r}
+data(bh1996, package="multilevel")
+\end{minted}
+
+From the data documentation:
+\begin{quote}
+Variables are Cohesion (COHES), Leadership Climate (LEAD),
+Well-Being (WBEING) and Work Hours (HRS).  Each of these variables
+has two variants - a group mean version that replicates each group
+mean for every individual, and a within-group version where the
+group mean is subtracted from each individual response.  The group
+mean version is designated with a G. (e.g., G.HRS), and the
+within-group version is designated with a W. (e.g., W.HRS).
+\end{quote}
+Note that the group identifier is named "GRP".
+\begin{enumerate}
+\setcounter{enumi}{0}
+\item Create a null model predicting wellbeing ("WBEING")
+\end{enumerate}
+\begin{minted}[fontsize=\scriptsize]{r}
+library(lme4)
+mod.grp0 <- lmer(WBEING ~ 1 + (1 | GRP), data = bh1996)
+summary(mod.grp0)
+\end{minted}
+=> library(lme4)
+> mod.grp0 <- lmer(WBEING \textasciitilde{} 1 + (1 | GRP), data = bh1996)
+> summary(mod.grp0)
+Linear mixed model fit by REML ['lmerMod']
+Formula: WBEING \textasciitilde{} 1 + (1 | GRP)
+   Data: bh1996
+
+REML criterion at convergence: 19347
+
+Scaled residuals: 
+   Min     1Q Median     3Q    Max 
+-3.322 -0.648  0.031  0.718  2.667 
+
+Random effects:
+ Groups   Name        Variance Std.Dev.
+ GRP      (Intercept) 0.0358   0.189   
+ Residual             0.7895   0.889   
+Number of obs: 7382, groups:  GRP, 99
+
+Fixed effects:
+            Estimate Std. Error t value
+(Intercept)   2.7743     0.0222     125
+> 
+=2. [@2] Calculate the ICC for your null model
+ \verb~ICC = .0358/(.0358 + .7895) = .04~
+\begin{enumerate}
+\setcounter{enumi}{2}
+\item Run a second multi-level model that adds two individual-level predictors, average number of hours worked ("HRS") and leadership skills ("LEAD") to the model and interpret your output.
+\end{enumerate}
+\begin{minted}[fontsize=\scriptsize]{r}
+mod.grp1 <- lmer(WBEING ~ HRS + LEAD + (1 | GRP), data = bh1996)
+summary(mod.grp1)
+\end{minted}
+
+\begin{enumerate}
+\setcounter{enumi}{3}
+\item Now, add a random effect of average number of hours worked ("HRS") to the model and interpret your output.  Test the significance of this random term.
+\end{enumerate}
+\begin{minted}[fontsize=\scriptsize]{r}
+mod.grp2 <- lmer(WBEING ~ HRS + LEAD + (1 + HRS | GRP), data = bh1996)
+anova(mod.grp1, mod.grp2)
+\end{minted}
+\end{frame}
+
 
 \section{Wrap-up}
 \label{sec-7}
@@ -1047,27 +1102,27 @@ For separate results, use print(summary(x), subset = i:j).
 feedback form 
 \begin{itemize}
 \item These workshops exist for you -- tell us what you need!
-\item \url{http:tinyurl.com/RstatisticsFeedback}
+\item \url{http://tinyurl.com/RstatisticsFeedback}
 \end{itemize}
 \end{frame}
 
 
 \begin{frame}[label=sec-7-2]{Additional resources}
 \begin{itemize}
-\item IQSS workshops: \url{http:projects.iq.harvard.edu/rtc/filter_by/workshops}
-\item IQSS statistical consulting: \url{http:rtc.iq.harvard.edu}
+\item IQSS workshops: \url{http://projects.iq.harvard.edu/rtc/filter_by/workshops}
+\item IQSS statistical consulting: \url{http://rtc.iq.harvard.edu}
 
 \item Zelig
 \begin{itemize}
-\item Website: \url{http:gking.harvard.edu/zelig}
-\item Documentation: \url{http:r.iq.harvard.edu/docs/zelig.pdf}
+\item Website: \url{http://gking.harvard.edu/zelig}
+\item Documentation: \url{http://r.iq.harvard.edu/docs/zelig.pdf}
 \end{itemize}
 \item Ameila
 \begin{itemize}
-\item Website: \url{http:gking.harvard.edu/Amelia/}
-\item Documetation: \url{http:r.iq.harvard.edu/docs/amelia/amelia.pdf}
+\item Website: \url{http://gking.harvard.edu/Amelia/}
+\item Documetation: \url{http://r.iq.harvard.edu/docs/amelia/amelia.pdf}
 \end{itemize}
 \end{itemize}
 \end{frame}
-% Emacs 24.3.1 (Org mode 8.2.5h)
+% Emacs 24.3.1 (Org mode 8.2.7c)
 \end{document}

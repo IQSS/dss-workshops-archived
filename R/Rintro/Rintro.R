@@ -32,7 +32,7 @@
 ##   Materials for this workshop include slides, example data sets, and
 ##   example code.
 
-## • Download materials from http:tutorials.iq.harvard.edu/R/Rintro.zip
+## • Download materials from http://tutorials.iq.harvard.edu/R/Rintro.zip
 ## • Extract the zip file containing the materials to your desktop
 
 ##   Workshop notes are available in .hmtl and .pdf format. Navigate to

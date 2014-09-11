@@ -1,6 +1,6 @@
-## 			━━━━━━━━━━━━━━━━━━━━━━━━
-## 			 REGRESSION MODELS IN R
-## 			━━━━━━━━━━━━━━━━━━━━━━━━
+##                         ━━━━━━━━━━━━━━━━━━━━━━━━
+##                          REGRESSION MODELS IN R
+##                         ━━━━━━━━━━━━━━━━━━━━━━━━
 
 ## Table of Contents
 ## ─────────────────
@@ -10,9 +10,8 @@
 ## 3 Interactions and factors
 ## 4 Regression with binary outcomes
 ## 5 Multilevel Modeling
-## 6 Multiple imputation
+## 6 Exercise solutions                                         :prototype:
 ## 7 Wrap-up
-
 
 ## 1 Introduction
 ## ══════════════
@@ -28,15 +27,24 @@
 ##     • Specify factor contrasts to test specific hypotheses
 ##     • Perform model comparisons
 ##     • Run and interpret variety of regression models in R
-##     • Create and use imputed data sets in regression models
 
 ## 1.2 Materials and Setup                                          :setup:
 ## ───────────────────────
 
-##   • Lab computer users:
-##     USERNAME: dataclass
-##     PASSWORD: dataclass
-##   • Download materials from [http://j.mp/r-stats]
+##   Lab computer users: Log in using the user name and password on the
+##   board to your left.
+
+##   Everyone should have R installed –if not:
+
+##   • Open a web browser and go to [http://cran.r-project.org] and
+##     download and install it
+##   • Also helpful to install RStudo (download from [http://rstudio.com])
+
+##   Materials for this workshop include slides, example data sets, and
+##   example code.
+
+##   • Download materials from
+##     [http://tutorials.iq.harvard.edu/R/Rstatistics.zip]
 ##   • Extract materials from RStatistics.zip (on lab machines /right-click
 ##     -> WinZip -> Extract to here/) and move to your desktop.
 
@@ -61,13 +69,13 @@
 ##   directory so you don't have to type the full path names to your data
 ##   and other files
 
- # set the working directory
- # setwd("~/Desktop/Rstatistics")
- setwd("C:/Users/dataclass/Desktop/Rstatistics")
+set the working directory
+setwd("~/Desktop/Rstatistics")
+setwd("C:/Users/dataclass/Desktop/Rstatistics")
 
 ##   You might also start by listing the files in your working directory
- getwd() # where am I?
- list.files("dataSets") # files in the dataSets folder
+getwd() # where am I?
+list.files("dataSets") # files in the dataSets folder
 
 ## 1.5 Load the states data
 ## ────────────────────────
@@ -76,12 +84,12 @@
 ##   [http://anawida.de/teach/SS14/anawida/4.linReg/data/states.dta.txt]
 ##   and appears to have originally appeared in /Statistics with Stata/ by
 ##   Lawrence C. Hamilton.
- # read the states data
- states.data <- readRDS("dataSets/states.rds") 
- #get labels
- states.info <- data.frame(attributes(states.data)[c("names", "var.labels")])
- #look at last few labels
- tail(states.info, 8)
+read the states data
+states.data <- readRDS("dataSets/states.rds") 
+#get labels
+states.info <- data.frame(attributes(states.data)[c("names", "var.labels")])
+#look at last few labels
+tail(states.info, 8)
 
 ## 2 Linear regression
 ## ═══════════════════
@@ -91,10 +99,11 @@
 
 ##   Start by examining the data to check for problems.
 
- # summary of expense and csat columns, all rows
- summary(states.data[ , c("expense", "csat")]) 
- # correlation between expense and csat
- cor(states.data[ , c("expense", "csat")])[1, 2]
+summary of expense and csat columns, all rows
+sts.ex.sat <- subset(states.data, select = c("expense", "csat"))
+summary(sts.ex.sat)
+correlation between expense and csat
+cor(sts.ex.sat)
 
 ## 2.2 Plot the data before fitting models
 ## ───────────────────────────────────────
@@ -102,10 +111,8 @@
 ##   Plot the data to look for multivariate outliers, non-linear
 ##   relationships etc.
 
- # scatter plot of expense vs csat
- plot(states.data[ , c("expense", "csat")])
-
-##   [file:images/statesCorr1.png]
+scatter plot of expense vs csat
+plot(sts.ex.sat)
 
 ##   [file:images/statesCorr1.png]
 
@@ -116,11 +123,11 @@
 ##   • For example, we can use `lm' to predict SAT scores based on
 ##     per-pupal expenditures:
 
- # Fit our regression model
- sat.mod <- lm(csat ~ expense, # regression formula
- 	      data=states.data) # data set
- # Summarize and print the results
- summary(sat.mod) # show regression coefficients table
+Fit our regression model
+sat.mod <- lm(csat ~ expense, # regression formula
+              data=states.data) # data set
+Summarize and print the results
+summary(sat.mod) # show regression coefficients table
 
 ## 2.4 Why is the association between expense and SAT scores /negative/?
 ## ─────────────────────────────────────────────────────────────────────
@@ -132,7 +139,7 @@
 ##   difference among the states in the percentage of students taking the
 ##   SAT?
 
- summary(lm(csat ~ expense + percent, data = states.data))
+summary(lm(csat ~ expense + percent, data = states.data))
 
 ## 2.5 The lm class and methods
 ## ────────────────────────────
@@ -140,14 +147,14 @@
 ##   OK, we fit our model. Now what?
 ##   • Examine the model object:
 
- class(sat.mod)
- names(sat.mod)
- methods(class = class(sat.mod))[1:9]
+class(sat.mod)
+names(sat.mod)
+methods(class = class(sat.mod))[1:9]
 
 ##   • Use function methods to get more information about the fit
 
- confint(sat.mod)
- # hist(residuals(sat.mod))
+confint(sat.mod)
+hist(residuals(sat.mod))
 
 ## 2.6 Linear Regression Assumptions
 ## ─────────────────────────────────
@@ -158,8 +165,8 @@
 ##     linear.
 
 ##   • Investigate these assumptions visually by plotting your model:
- par(mar = c(4, 4, 2, 2), mfrow = c(1, 2)) #optional
- plot(sat.mod, which = c(1, 2)) # "which" argument optional
+par(mar = c(4, 4, 2, 2), mfrow = c(1, 2)) #optional
+plot(sat.mod, which = c(1, 2)) # "which" argument optional
 
 ##   [file:images/regressionsAssumptions1.png]
 
@@ -168,13 +175,13 @@
 
 ##   Do congressional voting patterns predict SAT scores over and above
 ##   expense? Fit two models and compare them:
- # fit another model, adding house and senate as predictors
- sat.voting.mod <-  lm(csat ~ expense + house + senate,
- 		      data = na.omit(states.data))
- sat.mod <- update(sat.mod, data=na.omit(states.data))
- # compare using the anova() function
- anova(sat.mod, sat.voting.mod)
- coef(summary(sat.voting.mod))
+fit another model, adding house and senate as predictors
+sat.voting.mod <-  lm(csat ~ expense + house + senate,
+                      data = na.omit(states.data))
+sat.mod <- update(sat.mod, data=na.omit(states.data))
+compare using the anova() function
+anova(sat.mod, sat.voting.mod)
+coef(summary(sat.voting.mod))
 
 ## 2.8 Exercise 0: least squares regression
 ## ────────────────────────────────────────
@@ -197,30 +204,30 @@
 ## ─────────────────────────
 
 ##   Interactions allow us assess the extent to which the association
-##   between one predictor and the outcome depends on a second
-##   predictor. For example: Does the association between expense and SAT
-##   scores depend on the median income in the state?
-   #Add the interaction to the model
- sat.expense.by.percent <- lm(csat ~ expense*income,
- 			     data=states.data) 
- #Show the results
-   coef(summary(sat.expense.by.percent)) # show regression coefficients table
+##   between one predictor and the outcome depends on a second predictor.
+##   For example: Does the association between expense and SAT scores
+##   depend on the median income in the state?
+  #Add the interaction to the model
+sat.expense.by.percent <- lm(csat ~ expense*income,
+                             data=states.data) 
+#Show the results
+  coef(summary(sat.expense.by.percent)) # show regression coefficients table
 
 ## 3.2 Regression with categorical predictors
 ## ──────────────────────────────────────────
 
-##   Let's try to predict SAT scores from region, a categorical
-##   variable. Note that you must make sure R does not think your
-##   categorical variable is numeric.
- # make sure R knows region is categorical
- str(states.data$region)
- states.data$region <- factor(states.data$region)
- #Add region to the model
- sat.region <- lm(csat ~ region,
- 		 data=states.data) 
- #Show the results
- coef(summary(sat.region)) # show regression coefficients table
- anova(sat.region) # show ANOVA table
+##   Let's try to predict SAT scores from region, a categorical variable.
+##   Note that you must make sure R does not think your categorical
+##   variable is numeric.
+make sure R knows region is categorical
+str(states.data$region)
+states.data$region <- factor(states.data$region)
+#Add region to the model
+sat.region <- lm(csat ~ region,
+                 data=states.data) 
+#Show the results
+coef(summary(sat.region)) # show regression coefficients table
+anova(sat.region) # show ANOVA table
 
 ##   Again, *make sure to tell R which variables are categorical by
 ##   converting them to factors!*
@@ -233,14 +240,14 @@
 ##   reference. We can change the reference group or use another coding
 ##   scheme using the `C' function.
 
- # print default contrasts
- contrasts(states.data$region)
- # change the reference group
- coef(summary(lm(csat ~ C(region, base=4),
- 		data=states.data)))
- # change the coding scheme
- coef(summary(lm(csat ~ C(region, contr.helmert),
- 		data=states.data)))
+print default contrasts
+contrasts(states.data$region)
+change the reference group
+coef(summary(lm(csat ~ C(region, base=4),
+                data=states.data)))
+change the coding scheme
+coef(summary(lm(csat ~ C(region, contr.helmert),
+                data=states.data)))
 
 ##   See also `?contrasts', `?contr.treatment', and `?relevel'.
 
@@ -251,11 +258,9 @@
 
 ##   1. Add on to the regression equation that you created in exercise 1 by
 ##      generating an interaction term and testing the interaction.
-##   2. Try adding a categorical variable to your regression (remember, it
-##      will need to be dummy coded).  You could use region or, or generate
-##      a new categorical variable from one of the continuous variables in
-##      the dataset.
-##   3. Are there significant differences across the four regions?
+
+##   2. Try adding region to the model. Are there significant differences
+##      across the four regions?
 
 ## 4 Regression with binary outcomes
 ## ═════════════════════════════════
@@ -263,10 +268,10 @@
 ## 4.1 Logistic regression
 ## ───────────────────────
 
-##   This far we have used the `lm' function to fit our regression
-##   models. `lm' is great, but limited–in particular it only fits models
-##   for continuous dependent variables. For categorical dependent
-##   variables we can use the `glm()' function.
+##   This far we have used the `lm' function to fit our regression models.
+##   `lm' is great, but limited–in particular it only fits models for
+##   continuous dependent variables. For categorical dependent variables we
+##   can use the `glm()' function.
 
 ##   For these models we will use a different dataset, drawn from the
 ##   National Health Interview Survey. From the [CDC website]:
@@ -283,8 +288,8 @@
 
 ##   Load the National Health Interview Survey data:
 
- NH11 <- readRDS("dataSets/NatHealth2011.rds")
- labs <- attributes(NH11)$labels
+NH11 <- readRDS("dataSets/NatHealth2011.rds")
+labs <- attributes(NH11)$labels
 
 ##   [CDC website] http://www.cdc.gov/nchs/nhis.htm
 
@@ -294,14 +299,14 @@
 ##   Let's predict the probability of being diagnosed with hypertension
 ##   based on age, sex, sleep, and bmi
 
- str(NH11$hypev) # check stucture of hypev
- levels(NH11$hypev) # check levels of hypev
- # collapse all missing values to NA
- NH11$hypev <- factor(NH11$hypev, levels=c("2 No", "1 Yes"))
- # run our regression model
- hyp.out <- glm(hypev~age_p+sex+sleep+bmi,
- 	      data=NH11, family="binomial")
- coef(summary(hyp.out))
+str(NH11$hypev) # check stucture of hypev
+levels(NH11$hypev) # check levels of hypev
+collapse all missing values to NA
+NH11$hypev <- factor(NH11$hypev, levels=c("2 No", "1 Yes"))
+run our regression model
+hyp.out <- glm(hypev~age_p+sex+sleep+bmi,
+              data=NH11, family="binomial")
+coef(summary(hyp.out))
 
 ## 4.3 Logistic regression coefficients
 ## ────────────────────────────────────
@@ -315,9 +320,9 @@
 ##   One solution is to transform the coefficients to make them easier to
 ##   interpret
 
- hyp.out.tab <- coef(summary(hyp.out))
- hyp.out.tab[, "Estimate"] <- exp(coef(hyp.out))
- hyp.out.tab
+hyp.out.tab <- coef(summary(hyp.out))
+hyp.out.tab[, "Estimate"] <- exp(coef(hyp.out))
+hyp.out.tab
 
 ## 4.4 Generating predicted values
 ## ───────────────────────────────
@@ -328,16 +333,16 @@
 ##   is a 63 year old female to have hypertension compared to a 33 year old
 ##   female?".
 
- # Create a dataset with predictors set at desired levels
- predDat <- with(NH11,
- 		expand.grid(age_p = c(33, 63),
- 			    sex = "2 Female",
- 			    bmi = mean(bmi, na.rm = TRUE),
- 			    sleep = mean(sleep, na.rm = TRUE)))
- # predict hypertension at those levels
- cbind(predDat, predict(hyp.out, type = "response",
- 		       se.fit = TRUE, interval="confidence",
- 		       newdata = predDat))
+Create a dataset with predictors set at desired levels
+predDat <- with(NH11,
+                expand.grid(age_p = c(33, 63),
+                            sex = "2 Female",
+                            bmi = mean(bmi, na.rm = TRUE),
+                            sleep = mean(sleep, na.rm = TRUE)))
+predict hypertension at those levels
+cbind(predDat, predict(hyp.out, type = "response",
+                       se.fit = TRUE, interval="confidence",
+                       newdata = predDat))
 
 ##   This tells us that a 33 year old female has a 13% probability of
 ##   having been diagnosed with hypertension, while and 63 year old female
@@ -349,15 +354,15 @@
 ##   Instead of doing all this ourselves, we can use the effects package to
 ##   compute quantities of interest for us (cf. the Zelig package).
 
- library(effects)
- plot(allEffects(hyp.out))
+library(effects)
+plot(allEffects(hyp.out))
 
 ##   [file:images/effects1.png]
 
 ## 4.6 Exercise 2: logistic regression
 ## ───────────────────────────────────
 
-##   Use the NH11 data set.
+##   Use the NH11 data set that we loaded earlier.
 
 ##   1. Use glm to conduct a logistic regression to predict ever worked
 ##      (everwrk) using age (age_p) and marital status (r_maritl).
@@ -365,8 +370,8 @@
 ##      status.
 
 ##   Note that the data is not perfectly clean and ready to be modeled. You
-##   will need to clean up at leas some of the variables before fitting the
-##   model.
+##   will need to clean up at least some of the variables before fitting
+##   the model.
 
 ## 5 Multilevel Modeling
 ## ═════════════════════
@@ -390,7 +395,7 @@
 ##     • Use the `lmer' function for liner mixed models, `glmer' for
 ##       generalized mixed models
 
- library(lme4)
+library(lme4)
 
 ## 5.2 The Exam data
 ## ─────────────────
@@ -400,19 +405,19 @@
 
 ##   school: School ID - a factor.
 ##   normexam: Normalized exam score.
-##   schgend: School gender - a factor.  Levels are 'mixed', 'boys', and
+##   schgend: School gender - a factor. Levels are 'mixed', 'boys', and
 ##            'girls'.
 ##   schavg: School average of intake score.
 ##   vr: Student level Verbal Reasoning (VR) score band at intake - a factor.
 ##       Levels are 'bottom 25%', 'mid 50%', and 'top 25%'.
-##   intake: Band of student's intake score - a factor.  Levels are 'bottom
+##   intake: Band of student's intake score - a factor. Levels are 'bottom
 ##           25%', 'mid 50%' and 'top 25%'./
 ##   standLRT: Standardised LR test score.
 ##   sex: Sex of the student - levels are 'F' and 'M'.
 ##   type: School type - levels are 'Mxd' and 'Sngl'.
 ##   student: Student id (within school) - a factor
 
- Exam <- readRDS("dataSets/Exam.rds")
+Exam <- readRDS("dataSets/Exam.rds")
 
 ## 5.3 The null model and ICC
 ## ──────────────────────────
@@ -422,20 +427,23 @@
 ##   accomplished by running a null model (i.e., a model with a random
 ##   effects grouping structure, but no fixed-effects predictors).
 
- # null model, grouping by school but not fixed effects.
- Norm1 <-lmer(normexam ~ 1 + (1|school),
- 	      data=Exam, REML = FALSE)
- summary(Norm1)
+null model, grouping by school but not fixed effects.
+Norm1 <-lmer(normexam ~ 1 + (1|school),
+              data=Exam, REML = FALSE)
+summary(Norm1)
+
+##   The is .169/(.169 + .848) = .17: 17% of the variance is at the school
+##   level.
 
 ## 5.4 Adding fixed-effects predictors
 ## ───────────────────────────────────
 
 ##   Predict exam scores from student's standardized tests scores
 
- Norm2 <-lmer(normexam~standLRT + (1|school),
- 	     data=Exam,
- 	     REML = FALSE) 
- summary(Norm2)
+Norm2 <-lmer(normexam~standLRT + (1|school),
+             data=Exam,
+             REML = FALSE) 
+summary(Norm2)
 
 ## 5.5 Multiple degree of freedom comparisons
 ## ──────────────────────────────────────────
@@ -443,7 +451,7 @@
 ##   As with `lm' and `glm' models, you can compare the two `lmer' models
 ##   using the `anova' function.
 
- anova(Norm1, Norm2)
+anova(Norm1, Norm2)
 
 ## 5.6 Random slopes
 ## ─────────────────
@@ -453,9 +461,9 @@
 ##   schools, we also estimate the distribution of the slope of exam on
 ##   standardized test.
 
- Norm3 <- lmer(normexam~standLRT + (standLRT|school), data=Exam,
- 	       REML = FALSE) 
- summary(Norm3)
+Norm3 <- lmer(normexam~standLRT + (standLRT|school), data=Exam,
+               REML = FALSE) 
+summary(Norm3)
 
 ## 5.7 Test the significance of the random slope
 ## ─────────────────────────────────────────────
@@ -463,21 +471,21 @@
 ##   To test the significance of a random slope just compare models with
 ##   and without the random slope term
 
- anova(Norm2, Norm3)
+anova(Norm2, Norm3)
 
 ## 5.8 Exercise 3: multilevel modeling
 ## ───────────────────────────────────
 
 ##   Use the dataset, bh1996:
- data(bh1996, package="multilevel")
+data(bh1996, package="multilevel")
 
 ##   From the data documentation:
 ##         Variables are Cohesion (COHES), Leadership Climate (LEAD),
-##         Well-Being (WBEING) and Work Hours (HRS).  Each of these
+##         Well-Being (WBEING) and Work Hours (HRS). Each of these
 ##         variables has two variants - a group mean version that
 ##         replicates each group mean for every individual, and a
 ##         within-group version where the group mean is subtracted
-##         from each individual response.  The group mean version is
+##         from each individual response. The group mean version is
 ##         designated with a G. (e.g., G.HRS), and the within-group
 ##         version is designated with a W. (e.g., W.HRS).
 
@@ -487,108 +495,130 @@
 ##      predictors, average number of hours worked ("HRS") and leadership
 ##      skills ("LEAD") to the model and interpret your output.
 ##   4. Now, add a random effect of average number of hours worked ("HRS")
-##      to the model and interpret your output.  Test the significance of
+##      to the model and interpret your output. Test the significance of
 ##      this random term.
-##   5. Finally, add a group-level term, workplace cohesion ("G.COHES") to
-##      the model and interpret your output.
 
-## 6 Multiple imputation
-## ═════════════════════
+## 6 Exercise solutions                                         :prototype:
+## ════════════════════
 
-## 6.1 Multiple imputation
-## ───────────────────────
+## 6.1 Exercise 0 prototype
+## ────────────────────────
 
-##   • Majority of datasets contain missing data
-##   • Produces a variety of problems and limitations to data analysis
-##   • Multiple imputation (MI) generates multiple, complete datasets that
-##     contain estimations of missing data points
+##   Use the /states.rds/ data set.
+states <- readRDS("dataSets/states.rds")
 
-## 6.2 Multiple imputation
-## ───────────────────────
+##   Fit a model predicting energy consumed per capita (energy) from the
+##   percentage of residents living in metropolitan areas (metro). Be sure
+##   to
+##   1. Examine/plot the data before fitting the model
+states.en.met <- subset(states, select = c("metro", "energy"))
+summary(states.en.met)
+plot(states.en.met)
+cor(states.en.met, use="pairwise")
 
-##   Earlier we wanted to compare a model predicting bmi from demographic
-##   variables to a model including demographics and substantive
-##   predictors. We omitted missing data so that we could fit both models
-##   to the same data. That is a common practice, but it has many problems
-##   (which we unfortunately don't have time to discuss in detail). A
-##   popular solution is to use multiple imputation to fill in the missing
-##   values with reasonable placeholders.
+##   2. Print and interpret the model `summary'
+mod.en.met <- lm(energy ~ metro, data = states)
+summary(mod.en.met)
 
-##   MI is typically thought of as involving three steps:
-##   • Selection of imputation model
-##   • Generation of imputed datasets
-##   • Combining results across imputed datasets
+##   3. `plot' the model to look for deviations from modeling assumptions
+plot(mod.en.met)
 
-##   There are a number of packages for doing this in R: we will use the
-##   Amelia package because it is powerful, fast, and easy to use. You can
-##   refer to the Amelia documentation for more information about its
-##   imputation procedures:
-##   [http://r.iq.harvard.edu/docs/amelia/amelia.pdf]
+##   Select one or more additional predictors to add to your model and
+##   repeat steps 1-3. Is this model significantly better than the model
+##   with /metro/ as the only predictor?
+states.en.met.pop.wst <- subset(states, select = c("energy", "metro", "pop", "waste"))
+summary(states.en.met.pop.wst)
+plot(states.en.met.pop.wst)
+cor(states.en.met.pop.wst, use = "pairwise")
+mod.en.met.pop.waste <- lm(energy ~ metro + pop + waste, data = states)
+summary(mod.en.met.pop.waste)
+anova(mod.en.met, mod.en.met.pop.waste)
 
-## 6.3 Creating imputed data sets
-## ──────────────────────────────
+## 6.2 Exercise 1: prototype
+## ─────────────────────────
 
-##   We're going to create several datasets to look at a model predicting
-##   the number of days of work missed/year (wkdayr)
+##   Use the states data set.
 
- # load the Amelia package
- library(Amelia)
- # help(package="Amelia")
- # load a smaller version of NH
- NH08.mi <- readRDS("dataSets/NatHealth2008MI")
- # generate five imputed data sets
- amelia.log <- capture.output( # suppress amelia's chattiness
-   NatHealth.MI <- amelia(NH08.mi,
- 			 m=5,
- 			 idvars=c("id")))
+##   1. Add on to the regression equation that you created in exercise 1 by
+##      generating an interaction term and testing the interaction.
+mod.en.metro.by.waste <- lm(energy ~ metro * waste, data = states)
 
-## 6.4 Checking imputed values
-## ───────────────────────────
+##   1. Try adding a region to the model. Are there significant differences
+##      across the four regions?
+mod.en.region <- lm(energy ~ metro * waste + region, data = states)
+anova(mod.en.region)
 
-##   Compare imputed values to observed values
+## 6.3 Exercise 2 prototype
+## ────────────────────────
 
- plot(NatHealth.MI, which.vars=9:12)
+##   Use the NH11 data set that we loaded earlier. Note that the data is
+##   not perfectly clean and ready to be modeled. You will need to clean up
+##   at least some of the variables before fitting the model.
 
-##   [file:images/imputed1.png]
+##   1. Use glm to conduct a logistic regression to predict ever worked
+##      (everwrk) using age (age_p) and marital status (r_maritl).
+nh11.wrk.age.mar <- subset(NH11, select = c("everwrk", "age_p", "r_maritl"))
+summary(nh11.wrk.age.mar)
+NH11 <- transform(NH11,
+                  everwrk = factor(everwrk,
+                      levels = c("1 Yes", "2 No")),
+                  r_maritl = droplevels(r_maritl))
 
-##   [file:images/imputed1.png]
+mod.wk.age.mar <- glm(everwrk ~ age_p + r_maritl, data = NH11,
+                      family = "binomial")
 
-## 6.5 Checking imputed values: overimputation
-## ───────────────────────────────────────────
+summary(mod.wk.age.mar)
 
-##   Overimputation strategy:
-##   • Treat every observed value as if it was missing
-##   • Impute many values for that observed value
-##   • Examine the correspondence between imputed and observed values
+##   2. Predict the probability of working for each level of marital
+##      status.
+library(effects)
+data.frame(Effect("r_maritl", mod.wk.age.mar))
 
- overimpute(NatHealth.MI, var="sleep")
+## 6.4 Exercise 3 prototype
+## ────────────────────────
 
-##   [file:images/overImputed.png]
+##   Use the dataset, bh1996:
+data(bh1996, package="multilevel")
 
-##   [file:images/overImputed.png]
+##   From the data documentation:
+##         Variables are Cohesion (COHES), Leadership Climate (LEAD),
+##         Well-Being (WBEING) and Work Hours (HRS). Each of these
+##         variables has two variants - a group mean version that
+##         replicates each group mean for every individual, and a
+##         within-group version where the group mean is subtracted
+##         from each individual response. The group mean version is
+##         designated with a G. (e.g., G.HRS), and the within-group
+##         version is designated with a W. (e.g., W.HRS).
+##   Note that the group identifier is named "GRP".
+##   1. Create a null model predicting wellbeing ("WBEING")
+library(lme4)
+mod.grp0 <- lmer(WBEING ~ 1 + (1 | GRP), data = bh1996)
+summary(mod.grp0)
+##   => library(lme4) > mod.grp0 <- lmer(WBEING ~ 1 + (1 | GRP), data =
+##   bh1996) > summary(mod.grp0) Linear mixed model fit by REML ['lmerMod']
+##   Formula: WBEING ~ 1 + (1 | GRP) Data: bh1996
 
-## 6.6 Using imputed data sets in regression models
-## ────────────────────────────────────────────────
+##   REML criterion at convergence: 19347
 
-##   Zelig makes it very easy to use imputed data sets – just point to the
-##   list of imputed data sets in the `data' argument
+##   Scaled residuals: Min 1Q Median 3Q Max -3.322 -0.648 0.031 0.718 2.667
 
- library(Zelig)
- nhImp.out <- zelig(wkdayr ~ cigsday + modmin + sleep, model = "ls",
- 		   data = NatHealth.MI$imputations, cite = FALSE)
- 
- coef(summary(nhImp.out))
+##   Random effects: Groups Name Variance Std.Dev. GRP (Intercept) 0.0358
+##    0.189 Residual 0.7895 0.889 Number of obs: 7382, groups: GRP, 99
 
-##   For separate results, use print(summary(x), subset = i:j).
+##   Fixed effects: Estimate Std. Error t value (Intercept) 2.7743 0.0222
+##               125 > =2. [@2] Calculate the ICC for your null model `ICC
+##               = .0358/(.0358 + .7895) = .04'
+##   3. Run a second multi-level model that adds two individual-level
+##      predictors, average number of hours worked ("HRS") and leadership
+##      skills ("LEAD") to the model and interpret your output.
+mod.grp1 <- lmer(WBEING ~ HRS + LEAD + (1 | GRP), data = bh1996)
+summary(mod.grp1)
 
-## 6.7 Exercise 2: multiple imputation
-## ───────────────────────────────────
-
-##   1. Using Amelia, generate 5 imputed versions of the Exam dataset. Make
-##      sure you tell Amelia which variables are nominal, and that school
-##      is the id variable.
-##   2. Create plots that compare imputed values to observed values
-##   3. Overimpute the variable "schavg"
+##   4. Now, add a random effect of average number of hours worked ("HRS")
+##      to the model and interpret your output. Test the significance of
+##      this random term.
+mod.grp2 <- lmer(WBEING ~ HRS + LEAD + (1 + HRS | GRP), data = bh1996)
+anova(mod.grp1, mod.grp2)
 
 ## 7 Wrap-up
 ## ═════════

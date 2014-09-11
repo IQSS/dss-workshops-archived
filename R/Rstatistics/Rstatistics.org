@@ -11,7 +11,7 @@
 # property and/or the EXCLUDE_TAGS, place the curser on the poperty line 
 # and press C-c C-c
 
-#+PROPERTY: exports code
+#+PROPERTY: exports results
 #+EXCLUDE_TAGS: noexport mitsetup
 
 
@@ -52,13 +52,19 @@
   - Specify factor contrasts to test specific hypotheses
   - Perform model comparisons
   - Run and interpret variety of regression models in R
-  - Create and use imputed data sets in regression models
 
 ** Materials and Setup						   :setup:
-- Lab computer users:
-  - USERNAME :: dataclass
-  - PASSWORD :: dataclass
-- Download materials from [[http://j.mp/r-stats]]
+
+Lab computer users: Log in using the user name and password on the board to your left.
+
+Everyone should have R installed --if not:
+
+- Open a web browser and go to [[http://cran.r-project.org]] and download and install it
+- Also helpful to install RStudo (download from [[http://rstudio.com]])
+
+Materials for this workshop include slides, example data sets, and example code.
+
+- Download materials from [[http://tutorials.iq.harvard.edu/R/Rstatistics.zip]]
 - Extract materials from RStatistics.zip (on lab machines /right-click -> WinZip -> Extract to here/) and move to your desktop.
 
 ** Launch RStudio						   :labsetup:
@@ -171,15 +177,17 @@ Start by examining the data to check for problems.
 
 #+BEGIN_SRC R 
   # summary of expense and csat columns, all rows
-  summary(states.data[ , c("expense", "csat")]) 
+  sts.ex.sat <- subset(states.data, select = c("expense", "csat"))
+  summary(sts.ex.sat)
   # correlation between expense and csat
-  cor(states.data[ , c("expense", "csat")])[1, 2] 
+  cor(sts.ex.sat) 
 #+END_SRC
 
 #+RESULTS:
 #+begin_example
 > # summary of expense and csat columns, all rows
-> summary(states.data[ , c("expense", "csat")]) 
+> sts.ex.sat <- subset(states.data, select = c("expense", "csat"))
+> summary(sts.ex.sat)
     expense          csat     
  Min.   :2960   Min.   : 832  
  1st Qu.:4352   1st Qu.: 888  
@@ -188,8 +196,10 @@ Start by examining the data to check for problems.
  3rd Qu.:5794   3rd Qu.: 997  
  Max.   :9259   Max.   :1093  
 > # correlation between expense and csat
-> cor(states.data[ , c("expense", "csat")])[1, 2] 
-[1] -0.466
+> cor(sts.ex.sat) 
+        expense   csat
+expense   1.000 -0.466
+csat     -0.466  1.000
 > 
 #+end_example
 
@@ -200,15 +210,13 @@ Plot the data to look for multivariate outliers, non-linear relationships etc.
 #+name: statsScatter1
 #+BEGIN_SRC R :results output graphics :exports both :file images/statesCorr1.png :width 500 :height 400 :R-dev-args res=80
   # scatter plot of expense vs csat
-  plot(states.data[ , c("expense", "csat")])
+  plot(sts.ex.sat)
 #+END_SRC
 
+#+ATTR_LATEX: :width 2.5in  
 #+RESULTS: statsScatter1
 [[file:images/statesCorr1.png]]
 
-#+ATTR_LATEX: :width 2.5in
-#+RESULTS:
-[[file:images/statesCorr1.png]]
 
 #+LATEX: \end{block} \end{columns}
 
@@ -511,8 +519,8 @@ See also =?contrasts=, =?contr.treatment=, and =?relevel=.
 Use the states data set.
 
 1. Add on to the regression equation that you created in exercise 1 by generating an interaction term and testing the interaction.
-2. Try adding a categorical variable to your regression (remember, it will need to be dummy coded).  You could use region or, or generate a new categorical variable from one of the continuous variables in the dataset.
-3. Are there significant differences across the four regions?
+
+2. Try adding region to the model. Are there significant differences across the four regions?
 
 * Regression with binary outcomes
 
@@ -659,12 +667,12 @@ Instead of doing all this ourselves, we can use the effects package to compute q
 
 
 ** Exercise 2: logistic regression
-Use the NH11 data set.
+Use the NH11 data set that we loaded earlier.
 
     1. Use glm  to conduct a logistic regression to predict ever worked (everwrk) using age (age_p) and marital status (r_maritl). 
     2. Predict the probability of working for each level of marital status.
 
-Note that the data is not perfectly clean and ready to be modeled. You will need to clean up at leas some of the variables before fitting the model.
+Note that the data is not perfectly clean and ready to be modeled. You will need to clean up at least some of the variables before fitting the model.
 
 
 * Multilevel Modeling
@@ -780,7 +788,7 @@ Random effects:
  Groups   Name        Variance Std.Dev.
  school   (Intercept) 0.169    0.412   
  Residual             0.848    0.921   
-Number of obs: 3987, groups: school, 65
+Number of obs: 3987, groups:  school, 65
 
 Fixed effects:
             Estimate Std. Error t value
@@ -788,7 +796,7 @@ Fixed effects:
 > 
 #+end_example
 
-
+The is .169/(.169 + .848) = .17: 17% of the variance is at the school level.
 ** Adding fixed-effects predictors
 Predict exam scores from student's standardized tests scores
 
@@ -821,7 +829,7 @@ Random effects:
  Groups   Name        Variance Std.Dev.
  school   (Intercept) 0.0919   0.303   
  Residual             0.5670   0.753   
-Number of obs: 3958, groups: school, 65
+Number of obs: 3958, groups:  school, 65
 
 Fixed effects:
             Estimate Std. Error t value
@@ -888,7 +896,7 @@ Random effects:
  school   (Intercept) 0.0899   0.300        
           standLRT    0.0141   0.119    0.51
  Residual             0.5552   0.745        
-Number of obs: 3958, groups: school, 65
+Number of obs: 3958, groups:  school, 65
 
 Fixed effects:
             Estimate Std. Error t value
@@ -942,10 +950,12 @@ From the data documentation:
 2. Calculate the ICC for your null model
 3. Run a second multi-level model that adds two individual-level predictors, average number of hours worked ("HRS") and leadership skills ("LEAD") to the model and interpret your output.
 4. Now, add a random effect of average number of hours worked ("HRS") to the model and interpret your output.  Test the significance of this random term.
-5. Finally, add a group-level term, workplace cohesion ("G.COHES") to the model and interpret your output.
 
 
-* Multiple imputation
+* BONUS ROUND: Multiple imputation                                 :noexport:
+  :PROPERTIES:
+  :header-args: :eval no
+  :END: 
 
 ** Multiple imputation
 - Majority of datasets contain missing data
@@ -1094,10 +1104,427 @@ sleep        1.7233     0.8624   2.00  0.0669
 
 For separate results, use print(summary(x), subset = i:j).
 
-** Exercise 2: multiple imputation
+** Exercise 4: multiple imputation
     1. Using Amelia, generate 5 imputed versions of the Exam dataset. Make sure you tell Amelia which variables are nominal, and that school is the id variable.  
     2. Create plots that compare imputed values to observed values
     3. Overimpute the variable "schavg"
+
+
+* Exercise solutions                                              :prototype:
+  :PROPERTIES:
+  :header-args: :exports code
+  :END:
+
+** Exercise 0 prototype
+Use the /states.rds/ data set. 
+#+BEGIN_SRC R
+  states <- readRDS("dataSets/states.rds")
+#+END_SRC
+
+#+RESULTS:
+#+begin_example
+> states <- readRDS("dataSets/states.rds")
+> 
+#+end_example
+
+Fit a model predicting  energy consumed per capita (energy) from the percentage of residents living in metropolitan areas (metro). Be sure to 
+1. [@1] Examine/plot the data before fitting the model
+#+BEGIN_SRC R
+  states.en.met <- subset(states, select = c("metro", "energy"))
+  summary(states.en.met)
+  plot(states.en.met)
+  cor(states.en.met, use="pairwise")
+#+END_SRC
+
+#+RESULTS:
+#+begin_example
+> states.en.met <- subset(states, select = c("metro", "energy"))
+> summary(states.en.met)
+     metro           energy   
+ Min.   : 20.4   Min.   :200  
+ 1st Qu.: 47.0   1st Qu.:285  
+ Median : 67.5   Median :320  
+ Mean   : 64.1   Mean   :354  
+ 3rd Qu.: 81.6   3rd Qu.:372  
+ Max.   :100.0   Max.   :991  
+ NA's   :1       NA's   :1    
+> plot(states.en.met)
+> cor(states.en.met, use="pairwise")
+       metro energy
+metro   1.00  -0.34
+energy -0.34   1.00
+> 
+#+end_example
+
+2. [@2] Print and interpret the model =summary=
+#+BEGIN_SRC R
+  mod.en.met <- lm(energy ~ metro, data = states)
+  summary(mod.en.met)
+#+END_SRC
+
+#+RESULTS:
+#+begin_example
+> mod.en.met <- lm(energy ~ metro, data = states)
+> summary(mod.en.met)
+
+Call:
+lm(formula = energy ~ metro, data = states)
+
+Residuals:
+   Min     1Q Median     3Q    Max 
+-215.5  -64.5  -30.9   18.7  584.0 
+
+Coefficients:
+            Estimate Std. Error t value      Pr(>|t|)
+(Intercept)  501.029     61.814    8.11 0.00000000015
+metro         -2.287      0.914   -2.50         0.016
+
+Residual standard error: 140 on 48 degrees of freedom
+  (1 observation deleted due to missingness)
+Multiple R-squared:  0.115,	Adjusted R-squared:  0.097 
+F-statistic: 6.26 on 1 and 48 DF,  p-value: 0.0158
+
+> 
+#+end_example
+
+3. [@3] =plot= the model to look for deviations from modeling assumptions
+#+BEGIN_SRC R :results output graphics :file images/ex1.png
+  plot(mod.en.met)
+#+END_SRC
+
+#+RESULTS:
+[[file:images/ex1.png]]
+
+Select one or more additional predictors to add to your model and repeat steps 1-3. Is this model significantly better than the model with /metro/ as the only predictor?
+#+BEGIN_SRC R
+  states.en.met.pop.wst <- subset(states, select = c("energy", "metro", "pop", "waste"))
+  summary(states.en.met.pop.wst)
+  plot(states.en.met.pop.wst)
+  cor(states.en.met.pop.wst, use = "pairwise")
+  mod.en.met.pop.waste <- lm(energy ~ metro + pop + waste, data = states)
+  summary(mod.en.met.pop.waste)
+  anova(mod.en.met, mod.en.met.pop.waste)
+#+END_SRC
+
+#+RESULTS:
+#+begin_example
+> states.en.met.pop.wst <- subset(states, select = c("energy", "metro", "pop", "waste"))
+> summary(states.en.met.pop.wst)
+     energy        metro            pop               waste      
+ Min.   :200   Min.   : 20.4   Min.   :  454000   Min.   :0.540  
+ 1st Qu.:285   1st Qu.: 47.0   1st Qu.: 1299750   1st Qu.:0.822  
+ Median :320   Median : 67.5   Median : 3390500   Median :0.960  
+ Mean   :354   Mean   : 64.1   Mean   : 4962040   Mean   :0.989  
+ 3rd Qu.:372   3rd Qu.: 81.6   3rd Qu.: 5898000   3rd Qu.:1.145  
+ Max.   :991   Max.   :100.0   Max.   :29760000   Max.   :1.510  
+ NA's   :1     NA's   :1       NA's   :1          NA's   :1      
+> plot(states.en.met.pop.wst)
+> cor(states.en.met.pop.wst, use = "pairwise")
+       energy  metro    pop  waste
+energy  1.000 -0.340 -0.184 -0.253
+metro  -0.340  1.000  0.565  0.488
+pop    -0.184  0.565  1.000  0.526
+waste  -0.253  0.488  0.526  1.000
+> mod.en.met.pop.waste <- lm(energy ~ metro + pop + waste, data = states)
+> summary(mod.en.met.pop.waste)
+
+Call:
+lm(formula = energy ~ metro + pop + waste, data = states)
+
+Residuals:
+   Min     1Q Median     3Q    Max 
+-224.6  -67.5  -31.8   12.7  589.5 
+
+Coefficients:
+                Estimate   Std. Error t value  Pr(>|t|)
+(Intercept) 561.66773812  99.04681924    5.67 0.0000009
+metro        -2.07914840   1.16786868   -1.78     0.082
+pop           0.00000165   0.00000481    0.34     0.733
+waste       -83.07494970 104.21963267   -0.80     0.429
+
+Residual standard error: 142 on 46 degrees of freedom
+  (1 observation deleted due to missingness)
+Multiple R-squared:  0.128,	Adjusted R-squared:  0.0707 
+F-statistic: 2.24 on 3 and 46 DF,  p-value: 0.096
+
+> anova(mod.en.met, mod.en.met.pop.waste)
+Analysis of Variance Table
+
+Model 1: energy ~ metro
+Model 2: energy ~ metro + pop + waste
+  Res.Df    RSS Df Sum of Sq    F Pr(>F)
+1     48 943103                         
+2     46 930153  2     12949 0.32   0.73
+> 
+#+end_example
+
+** Exercise 1: prototype
+
+Use the states data set.
+
+1. Add on to the regression equation that you created in exercise 1 by generating an interaction term and testing the interaction.
+#+BEGIN_SRC R
+  mod.en.metro.by.waste <- lm(energy ~ metro * waste, data = states)
+#+END_SRC
+
+#+RESULTS:
+#+begin_example
+> mod.en.metro.by.waste <- lm(energy ~ metro * waste, data = states)
+> 
+#+end_example
+
+2. Try adding a region to the model. Are there significant differences across the four regions?
+#+BEGIN_SRC R
+  mod.en.region <- lm(energy ~ metro * waste + region, data = states)
+  anova(mod.en.region)
+#+END_SRC
+
+#+RESULTS:
+#+begin_example
+> mod.en.region <- lm(energy ~ metro * waste + region, data = states)
+> anova(mod.en.region)
+Analysis of Variance Table
+
+Response: energy
+            Df Sum Sq Mean Sq F value Pr(>F)
+metro        1 123064  123064    6.44  0.015
+waste        1  10572   10572    0.55  0.461
+region       3 111128   37043    1.94  0.137
+metro:waste  1    156     156    0.01  0.928
+Residuals   43 821247   19099               
+> 
+#+end_example
+
+** Exercise 2 prototype
+Use the NH11 data set that we loaded earlier. Note that the data is not perfectly clean and ready to be modeled. You will need to clean up at least some of the variables before fitting the model.
+
+1. [@1] Use glm  to conduct a logistic regression to predict ever worked (everwrk) using age (age_p) and marital status (r_maritl). 
+#+BEGIN_SRC R
+  nh11.wrk.age.mar <- subset(NH11, select = c("everwrk", "age_p", "r_maritl"))
+  summary(nh11.wrk.age.mar)
+  NH11 <- transform(NH11,
+                    everwrk = factor(everwrk,
+                        levels = c("1 Yes", "2 No")),
+                    r_maritl = droplevels(r_maritl))
+
+  mod.wk.age.mar <- glm(everwrk ~ age_p + r_maritl, data = NH11,
+                        family = "binomial")
+
+  summary(mod.wk.age.mar)
+#+END_SRC
+
+#+RESULTS:
+#+begin_example
+> nh11.wrk.age.mar <- subset(NH11, select = c("everwrk", "age_p", "r_maritl"))
+> summary(nh11.wrk.age.mar)
+              everwrk          age_p     
+ 1 Yes            :12153   Min.   :18.0  
+ 2 No             : 1887   1st Qu.:33.0  
+ 7 Refused        :   17   Median :47.0  
+ 8 Not ascertained:    0   Mean   :48.1  
+ 9 Don't know     :    8   3rd Qu.:62.0  
+ NA's             :18949   Max.   :85.0  
+                                         
+                            r_maritl    
+ 1 Married - spouse in household:13943  
+ 7 Never married                : 7763  
+ 5 Divorced                     : 4511  
+ 4 Widowed                      : 3069  
+ 8 Living with partner          : 2002  
+ 6 Separated                    : 1121  
+ (Other)                        :  605  
+> NH11 <- transform(NH11,
++                   everwrk = factor(everwrk,
++                       levels = c("1 Yes", "2 No")),
++                   r_maritl = droplevels(r_maritl))
+> 
+> mod.wk.age.mar <- glm(everwrk ~ age_p + r_maritl, data = NH11,
++                       family = "binomial")
+> 
+> summary(mod.wk.age.mar)
+
+Call:
+glm(formula = everwrk ~ age_p + r_maritl, family = "binomial", 
+    data = NH11)
+
+Deviance Residuals: 
+   Min      1Q  Median      3Q     Max  
+-1.044  -0.565  -0.439  -0.337   2.731  
+
+Coefficients:
+                                            Estimate Std. Error
+(Intercept)                                 -0.44025    0.09354
+age_p                                       -0.02981    0.00165
+r_maritl2 Married - spouse not in household  0.04968    0.21731
+r_maritl4 Widowed                            0.68362    0.08434
+r_maritl5 Divorced                          -0.73011    0.11168
+r_maritl6 Separated                         -0.12809    0.15137
+r_maritl7 Never married                      0.34361    0.06922
+r_maritl8 Living with partner               -0.44358    0.13777
+r_maritl9 Unknown marital status             0.39548    0.49297
+                                            z value Pr(>|z|)
+(Intercept)                                   -4.71  2.5e-06
+age_p                                        -18.12  < 2e-16
+r_maritl2 Married - spouse not in household    0.23   0.8192
+r_maritl4 Widowed                              8.11  5.2e-16
+r_maritl5 Divorced                            -6.54  6.3e-11
+r_maritl6 Separated                           -0.85   0.3974
+r_maritl7 Never married                        4.96  6.9e-07
+r_maritl8 Living with partner                 -3.22   0.0013
+r_maritl9 Unknown marital status               0.80   0.4224
+
+(Dispersion parameter for binomial family taken to be 1)
+
+    Null deviance: 11082  on 14039  degrees of freedom
+Residual deviance: 10309  on 14031  degrees of freedom
+  (18974 observations deleted due to missingness)
+AIC: 10327
+
+Number of Fisher Scoring iterations: 5
+
+> 
+#+end_example
+
+2. [@2] Predict the probability of working for each level of marital status.
+#+BEGIN_SRC R
+  library(effects)
+  data.frame(Effect("r_maritl", mod.wk.age.mar))
+#+END_SRC
+
+#+RESULTS:
+#+begin_example
+> library(effects)
+> data.frame(Effect("r_maritl", mod.wk.age.mar))
+                             r_maritl    fit     se  lower  upper
+1     1 Married - spouse in household 0.1082 0.0441 0.1001 0.1169
+2 2 Married - spouse not in household 0.1131 0.2133 0.0775 0.1623
+3                           4 Widowed 0.1938 0.0681 0.1738 0.2155
+4                          5 Divorced 0.0552 0.1027 0.0456 0.0667
+5                         6 Separated 0.0965 0.1458 0.0743 0.1244
+6                     7 Never married 0.1461 0.0598 0.1321 0.1613
+7               8 Living with partner 0.0722 0.1329 0.0566 0.0918
+8            9 Unknown marital status 0.1527 0.4910 0.0644 0.3206
+> 
+#+end_example
+
+
+
+** Exercise 3 prototype
+Use the dataset, bh1996:
+#+BEGIN_SRC R
+  data(bh1996, package="multilevel")
+
+#+END_SRC
+
+#+RESULTS:
+#+begin_example
+> data(bh1996, package="multilevel")
+> 
+#+end_example
+
+From the data documentation:
+#+begin_quote
+     Variables are Cohesion (COHES), Leadership Climate (LEAD),
+     Well-Being (WBEING) and Work Hours (HRS).  Each of these variables
+     has two variants - a group mean version that replicates each group
+     mean for every individual, and a within-group version where the
+     group mean is subtracted from each individual response.  The group
+     mean version is designated with a G. (e.g., G.HRS), and the
+     within-group version is designated with a W. (e.g., W.HRS).
+#+end_quote
+Note that the group identifier is named "GRP".
+1. [@1] Create a null model predicting wellbeing ("WBEING")
+#+BEGIN_SRC R
+  library(lme4)
+  mod.grp0 <- lmer(WBEING ~ 1 + (1 | GRP), data = bh1996)
+  summary(mod.grp0)
+#+END_SRC
+
+#+RESULTS:
+=> library(lme4)
+> mod.grp0 <- lmer(WBEING ~ 1 + (1 | GRP), data = bh1996)
+> summary(mod.grp0)
+Linear mixed model fit by REML ['lmerMod']
+Formula: WBEING ~ 1 + (1 | GRP)
+   Data: bh1996
+
+REML criterion at convergence: 19347
+
+Scaled residuals: 
+   Min     1Q Median     3Q    Max 
+-3.322 -0.648  0.031  0.718  2.667 
+
+Random effects:
+ Groups   Name        Variance Std.Dev.
+ GRP      (Intercept) 0.0358   0.189   
+ Residual             0.7895   0.889   
+Number of obs: 7382, groups:  GRP, 99
+
+Fixed effects:
+            Estimate Std. Error t value
+(Intercept)   2.7743     0.0222     125
+> 
+=2. [@2] Calculate the ICC for your null model
+ ~ICC = .0358/(.0358 + .7895) = .04~
+3. [@3] Run a second multi-level model that adds two individual-level predictors, average number of hours worked ("HRS") and leadership skills ("LEAD") to the model and interpret your output.
+#+BEGIN_SRC R
+  mod.grp1 <- lmer(WBEING ~ HRS + LEAD + (1 | GRP), data = bh1996)
+  summary(mod.grp1)
+#+END_SRC
+
+#+RESULTS:
+#+begin_example
+> mod.grp1 <- lmer(WBEING ~ HRS + LEAD + (1 | GRP), data = bh1996)
+> summary(mod.grp1)
+Linear mixed model fit by REML ['lmerMod']
+Formula: WBEING ~ HRS + LEAD + (1 | GRP)
+   Data: bh1996
+
+REML criterion at convergence: 17860
+
+Scaled residuals: 
+   Min     1Q Median     3Q    Max 
+-3.919 -0.659  0.038  0.704  3.644 
+
+Random effects:
+ Groups   Name        Variance Std.Dev.
+ GRP      (Intercept) 0.0193   0.139   
+ Residual             0.6467   0.804   
+Number of obs: 7382, groups:  GRP, 99
+
+Fixed effects:
+            Estimate Std. Error t value
+(Intercept)  1.68616    0.06770    24.9
+HRS         -0.03162    0.00438    -7.2
+LEAD         0.50074    0.01281    39.1
+
+Correlation of Fixed Effects:
+     (Intr) HRS   
+HRS  -0.800       
+LEAD -0.635  0.121
+> 
+#+end_example
+
+4. [@4] Now, add a random effect of average number of hours worked ("HRS") to the model and interpret your output.  Test the significance of this random term.
+#+BEGIN_SRC R
+  mod.grp2 <- lmer(WBEING ~ HRS + LEAD + (1 + HRS | GRP), data = bh1996)
+  anova(mod.grp1, mod.grp2)
+#+END_SRC
+
+#+RESULTS:
+#+begin_example
+> mod.grp2 <- lmer(WBEING ~ HRS + LEAD + (1 + HRS | GRP), data = bh1996)
+> anova(mod.grp1, mod.grp2)
+Data: bh1996
+Models:
+mod.grp1: WBEING ~ HRS + LEAD + (1 | GRP)
+mod.grp2: WBEING ~ HRS + LEAD + (1 + HRS | GRP)
+         Df   AIC   BIC logLik deviance Chisq Chi Df Pr(>Chisq)
+mod.grp1  5 17848 17882  -8919    17838                        
+mod.grp2  7 17851 17899  -8918    17837  1.22      2       0.54
+> 
+#+end_example
+
 
 * Wrap-up
 
