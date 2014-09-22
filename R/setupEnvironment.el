@@ -1,15 +1,6 @@
 ;; make R save and restore instead of using sessions; this gives the input and output as displayed by the R console
 (set (make-local-variable 'org-babel-R-command) "R --silent --save --restore")
 
-;; set up syntax highlighting (requires the "pygments" python package and the "minted" latex package installed on your system)
-(set (make-local-variable 'org-latex-listings) 'minted)
-(set (make-local-variable 'org-latex-minted-options) '(("fontsize" "\\scriptsize")))
-
-;; make sure latex is run enough times, and enable shell-escape so that pygments syntax highlighting works
-(set (make-local-variable 'org-latex-pdf-process) '("pdflatex -shell-escape -interaction nonstopmode -output-directory %o %f" 
-						    "pdflatex -shell-escape -interaction nonstopmode -output-directory %o %f"))
-(set (make-local-variable 'LaTeX-command) "pdflatex -shell-escape")
-
 ;; don't let orgmode resize images (this means you must set them to the correct size when generating!)
 (set (make-local-variable 'org-latex-image-default-option) "")
 
@@ -34,38 +25,8 @@
    (python . t)
    (matlab . t)))
 
-;; tell minted that R blocks should be highighted using r syntax
-(add-to-list 'org-latex-minted-langs '(R "r"))
-
 ;; display images in the orgmode buffer automatically
 (add-hook 'org-babel-after-execute-hook 'org-display-inline-images)
-
-;; wrap results blocks in minted for syntax highlighting
-(defun my-latex-fixed-width-start (fixed-width backend info)
-  (when (org-export-derived-backend-p backend 'latex)
-    (replace-regexp-in-string
-     "\\(begin{verbatim\\)}"
-     "vspace{-.5em}
-\\\\begin{columns}
-\\\\column{.95\\\\linewidth}
-\\\\begin{block}{}
-\\\\begin{minted}[linenos=false, fontsize=\\\\footnotesize]{rconsole" fixed-width nil nil 1)))
-
-(defun my-latex-fixed-width-end (fixed-width backend info)
-  (when (org-export-derived-backend-p backend 'latex)
-    (replace-regexp-in-string
-     "\\(end\\){\\(verbatim\\)}"
-     "minted}
-\\\\end{block}
-\\\\end{columns}
-\\\\vspace{.5em" fixed-width nil nil 2)))
-
-(make-local-variable 'org-export-filter-final-output-functions)
-
-(add-to-list 'org-export-filter-final-output-functions
-             'my-latex-fixed-width-start)
-(add-to-list 'org-export-filter-final-output-functions
-             'my-latex-fixed-width-end)
 
 ;; convenience function to export headings to markdown chapters for upload to datacamp
 (defun my-exp-to-datacamp (course)
@@ -123,6 +84,3 @@ mode              : selfcontained
   (setq org-export-filter-src-block-functions (delete 'my-md-src-block-replace org-export-filter-src-block-functions))
   (setq org-export-filter-keyword-functions (delete 'my-md-keyword-replace org-export-filter-keyword-functions))
   nil nil)
-
-
-	       
