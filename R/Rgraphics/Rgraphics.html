@@ -4,7 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
 <title>Introduction to R Graphics with <code>ggplot2</code></title>
-<!-- 2014-09-19 Fri 08:54 -->
+<!-- 2014-09-22 Mon 11:53 -->
 <meta  http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta  name="generator" content="Org-mode" />
 <style type="text/css">
@@ -87,16 +87,16 @@
     { background-color: #ffff00; color: #000000; font-weight: bold; }
   /*]]>*/-->
 </style>
-<link rel="stylesheet" type="text/css" href="http://www.pirilampo.org/styles/bigblow/css/htmlize.css"/>
-<link rel="stylesheet" type="text/css" href="http://www.pirilampo.org/styles/bigblow/css/bigblow.css"/>
-<link rel="stylesheet" type="text/css" href="http://www.pirilampo.org/styles/bigblow/css/hideshow.css"/>
-<script type="text/javascript" src="http://www.pirilampo.org/styles/bigblow/js/jquery-1.11.0.min.js"></script>
-<script type="text/javascript" src="http://www.pirilampo.org/styles/bigblow/js/jquery-ui-1.10.2.min.js"></script>
-<script type="text/javascript" src="http://www.pirilampo.org/styles/bigblow/js/jquery.localscroll-min.js"></script>
-<script type="text/javascript" src="http://www.pirilampo.org/styles/bigblow/js/jquery.scrollTo-1.4.3.1-min.js"></script>
-<script type="text/javascript" src="http://www.pirilampo.org/styles/bigblow/js/jquery.zclip.min.js"></script>
-<script type="text/javascript" src="http://www.pirilampo.org/styles/bigblow/js/bigblow.js"></script>
-<script type="text/javascript" src="http://www.pirilampo.org/styles/bigblow/js/hideshow.js"></script>
+<link rel="stylesheet" type="text/css" href="https://rawgit.com/fniessen/org-html-themes/master/styles/bigblow/css/htmlize.css"/>
+<link rel="stylesheet" type="text/css" href="https://rawgit.com/fniessen/org-html-themes/master/styles/bigblow/css/bigblow.css"/>
+<link rel="stylesheet" type="text/css" href="https://rawgit.com/fniessen/org-html-themes/master/styles/bigblow/css/hideshow.css"/>
+<script type="text/javascript" src="https://rawgit.com/fniessen/org-html-themes/master/styles/bigblow/js/jquery-1.11.0.min.js"></script>
+<script type="text/javascript" src="https://rawgit.com/fniessen/org-html-themes/master/styles/bigblow/js/jquery-ui-1.10.2.min.js"></script>
+<script type="text/javascript" src="https://rawgit.com/fniessen/org-html-themes/master/styles/bigblow/js/jquery.localscroll-min.js"></script>
+<script type="text/javascript" src="https://rawgit.com/fniessen/org-html-themes/master/styles/bigblow/js/jquery.scrollTo-1.4.3.1-min.js"></script>
+<script type="text/javascript" src="https://rawgit.com/fniessen/org-html-themes/master/styles/bigblow/js/jquery.zclip.min.js"></script>
+<script type="text/javascript" src="https://rawgit.com/fniessen/org-html-themes/master/styles/bigblow/js/bigblow.js"></script>
+<script type="text/javascript" src="https://rawgit.com/fniessen/org-html-themes/master/styles/bigblow/js/hideshow.js"></script>
 <script type="text/javascript">
 /*
 @licstart  The following is the entire license notice for the
@@ -154,14 +154,15 @@ for the JavaScript code in this tag.
 <li><a href="#sec-1">1. Introduction</a>
 <ul>
 <li><a href="#sec-1-1">1.1. Materials and setup&#xa0;&#xa0;&#xa0;<span class="tag"><span class="setup">setup</span></span></a></li>
-<li><a href="#sec-1-2">1.2. Starting A The End</a></li>
-<li><a href="#sec-1-3">1.3. Why <code>ggplot2</code>?</a></li>
-<li><a href="#sec-1-4">1.4. What Is The Grammar Of Graphics?</a></li>
-<li><a href="#sec-1-5">1.5. The structure of a <code>ggplot</code></a></li>
-<li><a href="#sec-1-6">1.6. Example data I: <code>mtcars</code></a></li>
-<li><a href="#sec-1-7">1.7. <code>ggplot2</code> VS Base Graphics</a></li>
-<li><a href="#sec-1-8">1.8. <code>ggplot2</code> VS Base for simple graphs</a></li>
-<li><a href="#sec-1-9">1.9. <code>ggplot2</code> Base graphics VS <code>ggplot</code> for more complex graphs:</a></li>
+<li><a href="#sec-1-2">1.2. Workshop Overview</a></li>
+<li><a href="#sec-1-3">1.3. Starting A The End</a></li>
+<li><a href="#sec-1-4">1.4. Why <code>ggplot2</code>?</a></li>
+<li><a href="#sec-1-5">1.5. What Is The Grammar Of Graphics?</a></li>
+<li><a href="#sec-1-6">1.6. The structure of a <code>ggplot</code></a></li>
+<li><a href="#sec-1-7">1.7. Example data I: <code>mtcars</code></a></li>
+<li><a href="#sec-1-8">1.8. <code>ggplot2</code> VS Base Graphics</a></li>
+<li><a href="#sec-1-9">1.9. <code>ggplot2</code> VS Base for simple graphs</a></li>
+<li><a href="#sec-1-10">1.10. <code>ggplot2</code> Base graphics VS <code>ggplot</code> for more complex graphs:</a></li>
 </ul>
 </li>
 <li><a href="#sec-2">2. Geometric Objects And Aesthetics</a>
@@ -213,7 +214,12 @@ for the JavaScript code in this tag.
 </li>
 <li><a href="#sec-7">7. The #1 FAQ</a>
 <ul>
-<li><a href="#sec-7-1">7.1. Map Aesthetic To Different Columns</a></li>
+<li><a href="#sec-7-1">7.1. Map Aesthetic To Different Columns</a>
+<ul>
+<li><a href="#sec-7-1-1">7.1.1. Wrong</a></li>
+<li><a href="#sec-7-1-2">7.1.2. Right</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li><a href="#sec-8">8. Putting It All Together</a>
@@ -280,7 +286,13 @@ Materials for this workshop include slides, example data sets, and example code.
 <p>
 Workshop notes are available in .hmtl format. Open a file browser, navigate to your desktop and open Rgraphics.html
 </p>
+</div>
+</div>
 
+
+<div id="outline-container-sec-1-2" class="outline-3">
+<h3 id="sec-1-2"><span class="section-number-3">1.2</span> Workshop Overview</h3>
+<div class="outline-text-3" id="text-1-2">
 <p>
 Class Structure and Organization:
 </p>
@@ -308,9 +320,9 @@ This is an intermediate R course:
 </div>
 
 
-<div id="outline-container-sec-1-2" class="outline-3">
-<h3 id="sec-1-2"><span class="section-number-3">1.2</span> Starting A The End</h3>
-<div class="outline-text-3" id="text-1-2">
+<div id="outline-container-sec-1-3" class="outline-3">
+<h3 id="sec-1-3"><span class="section-number-3">1.3</span> Starting A The End</h3>
+<div class="outline-text-3" id="text-1-3">
 <p>
 My goal: by the end of the workshop you will be able to reproduce this graphic from the Economist:
 </p>
@@ -323,9 +335,9 @@ My goal: by the end of the workshop you will be able to reproduce this graphic f
 </div>
 </div>
 
-<div id="outline-container-sec-1-3" class="outline-3">
-<h3 id="sec-1-3"><span class="section-number-3">1.3</span> Why <code>ggplot2</code>?</h3>
-<div class="outline-text-3" id="text-1-3">
+<div id="outline-container-sec-1-4" class="outline-3">
+<h3 id="sec-1-4"><span class="section-number-3">1.4</span> Why <code>ggplot2</code>?</h3>
+<div class="outline-text-3" id="text-1-4">
 <p>
 Advantages of ggplot2
 </p>
@@ -358,9 +370,9 @@ That said, there are some things you cannot (or should not) do With ggplot2:
 </div>
 </div>
 
-<div id="outline-container-sec-1-4" class="outline-3">
-<h3 id="sec-1-4"><span class="section-number-3">1.4</span> What Is The Grammar Of Graphics?</h3>
-<div class="outline-text-3" id="text-1-4">
+<div id="outline-container-sec-1-5" class="outline-3">
+<h3 id="sec-1-5"><span class="section-number-3">1.5</span> What Is The Grammar Of Graphics?</h3>
+<div class="outline-text-3" id="text-1-5">
 <p>
 The basic idea: independently specify plot building blocks and combine them to create just about any kind of graphical display you want. Building blocks of a graph include:
 </p>
@@ -385,9 +397,9 @@ The basic idea: independently specify plot building blocks and combine them to c
 </div>
 </div>
 
-<div id="outline-container-sec-1-5" class="outline-3">
-<h3 id="sec-1-5"><span class="section-number-3">1.5</span> The structure of a <code>ggplot</code></h3>
-<div class="outline-text-3" id="text-1-5">
+<div id="outline-container-sec-1-6" class="outline-3">
+<h3 id="sec-1-6"><span class="section-number-3">1.6</span> The structure of a <code>ggplot</code></h3>
+<div class="outline-text-3" id="text-1-6">
 <p>
 The <code>ggplot()</code> function is used to initialize the basic graph structure, then we add to it. The structure of a ggplot looks like this:
 </p>
@@ -424,9 +436,9 @@ Don't be afraid, you will understand this by the end of the workshop! The basic 
 </div>
 </div>
 
-<div id="outline-container-sec-1-6" class="outline-3">
-<h3 id="sec-1-6"><span class="section-number-3">1.6</span> Example data I: <code>mtcars</code></h3>
-<div class="outline-text-3" id="text-1-6">
+<div id="outline-container-sec-1-7" class="outline-3">
+<h3 id="sec-1-7"><span class="section-number-3">1.7</span> Example data I: <code>mtcars</code></h3>
+<div class="outline-text-3" id="text-1-7">
 <div class="org-src-container">
 
 <pre class="src src-R" id="mtcars1">head(mtcars); cat(<span style="color: #008000;">".\n.\n.\n"</span>); tail(mtcars)
@@ -533,9 +545,9 @@ These data come from Motor Trend magazine; most of the variable names are intuit
 </div>
 </div>
 
-<div id="outline-container-sec-1-7" class="outline-3">
-<h3 id="sec-1-7"><span class="section-number-3">1.7</span> <code>ggplot2</code> VS Base Graphics</h3>
-<div class="outline-text-3" id="text-1-7">
+<div id="outline-container-sec-1-8" class="outline-3">
+<h3 id="sec-1-8"><span class="section-number-3">1.8</span> <code>ggplot2</code> VS Base Graphics</h3>
+<div class="outline-text-3" id="text-1-8">
 <p>
 Compared to base graphics, <code>ggplot2</code>
 </p>
@@ -552,9 +564,9 @@ Compared to base graphics, <code>ggplot2</code>
 </div>
 </div>
 
-<div id="outline-container-sec-1-8" class="outline-3">
-<h3 id="sec-1-8"><span class="section-number-3">1.8</span> <code>ggplot2</code> VS Base for simple graphs</h3>
-<div class="outline-text-3" id="text-1-8">
+<div id="outline-container-sec-1-9" class="outline-3">
+<h3 id="sec-1-9"><span class="section-number-3">1.9</span> <code>ggplot2</code> VS Base for simple graphs</h3>
+<div class="outline-text-3" id="text-1-9">
 <p>
 Base graphics histogram example:
 </p>
@@ -591,9 +603,9 @@ Base wins!
 </div>
 </div>
 
-<div id="outline-container-sec-1-9" class="outline-3">
-<h3 id="sec-1-9"><span class="section-number-3">1.9</span> <code>ggplot2</code> Base graphics VS <code>ggplot</code> for more complex graphs:</h3>
-<div class="outline-text-3" id="text-1-9">
+<div id="outline-container-sec-1-10" class="outline-3">
+<h3 id="sec-1-10"><span class="section-number-3">1.10</span> <code>ggplot2</code> Base graphics VS <code>ggplot</code> for more complex graphs:</h3>
+<div class="outline-text-3" id="text-1-10">
 <p>
 Base colored scatter plot example:
 </p>
@@ -1582,7 +1594,9 @@ p7 + theme_new
 The most frequently asked question goes something like this: <i>I have two variables in my data.frame, and I'd like to plot them as separate points, with different color depending on which variable it is. How do I do that?</i>
 </p>
 </div>
-<ol class="org-ol"><li>Wrong<br  /><div class="outline-text-4" id="text-7-1-1">
+<div id="outline-container-sec-7-1-1" class="outline-4">
+<h4 id="sec-7-1-1"><span class="section-number-4">7.1.1</span> Wrong</h4>
+<div class="outline-text-4" id="text-7-1-1">
 <div class="org-src-container">
 
 <pre class="src src-R" id="WrongWayNoMelt">ggplot(mtcars, aes(x=wt)) +
@@ -1602,9 +1616,11 @@ The most frequently asked question goes something like this: <i>I have two varia
 </p>
 </div>
 </div>
-</li>
+</div>
 
-<li>Right<br  /><div class="outline-text-4" id="text-7-1-2">
+<div id="outline-container-sec-7-1-2" class="outline-4">
+<h4 id="sec-7-1-2"><span class="section-number-4">7.1.2</span> Right</h4>
+<div class="outline-text-4" id="text-7-1-2">
 <div class="org-src-container">
 
 <pre class="src src-R" id="meltingDataExe"><span style="color: #D0372D;">library</span>(reshape2)
@@ -1627,7 +1643,7 @@ ggplot(mtc.m,
 </p>
 </div>
 </div>
-</li></ol>
+</div>
 </div>
 </div>
 
@@ -1905,7 +1921,7 @@ Finishing touches
 </div>
 </div>
 <div id="postamble" class="status">
-<p class="date">Created: 2014-09-19 Fri 08:54</p>
+<p class="date">Created: 2014-09-22 Mon 11:53</p>
 <p class="creator"><a href="http://www.gnu.org/software/emacs/">Emacs</a> 24.3.1 (<a href="http://orgmode.org">Org</a> mode 8.2.7c)</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>

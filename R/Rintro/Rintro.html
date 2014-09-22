@@ -4,7 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
 <title>Introduction to R</title>
-<!-- 2014-09-15 Mon 15:12 -->
+<!-- 2014-09-22 Mon 11:53 -->
 <meta  http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta  name="generator" content="Org-mode" />
 <meta  name="author" content="Ista Zahn" />
@@ -88,16 +88,16 @@
     { background-color: #ffff00; color: #000000; font-weight: bold; }
   /*]]>*/-->
 </style>
-<link rel="stylesheet" type="text/css" href="http://www.pirilampo.org/styles/bigblow/css/htmlize.css"/>
-<link rel="stylesheet" type="text/css" href="http://www.pirilampo.org/styles/bigblow/css/bigblow.css"/>
-<link rel="stylesheet" type="text/css" href="http://www.pirilampo.org/styles/bigblow/css/hideshow.css"/>
-<script type="text/javascript" src="http://www.pirilampo.org/styles/bigblow/js/jquery-1.11.0.min.js"></script>
-<script type="text/javascript" src="http://www.pirilampo.org/styles/bigblow/js/jquery-ui-1.10.2.min.js"></script>
-<script type="text/javascript" src="http://www.pirilampo.org/styles/bigblow/js/jquery.localscroll-min.js"></script>
-<script type="text/javascript" src="http://www.pirilampo.org/styles/bigblow/js/jquery.scrollTo-1.4.3.1-min.js"></script>
-<script type="text/javascript" src="http://www.pirilampo.org/styles/bigblow/js/jquery.zclip.min.js"></script>
-<script type="text/javascript" src="http://www.pirilampo.org/styles/bigblow/js/bigblow.js"></script>
-<script type="text/javascript" src="http://www.pirilampo.org/styles/bigblow/js/hideshow.js"></script>
+<link rel="stylesheet" type="text/css" href="https://rawgit.com/fniessen/org-html-themes/master/styles/bigblow/css/htmlize.css"/>
+<link rel="stylesheet" type="text/css" href="https://rawgit.com/fniessen/org-html-themes/master/styles/bigblow/css/bigblow.css"/>
+<link rel="stylesheet" type="text/css" href="https://rawgit.com/fniessen/org-html-themes/master/styles/bigblow/css/hideshow.css"/>
+<script type="text/javascript" src="https://rawgit.com/fniessen/org-html-themes/master/styles/bigblow/js/jquery-1.11.0.min.js"></script>
+<script type="text/javascript" src="https://rawgit.com/fniessen/org-html-themes/master/styles/bigblow/js/jquery-ui-1.10.2.min.js"></script>
+<script type="text/javascript" src="https://rawgit.com/fniessen/org-html-themes/master/styles/bigblow/js/jquery.localscroll-min.js"></script>
+<script type="text/javascript" src="https://rawgit.com/fniessen/org-html-themes/master/styles/bigblow/js/jquery.scrollTo-1.4.3.1-min.js"></script>
+<script type="text/javascript" src="https://rawgit.com/fniessen/org-html-themes/master/styles/bigblow/js/jquery.zclip.min.js"></script>
+<script type="text/javascript" src="https://rawgit.com/fniessen/org-html-themes/master/styles/bigblow/js/bigblow.js"></script>
+<script type="text/javascript" src="https://rawgit.com/fniessen/org-html-themes/master/styles/bigblow/js/hideshow.js"></script>
 <script type="text/javascript">
 /*
 @licstart  The following is the entire license notice for the
@@ -494,9 +494,9 @@ Values can be assigned names and used in subsequent operations
 
 <div class="org-src-container">
 
-<pre class="src src-R" id="firstRExample">x <span style="color: #008b8b;">&lt;-</span> 11 <span style="color: #b22222;"># </span><span style="color: #b22222;">Assign the value 10 to a variable named x</span>
-x + 1 <span style="color: #b22222;"># </span><span style="color: #b22222;">Add 1 to x</span>
-y <span style="color: #008b8b;">&lt;-</span> x + 1 <span style="color: #b22222;"># </span><span style="color: #b22222;">Assign y the value x + 1</span>
+<pre class="src src-R" id="firstRExample">x <span style="color: #D0372D;">&lt;-</span> 11 <span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">Assign the value 10 to a variable named x</span>
+x + 1 <span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">Add 1 to x</span>
+y <span style="color: #D0372D;">&lt;-</span> x + 1 <span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">Assign y the value x + 1</span>
 y
 </pre>
 </div>
@@ -517,11 +517,11 @@ Saved variables can be listed, overwritten and deleted
 </p>
 <div class="org-src-container">
 
-<pre class="src src-R" id="listOverwriteDelete">ls() <span style="color: #b22222;"># </span><span style="color: #b22222;">List variables in workspace</span>
-x <span style="color: #b22222;"># </span><span style="color: #b22222;">Print the value of x</span>
-x <span style="color: #008b8b;">&lt;-</span> 100 <span style="color: #b22222;"># </span><span style="color: #b22222;">Overwrite x. Note that no warning is given!</span>
+<pre class="src src-R" id="listOverwriteDelete">ls() <span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">List variables in workspace</span>
+x <span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">Print the value of x</span>
+x <span style="color: #D0372D;">&lt;-</span> 100 <span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">Overwrite x. Note that no warning is given!</span>
 x
-rm(x) <span style="color: #b22222;"># </span><span style="color: #b22222;">Delete x</span>
+rm(x) <span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">Delete x</span>
 ls()
 </pre>
 </div>
@@ -578,11 +578,11 @@ Examples:
 </p>
 <div class="org-src-container">
 
-<pre class="src src-R" id="functionExamples"><span style="color: #b22222;">#</span><span style="color: #b22222;">?sqrt</span>
-a <span style="color: #008b8b;">&lt;-</span> sqrt(y) <span style="color: #b22222;"># </span><span style="color: #b22222;">Call the sqrt function with argument x=y</span>
-round(a, digits = 2) <span style="color: #b22222;"># </span><span style="color: #b22222;">Call round() with arguments x=x and digits=2</span>
-<span style="color: #b22222;"># </span><span style="color: #b22222;">Functions can be nested so an alternative is</span>
-round(sqrt(y), digits = 5) <span style="color: #b22222;"># </span><span style="color: #b22222;">Take sqrt of a and round</span>
+<pre class="src src-R" id="functionExamples"><span style="color: #8D8D84; font-style: italic;">#</span><span style="color: #8D8D84; font-style: italic;">?sqrt</span>
+a <span style="color: #D0372D;">&lt;-</span> sqrt(y) <span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">Call the sqrt function with argument x=y</span>
+round(a, digits = 2) <span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">Call round() with arguments x=x and digits=2</span>
+<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">Functions can be nested so an alternative is</span>
+round(sqrt(y), digits = 5) <span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">Take sqrt of a and round</span>
 </pre>
 </div>
 
@@ -643,7 +643,7 @@ R has extensive built-in documentation that can be accessed through R commands o
 <li>Look up documentation for a package
 <div class="org-src-container">
 
-<pre class="src src-R">help(package=<span style="color: #8b2252;">"stats"</span>)
+<pre class="src src-R">help(package=<span style="color: #008000;">"stats"</span>)
 </pre>
 </div>
 </li>
@@ -651,7 +651,7 @@ R has extensive built-in documentation that can be accessed through R commands o
 <li>Search documentation from R (not always the best way&#x2026; google often works better)
 <div class="org-src-container">
 
-<pre class="src src-R">help.search(<span style="color: #8b2252;">"classification"</span>)
+<pre class="src src-R">help.search(<span style="color: #008000;">"classification"</span>)
 </pre>
 </div>
 </li>
@@ -670,7 +670,7 @@ There are thousands of R packages that extend R's capabilities.
 <li>To view available packages: 
 <div class="org-src-container">
 
-<pre class="src src-R"><span style="color: #008b8b;">library</span>()
+<pre class="src src-R"><span style="color: #D0372D;">library</span>()
 </pre>
 </div>
 </li>
@@ -686,7 +686,7 @@ There are thousands of R packages that extend R's capabilities.
 <li>To load a package: 
 <div class="org-src-container">
 
-<pre class="src src-R"><span style="color: #008b8b;">library</span>(<span style="color: #8b2252;">"car"</span>)
+<pre class="src src-R"><span style="color: #D0372D;">library</span>(<span style="color: #008000;">"car"</span>)
 </pre>
 </div>
 </li>
@@ -694,7 +694,7 @@ There are thousands of R packages that extend R's capabilities.
 <li>Install new package: 
 <div class="org-src-container">
 
-<pre class="src src-R">install.packages(<span style="color: #8b2252;">"stringdist"</span>)
+<pre class="src src-R">install.packages(<span style="color: #008000;">"stringdist"</span>)
 </pre>
 </div>
 </li>
@@ -715,8 +715,8 @@ The next few examples use a subset of the General Social Survey data set. The va
 </p>
 <div class="org-src-container">
 
-<pre class="src src-R" id="GSSinfo">head(read.csv(<span style="color: #8b2252;">"dataSets/gssInfo.csv"</span>)) 
-<span style="color: #b22222;">#</span><span style="color: #b22222;">see gssInfo.csv for rest of the variable descriptions</span>
+<pre class="src src-R" id="GSSinfo">head(read.csv(<span style="color: #008000;">"dataSets/gssInfo.csv"</span>)) 
+<span style="color: #8D8D84; font-style: italic;">#</span><span style="color: #8D8D84; font-style: italic;">see gssInfo.csv for rest of the variable descriptions</span>
 </pre>
 </div>
 
@@ -743,7 +743,7 @@ R knows the directory it was started in, and refers to this as the "working dire
 </p>
 <div class="org-src-container">
 
-<pre class="src src-R" id="SetDesktopWorkingDirectory">setwd(<span style="color: #8b2252;">"~/Desktop/Rintro"</span>)
+<pre class="src src-R" id="SetDesktopWorkingDirectory">setwd(<span style="color: #008000;">"~/Desktop/Rintro"</span>)
 </pre>
 </div>
 
@@ -753,10 +753,10 @@ We can also set the working directory using paths relative to the current workin
 
 <div class="org-src-container">
 
-<pre class="src src-R" id="getWD">getwd() <span style="color: #b22222;"># </span><span style="color: #b22222;">get the current working directory</span>
-setwd(<span style="color: #8b2252;">"dataSets"</span>) <span style="color: #b22222;"># </span><span style="color: #b22222;">set wd to the dataSets folder</span>
+<pre class="src src-R" id="getWD">getwd() <span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">get the current working directory</span>
+setwd(<span style="color: #008000;">"dataSets"</span>) <span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">set wd to the dataSets folder</span>
 getwd()
-setwd(<span style="color: #8b2252;">".."</span>) <span style="color: #b22222;"># </span><span style="color: #b22222;">set wd to enclosing folder ("up")</span>
+setwd(<span style="color: #008000;">".."</span>) <span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">set wd to enclosing folder ("up")</span>
 </pre>
 </div>
 
@@ -775,8 +775,8 @@ It can be convenient to list files in a directory without leaving R
 </p>
 <div class="org-src-container">
 
-<pre class="src src-R" id="listFilesExample">list.files(<span style="color: #8b2252;">"dataSets"</span>) <span style="color: #b22222;"># </span><span style="color: #b22222;">list files in the dataSets folder</span>
-<span style="color: #b22222;"># </span><span style="color: #b22222;">list.files("dataSets", pattern = ".csv") # restrict to .csv files</span>
+<pre class="src src-R" id="listFilesExample">list.files(<span style="color: #008000;">"dataSets"</span>) <span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">list files in the dataSets folder</span>
+<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">list.files("dataSets", pattern = ".csv") # restrict to .csv files</span>
 </pre>
 </div>
 
@@ -861,13 +861,13 @@ Examples:
 </p>
 <div class="org-src-container">
 
-<pre class="src src-R" id="readRDS"><span style="color: #b22222;"># </span><span style="color: #b22222;">read gss data from the gss.rds R file</span>
-datGSS <span style="color: #008b8b;">&lt;-</span> readRDS(<span style="color: #8b2252;">"dataSets/gss.rds"</span>)
-<span style="color: #b22222;"># </span><span style="color: #b22222;">read gss data from the gss.csv comma separated file</span>
-gss.data <span style="color: #008b8b;">&lt;-</span> read.csv(<span style="color: #8b2252;">"dataSets/gss.csv"</span>) <span style="color: #b22222;"># </span><span style="color: #b22222;">read gss data</span>
-<span style="color: #b22222;"># </span><span style="color: #b22222;">read a Stata dataset from gss.dta </span>
-<span style="color: #008b8b;">library</span>(foreign) <span style="color: #b22222;"># </span><span style="color: #b22222;">load foreign data functions</span>
-datGSS <span style="color: #008b8b;">&lt;-</span> read.dta(file=<span style="color: #8b2252;">"dataSets/gss.dta"</span>)
+<pre class="src src-R" id="readRDS"><span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">read gss data from the gss.rds R file</span>
+datGSS <span style="color: #D0372D;">&lt;-</span> readRDS(<span style="color: #008000;">"dataSets/gss.rds"</span>)
+<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">read gss data from the gss.csv comma separated file</span>
+gss.data <span style="color: #D0372D;">&lt;-</span> read.csv(<span style="color: #008000;">"dataSets/gss.csv"</span>) <span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">read gss data</span>
+<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">read a Stata dataset from gss.dta </span>
+<span style="color: #D0372D;">library</span>(foreign) <span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">load foreign data functions</span>
+datGSS <span style="color: #D0372D;">&lt;-</span> read.dta(file=<span style="color: #008000;">"dataSets/gss.dta"</span>)
 </pre>
 </div>
 
@@ -893,10 +893,10 @@ Always a good idea  to examine the imported data set&#x2013;usually we want the 
 </p>
 <div class="org-src-container">
 
-<pre class="src src-R" id="ExamineStataData">class(datGSS) <span style="color: #b22222;"># </span><span style="color: #b22222;">check to see that test is what we expect it to be</span>
-dim(datGSS) <span style="color: #b22222;"># </span><span style="color: #b22222;">how many rows and columns?</span>
-names(datGSS)[1:10] <span style="color: #b22222;"># </span><span style="color: #b22222;">first 10 column names</span>
-str(datGSS[1:5]) <span style="color: #b22222;"># </span><span style="color: #b22222;">more details about the first 5 columns</span>
+<pre class="src src-R" id="ExamineStataData">class(datGSS) <span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">check to see that test is what we expect it to be</span>
+dim(datGSS) <span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">how many rows and columns?</span>
+names(datGSS)[1:10] <span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">first 10 column names</span>
+str(datGSS[1:5]) <span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">more details about the first 5 columns</span>
 </pre>
 </div>
 
@@ -933,10 +933,10 @@ In addition to importing individual datasets, R can save and load entire workspa
 </ul>
 <div class="org-src-container">
 
-<pre class="src src-R" id="saveDelete">ls() <span style="color: #b22222;"># </span><span style="color: #b22222;">list objects in our workspace</span>
-save.image(file=<span style="color: #8b2252;">"myWorkspace.RData"</span>) <span style="color: #b22222;"># </span><span style="color: #b22222;">save workspace </span>
-rm(list=ls()) <span style="color: #b22222;"># </span><span style="color: #b22222;">remove all objects from our workspace </span>
-ls() <span style="color: #b22222;"># </span><span style="color: #b22222;">list stored objects to make sure they are deleted</span>
+<pre class="src src-R" id="saveDelete">ls() <span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">list objects in our workspace</span>
+save.image(file=<span style="color: #008000;">"myWorkspace.RData"</span>) <span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">save workspace </span>
+rm(list=ls()) <span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">remove all objects from our workspace </span>
+ls() <span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">list stored objects to make sure they are deleted</span>
 </pre>
 </div>
 
@@ -957,8 +957,8 @@ character(0)
 
 <div class="org-src-container">
 
-<pre class="src src-R" id="loadList">load(<span style="color: #8b2252;">"myWorkspace.RData"</span>) <span style="color: #b22222;"># </span><span style="color: #b22222;">load myWorkspace.RData</span>
-ls() <span style="color: #b22222;"># </span><span style="color: #b22222;">list objects</span>
+<pre class="src src-R" id="loadList">load(<span style="color: #008000;">"myWorkspace.RData"</span>) <span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">load myWorkspace.RData</span>
+ls() <span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">list objects</span>
 </pre>
 </div>
 
@@ -1039,13 +1039,13 @@ A number of functions are available for inspecting data.frame objects:
 
 <div class="org-src-container">
 
-<pre class="src src-R" id="getAttributes"><span style="color: #b22222;"># </span><span style="color: #b22222;">row and column names</span>
-head(names(datGSS)) <span style="color: #b22222;"># </span><span style="color: #b22222;">variable names in datGSS</span>
-head(rownames(datGSS)) <span style="color: #b22222;"># </span><span style="color: #b22222;">first few rownames of datGSS</span>
-<span style="color: #b22222;"># </span><span style="color: #b22222;">dimensions</span>
+<pre class="src src-R" id="getAttributes"><span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">row and column names</span>
+head(names(datGSS)) <span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">variable names in datGSS</span>
+head(rownames(datGSS)) <span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">first few rownames of datGSS</span>
+<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">dimensions</span>
 dim(datGSS)
-<span style="color: #b22222;"># </span><span style="color: #b22222;">structure</span>
-<span style="color: #b22222;">#</span><span style="color: #b22222;">str(datGSS) # get structure</span>
+<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">structure</span>
+<span style="color: #8D8D84; font-style: italic;">#</span><span style="color: #8D8D84; font-style: italic;">str(datGSS) # get structure</span>
 </pre>
 </div>
 
@@ -1108,20 +1108,20 @@ You can extract subsets of data.frames using the <code>subset()</code> function.
 
 <div class="org-src-container">
 
-<pre class="src src-R" id="indexingDataFrame"><span style="color: #b22222;"># </span><span style="color: #b22222;">extracting subsets</span>
+<pre class="src src-R" id="indexingDataFrame"><span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">extracting subsets</span>
 subset(datGSS,
-       <span style="color: #b22222;"># </span><span style="color: #b22222;">rows 1 through 3</span>
-       subset = rownames(datGSS) %<span style="color: #a020f0;">in</span>% 1:3,
-       <span style="color: #b22222;"># </span><span style="color: #b22222;">column 1 to 5</span>
+       <span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">rows 1 through 3</span>
+       subset = rownames(datGSS) %<span style="color: #0000FF;">in</span>% 1:3,
+       <span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">column 1 to 5</span>
        select = 1:4)
 
 subset(datGSS,
-       <span style="color: #b22222;"># </span><span style="color: #b22222;">rows where age &gt; 90</span>
+       <span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">rows where age &gt; 90</span>
        subset = age &gt; 90,
-       <span style="color: #b22222;">## </span><span style="color: #b22222;">sex and age columns</span>
-       select = c(<span style="color: #8b2252;">"sex"</span>, <span style="color: #8b2252;">"age"</span>))
+       <span style="color: #8D8D84; font-style: italic;">## </span><span style="color: #8D8D84; font-style: italic;">sex and age columns</span>
+       select = c(<span style="color: #008000;">"sex"</span>, <span style="color: #008000;">"age"</span>))
 
-<span style="color: #b22222;">## </span><span style="color: #b22222;">the $ operator can be used to extract a single column</span>
+<span style="color: #8D8D84; font-style: italic;">## </span><span style="color: #8D8D84; font-style: italic;">the $ operator can be used to extract a single column</span>
 str(datGSS$age)
 </pre>
 </div>
@@ -1168,22 +1168,22 @@ You can modify data.frames using the <code>transform()</code> function.
 
 <div class="org-src-container">
 
-<pre class="src src-R" id="replaceDataFrame"><span style="color: #b22222;"># </span><span style="color: #b22222;">creating new variable mean centered age</span>
-datGSS <span style="color: #008b8b;">&lt;-</span> transform(datGSS,
+<pre class="src src-R" id="replaceDataFrame"><span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">creating new variable mean centered age</span>
+datGSS <span style="color: #D0372D;">&lt;-</span> transform(datGSS,
                     ageC = age - mean(age))
 
- <span style="color: #b22222;">#</span><span style="color: #b22222;">education difference between wifes and husbands</span>
-datGSS <span style="color: #008b8b;">&lt;-</span> transform(datGSS,
+ <span style="color: #8D8D84; font-style: italic;">#</span><span style="color: #8D8D84; font-style: italic;">education difference between wifes and husbands</span>
+datGSS <span style="color: #D0372D;">&lt;-</span> transform(datGSS,
                     educ.diff = wifeduc - husbeduc)
 
-<span style="color: #b22222;">## </span><span style="color: #b22222;">ifelse() is also useful; note that the $ operator can</span>
-<span style="color: #b22222;">## </span><span style="color: #b22222;">also be used to create new variables.</span>
-datGSS$young <span style="color: #008b8b;">&lt;-</span> ifelse(datGSS$age &lt; 30, <span style="color: #8b2252;">"yes"</span>, <span style="color: #8b2252;">"no"</span>)
+<span style="color: #8D8D84; font-style: italic;">## </span><span style="color: #8D8D84; font-style: italic;">ifelse() is also useful; note that the $ operator can</span>
+<span style="color: #8D8D84; font-style: italic;">## </span><span style="color: #8D8D84; font-style: italic;">also be used to create new variables.</span>
+datGSS$young <span style="color: #D0372D;">&lt;-</span> ifelse(datGSS$age &lt; 30, <span style="color: #008000;">"yes"</span>, <span style="color: #008000;">"no"</span>)
 
-<span style="color: #b22222;">## </span><span style="color: #b22222;">examine our newly created variables</span>
+<span style="color: #8D8D84; font-style: italic;">## </span><span style="color: #8D8D84; font-style: italic;">examine our newly created variables</span>
 head(subset(datGSS,
-            select = c(<span style="color: #8b2252;">"age"</span>, <span style="color: #8b2252;">"ageC"</span>, <span style="color: #8b2252;">"young"</span>, <span style="color: #8b2252;">"wifeduc"</span>,
-                       <span style="color: #8b2252;">"husbeduc"</span>, <span style="color: #8b2252;">"educ.diff"</span>)),
+            select = c(<span style="color: #008000;">"age"</span>, <span style="color: #008000;">"ageC"</span>, <span style="color: #008000;">"young"</span>, <span style="color: #008000;">"wifeduc"</span>,
+                       <span style="color: #008000;">"husbeduc"</span>, <span style="color: #008000;">"educ.diff"</span>)),
      n = 8)
 </pre>
 </div>
@@ -1233,12 +1233,12 @@ Now that we have made some changes to our GSS data set, we might want to save th
 
 <div class="org-src-container">
 
-<pre class="src src-R" id="dataExportExamples"><span style="color: #b22222;"># </span><span style="color: #b22222;">write data to a .csv file</span>
-write.csv(datGSS, file = <span style="color: #8b2252;">"gss.csv"</span>)
-<span style="color: #b22222;"># </span><span style="color: #b22222;">write data to a Stata file</span>
-write.dta(datGSS, file = <span style="color: #8b2252;">"gss.dta"</span>)
-<span style="color: #b22222;"># </span><span style="color: #b22222;">write data to an R file</span>
-saveRDS(datGSS, file = <span style="color: #8b2252;">"gss.rds"</span>)
+<pre class="src src-R" id="dataExportExamples"><span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">write data to a .csv file</span>
+write.csv(datGSS, file = <span style="color: #008000;">"gss.csv"</span>)
+<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">write data to a Stata file</span>
+write.dta(datGSS, file = <span style="color: #008000;">"gss.dta"</span>)
+<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">write data to an R file</span>
+saveRDS(datGSS, file = <span style="color: #008000;">"gss.rds"</span>)
 </pre>
 </div>
 
@@ -1303,10 +1303,10 @@ Descriptive statistics of single variables are straightforward:
 </p>
 <div class="org-src-container">
 
-<pre class="src src-R" id="descriptiveStats1">mean(datGSS$educ) <span style="color: #b22222;"># </span><span style="color: #b22222;">calculate mean value of education</span>
-sd(datGSS$educ) <span style="color: #b22222;"># </span><span style="color: #b22222;">calculate standard deviation of x</span>
-<span style="color: #b22222;"># </span><span style="color: #b22222;">calculate min, max, quantiles, mean of educ, age, and ageC</span>
-summary(subset(datGSS, select = c(<span style="color: #8b2252;">"educ"</span>, <span style="color: #8b2252;">"age"</span>, <span style="color: #8b2252;">"ageC"</span>)))
+<pre class="src src-R" id="descriptiveStats1">mean(datGSS$educ) <span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">calculate mean value of education</span>
+sd(datGSS$educ) <span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">calculate standard deviation of x</span>
+<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">calculate min, max, quantiles, mean of educ, age, and ageC</span>
+summary(subset(datGSS, select = c(<span style="color: #008000;">"educ"</span>, <span style="color: #008000;">"age"</span>, <span style="color: #008000;">"ageC"</span>)))
 </pre>
 </div>
 
@@ -1342,9 +1342,9 @@ Start by using the <code>table()</code> function to tabulate counts, then perfor
 </p>
 <div class="org-src-container">
 
-<pre class="src src-R" id="tableExample">sex.counts <span style="color: #008b8b;">&lt;-</span> table(datGSS$sex) <span style="color: #b22222;"># </span><span style="color: #b22222;">tabulate sex categories</span>
+<pre class="src src-R" id="tableExample">sex.counts <span style="color: #D0372D;">&lt;-</span> table(datGSS$sex) <span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">tabulate sex categories</span>
 sex.counts
-prop.table(sex.counts) <span style="color: #b22222;"># </span><span style="color: #b22222;">convert to proportions</span>
+prop.table(sex.counts) <span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">convert to proportions</span>
 </pre>
 </div>
 
@@ -1367,7 +1367,7 @@ Add variables for crosstabs
 
 <div class="org-src-container">
 
-<pre class="src src-R" id="crosstabExample">table(subset(datGSS, select = c(<span style="color: #8b2252;">"sex"</span>, <span style="color: #8b2252;">"happy"</span>))) <span style="color: #b22222;"># </span><span style="color: #b22222;">crosstab marital X happy</span>
+<pre class="src src-R" id="crosstabExample">table(subset(datGSS, select = c(<span style="color: #008000;">"sex"</span>, <span style="color: #008000;">"happy"</span>))) <span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">crosstab marital X happy</span>
 </pre>
 </div>
 
@@ -1392,8 +1392,8 @@ The <code>by()</code> function can be used to perform a calculation separately f
 </p>
 <div class="org-src-container">
 
-<pre class="src src-R" id="byExample">by(subset(datGSS, select = c(<span style="color: #8b2252;">"income"</span>, <span style="color: #8b2252;">"educ"</span>)),
-   INDICES=datGSS[<span style="color: #8b2252;">"sex"</span>],
+<pre class="src src-R" id="byExample">by(subset(datGSS, select = c(<span style="color: #008000;">"income"</span>, <span style="color: #008000;">"educ"</span>)),
+   INDICES=datGSS[<span style="color: #008000;">"sex"</span>],
    FUN=summary)
 </pre>
 </div>
@@ -1434,7 +1434,7 @@ Let's look at correlations among between age, income, and education
 </p>
 <div class="org-src-container">
 
-<pre class="src src-R" id="corEx">cor(subset(datGSS, select =  c(<span style="color: #8b2252;">"age"</span>, <span style="color: #8b2252;">"incomdol"</span>, <span style="color: #8b2252;">"educ"</span>)))
+<pre class="src src-R" id="corEx">cor(subset(datGSS, select =  c(<span style="color: #008000;">"age"</span>, <span style="color: #008000;">"incomdol"</span>, <span style="color: #008000;">"educ"</span>)))
 </pre>
 </div>
 
@@ -1486,7 +1486,7 @@ Modeling functions generally use the <i>formula</i> interface whith DV on left f
 </p>
 <div class="org-src-container">
 
-<pre class="src src-R">help(<span style="color: #8b2252;">"formula"</span>)
+<pre class="src src-R">help(<span style="color: #008000;">"formula"</span>)
 </pre>
 </div>
 
@@ -1496,7 +1496,7 @@ Modeling functions generally use the <i>formula</i> interface whith DV on left f
 </ul>
 <div class="org-src-container">
 
-<pre class="src src-R" id="regression">m1 <span style="color: #008b8b;">&lt;-</span> lm(educ ~ sex + age, data = datGSS)
+<pre class="src src-R" id="regression">m1 <span style="color: #D0372D;">&lt;-</span> lm(educ ~ sex + age, data = datGSS)
 summary(m1)
 </pre>
 </div>
@@ -1537,10 +1537,10 @@ Earlier we learned how to write a data set to a file. But what if we want to wri
 
 <div class="org-src-container">
 
-<pre class="src src-R" id="sinkExample">sink(file=<span style="color: #8b2252;">"output.txt"</span>, split=<span style="color: #228b22;">TRUE</span>) <span style="color: #b22222;"># </span><span style="color: #b22222;">start logging</span>
-print(<span style="color: #8b2252;">"This is the result from model 1\n"</span>)
+<pre class="src src-R" id="sinkExample">sink(file=<span style="color: #008000;">"output.txt"</span>, split=<span style="color: #6434A3;">TRUE</span>) <span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">start logging</span>
+print(<span style="color: #008000;">"This is the result from model 1\n"</span>)
 print(summary(m1))
-sink() <span style="color: #b22222;">## </span><span style="color: #b22222;">sink with no arguments turns logging off</span>
+sink() <span style="color: #8D8D84; font-style: italic;">## </span><span style="color: #8D8D84; font-style: italic;">sink with no arguments turns logging off</span>
 </pre>
 </div>
 
@@ -1583,7 +1583,7 @@ Thanks to classes and methods, you can <code>plot()</code> many  kinds of object
 
 <div class="org-src-container">
 
-<pre class="src src-R" id="plotExample">plot(datGSS$marital) <span style="color: #b22222;"># </span><span style="color: #b22222;">Plot a factor</span>
+<pre class="src src-R" id="plotExample">plot(datGSS$marital) <span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">Plot a factor</span>
 </pre>
 </div>
 
@@ -1603,7 +1603,7 @@ Thanks to classes and methods, you can <code>plot()</code> many kinds of objects
 <div class="org-src-container">
 
 <pre class="src src-R" id="plotExample2">with(datGSS,
-     plot(marital, educ)) <span style="color: #b22222;"># </span><span style="color: #b22222;">Plot ordinal by numeric</span>
+     plot(marital, educ)) <span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">Plot ordinal by numeric</span>
 </pre>
 </div>
 
@@ -1622,7 +1622,7 @@ Thanks to classes and methods, you can <code>plot()</code> many kinds of objects
 </p>
 <div class="org-src-container">
 
-<pre class="src src-R" id="plotExample3">with(datGSS, <span style="color: #b22222;"># </span><span style="color: #b22222;">Plot factor X factor</span>
+<pre class="src src-R" id="plotExample3">with(datGSS, <span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">Plot factor X factor</span>
      plot(marital, happy))
 </pre>
 </div>
@@ -1773,7 +1773,7 @@ Using the datGSS data.frame
 </ol>
 <div class="org-src-container">
 
-<pre class="src src-R"><span style="color: #008b8b;">library</span>(foreign)
+<pre class="src src-R"><span style="color: #D0372D;">library</span>(foreign)
 </pre>
 </div>
 
@@ -1783,7 +1783,7 @@ Using the datGSS data.frame
 </ol>
 <div class="org-src-container">
 
-<pre class="src src-R">help(<span style="color: #8b2252;">"read.spss"</span>)
+<pre class="src src-R">help(<span style="color: #008000;">"read.spss"</span>)
 </pre>
 </div>
 
@@ -1793,7 +1793,7 @@ Using the datGSS data.frame
 </ol>
 <div class="org-src-container">
 
-<pre class="src src-R">gss.data <span style="color: #008b8b;">&lt;-</span> read.spss(<span style="color: #8b2252;">"dataSets/gss.sav"</span>, to.data.frame=<span style="color: #228b22;">TRUE</span>)
+<pre class="src src-R">gss.data <span style="color: #D0372D;">&lt;-</span> read.spss(<span style="color: #008000;">"dataSets/gss.sav"</span>, to.data.frame=<span style="color: #6434A3;">TRUE</span>)
 </pre>
 </div>
 
@@ -1825,8 +1825,8 @@ ncol(gss.data)
 </ol>
 <div class="org-src-container">
 
-<pre class="src src-R"><span style="color: #008b8b;">library</span>(XLConnect)
-dat <span style="color: #008b8b;">&lt;-</span> readWorksheetFromFile(<span style="color: #8b2252;">"dataSets/gss.xlsx"</span>, sheet = 1)
+<pre class="src src-R"><span style="color: #D0372D;">library</span>(XLConnect)
+dat <span style="color: #D0372D;">&lt;-</span> readWorksheetFromFile(<span style="color: #008000;">"dataSets/gss.xlsx"</span>, sheet = 1)
 class(dat); dim(dat)
 </pre>
 </div>
@@ -1842,7 +1842,7 @@ Use the gss.rds data set
 </p>
 <div class="org-src-container">
 
-<pre class="src src-R">gss <span style="color: #008b8b;">&lt;-</span> readRDS(<span style="color: #8b2252;">"dataSets/gss.rds"</span>)
+<pre class="src src-R">gss <span style="color: #D0372D;">&lt;-</span> readRDS(<span style="color: #008000;">"dataSets/gss.rds"</span>)
 </pre>
 </div>
 
@@ -1852,7 +1852,7 @@ Use the gss.rds data set
 </ol>
 <div class="org-src-container">
 
-<pre class="src src-R">gss.usecomp <span style="color: #008b8b;">&lt;-</span> subset(gss, usecomp == <span style="color: #8b2252;">"Yes"</span>)
+<pre class="src src-R">gss.usecomp <span style="color: #D0372D;">&lt;-</span> subset(gss, usecomp == <span style="color: #008000;">"Yes"</span>)
 nrow(gss.usecomp)
 </pre>
 </div>
@@ -1869,10 +1869,10 @@ nrow(gss.usecomp)
 </ol>
 <div class="org-src-container">
 
-<pre class="src src-R">gss <span style="color: #008b8b;">&lt;-</span> transform(gss,
+<pre class="src src-R">gss <span style="color: #D0372D;">&lt;-</span> transform(gss,
                  rich = ifelse(rincdol &lt; 100000, 0, 1),
                  sinc = incomdol - rincdol)
-head(subset(gss, select = c(<span style="color: #8b2252;">"rincdol"</span>, <span style="color: #8b2252;">"incomdol"</span>, <span style="color: #8b2252;">"rich"</span>, <span style="color: #8b2252;">"sinc"</span>)))
+head(subset(gss, select = c(<span style="color: #008000;">"rincdol"</span>, <span style="color: #008000;">"incomdol"</span>, <span style="color: #008000;">"rich"</span>, <span style="color: #008000;">"sinc"</span>)))
 </pre>
 </div>
 
@@ -1883,7 +1883,7 @@ head(subset(gss, select = c(<span style="color: #8b2252;">"rincdol"</span>, <spa
 </ol>
 <div class="org-src-container">
 
-<pre class="src src-R">gss$dual.earn <span style="color: #008b8b;">&lt;-</span> ifelse(gss$wkftwife == 1 &amp; gss$wkfthusb == 1, 1, 0)
+<pre class="src src-R">gss$dual.earn <span style="color: #D0372D;">&lt;-</span> ifelse(gss$wkftwife == 1 &amp; gss$wkfthusb == 1, 1, 0)
 nrow(subset(gss, dual.earn == 1))
 </pre>
 </div>
@@ -1924,7 +1924,7 @@ by(datGSS$incomdol, datGSS$sex, sd)
 </ol>
 <div class="org-src-container">
 
-<pre class="src src-R">plot(subset(datGSS, select = c(<span style="color: #8b2252;">"educ"</span>, <span style="color: #8b2252;">"incomdol"</span>)))
+<pre class="src src-R">plot(subset(datGSS, select = c(<span style="color: #008000;">"educ"</span>, <span style="color: #008000;">"incomdol"</span>)))
 </pre>
 </div>
 </div>
@@ -1933,7 +1933,7 @@ by(datGSS$incomdol, datGSS$sex, sd)
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Ista Zahn</p>
-<p class="date">Created: 2014-09-15 Mon 15:12</p>
+<p class="date">Created: 2014-09-22 Mon 11:53</p>
 <p class="creator"><a href="http://www.gnu.org/software/emacs/">Emacs</a> 24.3.1 (<a href="http://orgmode.org">Org</a> mode 8.2.7c)</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>

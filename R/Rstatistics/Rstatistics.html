@@ -4,7 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
 <title>Regression Models in R</title>
-<!-- 2014-09-11 Thu 17:07 -->
+<!-- 2014-09-22 Mon 11:53 -->
 <meta  http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta  name="generator" content="Org-mode" />
 <style type="text/css">
@@ -87,7 +87,16 @@
     { background-color: #ffff00; color: #000000; font-weight: bold; }
   /*]]>*/-->
 </style>
-<link rel="stylesheet" type="text/css" href="style.css" />
+<link rel="stylesheet" type="text/css" href="https://rawgit.com/fniessen/org-html-themes/master/styles/bigblow/css/htmlize.css"/>
+<link rel="stylesheet" type="text/css" href="https://rawgit.com/fniessen/org-html-themes/master/styles/bigblow/css/bigblow.css"/>
+<link rel="stylesheet" type="text/css" href="https://rawgit.com/fniessen/org-html-themes/master/styles/bigblow/css/hideshow.css"/>
+<script type="text/javascript" src="https://rawgit.com/fniessen/org-html-themes/master/styles/bigblow/js/jquery-1.11.0.min.js"></script>
+<script type="text/javascript" src="https://rawgit.com/fniessen/org-html-themes/master/styles/bigblow/js/jquery-ui-1.10.2.min.js"></script>
+<script type="text/javascript" src="https://rawgit.com/fniessen/org-html-themes/master/styles/bigblow/js/jquery.localscroll-min.js"></script>
+<script type="text/javascript" src="https://rawgit.com/fniessen/org-html-themes/master/styles/bigblow/js/jquery.scrollTo-1.4.3.1-min.js"></script>
+<script type="text/javascript" src="https://rawgit.com/fniessen/org-html-themes/master/styles/bigblow/js/jquery.zclip.min.js"></script>
+<script type="text/javascript" src="https://rawgit.com/fniessen/org-html-themes/master/styles/bigblow/js/bigblow.js"></script>
+<script type="text/javascript" src="https://rawgit.com/fniessen/org-html-themes/master/styles/bigblow/js/hideshow.js"></script>
 <script type="text/javascript">
 /*
 @licstart  The following is the entire license notice for the
@@ -305,9 +314,9 @@ It is often helpful to start your R session by setting your working directory so
 
 <div class="org-src-container">
 
-<pre class="src src-R" id="setwed"><span style="color: #b22222;"># </span><span style="color: #b22222;">set the working directory</span>
-<span style="color: #b22222;"># </span><span style="color: #b22222;">setwd("~/Desktop/Rstatistics")</span>
-<span style="color: #b22222;"># </span><span style="color: #b22222;">setwd("C:/Users/dataclass/Desktop/Rstatistics")</span>
+<pre class="src src-R" id="setwed"><span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">set the working directory</span>
+<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">setwd("~/Desktop/Rstatistics")</span>
+<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">setwd("C:/Users/dataclass/Desktop/Rstatistics")</span>
 </pre>
 </div>
 
@@ -323,8 +332,8 @@ You might also start by listing the files in your working directory
 </p>
 <div class="org-src-container">
 
-<pre class="src src-R" id="listFiles">getwd() <span style="color: #b22222;"># </span><span style="color: #b22222;">where am I?</span>
-list.files(<span style="color: #8b2252;">"dataSets"</span>) <span style="color: #b22222;"># </span><span style="color: #b22222;">files in the dataSets folder</span>
+<pre class="src src-R" id="listFiles">getwd() <span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">where am I?</span>
+list.files(<span style="color: #008000;">"dataSets"</span>) <span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">files in the dataSets folder</span>
 </pre>
 </div>
 
@@ -347,11 +356,11 @@ The <i>states.dta</i> data comes from <a href="http://anawida.de/teach/SS14/anaw
 </p>
 <div class="org-src-container">
 
-<pre class="src src-R" id="loadStates"><span style="color: #b22222;"># </span><span style="color: #b22222;">read the states data</span>
-states.data <span style="color: #008b8b;">&lt;-</span> readRDS(<span style="color: #8b2252;">"dataSets/states.rds"</span>) 
-<span style="color: #b22222;">#</span><span style="color: #b22222;">get labels</span>
-states.info <span style="color: #008b8b;">&lt;-</span> data.frame(attributes(states.data)[c(<span style="color: #8b2252;">"names"</span>, <span style="color: #8b2252;">"var.labels"</span>)])
-<span style="color: #b22222;">#</span><span style="color: #b22222;">look at last few labels</span>
+<pre class="src src-R" id="loadStates"><span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">read the states data</span>
+states.data <span style="color: #D0372D;">&lt;-</span> readRDS(<span style="color: #008000;">"dataSets/states.rds"</span>) 
+<span style="color: #8D8D84; font-style: italic;">#</span><span style="color: #8D8D84; font-style: italic;">get labels</span>
+states.info <span style="color: #D0372D;">&lt;-</span> data.frame(attributes(states.data)[c(<span style="color: #008000;">"names"</span>, <span style="color: #008000;">"var.labels"</span>)])
+<span style="color: #8D8D84; font-style: italic;">#</span><span style="color: #8D8D84; font-style: italic;">look at last few labels</span>
 tail(states.info, 8)
 </pre>
 </div>
@@ -391,10 +400,10 @@ Start by examining the data to check for problems.
 
 <div class="org-src-container">
 
-<pre class="src src-R"><span style="color: #b22222;"># </span><span style="color: #b22222;">summary of expense and csat columns, all rows</span>
-sts.ex.sat <span style="color: #008b8b;">&lt;-</span> subset(states.data, select = c(<span style="color: #8b2252;">"expense"</span>, <span style="color: #8b2252;">"csat"</span>))
+<pre class="src src-R"><span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">summary of expense and csat columns, all rows</span>
+sts.ex.sat <span style="color: #D0372D;">&lt;-</span> subset(states.data, select = c(<span style="color: #008000;">"expense"</span>, <span style="color: #008000;">"csat"</span>))
 summary(sts.ex.sat)
-<span style="color: #b22222;"># </span><span style="color: #b22222;">correlation between expense and csat</span>
+<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">correlation between expense and csat</span>
 cor(sts.ex.sat)
 </pre>
 </div>
@@ -429,7 +438,7 @@ Plot the data to look for multivariate outliers, non-linear relationships etc.
 
 <div class="org-src-container">
 
-<pre class="src src-R" id="statsScatter1"><span style="color: #b22222;"># </span><span style="color: #b22222;">scatter plot of expense vs csat</span>
+<pre class="src src-R" id="statsScatter1"><span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">scatter plot of expense vs csat</span>
 plot(sts.ex.sat)
 </pre>
 </div>
@@ -454,11 +463,11 @@ plot(sts.ex.sat)
 
 <div class="org-src-container">
 
-<pre class="src src-R"><span style="color: #b22222;"># </span><span style="color: #b22222;">Fit our regression model</span>
-sat.mod <span style="color: #008b8b;">&lt;-</span> lm(csat ~ expense, <span style="color: #b22222;"># </span><span style="color: #b22222;">regression formula</span>
-              data=states.data) <span style="color: #b22222;"># </span><span style="color: #b22222;">data set</span>
-<span style="color: #b22222;"># </span><span style="color: #b22222;">Summarize and print the results</span>
-summary(sat.mod) <span style="color: #b22222;"># </span><span style="color: #b22222;">show regression coefficients table</span>
+<pre class="src src-R"><span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">Fit our regression model</span>
+sat.mod <span style="color: #D0372D;">&lt;-</span> lm(csat ~ expense, <span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">regression formula</span>
+              data=states.data) <span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">data set</span>
+<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">Summarize and print the results</span>
+summary(sat.mod) <span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">show regression coefficients table</span>
 </pre>
 </div>
 
@@ -569,7 +578,7 @@ methods(class = class(sat.mod))[1:9]
 <div class="org-src-container">
 
 <pre class="src src-R" id="confInt">confint(sat.mod)
-<span style="color: #b22222;"># </span><span style="color: #b22222;">hist(residuals(sat.mod))</span>
+<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">hist(residuals(sat.mod))</span>
 </pre>
 </div>
 
@@ -597,8 +606,8 @@ expense      -0.0344   -0.0101
 </ul>
 <div class="org-src-container">
 
-<pre class="src src-R">par(mar = c(4, 4, 2, 2), mfrow = c(1, 2)) <span style="color: #b22222;">#</span><span style="color: #b22222;">optional</span>
-plot(sat.mod, which = c(1, 2)) <span style="color: #b22222;"># </span><span style="color: #b22222;">"which" argument optional</span>
+<pre class="src src-R">par(mar = c(4, 4, 2, 2), mfrow = c(1, 2)) <span style="color: #8D8D84; font-style: italic;">#</span><span style="color: #8D8D84; font-style: italic;">optional</span>
+plot(sat.mod, which = c(1, 2)) <span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">"which" argument optional</span>
 </pre>
 </div>
 
@@ -618,11 +627,11 @@ Do congressional voting patterns predict SAT scores over and above expense? Fit 
 </p>
 <div class="org-src-container">
 
-<pre class="src src-R" id="m1demogOnly"><span style="color: #b22222;"># </span><span style="color: #b22222;">fit another model, adding house and senate as predictors</span>
-sat.voting.mod <span style="color: #008b8b;">&lt;-</span>  lm(csat ~ expense + house + senate,
+<pre class="src src-R" id="m1demogOnly"><span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">fit another model, adding house and senate as predictors</span>
+sat.voting.mod <span style="color: #D0372D;">&lt;-</span>  lm(csat ~ expense + house + senate,
                       data = na.omit(states.data))
-sat.mod <span style="color: #008b8b;">&lt;-</span> update(sat.mod, data=na.omit(states.data))
-<span style="color: #b22222;"># </span><span style="color: #b22222;">compare using the anova() function</span>
+sat.mod <span style="color: #D0372D;">&lt;-</span> update(sat.mod, data=na.omit(states.data))
+<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">compare using the anova() function</span>
 anova(sat.mod, sat.voting.mod)
 coef(summary(sat.voting.mod))
 </pre>
@@ -687,11 +696,11 @@ Interactions allow us assess the extent to which the association between one pre
 </p>
 <div class="org-src-container">
 
-<pre class="src src-R" id="fitModel2">  <span style="color: #b22222;">#</span><span style="color: #b22222;">Add the interaction to the model</span>
-sat.expense.by.percent <span style="color: #008b8b;">&lt;-</span> lm(csat ~ expense*income,
+<pre class="src src-R" id="fitModel2">  <span style="color: #8D8D84; font-style: italic;">#</span><span style="color: #8D8D84; font-style: italic;">Add the interaction to the model</span>
+sat.expense.by.percent <span style="color: #D0372D;">&lt;-</span> lm(csat ~ expense*income,
                              data=states.data) 
-<span style="color: #b22222;">#</span><span style="color: #b22222;">Show the results</span>
-  coef(summary(sat.expense.by.percent)) <span style="color: #b22222;"># </span><span style="color: #b22222;">show regression coefficients table</span>
+<span style="color: #8D8D84; font-style: italic;">#</span><span style="color: #8D8D84; font-style: italic;">Show the results</span>
+  coef(summary(sat.expense.by.percent)) <span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">show regression coefficients table</span>
 </pre>
 </div>
 
@@ -719,15 +728,15 @@ Let's try to predict SAT scores from region, a categorical variable. Note that y
 </p>
 <div class="org-src-container">
 
-<pre class="src src-R"><span style="color: #b22222;"># </span><span style="color: #b22222;">make sure R knows region is categorical</span>
+<pre class="src src-R"><span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">make sure R knows region is categorical</span>
 str(states.data$region)
-states.data$region <span style="color: #008b8b;">&lt;-</span> factor(states.data$region)
-<span style="color: #b22222;">#</span><span style="color: #b22222;">Add region to the model</span>
-sat.region <span style="color: #008b8b;">&lt;-</span> lm(csat ~ region,
+states.data$region <span style="color: #D0372D;">&lt;-</span> factor(states.data$region)
+<span style="color: #8D8D84; font-style: italic;">#</span><span style="color: #8D8D84; font-style: italic;">Add region to the model</span>
+sat.region <span style="color: #D0372D;">&lt;-</span> lm(csat ~ region,
                  data=states.data) 
-<span style="color: #b22222;">#</span><span style="color: #b22222;">Show the results</span>
-coef(summary(sat.region)) <span style="color: #b22222;"># </span><span style="color: #b22222;">show regression coefficients table</span>
-anova(sat.region) <span style="color: #b22222;"># </span><span style="color: #b22222;">show ANOVA table</span>
+<span style="color: #8D8D84; font-style: italic;">#</span><span style="color: #8D8D84; font-style: italic;">Show the results</span>
+coef(summary(sat.region)) <span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">show regression coefficients table</span>
+anova(sat.region) <span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">show ANOVA table</span>
 </pre>
 </div>
 
@@ -771,12 +780,12 @@ In the previous example we use the default contrasts for region. The default in 
 
 <div class="org-src-container">
 
-<pre class="src src-R" id="getContrasts"><span style="color: #b22222;"># </span><span style="color: #b22222;">print default contrasts</span>
+<pre class="src src-R" id="getContrasts"><span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">print default contrasts</span>
 contrasts(states.data$region)
-<span style="color: #b22222;"># </span><span style="color: #b22222;">change the reference group</span>
+<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">change the reference group</span>
 coef(summary(lm(csat ~ C(region, base=4),
                 data=states.data)))
-<span style="color: #b22222;"># </span><span style="color: #b22222;">change the coding scheme</span>
+<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">change the coding scheme</span>
 coef(summary(lm(csat ~ C(region, contr.helmert),
                 data=states.data)))
 </pre>
@@ -859,8 +868,8 @@ Load the National Health Interview Survey data:
 
 <div class="org-src-container">
 
-<pre class="src src-R" id="NHSdescription">NH11 <span style="color: #008b8b;">&lt;-</span> readRDS(<span style="color: #8b2252;">"dataSets/NatHealth2011.rds"</span>)
-labs <span style="color: #008b8b;">&lt;-</span> attributes(NH11)$labels
+<pre class="src src-R" id="NHSdescription">NH11 <span style="color: #D0372D;">&lt;-</span> readRDS(<span style="color: #008000;">"dataSets/NatHealth2011.rds"</span>)
+labs <span style="color: #D0372D;">&lt;-</span> attributes(NH11)$labels
 </pre>
 </div>
 
@@ -881,13 +890,13 @@ Let's predict the probability of being diagnosed with hypertension based on age,
 
 <div class="org-src-container">
 
-<pre class="src src-R" id="logit1">str(NH11$hypev) <span style="color: #b22222;"># </span><span style="color: #b22222;">check stucture of hypev</span>
-levels(NH11$hypev) <span style="color: #b22222;"># </span><span style="color: #b22222;">check levels of hypev</span>
-<span style="color: #b22222;"># </span><span style="color: #b22222;">collapse all missing values to NA</span>
-NH11$hypev <span style="color: #008b8b;">&lt;-</span> factor(NH11$hypev, levels=c(<span style="color: #8b2252;">"2 No"</span>, <span style="color: #8b2252;">"1 Yes"</span>))
-<span style="color: #b22222;"># </span><span style="color: #b22222;">run our regression model</span>
-hyp.out <span style="color: #008b8b;">&lt;-</span> glm(hypev~age_p+sex+sleep+bmi,
-              data=NH11, family=<span style="color: #8b2252;">"binomial"</span>)
+<pre class="src src-R" id="logit1">str(NH11$hypev) <span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">check stucture of hypev</span>
+levels(NH11$hypev) <span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">check levels of hypev</span>
+<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">collapse all missing values to NA</span>
+NH11$hypev <span style="color: #D0372D;">&lt;-</span> factor(NH11$hypev, levels=c(<span style="color: #008000;">"2 No"</span>, <span style="color: #008000;">"1 Yes"</span>))
+<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">run our regression model</span>
+hyp.out <span style="color: #D0372D;">&lt;-</span> glm(hypev~age_p+sex+sleep+bmi,
+              data=NH11, family=<span style="color: #008000;">"binomial"</span>)
 coef(summary(hyp.out))
 </pre>
 </div>
@@ -928,8 +937,8 @@ One solution is to transform the coefficients to make them easier to interpret
 
 <div class="org-src-container">
 
-<pre class="src src-R" id="logitcoef2">hyp.out.tab <span style="color: #008b8b;">&lt;-</span> coef(summary(hyp.out))
-hyp.out.tab[, <span style="color: #8b2252;">"Estimate"</span>] <span style="color: #008b8b;">&lt;-</span> exp(coef(hyp.out))
+<pre class="src src-R" id="logitcoef2">hyp.out.tab <span style="color: #D0372D;">&lt;-</span> coef(summary(hyp.out))
+hyp.out.tab[, <span style="color: #008000;">"Estimate"</span>] <span style="color: #D0372D;">&lt;-</span> exp(coef(hyp.out))
 hyp.out.tab
 </pre>
 </div>
@@ -958,15 +967,15 @@ In addition to transforming the log-odds produced by <code>glm</code> to odds, w
 
 <div class="org-src-container">
 
-<pre class="src src-R" id="predDat1"><span style="color: #b22222;"># </span><span style="color: #b22222;">Create a dataset with predictors set at desired levels</span>
-predDat <span style="color: #008b8b;">&lt;-</span> with(NH11,
+<pre class="src src-R" id="predDat1"><span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">Create a dataset with predictors set at desired levels</span>
+predDat <span style="color: #D0372D;">&lt;-</span> with(NH11,
                 expand.grid(age_p = c(33, 63),
-                            sex = <span style="color: #8b2252;">"2 Female"</span>,
-                            bmi = mean(bmi, na.rm = <span style="color: #228b22;">TRUE</span>),
-                            sleep = mean(sleep, na.rm = <span style="color: #228b22;">TRUE</span>)))
-<span style="color: #b22222;"># </span><span style="color: #b22222;">predict hypertension at those levels</span>
-cbind(predDat, predict(hyp.out, type = <span style="color: #8b2252;">"response"</span>,
-                       se.fit = <span style="color: #228b22;">TRUE</span>, interval=<span style="color: #8b2252;">"confidence"</span>,
+                            sex = <span style="color: #008000;">"2 Female"</span>,
+                            bmi = mean(bmi, na.rm = <span style="color: #6434A3;">TRUE</span>),
+                            sleep = mean(sleep, na.rm = <span style="color: #6434A3;">TRUE</span>)))
+<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">predict hypertension at those levels</span>
+cbind(predDat, predict(hyp.out, type = <span style="color: #008000;">"response"</span>,
+                       se.fit = <span style="color: #6434A3;">TRUE</span>, interval=<span style="color: #008000;">"confidence"</span>,
                        newdata = predDat))
 </pre>
 </div>
@@ -1003,7 +1012,7 @@ Instead of doing all this ourselves, we can use the effects package to compute q
 
 <div class="org-src-container">
 
-<pre class="src src-R" id="predWithEffects"><span style="color: #008b8b;">library</span>(effects)
+<pre class="src src-R" id="predWithEffects"><span style="color: #D0372D;">library</span>(effects)
 plot(allEffects(hyp.out))
 </pre>
 </div>
@@ -1071,7 +1080,7 @@ Note that the data is not perfectly clean and ready to be modeled. You will need
 
 <div class="org-src-container">
 
-<pre class="src src-R" id="loadlme4Package"><span style="color: #008b8b;">library</span>(lme4)
+<pre class="src src-R" id="loadlme4Package"><span style="color: #D0372D;">library</span>(lme4)
 </pre>
 </div>
 
@@ -1115,7 +1124,7 @@ The Exam data set contans exam scores of 4,059 students from 65 schools in Inner
 
 <div class="org-src-container">
 
-<pre class="src src-R" id="tasdf">Exam <span style="color: #008b8b;">&lt;-</span> readRDS(<span style="color: #8b2252;">"dataSets/Exam.rds"</span>)
+<pre class="src src-R" id="tasdf">Exam <span style="color: #D0372D;">&lt;-</span> readRDS(<span style="color: #008000;">"dataSets/Exam.rds"</span>)
 </pre>
 </div>
 
@@ -1136,9 +1145,9 @@ As a preliminary step it is often useful to partition the variance in the depend
 
 <div class="org-src-container">
 
-<pre class="src src-R" id="mixedModel1"><span style="color: #b22222;"># </span><span style="color: #b22222;">null model, grouping by school but not fixed effects.</span>
-Norm1 <span style="color: #008b8b;">&lt;-</span>lmer(normexam ~ 1 + (1|school),
-              data=Exam, REML = <span style="color: #228b22;">FALSE</span>)
+<pre class="src src-R" id="mixedModel1"><span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">null model, grouping by school but not fixed effects.</span>
+Norm1 <span style="color: #D0372D;">&lt;-</span>lmer(normexam ~ 1 + (1|school),
+              data=Exam, REML = <span style="color: #6434A3;">FALSE</span>)
 summary(Norm1)
 </pre>
 </div>
@@ -1185,9 +1194,9 @@ Predict exam scores from student's standardized tests scores
 
 <div class="org-src-container">
 
-<pre class="src src-R" id="mixedModel2">Norm2 <span style="color: #008b8b;">&lt;-</span>lmer(normexam~standLRT + (1|school),
+<pre class="src src-R" id="mixedModel2">Norm2 <span style="color: #D0372D;">&lt;-</span>lmer(normexam~standLRT + (1|school),
              data=Exam,
-             REML = <span style="color: #228b22;">FALSE</span>) 
+             REML = <span style="color: #6434A3;">FALSE</span>) 
 summary(Norm2)
 </pre>
 </div>
@@ -1265,8 +1274,8 @@ Add a random effect of students' standardized test scores as well. Now in additi
 
 <div class="org-src-container">
 
-<pre class="src src-R" id="mixedModelRandSlope">Norm3 <span style="color: #008b8b;">&lt;-</span> lmer(normexam~standLRT + (standLRT|school), data=Exam,
-               REML = <span style="color: #228b22;">FALSE</span>) 
+<pre class="src src-R" id="mixedModelRandSlope">Norm3 <span style="color: #D0372D;">&lt;-</span> lmer(normexam~standLRT + (standLRT|school), data=Exam,
+               REML = <span style="color: #6434A3;">FALSE</span>) 
 summary(Norm3)
 </pre>
 </div>
@@ -1342,7 +1351,7 @@ Use the dataset, bh1996:
 </p>
 <div class="org-src-container">
 
-<pre class="src src-R">data(bh1996, package=<span style="color: #8b2252;">"multilevel"</span>)
+<pre class="src src-R">data(bh1996, package=<span style="color: #008000;">"multilevel"</span>)
 </pre>
 </div>
 
@@ -1389,7 +1398,7 @@ Use the <i>states.rds</i> data set.
 </p>
 <div class="org-src-container">
 
-<pre class="src src-R">states <span style="color: #008b8b;">&lt;-</span> readRDS(<span style="color: #8b2252;">"dataSets/states.rds"</span>)
+<pre class="src src-R">states <span style="color: #D0372D;">&lt;-</span> readRDS(<span style="color: #008000;">"dataSets/states.rds"</span>)
 </pre>
 </div>
 
@@ -1402,10 +1411,10 @@ Fit a model predicting  energy consumed per capita (energy) from the percentage 
 </ol>
 <div class="org-src-container">
 
-<pre class="src src-R">states.en.met <span style="color: #008b8b;">&lt;-</span> subset(states, select = c(<span style="color: #8b2252;">"metro"</span>, <span style="color: #8b2252;">"energy"</span>))
+<pre class="src src-R">states.en.met <span style="color: #D0372D;">&lt;-</span> subset(states, select = c(<span style="color: #008000;">"metro"</span>, <span style="color: #008000;">"energy"</span>))
 summary(states.en.met)
 plot(states.en.met)
-cor(states.en.met, use=<span style="color: #8b2252;">"pairwise"</span>)
+cor(states.en.met, use=<span style="color: #008000;">"pairwise"</span>)
 </pre>
 </div>
 
@@ -1415,7 +1424,7 @@ cor(states.en.met, use=<span style="color: #8b2252;">"pairwise"</span>)
 </ol>
 <div class="org-src-container">
 
-<pre class="src src-R">mod.en.met <span style="color: #008b8b;">&lt;-</span> lm(energy ~ metro, data = states)
+<pre class="src src-R">mod.en.met <span style="color: #D0372D;">&lt;-</span> lm(energy ~ metro, data = states)
 summary(mod.en.met)
 </pre>
 </div>
@@ -1435,11 +1444,11 @@ Select one or more additional predictors to add to your model and repeat steps 1
 </p>
 <div class="org-src-container">
 
-<pre class="src src-R">states.en.met.pop.wst <span style="color: #008b8b;">&lt;-</span> subset(states, select = c(<span style="color: #8b2252;">"energy"</span>, <span style="color: #8b2252;">"metro"</span>, <span style="color: #8b2252;">"pop"</span>, <span style="color: #8b2252;">"waste"</span>))
+<pre class="src src-R">states.en.met.pop.wst <span style="color: #D0372D;">&lt;-</span> subset(states, select = c(<span style="color: #008000;">"energy"</span>, <span style="color: #008000;">"metro"</span>, <span style="color: #008000;">"pop"</span>, <span style="color: #008000;">"waste"</span>))
 summary(states.en.met.pop.wst)
 plot(states.en.met.pop.wst)
-cor(states.en.met.pop.wst, use = <span style="color: #8b2252;">"pairwise"</span>)
-mod.en.met.pop.waste <span style="color: #008b8b;">&lt;-</span> lm(energy ~ metro + pop + waste, data = states)
+cor(states.en.met.pop.wst, use = <span style="color: #008000;">"pairwise"</span>)
+mod.en.met.pop.waste <span style="color: #D0372D;">&lt;-</span> lm(energy ~ metro + pop + waste, data = states)
 summary(mod.en.met.pop.waste)
 anova(mod.en.met, mod.en.met.pop.waste)
 </pre>
@@ -1460,7 +1469,7 @@ Use the states data set.
 </ol>
 <div class="org-src-container">
 
-<pre class="src src-R">mod.en.metro.by.waste <span style="color: #008b8b;">&lt;-</span> lm(energy ~ metro * waste, data = states)
+<pre class="src src-R">mod.en.metro.by.waste <span style="color: #D0372D;">&lt;-</span> lm(energy ~ metro * waste, data = states)
 </pre>
 </div>
 
@@ -1470,7 +1479,7 @@ Use the states data set.
 </ol>
 <div class="org-src-container">
 
-<pre class="src src-R">mod.en.region <span style="color: #008b8b;">&lt;-</span> lm(energy ~ metro * waste + region, data = states)
+<pre class="src src-R">mod.en.region <span style="color: #D0372D;">&lt;-</span> lm(energy ~ metro * waste + region, data = states)
 anova(mod.en.region)
 </pre>
 </div>
@@ -1490,15 +1499,15 @@ Use the NH11 data set that we loaded earlier. Note that the data is not perfectl
 </ol>
 <div class="org-src-container">
 
-<pre class="src src-R">nh11.wrk.age.mar <span style="color: #008b8b;">&lt;-</span> subset(NH11, select = c(<span style="color: #8b2252;">"everwrk"</span>, <span style="color: #8b2252;">"age_p"</span>, <span style="color: #8b2252;">"r_maritl"</span>))
+<pre class="src src-R">nh11.wrk.age.mar <span style="color: #D0372D;">&lt;-</span> subset(NH11, select = c(<span style="color: #008000;">"everwrk"</span>, <span style="color: #008000;">"age_p"</span>, <span style="color: #008000;">"r_maritl"</span>))
 summary(nh11.wrk.age.mar)
-NH11 <span style="color: #008b8b;">&lt;-</span> transform(NH11,
+NH11 <span style="color: #D0372D;">&lt;-</span> transform(NH11,
                   everwrk = factor(everwrk,
-                      levels = c(<span style="color: #8b2252;">"1 Yes"</span>, <span style="color: #8b2252;">"2 No"</span>)),
+                      levels = c(<span style="color: #008000;">"1 Yes"</span>, <span style="color: #008000;">"2 No"</span>)),
                   r_maritl = droplevels(r_maritl))
 
-mod.wk.age.mar <span style="color: #008b8b;">&lt;-</span> glm(everwrk ~ age_p + r_maritl, data = NH11,
-                      family = <span style="color: #8b2252;">"binomial"</span>)
+mod.wk.age.mar <span style="color: #D0372D;">&lt;-</span> glm(everwrk ~ age_p + r_maritl, data = NH11,
+                      family = <span style="color: #008000;">"binomial"</span>)
 
 summary(mod.wk.age.mar)
 </pre>
@@ -1510,8 +1519,8 @@ summary(mod.wk.age.mar)
 </ol>
 <div class="org-src-container">
 
-<pre class="src src-R"><span style="color: #008b8b;">library</span>(effects)
-data.frame(Effect(<span style="color: #8b2252;">"r_maritl"</span>, mod.wk.age.mar))
+<pre class="src src-R"><span style="color: #D0372D;">library</span>(effects)
+data.frame(Effect(<span style="color: #008000;">"r_maritl"</span>, mod.wk.age.mar))
 </pre>
 </div>
 </div>
@@ -1527,7 +1536,7 @@ Use the dataset, bh1996:
 </p>
 <div class="org-src-container">
 
-<pre class="src src-R">data(bh1996, package=<span style="color: #8b2252;">"multilevel"</span>)
+<pre class="src src-R">data(bh1996, package=<span style="color: #008000;">"multilevel"</span>)
 </pre>
 </div>
 
@@ -1554,8 +1563,8 @@ Note that the group identifier is named "GRP".
 </ol>
 <div class="org-src-container">
 
-<pre class="src src-R"><span style="color: #008b8b;">library</span>(lme4)
-mod.grp0 <span style="color: #008b8b;">&lt;-</span> lmer(WBEING ~ 1 + (1 | GRP), data = bh1996)
+<pre class="src src-R"><span style="color: #D0372D;">library</span>(lme4)
+mod.grp0 <span style="color: #D0372D;">&lt;-</span> lmer(WBEING ~ 1 + (1 | GRP), data = bh1996)
 summary(mod.grp0)
 </pre>
 </div>
@@ -1600,7 +1609,7 @@ Fixed effects:
 </ol>
 <div class="org-src-container">
 
-<pre class="src src-R">mod.grp1 <span style="color: #008b8b;">&lt;-</span> lmer(WBEING ~ HRS + LEAD + (1 | GRP), data = bh1996)
+<pre class="src src-R">mod.grp1 <span style="color: #D0372D;">&lt;-</span> lmer(WBEING ~ HRS + LEAD + (1 | GRP), data = bh1996)
 summary(mod.grp1)
 </pre>
 </div>
@@ -1611,7 +1620,7 @@ summary(mod.grp1)
 </ol>
 <div class="org-src-container">
 
-<pre class="src src-R">mod.grp2 <span style="color: #008b8b;">&lt;-</span> lmer(WBEING ~ HRS + LEAD + (1 + HRS | GRP), data = bh1996)
+<pre class="src src-R">mod.grp2 <span style="color: #D0372D;">&lt;-</span> lmer(WBEING ~ HRS + LEAD + (1 + HRS | GRP), data = bh1996)
 anova(mod.grp1, mod.grp2)
 </pre>
 </div>
@@ -1674,7 +1683,7 @@ feedback form
 </div>
 </div>
 <div id="postamble" class="status">
-<p class="date">Created: 2014-09-11 Thu 17:07</p>
+<p class="date">Created: 2014-09-22 Mon 11:53</p>
 <p class="creator"><a href="http://www.gnu.org/software/emacs/">Emacs</a> 24.3.1 (<a href="http://orgmode.org">Org</a> mode 8.2.7c)</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>

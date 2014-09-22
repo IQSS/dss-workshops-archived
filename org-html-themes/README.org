@@ -1,0 +1,171 @@
+#+TITLE:     Awesome HTML themes for files exported from Org mode
+#+AUTHOR:    Fabrice Niessen
+#+EMAIL:     (concat "fniessen" at-sign "pirilampo.org")
+#+Time-stamp: <2014-09-15 Mon 22:59>
+#+DESCRIPTION: Org-HTML export made simple.
+#+KEYWORDS:  org, export, html, theme, style, css, js
+#+LANGUAGE:  en
+#+OPTIONS:   H:4 toc:t num:2
+
+#+PROPERTY:  padline no
+#+SETUPFILE: setup/bigblow-local.setup
+
+* Overview
+
+** Description
+
+Org provides basic HTML support.  Though, we can easily override CSS stylesheets
+and add our own HTML themes.
+
+#+begin_html
+<script src="http://platform.twitter.com/widgets.js"></script>
+<a href="https://twitter.com/share" class="twitter-share-button" data-via="f_niessen">Tweet</a>
+#+end_html
+
+** Objective
+
+The goal of the Org-HMTL themes is to provide you with a list of very nice
+(cross-browser) themes.
+
+** Requirements
+
+Org mode version 8 (or later) is required.
+
+If such a version is not bundled with your Emacs, install one from ELPA.
+
+* Gallery
+  :PROPERTIES:
+  :ID:       79e0ed21-c3b0-4f00-bdab-29fbff9dcad4
+  :END:
+
+This is a list of available *themes for Org*, which you can use right now!  Well,
+I hope to have more than one in a couple of weeks...
+
+** BigBlow
+
+BigBlow is perfect for your work: it is a clean design aimed at optimal *Org
+experience in your browser*. It looks just awesome!
+
+#+ATTR_HTML: :width 640
+[[https://www.youtube.com/watch?v=DnSGSiXYuOk][file:bigblow.png]]
+
+Click thumbnail for a demo.
+
+Keyboard shortcuts to save time and boost your productivity:
+
+| Shortcut | What it does                      |
+|----------+-----------------------------------|
+| =?= or =h=   | Access the *dashboard*              |
+| =n=        | Move to the *next* main heading     |
+| =p=        | Move to the *previous* main heading |
+| =b=        | Scroll up                         |
+| =<=        | Scroll to top                     |
+| =>=        | Scroll to bottom                  |
+| =-=        | Collapse all                      |
+| =+=        | Expand all                        |
+| =r=        | Go to next task in list           |
+| =R=        | Go to previous task in list       |
+| =q=        | Stop reviewing the list of tasks  |
+| =g=        | Reload the page                   |
+
+* Installing a theme
+
+Using a theme from the [[id:79e0ed21-c3b0-4f00-bdab-29fbff9dcad4][theme gallery]] for your own Org documents is very easy:
+you just need to clone the Org-HTML themes project and add a =#+SETUPFILE:=
+directive in the preamble to include the CSS and JavaScript files.
+
+You can either:
+
+- copy the "setup file" of the chosen theme to the directory of your Org files,
+
+  #+begin_src org :exports code
+  ,#+SETUPFILE: THEME-NAME.setup
+  #+end_src
+
+  or
+
+- use the (relative or absolute) path to the "setup file" (in your Git local
+  repository)
+
+  #+begin_src org :exports code
+  ,#+SETUPFILE: path/to/Git/repo/setup/THEME-NAME.setup
+  #+end_src
+
+** BigBlow
+
+In order to use this style, just copy the [[file:setup/bigblow-pirilampo.setup][bigblow-pirilampo.setup]] file to your
+project and link to it this way:
+
+#+begin_src org :exports code
+,#+SETUPFILE: bigblow-pirilampo.setup
+#+end_src
+
+If you prefer, you can add the content of the setup file at the beginning of
+your Org file instead:
+
+#+begin_src org :exports code :tangle setup/bigblow-pirilampo.setup
+# -*- mode: org; -*-
+
+,#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="http://www.pirilampo.org/styles/bigblow/css/htmlize.css"/>
+,#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="http://www.pirilampo.org/styles/bigblow/css/bigblow.css"/>
+,#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="http://www.pirilampo.org/styles/bigblow/css/hideshow.css"/>
+
+,#+HTML_HEAD: <script type="text/javascript" src="http://www.pirilampo.org/styles/bigblow/js/jquery-1.11.0.min.js"></script>
+,#+HTML_HEAD: <script type="text/javascript" src="http://www.pirilampo.org/styles/bigblow/js/jquery-ui-1.10.2.min.js"></script>
+
+,#+HTML_HEAD: <script type="text/javascript" src="http://www.pirilampo.org/styles/bigblow/js/jquery.localscroll-min.js"></script>
+,#+HTML_HEAD: <script type="text/javascript" src="http://www.pirilampo.org/styles/bigblow/js/jquery.scrollTo-1.4.3.1-min.js"></script>
+,#+HTML_HEAD: <script type="text/javascript" src="http://www.pirilampo.org/styles/bigblow/js/jquery.zclip.min.js"></script>
+,#+HTML_HEAD: <script type="text/javascript" src="http://www.pirilampo.org/styles/bigblow/js/bigblow.js"></script>
+,#+HTML_HEAD: <script type="text/javascript" src="http://www.pirilampo.org/styles/bigblow/js/hideshow.js"></script>
+#+end_src
+
+Here a local version (using relative paths):
+
+#+begin_src org :exports code :tangle setup/bigblow-local.setup
+# -*- mode: org; -*-
+
+,#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="styles/bigblow/css/htmlize.css"/>
+,#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="styles/bigblow/css/bigblow.css"/>
+,#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="styles/bigblow/css/hideshow.css"/>
+
+,#+HTML_HEAD: <script type="text/javascript" src="styles/bigblow/js/jquery-1.11.0.min.js"></script>
+,#+HTML_HEAD: <script type="text/javascript" src="styles/bigblow/js/jquery-ui-1.10.2.min.js"></script>
+
+,#+HTML_HEAD: <script type="text/javascript" src="styles/bigblow/js/jquery.localscroll-min.js"></script>
+,#+HTML_HEAD: <script type="text/javascript" src="styles/bigblow/js/jquery.scrollTo-1.4.3.1-min.js"></script>
+,#+HTML_HEAD: <script type="text/javascript" src="styles/bigblow/js/jquery.zclip.min.js"></script>
+,#+HTML_HEAD: <script type="text/javascript" src="styles/bigblow/js/bigblow.js"></script>
+,#+HTML_HEAD: <script type="text/javascript" src="styles/bigblow/js/hideshow.js"></script>
+#+end_src
+
+Here is a remote version (with CSS/JS files served from GitHub webservers) to
+share *temporary* examples or demos with small numbers of people:
+
+#+begin_src org :exports code :tangle setup/bigblow-github-dev.setup
+# -*- mode: org; -*-
+
+,#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="https://rawgit.com/fniessen/org-html-themes/master/styles/bigblow/css/htmlize.css"/>
+,#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="https://rawgit.com/fniessen/org-html-themes/master/styles/bigblow/css/bigblow.css"/>
+,#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="https://rawgit.com/fniessen/org-html-themes/master/styles/bigblow/css/hideshow.css"/>
+
+,#+HTML_HEAD: <script type="text/javascript" src="https://rawgit.com/fniessen/org-html-themes/master/styles/bigblow/js/jquery-1.11.0.min.js"></script>
+,#+HTML_HEAD: <script type="text/javascript" src="https://rawgit.com/fniessen/org-html-themes/master/styles/bigblow/js/jquery-ui-1.10.2.min.js"></script>
+
+,#+HTML_HEAD: <script type="text/javascript" src="https://rawgit.com/fniessen/org-html-themes/master/styles/bigblow/js/jquery.localscroll-min.js"></script>
+,#+HTML_HEAD: <script type="text/javascript" src="https://rawgit.com/fniessen/org-html-themes/master/styles/bigblow/js/jquery.scrollTo-1.4.3.1-min.js"></script>
+,#+HTML_HEAD: <script type="text/javascript" src="https://rawgit.com/fniessen/org-html-themes/master/styles/bigblow/js/jquery.zclip.min.js"></script>
+,#+HTML_HEAD: <script type="text/javascript" src="https://rawgit.com/fniessen/org-html-themes/master/styles/bigblow/js/bigblow.js"></script>
+,#+HTML_HEAD: <script type="text/javascript" src="https://rawgit.com/fniessen/org-html-themes/master/styles/bigblow/js/hideshow.js"></script>
+#+end_src
+
+* Contributing
+
+I love contributions!  If you'd like to contribute, please send a patch file or
+submit a pull request via GitHub.
+
+* License
+
+Copyright (C) 2011-2014 Fabrice Niessen.
+
+These Org-HTML Themes are open source and free to use under GPL.
