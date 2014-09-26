@@ -4,7 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
 <title>Introduction To Programming In R</title>
-<!-- 2014-09-25 Thu 21:52 -->
+<!-- 2014-09-26 Fri 08:58 -->
 <meta  http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta  name="generator" content="Org-mode" />
 <style type="text/css">
@@ -197,6 +197,7 @@ for the JavaScript code in this tag.
 <ul>
 <li><a href="#sec-1-1">1.1. Workshop description</a></li>
 <li><a href="#sec-1-2">1.2. Running example</a></li>
+<li><a href="#sec-1-3">1.3. Materials and setup&#xa0;&#xa0;&#xa0;<span class="tag"><span class="setup">setup</span></span></a></li>
 </ul>
 </li>
 <li><a href="#sec-2">2. Data types</a>
@@ -207,6 +208,7 @@ for the JavaScript code in this tag.
 <li><a href="#sec-2-4">2.4. Lists and data.frames</a></li>
 <li><a href="#sec-2-5">2.5. Data types summary</a></li>
 <li><a href="#sec-2-6">2.6. Exercise 0</a></li>
+<li><a href="#sec-2-7">2.7. Exercise 0 prototype&#xa0;&#xa0;&#xa0;<span class="tag"><span class="prototype">prototype</span></span></a></li>
 </ul>
 </li>
 <li><a href="#sec-3">3. Extracting and replacing object elements</a>
@@ -218,6 +220,7 @@ for the JavaScript code in this tag.
 <li><a href="#sec-3-5">3.5. Indexing data.frames</a></li>
 <li><a href="#sec-3-6">3.6. Extraction/replacement summary</a></li>
 <li><a href="#sec-3-7">3.7. Exercise 1</a></li>
+<li><a href="#sec-3-8">3.8. Exercise 1 prototype&#xa0;&#xa0;&#xa0;<span class="tag"><span class="prototype">prototype</span></span></a></li>
 </ul>
 </li>
 <li><a href="#sec-4">4. Applying functions to list elements</a>
@@ -236,6 +239,7 @@ for the JavaScript code in this tag.
 <li><a href="#sec-5-4">5.4. Debugging basics</a></li>
 <li><a href="#sec-5-5">5.5. Writing functions summary</a></li>
 <li><a href="#sec-5-6">5.6. Exercise 2</a></li>
+<li><a href="#sec-5-7">5.7. Exercise 2 prototype&#xa0;&#xa0;&#xa0;<span class="tag"><span class="prototype">prototype</span></span></a></li>
 </ul>
 </li>
 <li><a href="#sec-6">6. Control flow</a>
@@ -246,6 +250,7 @@ for the JavaScript code in this tag.
 <li><a href="#sec-6-4">6.4. Control flow examples</a></li>
 <li><a href="#sec-6-5">6.5. Control flow summary</a></li>
 <li><a href="#sec-6-6">6.6. Exercise 3</a></li>
+<li><a href="#sec-6-7">6.7. Exercise 3 prototype&#xa0;&#xa0;&#xa0;<span class="tag"><span class="prototype">prototype</span></span></a></li>
 </ul>
 </li>
 <li><a href="#sec-7">7. The S3 object class system</a>
@@ -257,6 +262,7 @@ for the JavaScript code in this tag.
 <li><a href="#sec-7-5">7.5. Creating generic functions</a></li>
 <li><a href="#sec-7-6">7.6. S3 classes summary</a></li>
 <li><a href="#sec-7-7">7.7. Exercise 4</a></li>
+<li><a href="#sec-7-8">7.8. Exercise 4 prototype&#xa0;&#xa0;&#xa0;<span class="tag"><span class="prototype">prototype</span></span></a></li>
 </ul>
 </li>
 <li><a href="#sec-8">8. Things that may surprise you</a>
@@ -283,6 +289,7 @@ for the JavaScript code in this tag.
 <li><a href="#sec-10-4">10.4. Using loops to fill in lists</a></li>
 <li><a href="#sec-10-5">10.5. Word of caution: don't overuse loops!</a></li>
 <li><a href="#sec-10-6">10.6. Exercise 5</a></li>
+<li><a href="#sec-10-7">10.7. Exercise 5 prototype&#xa0;&#xa0;&#xa0;<span class="tag"><span class="prototype">prototype</span></span></a></li>
 </ul>
 </li>
 </ul>
@@ -331,6 +338,34 @@ Throughout this workshop we will return to a running example that involves calcu
 <p>
 Our main example today consists of writing a statistical summary function that calculates the min, mean, median, max, sd, and n for all numeric columns in a data.frame, the correlations among these variables, and the counts and proportions for all categorical columns. Typically I will describe a topic and give some generic examples, then ask you to use the technique to start building the summary.
 </p>
+</div>
+</div>
+
+<div id="outline-container-sec-1-3" class="outline-3">
+<h3 id="sec-1-3"><span class="section-number-3">1.3</span> Materials and setup&#xa0;&#xa0;&#xa0;<span class="tag"><span class="setup">setup</span></span></h3>
+<div class="outline-text-3" id="text-1-3">
+<p>
+Everyone should have R installed &#x2013;if not:
+</p>
+
+<ul class="org-ul">
+<li>Open a web browser and go to <a href="http://cran.r-project.org">http://cran.r-project.org</a> and download and install it
+</li>
+<li>Also helpful to install RStudio (download from <a href="http://rstudio.com">http://rstudio.com</a>)
+</li>
+</ul>
+
+<p>
+Materials for this workshop include slides, example data sets, and example code.
+</p>
+
+<ul class="org-ul">
+<li>Download materials from <a href="http://tutorials.iq.harvard.edu/R/RProgramming.zip">http://tutorials.iq.harvard.edu/R/RProgramming.zip</a>
+</li>
+<li>Extract the zip file containing the materials to your desktop
+</li>
+</ul>
+<hr  />
 </div>
 </div>
 </div>
@@ -591,6 +626,70 @@ Functions introduced in this section:
 <li>Convert "test" to character class, and confirm that you were successful [ <code>as.numeric()</code>, <code>&lt;-</code>, <code>str()</code> ]
 </li>
 </ol>
+</div>
+</div>
+
+<div id="outline-container-sec-2-7" class="outline-3">
+<h3 id="sec-2-7"><span class="section-number-3">2.7</span> Exercise 0 prototype&#xa0;&#xa0;&#xa0;<span class="tag"><span class="prototype">prototype</span></span></h3>
+<div class="outline-text-3" id="text-2-7">
+<ol class="org-ol">
+<li value="1">Create a new vector called "test" containing five numbers of your choice
+</li>
+</ol>
+<!-- MD: *** =instructions-->
+<!-- MD: Just click the Submit Answer button on the right.-->
+<!-- MD: *** =sample_code-->
+<div class="org-src-container">
+
+<pre class="src src-R" id="ex0.1">test <span style="color: #D0372D;">&lt;-</span> c(1, 2, 3, 4, 5)
+</pre>
+</div>
+
+<ol class="org-ol">
+<li value="2">a Create a second vector called "students" containing five common names of your choice
+</li>
+</ol>
+<!-- MD: *** =sample_code-->
+<div class="org-src-container">
+
+<pre class="src src-R" id="ex0.2">students <span style="color: #D0372D;">&lt;-</span> c(<span style="color: #008000;">"Mary"</span>, <span style="color: #008000;">"Joan"</span>, <span style="color: #008000;">"Steve"</span>, <span style="color: #008000;">"Alex"</span>, <span style="color: #008000;">"Suzy"</span>)
+</pre>
+</div>
+
+<ol class="org-ol">
+<li value="3">Determine the class of "students" and "test"
+</li>
+</ol>
+<!-- MD: *** =sample_code-->
+<div class="org-src-container">
+
+<pre class="src src-R" id="ex0.3">class(students)
+class(test)
+</pre>
+</div>
+
+<ol class="org-ol">
+<li value="4">Create a data frame containing two columns, "students" and "tests" as defined above
+</li>
+</ol>
+<!-- MD: *** =sample_code-->
+<div class="org-src-container">
+
+<pre class="src src-R" id="ex0.4">testScores <span style="color: #D0372D;">&lt;-</span> data.frame(students, tests)
+</pre>
+</div>
+
+<ol class="org-ol">
+<li value="5">Convert "test" to character class, and confirm that you were successful
+<!-- MD: *** =sample_code-->
+</li>
+</ol>
+<div class="org-src-container">
+
+<pre class="src src-R" id="ex0.3">test <span style="color: #D0372D;">&lt;-</span> as.character(test)
+class(test)
+</pre>
+</div>
 </div>
 </div>
 </div>
@@ -915,6 +1014,67 @@ Functions introduced in this section:
 <li>BONUS (optional): Calculate the number of sepal lengths that are more than one standard deviation below the average sepal length
 </li>
 </ol>
+</div>
+</div>
+
+<div id="outline-container-sec-3-8" class="outline-3">
+<h3 id="sec-3-8"><span class="section-number-3">3.8</span> Exercise 1 prototype&#xa0;&#xa0;&#xa0;<span class="tag"><span class="prototype">prototype</span></span></h3>
+<div class="outline-text-3" id="text-3-8">
+<ol class="org-ol">
+<li value="1">Select just the Sepal.Length and Species columns from the <i>iris</i> data set (built-in, will be available in your workspace automatically) and save the result to a new data.frame named <i>iris.2</i>
+</li>
+</ol>
+<!-- MD: *** =instructions-->
+<!-- MD: Just click the Submit Answer button on the right.-->
+<!-- MD: *** =sample_code-->
+<div class="org-src-container">
+
+<pre class="src src-R" id="ex1.1">data(iris)
+iris2 <span style="color: #D0372D;">&lt;-</span> iris[c(<span style="color: #008000;">"Sepal.Length"</span>, <span style="color: #008000;">"Species"</span>)]
+str(iris2)
+</pre>
+</div>
+
+<ol class="org-ol">
+<li value="2">Calculate the mean of the Sepal.Length column in <i>iris.2</i> 
+</li>
+</ol>
+
+<!-- MD: *** =sample_code-->
+<div class="org-src-container">
+
+<pre class="src src-R" id="ex.2">mean(iris2[ , <span style="color: #008000;">"Sepal.Length"</span>])
+</pre>
+</div>
+
+<ol class="org-ol">
+<li value="3">BONUS (optional): Calculate the mean of Sepal.Length, but only for the setosa species
+</li>
+</ol>
+
+<!-- MD: *** =sample_code-->
+<div class="org-src-container">
+
+<pre class="src src-R" id="ex1.3">mean(iris2[iris2[[<span style="color: #008000;">"Species"</span>]] == <span style="color: #008000;">"setosa"</span>, <span style="color: #008000;">"Sepal.Length"</span>])
+<span style="color: #8D8D84; font-style: italic;">## </span><span style="color: #8D8D84; font-style: italic;">shortcut:</span>
+with(iris2, {
+    print(mean(Sepal.Length[Species == <span style="color: #008000;">"setosa"</span>]))
+})
+</pre>
+</div>
+
+<ol class="org-ol">
+<li value="4">BONUS (optional): Calculate the number of sepal lengths that are more than one standard deviation below the average sepal length
+</li>
+</ol>
+
+<!-- MD: *** =sample_code-->
+<div class="org-src-container">
+
+<pre class="src src-R" id="ex1.4">m.minus.sd <span style="color: #D0372D;">&lt;-</span> mean(iris2[[<span style="color: #008000;">"Sepal.Length"</span>]]) - sd(iris2[[<span style="color: #008000;">"Sepal.Length"</span>]])
+length(iris2[iris2[[<span style="color: #008000;">"Sepal.Length"</span>]] &lt; m.minus.sd, <span style="color: #008000;">"Sepal.Length"</span>])
+</pre>
+</div>
 </div>
 </div>
 </div>
@@ -1324,6 +1484,48 @@ Functions introduced in this section
 </ol>
 </div>
 </div>
+
+<div id="outline-container-sec-5-7" class="outline-3">
+<h3 id="sec-5-7"><span class="section-number-3">5.7</span> Exercise 2 prototype&#xa0;&#xa0;&#xa0;<span class="tag"><span class="prototype">prototype</span></span></h3>
+<div class="outline-text-3" id="text-5-7">
+<ol class="org-ol">
+<li value="1">Write a function that takes a data.frame as an argument and returns the mean of each numeric column in the data frame. Test your function using the iris data.
+</li>
+</ol>
+
+<!-- MD: *** =instructions-->
+<!-- MD: Just click the Submit Answer button on the right.-->
+<!-- MD: *** =sample_code-->
+<div class="org-src-container">
+
+<pre class="src src-R" id="ex3.1"><span style="color: #006699;">statsum</span> <span style="color: #D0372D;">&lt;-</span> <span style="color: #0000FF;">function</span>(df) {
+    classes <span style="color: #D0372D;">&lt;-</span> sapply(df, class)
+    means <span style="color: #D0372D;">&lt;-</span> sapply(df[classes == <span style="color: #008000;">"numeric"</span>], mean)
+    <span style="color: #0000FF;">return</span>(means)}
+
+statsum(iris)
+</pre>
+</div>
+
+
+<ol class="org-ol">
+<li value="2">Modify your function so that it returns a list, the first element if which is the means of the numeric variables, the second of which is the counts of the levels of each categorical variable.
+</li>
+</ol>
+<!-- MD: *** =sample_code-->
+<div class="org-src-container">
+
+<pre class="src src-R" id="ex3.2"><span style="color: #006699;">statsum</span> <span style="color: #D0372D;">&lt;-</span> <span style="color: #0000FF;">function</span>(df) {
+    classes <span style="color: #D0372D;">&lt;-</span> sapply(df, class)
+    means <span style="color: #D0372D;">&lt;-</span> sapply(df[classes == <span style="color: #008000;">"numeric"</span>], mean)
+    counts <span style="color: #D0372D;">&lt;-</span> sapply(df[classes == <span style="color: #008000;">"factor"</span>], table)
+    <span style="color: #0000FF;">return</span>(list(means, counts))}
+
+statsum(iris)
+</pre>
+</div>
+</div>
+</div>
 </div>
 
 <div id="outline-container-sec-6" class="outline-2">
@@ -1554,6 +1756,54 @@ Functions introduced in this section
 <li>Insert a break point with <code>browser()</code> and step through your function
 </li>
 </ol>
+</div>
+</div>
+
+<div id="outline-container-sec-6-7" class="outline-3">
+<h3 id="sec-6-7"><span class="section-number-3">6.7</span> Exercise 3 prototype&#xa0;&#xa0;&#xa0;<span class="tag"><span class="prototype">prototype</span></span></h3>
+<div class="outline-text-3" id="text-6-7">
+<ol class="org-ol">
+<li value="1">Add argument checking code to return an error if the argument to your function is not a data.frame
+</li>
+</ol>
+
+<!-- MD: *** =instructions-->
+<!-- MD: Just click the Submit Answer button on the right.-->
+<!-- MD: *** =sample_code-->
+<div class="org-src-container">
+
+<pre class="src src-R" id="ex4.1"><span style="color: #006699;">statsum</span> <span style="color: #D0372D;">&lt;-</span> <span style="color: #0000FF;">function</span>(df) {
+    <span style="color: #0000FF;">if</span>(class(df) != <span style="color: #008000;">"data.frame"</span>) <span style="color: #0000FF;">stop</span>(<span style="color: #008000;">"df must be a data.frame!"</span>)
+    classes <span style="color: #D0372D;">&lt;-</span> sapply(df, class)
+    means <span style="color: #D0372D;">&lt;-</span> sapply(df[classes == <span style="color: #008000;">"numeric"</span>], mean)
+    counts <span style="color: #D0372D;">&lt;-</span> sapply(df[classes == <span style="color: #008000;">"factor"</span>], table)
+    <span style="color: #0000FF;">return</span>(list(means, counts))}
+
+statsum(1:10)
+statsum(iris)
+</pre>
+</div>
+
+<ol class="org-ol">
+<li value="2">Insert a break point with <code>browser()</code> and step through your function
+</li>
+</ol>
+
+<!-- MD: *** =sample_code-->
+<div class="org-src-container">
+
+<pre class="src src-R" id="ex4.2"><span style="color: #006699;">statsum</span> <span style="color: #D0372D;">&lt;-</span> <span style="color: #0000FF;">function</span>(df) {
+    <span style="color: #0000FF;">if</span>(class(df) != <span style="color: #008000;">"data.frame"</span>) <span style="color: #0000FF;">stop</span>(<span style="color: #008000;">"df must be a data.frame!"</span>)
+browser()
+    classes <span style="color: #D0372D;">&lt;-</span> sapply(df, class)
+    means <span style="color: #D0372D;">&lt;-</span> sapply(df[classes == <span style="color: #008000;">"numeric"</span>], mean)
+    counts <span style="color: #D0372D;">&lt;-</span> sapply(df[classes == <span style="color: #008000;">"factor"</span>], table)
+    <span style="color: #0000FF;">return</span>(list(means, counts))
+}
+
+statsum(iris)
+</pre>
+</div>
 </div>
 </div>
 </div>
@@ -1839,6 +2089,74 @@ Functions introduced in this section
 <li>Write a print method for the statsum class
 </li>
 </ol>
+</div>
+</div>
+
+<div id="outline-container-sec-7-8" class="outline-3">
+<h3 id="sec-7-8"><span class="section-number-3">7.8</span> Exercise 4 prototype&#xa0;&#xa0;&#xa0;<span class="tag"><span class="prototype">prototype</span></span></h3>
+<div class="outline-text-3" id="text-7-8">
+<ol class="org-ol">
+<li value="1">Modify your function so that it also returns the standard deviations of the numeric variables 
+</li>
+</ol>
+
+<!-- MD: *** =instructions-->
+<!-- MD: Just click the Submit Answer button on the right.-->
+<!-- MD: *** =sample_code-->
+<div class="org-src-container">
+
+<pre class="src src-R" id="ex5.1"><span style="color: #006699;">statsum</span> <span style="color: #D0372D;">&lt;-</span> <span style="color: #0000FF;">function</span>(df) {
+    <span style="color: #0000FF;">if</span>(class(df) != <span style="color: #008000;">"data.frame"</span>) <span style="color: #0000FF;">stop</span>(<span style="color: #008000;">"df must be a data.frame!"</span>)
+    classes <span style="color: #D0372D;">&lt;-</span> sapply(df, class)
+    means <span style="color: #D0372D;">&lt;-</span> sapply(df[classes == <span style="color: #008000;">"numeric"</span>], mean)
+    sds <span style="color: #D0372D;">&lt;-</span> sapply(df[classes == <span style="color: #008000;">"numeric"</span>], mean)
+    counts <span style="color: #D0372D;">&lt;-</span> sapply(df[classes == <span style="color: #008000;">"factor"</span>], table)
+    <span style="color: #0000FF;">return</span>(list(cbind(means, sds), counts))}
+
+statsum(iris)
+</pre>
+</div>
+
+<ol class="org-ol">
+<li value="2">Modify your function so that it returns a list of class "statsum"
+</li>
+</ol>
+
+<!-- MD: *** =sample_code-->
+<div class="org-src-container">
+
+<pre class="src src-R" id="ex5.2"><span style="color: #006699;">statsum</span> <span style="color: #D0372D;">&lt;-</span> <span style="color: #0000FF;">function</span>(df) {
+    <span style="color: #0000FF;">if</span>(class(df) != <span style="color: #008000;">"data.frame"</span>) <span style="color: #0000FF;">stop</span>(<span style="color: #008000;">"df must be a data.frame!"</span>)
+    classes <span style="color: #D0372D;">&lt;-</span> sapply(df, class)
+    means <span style="color: #D0372D;">&lt;-</span> sapply(df[classes == <span style="color: #008000;">"numeric"</span>], mean)
+    sds <span style="color: #D0372D;">&lt;-</span> sapply(df[classes == <span style="color: #008000;">"numeric"</span>], mean)
+    counts <span style="color: #D0372D;">&lt;-</span> sapply(df[classes == <span style="color: #008000;">"factor"</span>], table)
+    R <span style="color: #D0372D;">&lt;-</span> list(cbind(means, sds), counts)
+    class(R) <span style="color: #D0372D;">&lt;-</span> c(<span style="color: #008000;">"statsum"</span>, class(R))
+    <span style="color: #0000FF;">return</span>(R)}
+
+str(statsum(iris))
+</pre>
+</div>
+
+
+<p>
+3 [@3] Write a print method for the statsum class
+</p>
+
+<!-- MD: *** =sample_code-->
+<div class="org-src-container">
+
+<pre class="src src-R" id="ex5.3"><span style="color: #006699;">print.statsum</span> <span style="color: #D0372D;">&lt;-</span> <span style="color: #0000FF;">function</span>(x) {
+    cat(<span style="color: #008000;">"Numeric variable descriptive statistics:\n"</span>)
+    print(x[[1]], digits=2) 
+    cat(<span style="color: #008000;">"Factor variable counts:\n"</span>)
+    print(x[[2]])
+}
+
+statsum(iris)
+</pre>
+</div>
 </div>
 </div>
 </div>
@@ -2408,11 +2726,100 @@ Loops are handy, but save them for when you really need them!
 </ol>
 </div>
 </div>
+
+
+<div id="outline-container-sec-10-7" class="outline-3">
+<h3 id="sec-10-7"><span class="section-number-3">10.7</span> Exercise 5 prototype&#xa0;&#xa0;&#xa0;<span class="tag"><span class="prototype">prototype</span></span></h3>
+<div class="outline-text-3" id="text-10-7">
+<ol class="org-ol">
+<li>use a loop to get the <code>class()</code> of each column in the iris data set
+</li>
+</ol>
+
+<!-- MD: *** =instructions-->
+<!-- MD: Just click the Submit Answer button on the right.-->
+<!-- MD: *** =sample_code-->
+<div class="org-src-container">
+
+<pre class="src src-R" id="ex2.1">classes <span style="color: #D0372D;">&lt;-</span> c()
+<span style="color: #0000FF;">for</span> (name <span style="color: #0000FF;">in</span> names(iris)) {
+    classes[name] <span style="color: #D0372D;">&lt;-</span> class(iris[[name]])
+}
+
+classes
+</pre>
+</div>
+
+<pre class="example">
+&gt; classes &lt;- c()
+&gt; for (name in names(iris)) {
++     classes[name] &lt;- class(iris[[name]])
++ }
+&gt; 
+&gt; classes
+Sepal.Length  Sepal.Width Petal.Length  Petal.Width      Species 
+   "numeric"    "numeric"    "numeric"    "numeric"     "factor" 
+&gt;
+</pre>
+
+<ol class="org-ol">
+<li>use the results from step 1 to select the numeric columns 
+</li>
+</ol>
+
+<!-- MD: *** =sample_code-->
+<div class="org-src-container">
+
+<pre class="src src-R" id="ex2.2">iris.num <span style="color: #D0372D;">&lt;-</span> iris[, names(classes)[classes==<span style="color: #008000;">"numeric"</span>]]
+head(iris.num, 2)
+</pre>
+</div>
+
+<pre class="example">
+&gt; iris.num &lt;- iris[, names(classes)[classes=="numeric"]]
+&gt; head(iris.num, 2)
+  Sepal.Length Sepal.Width Petal.Length Petal.Width
+1          5.1         3.5          1.4         0.2
+2          4.9         3.0          1.4         0.2
+&gt;
+</pre>
+
+
+<ol class="org-ol">
+<li>use a loop to calculate the mean of each numeric column in the iris data
+</li>
+</ol>
+
+<!-- MD: *** =sample_code-->
+<div class="org-src-container">
+
+<pre class="src src-R" id="ex2.3">  iris.means <span style="color: #D0372D;">&lt;-</span> c()
+  <span style="color: #0000FF;">for</span>(var <span style="color: #0000FF;">in</span> names(iris.num)) {
+      iris.means[[var]] <span style="color: #D0372D;">&lt;-</span> mean(iris[[var]])
+  }
+
+iris.means
+</pre>
+</div>
+
+<pre class="example">
+&gt;   iris.means &lt;- c()
+&gt;   for(var in names(iris.num)) {
++       iris.means[[var]] &lt;- mean(iris[[var]])
++   }
+&gt; 
+&gt; iris.means
+Sepal.Length  Sepal.Width Petal.Length  Petal.Width 
+    5.843333     3.057333     3.758000     1.199333 
+&gt;
+</pre>
+</div>
+</div>
 </div>
 </div>
 <div id="postamble" class="status">
 <p class="date">Date: Last updated November 20, 2013</p>
-<p class="date">Created: 2014-09-25 Thu 21:52</p>
+<p class="date">Created: 2014-09-26 Fri 08:58</p>
 <p class="creator"><a href="http://www.gnu.org/software/emacs/">Emacs</a> 24.3.1 (<a href="http://orgmode.org">Org</a> mode 8.2.7c)</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
