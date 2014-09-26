@@ -4,7 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
 <title>Introduction To Programming In R</title>
-<!-- 2014-02-27 Thu 15:55 -->
+<!-- 2014-09-25 Thu 21:52 -->
 <meta  http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta  name="generator" content="Org-mode" />
 <style type="text/css">
@@ -87,7 +87,16 @@
     { background-color: #ffff00; color: #000000; font-weight: bold; }
   /*]]>*/-->
 </style>
-<link rel="stylesheet" type="text/css" href="style.css" />
+<link rel="stylesheet" type="text/css" href="https://rawgit.com/fniessen/org-html-themes/master/styles/bigblow/css/htmlize.css"/>
+<link rel="stylesheet" type="text/css" href="https://rawgit.com/fniessen/org-html-themes/master/styles/bigblow/css/bigblow.css"/>
+<link rel="stylesheet" type="text/css" href="https://rawgit.com/fniessen/org-html-themes/master/styles/bigblow/css/hideshow.css"/>
+<script type="text/javascript" src="https://rawgit.com/fniessen/org-html-themes/master/styles/bigblow/js/jquery-1.11.0.min.js"></script>
+<script type="text/javascript" src="https://rawgit.com/fniessen/org-html-themes/master/styles/bigblow/js/jquery-ui-1.10.2.min.js"></script>
+<script type="text/javascript" src="https://rawgit.com/fniessen/org-html-themes/master/styles/bigblow/js/jquery.localscroll-min.js"></script>
+<script type="text/javascript" src="https://rawgit.com/fniessen/org-html-themes/master/styles/bigblow/js/jquery.scrollTo-1.4.3.1-min.js"></script>
+<script type="text/javascript" src="https://rawgit.com/fniessen/org-html-themes/master/styles/bigblow/js/jquery.zclip.min.js"></script>
+<script type="text/javascript" src="https://rawgit.com/fniessen/org-html-themes/master/styles/bigblow/js/bigblow.js"></script>
+<script type="text/javascript" src="https://rawgit.com/fniessen/org-html-themes/master/styles/bigblow/js/hideshow.js"></script>
 <script type="text/javascript">
 /*
 @licstart  The following is the entire license notice for the
@@ -198,7 +207,6 @@ for the JavaScript code in this tag.
 <li><a href="#sec-2-4">2.4. Lists and data.frames</a></li>
 <li><a href="#sec-2-5">2.5. Data types summary</a></li>
 <li><a href="#sec-2-6">2.6. Exercise 0</a></li>
-<li><a href="#sec-2-7">2.7. Exercise 0 prototype&#xa0;&#xa0;&#xa0;<span class="tag"><span class="prototype">prototype</span></span></a></li>
 </ul>
 </li>
 <li><a href="#sec-3">3. Extracting and replacing object elements</a>
@@ -210,7 +218,6 @@ for the JavaScript code in this tag.
 <li><a href="#sec-3-5">3.5. Indexing data.frames</a></li>
 <li><a href="#sec-3-6">3.6. Extraction/replacement summary</a></li>
 <li><a href="#sec-3-7">3.7. Exercise 1</a></li>
-<li><a href="#sec-3-8">3.8. Exercise 1 prototype&#xa0;&#xa0;&#xa0;<span class="tag"><span class="prototype">prototype</span></span></a></li>
 </ul>
 </li>
 <li><a href="#sec-4">4. Applying functions to list elements</a>
@@ -229,7 +236,6 @@ for the JavaScript code in this tag.
 <li><a href="#sec-5-4">5.4. Debugging basics</a></li>
 <li><a href="#sec-5-5">5.5. Writing functions summary</a></li>
 <li><a href="#sec-5-6">5.6. Exercise 2</a></li>
-<li><a href="#sec-5-7">5.7. Exercise 2 prototype&#xa0;&#xa0;&#xa0;<span class="tag"><span class="prototype">prototype</span></span></a></li>
 </ul>
 </li>
 <li><a href="#sec-6">6. Control flow</a>
@@ -240,7 +246,6 @@ for the JavaScript code in this tag.
 <li><a href="#sec-6-4">6.4. Control flow examples</a></li>
 <li><a href="#sec-6-5">6.5. Control flow summary</a></li>
 <li><a href="#sec-6-6">6.6. Exercise 3</a></li>
-<li><a href="#sec-6-7">6.7. Exercise 3 prototype&#xa0;&#xa0;&#xa0;<span class="tag"><span class="prototype">prototype</span></span></a></li>
 </ul>
 </li>
 <li><a href="#sec-7">7. The S3 object class system</a>
@@ -252,7 +257,6 @@ for the JavaScript code in this tag.
 <li><a href="#sec-7-5">7.5. Creating generic functions</a></li>
 <li><a href="#sec-7-6">7.6. S3 classes summary</a></li>
 <li><a href="#sec-7-7">7.7. Exercise 4</a></li>
-<li><a href="#sec-7-8">7.8. Exercise 4 prototype&#xa0;&#xa0;&#xa0;<span class="tag"><span class="prototype">prototype</span></span></a></li>
 </ul>
 </li>
 <li><a href="#sec-8">8. Things that may surprise you</a>
@@ -279,7 +283,6 @@ for the JavaScript code in this tag.
 <li><a href="#sec-10-4">10.4. Using loops to fill in lists</a></li>
 <li><a href="#sec-10-5">10.5. Word of caution: don't overuse loops!</a></li>
 <li><a href="#sec-10-6">10.6. Exercise 5</a></li>
-<li><a href="#sec-10-7">10.7. Exercise 5 prototype&#xa0;&#xa0;&#xa0;<span class="tag"><span class="prototype">prototype</span></span></a></li>
 </ul>
 </li>
 </ul>
@@ -317,6 +320,7 @@ for the JavaScript code in this tag.
 <hr  />
 </div>
 </div>
+
 <div id="outline-container-sec-1-2" class="outline-3">
 <h3 id="sec-1-2"><span class="section-number-3">1.2</span> Running example</h3>
 <div class="outline-text-3" id="text-1-2">
@@ -330,6 +334,7 @@ Our main example today consists of writing a statistical summary function that c
 </div>
 </div>
 </div>
+
 <div id="outline-container-sec-2" class="outline-2">
 <h2 id="sec-2"><span class="section-number-2">2</span> Data types</h2>
 <div class="outline-text-2" id="text-2">
@@ -346,10 +351,10 @@ Values can be combined into vectors using the <code>c()</code> function
 <!-- MD: *** =sample_code-->
 <div class="org-src-container">
 
-<pre class="src src-R" id="VectorsExample">num.var <span style="color: #008b8b;">&lt;-</span> <span style="color: #0000ff;">c</span>(<span style="color: #228b22;">1</span>, <span style="color: #228b22;">2</span>, <span style="color: #228b22;">3</span>, <span style="color: #228b22;">4</span>) <span style="color: #b22222;"># </span><span style="color: #b22222;">numeric vector</span>
-char.var <span style="color: #008b8b;">&lt;-</span> <span style="color: #0000ff;">c</span>(<span style="color: #8b2252;">"1"</span>, <span style="color: #8b2252;">"2"</span>, <span style="color: #8b2252;">"3"</span>, <span style="color: #8b2252;">"4"</span>) <span style="color: #b22222;"># </span><span style="color: #b22222;">character vector</span>
-log.var <span style="color: #008b8b;">&lt;-</span> <span style="color: #0000ff;">c</span>(<span style="color: #228b22;">TRUE</span>, <span style="color: #228b22;">TRUE</span>, <span style="color: #228b22;">FALSE</span>, <span style="color: #228b22;">TRUE</span>) <span style="color: #b22222;"># </span><span style="color: #b22222;">logical vector</span>
-char.var2 <span style="color: #008b8b;">&lt;-</span> <span style="color: #0000ff;">c</span>(num.var, char.var) <span style="color: #b22222;"># </span><span style="color: #b22222;">numbers coverted to character</span>
+<pre class="src src-R" id="VectorsExample">num.var <span style="color: #D0372D;">&lt;-</span> c(1, 2, 3, 4) <span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">numeric vector</span>
+char.var <span style="color: #D0372D;">&lt;-</span> c(<span style="color: #008000;">"1"</span>, <span style="color: #008000;">"2"</span>, <span style="color: #008000;">"3"</span>, <span style="color: #008000;">"4"</span>) <span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">character vector</span>
+log.var <span style="color: #D0372D;">&lt;-</span> c(<span style="color: #6434A3;">TRUE</span>, <span style="color: #6434A3;">TRUE</span>, <span style="color: #6434A3;">FALSE</span>, <span style="color: #6434A3;">TRUE</span>) <span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">logical vector</span>
+char.var2 <span style="color: #D0372D;">&lt;-</span> c(num.var, char.var) <span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">numbers coverted to character</span>
 </pre>
 </div>
 
@@ -367,19 +372,21 @@ Vectors have a \emph{class} which determines how functions treat them
 <!-- MD: *** =sample_code-->
 <div class="org-src-container">
 
-<pre class="src src-R" id="classComputations"><span style="color: #0000ff;">class</span>(num.var)
-<span style="color: #0000ff;">mean</span>(num.var) <span style="color: #b22222;"># </span><span style="color: #b22222;">take the mean of a numeric vector</span>
-<span style="color: #0000ff;">class</span>(char.var)
-<span style="color: #0000ff;">mean</span>(char.var) <span style="color: #b22222;"># </span><span style="color: #b22222;">cannot average characters</span>
-<span style="color: #0000ff;">class</span>(char.var2)
+<pre class="src src-R" id="classComputations">num.var <span style="color: #D0372D;">&lt;-</span> <span style="color: #008000;">"a"</span>
+class(num.var)
+mean(num.var) <span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">take the mean of a numeric vector</span>
+class(char.var)
+mean(char.var) <span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">cannot average characters</span>
+class(char.var2)
 </pre>
 </div>
 
 <pre class="example">
+&gt; num.var &lt;- "a"
 &gt; class(num.var)
-[1] "numeric"
+[1] "character"
 &gt; mean(num.var) # take the mean of a numeric vector
-[1] 2.5
+[1] NA
 &gt; class(char.var)
 [1] "character"
 &gt; mean(char.var) # cannot average characters
@@ -392,6 +399,7 @@ Vectors have a \emph{class} which determines how functions treat them
 <hr  />
 </div>
 </div>
+
 <div id="outline-container-sec-2-2" class="outline-3">
 <h3 id="sec-2-2"><span class="section-number-3">2.2</span> Vector conversion and info</h3>
 <div class="outline-text-3" id="text-2-2">
@@ -403,11 +411,11 @@ Vectors can be converted from one class to another
 <!-- MD: *** =sample_code-->
 <div class="org-src-container">
 
-<pre class="src src-R" id="VectorClassConversion"><span style="color: #0000ff;">class</span>(char.var2)
-num.var2 <span style="color: #008b8b;">&lt;-</span> <span style="color: #0000ff;">as.numeric</span>(char.var2) <span style="color: #b22222;"># </span><span style="color: #b22222;">convert to numeric</span>
-<span style="color: #0000ff;">class</span>(num.var2)
-<span style="color: #0000ff;">mean</span>(<span style="color: #0000ff;">as.numeric</span>(char.var2)) <span style="color: #b22222;"># </span><span style="color: #b22222;">now we can calculate the mean</span>
-<span style="color: #0000ff;">as.numeric</span>(<span style="color: #0000ff;">c</span>(<span style="color: #8b2252;">"a"</span>, <span style="color: #8b2252;">"b"</span>, <span style="color: #8b2252;">"c"</span>)) <span style="color: #b22222;"># </span><span style="color: #b22222;">cannot convert letters to numeric</span>
+<pre class="src src-R" id="VectorClassConversion">class(char.var2)
+num.var2 <span style="color: #D0372D;">&lt;-</span> as.numeric(char.var2) <span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">convert to numeric</span>
+class(num.var2)
+mean(as.numeric(char.var2)) <span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">now we can calculate the mean</span>
+as.numeric(c(<span style="color: #008000;">"a"</span>, <span style="color: #008000;">"b"</span>, <span style="color: #008000;">"c"</span>)) <span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">cannot convert letters to numeric</span>
 </pre>
 </div>
 
@@ -430,9 +438,9 @@ In addition to class, you can examine the <code>length()</code> \\ and <code>str
 <!-- MD: *** =sample_code-->
 <div class="org-src-container">
 
-<pre class="src src-R" id="VectorLengthStructure"><span style="color: #0000ff;">ls</span>() <span style="color: #b22222;"># </span><span style="color: #b22222;">list objects in our workspace</span>
-<span style="color: #0000ff;">length</span>(char.var) <span style="color: #b22222;"># </span><span style="color: #b22222;">how many elements in char.var?</span>
-<span style="color: #0000ff;">str</span>(num.var2) <span style="color: #b22222;"># </span><span style="color: #b22222;">what is the structure of num.var2?</span>
+<pre class="src src-R" id="VectorLengthStructure">ls() <span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">list objects in our workspace</span>
+length(char.var) <span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">how many elements in char.var?</span>
+str(num.var2) <span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">what is the structure of num.var2?</span>
 </pre>
 </div>
 
@@ -449,6 +457,7 @@ In addition to class, you can examine the <code>length()</code> \\ and <code>str
 <hr  />
 </div>
 </div>
+
 <div id="outline-container-sec-2-3" class="outline-3">
 <h3 id="sec-2-3"><span class="section-number-3">2.3</span> Factor vectors</h3>
 <div class="outline-text-3" id="text-2-3">
@@ -468,6 +477,7 @@ Most of the time we can treat factors as though they were character vectors
 <hr  />
 </div>
 </div>
+
 <div id="outline-container-sec-2-4" class="outline-3">
 <h3 id="sec-2-4"><span class="section-number-3">2.4</span> Lists and data.frames</h3>
 <div class="outline-text-3" id="text-2-4">
@@ -483,12 +493,12 @@ Most of the time we can treat factors as though they were character vectors
 <!-- MD: *** =sample_code-->
 <div class="org-src-container">
 
-<pre class="src src-R" id="ListsAndDataframeExample">DF <span style="color: #008b8b;">&lt;-</span> <span style="color: #0000ff;">data.frame</span>(x<span style="color: #008b8b;">=</span><span style="color: #228b22;">1</span>:<span style="color: #228b22;">5</span>, y<span style="color: #008b8b;">=</span>letters[<span style="color: #228b22;">1</span>:<span style="color: #228b22;">5</span>])
-DF <span style="color: #b22222;"># </span><span style="color: #b22222;">data.frame with two columns and 5 rows</span>
+<pre class="src src-R" id="ListsAndDataframeExample">DF <span style="color: #D0372D;">&lt;-</span> data.frame(x=1:5, y=letters[1:5])
+DF <span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">data.frame with two columns and 5 rows</span>
 
-<span style="color: #b22222;"># </span><span style="color: #b22222;">DF &lt;- data.frame(x=1:10, y=1:7) # illegal becase lengths differ</span>
-L <span style="color: #008b8b;">&lt;-</span> <span style="color: #0000ff;">list</span>(x<span style="color: #008b8b;">=</span><span style="color: #228b22;">1</span>:<span style="color: #228b22;">5</span>, y<span style="color: #008b8b;">=</span><span style="color: #228b22;">1</span>:<span style="color: #228b22;">3</span>, z <span style="color: #008b8b;">=</span> DF)
-L <span style="color: #b22222;"># </span><span style="color: #b22222;">lists are much more flexible!</span>
+<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">DF &lt;- data.frame(x=1:10, y=1:7) # illegal becase lengths differ</span>
+L <span style="color: #D0372D;">&lt;-</span> list(x=1:5, y=1:3, z = DF)
+L <span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">lists are much more flexible!</span>
 </pre>
 </div>
 
@@ -524,6 +534,7 @@ $z
 <hr  />
 </div>
 </div>
+
 <div id="outline-container-sec-2-5" class="outline-3">
 <h3 id="sec-2-5"><span class="section-number-3">2.5</span> Data types summary</h3>
 <div class="outline-text-3" id="text-2-5">
@@ -564,6 +575,7 @@ Functions introduced in this section:
 <hr  />
 </div>
 </div>
+
 <div id="outline-container-sec-2-6" class="outline-3">
 <h3 id="sec-2-6"><span class="section-number-3">2.6</span> Exercise 0</h3>
 <div class="outline-text-3" id="text-2-6">
@@ -581,70 +593,8 @@ Functions introduced in this section:
 </ol>
 </div>
 </div>
-<div id="outline-container-sec-2-7" class="outline-3">
-<h3 id="sec-2-7"><span class="section-number-3">2.7</span> Exercise 0 prototype&#xa0;&#xa0;&#xa0;<span class="tag"><span class="prototype">prototype</span></span></h3>
-<div class="outline-text-3" id="text-2-7">
-<ol class="org-ol">
-<li value="1">Create a new vector called "test" containing five numbers of your choice
-</li>
-</ol>
-<!-- MD: *** =instructions-->
-<!-- MD: Just click the Submit Answer button on the right.-->
-<!-- MD: *** =sample_code-->
-<div class="org-src-container">
-
-<pre class="src src-R" id="ex0.1">test <span style="color: #008b8b;">&lt;-</span> <span style="color: #0000ff;">c</span>(<span style="color: #228b22;">1</span>, <span style="color: #228b22;">2</span>, <span style="color: #228b22;">3</span>, <span style="color: #228b22;">4</span>, <span style="color: #228b22;">5</span>)
-</pre>
 </div>
 
-<ol class="org-ol">
-<li value="2">a Create a second vector called "students" containing five common names of your choice
-</li>
-</ol>
-<!-- MD: *** =sample_code-->
-<div class="org-src-container">
-
-<pre class="src src-R" id="ex0.2">students <span style="color: #008b8b;">&lt;-</span> <span style="color: #0000ff;">c</span>(<span style="color: #8b2252;">"Mary"</span>, <span style="color: #8b2252;">"Joan"</span>, <span style="color: #8b2252;">"Steve"</span>, <span style="color: #8b2252;">"Alex"</span>, <span style="color: #8b2252;">"Suzy"</span>)
-</pre>
-</div>
-
-<ol class="org-ol">
-<li value="3">Determine the class of "students" and "test"
-</li>
-</ol>
-<!-- MD: *** =sample_code-->
-<div class="org-src-container">
-
-<pre class="src src-R" id="ex0.3"><span style="color: #0000ff;">class</span>(students)
-<span style="color: #0000ff;">class</span>(test)
-</pre>
-</div>
-
-<ol class="org-ol">
-<li value="4">Create a data frame containing two columns, "students" and "tests" as defined above
-</li>
-</ol>
-<!-- MD: *** =sample_code-->
-<div class="org-src-container">
-
-<pre class="src src-R" id="ex0.4">testScores <span style="color: #008b8b;">&lt;-</span> <span style="color: #0000ff;">data.frame</span>(students, tests)
-</pre>
-</div>
-
-<ol class="org-ol">
-<li value="5">Convert "test" to character class, and confirm that you were successful
-<!-- MD: *** =sample_code-->
-</li>
-</ol>
-<div class="org-src-container">
-
-<pre class="src src-R" id="ex0.3">test <span style="color: #008b8b;">&lt;-</span> <span style="color: #0000ff;">as.character</span>(test)
-<span style="color: #0000ff;">class</span>(test)
-</pre>
-</div>
-</div>
-</div>
-</div>
 
 <div id="outline-container-sec-3" class="outline-2">
 <h2 id="sec-3"><span class="section-number-2">3</span> Extracting and replacing object elements</h2>
@@ -662,16 +612,16 @@ Parts of vectors, matricies, data.frames, and lists can be extracted or replaced
 <!-- MD: *** =sample_code-->
 <div class="org-src-container">
 
-<pre class="src src-R" id="indexingVectors"><span style="color: #b22222;">## </span><span style="color: #b22222;">indexing vectors by position</span>
-x <span style="color: #008b8b;">&lt;-</span> <span style="color: #228b22;">101</span>:<span style="color: #228b22;">110</span> <span style="color: #b22222;"># </span><span style="color: #b22222;">Creat a vector of integers from 101 to 110</span>
-x[<span style="color: #0000ff;">c</span>(<span style="color: #228b22;">4</span>, <span style="color: #228b22;">5</span>)] <span style="color: #b22222;"># </span><span style="color: #b22222;">extract the fourth and fifth values of x</span>
-x[<span style="color: #228b22;">4</span>] <span style="color: #008b8b;">&lt;-</span> <span style="color: #228b22;">1</span> <span style="color: #b22222;"># </span><span style="color: #b22222;">change the 4th value to 1</span>
-x <span style="color: #b22222;"># </span><span style="color: #b22222;">print x</span>
+<pre class="src src-R" id="indexingVectors"><span style="color: #8D8D84; font-style: italic;">## </span><span style="color: #8D8D84; font-style: italic;">indexing vectors by position</span>
+x <span style="color: #D0372D;">&lt;-</span> 101:110 <span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">Creat a vector of integers from 101 to 110</span>
+x[c(4, 5)] <span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">extract the fourth and fifth values of x</span>
+x[4] <span style="color: #D0372D;">&lt;-</span> 1 <span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">change the 4th value to 1</span>
+x <span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">print x</span>
 
-<span style="color: #b22222;">## </span><span style="color: #b22222;">indexing vectors by name</span>
-<span style="color: #0000ff;">names</span>(x) <span style="color: #008b8b;">&lt;-</span> letters[<span style="color: #228b22;">1</span>:<span style="color: #228b22;">10</span>] <span style="color: #b22222;"># </span><span style="color: #b22222;">give x names</span>
-<span style="color: #0000ff;">print</span>(x) <span style="color: #b22222;">#</span><span style="color: #b22222;">print x</span>
-x[<span style="color: #0000ff;">c</span>(<span style="color: #8b2252;">"a"</span>, <span style="color: #8b2252;">"f"</span>)] <span style="color: #b22222;"># </span><span style="color: #b22222;">extract the values of a  and f from x</span>
+<span style="color: #8D8D84; font-style: italic;">## </span><span style="color: #8D8D84; font-style: italic;">indexing vectors by name</span>
+names(x) <span style="color: #D0372D;">&lt;-</span> letters[1:10] <span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">give x names</span>
+print(x) <span style="color: #8D8D84; font-style: italic;">#</span><span style="color: #8D8D84; font-style: italic;">print x</span>
+x[c(<span style="color: #008000;">"a"</span>, <span style="color: #008000;">"f"</span>)] <span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">extract the values of a  and f from x</span>
 </pre>
 </div>
 
@@ -697,6 +647,7 @@ x[<span style="color: #0000ff;">c</span>(<span style="color: #8b2252;">"a"</span
 <hr  />
 </div>
 </div>
+
 <div id="outline-container-sec-3-2" class="outline-3">
 <h3 id="sec-3-2"><span class="section-number-3">3.2</span> Logical indexing</h3>
 <div class="outline-text-3" id="text-3-2">
@@ -709,8 +660,8 @@ Elements can also be selected or replaced based on logical (TRUE/FALSE) vectors.
 <!-- MD: *** =sample_code-->
 <div class="org-src-container">
 
-<pre class="src src-R" id="logicalIndexingVectors">x <span style="color: #008b8b;">&gt;</span> <span style="color: #228b22;">106</span> <span style="color: #b22222;"># </span><span style="color: #b22222;">shows which elements of x are &gt; 106</span>
-x[x <span style="color: #008b8b;">&gt;</span> <span style="color: #228b22;">106</span>] <span style="color: #b22222;"># </span><span style="color: #b22222;">selects elements of x where x &gt; 106</span>
+<pre class="src src-R" id="logicalIndexingVectors">x &gt; 106 <span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">shows which elements of x are &gt; 106</span>
+x[x &gt; 106] <span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">selects elements of x where x &gt; 106</span>
 </pre>
 </div>
 
@@ -751,8 +702,8 @@ Additional operators useful for logical indexing:
 <!-- MD: *** =sample_code-->
 <div class="org-src-container">
 
-<pre class="src src-R" id="logicalIndexingVectors2">x[x <span style="color: #008b8b;">&gt;</span> <span style="color: #228b22;">106</span> &amp; x <span style="color: #008b8b;">&lt;=</span> <span style="color: #228b22;">108</span>]
-x[x <span style="color: #008b8b;">&gt;</span> <span style="color: #228b22;">106</span> | <span style="color: #0000ff;">names</span>(x) <span style="color: #008b8b;">%</span><span style="color: #a020f0;">in</span><span style="color: #008b8b;">%</span> <span style="color: #0000ff;">c</span>(<span style="color: #8b2252;">"a"</span>, <span style="color: #8b2252;">"b"</span>, <span style="color: #8b2252;">"c"</span>)]
+<pre class="src src-R" id="logicalIndexingVectors2">x[x &gt; 106 &amp; x &lt;= 108]
+x[x &gt; 106 | names(x) %<span style="color: #0000FF;">in</span>% c(<span style="color: #008000;">"a"</span>, <span style="color: #008000;">"b"</span>, <span style="color: #008000;">"c"</span>)]
 </pre>
 </div>
 
@@ -769,6 +720,7 @@ x[x <span style="color: #008b8b;">&gt;</span> <span style="color: #228b22;">106<
 <hr  />
 </div>
 </div>
+
 <div id="outline-container-sec-3-3" class="outline-3">
 <h3 id="sec-3-3"><span class="section-number-3">3.3</span> Indexing matrices</h3>
 <div class="outline-text-3" id="text-3-3">
@@ -781,12 +733,12 @@ Extraction on matrices operate in two dimensions: first dimension refers to rows
 <!-- MD: *** =sample_code-->
 <div class="org-src-container">
 
-<pre class="src src-R" id="indexingMatricies"><span style="color: #b22222;">## </span><span style="color: #b22222;">indexing matricies</span>
- <span style="color: #b22222;"># </span><span style="color: #b22222;">create a matrix</span>
-(M <span style="color: #008b8b;">&lt;-</span> <span style="color: #0000ff;">cbind</span>(x <span style="color: #008b8b;">=</span> <span style="color: #228b22;">1</span>:<span style="color: #228b22;">5</span>, y <span style="color: #008b8b;">=</span> <span style="color: #008b8b;">-</span><span style="color: #228b22;">1</span>:<span style="color: #008b8b;">-</span><span style="color: #228b22;">5</span>, z <span style="color: #008b8b;">=</span> <span style="color: #0000ff;">c</span>(<span style="color: #228b22;">6</span>, <span style="color: #228b22;">3</span>, <span style="color: #228b22;">4</span>, <span style="color: #228b22;">2</span>, <span style="color: #228b22;">8</span>)))
-M[<span style="color: #228b22;">1</span>:<span style="color: #228b22;">3</span>, ] <span style="color: #b22222;">#</span><span style="color: #b22222;">extract rows 1 through 3, all columns</span>
-M[<span style="color: #0000ff;">c</span>(<span style="color: #228b22;">5</span>, <span style="color: #228b22;">3</span>, <span style="color: #228b22;">1</span>), <span style="color: #228b22;">2</span>:<span style="color: #228b22;">3</span>] <span style="color: #b22222;"># </span><span style="color: #b22222;">rows 5, 3 and 1, columns 2 and 3</span>
-M[M[, <span style="color: #228b22;">1</span>] <span style="color: #008b8b;">%</span><span style="color: #a020f0;">in</span><span style="color: #008b8b;">%</span> <span style="color: #228b22;">4</span>:<span style="color: #228b22;">2</span>, <span style="color: #228b22;">2</span>] <span style="color: #b22222;"># </span><span style="color: #b22222;">second column where first column &lt;=4 &amp; &gt;= 2</span>
+<pre class="src src-R" id="indexingMatricies"><span style="color: #8D8D84; font-style: italic;">## </span><span style="color: #8D8D84; font-style: italic;">indexing matricies</span>
+ <span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">create a matrix</span>
+(M <span style="color: #D0372D;">&lt;-</span> cbind(x = 1:5, y = -1:-5, z = c(6, 3, 4, 2, 8)))
+M[1:3, ] <span style="color: #8D8D84; font-style: italic;">#</span><span style="color: #8D8D84; font-style: italic;">extract rows 1 through 3, all columns</span>
+M[c(5, 3, 1), 2:3] <span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">rows 5, 3 and 1, columns 2 and 3</span>
+M[M[, 1] %<span style="color: #0000FF;">in</span>% 4:2, 2] <span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">second column where first column &lt;=4 &amp; &gt;= 2</span>
 </pre>
 </div>
 
@@ -822,6 +774,7 @@ Note that unspecified index's (as in the column index in the example above ) ret
 <hr  />
 </div>
 </div>
+
 <div id="outline-container-sec-3-4" class="outline-3">
 <h3 id="sec-3-4"><span class="section-number-3">3.4</span> Indexing lists</h3>
 <div class="outline-text-3" id="text-3-4">
@@ -833,12 +786,12 @@ Lists can be indexed in the same way as vectors, with the following extension:
 <!-- MD: *** =sample_code-->
 <div class="org-src-container">
 
-<pre class="src src-R" id="ListIndexing"><span style="color: #b22222;"># </span><span style="color: #b22222;">Lists can be indexed with single brackets, similar to vector indexing</span>
-L[<span style="color: #0000ff;">c</span>(<span style="color: #228b22;">1</span>, <span style="color: #228b22;">2</span>)] <span style="color: #b22222;"># </span><span style="color: #b22222;">the first two elements of L</span>
-L[<span style="color: #228b22;">1</span>] <span style="color: #b22222;"># </span><span style="color: #b22222;">a list with one element</span>
-<span style="color: #b22222;">## </span><span style="color: #b22222;">double brackets select the content of a single selected element</span>
-<span style="color: #b22222;">## </span><span style="color: #b22222;">effectively taking it out of the list.</span>
-L[[<span style="color: #228b22;">1</span>]] <span style="color: #b22222;"># </span><span style="color: #b22222;">a vector</span>
+<pre class="src src-R" id="ListIndexing"><span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">Lists can be indexed with single brackets, similar to vector indexing</span>
+L[c(1, 2)] <span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">the first two elements of L</span>
+L[1] <span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">a list with one element</span>
+<span style="color: #8D8D84; font-style: italic;">## </span><span style="color: #8D8D84; font-style: italic;">double brackets select the content of a single selected element</span>
+<span style="color: #8D8D84; font-style: italic;">## </span><span style="color: #8D8D84; font-style: italic;">effectively taking it out of the list.</span>
+L[[1]] <span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">a vector</span>
 </pre>
 </div>
 
@@ -864,6 +817,7 @@ $x
 <hr  />
 </div>
 </div>
+
 <div id="outline-container-sec-3-5" class="outline-3">
 <h3 id="sec-3-5"><span class="section-number-3">3.5</span> Indexing data.frames</h3>
 <div class="outline-text-3" id="text-3-5">
@@ -876,8 +830,8 @@ A data.frame can be indexed in the same ways as a matrix, and also the same ways
 <!-- MD: *** =sample_code-->
 <div class="org-src-container">
 
-<pre class="src src-R" id="DataFrameIndexing">DF[<span style="color: #0000ff;">c</span>(<span style="color: #228b22;">3</span>, <span style="color: #228b22;">1</span>, <span style="color: #228b22;">2</span>), <span style="color: #0000ff;">c</span>(<span style="color: #228b22;">1</span>, <span style="color: #228b22;">2</span>)] <span style="color: #b22222;"># </span><span style="color: #b22222;">rows 3, 1, and 2, columns 1 and 2</span>
-DF[[<span style="color: #228b22;">1</span>]] <span style="color: #b22222;"># </span><span style="color: #b22222;">column 1 as a vector</span>
+<pre class="src src-R" id="DataFrameIndexing">DF[c(3, 1, 2), c(1, 2)] <span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">rows 3, 1, and 2, columns 1 and 2</span>
+DF[[1]] <span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">column 1 as a vector</span>
 </pre>
 </div>
 
@@ -898,8 +852,8 @@ There is a subtle but important difference between <code>[ , n]</code> and <code
 <!-- MD: *** =sample_code-->
 <div class="org-src-container">
 
-<pre class="src src-R" id="dataFrameIndexingComplicated"><span style="color: #0000ff;">str</span>(DF[<span style="color: #228b22;">1</span>])<span style="color: #b22222;"># </span><span style="color: #b22222;">a data.frame with one column</span>
-<span style="color: #0000ff;">str</span>(DF[ ,<span style="color: #228b22;">1</span>])<span style="color: #b22222;"># </span><span style="color: #b22222;">a vector</span>
+<pre class="src src-R" id="dataFrameIndexingComplicated">str(DF[1])<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">a data.frame with one column</span>
+str(DF[ ,1])<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">a vector</span>
 </pre>
 </div>
 
@@ -914,6 +868,7 @@ There is a subtle but important difference between <code>[ , n]</code> and <code
 <hr  />
 </div>
 </div>
+
 <div id="outline-container-sec-3-6" class="outline-3">
 <h3 id="sec-3-6"><span class="section-number-3">3.6</span> Extraction/replacement summary</h3>
 <div class="outline-text-3" id="text-3-6">
@@ -946,6 +901,7 @@ Functions introduced in this section:
 <hr  />
 </div>
 </div>
+
 <div id="outline-container-sec-3-7" class="outline-3">
 <h3 id="sec-3-7"><span class="section-number-3">3.7</span> Exercise 1</h3>
 <div class="outline-text-3" id="text-3-7">
@@ -961,67 +917,8 @@ Functions introduced in this section:
 </ol>
 </div>
 </div>
-<div id="outline-container-sec-3-8" class="outline-3">
-<h3 id="sec-3-8"><span class="section-number-3">3.8</span> Exercise 1 prototype&#xa0;&#xa0;&#xa0;<span class="tag"><span class="prototype">prototype</span></span></h3>
-<div class="outline-text-3" id="text-3-8">
-<ol class="org-ol">
-<li value="1">Select just the Sepal.Length and Species columns from the <i>iris</i> data set (built-in, will be available in your workspace automatically) and save the result to a new data.frame named <i>iris.2</i>
-</li>
-</ol>
-<!-- MD: *** =instructions-->
-<!-- MD: Just click the Submit Answer button on the right.-->
-<!-- MD: *** =sample_code-->
-<div class="org-src-container">
-
-<pre class="src src-R" id="ex1.1"><span style="color: #0000ff;">data</span>(iris)
-iris2 <span style="color: #008b8b;">&lt;-</span> iris[<span style="color: #0000ff;">c</span>(<span style="color: #8b2252;">"Sepal.Length"</span>, <span style="color: #8b2252;">"Species"</span>)]
-<span style="color: #0000ff;">str</span>(iris2)
-</pre>
 </div>
 
-<ol class="org-ol">
-<li value="2">Calculate the mean of the Sepal.Length column in <i>iris.2</i> 
-</li>
-</ol>
-
-<!-- MD: *** =sample_code-->
-<div class="org-src-container">
-
-<pre class="src src-R" id="ex.2"><span style="color: #0000ff;">mean</span>(iris2[ , <span style="color: #8b2252;">"Sepal.Length"</span>])
-</pre>
-</div>
-
-<ol class="org-ol">
-<li value="3">BONUS (optional): Calculate the mean of Sepal.Length, but only for the setosa species
-</li>
-</ol>
-
-<!-- MD: *** =sample_code-->
-<div class="org-src-container">
-
-<pre class="src src-R" id="ex1.3"><span style="color: #0000ff;">mean</span>(iris2[iris2[[<span style="color: #8b2252;">"Species"</span>]] <span style="color: #008b8b;">==</span> <span style="color: #8b2252;">"setosa"</span>, <span style="color: #8b2252;">"Sepal.Length"</span>])
-<span style="color: #b22222;">## </span><span style="color: #b22222;">shortcut:</span>
-<span style="color: #0000ff;">with</span>(iris2, {
-    <span style="color: #0000ff;">print</span>(<span style="color: #0000ff;">mean</span>(Sepal.Length[Species <span style="color: #008b8b;">==</span> <span style="color: #8b2252;">"setosa"</span>]))
-})
-</pre>
-</div>
-
-<ol class="org-ol">
-<li value="4">BONUS (optional): Calculate the number of sepal lengths that are more than one standard deviation below the average sepal length
-</li>
-</ol>
-
-<!-- MD: *** =sample_code-->
-<div class="org-src-container">
-
-<pre class="src src-R" id="ex1.4">m.minus.sd <span style="color: #008b8b;">&lt;-</span> <span style="color: #0000ff;">mean</span>(iris2[[<span style="color: #8b2252;">"Sepal.Length"</span>]]) <span style="color: #008b8b;">-</span> <span style="color: #0000ff;">sd</span>(iris2[[<span style="color: #8b2252;">"Sepal.Length"</span>]])
-<span style="color: #0000ff;">length</span>(iris2[iris2[[<span style="color: #8b2252;">"Sepal.Length"</span>]] <span style="color: #008b8b;">&lt;</span> m.minus.sd, <span style="color: #8b2252;">"Sepal.Length"</span>])
-</pre>
-</div>
-</div>
-</div>
-</div>
 <div id="outline-container-sec-4" class="outline-2">
 <h2 id="sec-4"><span class="section-number-2">4</span> Applying functions to list elements</h2>
 <div class="outline-text-2" id="text-4">
@@ -1038,9 +935,9 @@ The apply function is used to apply a function to the rows or columns of a matri
 <!-- MD: *** =sample_code-->
 <div class="org-src-container">
 
-<pre class="src src-R" id="applyFunctionExample">M <span style="color: #008b8b;">&lt;-</span> <span style="color: #0000ff;">matrix</span>(<span style="color: #228b22;">1</span>:<span style="color: #228b22;">20</span>, ncol<span style="color: #008b8b;">=</span><span style="color: #228b22;">4</span>)
-<span style="color: #0000ff;">apply</span>(M, <span style="color: #228b22;">2</span>, mean) <span style="color: #b22222;">## </span><span style="color: #b22222;">average across the rows</span>
-<span style="color: #0000ff;">apply</span>(M, <span style="color: #228b22;">2</span>, sum) <span style="color: #b22222;">## </span><span style="color: #b22222;">sum the columns</span>
+<pre class="src src-R" id="applyFunctionExample">M <span style="color: #D0372D;">&lt;-</span> matrix(1:20, ncol=4)
+apply(M, 2, mean) <span style="color: #8D8D84; font-style: italic;">## </span><span style="color: #8D8D84; font-style: italic;">average across the rows</span>
+apply(M, 2, sum) <span style="color: #8D8D84; font-style: italic;">## </span><span style="color: #8D8D84; font-style: italic;">sum the columns</span>
 </pre>
 </div>
 
@@ -1056,6 +953,7 @@ The apply function is used to apply a function to the rows or columns of a matri
 <hr  />
 </div>
 </div>
+
 <div id="outline-container-sec-4-2" class="outline-3">
 <h3 id="sec-4-2"><span class="section-number-3">4.2</span> The sapply function</h3>
 <div class="outline-text-3" id="text-4-2">
@@ -1068,9 +966,9 @@ It is often useful to apply a function to each element of a vector, list, or dat
 <!-- MD: *** =sample_code-->
 <div class="org-src-container">
 
-<pre class="src src-R" id="sapplyExample"><span style="color: #0000ff;">sapply</span>(DF, class) <span style="color: #b22222;"># </span><span style="color: #b22222;">get the class of each column in the DF data.frame</span>
-<span style="color: #0000ff;">sapply</span>(L, length) <span style="color: #b22222;"># </span><span style="color: #b22222;">get the length of each element in the L list</span>
-<span style="color: #0000ff;">sapply</span>(DF, is.numeric) <span style="color: #b22222;"># </span><span style="color: #b22222;">check each column of DF to see if it is numeric</span>
+<pre class="src src-R" id="sapplyExample">sapply(DF, class) <span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">get the class of each column in the DF data.frame</span>
+sapply(L, length) <span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">get the length of each element in the L list</span>
+sapply(DF, is.numeric) <span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">check each column of DF to see if it is numeric</span>
 </pre>
 </div>
 
@@ -1089,6 +987,7 @@ x y z
 <hr  />
 </div>
 </div>
+
 <div id="outline-container-sec-4-3" class="outline-3">
 <h3 id="sec-4-3"><span class="section-number-3">4.3</span> Combining sapply and indexing</h3>
 <div class="outline-text-3" id="text-4-3">
@@ -1104,7 +1003,7 @@ The <code>sapply</code> function can be used in combination with indexing to ext
 <!-- MD: *** =sample_code-->
 <div class="org-src-container">
 
-<pre class="src src-R" id="sapplyAndIndexing1">DF[, <span style="color: #0000ff;">c</span>(<span style="color: #228b22;">TRUE</span>, <span style="color: #228b22;">FALSE</span>)] <span style="color: #b22222;"># </span><span style="color: #b22222;">select the first column of DF, but not the second</span>
+<pre class="src src-R" id="sapplyAndIndexing1">DF[, c(<span style="color: #6434A3;">TRUE</span>, <span style="color: #6434A3;">FALSE</span>)] <span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">select the first column of DF, but not the second</span>
 </pre>
 </div>
 
@@ -1128,8 +1027,8 @@ The <code>sapply</code> function can be used in combination with indexing to ext
 <!-- MD: *** =sample_code-->
 <div class="org-src-container">
 
-<pre class="src src-R" id="sapplyAndIndexing2">(DF.which.num <span style="color: #008b8b;">&lt;-</span> <span style="color: #0000ff;">sapply</span>(DF, is.numeric))<span style="color: #b22222;"># </span><span style="color: #b22222;">check which columns of DF are numeric</span>
-DF[DF.which.num] <span style="color: #b22222;"># </span><span style="color: #b22222;">select the numeric columns</span>
+<pre class="src src-R" id="sapplyAndIndexing2">(DF.which.num <span style="color: #D0372D;">&lt;-</span> sapply(DF, is.numeric))<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">check which columns of DF are numeric</span>
+DF[DF.which.num] <span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">select the numeric columns</span>
 </pre>
 </div>
 
@@ -1153,6 +1052,7 @@ Note the difference between <code>DF[, 1]</code> and <code>DF[1]</code>! The fir
 <hr  />
 </div>
 </div>
+
 <div id="outline-container-sec-4-4" class="outline-3">
 <h3 id="sec-4-4"><span class="section-number-3">4.4</span> Applying functions summary</h3>
 <div class="outline-text-3" id="text-4-4">
@@ -1181,6 +1081,7 @@ Functions introduced in this section:
 </div>
 </div>
 </div>
+
 <div id="outline-container-sec-5" class="outline-2">
 <h2 id="sec-5"><span class="section-number-2">5</span> Writing functions</h2>
 <div class="outline-text-2" id="text-5">
@@ -1204,6 +1105,7 @@ Functions introduced in this section:
 <hr  />
 </div>
 </div>
+
 <div id="outline-container-sec-5-2" class="outline-3">
 <h3 id="sec-5-2"><span class="section-number-3">5.2</span> Function return value</h3>
 <div class="outline-text-3" id="text-5-2">
@@ -1235,14 +1137,14 @@ Functions introduced in this section:
 <!-- MD: *** =sample_code-->
 <div class="org-src-container">
 
-<pre class="src src-R" id="functionReturn"><span style="color: #0000ff;">f</span> <span style="color: #008b8b;">&lt;-</span> <span style="color: #a020f0;">function</span>() { <span style="color: #b22222;"># </span><span style="color: #b22222;">define function f</span>
-<span style="color: #0000ff;">print</span>(<span style="color: #8b2252;">"setting x to 1"</span>) <span style="color: #b22222;"># </span><span style="color: #b22222;">print a text string</span>
-x <span style="color: #008b8b;">&lt;-</span> <span style="color: #228b22;">1</span>} <span style="color: #b22222;"># </span><span style="color: #b22222;">set x to 1</span>
+<pre class="src src-R" id="functionReturn"><span style="color: #006699;">f</span> <span style="color: #D0372D;">&lt;-</span> <span style="color: #0000FF;">function</span>() { <span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">define function f</span>
+print(<span style="color: #008000;">"setting x to 1"</span>) <span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">print a text string</span>
+x <span style="color: #D0372D;">&lt;-</span> 1} <span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">set x to 1</span>
 
-y <span style="color: #008b8b;">&lt;-</span> <span style="color: #0000ff;">f</span>() <span style="color: #b22222;"># </span><span style="color: #b22222;">assign y the value returned by f</span>
+y <span style="color: #D0372D;">&lt;-</span> f() <span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">assign y the value returned by f</span>
 
-y <span style="color: #b22222;"># </span><span style="color: #b22222;">print y</span>
-x <span style="color: #b22222;"># </span><span style="color: #b22222;">x in the global is not 1!</span>
+y <span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">print y</span>
+x <span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">x in the global is not 1!</span>
 </pre>
 </div>
 
@@ -1265,6 +1167,7 @@ x <span style="color: #b22222;"># </span><span style="color: #b22222;">x in the 
 <hr  />
 </div>
 </div>
+
 <div id="outline-container-sec-5-3" class="outline-3">
 <h3 id="sec-5-3"><span class="section-number-3">5.3</span> Writing functions example</h3>
 <div class="outline-text-3" id="text-5-3">
@@ -1277,14 +1180,14 @@ Goal: write a function that returns the square of it's argument
 <!-- MD: *** =sample_code-->
 <div class="org-src-container">
 
-<pre class="src src-R" id="firstFunctionExample"><span style="color: #0000ff;">square</span> <span style="color: #008b8b;">&lt;-</span> <span style="color: #a020f0;">function</span> (x) { <span style="color: #b22222;"># </span><span style="color: #b22222;">define function named "square" with argument x</span>
-  <span style="color: #a020f0;">return</span>(x*x) <span style="color: #b22222;"># </span><span style="color: #b22222;">multiple the x argument by itself</span>
-} <span style="color: #b22222;"># </span><span style="color: #b22222;">end the function definition</span>
+<pre class="src src-R" id="firstFunctionExample"><span style="color: #006699;">square</span> <span style="color: #D0372D;">&lt;-</span> <span style="color: #0000FF;">function</span> (x) { <span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">define function named "square" with argument x</span>
+  <span style="color: #0000FF;">return</span>(x*x) <span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">multiple the x argument by itself</span>
+} <span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">end the function definition</span>
 
-<span style="color: #b22222;"># </span><span style="color: #b22222;">check to see that the function works</span>
-<span style="color: #0000ff;">square</span>(x <span style="color: #008b8b;">=</span> <span style="color: #228b22;">2</span>) <span style="color: #b22222;"># </span><span style="color: #b22222;">square the value 2</span>
-<span style="color: #0000ff;">square</span>(<span style="color: #228b22;">10</span>) <span style="color: #b22222;"># </span><span style="color: #b22222;">square the value 10</span>
-<span style="color: #0000ff;">square</span>(<span style="color: #228b22;">1</span>:<span style="color: #228b22;">5</span>) <span style="color: #b22222;"># </span><span style="color: #b22222;">square integers 1 through 5</span>
+<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">check to see that the function works</span>
+square(x = 2) <span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">square the value 2</span>
+square(10) <span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">square the value 10</span>
+square(1:5) <span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">square integers 1 through 5</span>
 </pre>
 </div>
 
@@ -1306,6 +1209,7 @@ Goal: write a function that returns the square of it's argument
 <hr  />
 </div>
 </div>
+
 <div id="outline-container-sec-5-4" class="outline-3">
 <h3 id="sec-5-4"><span class="section-number-3">5.4</span> Debugging basics</h3>
 <div class="outline-text-3" id="text-5-4">
@@ -1318,21 +1222,21 @@ Stepping througth functions and setting breakpoints
 <!-- MD: *** =sample_code-->
 <div class="org-src-container">
 
-<pre class="src src-R" id="debug1"><span style="color: #b22222;">## </span><span style="color: #b22222;">Debugging</span>
-<span style="color: #b22222;"># </span><span style="color: #b22222;">write my.mean function</span>
-<span style="color: #0000ff;">my.mean</span> <span style="color: #008b8b;">&lt;-</span> <span style="color: #a020f0;">function</span> (x, ...) {
-  S <span style="color: #008b8b;">&lt;-</span> <span style="color: #0000ff;">sum</span>(x, ...)
-  L <span style="color: #008b8b;">&lt;-</span> <span style="color: #0000ff;">length</span>(<span style="color: #0000ff;">na.omit</span>(x))
-  <span style="color: #a020f0;">return</span>(S <span style="color: #008b8b;">/</span> L)}
-<span style="color: #0000ff;">debug</span>(my.mean) <span style="color: #b22222;"># </span><span style="color: #b22222;">turn debugger on for my.mean function</span>
-<span style="color: #b22222;"># </span><span style="color: #b22222;">mymean() # step through the function</span>
-<span style="color: #0000ff;">undebug</span>(my.mean) <span style="color: #b22222;"># </span><span style="color: #b22222;">to turn the debugger off</span>
-<span style="color: #b22222;"># </span><span style="color: #b22222;">insert breakpoints</span>
-<span style="color: #0000ff;">my.mean</span> <span style="color: #008b8b;">&lt;-</span> <span style="color: #a020f0;">function</span> (x, ...) {
-  S <span style="color: #008b8b;">&lt;-</span> <span style="color: #0000ff;">sum</span>(x, ...)
-  L <span style="color: #008b8b;">&lt;-</span> <span style="color: #0000ff;">length</span>(<span style="color: #0000ff;">na.omit</span>(x))
-  <span style="color: #0000ff;">browser</span>() <span style="color: #b22222;"># </span><span style="color: #b22222;">function will stop here so you can inspect S and L</span>
-  <span style="color: #a020f0;">return</span>(S <span style="color: #008b8b;">/</span> L)}
+<pre class="src src-R" id="debug1"><span style="color: #8D8D84; font-style: italic;">## </span><span style="color: #8D8D84; font-style: italic;">Debugging</span>
+<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">write my.mean function</span>
+<span style="color: #006699;">my.mean</span> <span style="color: #D0372D;">&lt;-</span> <span style="color: #0000FF;">function</span> (x, ...) {
+  S <span style="color: #D0372D;">&lt;-</span> sum(x, ...)
+  L <span style="color: #D0372D;">&lt;-</span> length(na.omit(x))
+  <span style="color: #0000FF;">return</span>(S / L)}
+debug(my.mean) <span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">turn debugger on for my.mean function</span>
+<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">mymean() # step through the function</span>
+undebug(my.mean) <span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">to turn the debugger off</span>
+<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">insert breakpoints</span>
+<span style="color: #006699;">my.mean</span> <span style="color: #D0372D;">&lt;-</span> <span style="color: #0000FF;">function</span> (x, ...) {
+  S <span style="color: #D0372D;">&lt;-</span> sum(x, ...)
+  L <span style="color: #D0372D;">&lt;-</span> length(na.omit(x))
+  browser() <span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">function will stop here so you can inspect S and L</span>
+  <span style="color: #0000FF;">return</span>(S / L)}
 </pre>
 </div>
 
@@ -1362,14 +1266,15 @@ Use <code>traceback()</code> to see what went wrong after the fact
 <!-- MD: *** =sample_code-->
 <div class="org-src-container">
 
-<pre class="src src-R" id="debugTraceback">myModel <span style="color: #008b8b;">&lt;-</span> <span style="color: #0000ff;">lm</span>(<span style="color: #228b22;">NA</span>~<span style="color: #228b22;">NA</span>)
-<span style="color: #0000ff;">traceback</span>()
+<pre class="src src-R" id="debugTraceback">myModel <span style="color: #D0372D;">&lt;-</span> lm(<span style="color: #6434A3;">NA</span>~<span style="color: #6434A3;">NA</span>)
+traceback()
 </pre>
 </div>
 
 <hr  />
 </div>
 </div>
+
 <div id="outline-container-sec-5-5" class="outline-3">
 <h3 id="sec-5-5"><span class="section-number-3">5.5</span> Writing functions summary</h3>
 <div class="outline-text-3" id="text-5-5">
@@ -1406,6 +1311,7 @@ Functions introduced in this section
 <hr  />
 </div>
 </div>
+
 <div id="outline-container-sec-5-6" class="outline-3">
 <h3 id="sec-5-6"><span class="section-number-3">5.6</span> Exercise 2</h3>
 <div class="outline-text-3" id="text-5-6">
@@ -1418,48 +1324,8 @@ Functions introduced in this section
 </ol>
 </div>
 </div>
-<div id="outline-container-sec-5-7" class="outline-3">
-<h3 id="sec-5-7"><span class="section-number-3">5.7</span> Exercise 2 prototype&#xa0;&#xa0;&#xa0;<span class="tag"><span class="prototype">prototype</span></span></h3>
-<div class="outline-text-3" id="text-5-7">
-<ol class="org-ol">
-<li value="1">Write a function that takes a data.frame as an argument and returns the mean of each numeric column in the data frame. Test your function using the iris data.
-</li>
-</ol>
-
-<!-- MD: *** =instructions-->
-<!-- MD: Just click the Submit Answer button on the right.-->
-<!-- MD: *** =sample_code-->
-<div class="org-src-container">
-
-<pre class="src src-R" id="ex3.1"><span style="color: #0000ff;">statsum</span> <span style="color: #008b8b;">&lt;-</span> <span style="color: #a020f0;">function</span>(df) {
-    classes <span style="color: #008b8b;">&lt;-</span> <span style="color: #0000ff;">sapply</span>(df, class)
-    means <span style="color: #008b8b;">&lt;-</span> <span style="color: #0000ff;">sapply</span>(df[classes <span style="color: #008b8b;">==</span> <span style="color: #8b2252;">"numeric"</span>], mean)
-    <span style="color: #a020f0;">return</span>(means)}
-
-<span style="color: #0000ff;">statsum</span>(iris)
-</pre>
 </div>
 
-
-<ol class="org-ol">
-<li value="2">Modify your function so that it returns a list, the first element if which is the means of the numeric variables, the second of which is the counts of the levels of each categorical variable.
-</li>
-</ol>
-<!-- MD: *** =sample_code-->
-<div class="org-src-container">
-
-<pre class="src src-R" id="ex3.2"><span style="color: #0000ff;">statsum</span> <span style="color: #008b8b;">&lt;-</span> <span style="color: #a020f0;">function</span>(df) {
-    classes <span style="color: #008b8b;">&lt;-</span> <span style="color: #0000ff;">sapply</span>(df, class)
-    means <span style="color: #008b8b;">&lt;-</span> <span style="color: #0000ff;">sapply</span>(df[classes <span style="color: #008b8b;">==</span> <span style="color: #8b2252;">"numeric"</span>], mean)
-    counts <span style="color: #008b8b;">&lt;-</span> <span style="color: #0000ff;">sapply</span>(df[classes <span style="color: #008b8b;">==</span> <span style="color: #8b2252;">"factor"</span>], table)
-    <span style="color: #a020f0;">return</span>(<span style="color: #0000ff;">list</span>(means, counts))}
-
-<span style="color: #0000ff;">statsum</span>(iris)
-</pre>
-</div>
-</div>
-</div>
-</div>
 <div id="outline-container-sec-6" class="outline-2">
 <h2 id="sec-6"><span class="section-number-2">6</span> Control flow</h2>
 <div class="outline-text-2" id="text-6">
@@ -1479,6 +1345,7 @@ Functions introduced in this section
 <hr  />
 </div>
 </div>
+
 <div id="outline-container-sec-6-2" class="outline-3">
 <h3 id="sec-6-2"><span class="section-number-3">6.2</span> Control flow examples</h3>
 <div class="outline-text-3" id="text-6-2">
@@ -1491,18 +1358,18 @@ Goal: write a function that tells us if a number is positive or negative
 <!-- MD: *** =sample_code-->
 <div class="org-src-container">
 
-<pre class="src src-R" id="brachingExample1"><span style="color: #b22222;">## </span><span style="color: #b22222;">use branching to return different result depending on the sign of the input</span>
-<span style="color: #0000ff;">isPositive</span> <span style="color: #008b8b;">&lt;-</span> <span style="color: #a020f0;">function</span>(x) { <span style="color: #b22222;"># </span><span style="color: #b22222;">define function "isPositive"</span>
-  <span style="color: #a020f0;">if</span> (x <span style="color: #008b8b;">&gt;</span> <span style="color: #228b22;">0</span>) { <span style="color: #b22222;"># </span><span style="color: #b22222;">if x is greater than zero, then</span>
-    <span style="color: #0000ff;">cat</span>(x, <span style="color: #8b2252;">"is positive \n"</span>) } <span style="color: #b22222;"># </span><span style="color: #b22222;">say so! </span>
-  <span style="color: #a020f0;">else</span> { <span style="color: #b22222;"># </span><span style="color: #b22222;">otherwise</span>
-      <span style="color: #0000ff;">cat</span>(x, <span style="color: #8b2252;">"is negative \n"</span>)} <span style="color: #b22222;"># </span><span style="color: #b22222;">say x is negative</span>
-} <span style="color: #b22222;"># </span><span style="color: #b22222;">end function definition </span>
+<pre class="src src-R" id="brachingExample1"><span style="color: #8D8D84; font-style: italic;">## </span><span style="color: #8D8D84; font-style: italic;">use branching to return different result depending on the sign of the input</span>
+<span style="color: #006699;">isPositive</span> <span style="color: #D0372D;">&lt;-</span> <span style="color: #0000FF;">function</span>(x) { <span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">define function "isPositive"</span>
+  <span style="color: #0000FF;">if</span> (x &gt; 0) { <span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">if x is greater than zero, then</span>
+    cat(x, <span style="color: #008000;">"is positive \n"</span>) } <span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">say so! </span>
+  <span style="color: #0000FF;">else</span> { <span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">otherwise</span>
+      cat(x, <span style="color: #008000;">"is negative \n"</span>)} <span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">say x is negative</span>
+} <span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">end function definition </span>
 
-<span style="color: #b22222;">## </span><span style="color: #b22222;">test the isPositive() function</span>
-<span style="color: #0000ff;">isPositive</span>(<span style="color: #228b22;">10</span>)
-<span style="color: #0000ff;">isPositive</span>(<span style="color: #008b8b;">-</span><span style="color: #228b22;">1</span>)
-<span style="color: #0000ff;">isPositive</span>(<span style="color: #228b22;">0</span>)
+<span style="color: #8D8D84; font-style: italic;">## </span><span style="color: #8D8D84; font-style: italic;">test the isPositive() function</span>
+isPositive(10)
+isPositive(-1)
+isPositive(0)
 </pre>
 </div>
 
@@ -1531,6 +1398,7 @@ Need to do something different if x equals zero!
 <hr  />
 </div>
 </div>
+
 <div id="outline-container-sec-6-3" class="outline-3">
 <h3 id="sec-6-3"><span class="section-number-3">6.3</span> Control flow examples</h3>
 <div class="outline-text-3" id="text-6-3">
@@ -1543,15 +1411,15 @@ Add a condition to handle <code>x = 0</code>
 <!-- MD: *** =sample_code-->
 <div class="org-src-container">
 
-<pre class="src src-R" id="brachingExample3"><span style="color: #b22222;">## </span><span style="color: #b22222;">add condition to handle the case that x is zero</span>
-  <span style="color: #0000ff;">isPositive</span> <span style="color: #008b8b;">&lt;-</span> <span style="color: #a020f0;">function</span>(x) { <span style="color: #b22222;"># </span><span style="color: #b22222;">define function "isPositive"</span>
-    <span style="color: #a020f0;">if</span> (x <span style="color: #008b8b;">&gt;</span> <span style="color: #228b22;">0</span>) { <span style="color: #b22222;"># </span><span style="color: #b22222;">if x is greater than zero, then</span>
-      <span style="color: #0000ff;">cat</span>(x, <span style="color: #8b2252;">"is positive \n"</span>) } <span style="color: #b22222;"># </span><span style="color: #b22222;">say so! </span>
-    <span style="color: #a020f0;">else</span> <span style="color: #a020f0;">if</span> (x <span style="color: #008b8b;">==</span> <span style="color: #228b22;">0</span>) { <span style="color: #b22222;"># </span><span style="color: #b22222;">otherwise if x is zero</span>
-      <span style="color: #0000ff;">cat</span>(x, <span style="color: #8b2252;">"is zero \n"</span>)} <span style="color: #b22222;"># </span><span style="color: #b22222;">say so!</span>
-    <span style="color: #a020f0;">else</span> { <span style="color: #b22222;">#</span><span style="color: #b22222;">otherwise</span>
-        <span style="color: #0000ff;">cat</span>(x, <span style="color: #8b2252;">"is negative \n"</span>)} <span style="color: #b22222;"># </span><span style="color: #b22222;">say x is negative</span>
-  } <span style="color: #b22222;"># </span><span style="color: #b22222;">end function definition</span>
+<pre class="src src-R" id="brachingExample3"><span style="color: #8D8D84; font-style: italic;">## </span><span style="color: #8D8D84; font-style: italic;">add condition to handle the case that x is zero</span>
+  <span style="color: #006699;">isPositive</span> <span style="color: #D0372D;">&lt;-</span> <span style="color: #0000FF;">function</span>(x) { <span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">define function "isPositive"</span>
+    <span style="color: #0000FF;">if</span> (x &gt; 0) { <span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">if x is greater than zero, then</span>
+      cat(x, <span style="color: #008000;">"is positive \n"</span>) } <span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">say so! </span>
+    <span style="color: #0000FF;">else</span> <span style="color: #0000FF;">if</span> (x == 0) { <span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">otherwise if x is zero</span>
+      cat(x, <span style="color: #008000;">"is zero \n"</span>)} <span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">say so!</span>
+    <span style="color: #0000FF;">else</span> { <span style="color: #8D8D84; font-style: italic;">#</span><span style="color: #8D8D84; font-style: italic;">otherwise</span>
+        cat(x, <span style="color: #008000;">"is negative \n"</span>)} <span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">say x is negative</span>
+  } <span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">end function definition</span>
 </pre>
 </div>
 
@@ -1575,8 +1443,8 @@ Test the new function
 <!-- MD: *** =sample_code-->
 <div class="org-src-container">
 
-<pre class="src src-R" id="brachingExample3.1"><span style="color: #0000ff;">isPositive</span>(<span style="color: #228b22;">0</span>) <span style="color: #b22222;"># </span><span style="color: #b22222;">test the isPositive() function</span>
-<span style="color: #0000ff;">isPositive</span>(<span style="color: #8b2252;">"a"</span>) <span style="color: #b22222;">#</span><span style="color: #b22222;">oops, that will not work!</span>
+<pre class="src src-R" id="brachingExample3.1">isPositive(0) <span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">test the isPositive() function</span>
+isPositive(<span style="color: #008000;">"a"</span>) <span style="color: #8D8D84; font-style: italic;">#</span><span style="color: #8D8D84; font-style: italic;">oops, that will not work!</span>
 </pre>
 </div>
 
@@ -1594,6 +1462,7 @@ We fixed the problem when <code>x = 0</code>, but now we need to make sure x is 
 <hr  />
 </div>
 </div>
+
 <div id="outline-container-sec-6-4" class="outline-3">
 <h3 id="sec-6-4"><span class="section-number-3">6.4</span> Control flow examples</h3>
 <div class="outline-text-3" id="text-6-4">
@@ -1606,19 +1475,19 @@ Do something reasonable if x is not numeric
 <!-- MD: *** =sample_code-->
 <div class="org-src-container">
 
-<pre class="src src-R" id="brachingExample5"><span style="color: #b22222;">## </span><span style="color: #b22222;">add condition to handle the case that x is zero</span>
-  <span style="color: #0000ff;">isPositive</span> <span style="color: #008b8b;">&lt;-</span> <span style="color: #a020f0;">function</span>(x) { <span style="color: #b22222;"># </span><span style="color: #b22222;">define function "isPositive"</span>
-    <span style="color: #a020f0;">if</span>(!<span style="color: #0000ff;">is.numeric</span>(x) | <span style="color: #0000ff;">length</span>(x) <span style="color: #008b8b;">&gt;</span> <span style="color: #228b22;">1</span>) {
-      <span style="color: #0000ff;">cat</span>(<span style="color: #8b2252;">"x must be a numeric vector of length one! \n"</span>)}
-    <span style="color: #a020f0;">else</span> <span style="color: #a020f0;">if</span> (x <span style="color: #008b8b;">&gt;</span> <span style="color: #228b22;">0</span>) { <span style="color: #b22222;"># </span><span style="color: #b22222;">if x is greater than zero, then</span>
-      <span style="color: #0000ff;">cat</span>(x,<span style="color: #8b2252;">" is positive \n"</span>) } <span style="color: #b22222;"># </span><span style="color: #b22222;">say so! </span>
-    <span style="color: #a020f0;">else</span> <span style="color: #a020f0;">if</span> (x <span style="color: #008b8b;">==</span> <span style="color: #228b22;">0</span>) { <span style="color: #b22222;"># </span><span style="color: #b22222;">otherwise if x is zero</span>
-      <span style="color: #0000ff;">cat</span>(x,<span style="color: #8b2252;">" is zero \n"</span>)} <span style="color: #b22222;"># </span><span style="color: #b22222;">say so!</span>
-    <span style="color: #a020f0;">else</span> { <span style="color: #b22222;">#</span><span style="color: #b22222;">otherwise</span>
-      <span style="color: #0000ff;">cat</span>(x,<span style="color: #8b2252;">" is negative \n"</span>)} <span style="color: #b22222;"># </span><span style="color: #b22222;">say x is negative</span>
-  } <span style="color: #b22222;"># </span><span style="color: #b22222;">end function definition</span>
+<pre class="src src-R" id="brachingExample5"><span style="color: #8D8D84; font-style: italic;">## </span><span style="color: #8D8D84; font-style: italic;">add condition to handle the case that x is zero</span>
+  <span style="color: #006699;">isPositive</span> <span style="color: #D0372D;">&lt;-</span> <span style="color: #0000FF;">function</span>(x) { <span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">define function "isPositive"</span>
+    <span style="color: #0000FF;">if</span>(!is.numeric(x) | length(x) &gt; 1) {
+      cat(<span style="color: #008000;">"x must be a numeric vector of length one! \n"</span>)}
+    <span style="color: #0000FF;">else</span> <span style="color: #0000FF;">if</span> (x &gt; 0) { <span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">if x is greater than zero, then</span>
+      cat(x,<span style="color: #008000;">" is positive \n"</span>) } <span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">say so! </span>
+    <span style="color: #0000FF;">else</span> <span style="color: #0000FF;">if</span> (x == 0) { <span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">otherwise if x is zero</span>
+      cat(x,<span style="color: #008000;">" is zero \n"</span>)} <span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">say so!</span>
+    <span style="color: #0000FF;">else</span> { <span style="color: #8D8D84; font-style: italic;">#</span><span style="color: #8D8D84; font-style: italic;">otherwise</span>
+      cat(x,<span style="color: #008000;">" is negative \n"</span>)} <span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">say x is negative</span>
+  } <span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">end function definition</span>
 
-<span style="color: #0000ff;">isPositive</span>(<span style="color: #8b2252;">"a"</span>) <span style="color: #b22222;"># </span><span style="color: #b22222;">test the isPositive() function on character</span>
+isPositive(<span style="color: #008000;">"a"</span>) <span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">test the isPositive() function on character</span>
 </pre>
 </div>
 
@@ -1643,6 +1512,7 @@ x must be a numeric vector of length one!
 <hr  />
 </div>
 </div>
+
 <div id="outline-container-sec-6-5" class="outline-3">
 <h3 id="sec-6-5"><span class="section-number-3">6.5</span> Control flow summary</h3>
 <div class="outline-text-3" id="text-6-5">
@@ -1673,6 +1543,7 @@ Functions introduced in this section
 <hr  />
 </div>
 </div>
+
 <div id="outline-container-sec-6-6" class="outline-3">
 <h3 id="sec-6-6"><span class="section-number-3">6.6</span> Exercise 3</h3>
 <div class="outline-text-3" id="text-6-6">
@@ -1685,54 +1556,8 @@ Functions introduced in this section
 </ol>
 </div>
 </div>
-<div id="outline-container-sec-6-7" class="outline-3">
-<h3 id="sec-6-7"><span class="section-number-3">6.7</span> Exercise 3 prototype&#xa0;&#xa0;&#xa0;<span class="tag"><span class="prototype">prototype</span></span></h3>
-<div class="outline-text-3" id="text-6-7">
-<ol class="org-ol">
-<li value="1">Add argument checking code to return an error if the argument to your function is not a data.frame
-</li>
-</ol>
-
-<!-- MD: *** =instructions-->
-<!-- MD: Just click the Submit Answer button on the right.-->
-<!-- MD: *** =sample_code-->
-<div class="org-src-container">
-
-<pre class="src src-R" id="ex4.1"><span style="color: #0000ff;">statsum</span> <span style="color: #008b8b;">&lt;-</span> <span style="color: #a020f0;">function</span>(df) {
-    <span style="color: #a020f0;">if</span>(<span style="color: #0000ff;">class</span>(df) !<span style="color: #008b8b;">=</span> <span style="color: #8b2252;">"data.frame"</span>) <span style="color: #a020f0;">stop</span>(<span style="color: #8b2252;">"df must be a data.frame!"</span>)
-    classes <span style="color: #008b8b;">&lt;-</span> <span style="color: #0000ff;">sapply</span>(df, class)
-    means <span style="color: #008b8b;">&lt;-</span> <span style="color: #0000ff;">sapply</span>(df[classes <span style="color: #008b8b;">==</span> <span style="color: #8b2252;">"numeric"</span>], mean)
-    counts <span style="color: #008b8b;">&lt;-</span> <span style="color: #0000ff;">sapply</span>(df[classes <span style="color: #008b8b;">==</span> <span style="color: #8b2252;">"factor"</span>], table)
-    <span style="color: #a020f0;">return</span>(<span style="color: #0000ff;">list</span>(means, counts))}
-
-<span style="color: #0000ff;">statsum</span>(<span style="color: #228b22;">1</span>:<span style="color: #228b22;">10</span>)
-<span style="color: #0000ff;">statsum</span>(iris)
-</pre>
 </div>
 
-<ol class="org-ol">
-<li value="2">Insert a break point with <code>browser()</code> and step through your function
-</li>
-</ol>
-
-<!-- MD: *** =sample_code-->
-<div class="org-src-container">
-
-<pre class="src src-R" id="ex4.2"><span style="color: #0000ff;">statsum</span> <span style="color: #008b8b;">&lt;-</span> <span style="color: #a020f0;">function</span>(df) {
-    <span style="color: #a020f0;">if</span>(<span style="color: #0000ff;">class</span>(df) !<span style="color: #008b8b;">=</span> <span style="color: #8b2252;">"data.frame"</span>) <span style="color: #a020f0;">stop</span>(<span style="color: #8b2252;">"df must be a data.frame!"</span>)
-<span style="color: #0000ff;">browser</span>()
-    classes <span style="color: #008b8b;">&lt;-</span> <span style="color: #0000ff;">sapply</span>(df, class)
-    means <span style="color: #008b8b;">&lt;-</span> <span style="color: #0000ff;">sapply</span>(df[classes <span style="color: #008b8b;">==</span> <span style="color: #8b2252;">"numeric"</span>], mean)
-    counts <span style="color: #008b8b;">&lt;-</span> <span style="color: #0000ff;">sapply</span>(df[classes <span style="color: #008b8b;">==</span> <span style="color: #8b2252;">"factor"</span>], table)
-    <span style="color: #a020f0;">return</span>(<span style="color: #0000ff;">list</span>(means, counts))
-}
-
-<span style="color: #0000ff;">statsum</span>(iris)
-</pre>
-</div>
-</div>
-</div>
-</div>
 
 
 <div id="outline-container-sec-7" class="outline-2">
@@ -1759,6 +1584,7 @@ R has two major object systems:
 <hr  />
 </div>
 </div>
+
 <div id="outline-container-sec-7-2" class="outline-3">
 <h3 id="sec-7-2"><span class="section-number-3">7.2</span> Object class</h3>
 <div class="outline-text-3" id="text-7-2">
@@ -1771,10 +1597,10 @@ The class of an object can be retrieved and modified using the <code>class()</co
 <!-- MD: *** =sample_code-->
 <div class="org-src-container">
 
-<pre class="src src-R" id="classExample">x <span style="color: #008b8b;">&lt;-</span> <span style="color: #228b22;">1</span>:<span style="color: #228b22;">10</span>
-<span style="color: #0000ff;">class</span>(x) 
-<span style="color: #0000ff;">class</span>(x) <span style="color: #008b8b;">&lt;-</span> <span style="color: #8b2252;">"foo"</span>
-<span style="color: #0000ff;">class</span>(x)
+<pre class="src src-R" id="classExample">x <span style="color: #D0372D;">&lt;-</span> 1:10
+class(x) 
+class(x) <span style="color: #D0372D;">&lt;-</span> <span style="color: #008000;">"foo"</span>
+class(x)
 </pre>
 </div>
 
@@ -1795,8 +1621,8 @@ Objects are not limited to a single class, and can have many classes:
 <!-- MD: *** =sample_code-->
 <div class="org-src-container">
 
-<pre class="src src-R" id="classExample2"><span style="color: #0000ff;">class</span>(x) <span style="color: #008b8b;">&lt;-</span> <span style="color: #0000ff;">c</span>(<span style="color: #8b2252;">"A"</span>, <span style="color: #8b2252;">"B"</span>)
-<span style="color: #0000ff;">class</span>(x)
+<pre class="src src-R" id="classExample2">class(x) <span style="color: #D0372D;">&lt;-</span> c(<span style="color: #008000;">"A"</span>, <span style="color: #008000;">"B"</span>)
+class(x)
 </pre>
 </div>
 
@@ -1810,6 +1636,7 @@ Objects are not limited to a single class, and can have many classes:
 <hr  />
 </div>
 </div>
+
 <div id="outline-container-sec-7-3" class="outline-3">
 <h3 id="sec-7-3"><span class="section-number-3">7.3</span> Function methods</h3>
 <div class="outline-text-3" id="text-7-3">
@@ -1825,10 +1652,10 @@ Objects are not limited to a single class, and can have many classes:
 <!-- MD: *** =sample_code-->
 <div class="org-src-container">
 
-<pre class="src src-R" id="getMethods"><span style="color: #b22222;"># </span><span style="color: #b22222;">see what methods have been defined for the mean function</span>
-<span style="color: #0000ff;">methods</span>(mean)
-<span style="color: #b22222;"># </span><span style="color: #b22222;">which functions have methods for data.frames?</span>
-<span style="color: #0000ff;">methods</span>(class<span style="color: #008b8b;">=</span><span style="color: #8b2252;">"data.frame"</span>)[<span style="color: #228b22;">1</span>:<span style="color: #228b22;">9</span>]
+<pre class="src src-R" id="getMethods"><span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">see what methods have been defined for the mean function</span>
+methods(mean)
+<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">which functions have methods for data.frames?</span>
+methods(class=<span style="color: #008000;">"data.frame"</span>)[1:9]
 </pre>
 </div>
 
@@ -1850,6 +1677,7 @@ Objects are not limited to a single class, and can have many classes:
 <hr  />
 </div>
 </div>
+
 <div id="outline-container-sec-7-4" class="outline-3">
 <h3 id="sec-7-4"><span class="section-number-3">7.4</span> Creating new function methods</h3>
 <div class="outline-text-3" id="text-7-4">
@@ -1862,22 +1690,22 @@ To create a new method for a function that is already generic all you have to do
 <!-- MD: *** =sample_code-->
 <div class="org-src-container">
 
-<pre class="src src-R" id="fooMean"><span style="color: #b22222;"># </span><span style="color: #b22222;">create a mean() method for objects of class "foo":</span>
-<span style="color: #0000ff;">mean.foo</span> <span style="color: #008b8b;">&lt;-</span> <span style="color: #a020f0;">function</span>(x) { <span style="color: #b22222;"># </span><span style="color: #b22222;">mean method for "foo" class</span>
-  <span style="color: #a020f0;">if</span>(<span style="color: #0000ff;">is.numeric</span>(x)) {
-    <span style="color: #0000ff;">cat</span>(<span style="color: #8b2252;">"The average is"</span>, <span style="color: #0000ff;">mean.default</span>(x))
-    <span style="color: #a020f0;">return</span>(<span style="color: #0000ff;">invisible</span>(<span style="color: #0000ff;">mean.default</span>(x))) <span style="color: #b22222;">#</span><span style="color: #b22222;">use mean.default for numeric</span>
-  } <span style="color: #a020f0;">else</span>
-    <span style="color: #0000ff;">cat</span>(<span style="color: #8b2252;">"x is not numeric \n"</span>)} <span style="color: #b22222;"># </span><span style="color: #b22222;">otherwise say x not numeric</span>
+<pre class="src src-R" id="fooMean"><span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">create a mean() method for objects of class "foo":</span>
+<span style="color: #006699;">mean.foo</span> <span style="color: #D0372D;">&lt;-</span> <span style="color: #0000FF;">function</span>(x) { <span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">mean method for "foo" class</span>
+  <span style="color: #0000FF;">if</span>(is.numeric(x)) {
+    cat(<span style="color: #008000;">"The average is"</span>, mean.default(x))
+    <span style="color: #0000FF;">return</span>(invisible(mean.default(x))) <span style="color: #8D8D84; font-style: italic;">#</span><span style="color: #8D8D84; font-style: italic;">use mean.default for numeric</span>
+  } <span style="color: #0000FF;">else</span>
+    cat(<span style="color: #008000;">"x is not numeric \n"</span>)} <span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">otherwise say x not numeric</span>
 
-x <span style="color: #008b8b;">&lt;-</span> <span style="color: #228b22;">1</span>:<span style="color: #228b22;">10</span>
-<span style="color: #0000ff;">mean</span>(x)
-<span style="color: #0000ff;">class</span>(x) <span style="color: #008b8b;">&lt;-</span> <span style="color: #8b2252;">"foo"</span>
-<span style="color: #0000ff;">mean</span>(x)
+x <span style="color: #D0372D;">&lt;-</span> 1:10
+mean(x)
+class(x) <span style="color: #D0372D;">&lt;-</span> <span style="color: #008000;">"foo"</span>
+mean(x)
 
-x <span style="color: #008b8b;">&lt;-</span> <span style="color: #0000ff;">as.character</span>(x)
-<span style="color: #0000ff;">class</span>(x) <span style="color: #008b8b;">&lt;-</span> <span style="color: #8b2252;">"foo"</span>
-<span style="color: #0000ff;">mean</span>(x)
+x <span style="color: #D0372D;">&lt;-</span> as.character(x)
+class(x) <span style="color: #D0372D;">&lt;-</span> <span style="color: #008000;">"foo"</span>
+mean(x)
 </pre>
 </div>
 
@@ -1906,6 +1734,7 @@ x is not numeric
 <hr  />
 </div>
 </div>
+
 <div id="outline-container-sec-7-5" class="outline-3">
 <h3 id="sec-7-5"><span class="section-number-3">7.5</span> Creating generic functions</h3>
 <div class="outline-text-3" id="text-7-5">
@@ -1918,18 +1747,18 @@ S3 generics are most often used for print, summary, and plot methods, but someti
 <!-- MD: *** =sample_code-->
 <div class="org-src-container">
 
-<pre class="src src-R" id="createGeneric"><span style="color: #b22222;"># </span><span style="color: #b22222;">create a generic disp() function</span>
-<span style="color: #0000ff;">disp</span> <span style="color: #008b8b;">&lt;-</span> <span style="color: #a020f0;">function</span>(x, ...) {
-  <span style="color: #0000ff;">UseMethod</span>(<span style="color: #8b2252;">"disp"</span>)
+<pre class="src src-R" id="createGeneric"><span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">create a generic disp() function</span>
+<span style="color: #006699;">disp</span> <span style="color: #D0372D;">&lt;-</span> <span style="color: #0000FF;">function</span>(x, ...) {
+  UseMethod(<span style="color: #008000;">"disp"</span>)
 }
 
-<span style="color: #b22222;"># </span><span style="color: #b22222;">create a disp method for class "matrix"</span>
-<span style="color: #0000ff;">disp.matrix</span> <span style="color: #008b8b;">&lt;-</span> <span style="color: #a020f0;">function</span>(x) {
-  <span style="color: #0000ff;">print</span>(<span style="color: #0000ff;">round</span>(x, digits<span style="color: #008b8b;">=</span><span style="color: #228b22;">2</span>))
+<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">create a disp method for class "matrix"</span>
+<span style="color: #006699;">disp.matrix</span> <span style="color: #D0372D;">&lt;-</span> <span style="color: #0000FF;">function</span>(x) {
+  print(round(x, digits=2))
 }
 
-<span style="color: #b22222;"># </span><span style="color: #b22222;">test it out</span>
-<span style="color: #0000ff;">disp</span>(<span style="color: #0000ff;">matrix</span>(<span style="color: #0000ff;">runif</span>(<span style="color: #228b22;">10</span>), ncol<span style="color: #008b8b;">=</span><span style="color: #228b22;">2</span>))
+<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">test it out</span>
+disp(matrix(runif(10), ncol=2))
 </pre>
 </div>
 
@@ -1958,6 +1787,7 @@ S3 generics are most often used for print, summary, and plot methods, but someti
 <hr  />
 </div>
 </div>
+
 <div id="outline-container-sec-7-6" class="outline-3">
 <h3 id="sec-7-6"><span class="section-number-3">7.6</span> S3 classes summary</h3>
 <div class="outline-text-3" id="text-7-6">
@@ -1995,6 +1825,7 @@ Functions introduced in this section
 <hr  />
 </div>
 </div>
+
 <div id="outline-container-sec-7-7" class="outline-3">
 <h3 id="sec-7-7"><span class="section-number-3">7.7</span> Exercise 4</h3>
 <div class="outline-text-3" id="text-7-7">
@@ -2010,74 +1841,8 @@ Functions introduced in this section
 </ol>
 </div>
 </div>
-<div id="outline-container-sec-7-8" class="outline-3">
-<h3 id="sec-7-8"><span class="section-number-3">7.8</span> Exercise 4 prototype&#xa0;&#xa0;&#xa0;<span class="tag"><span class="prototype">prototype</span></span></h3>
-<div class="outline-text-3" id="text-7-8">
-<ol class="org-ol">
-<li value="1">Modify your function so that it also returns the standard deviations of the numeric variables 
-</li>
-</ol>
-
-<!-- MD: *** =instructions-->
-<!-- MD: Just click the Submit Answer button on the right.-->
-<!-- MD: *** =sample_code-->
-<div class="org-src-container">
-
-<pre class="src src-R" id="ex5.1"><span style="color: #0000ff;">statsum</span> <span style="color: #008b8b;">&lt;-</span> <span style="color: #a020f0;">function</span>(df) {
-    <span style="color: #a020f0;">if</span>(<span style="color: #0000ff;">class</span>(df) !<span style="color: #008b8b;">=</span> <span style="color: #8b2252;">"data.frame"</span>) <span style="color: #a020f0;">stop</span>(<span style="color: #8b2252;">"df must be a data.frame!"</span>)
-    classes <span style="color: #008b8b;">&lt;-</span> <span style="color: #0000ff;">sapply</span>(df, class)
-    means <span style="color: #008b8b;">&lt;-</span> <span style="color: #0000ff;">sapply</span>(df[classes <span style="color: #008b8b;">==</span> <span style="color: #8b2252;">"numeric"</span>], mean)
-    sds <span style="color: #008b8b;">&lt;-</span> <span style="color: #0000ff;">sapply</span>(df[classes <span style="color: #008b8b;">==</span> <span style="color: #8b2252;">"numeric"</span>], mean)
-    counts <span style="color: #008b8b;">&lt;-</span> <span style="color: #0000ff;">sapply</span>(df[classes <span style="color: #008b8b;">==</span> <span style="color: #8b2252;">"factor"</span>], table)
-    <span style="color: #a020f0;">return</span>(<span style="color: #0000ff;">list</span>(<span style="color: #0000ff;">cbind</span>(means, sds), counts))}
-
-<span style="color: #0000ff;">statsum</span>(iris)
-</pre>
 </div>
 
-<ol class="org-ol">
-<li value="2">Modify your function so that it returns a list of class "statsum"
-</li>
-</ol>
-
-<!-- MD: *** =sample_code-->
-<div class="org-src-container">
-
-<pre class="src src-R" id="ex5.2"><span style="color: #0000ff;">statsum</span> <span style="color: #008b8b;">&lt;-</span> <span style="color: #a020f0;">function</span>(df) {
-    <span style="color: #a020f0;">if</span>(<span style="color: #0000ff;">class</span>(df) !<span style="color: #008b8b;">=</span> <span style="color: #8b2252;">"data.frame"</span>) <span style="color: #a020f0;">stop</span>(<span style="color: #8b2252;">"df must be a data.frame!"</span>)
-    classes <span style="color: #008b8b;">&lt;-</span> <span style="color: #0000ff;">sapply</span>(df, class)
-    means <span style="color: #008b8b;">&lt;-</span> <span style="color: #0000ff;">sapply</span>(df[classes <span style="color: #008b8b;">==</span> <span style="color: #8b2252;">"numeric"</span>], mean)
-    sds <span style="color: #008b8b;">&lt;-</span> <span style="color: #0000ff;">sapply</span>(df[classes <span style="color: #008b8b;">==</span> <span style="color: #8b2252;">"numeric"</span>], mean)
-    counts <span style="color: #008b8b;">&lt;-</span> <span style="color: #0000ff;">sapply</span>(df[classes <span style="color: #008b8b;">==</span> <span style="color: #8b2252;">"factor"</span>], table)
-    R <span style="color: #008b8b;">&lt;-</span> <span style="color: #0000ff;">list</span>(<span style="color: #0000ff;">cbind</span>(means, sds), counts)
-    <span style="color: #0000ff;">class</span>(R) <span style="color: #008b8b;">&lt;-</span> <span style="color: #0000ff;">c</span>(<span style="color: #8b2252;">"statsum"</span>, <span style="color: #0000ff;">class</span>(R))
-    <span style="color: #a020f0;">return</span>(R)}
-
-<span style="color: #0000ff;">str</span>(<span style="color: #0000ff;">statsum</span>(iris))
-</pre>
-</div>
-
-
-<p>
-3 [@3] Write a print method for the statsum class
-</p>
-
-<!-- MD: *** =sample_code-->
-<div class="org-src-container">
-
-<pre class="src src-R" id="ex5.3"><span style="color: #0000ff;">print.statsum</span> <span style="color: #008b8b;">&lt;-</span> <span style="color: #a020f0;">function</span>(x) {
-    <span style="color: #0000ff;">cat</span>(<span style="color: #8b2252;">"Numeric variable descriptive statistics:\n"</span>)
-    <span style="color: #0000ff;">print</span>(x[[<span style="color: #228b22;">1</span>]], digits<span style="color: #008b8b;">=</span><span style="color: #228b22;">2</span>) 
-    <span style="color: #0000ff;">cat</span>(<span style="color: #8b2252;">"Factor variable counts:\n"</span>)
-    <span style="color: #0000ff;">print</span>(x[[<span style="color: #228b22;">2</span>]])
-}
-
-<span style="color: #0000ff;">statsum</span>(iris)
-</pre>
-</div>
-</div>
-</div>
-</div>
 
 <div id="outline-container-sec-8" class="outline-2">
 <h2 id="sec-8"><span class="section-number-2">8</span> Things that may surprise you</h2>
@@ -2099,6 +1864,7 @@ Functions introduced in this section
 <hr  />
 </div>
 </div>
+
 <div id="outline-container-sec-8-2" class="outline-3">
 <h3 id="sec-8-2"><span class="section-number-3">8.2</span> Floating point comparison</h3>
 <div class="outline-text-3" id="text-8-2">
@@ -2110,7 +1876,7 @@ Floating point arithmetic is not exact:
 <!-- MD: *** =sample_code-->
 <div class="org-src-container">
 
-<pre class="src src-R" id="floatingPointExample"><span style="color: #228b22;">.1</span> <span style="color: #008b8b;">==</span> <span style="color: #228b22;">.3</span><span style="color: #008b8b;">/</span><span style="color: #228b22;">3</span>
+<pre class="src src-R" id="floatingPointExample">.1 == .3/3
 </pre>
 </div>
 
@@ -2126,7 +1892,7 @@ Solution: <code>use all.equal()</code>:
 <!-- MD: *** =sample_code-->
 <div class="org-src-container">
 
-<pre class="src src-R" id="floatingPointExampleSolution"><span style="color: #0000ff;">all.equal</span>(<span style="color: #228b22;">.1</span>, <span style="color: #228b22;">.3</span><span style="color: #008b8b;">/</span><span style="color: #228b22;">3</span>)
+<pre class="src src-R" id="floatingPointExampleSolution">all.equal(.1, .3/3)
 </pre>
 </div>
 
@@ -2138,6 +1904,7 @@ Solution: <code>use all.equal()</code>:
 <hr  />
 </div>
 </div>
+
 <div id="outline-container-sec-8-3" class="outline-3">
 <h3 id="sec-8-3"><span class="section-number-3">8.3</span> Missing values</h3>
 <div class="outline-text-3" id="text-8-3">
@@ -2149,8 +1916,8 @@ R does not exclude missing values by default &#x2013; a single missing value in 
 <!-- MD: *** =sample_code-->
 <div class="org-src-container">
 
-<pre class="src src-R" id="MissingDataExample">x <span style="color: #008b8b;">&lt;-</span> <span style="color: #0000ff;">c</span>(<span style="color: #228b22;">1</span>:<span style="color: #228b22;">10</span>, <span style="color: #228b22;">NA</span>, <span style="color: #228b22;">12</span>:<span style="color: #228b22;">20</span>)
-<span style="color: #0000ff;">c</span>(<span style="color: #0000ff;">mean</span>(x), <span style="color: #0000ff;">sd</span>(x), <span style="color: #0000ff;">median</span>(x), <span style="color: #0000ff;">min</span>(x), <span style="color: #0000ff;">sd</span>(x))
+<pre class="src src-R" id="MissingDataExample">x <span style="color: #D0372D;">&lt;-</span> c(1:10, <span style="color: #6434A3;">NA</span>, 12:20)
+c(mean(x), sd(x), median(x), min(x), sd(x))
 </pre>
 </div>
 
@@ -2167,7 +1934,7 @@ NA is not equal to anything, not even NA
 <!-- MD: *** =sample_code-->
 <div class="org-src-container">
 
-<pre class="src src-R" id="NAcomp"><span style="color: #228b22;">NA</span> <span style="color: #008b8b;">==</span> <span style="color: #228b22;">NA</span>
+<pre class="src src-R" id="NAcomp"><span style="color: #6434A3;">NA</span> == <span style="color: #6434A3;">NA</span>
 </pre>
 </div>
 
@@ -2183,6 +1950,7 @@ Solutions: use <code>na.rm = TRUE</code> option when calculating, and is.na to t
 <hr  />
 </div>
 </div>
+
 <div id="outline-container-sec-8-4" class="outline-3">
 <h3 id="sec-8-4"><span class="section-number-3">8.4</span> Automatic type conversion</h3>
 <div class="outline-text-3" id="text-8-4">
@@ -2195,12 +1963,12 @@ Automatic type conversion happens a lot which is often useful, but makes it easy
 <!-- MD: *** =sample_code-->
 <div class="org-src-container">
 
-<pre class="src src-R" id="typeConversion"><span style="color: #b22222;"># </span><span style="color: #b22222;">combining values coereces them to the most general type</span>
-(x <span style="color: #008b8b;">&lt;-</span> <span style="color: #0000ff;">c</span>(<span style="color: #228b22;">TRUE</span>, <span style="color: #228b22;">FALSE</span>, <span style="color: #228b22;">1</span>, <span style="color: #228b22;">2</span>, <span style="color: #8b2252;">"a"</span>, <span style="color: #8b2252;">"b"</span>))
-<span style="color: #0000ff;">str</span>(x)
+<pre class="src src-R" id="typeConversion"><span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">combining values coereces them to the most general type</span>
+(x <span style="color: #D0372D;">&lt;-</span> c(<span style="color: #6434A3;">TRUE</span>, <span style="color: #6434A3;">FALSE</span>, 1, 2, <span style="color: #008000;">"a"</span>, <span style="color: #008000;">"b"</span>))
+str(x)
 
-<span style="color: #b22222;"># </span><span style="color: #b22222;">comparisons convert arguments to most general type</span>
-<span style="color: #228b22;">1</span> <span style="color: #008b8b;">&gt;</span> <span style="color: #8b2252;">"a"</span>
+<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">comparisons convert arguments to most general type</span>
+1 &gt; <span style="color: #008000;">"a"</span>
 </pre>
 </div>
 
@@ -2223,6 +1991,7 @@ Maybe this is what you expect&#x2026; I would like to at least get a warning!
 <hr  />
 </div>
 </div>
+
 <div id="outline-container-sec-8-5" class="outline-3">
 <h3 id="sec-8-5"><span class="section-number-3">8.5</span> Optional argument inconsistencies</h3>
 <div class="outline-text-3" id="text-8-5">
@@ -2235,8 +2004,8 @@ Functions you might expect to work similarly don't always:
 <!-- MD: *** =sample_code-->
 <div class="org-src-container">
 
-<pre class="src src-R" id="MeanVSsd"><span style="color: #0000ff;">mean</span>(<span style="color: #228b22;">1</span>, <span style="color: #228b22;">2</span>, <span style="color: #228b22;">3</span>, <span style="color: #228b22;">4</span>, <span style="color: #228b22;">5</span>)*<span style="color: #228b22;">5</span>
-<span style="color: #0000ff;">sum</span>(<span style="color: #228b22;">1</span>, <span style="color: #228b22;">2</span>, <span style="color: #228b22;">3</span>, <span style="color: #228b22;">4</span>, <span style="color: #228b22;">5</span>)
+<pre class="src src-R" id="MeanVSsd">mean(1, 2, 3, 4, 5)*5
+sum(1, 2, 3, 4, 5)
 </pre>
 </div>
 
@@ -2254,8 +2023,8 @@ Why are these different?!?
 <!-- MD: *** =sample_code-->
 <div class="org-src-container">
 
-<pre class="src src-R" id="MeanVSsdExplained"><span style="color: #0000ff;">args</span>(mean)
-<span style="color: #0000ff;">args</span>(sum)
+<pre class="src src-R" id="MeanVSsdExplained">args(mean)
+args(sum)
 </pre>
 </div>
 
@@ -2275,6 +2044,7 @@ Ouch. That is not nice at all!
 <hr  />
 </div>
 </div>
+
 <div id="outline-container-sec-8-6" class="outline-3">
 <h3 id="sec-8-6"><span class="section-number-3">8.6</span> Trouble with Factors</h3>
 <div class="outline-text-3" id="text-8-6">
@@ -2287,15 +2057,15 @@ Factors sometimes behave as numbers, and sometimes as characters, which can be c
 <!-- MD: *** =sample_code-->
 <div class="org-src-container">
 
-<pre class="src src-R" id="factorTrouble">(x <span style="color: #008b8b;">&lt;-</span> <span style="color: #0000ff;">factor</span>(<span style="color: #0000ff;">c</span>(<span style="color: #228b22;">5</span>, <span style="color: #228b22;">5</span>, <span style="color: #228b22;">6</span>, <span style="color: #228b22;">6</span>), levels <span style="color: #008b8b;">=</span> <span style="color: #0000ff;">c</span>(<span style="color: #228b22;">6</span>, <span style="color: #228b22;">5</span>)))
+<pre class="src src-R" id="factorTrouble">(x <span style="color: #D0372D;">&lt;-</span> factor(c(5, 5, 6, 6), levels = c(6, 5)))
 
-<span style="color: #0000ff;">str</span>(x)
+str(x)
 
-<span style="color: #0000ff;">as.character</span>(x)
-<span style="color: #b22222;"># </span><span style="color: #b22222;">here is where people sometimes get lost...</span>
-<span style="color: #0000ff;">as.numeric</span>(x)
-<span style="color: #b22222;"># </span><span style="color: #b22222;">you probably want</span>
-<span style="color: #0000ff;">as.numeric</span>(<span style="color: #0000ff;">as.character</span>(x))
+as.character(x)
+<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">here is where people sometimes get lost...</span>
+as.numeric(x)
+<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">you probably want</span>
+as.numeric(as.character(x))
 </pre>
 </div>
 
@@ -2320,6 +2090,7 @@ Levels: 6 5
 </div>
 </div>
 </div>
+
 <div id="outline-container-sec-9" class="outline-2">
 <h2 id="sec-9"><span class="section-number-2">9</span> Additional resources</h2>
 <div class="outline-text-2" id="text-9">
@@ -2369,6 +2140,7 @@ Levels: 6 5
 <hr  />
 </div>
 </div>
+
 <div id="outline-container-sec-9-2" class="outline-3">
 <h3 id="sec-9-2"><span class="section-number-3">9.2</span> Feedback</h3>
 <div class="outline-text-3" id="text-9-2">
@@ -2385,6 +2157,7 @@ Levels: 6 5
 </div>
 </div>
 </div>
+
 
 <div id="outline-container-sec-10" class="outline-2">
 <h2 id="sec-10"><span class="section-number-2">10</span> Loops (supplimental)</h2>
@@ -2407,6 +2180,7 @@ Levels: 6 5
 <hr  />
 </div>
 </div>
+
 <div id="outline-container-sec-10-2" class="outline-3">
 <h3 id="sec-10-2"><span class="section-number-3">10.2</span> Looping: for-loop examples</h3>
 <div class="outline-text-3" id="text-10-2">
@@ -2418,9 +2192,9 @@ For each value in a vector, print the number and its square
 <!-- MD: *** =sample_code-->
 <div class="org-src-container">
 
-<pre class="src src-R" id="firstForLoop"><span style="color: #b22222;"># </span><span style="color: #b22222;">For-loop example</span>
-<span style="color: #a020f0;">for</span> (num <span style="color: #a020f0;">in</span> <span style="color: #0000ff;">seq</span>(<span style="color: #008b8b;">-</span><span style="color: #228b22;">5</span>,<span style="color: #228b22;">5</span>)) {<span style="color: #b22222;"># </span><span style="color: #b22222;">for each number in [-5, 5]</span>
-  <span style="color: #0000ff;">cat</span>(num, <span style="color: #8b2252;">"squared is"</span>, num^<span style="color: #228b22;">2</span>, <span style="color: #8b2252;">"\n"</span>) <span style="color: #b22222;"># </span><span style="color: #b22222;">print the number</span>
+<pre class="src src-R" id="firstForLoop"><span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">For-loop example</span>
+<span style="color: #0000FF;">for</span> (num <span style="color: #0000FF;">in</span> seq(-5,5)) {<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">for each number in [-5, 5]</span>
+  cat(num, <span style="color: #008000;">"squared is"</span>, num^2, <span style="color: #008000;">"\n"</span>) <span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">print the number</span>
 }
 </pre>
 </div>
@@ -2446,6 +2220,7 @@ For each value in a vector, print the number and its square
 <hr  />
 </div>
 </div>
+
 <div id="outline-container-sec-10-3" class="outline-3">
 <h3 id="sec-10-3"><span class="section-number-3">10.3</span> Looping: while-loop example</h3>
 <div class="outline-text-3" id="text-10-3">
@@ -2458,14 +2233,14 @@ Goal: simulate rolling two dice until we roll two sixes
 <!-- MD: *** =sample_code-->
 <div class="org-src-container">
 
-<pre class="src src-R" id="whileLoopExample"><span style="color: #b22222;">## </span><span style="color: #b22222;">While-loop example: rolling dice</span>
-<span style="color: #0000ff;">set.seed</span>(<span style="color: #228b22;">15</span>) <span style="color: #b22222;"># </span><span style="color: #b22222;">allows repoducible sample() results</span>
-dice <span style="color: #008b8b;">&lt;-</span> <span style="color: #0000ff;">seq</span>(<span style="color: #228b22;">1</span>,<span style="color: #228b22;">6</span>) <span style="color: #b22222;"># </span><span style="color: #b22222;">set dice = [1 2 3 4 5 6]</span>
-roll <span style="color: #008b8b;">&lt;-</span> <span style="color: #228b22;">0</span> <span style="color: #b22222;"># </span><span style="color: #b22222;">set roll = 0</span>
-<span style="color: #a020f0;">while</span> (roll <span style="color: #008b8b;">&lt;</span> <span style="color: #228b22;">12</span>) {
-  roll <span style="color: #008b8b;">&lt;-</span> <span style="color: #0000ff;">sample</span>(dice,<span style="color: #228b22;">1</span>) <span style="color: #008b8b;">+</span> <span style="color: #0000ff;">sample</span>(dice,<span style="color: #228b22;">1</span>) <span style="color: #b22222;"># </span><span style="color: #b22222;">calculate sum of two rolls</span>
-  <span style="color: #0000ff;">cat</span>(<span style="color: #8b2252;">"We rolled a "</span>, roll, <span style="color: #8b2252;">"\n"</span>) <span style="color: #b22222;"># </span><span style="color: #b22222;">print the result</span>
-} <span style="color: #b22222;"># </span><span style="color: #b22222;">end the loop</span>
+<pre class="src src-R" id="whileLoopExample"><span style="color: #8D8D84; font-style: italic;">## </span><span style="color: #8D8D84; font-style: italic;">While-loop example: rolling dice</span>
+set.seed(15) <span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">allows repoducible sample() results</span>
+dice <span style="color: #D0372D;">&lt;-</span> seq(1,6) <span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">set dice = [1 2 3 4 5 6]</span>
+roll <span style="color: #D0372D;">&lt;-</span> 0 <span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">set roll = 0</span>
+<span style="color: #0000FF;">while</span> (roll &lt; 12) {
+  roll <span style="color: #D0372D;">&lt;-</span> sample(dice,1) + sample(dice,1) <span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">calculate sum of two rolls</span>
+  cat(<span style="color: #008000;">"We rolled a "</span>, roll, <span style="color: #008000;">"\n"</span>) <span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">print the result</span>
+} <span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">end the loop</span>
 </pre>
 </div>
 
@@ -2491,6 +2266,7 @@ We rolled a  12
 <hr  />
 </div>
 </div>
+
 <div id="outline-container-sec-10-4" class="outline-3">
 <h3 id="sec-10-4"><span class="section-number-3">10.4</span> Using loops to fill in lists</h3>
 <div class="outline-text-3" id="text-10-4">
@@ -2503,12 +2279,12 @@ Often you will want to store the results from a loop. You can create an object t
 <!-- MD: *** =sample_code-->
 <div class="org-src-container">
 
-<pre class="src src-R" id="saveLoopResults"><span style="color: #b22222;">## </span><span style="color: #b22222;">save calculations done in a loop</span>
-Result <span style="color: #008b8b;">&lt;-</span> <span style="color: #0000ff;">list</span>() <span style="color: #b22222;"># </span><span style="color: #b22222;">create an object to store the results</span>
-  <span style="color: #a020f0;">for</span> (i <span style="color: #a020f0;">in</span> <span style="color: #228b22;">1</span>:<span style="color: #228b22;">5</span>) {<span style="color: #b22222;"># </span><span style="color: #b22222;">for each i in [1, 5]</span>
-    Result[[i]] <span style="color: #008b8b;">&lt;-</span> <span style="color: #228b22;">1</span>:i <span style="color: #b22222;">## </span><span style="color: #b22222;">assign the sequence 1 to i to Result</span>
+<pre class="src src-R" id="saveLoopResults"><span style="color: #8D8D84; font-style: italic;">## </span><span style="color: #8D8D84; font-style: italic;">save calculations done in a loop</span>
+Result <span style="color: #D0372D;">&lt;-</span> list() <span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">create an object to store the results</span>
+  <span style="color: #0000FF;">for</span> (i <span style="color: #0000FF;">in</span> 1:5) {<span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">for each i in [1, 5]</span>
+    Result[[i]] <span style="color: #D0372D;">&lt;-</span> 1:i <span style="color: #8D8D84; font-style: italic;">## </span><span style="color: #8D8D84; font-style: italic;">assign the sequence 1 to i to Result</span>
 }
-Result <span style="color: #b22222;"># </span><span style="color: #b22222;">print Result</span>
+Result <span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">print Result</span>
 </pre>
 </div>
 
@@ -2540,6 +2316,7 @@ Result <span style="color: #b22222;"># </span><span style="color: #b22222;">prin
 <hr  />
 </div>
 </div>
+
 <div id="outline-container-sec-10-5" class="outline-3">
 <h3 id="sec-10-5"><span class="section-number-3">10.5</span> Word of caution: don't overuse loops!</h3>
 <div class="outline-text-3" id="text-10-5">
@@ -2557,12 +2334,12 @@ Most operations in R are vectorized &#x2013; This makes loops unnecessary in man
 <!-- MD: *** =sample_code-->
 <div class="org-src-container">
 
-<pre class="src src-R" id="sillyLoop1">x <span style="color: #008b8b;">&lt;-</span> <span style="color: #0000ff;">c</span>() <span style="color: #b22222;"># </span><span style="color: #b22222;">create vector x</span>
-<span style="color: #a020f0;">for</span>(i <span style="color: #a020f0;">in</span> <span style="color: #228b22;">1</span>:<span style="color: #228b22;">5</span>) x[i] <span style="color: #008b8b;">&lt;-</span> i<span style="color: #008b8b;">+</span>i <span style="color: #b22222;"># </span><span style="color: #b22222;">double a vector using a loop</span>
-<span style="color: #0000ff;">print</span>(x) <span style="color: #b22222;"># </span><span style="color: #b22222;">print the result</span>
+<pre class="src src-R" id="sillyLoop1">x <span style="color: #D0372D;">&lt;-</span> c() <span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">create vector x</span>
+<span style="color: #0000FF;">for</span>(i <span style="color: #0000FF;">in</span> 1:5) x[i] <span style="color: #D0372D;">&lt;-</span> i+i <span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">double a vector using a loop</span>
+print(x) <span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">print the result</span>
 
-<span style="color: #228b22;">1</span>:<span style="color: #228b22;">5</span> <span style="color: #008b8b;">+</span> <span style="color: #228b22;">1</span>:<span style="color: #228b22;">5</span> <span style="color: #b22222;">#</span><span style="color: #b22222;">double a vector without a loop</span>
-<span style="color: #228b22;">1</span>:<span style="color: #228b22;">5</span> <span style="color: #008b8b;">+</span> <span style="color: #228b22;">5</span> <span style="color: #b22222;"># </span><span style="color: #b22222;">shorter vectors are recycled</span>
+1:5 + 1:5 <span style="color: #8D8D84; font-style: italic;">#</span><span style="color: #8D8D84; font-style: italic;">double a vector without a loop</span>
+1:5 + 5 <span style="color: #8D8D84; font-style: italic;"># </span><span style="color: #8D8D84; font-style: italic;">shorter vectors are recycled</span>
 </pre>
 </div>
 
@@ -2587,12 +2364,12 @@ Most operations in R are vectorized &#x2013; This makes loops unnecessary in man
 <!-- MD: *** =sample_code-->
 <div class="org-src-container">
 
-<pre class="src src-R" id="pasteNotLoop"><span style="color: #b22222;">## </span><span style="color: #b22222;">Earlier we said</span>
-  <span style="color: #b22222;">## </span><span style="color: #b22222;">for (num in seq(-5,5)) {# for each number in [-5, 5]</span>
-  <span style="color: #b22222;">##   </span><span style="color: #b22222;">cat(num, "squared is", num^2, "\n") # print the number</span>
-  <span style="color: #b22222;">## </span><span style="color: #b22222;">}</span>
-<span style="color: #b22222;">## </span><span style="color: #b22222;">a better way:</span>
-<span style="color: #0000ff;">paste</span>(<span style="color: #228b22;">1</span>:<span style="color: #228b22;">5</span>, <span style="color: #8b2252;">"squared = "</span>, (<span style="color: #228b22;">1</span>:<span style="color: #228b22;">5</span>)^<span style="color: #228b22;">2</span>)
+<pre class="src src-R" id="pasteNotLoop"><span style="color: #8D8D84; font-style: italic;">## </span><span style="color: #8D8D84; font-style: italic;">Earlier we said</span>
+  <span style="color: #8D8D84; font-style: italic;">## </span><span style="color: #8D8D84; font-style: italic;">for (num in seq(-5,5)) {# for each number in [-5, 5]</span>
+  <span style="color: #8D8D84; font-style: italic;">##   </span><span style="color: #8D8D84; font-style: italic;">cat(num, "squared is", num^2, "\n") # print the number</span>
+  <span style="color: #8D8D84; font-style: italic;">## </span><span style="color: #8D8D84; font-style: italic;">}</span>
+<span style="color: #8D8D84; font-style: italic;">## </span><span style="color: #8D8D84; font-style: italic;">a better way:</span>
+paste(1:5, <span style="color: #008000;">"squared = "</span>, (1:5)^2)
 </pre>
 </div>
 
@@ -2615,6 +2392,7 @@ Loops are handy, but save them for when you really need them!
 <hr  />
 </div>
 </div>
+
 <div id="outline-container-sec-10-6" class="outline-3">
 <h3 id="sec-10-6"><span class="section-number-3">10.6</span> Exercise 5</h3>
 <div class="outline-text-3" id="text-10-6">
@@ -2630,100 +2408,12 @@ Loops are handy, but save them for when you really need them!
 </ol>
 </div>
 </div>
-
-<div id="outline-container-sec-10-7" class="outline-3">
-<h3 id="sec-10-7"><span class="section-number-3">10.7</span> Exercise 5 prototype&#xa0;&#xa0;&#xa0;<span class="tag"><span class="prototype">prototype</span></span></h3>
-<div class="outline-text-3" id="text-10-7">
-<ol class="org-ol">
-<li>use a loop to get the <code>class()</code> of each column in the iris data set
-</li>
-</ol>
-
-<!-- MD: *** =instructions-->
-<!-- MD: Just click the Submit Answer button on the right.-->
-<!-- MD: *** =sample_code-->
-<div class="org-src-container">
-
-<pre class="src src-R" id="ex2.1">classes <span style="color: #008b8b;">&lt;-</span> <span style="color: #0000ff;">c</span>()
-<span style="color: #a020f0;">for</span> (name <span style="color: #a020f0;">in</span> <span style="color: #0000ff;">names</span>(iris)) {
-    classes[name] <span style="color: #008b8b;">&lt;-</span> <span style="color: #0000ff;">class</span>(iris[[name]])
-}
-
-classes
-</pre>
-</div>
-
-<pre class="example">
-&gt; classes &lt;- c()
-&gt; for (name in names(iris)) {
-+     classes[name] &lt;- class(iris[[name]])
-+ }
-&gt; 
-&gt; classes
-Sepal.Length  Sepal.Width Petal.Length  Petal.Width      Species 
-   "numeric"    "numeric"    "numeric"    "numeric"     "factor" 
-&gt;
-</pre>
-
-<ol class="org-ol">
-<li>use the results from step 1 to select the numeric columns 
-</li>
-</ol>
-
-<!-- MD: *** =sample_code-->
-<div class="org-src-container">
-
-<pre class="src src-R" id="ex2.2">iris.num <span style="color: #008b8b;">&lt;-</span> iris[, <span style="color: #0000ff;">names</span>(classes)[classes<span style="color: #008b8b;">==</span><span style="color: #8b2252;">"numeric"</span>]]
-<span style="color: #0000ff;">head</span>(iris.num, <span style="color: #228b22;">2</span>)
-</pre>
-</div>
-
-<pre class="example">
-&gt; iris.num &lt;- iris[, names(classes)[classes=="numeric"]]
-&gt; head(iris.num, 2)
-  Sepal.Length Sepal.Width Petal.Length Petal.Width
-1          5.1         3.5          1.4         0.2
-2          4.9         3.0          1.4         0.2
-&gt;
-</pre>
-
-
-<ol class="org-ol">
-<li>use a loop to calculate the mean of each numeric column in the iris data
-</li>
-</ol>
-
-<!-- MD: *** =sample_code-->
-<div class="org-src-container">
-
-<pre class="src src-R" id="ex2.3">  iris.means <span style="color: #008b8b;">&lt;-</span> <span style="color: #0000ff;">c</span>()
-  <span style="color: #a020f0;">for</span>(var <span style="color: #a020f0;">in</span> <span style="color: #0000ff;">names</span>(iris.num)) {
-      iris.means[[var]] <span style="color: #008b8b;">&lt;-</span> <span style="color: #0000ff;">mean</span>(iris[[var]])
-  }
-
-iris.means
-</pre>
-</div>
-
-<pre class="example">
-&gt;   iris.means &lt;- c()
-&gt;   for(var in names(iris.num)) {
-+       iris.means[[var]] &lt;- mean(iris[[var]])
-+   }
-&gt; 
-&gt; iris.means
-Sepal.Length  Sepal.Width Petal.Length  Petal.Width 
-    5.843333     3.057333     3.758000     1.199333 
-&gt;
-</pre>
-</div>
-</div>
 </div>
 </div>
 <div id="postamble" class="status">
 <p class="date">Date: Last updated November 20, 2013</p>
-<p class="date">Created: 2014-02-27 Thu 15:55</p>
-<p class="creator"><a href="http://www.gnu.org/software/emacs/">Emacs</a> 24.3.3 (<a href="http://orgmode.org">Org</a> mode 8.2.5h)</p>
+<p class="date">Created: 2014-09-25 Thu 21:52</p>
+<p class="creator"><a href="http://www.gnu.org/software/emacs/">Emacs</a> 24.3.1 (<a href="http://orgmode.org">Org</a> mode 8.2.7c)</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
