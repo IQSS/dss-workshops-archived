@@ -5,8 +5,6 @@
 
 #+OPTIONS:   H:2 toc:t \n:nil d:nil ^:{}
 #+startup: beamer inlineimages
-#+COLUMNS: %20ITEM %13BEAMER_env(Env) %6BEAMER_envargs(Args) %4BEAMER_col(Col) %7BEAMER_extra(Extra)
-#+PROPERTY: BEAMER_col_ALL 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 0.0 :ETC
 #+PROPERTY: cache no
 #+PROPERTY: exports code
 #+PROPERTY: results output
@@ -14,72 +12,14 @@
 #+PROPERTY: session nil
 #+PROPERTY: tangle SASintroCodeOnly.sas
 
-#+LaTeX_CLASS: beamer
-#+LaTeX_CLASS_OPTIONS: [table,smaller]
 
-#+LaTeX_HEADER: \usepackage{tikz}
-#+LaTeX_HEADER: \usepackage{minted}
-#+LaTeX_HEADER: \usepackage{fancyvrb}
-#+LaTeX_HEADER: \usemintedstyle{perldoc}
-#+LaTeX_HEADER: \definecolor{lightgray}{gray}{0.96}
-#+LaTeX_HEADER: \setlength{\tabcolsep}{1ex}
-#+LaTeX_HEADER: \institute{Harvard MIT Data Center}
-#+latex_header: \usetheme{Warsaw}
-#+latex_header: \useoutertheme{infolines}
-#+latex_header: \setbeamercolor{block body}{bg=lightgray}
-#+latex_header: \titlegraphic{\includegraphics[width=.75\textwidth]{images/IQSSNewLogo.pdf}}
-#+LaTex_header: \setbeamersize{text margin left=2em,text margin right=2em}
-#+latex_header: \AtBeginSection[]{\begin{frame}<beamer>\frametitle{Topic}\tableofcontents[currentsection]\end{frame}}
+#+SETUPFILE: ../../org-html-themes/setup/bigblow-github-dev.setup
+#+EXCLUDE_TAGS: noexport mitsetup
 
-#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="style.css" />
-
-
-* Setup								   :noexport:
-#+name: setup-minted
-#+begin_src emacs-lisp :exports none :results silent :tangle no
-  (set (make-local-variable 'org-latex-listings) 'minted)
-  (set (make-local-variable 'org-latex-minted-options) '(("fontsize" "\\footnotesize")))
-  (set (make-local-variable 'org-latex-pdf-process) '("pdflatex -shell-escape -interaction nonstopmode -output-directory %o %f"
-                                "pdflatex -shell-escape -interaction nonstopmode -output-directory %o %f"))
-  (set (make-local-variable 'LaTeX-command) "pdflatex -shell-escape")
-  (set (make-local-variable 'org-latex-image-default-option) "")
-  (set (make-local-variable 'org-babel-min-lines-for-block-output) 0)
-  (set (make-local-variable 'org-export-babel-evaluate) nil)
-
-  (add-to-list 'org-latex-minted-langs '(sas "c"))
-
-  (add-hook 'org-babel-after-execute-hook 'org-display-inline-images)
-
-  (defun my-latex-fixed-width-start (fixed-width backend info)
-    (when (org-export-derived-backend-p backend 'latex)
-      (replace-regexp-in-string
-       "\\(begin{verbatim\\)}"
-       "vspace{-.5em}
-  \\\\begin{columns}
-  \\\\column{.95\\\\linewidth}
-  \\\\begin{block}{}
-  \\\\begin{minted}[linenos=false, fontsize=\\\\footnotesize]{rconsole" fixed-width nil nil 1)))
-
-  (defun my-latex-fixed-width-end (fixed-width backend info)
-    (when (org-export-derived-backend-p backend 'latex)
-      (replace-regexp-in-string
-       "\\(end\\){\\(verbatim\\)}"
-       "minted}
-  \\\\end{block}
-  \\\\end{columns}
-  \\\\vspace{.5em" fixed-width nil nil 2)))
-
-  (make-local-variable 'org-export-filter-final-output-functions)
-
-  (add-to-list 'org-export-filter-final-output-functions
-               'my-latex-fixed-width-start)
-  (add-to-list 'org-export-filter-final-output-functions
-               'my-latex-fixed-width-end)
-#+end_src
 
 * Introduction
 
-** Get Workshop Materials And Start SAS				   :noexport:
+** Get Workshop Materials And Start SAS                            :mitsetup:
 
 - *Log in to an Athena workstation* using your Athena user name and password
 
@@ -99,13 +39,13 @@
   - *Click on the "Ubuntu" button* on the upper-left and type "text editor"
   - *Click on the "Text Editor" icon*
 
-** Documents for Today
-- Log in
+** Documents for Today                                             :labsetup:
+- Lab computer log in:
   - USERNAME: dataclass
-  - PASSWORD: dataclass
-- Find class materials at http://j.mp/sas-intro
+  - PASSWORD: on the board to your left
+- Download class materials from [[http://tutorials.iq.harvard.eu/SAS/SASintro.zip]]
 - Includes data, presentation slides, exercises
-- Extract (right-click ==> WinZipCopy ==> Extract here) and move materials to your desktop!
+- Extract (on lab machines right-click ==> WinZip ==> Extract here) and move materials to your desktop!
 
 ** Workshop Description
 - This is an INTRODUCTION to SAS -- assumes no knowledge of SAS!
@@ -121,8 +61,9 @@
 - If you know SAS, it is likely you will not need any other software packages
 - Among the most powerful statistical software packages available
 - Great user community: macros, websites, etc.
-- Free online documentation:
-- http://support.sas.com/documentation/93/index.html
+- Online documentation: http://support.sas.com/documentation/93/index.html
+
+That said, it is my opinion that SAS is not cool. Only use it if you have to...
 
 ** SAS history
 SAS was first developed in the 1970's. The world was a lot different then!
