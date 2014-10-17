@@ -1,12 +1,10 @@
 #+TITLE:     Data Management in Stata
 #+AUTHOR:    
-#+EMAIL:     support@@help.hmdc.harvard.edu
+#+EMAIL:     support@help.hmdc.harvard.edu
 #+DATE:      
 
 #+OPTIONS:   H:2 toc:t \n:nil d:nil
-#+startup: beamer inlineimages
-#+COLUMNS: %20ITEM %13BEAMER_env(Env) %6BEAMER_envargs(Args) %4BEAMER_col(Col) %7BEAMER_extra(Extra)
-#+PROPERTY: BEAMER_col_ALL 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 0.0 :ETC
+
 #+PROPERTY: cache no
 #+PROPERTY: exports code
 #+PROPERTY: results output
@@ -14,72 +12,7 @@
 #+PROPERTY: session nil
 #+PROPERTY: tangle StataDatManCodeOnly.do
 
-#+LaTeX_CLASS: beamer
-#+LaTeX_CLASS_OPTIONS: [table,smaller]
-
-#+LaTeX_HEADER: \usepackage{tikz}
-#+LaTeX_HEADER: \usepackage{minted}
-#+LaTeX_HEADER: \usepackage{fancyvrb}
-#+LaTeX_HEADER: \usemintedstyle{perldoc}
-#+LaTeX_HEADER: \definecolor{lightgray}{gray}{0.96}
-#+LaTeX_HEADER: \setlength{\tabcolsep}{1ex}
-#+LaTeX_HEADER: \institute{Harvard MIT Data Center}
-#+latex_header: \usetheme{Warsaw}
-#+latex_header: \useoutertheme{infolines}
-#+latex_header: \setbeamercolor{block body}{bg=lightgray}
-#+latex_header: \titlegraphic{\includegraphics[width=.75\textwidth]{images/IQSSNewLogo.pdf}}
-#+LaTex_header: \setbeamersize{text margin left=2em,text margin right=2em}
-#+latex_header: \AtBeginSection[]{\begin{frame}<beamer>\frametitle{Topic}\tableofcontents[currentsection]\end{frame}}
-
-#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="style.css" />
-
-* Setup								   :noexport:
-
-#+LaTeX: \setbeamertemplate{blocks}[default][shadow=false]
-
-#+name: setup-minted
-#+begin_src emacs-lisp :exports none :results silent :tangle no
-  (set (make-local-variable 'org-babel-stata-command) "stata -q")
-
-  (set (make-local-variable 'org-latex-listings) 'minted)
-  (set (make-local-variable 'org-latex-minted-options) '(("fontsize" "\\footnotesize")))
-  (set (make-local-variable 'org-latex-pdf-process) '("pdflatex -shell-escape -interaction nonstopmode -output-directory %o %f" 
-                                "pdflatex -shell-escape -interaction nonstopmode -output-directory %o %f"))
-  (set (make-local-variable 'LaTeX-command) "pdflatex -shell-escape")
-  (set (make-local-variable 'org-latex-image-default-option) "")
-  (set (make-local-variable 'org-babel-min-lines-for-block-output) 0)
-  (set (make-local-variable 'org-export-babel-evaluate) nil)
-  
-  (add-to-list 'org-latex-minted-langs '(stata "c"))
-  
-  (add-hook 'org-babel-after-execute-hook 'org-display-inline-images)
-  
-  (defun my-latex-fixed-width-start (fixed-width backend info)
-    (when (org-export-derived-backend-p backend 'latex)
-      (replace-regexp-in-string
-       "\\(begin{verbatim\\)}"
-       "vspace{-.5em}
-  \\\\begin{columns}
-  \\\\column{.95\\\\linewidth}
-  \\\\begin{block}{}
-  \\\\begin{minted}[linenos=false, fontsize=\\\\footnotesize]{c" fixed-width nil nil 1)))
-  
-  (defun my-latex-fixed-width-end (fixed-width backend info)
-    (when (org-export-derived-backend-p backend 'latex)
-      (replace-regexp-in-string
-       "\\(end\\){\\(verbatim\\)}"
-       "minted}
-  \\\\end{block}
-  \\\\end{columns}
-  \\\\vspace{.5em" fixed-width nil nil 2)))
-  
-  (make-local-variable 'org-export-filter-final-output-functions)
-  
-  (add-to-list 'org-export-filter-final-output-functions
-               'my-latex-fixed-width-start)
-  (add-to-list 'org-export-filter-final-output-functions
-               'my-latex-fixed-width-end)
-#+end_src
+#+SETUPFILE: ../../org-html-themes/setup/bigblow-github-dev.setup
 
 
 * Introduction
@@ -90,10 +23,10 @@
 ** Materials and Setup
 - Lab computer log in:
   - USERNAME: dataclass
-  - PASSWORD: dataclass
+  - PASSWORD: on the board to your left
 - Workshop materials:
-  - Download class materials from [[http://j.mp/stata-datman]]
-  - Open a file browser, right-click on =StataDatMan.zip=, select the =WinZip= menu and select =Extrat to Here=.
+  - Download class materials from [[http://tutorials.iq.harvard.edu/Stata/StataDatMan.zip]]
+  - Open a file browser, right-click on =StataDatMan.zip=, select the =WinZip= menu and select =Extract to Here=.
 
 ** Copy the workshop materials to your home directory		   :noexport:
 

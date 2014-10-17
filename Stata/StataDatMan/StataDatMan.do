@@ -26,10 +26,10 @@
 * Materials and Setup
 * - Lab computer log in:
 *   - USERNAME: dataclass
-*   - PASSWORD: dataclass
+*   - PASSWORD: on the board to your left
 * - Workshop materials:
-*   - Download class materials from [[http://j.mp/stata-datman]]
-*   - Open a file browser, right-click on =StataDatMan.zip=, select the =WinZip= menu and select =Extrat to Here=.
+*   - Download class materials from [[http://tutorials.iq.harvard.edu/Stata/StataDatMan.zip]]
+*   - Open a file browser, right-click on =StataDatMan.zip=, select the =WinZip= menu and select =Extract to Here=.
 * 
 * 
 * 1.3 Workshop Description
