@@ -17,7 +17,10 @@
 * 
 * 1.1 Download workshop materials                                  :setup:
 * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-* 
+* - Lab computer log in:
+*   - USERNAME: dataclass
+*   - PASSWORD: on the board to your left
+* - Download materials from [http://tutorials.iq.harvard.edu/Stata/StataGraphics.zip]
 *   - Download materials from [http://j.mp/stata-graph]
 *   - Extract materials from the `StataGraphics.zip' file
 *   - Launch Stata and open the `StataGraphics.do' file

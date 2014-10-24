@@ -4,7 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
 <title>Stata Graphics</title>
-<!-- 2014-04-03 Thu 21:46 -->
+<!-- 2014-10-23 Thu 23:03 -->
 <meta  http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta  name="generator" content="Org-mode" />
 <style type="text/css">
@@ -197,13 +197,19 @@ for the JavaScript code in this tag.
 <div id="outline-container-sec-1" class="outline-2">
 <h2 id="sec-1"><span class="section-number-2">1</span> Introduction</h2>
 <div class="outline-text-2" id="text-1">
-</div>
-
-<div id="outline-container-sec-1-1" class="outline-3">
+</div><div id="outline-container-sec-1-1" class="outline-3">
 <h3 id="sec-1-1"><span class="section-number-3">1.1</span> Download workshop materials&#xa0;&#xa0;&#xa0;<span class="tag"><span class="setup">setup</span></span></h3>
 <div class="outline-text-3" id="text-1-1">
 <ul class="org-ul">
-<li>Download materials from <a href="http://j.mp/stata-graph">http://j.mp/stata-graph</a>
+<li>Lab computer log in:
+<ul class="org-ul">
+<li>USERNAME: dataclass
+</li>
+<li>PASSWORD: on the board to your left
+</li>
+</ul>
+</li>
+<li>Download materials from <a href="http://tutorials.iq.harvard.edu/Stata/StataGraphics.zip">http://tutorials.iq.harvard.edu/Stata/StataGraphics.zip</a>
 </li>
 <li>Extract materials from the <code>StataGraphics.zip</code> file
 </li>
@@ -212,6 +218,7 @@ for the JavaScript code in this tag.
 </ul>
 </div>
 </div>
+
 
 <div id="outline-container-sec-1-2" class="outline-3">
 <h3 id="sec-1-2"><span class="section-number-3">1.2</span> Organization</h3>
@@ -233,7 +240,7 @@ for the JavaScript code in this tag.
 </div>
 
 
-<ol class="org-ol"><li>Graphing Strategies<br  /><div class="outline-text-4" id="text-1-2-1">
+<ol class="org-ol"><li><a id="sec-1-2-1" name="sec-1-2-1"></a>Graphing Strategies<br  /><div class="outline-text-4" id="text-1-2-1">
 <ul class="org-ul">
 <li>Keep it simple
 </li>
@@ -270,7 +277,8 @@ for the JavaScript code in this tag.
 </div>
 </li>
 
-<li>Terrible Graph<br  /><div class="outline-text-4" id="text-1-2-2">
+
+<li><a id="sec-1-2-2" name="sec-1-2-2"></a>Terrible Graph<br  /><div class="outline-text-4" id="text-1-2-2">
 
 <div class="figure">
 <p><img src="./images/Terrible.png" alt="Terrible.png" />
@@ -278,7 +286,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 </li>
-<li>Much Better Graph<br  /><div class="outline-text-4" id="text-1-2-3">
+
+<li><a id="sec-1-2-3" name="sec-1-2-3"></a>Much Better Graph<br  /><div class="outline-text-4" id="text-1-2-3">
 
 <div class="figure">
 <p><img src="./images/Good.png" alt="Good.png" />
@@ -288,6 +297,7 @@ for the JavaScript code in this tag.
 </li></ol>
 </div>
 </div>
+
 
 
 
@@ -315,14 +325,22 @@ for the JavaScript code in this tag.
 
 <div class="org-src-container">
 
-<pre class="src src-stata" id="OpenData"><span style="color: #b22222;">// Step 1: tell Stata where to find data:</span>
-<span style="color: #a020f0;">cd</span> /Users/dataclass/Desktop/StataGraphics/dataSets
-<span style="color: #b22222;">// Step 2: call up our dataset:</span>
-<span style="color: #a020f0;">use</span> TimePollPubSchools.dta
+<pre class="src src-stata" id="OpenData"><span style="color: #b22222; font-style: italic;">// Step 1: tell Stata where to find data:</span>
+<span style="color: #0000FF;">cd</span> <span style="color: #008000;">"~/StataGraphics/dataSets"</span>
+<span style="color: #b22222; font-style: italic;">// Step 2: call up our dataset:</span>
+<span style="color: #0000FF;">use</span> TimePollPubSchools.dta
+</pre>
+</div>
+
+<pre class="example">
+cd "~/StataGraphics/dataSets"
+/nfs/home/I/izahn/StataGraphics/dataSets
+
+use TimePollPubSchools.dta
 </pre>
 </div>
 </div>
-</div>
+
 
 <div id="outline-container-sec-2-2" class="outline-3">
 <h3 id="sec-2-2"><span class="section-number-3">2.2</span> Single Continuous Variables</h3>
@@ -353,6 +371,7 @@ Example: Histograms
 </div>
 </div>
 
+
 <div id="outline-container-sec-2-3" class="outline-3">
 <h3 id="sec-2-3"><span class="section-number-3">2.3</span> Histogram Options</h3>
 <div class="outline-text-3" id="text-2-3">
@@ -378,15 +397,17 @@ Example: Histograms
 </ul>
 </div>
 </div>
+
 <div id="outline-container-sec-2-4" class="outline-3">
 <h3 id="sec-2-4"><span class="section-number-3">2.4</span> Histogram Example</h3>
 <div class="outline-text-3" id="text-2-4">
 <div class="org-src-container">
 
-<pre class="src src-stata" id="hist1">hist F1, bin(10) percent title(TITLE) <span style="color: #b22222;">///</span>
-  subtitle(SUBTITLE) caption(CAPTION) <span style="color: #008b8b;">note</span>(NOTES)
+<pre class="src src-stata" id="hist1">hist F1, bin(10) percent title(TITLE) <span style="color: #b22222; font-style: italic;">///</span>
+  subtitle(SUBTITLE) caption(CAPTION) <span style="color: #D0372D;">note</span>(NOTES)
 </pre>
 </div>
+
 
 
 <div class="figure">
@@ -395,6 +416,8 @@ Example: Histograms
 </div>
 </div>
 </div>
+
+
 <div id="outline-container-sec-2-5" class="outline-3">
 <h3 id="sec-2-5"><span class="section-number-3">2.5</span> Axis Titles and Labels</h3>
 <div class="outline-text-3" id="text-2-5">
@@ -440,17 +463,19 @@ Example: Histograms
 </ul>
 </div>
 </div>
+
 <div id="outline-container-sec-2-6" class="outline-3">
 <h3 id="sec-2-6"><span class="section-number-3">2.6</span> Axis Labels Example</h3>
 <div class="outline-text-3" id="text-2-6">
 <div class="org-src-container">
 
-<pre class="src src-stata" id="hist2">hist F1, bin(10) percent title(TITLE) subtitle(SUBTITLE) <span style="color: #b22222;">///</span>
-    caption(CAPTION) <span style="color: #008b8b;">note</span>(NOTES) <span style="color: #b22222;">///</span>
-    xtitle(Here's your x-axis title) <span style="color: #b22222;">///</span>
+<pre class="src src-stata" id="hist2">hist F1, bin(10) percent title(TITLE) subtitle(SUBTITLE) <span style="color: #b22222; font-style: italic;">///</span>
+    caption(CAPTION) <span style="color: #D0372D;">note</span>(NOTES) <span style="color: #b22222; font-style: italic;">///</span>
+    xtitle(Here's your x-axis title) <span style="color: #b22222; font-style: italic;">///</span>
 ytitle(here's your y-axis title)
 </pre>
 </div>
+
 
 
 <div class="figure">
@@ -459,6 +484,8 @@ ytitle(here's your y-axis title)
 </div>
 </div>
 </div>
+
+
 
 <div id="outline-container-sec-2-7" class="outline-3">
 <h3 id="sec-2-7"><span class="section-number-3">2.7</span> Basic Graphing: Single Categorical Variables</h3>
@@ -479,11 +506,12 @@ ytitle(here's your y-axis title)
 
 <div class="org-src-container">
 
-<pre class="src src-stata" id="bargraph">hist F4, title(Racial breakdown of Time Poll Sample) xtitle(Race) <span style="color: #b22222;">///</span>
-ytitle(Percent) <span style="color: #228b22;">xlabel</span>(1 <span style="color: #8b2252;">"White"</span> 2 <span style="color: #8b2252;">"Black"</span> 3 <span style="color: #8b2252;">"Asian"</span> 4 <span style="color: #8b2252;">"Hispanic"</span> <span style="color: #b22222;">///</span>
- 5 <span style="color: #8b2252;">"Other"</span>) discrete percent addlabels
+<pre class="src src-stata" id="bargraph">hist F4, title(Racial breakdown of Time Poll Sample) xtitle(Race) <span style="color: #b22222; font-style: italic;">///</span>
+ytitle(Percent) <span style="color: #6434A3;">xlabel</span>(1 <span style="color: #008000;">"White"</span> 2 <span style="color: #008000;">"Black"</span> 3 <span style="color: #008000;">"Asian"</span> 4 <span style="color: #008000;">"Hispanic"</span> <span style="color: #b22222; font-style: italic;">///</span>
+ 5 <span style="color: #008000;">"Other"</span>) discrete percent addlabels
 </pre>
 </div>
+
 
 
 <div class="figure">
@@ -492,6 +520,8 @@ ytitle(Percent) <span style="color: #228b22;">xlabel</span>(1 <span style="color
 </div>
 </div>
 </div>
+
+
 
 <div id="outline-container-sec-2-8" class="outline-3">
 <h3 id="sec-2-8"><span class="section-number-3">2.8</span> Exercise 1: Histograms Bar Graphs</h3>
@@ -517,6 +547,7 @@ ytitle(Percent) <span style="color: #228b22;">xlabel</span>(1 <span style="color
 </div>
 </div>
 
+
 <div id="outline-container-sec-2-9" class="outline-3">
 <h3 id="sec-2-9"><span class="section-number-3">2.9</span> Next Dataset:</h3>
 <div class="outline-text-3" id="text-2-9">
@@ -537,6 +568,7 @@ ytitle(Percent) <span style="color: #228b22;">xlabel</span>(1 <span style="color
 </div>
 </div>
 </div>
+
 
 <div id="outline-container-sec-3" class="outline-2">
 <h2 id="sec-3"><span class="section-number-2">3</span> Bivariate Graphics</h2>
@@ -561,7 +593,7 @@ ytitle(Percent) <span style="color: #228b22;">xlabel</span>(1 <span style="color
 </ul>
 <div class="org-src-container">
 
-<pre class="src src-stata" id="twowayBasic"><span style="color: #a020f0;">use</span> NatNeighCrimeStudy.dta
+<pre class="src src-stata" id="twowayBasic"><span style="color: #0000FF;">use</span> NatNeighCrimeStudy.dta
 twoway scatter T_PERCAP T_VIOLNT
 twoway dropline T_PERCAP T_VIOLNT
 twoway  lfitci T_PERCAP T_VIOLNT
@@ -569,12 +601,13 @@ twoway  lfitci T_PERCAP T_VIOLNT
 </div>
 </div>
 </div>
+
 <div id="outline-container-sec-3-2" class="outline-3">
 <h3 id="sec-3-2"><span class="section-number-3">3.2</span> Twoway and the "by" Statement</h3>
 <div class="outline-text-3" id="text-3-2">
 <div class="org-src-container">
 
-<pre class="src src-stata" id="XXX">twoway scatter T_PERCAP T_VIOLNT, <span style="color: #228b22;">by</span>(DIVISION)
+<pre class="src src-stata" id="XXX">twoway scatter T_PERCAP T_VIOLNT, <span style="color: #6434A3;">by</span>(DIVISION)
 </pre>
 </div>
 
@@ -587,6 +620,8 @@ twoway  lfitci T_PERCAP T_VIOLNT
 </div>
 </div>
 </div>
+
+
 
 <div id="outline-container-sec-3-3" class="outline-3">
 <h3 id="sec-3-3"><span class="section-number-3">3.3</span> Twoway Title Options</h3>
@@ -607,18 +642,20 @@ twoway  lfitci T_PERCAP T_VIOLNT
 </ul>
 </div>
 </div>
+
 <div id="outline-container-sec-3-4" class="outline-3">
 <h3 id="sec-3-4"><span class="section-number-3">3.4</span> Twoway Title Options Example</h3>
 <div class="outline-text-3" id="text-3-4">
 <div class="org-src-container">
 
-<pre class="src src-stata" id="TwowayTitleOptinsExample">twoway scatter T_PERCAP T_VIOLNT, <span style="color: #b22222;">///</span>
-    title(Comparison of Per Capita Income <span style="color: #b22222;">///</span>
-          and Violent Crime Rate at Tract level) <span style="color: #b22222;">///</span>
-xtitle(Violent Crime Rate) ytitle(Per Capita Income) <span style="color: #b22222;">///</span>
-    <span style="color: #008b8b;">note</span>(Source: National Neighborhood Crime Study 2000)
+<pre class="src src-stata" id="TwowayTitleOptinsExample">twoway scatter T_PERCAP T_VIOLNT, <span style="color: #b22222; font-style: italic;">///</span>
+    title(Comparison of Per Capita Income <span style="color: #b22222; font-style: italic;">///</span>
+          and Violent Crime Rate at Tract level) <span style="color: #b22222; font-style: italic;">///</span>
+xtitle(Violent Crime Rate) ytitle(Per Capita Income) <span style="color: #b22222; font-style: italic;">///</span>
+    <span style="color: #D0372D;">note</span>(Source: National Neighborhood Crime Study 2000)
 </pre>
 </div>
+
 
 <ul class="org-ul">
 <li>The title is a bit cramped&#x2013;let's fix that:
@@ -627,15 +664,17 @@ xtitle(Violent Crime Rate) ytitle(Per Capita Income) <span style="color: #b22222
 
 <div class="org-src-container">
 
-<pre class="src src-stata" id="TwowayTitleOptinsExample2">twoway scatter T_PERCAP T_VIOLNT, <span style="color: #b22222;">///</span>
-    title(<span style="color: #8b2252;">"Comparison of Per Capita Income"</span> <span style="color: #b22222;">///</span>
-<span style="color: #8b2252;">"and Violent Crime Rate at Tract level"</span>) <span style="color: #b22222;">///</span>
-xtitle(Violent Crime Rate) ytitle(Per Capita Income) <span style="color: #b22222;">///</span>
+<pre class="src src-stata" id="TwowayTitleOptinsExample2">twoway scatter T_PERCAP T_VIOLNT, <span style="color: #b22222; font-style: italic;">///</span>
+    title(<span style="color: #008000;">"Comparison of Per Capita Income"</span> <span style="color: #b22222; font-style: italic;">///</span>
+<span style="color: #008000;">"and Violent Crime Rate at Tract level"</span>) <span style="color: #b22222; font-style: italic;">///</span>
+xtitle(Violent Crime Rate) ytitle(Per Capita Income) <span style="color: #b22222; font-style: italic;">///</span>
 note(Source: National Neighborhood Crime Study 2000)
 </pre>
 </div>
 </div>
 </div>
+
+
 
 <div id="outline-container-sec-3-5" class="outline-3">
 <h3 id="sec-3-5"><span class="section-number-3">3.5</span> Twoway Symbol Options</h3>
@@ -651,17 +690,18 @@ note(Source: National Neighborhood Crime Study 2000)
 </div>
 </div>
 </div>
+
 <div id="outline-container-sec-3-6" class="outline-3">
 <h3 id="sec-3-6"><span class="section-number-3">3.6</span> Twoway Symbol Options</h3>
 <div class="outline-text-3" id="text-3-6">
 <div class="org-src-container">
 
-<pre class="src src-stata" id="TwowaySymbolOptinsExample">twoway scatter T_PERCAP T_VIOLNT, <span style="color: #b22222;">///</span>
-    title(<span style="color: #8b2252;">"Comparison of Per Capita Income"</span> <span style="color: #b22222;">///</span>
-<span style="color: #8b2252;">"and Violent Crime Rate at Tract level"</span>) <span style="color: #b22222;">///</span>
-xtitle(Violent Crime Rate) ytitle(Per Capita Income) <span style="color: #b22222;">///</span>
-note(Source: National Neighborhood Crime Study 2000) <span style="color: #b22222;">///</span>
-msymbol(Sh) mcolor(<span style="color: #8b2252;">"red"</span>)
+<pre class="src src-stata" id="TwowaySymbolOptinsExample">twoway scatter T_PERCAP T_VIOLNT, <span style="color: #b22222; font-style: italic;">///</span>
+    title(<span style="color: #008000;">"Comparison of Per Capita Income"</span> <span style="color: #b22222; font-style: italic;">///</span>
+<span style="color: #008000;">"and Violent Crime Rate at Tract level"</span>) <span style="color: #b22222; font-style: italic;">///</span>
+xtitle(Violent Crime Rate) ytitle(Per Capita Income) <span style="color: #b22222; font-style: italic;">///</span>
+note(Source: National Neighborhood Crime Study 2000) <span style="color: #b22222; font-style: italic;">///</span>
+msymbol(Sh) mcolor(<span style="color: #008000;">"red"</span>)
 </pre>
 </div>
 
@@ -672,6 +712,8 @@ msymbol(Sh) mcolor(<span style="color: #8b2252;">"red"</span>)
 </div>
 </div>
 </div>
+
+
 
 
 <div id="outline-container-sec-3-7" class="outline-3">
@@ -695,36 +737,41 @@ msymbol(Sh) mcolor(<span style="color: #8b2252;">"red"</span>)
 </ul>
 </div>
 </div>
+
 <div id="outline-container-sec-3-8" class="outline-3">
 <h3 id="sec-3-8"><span class="section-number-3">3.8</span> Overlaying Points and Lines</h3>
 <div class="outline-text-3" id="text-3-8">
 <div class="org-src-container">
 
-<pre class="src src-stata" id="TwowayPointsLinesExample">twoway (scatter T_PERCAP T_VIOLNT) <span style="color: #b22222;">///</span>
-    (lfit T_PERCAP T_VIOLNT), <span style="color: #b22222;">///</span>
-    title(<span style="color: #8b2252;">"Comparison of Per Capita Income"</span> <span style="color: #b22222;">///</span>
-          <span style="color: #8b2252;">"and Violent Crime Rate at Tract level"</span>) <span style="color: #b22222;">///</span>
-    xtitle(Violent Crime Rate) ytitle(Per Capita Income) <span style="color: #b22222;">///</span>
-    <span style="color: #008b8b;">note</span>(Source: National  Neighborhood Crime Study 2000)
+<pre class="src src-stata" id="TwowayPointsLinesExample">twoway (scatter T_PERCAP T_VIOLNT) <span style="color: #b22222; font-style: italic;">///</span>
+    (lfit T_PERCAP T_VIOLNT), <span style="color: #b22222; font-style: italic;">///</span>
+    title(<span style="color: #008000;">"Comparison of Per Capita Income"</span> <span style="color: #b22222; font-style: italic;">///</span>
+          <span style="color: #008000;">"and Violent Crime Rate at Tract level"</span>) <span style="color: #b22222; font-style: italic;">///</span>
+    xtitle(Violent Crime Rate) ytitle(Per Capita Income) <span style="color: #b22222; font-style: italic;">///</span>
+    <span style="color: #D0372D;">note</span>(Source: National  Neighborhood Crime Study 2000)
 </pre>
 </div>
 </div>
 </div>
+
+
 <div id="outline-container-sec-3-9" class="outline-3">
 <h3 id="sec-3-9"><span class="section-number-3">3.9</span> Overlaying Points and Labels</h3>
 <div class="outline-text-3" id="text-3-9">
 <div class="org-src-container">
 
-<pre class="src src-stata" id="TwowayPointsLabelsExample">twoway (scatter T_PERCAP T_VIOLNT if T_VIOLNT==1976, <span style="color: #b22222;">///</span>
-        mlabel(CITY)) (scatter T_PERCAP T_VIOLNT), <span style="color: #b22222;">///</span>
-    title(<span style="color: #8b2252;">"Comparison of Per Capita Income"</span> <span style="color: #b22222;">///</span>
-          <span style="color: #8b2252;">"and Violent Crime Rate at Tract level"</span>) <span style="color: #b22222;">///</span>
-    <span style="color: #228b22;">xlabel</span>(0(200)2400) <span style="color: #008b8b;">note</span>(Source: National Neighborhood <span style="color: #b22222;">///</span>
+<pre class="src src-stata" id="TwowayPointsLabelsExample">twoway (scatter T_PERCAP T_VIOLNT if T_VIOLNT==1976, <span style="color: #b22222; font-style: italic;">///</span>
+        mlabel(CITY)) (scatter T_PERCAP T_VIOLNT), <span style="color: #b22222; font-style: italic;">///</span>
+    title(<span style="color: #008000;">"Comparison of Per Capita Income"</span> <span style="color: #b22222; font-style: italic;">///</span>
+          <span style="color: #008000;">"and Violent Crime Rate at Tract level"</span>) <span style="color: #b22222; font-style: italic;">///</span>
+    <span style="color: #6434A3;">xlabel</span>(0(200)2400) <span style="color: #D0372D;">note</span>(Source: National Neighborhood <span style="color: #b22222; font-style: italic;">///</span>
                             Crime Study 2000) legend(off)
 </pre>
 </div>
 </div>
 </div>
+
+
 
 <div id="outline-container-sec-3-10" class="outline-3">
 <h3 id="sec-3-10"><span class="section-number-3">3.10</span> Exercise 2: The TwoWay Family</h3>
@@ -750,6 +797,7 @@ Open the datafile, NatNeighCrimeStudy.dta.
 </div>
 </div>
 
+
 <div id="outline-container-sec-4" class="outline-2">
 <h2 id="sec-4"><span class="section-number-2">4</span> More Fun with Twoway Line Graphs</h2>
 <div class="outline-text-2" id="text-4">
@@ -772,14 +820,15 @@ Open the datafile, NatNeighCrimeStudy.dta.
 </ul>
 </div>
 </div>
+
 <div id="outline-container-sec-4-2" class="outline-3">
 <h3 id="sec-4-2"><span class="section-number-3">4.2</span> Line Graphs</h3>
 <div class="outline-text-3" id="text-4-2">
 <div class="org-src-container">
 
-<pre class="src src-stata" id="TwowayLinegraphExample2">webuse uslifeexp, <span style="color: #a020f0;">clear</span>
-twoway (line le_wm year, mcolor(<span style="color: #8b2252;">"red"</span>)) <span style="color: #b22222;">///</span>
-    (line le_bm year, mcolor(<span style="color: #8b2252;">"green"</span>))
+<pre class="src src-stata" id="TwowayLinegraphExample2">webuse uslifeexp, <span style="color: #0000FF;">clear</span>
+twoway (line le_wm year, mcolor(<span style="color: #008000;">"red"</span>)) <span style="color: #b22222; font-style: italic;">///</span>
+    (line le_bm year, mcolor(<span style="color: #008000;">"green"</span>))
 </pre>
 </div>
 
@@ -791,12 +840,14 @@ twoway (line le_wm year, mcolor(<span style="color: #8b2252;">"red"</span>)) <sp
 </div>
 </div>
 
+
+
 <div id="outline-container-sec-4-3" class="outline-3">
 <h3 id="sec-4-3"><span class="section-number-3">4.3</span> Line Graphs</h3>
 <div class="outline-text-3" id="text-4-3">
 <div class="org-src-container">
 
-<pre class="src src-stata" id="TwowayLineGraphExample2">twoway (line (le_wfemale le_wmale le_bf le_bm) year, <span style="color: #b22222;">///</span>
+<pre class="src src-stata" id="TwowayLineGraphExample2">twoway (line (le_wfemale le_wmale le_bf le_bm) year, <span style="color: #b22222; font-style: italic;">///</span>
     lpattern(dot solid dot solid))
 </pre>
 </div>
@@ -808,6 +859,8 @@ twoway (line le_wm year, mcolor(<span style="color: #8b2252;">"red"</span>)) <sp
 </div>
 </div>
 </div>
+
+
 
 <div id="outline-container-sec-4-4" class="outline-3">
 <h3 id="sec-4-4"><span class="section-number-3">4.4</span> Stata Graphing Lines</h3>
@@ -825,6 +878,8 @@ twoway (line le_wm year, mcolor(<span style="color: #8b2252;">"red"</span>)) <sp
 </div>
 </div>
 </div>
+
+
 
 <div id="outline-container-sec-4-5" class="outline-3">
 <h3 id="sec-4-5"><span class="section-number-3">4.5</span> Exporting Graphs</h3>
@@ -848,6 +903,7 @@ twoway (line le_wm year, mcolor(<span style="color: #8b2252;">"red"</span>)) <sp
 </div>
 
 
+
 <div id="outline-container-sec-5" class="outline-2">
 <h2 id="sec-5"><span class="section-number-2">5</span> Wrap-up</h2>
 <div class="outline-text-2" id="text-5">
@@ -864,6 +920,7 @@ twoway (line le_wm year, mcolor(<span style="color: #8b2252;">"red"</span>)) <sp
 </ul>
 </div>
 </div>
+
 <div id="outline-container-sec-5-2" class="outline-3">
 <h3 id="sec-5-2"><span class="section-number-3">5.2</span> Additional resources</h3>
 <div class="outline-text-3" id="text-5-2">
@@ -897,8 +954,8 @@ twoway (line le_wm year, mcolor(<span style="color: #8b2252;">"red"</span>)) <sp
 </div>
 </div>
 <div id="postamble" class="status">
-<p class="date">Created: 2014-04-03 Thu 21:46</p>
-<p class="creator"><a href="http://www.gnu.org/software/emacs/">Emacs</a> 24.3.1 (<a href="http://orgmode.org">Org</a> mode 8.2.5h)</p>
+<p class="date">Created: 2014-10-23 Thu 23:03</p>
+<p class="creator"><a href="http://www.gnu.org/software/emacs/">Emacs</a> 24.4.1 (<a href="http://orgmode.org">Org</a> mode 8.2.10)</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
