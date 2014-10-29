@@ -13,7 +13,7 @@
 # and press C-c C-c
 
 #+PROPERTY: exports both
-#+EXCLUDE_TAGS: noexport mitsetup
+#+EXCLUDE_TAGS: noexport labsetup
 
 
 
@@ -40,10 +40,6 @@
 
 
 * Workshop overview and materials
-  :PROPERTIES:
-  :EXPORT_FILE_NAME: datacamp/Workshop overview and materials
-  :EXPORT_OPTIONS: num:nil toc:nil
-  :END:
 
 ** Workshop description
 - This is an intermediate/advanced R course
@@ -54,7 +50,6 @@
   - Write your own simple functions
   - Debug functions
   - Understand and use the S3 object system
------
 
 ** Running example
 Throughout this workshop we will return to a running example that involves calculating descriptive statistics for every column of a data.frame. We will often use the built-in /iris/ data set. You can load the iris data by evaluating =data(iris)= at the R prompt.
@@ -72,23 +67,6 @@ Materials for this workshop include slides, example data sets, and example code.
 
 - Download materials from [[http://tutorials.iq.harvard.edu/R/RProgramming.zip]]
 - Extract the zip file containing the materials to your desktop
------
-
-** Copy the workshop materials to your home directory		   :mitsetup:
-
-- *Log in to an Athena workstation* using your Athena user name and password
-
-- *Click on the "Ubuntu" button* on the upper-left and type "term" as shown below
-#+attr_latex: width=.8\textwidth
- [[./images/OpenTerminal.png]]
-
-- *Click on the "Terminal" icon* as shown above
-
-- In the terminal, *type this line exactly as shown*:
-: cd; wget j.mp/r-prog; unzip r-prog
-
-- If you see "ERROR 404: Not Found", then you mistyped the command -- try again, making sure to type the command exactly as shown
------
 
 ** Launch RStudio on Athena					   :mitsetup:
 
@@ -106,17 +84,10 @@ Materials for this workshop include slides, example data sets, and example code.
 - I encourage you to add your own notes to this file!
 
 * Data types
-  :PROPERTIES:
-  :EXPORT_FILE_NAME: datacamp/Data types
-  :EXPORT_OPTIONS: num:nil toc:nil
-  :END:
 
 ** Vectors and data classes
 
 Values can be combined into vectors using the ~c()~ function
-#+HTML: <!-- MD: *** =instructions-->
-#+HTML: <!-- MD: Just click the Submit Answer button on the right.-->
-#+HTML: <!-- MD: *** =sample_code-->
 #+name: VectorsExample
 #+begin_src R
   num.var <- c(1, 2, 3, 4) # numeric vector
@@ -135,7 +106,6 @@ Values can be combined into vectors using the ~c()~ function
 #+end_example
 
 Vectors have a \emph{class} which determines how functions treat them
-#+HTML: <!-- MD: *** =sample_code-->
 #+name: classComputations
 #+begin_src R
   num.var <- "a"
@@ -162,13 +132,9 @@ Vectors have a \emph{class} which determines how functions treat them
 > 
 #+end_example
 
------
 
 ** Vector conversion and info
  Vectors can be converted from one class to another
-#+HTML: <!-- MD: *** =instructions-->
-#+HTML: <!-- MD: Just click the Submit Answer button on the right.-->
-#+HTML: <!-- MD: *** =sample_code-->
 #+name: VectorClassConversion
 #+begin_src R
   class(char.var2)
@@ -193,7 +159,6 @@ Vectors have a \emph{class} which determines how functions treat them
 #+end_example
 
  In addition to class, you can examine the ~length()~ \\ and ~str()~ ucture of vectors
-#+HTML: <!-- MD: *** =sample_code-->
 #+name: VectorLengthStructure
 #+begin_src R
   ls() # list objects in our workspace
@@ -212,7 +177,6 @@ Vectors have a \emph{class} which determines how functions treat them
  num [1:8] 1 2 3 4 1 2 3 4
 > 
 #+end_example
------
 
 ** Factor vectors
  Factors are stored as numbers, but have character labels. Factors are useful for
@@ -220,15 +184,11 @@ Vectors have a \emph{class} which determines how functions treat them
   - Sorting/presenting values in arbitrary order
 
 Most of the time we can treat factors as though they were character vectors
------
 
 ** Lists and data.frames
 - A /data.frame/ is a list of vectors, each of the same length
 - A /list/ is a collection of objects each of which can be almost anything
 
-#+HTML: <!-- MD: *** =instructions-->
-#+HTML: <!-- MD: Just click the Submit Answer button on the right.-->
-#+HTML: <!-- MD: *** =sample_code-->
 #+name: ListsAndDataframeExample
 #+begin_src R
   DF <- data.frame(x=1:5, y=letters[1:5])
@@ -269,7 +229,6 @@ $z
 
 > 
 #+end_example
------
 
 ** Data types summary
 Key points:
@@ -286,7 +245,6 @@ Functions introduced in this section:
 - str :: get the structure of an object
 - length :: get the number of elements in an object
 - mean :: calculate the mean of a vector
------
 
 ** Exercise 0 
 
@@ -299,9 +257,6 @@ Functions introduced in this section:
 ** Exercise 0 prototype						  :prototype:
 
 1) [@1] Create a new vector called "test" containing five numbers of your choice
-#+HTML: <!-- MD: *** =instructions-->
-#+HTML: <!-- MD: Just click the Submit Answer button on the right.-->
-#+HTML: <!-- MD: *** =sample_code-->
 #+name: ex0.1
 #+begin_src R :exports code
   test <- c(1, 2, 3, 4, 5)
@@ -314,7 +269,6 @@ Functions introduced in this section:
 #+end_example
 
 2) [@2] a Create a second vector called "students" containing five common names of your choice
-#+HTML: <!-- MD: *** =sample_code-->
 #+name: ex0.2
 #+begin_src R :exports code
   students <- c("Mary", "Joan", "Steve", "Alex", "Suzy")
@@ -327,7 +281,6 @@ Functions introduced in this section:
 #+end_example
 
 3) [@3] Determine the class of "students" and "test"
-#+HTML: <!-- MD: *** =sample_code-->
 #+name: ex0.3
 #+begin_src R :exports code
   class(students)
@@ -343,7 +296,6 @@ Functions introduced in this section:
 #+end_example
 
 4) [@4] Create a data frame containing two columns, "students" and "tests" as defined above
-#+HTML: <!-- MD: *** =sample_code-->
 #+name: ex0.4
 #+begin_src R :exports code
   testScores <- data.frame(students, tests)
@@ -352,7 +304,6 @@ Functions introduced in this section:
 #+RESULTS: ex0.4
 
 5) [@5] Convert "test" to character class, and confirm that you were successful
- #+HTML: <!-- MD: *** =sample_code-->
 #+name: ex0.3
 #+begin_src R :exports code
   test <- as.character(test)
@@ -361,16 +312,9 @@ Functions introduced in this section:
 
 
 * Extracting and replacing object elements
-  :PROPERTIES:
-  :EXPORT_FILE_NAME: datacamp/Extracting and replacing object elements
-  :EXPORT_OPTIONS: num:nil toc:nil
-  :END:
 
 ** Indexing by position or name
 Parts of vectors, matricies, data.frames, and lists can be extracted or replaced based on position or name
-#+HTML: <!-- MD: *** =instructions-->
-#+HTML: <!-- MD: Just click the Submit Answer button on the right.-->
-#+HTML: <!-- MD: *** =sample_code-->
 #+name: indexingVectors
 #+begin_src R 
   ## indexing vectors by position
@@ -405,14 +349,10 @@ Parts of vectors, matricies, data.frames, and lists can be extracted or replaced
 101 106 
 > 
 #+end_example
------
 
 ** Logical indexing
 Elements can also be selected or replaced based on logical (TRUE/FALSE) vectors.
 
-#+HTML: <!-- MD: *** =instructions-->
-#+HTML: <!-- MD: Just click the Submit Answer button on the right.-->
-#+HTML: <!-- MD: *** =sample_code-->
 #+name: logicalIndexingVectors
 #+begin_src R
   x > 106 # shows which elements of x are > 106
@@ -441,7 +381,6 @@ Additional operators useful for logical indexing:
 - & :: and
 - | :: or
 
-#+HTML: <!-- MD: *** =sample_code-->
 #+name: logicalIndexingVectors2
 #+begin_src R
   x[x > 106 & x <= 108]
@@ -459,14 +398,10 @@ Additional operators useful for logical indexing:
 > 
 #+end_example
 
------
 
 ** Indexing matrices
 Extraction on matrices operate in two dimensions: first dimension refers to rows, second dimension refers to columns
 
-#+HTML: <!-- MD: *** =instructions-->
-#+HTML: <!-- MD: Just click the Submit Answer button on the right.-->
-#+HTML: <!-- MD: *** =sample_code-->
 #+name: indexingMatricies
 #+begin_src R 
   ## indexing matricies
@@ -505,13 +440,9 @@ Extraction on matrices operate in two dimensions: first dimension refers to rows
 
 Note that unspecified index's (as in the column index in the example above ) return all values.
 
------
 
 ** Indexing lists
 Lists can be indexed in the same way as vectors, with the following extension:
-#+HTML: <!-- MD: *** =instructions-->
-#+HTML: <!-- MD: Just click the Submit Answer button on the right.-->
-#+HTML: <!-- MD: *** =sample_code-->
 #+name: ListIndexing
 #+begin_src R
   # Lists can be indexed with single brackets, similar to vector indexing
@@ -542,15 +473,11 @@ $x
 [1] 1 2 3 4 5
 > 
 #+end_example
------
 
 ** Indexing data.frames
 
 A data.frame can be indexed in the same ways as a matrix, and also the same ways as a list:
 
-#+HTML: <!-- MD: *** =instructions-->
-#+HTML: <!-- MD: Just click the Submit Answer button on the right.-->
-#+HTML: <!-- MD: *** =sample_code-->
 #+name: DataFrameIndexing
 #+begin_src R
   DF[c(3, 1, 2), c(1, 2)] # rows 3, 1, and 2, columns 1 and 2
@@ -570,7 +497,6 @@ A data.frame can be indexed in the same ways as a matrix, and also the same ways
 #+end_example
 
 There is a subtle but important difference between =[ , n]= and =[n]= when indexing data.frames: the first form returns a vector, the second returns a data.frame with one column.
-#+HTML: <!-- MD: *** =sample_code-->
 #+name: dataFrameIndexingComplicated
 #+begin_src R
   str(DF[1])# a data.frame with one column
@@ -586,7 +512,6 @@ There is a subtle but important difference between =[ , n]= and =[n]= when index
  int [1:5] 1 2 3 4 5
 > 
 #+end_example
------
 
 ** Extraction/replacement summary
 Key points:
@@ -600,7 +525,6 @@ Functions introduced in this section:
 - names :: get the names of an object, usually a vector, list, or data.frame
 - print :: print an object 
 
------
 
 ** Exercise 1
 
@@ -612,9 +536,6 @@ Functions introduced in this section:
 ** Exercise 1 prototype						  :prototype:
 
 1) [@1] Select just the Sepal.Length and Species columns from the /iris/ data set (built-in, will be available in your workspace automatically) and save the result to a new data.frame named /iris.2/
-#+HTML: <!-- MD: *** =instructions-->
-#+HTML: <!-- MD: Just click the Submit Answer button on the right.-->
-#+HTML: <!-- MD: *** =sample_code-->
 #+name: ex1.1
 #+begin_src R :exports code
   data(iris)
@@ -635,7 +556,6 @@ Functions introduced in this section:
 
 2) [@2] Calculate the mean of the Sepal.Length column in /iris.2/ 
 
-#+HTML: <!-- MD: *** =sample_code-->
 #+name: ex.2
 #+begin_src R :exports code
   mean(iris2[ , "Sepal.Length"])
@@ -650,7 +570,6 @@ Functions introduced in this section:
 
 3) [@3] BONUS (optional): Calculate the mean of Sepal.Length, but only for the setosa species
 
-#+HTML: <!-- MD: *** =sample_code-->
 #+name: ex1.3
 #+begin_src R :exports code
   mean(iris2[iris2[["Species"]] == "setosa", "Sepal.Length"])
@@ -674,7 +593,6 @@ Functions introduced in this section:
 
 4) [@4] BONUS (optional): Calculate the number of sepal lengths that are more than one standard deviation below the average sepal length
 
-#+HTML: <!-- MD: *** =sample_code-->
 #+name: ex1.4
 #+begin_src R :exports code
   m.minus.sd <- mean(iris2[["Sepal.Length"]]) - sd(iris2[["Sepal.Length"]])
@@ -690,16 +608,9 @@ Functions introduced in this section:
 #+end_example
 
 * Applying functions to list elements
-  :PROPERTIES:
-  :EXPORT_FILE_NAME: datacamp/Applying functions to list elements
-  :EXPORT_OPTIONS: num:nil toc:nil
-  :END:
 
 ** The apply function
 The apply function is used to apply a function to the rows or columns of a matrix
-#+HTML: <!-- MD: *** =instructions-->
-#+HTML: <!-- MD: Just click the Submit Answer button on the right.-->
-#+HTML: <!-- MD: *** =sample_code-->
 #+name: applyFunctionExample
 #+begin_src R
   M <- matrix(1:20, ncol=4)
@@ -717,14 +628,10 @@ The apply function is used to apply a function to the rows or columns of a matri
 > 
 #+end_example
 
------
 
 ** The sapply function
 It is often useful to apply a function to each element of a vector, list, or data.frame; use the =sapply= function for this
 
-#+HTML: <!-- MD: *** =instructions-->
-#+HTML: <!-- MD: Just click the Submit Answer button on the right.-->
-#+HTML: <!-- MD: *** =sample_code-->
 #+name: sapplyExample
 #+begin_src R
   sapply(DF, class) # get the class of each column in the DF data.frame
@@ -745,14 +652,10 @@ x y z
  TRUE FALSE 
 > 
 #+end_example
------
 
 ** Combining sapply and indexing
 The =sapply= function can be used in combination with indexing to extract elements that meet certain criteria
 - Recall that we can index using logical vectors:
-#+HTML: <!-- MD: *** =instructions-->
-#+HTML: <!-- MD: Just click the Submit Answer button on the right.-->
-#+HTML: <!-- MD: *** =sample_code-->
 #+name: sapplyAndIndexing1
 #+begin_src R
   DF[, c(TRUE, FALSE)] # select the first column of DF, but not the second
@@ -774,7 +677,6 @@ The =sapply= function can be used in combination with indexing to extract elemen
 #+end_example
 
 - =sapply()= can be used to generate the logical vector
-#+HTML: <!-- MD: *** =sample_code-->
 #+name: sapplyAndIndexing2
 #+begin_src R
   (DF.which.num <- sapply(DF, is.numeric))# check which columns of DF are numeric
@@ -797,7 +699,6 @@ The =sapply= function can be used in combination with indexing to extract elemen
 #+end_example
 
 Note the difference between =DF[, 1]= and =DF[1]=! The first form returns a vector, the second a data.frame with one column. 
------
 
 ** Applying functions summary
 Key points:
@@ -810,10 +711,6 @@ Functions introduced in this section:
 - is.numeric :: returns TRUE or FALSE, depending on the type of object 
 
 * Writing functions
-  :PROPERTIES:
-  :EXPORT_FILE_NAME: datacamp/Writing functions
-  :EXPORT_OPTIONS: num:nil toc:nil
-  :END:
 
 ** Functions
 - A function is a collection of commands that takes input(s) and returns output.
@@ -821,7 +718,6 @@ Functions introduced in this section:
 - Functions are defined using the ~function()~ function
 - Functions can be defined with any number of named arguments
 - Arguments can be of any type (e.g., vectors, data.frames, lists ...)
------
 
 ** Function return value
 - The return value of a function can be:
@@ -833,9 +729,6 @@ Functions introduced in this section:
 - Assignment inside the body of a function takes place in a local environment
 - Example:
 
-#+HTML: <!-- MD: *** =instructions-->
-#+HTML: <!-- MD: Just click the Submit Answer button on the right.-->
-#+HTML: <!-- MD: *** =sample_code-->
 #+name: functionReturn
 #+begin_src R
   f <- function() { # define function f
@@ -865,14 +758,10 @@ Functions introduced in this section:
 > 
 #+end_example
 
------
 
 ** Writing functions example
 Goal: write a function that returns the square of it's argument
 
-#+HTML: <!-- MD: *** =instructions-->
-#+HTML: <!-- MD: Just click the Submit Answer button on the right.-->
-#+HTML: <!-- MD: *** =sample_code-->
 #+name: firstFunctionExample
 #+begin_src R
   square <- function (x) { # define function named "square" with argument x
@@ -901,15 +790,11 @@ Goal: write a function that returns the square of it's argument
 > 
 #+end_example
 
------
 
 ** Debugging basics
 
 Stepping througth functions and setting breakpoints
 
-#+HTML: <!-- MD: *** =instructions-->
-#+HTML: <!-- MD: Just click the Submit Answer button on the right.-->
-#+HTML: <!-- MD: *** =sample_code-->
 #+name: debug1
 #+begin_src R
   ## Debugging
@@ -951,14 +836,12 @@ Stepping througth functions and setting breakpoints
 
 Use =traceback()= to see what went wrong after the fact
 
-#+HTML: <!-- MD: *** =sample_code-->
 #+name: debugTraceback
 #+begin_src R :eval no :exports code
   myModel <- lm(NA~NA)
   traceback()
 #+end_src
 
------
 
 ** Writing functions summary
 Key points:
@@ -974,7 +857,6 @@ Functions introduced in this section
 - traceback :: shows the error stack (call after an error to see what went wrong)
   
 
------
 
 ** Exercise 2
 
@@ -986,9 +868,6 @@ Functions introduced in this section
 
 1) [@1] Write a function that takes a data.frame as an argument and returns the mean of each numeric column in the data frame. Test your function using the iris data.
 
-#+HTML: <!-- MD: *** =instructions-->
-#+HTML: <!-- MD: Just click the Submit Answer button on the right.-->
-#+HTML: <!-- MD: *** =sample_code-->
 #+name: ex3.1
 #+begin_src R :exports code
   statsum <- function(df) {
@@ -1014,7 +893,6 @@ Sepal.Length  Sepal.Width Petal.Length  Petal.Width
 
 
 2) [@2] Modify your function so that it returns a list, the first element if which is the means of the numeric variables, the second of which is the counts of the levels of each categorical variable.
-#+HTML: <!-- MD: *** =sample_code-->
 #+name: ex3.2
 #+begin_src R :exports code
   statsum <- function(df) {
@@ -1049,23 +927,15 @@ virginica       50
 #+end_example
 
 * Control flow
-  :PROPERTIES:
-  :EXPORT_FILE_NAME: datacamp/Control flow
-  :EXPORT_OPTIONS: num:nil toc:nil
-  :END:
 
 ** Control flow 
 - Basic idea: if some condition is true, do one thing. If false, do something else
 - Carried out in R using ~if()~ and ~else()~ statements, which can be nested if necessary
 - Especially useful for checking function arguments and performing different operations depending on function input
------
 
 ** Control flow examples
 Goal: write a function that tells us if a number is positive or negative
 
-#+HTML: <!-- MD: *** =instructions-->
-#+HTML: <!-- MD: Just click the Submit Answer button on the right.-->
-#+HTML: <!-- MD: *** =sample_code-->
 #+name: brachingExample1
 #+begin_src R
   ## use branching to return different result depending on the sign of the input
@@ -1103,15 +973,11 @@ Goal: write a function that tells us if a number is positive or negative
 #+end_example
 
 Need to do something different if x equals zero!
------
 
 ** Control flow examples
 
 Add a condition to handle =x = 0=
 
-#+HTML: <!-- MD: *** =instructions-->
-#+HTML: <!-- MD: Just click the Submit Answer button on the right.-->
-#+HTML: <!-- MD: *** =sample_code-->
 #+name: brachingExample3
 #+begin_src R
   ## add condition to handle the case that x is zero
@@ -1141,7 +1007,6 @@ Add a condition to handle =x = 0=
 
 Test the new function
 
-#+HTML: <!-- MD: *** =sample_code-->
 #+name: brachingExample3.1
 #+begin_src R
   isPositive(0) # test the isPositive() function
@@ -1158,15 +1023,11 @@ a is positive
 #+end_example
 
 We fixed the problem when =x = 0=, but now we need to make sure x is numeric of length one (unless we agree with R that =a= is positive!)
------
 
 ** Control flow examples
 
 Do something reasonable if x is not numeric
 
-#+HTML: <!-- MD: *** =instructions-->
-#+HTML: <!-- MD: Just click the Submit Answer button on the right.-->
-#+HTML: <!-- MD: *** =sample_code-->
 #+name: brachingExample5
 #+begin_src R
   ## add condition to handle the case that x is zero
@@ -1203,7 +1064,6 @@ x must be a numeric vector of length one!
 > 
 #+end_example
 
------
 
 ** Control flow summary 
 Key points:
@@ -1216,7 +1076,6 @@ Functions introduced in this section
 - if :: execute code only if condition is met
 - else :: used with *if*; code to execute if condition is not met
 
------
 
 ** Exercise 3
 
@@ -1228,9 +1087,6 @@ Functions introduced in this section
 
 1) [@1] Add argument checking code to return an error if the argument to your function is not a data.frame
 
-#+HTML: <!-- MD: *** =instructions-->
-#+HTML: <!-- MD: Just click the Submit Answer button on the right.-->
-#+HTML: <!-- MD: *** =sample_code-->
 #+name: ex4.1
 #+begin_src R :eval no :exports code
   statsum <- function(df) {
@@ -1246,7 +1102,6 @@ Functions introduced in this section
 
 2) [@2] Insert a break point with =browser()= and step through your function
 
-#+HTML: <!-- MD: *** =sample_code-->
 #+name: ex4.2
 #+begin_src R :exports code
   statsum <- function(df) {
@@ -1290,10 +1145,6 @@ virginica       50
   
 
 * The S3 object class system
-  :PROPERTIES:
-  :EXPORT_FILE_NAME: datacamp/The S3 object class system
-  :EXPORT_OPTIONS: num:nil toc:nil
-  :END:
 
 ** The S3 object class system 
 R has two major object systems: 
@@ -1301,14 +1152,10 @@ R has two major object systems:
   - Stricter, more formal "S4" classes 
 - We will cover only the S3 system, not the S4 system
 - Basic idea: functions have different methods for different types of objects
------
 
 ** Object class
 The class of an object can be retrieved and modified using the ~class()~ function:
 
-#+HTML: <!-- MD: *** =instructions-->
-#+HTML: <!-- MD: Just click the Submit Answer button on the right.-->
-#+HTML: <!-- MD: *** =sample_code-->
 #+name: classExample
 #+begin_src R
   x <- 1:10
@@ -1330,7 +1177,6 @@ The class of an object can be retrieved and modified using the ~class()~ functio
 
  Objects are not limited to a single class, and can have many classes:
 
-#+HTML: <!-- MD: *** =sample_code-->
 #+name: classExample2
 #+begin_src R
   class(x) <- c("A", "B")
@@ -1345,15 +1191,11 @@ The class of an object can be retrieved and modified using the ~class()~ functio
 > 
 #+end_example
 
------
 
 ** Function methods
 - Functions can have many methods, allowing us to have (e.g.) one plot() function that does different things depending on what is being plotted()
 - Methods can only be defined for generic functions: plot, print, summary, mean, and several others are already generic
 
-#+HTML: <!-- MD: *** =instructions-->
-#+HTML: <!-- MD: Just click the Submit Answer button on the right.-->
-#+HTML: <!-- MD: *** =sample_code-->
 #+name: getMethods
 #+begin_src R 
   # see what methods have been defined for the mean function
@@ -1378,14 +1220,10 @@ The class of an object can be retrieved and modified using the ~class()~ functio
 > 
 #+end_example
 
------
 
 ** Creating new function methods
 To create a new method for a function that is already generic all you have to do is name your function ~function.class~
 
-#+HTML: <!-- MD: *** =instructions-->
-#+HTML: <!-- MD: Just click the Submit Answer button on the right.-->
-#+HTML: <!-- MD: *** =sample_code-->
 #+name: fooMean
 #+begin_src R 
   # create a mean() method for objects of class "foo":
@@ -1429,15 +1267,11 @@ x is not numeric
 > 
 #+end_example
 
------
 
 ** Creating generic functions
 
 S3 generics are most often used for print, summary, and plot methods, but sometimes you may want to create a new generic function
 
-#+HTML: <!-- MD: *** =instructions-->
-#+HTML: <!-- MD: Just click the Submit Answer button on the right.-->
-#+HTML: <!-- MD: *** =sample_code-->
 #+name: createGeneric
 #+begin_src R
   # create a generic disp() function
@@ -1477,7 +1311,6 @@ S3 generics are most often used for print, summary, and plot methods, but someti
 > 
 #+end_example
 
------
 
 ** S3 classes summary 
 Key points:
@@ -1494,7 +1327,6 @@ Functions introduced in this section
 - invisible :: returns an object but does not print it
 
 
------
 
 ** Exercise 4 
 1) Modify your function so that it also returns the standard deviations of the numeric variables 
@@ -1506,9 +1338,6 @@ Functions introduced in this section
 ** Exercise 4 prototype						  :prototype:
 1) [@1] Modify your function so that it also returns the standard deviations of the numeric variables 
 
-#+HTML: <!-- MD: *** =instructions-->
-#+HTML: <!-- MD: Just click the Submit Answer button on the right.-->
-#+HTML: <!-- MD: *** =sample_code-->
 #+name: ex5.1
 #+begin_src R :exports code
   statsum <- function(df) {
@@ -1551,7 +1380,6 @@ virginica       50
 
 2) [@2] Modify your function so that it returns a list of class "statsum"
 
-#+HTML: <!-- MD: *** =sample_code-->
 #+name: ex5.2
 #+begin_src R :exports code
   statsum <- function(df) {
@@ -1596,7 +1424,6 @@ List of 2
 
 3 [@3] Write a print method for the statsum class
 
-#+HTML: <!-- MD: *** =sample_code-->
 #+name: ex5.3
 #+begin_src R :exports code
   print.statsum <- function(x) {
@@ -1635,10 +1462,6 @@ virginica       50
 
 
 * Things that may surprise you
-  :PROPERTIES:
-  :EXPORT_FILE_NAME: datacamp/Things that may surprise you
-  :EXPORT_OPTIONS: num:nil toc:nil
-  :END:
 
 ** Gotcha's
 
@@ -1646,14 +1469,10 @@ virginica       50
 - Some of these "gotcha's" are common problems in other languages, many are unique to R
 - We will only cover a few -- for a more comprehensive discussion please see http://www.burns-stat.com/pages/Tutor/R_inferno.pdf
 
------
 
 ** Floating point comparison
 
 Floating point arithmetic is not exact:
-#+HTML: <!-- MD: *** =instructions-->
-#+HTML: <!-- MD: Just click the Submit Answer button on the right.-->
-#+HTML: <!-- MD: *** =sample_code-->
 #+name: floatingPointExample
 #+begin_src R
   .1 == .3/3
@@ -1667,7 +1486,6 @@ Floating point arithmetic is not exact:
 #+end_example
 
 Solution: ~use all.equal()~:
-#+HTML: <!-- MD: *** =sample_code-->
 #+name: floatingPointExampleSolution
 #+begin_src R
   all.equal(.1, .3/3)
@@ -1679,13 +1497,9 @@ Solution: ~use all.equal()~:
 [1] TRUE
 > 
 #+end_example
------
 
 ** Missing values
 R does not exclude missing values by default -- a single missing value in a vector means that many thing are unknown:
-#+HTML: <!-- MD: *** =instructions-->
-#+HTML: <!-- MD: Just click the Submit Answer button on the right.-->
-#+HTML: <!-- MD: *** =sample_code-->
 #+name: MissingDataExample
 #+begin_src R
   x <- c(1:10, NA, 12:20)
@@ -1701,7 +1515,6 @@ R does not exclude missing values by default -- a single missing value in a vect
 #+end_example
 
 NA is not equal to anything, not even NA
-#+HTML: <!-- MD: *** =sample_code-->
 #+name: NAcomp
 #+begin_src R
   NA == NA
@@ -1715,15 +1528,11 @@ NA is not equal to anything, not even NA
 #+end_example
 
 Solutions: use ~na.rm = TRUE~ option when calculating, and is.na to test for missing
------
 
 ** Automatic type conversion
 
 Automatic type conversion happens a lot which is often useful, but makes it easy to miss mistakes
 
-#+HTML: <!-- MD: *** =instructions-->
-#+HTML: <!-- MD: Just click the Submit Answer button on the right.-->
-#+HTML: <!-- MD: *** =sample_code-->
 #+name: typeConversion
 #+begin_src R
   # combining values coereces them to the most general type
@@ -1749,14 +1558,10 @@ Automatic type conversion happens a lot which is often useful, but makes it easy
 #+end_example
 
 Maybe this is what you expect... I would like to at least get a warning!
------
 
 ** Optional argument inconsistencies
 Functions you might expect to work similarly don't always:
 
-#+HTML: <!-- MD: *** =instructions-->
-#+HTML: <!-- MD: Just click the Submit Answer button on the right.-->
-#+HTML: <!-- MD: *** =sample_code-->
 #+name: MeanVSsd
 #+begin_src R
   mean(1, 2, 3, 4, 5)*5
@@ -1773,7 +1578,6 @@ Functions you might expect to work similarly don't always:
 #+end_example
 
 Why are these different?!?
-#+HTML: <!-- MD: *** =sample_code-->
 #+name: MeanVSsdExplained
 #+begin_src R
   args(mean)
@@ -1792,15 +1596,11 @@ NULL
 #+end_example
 
 Ouch. That is not nice at all!
------
 
 ** Trouble with Factors
 
 Factors sometimes behave as numbers, and sometimes as characters, which can be confusing!
 
-#+HTML: <!-- MD: *** =instructions-->
-#+HTML: <!-- MD: Just click the Submit Answer button on the right.-->
-#+HTML: <!-- MD: *** =sample_code-->
 #+name: factorTrouble
 #+begin_src R
   (x <- factor(c(5, 5, 6, 6), levels = c(6, 5)))
@@ -1835,10 +1635,6 @@ Levels: 6 5
 #+end_example
 
 * Additional resources
-  :PROPERTIES:
-  :EXPORT_FILE_NAME: datacamp/Additional resources
-  :EXPORT_OPTIONS: num:nil toc:nil
-  :END:
 
 ** Additional reading and resources
 - S3 system overview: https://github.com/hadley/devtools/wiki/S3
@@ -1856,7 +1652,6 @@ http://www.jstatso|.org/v31/i01/paper
 - Institute for Quantitative Social Science: http://iq.harvard.edu
 - Research technology consulting: http://projects.iq.harvard.edu/rtc
 
------
 
 ** Feedback
 - Help Us Make This Workshop Better!
@@ -1865,11 +1660,7 @@ http://www.jstatso|.org/v31/i01/paper
 - http://tinyurl.com/RprogrammingFeedback 
 
 
-* Loops (supplimental)
-  :PROPERTIES:
-  :EXPORT_FILE_NAME: datacamp/Loops (supplimental)
-  :EXPORT_OPTIONS: num:nil toc:nil
-  :END:
+* Loops (supplemental)
 
 ** Looping
 
@@ -1877,13 +1668,9 @@ http://www.jstatso|.org/v31/i01/paper
 - A for loop runs the code a fixed number of times, or on a fixed set of objects.
 - A while loop runs the code until a condition is met.
 - If you're typing the same commands over and over again, you might want to use a loop!
------
 
 ** Looping: for-loop examples
 For each value in a vector, print the number and its square
-#+HTML: <!-- MD: *** =instructions-->
-#+HTML: <!-- MD: Just click the Submit Answer button on the right.-->
-#+HTML: <!-- MD: *** =sample_code-->
 #+name: firstForLoop
 #+begin_src R
   # For-loop example
@@ -1911,14 +1698,10 @@ For each value in a vector, print the number and its square
 5 squared is 25 
 > 
 #+end_example
------
 
 ** Looping: while-loop example
 Goal: simulate rolling two dice until we roll two sixes
 
-#+HTML: <!-- MD: *** =instructions-->
-#+HTML: <!-- MD: Just click the Submit Answer button on the right.-->
-#+HTML: <!-- MD: *** =sample_code-->
 #+name: whileLoopExample
 #+begin_src R
   ## While-loop example: rolling dice
@@ -1951,14 +1734,10 @@ We rolled a  9
 We rolled a  12 
 > 
 #+end_example
------
 
 ** Using loops to fill in lists
 Often you will want to store the results from a loop. You can create an object to hold the results generated in the loop and fill in the values using indexing
 
-#+HTML: <!-- MD: *** =instructions-->
-#+HTML: <!-- MD: Just click the Submit Answer button on the right.-->
-#+HTML: <!-- MD: *** =sample_code-->
 #+name: saveLoopResults
 #+begin_src R
     ## save calculations done in a loop
@@ -1995,16 +1774,12 @@ Often you will want to store the results from a loop. You can create an object t
 > 
 #+end_example
 
------
 
 ** Word of caution: don't overuse loops!
 Most operations in R are vectorized -- This makes loops unnecessary in many cases
 
 - Use vector arithmatic instead of loops:
 
-#+HTML: <!-- MD: *** =instructions-->
-#+HTML: <!-- MD: Just click the Submit Answer button on the right.-->
-#+HTML: <!-- MD: *** =sample_code-->
 #+name: sillyLoop1
 #+begin_src R 
   x <- c() # create vector x
@@ -2031,7 +1806,6 @@ Most operations in R are vectorized -- This makes loops unnecessary in many case
 
 - Use paste instead of loops:
 
-#+HTML: <!-- MD: *** =sample_code-->
 #+name: pasteNotLoop
 #+begin_src R
   ## Earlier we said
@@ -2057,7 +1831,6 @@ Most operations in R are vectorized -- This makes loops unnecessary in many case
 
 
 Loops are handy, but save them for when you really need them!
------
 
 ** Exercise 5
 
@@ -2072,9 +1845,6 @@ Loops are handy, but save them for when you really need them!
 
 1) use a loop to get the =class()= of each column in the iris data set
 
-#+HTML: <!-- MD: *** =instructions-->
-#+HTML: <!-- MD: Just click the Submit Answer button on the right.-->
-#+HTML: <!-- MD: *** =sample_code-->
 #+name: ex2.1
 #+begin_src R
   classes <- c()
@@ -2100,7 +1870,6 @@ Sepal.Length  Sepal.Width Petal.Length  Petal.Width      Species
 
 2) use the results from step 1 to select the numeric columns 
 
-#+HTML: <!-- MD: *** =sample_code-->
 #+name: ex2.2
 #+begin_src R
   iris.num <- iris[, names(classes)[classes=="numeric"]]
@@ -2120,7 +1889,6 @@ Sepal.Length  Sepal.Width Petal.Length  Petal.Width      Species
 
 3) use a loop to calculate the mean of each numeric column in the iris data
 
-#+HTML: <!-- MD: *** =sample_code-->
 #+name: ex2.3
 #+begin_src R
   iris.means <- c()
