@@ -2,7 +2,7 @@
 #+TITLE:     Introduction To Programming In R
 #+AUTHOR:    
 #+EMAIL:     support@help.hmdc.harvard.edu
-#+DATE:      Last updated November 20, 2013
+#+DATE:      ""
 #+STARTUP: showeverything
 
 # NOTE: refer to the README file if you are unfamiliar with emacs or orgmode.
@@ -51,11 +51,6 @@
   - Debug functions
   - Understand and use the S3 object system
 
-** Running example
-Throughout this workshop we will return to a running example that involves calculating descriptive statistics for every column of a data.frame. We will often use the built-in /iris/ data set. You can load the iris data by evaluating =data(iris)= at the R prompt.
-
-Our main example today consists of writing a statistical summary function that calculates the min, mean, median, max, sd, and n for all numeric columns in a data.frame, the correlations among these variables, and the counts and proportions for all categorical columns. Typically I will describe a topic and give some generic examples, then ask you to use the technique to start building the summary.
-
 ** Materials and setup
 
 Everyone should have R installed --if not:
@@ -82,6 +77,11 @@ Materials for this workshop include slides, example data sets, and example code.
 - Go to *Tools => Set working directory => To source file location* (more on the working directory later)
 
 - I encourage you to add your own notes to this file!
+
+** Running example
+Throughout this workshop we will return to a running example that involves calculating descriptive statistics for every column of a data.frame. We will often use the built-in /iris/ data set. You can load the iris data by evaluating =data(iris)= at the R prompt.
+
+Our main example today consists of writing a statistical summary function that calculates the min, mean, median, max, sd, and n for all numeric columns in a data.frame, the correlations among these variables, and the counts and proportions for all categorical columns. Typically I will describe a topic and give some generic examples, then ask you to use the technique to start building the summary.
 
 * Data types
 
@@ -193,6 +193,7 @@ Most of the time we can treat factors as though they were character vectors
 #+begin_src R
   DF <- data.frame(x=1:5, y=letters[1:5])
   DF # data.frame with two columns and 5 rows
+  DF$x # select just the x column.
 
   # DF <- data.frame(x=1:10, y=1:7) # illegal becase lengths differ
   L <- list(x=1:5, y=1:3, z = DF)
@@ -245,71 +246,14 @@ Functions introduced in this section:
 - str :: get the structure of an object
 - length :: get the number of elements in an object
 - mean :: calculate the mean of a vector
+- $ :: extraction operator, selects a single element from a list or data.frame 
 
 ** Exercise 0 
-
-1. Create a new vector called "test" containing five numbers of your choice [ ~c()~, ~<-~ ]
-2. Create a second vector called "students" containing five common names of your choice [ ~c()~, ~<-~ ]
-3. Determine the class of "students" and "test" [ ~class()~ or ~str()~ ]
-4. Create a data frame containing two columns, "students" and "tests" as defined above [ ~data.frame~ ]
-5. Convert "test" to character class, and confirm that you were successful [ ~as.numeric()~, ~<-~, ~str()~ ]
-
-** Exercise 0 prototype						  :prototype:
-
-1) [@1] Create a new vector called "test" containing five numbers of your choice
-#+name: ex0.1
-#+begin_src R :exports code
-  test <- c(1, 2, 3, 4, 5)
-#+end_src
-
-#+RESULTS: ex0.1
-#+begin_example
-> test <- c(1, 2, 3, 4, 5)
-> 
-#+end_example
-
-2) [@2] a Create a second vector called "students" containing five common names of your choice
-#+name: ex0.2
-#+begin_src R :exports code
-  students <- c("Mary", "Joan", "Steve", "Alex", "Suzy")
-#+end_src
-
-#+RESULTS: ex0.2
-#+begin_example
-> students <- c("Mary", "Joan", "Steve", "Alex", "Suzy")
-> 
-#+end_example
-
-3) [@3] Determine the class of "students" and "test"
-#+name: ex0.3
-#+begin_src R :exports code
-  class(students)
-  class(test)
-#+end_src
-
-#+RESULTS: ex0.3
-#+begin_example
-> test <- as.character(test)
-> class(test)
-[1] "character"
-> 
-#+end_example
-
-4) [@4] Create a data frame containing two columns, "students" and "tests" as defined above
-#+name: ex0.4
-#+begin_src R :exports code
-  testScores <- data.frame(students, tests)
-#+end_src
-
-#+RESULTS: ex0.4
-
-5) [@5] Convert "test" to character class, and confirm that you were successful
-#+name: ex0.3
-#+begin_src R :exports code
-  test <- as.character(test)
-  class(test)
-#+end_src
-
+Use the built-in /iris/ data set (comes with R, will be available in your workspace automatically).
+1. Determine the =class= and =str= ucture of the /iris/ data set.
+2. Determine the class of each column in the iris data set
+3. BONUS (OPTIONAL): Create a new variable by =c= ombining the Petal.Length and Petal.Width columns
+4. BONUS (OPTIONAL): Create a new data.frame with two columns; the first should be named /value/, and should be equal to the variable you created in step 3. The second should be named /variable/ and should be either /Petal.Length/ or /Petal.Width/ as appropriate.
 
 * Extracting and replacing object elements
 
@@ -533,89 +477,18 @@ Functions introduced in this section:
 3) BONUS (optional): Calculate the mean of Sepal.Length, but only for the setosa species
 4) BONUS (optional): Calculate the number of sepal lengths that are more than one standard deviation below the average sepal length
 
-** Exercise 1 prototype						  :prototype:
-
-1) [@1] Select just the Sepal.Length and Species columns from the /iris/ data set (built-in, will be available in your workspace automatically) and save the result to a new data.frame named /iris.2/
-#+name: ex1.1
-#+begin_src R :exports code
-  data(iris)
-  iris2 <- iris[c("Sepal.Length", "Species")]
-  str(iris2)
-#+end_src
-
-#+RESULTS: ex1.1
-#+begin_example
-> data(iris)
-> iris2 <- iris[c("Sepal.Length", "Species")]
-> str(iris2)
-'data.frame':	150 obs. of  2 variables:
- $ Sepal.Length: num  5.1 4.9 4.7 4.6 5 5.4 4.6 5 4.4 4.9 ...
- $ Species     : Factor w/ 3 levels "setosa","versicolor",..: 1 1 1 1 1 1 1 1 1 1 ...
-> 
-#+end_example
-
-2) [@2] Calculate the mean of the Sepal.Length column in /iris.2/ 
-
-#+name: ex.2
-#+begin_src R :exports code
-  mean(iris2[ , "Sepal.Length"])
-#+end_src
-
-#+RESULTS: ex.2
-#+begin_example
-> mean(iris2[ , "Sepal.Length"])
-[1] 5.843333
-> 
-#+end_example
-
-3) [@3] BONUS (optional): Calculate the mean of Sepal.Length, but only for the setosa species
-
-#+name: ex1.3
-#+begin_src R :exports code
-  mean(iris2[iris2[["Species"]] == "setosa", "Sepal.Length"])
-  ## shortcut:
-  with(iris2, {
-      print(mean(Sepal.Length[Species == "setosa"]))
-  })
-#+end_src
-
-#+RESULTS: ex1.3
-#+begin_example
-> mean(iris2[iris2[["Species"]] == "setosa", "Sepal.Length"])
-[1] 5.006
-> ## shortcut:
-> with(iris2, {
-+     print(mean(Sepal.Length[Species == "setosa"]))
-+ })
-[1] 5.006
-> 
-#+end_example
-
-4) [@4] BONUS (optional): Calculate the number of sepal lengths that are more than one standard deviation below the average sepal length
-
-#+name: ex1.4
-#+begin_src R :exports code
-  m.minus.sd <- mean(iris2[["Sepal.Length"]]) - sd(iris2[["Sepal.Length"]])
-  length(iris2[iris2[["Sepal.Length"]] < m.minus.sd, "Sepal.Length"])
-#+end_src
-
-#+RESULTS: ex1.4
-#+begin_example
-> m.minus.sd <- mean(iris2[["Sepal.Length"]]) - sd(iris2[["Sepal.Length"]])
-> length(iris2[iris2[["Sepal.Length"]] < m.minus.sd, "Sepal.Length"])
-[1] 32
-> 
-#+end_example
-
-* Applying functions to list elements
-
+* Looping and applying
+=for= and =while= loops in R work much the same as they do in other programming languages. R also has an =apply= family of functions that are sometimes more convenient.
 ** The apply function
 The apply function is used to apply a function to the rows or columns of a matrix
 #+name: applyFunctionExample
 #+begin_src R
-  M <- matrix(1:20, ncol=4)
-  apply(M, 2, mean) ## average across the rows
-  apply(M, 2, sum) ## sum the columns
+  M <- matrix(1:20,
+              ncol=4,
+              dimnames = list(paste("row", 1:5),
+                              paste("col", 1:4)))
+  apply(M, 1, mean) ## average across the rows
+  apply(M, 2, sum) ## sum down the columns
 #+end_src
 
 #+RESULTS: applyFunctionExample
@@ -628,9 +501,24 @@ The apply function is used to apply a function to the rows or columns of a matri
 > 
 #+end_example
 
+** for loops
+We can alternatively calculate row and column means, but in this case =apply= is easier.
+#+name: forLoopExample
+#+begin_src R
+  M.means <- c() ## empty vector to hold the result
+  for (row in rownames(M)) {
+      M.means[row] <- mean(M[row, ])
+  }
+
+  M.sums <- c() ## empty vector to hold the result
+  for (col in colnames(M)) {
+      M.sums[col] <- mean(M[, col])
+  }
+#+end_src
+
 
 ** The sapply function
-It is often useful to apply a function to each element of a vector, list, or data.frame; use the =sapply= function for this
+It is often useful to apply a function to each element of a vector, list, or data.frame; you can use the =sapply= function for this
 
 #+name: sapplyExample
 #+begin_src R
@@ -653,6 +541,7 @@ x y z
 > 
 #+end_example
 
+See also: =lapply=, =vapply=, and =mapply=.
 ** Combining sapply and indexing
 The =sapply= function can be used in combination with indexing to extract elements that meet certain criteria
 - Recall that we can index using logical vectors:
@@ -864,68 +753,6 @@ Functions introduced in this section
 
 2) Modify your function so that it returns a list, the first element if which is the means of the numeric variables, the second of which is the counts of the levels of each categorical variable.
 
-** Exercise 2 prototype						  :prototype:
-
-1) [@1] Write a function that takes a data.frame as an argument and returns the mean of each numeric column in the data frame. Test your function using the iris data.
-
-#+name: ex3.1
-#+begin_src R :exports code
-  statsum <- function(df) {
-      classes <- sapply(df, class)
-      means <- sapply(df[classes == "numeric"], mean)
-      return(means)}
-  
-  statsum(iris) 
-#+end_src
-
-#+RESULTS: ex3.1
-#+begin_example
-> statsum <- function(df) {
-+     classes <- sapply(df, class)
-+     means <- sapply(df[classes == "numeric"], mean)
-+     return(means)}
-> 
-> statsum(iris) 
-Sepal.Length  Sepal.Width Petal.Length  Petal.Width 
-    5.843333     3.057333     3.758000     1.199333 
-> 
-#+end_example
-
-
-2) [@2] Modify your function so that it returns a list, the first element if which is the means of the numeric variables, the second of which is the counts of the levels of each categorical variable.
-#+name: ex3.2
-#+begin_src R :exports code
-  statsum <- function(df) {
-      classes <- sapply(df, class)
-      means <- sapply(df[classes == "numeric"], mean)
-      counts <- sapply(df[classes == "factor"], table)
-      return(list(means, counts))}
-    
-  statsum(iris) 
-#+end_src
-
-#+RESULTS: ex3.2
-#+begin_example
-> statsum <- function(df) {
-+     classes <- sapply(df, class)
-+     means <- sapply(df[classes == "numeric"], mean)
-+     counts <- sapply(df[classes == "factor"], table)
-+     return(list(means, counts))}
->   
-> statsum(iris) 
-[[1]]
-Sepal.Length  Sepal.Width Petal.Length  Petal.Width 
-    5.843333     3.057333     3.758000     1.199333 
-
-[[2]]
-           Species
-setosa          50
-versicolor      50
-virginica       50
-
-> 
-#+end_example
-
 * Control flow
 
 ** Control flow 
@@ -941,9 +768,9 @@ Goal: write a function that tells us if a number is positive or negative
   ## use branching to return different result depending on the sign of the input
   isPositive <- function(x) { # define function "isPositive"
     if (x > 0) { # if x is greater than zero, then
-      cat(x, "is positive \n") } # say so! 
+      return(paste(x, "is positive \n")) } # say so! 
     else { # otherwise
-        cat(x, "is negative \n")} # say x is negative
+        return(paste(x, "is negative \n"))} # say x is negative
   } # end function definition 
 
   ## test the isPositive() function
@@ -957,18 +784,18 @@ Goal: write a function that tells us if a number is positive or negative
 > ## use branching to return different result depending on the sign of the input
 > isPositive <- function(x) { # define function "isPositive"
 +   if (x > 0) { # if x is greater than zero, then
-+     cat(x, "is positive \n") } # say so! 
++     return(paste(x, "is positive \n")) } # say so! 
 +   else { # otherwise
-+       cat(x, "is negative \n")} # say x is negative
++       return(paste(x, "is negative \n"))} # say x is negative
 + } # end function definition 
 > 
 > ## test the isPositive() function
 > isPositive(10)
-10 is positive 
+[1] "10 is positive \n"
 > isPositive(-1)
--1 is negative 
+[1] "-1 is negative \n"
 > isPositive(0)
-0 is negative 
+[1] "0 is negative \n"
 > 
 #+end_example
 
@@ -983,11 +810,11 @@ Add a condition to handle =x = 0=
   ## add condition to handle the case that x is zero
     isPositive <- function(x) { # define function "isPositive"
       if (x > 0) { # if x is greater than zero, then
-        cat(x, "is positive \n") } # say so! 
+        return(paste(x, "is positive \n")) } # say so! 
       else if (x == 0) { # otherwise if x is zero
-        cat(x, "is zero \n")} # say so!
+        return(paste(x, "is zero \n"))} # say so!
       else { #otherwise
-          cat(x, "is negative \n")} # say x is negative
+          return(paste(x, "is negative \n"))} # say x is negative
     } # end function definition
 #+end_src
 
@@ -996,11 +823,11 @@ Add a condition to handle =x = 0=
 > ## add condition to handle the case that x is zero
 >   isPositive <- function(x) { # define function "isPositive"
 +     if (x > 0) { # if x is greater than zero, then
-+       cat(x, "is positive \n") } # say so! 
++       return(paste(x, "is positive \n")) } # say so! 
 +     else if (x == 0) { # otherwise if x is zero
-+       cat(x, "is zero \n")} # say so!
++       return(paste(x, "is zero \n"))} # say so!
 +     else { #otherwise
-+         cat(x, "is negative \n")} # say x is negative
++         return(paste(x, "is negative \n"))} # say x is negative
 +   } # end function definition
 > 
 #+end_example
@@ -1016,9 +843,9 @@ Test the new function
 #+RESULTS: brachingExample3.1
 #+begin_example
 > isPositive(0) # test the isPositive() function
-0 is zero 
+[1] "0 is zero \n"
 > isPositive("a") #oops, that will not work!
-a is positive 
+[1] "a is positive \n"
 > 
 #+end_example
 
@@ -1029,17 +856,17 @@ We fixed the problem when =x = 0=, but now we need to make sure x is numeric of 
 Do something reasonable if x is not numeric
 
 #+name: brachingExample5
-#+begin_src R
+#+begin_src R :eval no
   ## add condition to handle the case that x is zero
     isPositive <- function(x) { # define function "isPositive"
       if(!is.numeric(x) | length(x) > 1) {
-        cat("x must be a numeric vector of length one! \n")}
+        stop("x must be a numeric vector of length one! \n")}
       else if (x > 0) { # if x is greater than zero, then
-        cat(x," is positive \n") } # say so! 
+        return(paste(x," is positive \n")) } # say so! 
       else if (x == 0) { # otherwise if x is zero
-        cat(x," is zero \n")} # say so!
+        return(paste(x," is zero \n"))} # say so!
       else { #otherwise
-        cat(x," is negative \n")} # say x is negative
+        return(paste(x," is negative \n"))} # say x is negative
     } # end function definition
 
   isPositive("a") # test the isPositive() function on character
@@ -1047,21 +874,8 @@ Do something reasonable if x is not numeric
 
 #+RESULTS: brachingExample5
 #+begin_example
-> ## add condition to handle the case that x is zero
->   isPositive <- function(x) { # define function "isPositive"
-+     if(!is.numeric(x) | length(x) > 1) {
-+       cat("x must be a numeric vector of length one! \n")}
-+     else if (x > 0) { # if x is greater than zero, then
-+       cat(x," is positive \n") } # say so! 
-+     else if (x == 0) { # otherwise if x is zero
-+       cat(x," is zero \n")} # say so!
-+     else { #otherwise
-+       cat(x," is negative \n")} # say x is negative
-+   } # end function definition
-> 
-> isPositive("a") # test the isPositive() function on character
-x must be a numeric vector of length one! 
-> 
+> isPositive("a")
+Error in isPositive("a") : x must be a numeric vector of length one! 
 #+end_example
 
 
@@ -1072,7 +886,7 @@ Key points:
 - conditional execution is often used for argument checking, among other things
 
 Functions introduced in this section  
-- cat :: Concatenates and prints R objects
+- paste :: concatenates (character) vectors
 - if :: execute code only if condition is met
 - else :: used with *if*; code to execute if condition is not met
 
@@ -1082,67 +896,6 @@ Functions introduced in this section
 1) Add argument checking code to return an error if the argument to your function is not a data.frame
 
 2) Insert a break point with =browser()= and step through your function
-
-** Exercise 3 prototype						  :prototype:
-
-1) [@1] Add argument checking code to return an error if the argument to your function is not a data.frame
-
-#+name: ex4.1
-#+begin_src R :eval no :exports code
-  statsum <- function(df) {
-      if(class(df) != "data.frame") stop("df must be a data.frame!")
-      classes <- sapply(df, class)
-      means <- sapply(df[classes == "numeric"], mean)
-      counts <- sapply(df[classes == "factor"], table)
-      return(list(means, counts))}
-    
-  statsum(1:10)
-  statsum(iris)
-#+end_src
-
-2) [@2] Insert a break point with =browser()= and step through your function
-
-#+name: ex4.2
-#+begin_src R :exports code
-  statsum <- function(df) {
-      if(class(df) != "data.frame") stop("df must be a data.frame!")
-  browser()
-      classes <- sapply(df, class)
-      means <- sapply(df[classes == "numeric"], mean)
-      counts <- sapply(df[classes == "factor"], table)
-      return(list(means, counts))
-  }
-  
-  statsum(iris)    
-#+end_src
-
-#+RESULTS: ex4.2
-#+begin_example
-> statsum <- function(df) {
-+     if(class(df) != "data.frame") stop("df must be a data.frame!")
-+ browser()
-+     classes <- sapply(df, class)
-+     means <- sapply(df[classes == "numeric"], mean)
-+     counts <- sapply(df[classes == "factor"], table)
-+     return(list(means, counts))
-+ }
-> 
-> statsum(iris)    
-Called from: statsum(iris)
-Browse[1]> [[1]]
-Sepal.Length  Sepal.Width Petal.Length  Petal.Width 
-    5.843333     3.057333     3.758000     1.199333 
-
-[[2]]
-           Species
-setosa          50
-versicolor      50
-virginica       50
-
-> 
-#+end_example
-
-  
 
 * The S3 object class system
 
@@ -1335,130 +1088,6 @@ Functions introduced in this section
 
 3) Write a print method for the statsum class
 
-** Exercise 4 prototype						  :prototype:
-1) [@1] Modify your function so that it also returns the standard deviations of the numeric variables 
-
-#+name: ex5.1
-#+begin_src R :exports code
-  statsum <- function(df) {
-      if(class(df) != "data.frame") stop("df must be a data.frame!")
-      classes <- sapply(df, class)
-      means <- sapply(df[classes == "numeric"], mean)
-      sds <- sapply(df[classes == "numeric"], mean)
-      counts <- sapply(df[classes == "factor"], table)
-      return(list(cbind(means, sds), counts))}
-  
-  statsum(iris)
-#+end_src
-
-#+RESULTS: ex5.1
-#+begin_example
-> statsum <- function(df) {
-+     if(class(df) != "data.frame") stop("df must be a data.frame!")
-+     classes <- sapply(df, class)
-+     means <- sapply(df[classes == "numeric"], mean)
-+     sds <- sapply(df[classes == "numeric"], mean)
-+     counts <- sapply(df[classes == "factor"], table)
-+     return(list(cbind(means, sds), counts))}
-> 
-> statsum(iris)
-[[1]]
-                means      sds
-Sepal.Length 5.843333 5.843333
-Sepal.Width  3.057333 3.057333
-Petal.Length 3.758000 3.758000
-Petal.Width  1.199333 1.199333
-
-[[2]]
-           Species
-setosa          50
-versicolor      50
-virginica       50
-
-> 
-#+end_example
-
-2) [@2] Modify your function so that it returns a list of class "statsum"
-
-#+name: ex5.2
-#+begin_src R :exports code
-  statsum <- function(df) {
-      if(class(df) != "data.frame") stop("df must be a data.frame!")
-      classes <- sapply(df, class)
-      means <- sapply(df[classes == "numeric"], mean)
-      sds <- sapply(df[classes == "numeric"], mean)
-      counts <- sapply(df[classes == "factor"], table)
-      R <- list(cbind(means, sds), counts)
-      class(R) <- c("statsum", class(R))
-      return(R)}
-
-  str(statsum(iris))
-#+end_src
-
-#+RESULTS: ex5.2
-#+begin_example
-> statsum <- function(df) {
-+     if(class(df) != "data.frame") stop("df must be a data.frame!")
-+     classes <- sapply(df, class)
-+     means <- sapply(df[classes == "numeric"], mean)
-+     sds <- sapply(df[classes == "numeric"], mean)
-+     counts <- sapply(df[classes == "factor"], table)
-+     R <- list(cbind(means, sds), counts)
-+     class(R) <- c("statsum", class(R))
-+     return(R)}
-> 
-> str(statsum(iris))
-List of 2
- $ : num [1:4, 1:2] 5.84 3.06 3.76 1.2 5.84 ...
-  ..- attr(*, "dimnames")=List of 2
-  .. ..$ : chr [1:4] "Sepal.Length" "Sepal.Width" "Petal.Length" "Petal.Width"
-  .. ..$ : chr [1:2] "means" "sds"
- $ : int [1:3, 1] 50 50 50
-  ..- attr(*, "dimnames")=List of 2
-  .. ..$ : chr [1:3] "setosa" "versicolor" "virginica"
-  .. ..$ : chr "Species"
- - attr(*, "class")= chr [1:2] "statsum" "list"
-> 
-#+end_example
-
-
-3 [@3] Write a print method for the statsum class
-
-#+name: ex5.3
-#+begin_src R :exports code
-  print.statsum <- function(x) {
-      cat("Numeric variable descriptive statistics:\n")
-      print(x[[1]], digits=2) 
-      cat("Factor variable counts:\n")
-      print(x[[2]])
-  }
-  
-  statsum(iris)
-#+end_src
-
-#+RESULTS: ex5.3
-#+begin_example
-> print.statsum <- function(x) {
-+     cat("Numeric variable descriptive statistics:\n")
-+     print(x[[1]], digits=2) 
-+     cat("Factor variable counts:\n")
-+     print(x[[2]])
-+ }
-> 
-> statsum(iris)
-Numeric variable descriptive statistics:
-             means sds
-Sepal.Length   5.8 5.8
-Sepal.Width    3.1 3.1
-Petal.Length   3.8 3.8
-Petal.Width    1.2 1.2
-Factor variable counts:
-           Species
-setosa          50
-versicolor      50
-virginica       50
-> 
-#+end_example
 
 
 * Things that may surprise you
@@ -1634,6 +1263,425 @@ Levels: 6 5
 > 
 #+end_example
 
+* Exercise solutions
+
+** Exercise 0 prototype						  :prototype:
+
+** Exercise 0 
+Use the built-in /iris/ data set (comes with R, will be available in your workspace automatically).
+1) [@1] Determine the =class= and =str= ucture of the /iris/ data set.
+#+BEGIN_SRC R
+  class(iris)
+  str(iris)
+#+END_SRC
+
+#+RESULTS:
+#+begin_example
+> class(iris)
+[1] "data.frame"
+> str(iris)
+'data.frame':	150 obs. of  5 variables:
+ $ Sepal.Length: num  5.1 4.9 4.7 4.6 5 5.4 4.6 5 4.4 4.9 ...
+ $ Sepal.Width : num  3.5 3 3.2 3.1 3.6 3.9 3.4 3.4 2.9 3.1 ...
+ $ Petal.Length: num  1.4 1.4 1.3 1.5 1.4 1.7 1.4 1.5 1.4 1.5 ...
+ $ Petal.Width : num  0.2 0.2 0.2 0.2 0.2 0.4 0.3 0.2 0.2 0.1 ...
+ $ Species     : Factor w/ 3 levels "setosa","versicolor",..: 1 1 1 1 1 1 1 1 1 1 ...
+> 
+#+end_example
+
+2) [@2] Determine the class of each column in the iris data set
+#+BEGIN_SRC R
+  class(iris$Species)
+  class(iris$Sepal.Length)
+  class(iris$Sepal.Width)
+  class(iris$Petal.Length)
+  class(iris$Petal.Width)
+#+END_SRC
+
+#+RESULTS:
+#+begin_example
+> class(iris$Species)
+[1] "factor"
+> class(iris$Sepal.Length)
+[1] "numeric"
+> class(iris$Sepal.Width)
+[1] "numeric"
+> class(iris$Petal.Length)
+[1] "numeric"
+> class(iris$Petal.Width)
+[1] "numeric"
+> 
+#+end_example
+
+3) [@3] BONUS (OPTIONAL): Create a new variable by =c= ombining the Petal.Length and Petal.Width columns
+#+BEGIN_SRC R
+  petal <- c(iris$Petal.Length, iris$Petal.Width)
+#+END_SRC
+
+#+RESULTS:
+#+begin_example
+> petal <- c(iris$Petal.Length, iris$Petal.Width)
+> 
+#+end_example
+
+4) [@4] BONUS (OPTIONAL): Create a new data.frame with two columns; the first should be named /value/, and should be equal to the variable you created in step 3. The second should be named /variable/ and should be either /Petal.Length/ or /Petal.Width/ as appropriate.
+#+BEGIN_SRC R
+  petals <- data.frame(value = petal,
+                       variable = rep(c("Petal.Length", "Petal.Width"),
+                                      each = nrow(iris)))
+
+  head(petals)
+  tail(petals)
+#+END_SRC
+
+#+RESULTS:
+#+begin_example
+> petals <- data.frame(value = petal,
++                      variable = rep(c("Petal.Length", "Petal.Width"),
++                                     each = nrow(iris)))
+> 
+> head(petals)
+  value     variable
+1   1.4 Petal.Length
+2   1.4 Petal.Length
+3   1.3 Petal.Length
+4   1.5 Petal.Length
+5   1.4 Petal.Length
+6   1.7 Petal.Length
+> tail(petals)
+    value    variable
+295   2.5 Petal.Width
+296   2.3 Petal.Width
+297   1.9 Petal.Width
+298   2.0 Petal.Width
+299   2.3 Petal.Width
+300   1.8 Petal.Width
+> 
+#+end_example
+
+
+** Exercise 1 prototype						  :prototype:
+
+1) [@1] Select just the Sepal.Length and Species columns from the /iris/ data set (built-in, will be available in your workspace automatically) and save the result to a new data.frame named /iris.2/
+#+name: ex1.1
+#+begin_src R :exports code
+  data(iris)
+  iris2 <- iris[c("Sepal.Length", "Species")]
+  str(iris2)
+#+end_src
+
+#+RESULTS: ex1.1
+#+begin_example
+> data(iris)
+> iris2 <- iris[c("Sepal.Length", "Species")]
+> str(iris2)
+'data.frame':	150 obs. of  2 variables:
+ $ Sepal.Length: num  5.1 4.9 4.7 4.6 5 5.4 4.6 5 4.4 4.9 ...
+ $ Species     : Factor w/ 3 levels "setosa","versicolor",..: 1 1 1 1 1 1 1 1 1 1 ...
+> 
+#+end_example
+
+2) [@2] Calculate the mean of the Sepal.Length column in /iris.2/ 
+
+#+name: ex.2
+#+begin_src R :exports code
+  mean(iris2[ , "Sepal.Length"])
+#+end_src
+
+#+RESULTS: ex.2
+#+begin_example
+> mean(iris2[ , "Sepal.Length"])
+[1] 5.843333
+> 
+#+end_example
+
+3) [@3] BONUS (optional): Calculate the mean of Sepal.Length, but only for the setosa species
+
+#+name: ex1.3
+#+begin_src R :exports code
+  mean(iris2[iris2[["Species"]] == "setosa", "Sepal.Length"])
+  ## shortcut:
+  with(iris2, {
+      print(mean(Sepal.Length[Species == "setosa"]))
+  })
+#+end_src
+
+#+RESULTS: ex1.3
+#+begin_example
+> mean(iris2[iris2[["Species"]] == "setosa", "Sepal.Length"])
+[1] 5.006
+> ## shortcut:
+> with(iris2, {
++     print(mean(Sepal.Length[Species == "setosa"]))
++ })
+[1] 5.006
+> 
+#+end_example
+
+4) [@4] BONUS (optional): Calculate the number of sepal lengths that are more than one standard deviation below the average sepal length
+
+#+name: ex1.4
+#+begin_src R :exports code
+  m.minus.sd <- mean(iris2[["Sepal.Length"]]) - sd(iris2[["Sepal.Length"]])
+  length(iris2[iris2[["Sepal.Length"]] < m.minus.sd, "Sepal.Length"])
+#+end_src
+
+#+RESULTS: ex1.4
+#+begin_example
+> m.minus.sd <- mean(iris2[["Sepal.Length"]]) - sd(iris2[["Sepal.Length"]])
+> length(iris2[iris2[["Sepal.Length"]] < m.minus.sd, "Sepal.Length"])
+[1] 32
+> 
+#+end_example
+ 
+
+** Exercise 2 prototype						  :prototype:
+
+1) [@1] Write a function that takes a data.frame as an argument and returns the mean of each numeric column in the data frame. Test your function using the iris data.
+
+#+name: ex3.1
+#+begin_src R :exports code
+  statsum <- function(df) {
+      classes <- sapply(df, class)
+      means <- sapply(df[classes == "numeric"], mean)
+      return(means)}
+  
+  statsum(iris) 
+#+end_src
+
+#+RESULTS: ex3.1
+#+begin_example
+> statsum <- function(df) {
++     classes <- sapply(df, class)
++     means <- sapply(df[classes == "numeric"], mean)
++     return(means)}
+> 
+> statsum(iris) 
+Sepal.Length  Sepal.Width Petal.Length  Petal.Width 
+    5.843333     3.057333     3.758000     1.199333 
+> 
+#+end_example
+
+
+2) [@2] Modify your function so that it returns a list, the first element if which is the means of the numeric variables, the second of which is the counts of the levels of each categorical variable.
+#+name: ex3.2
+#+begin_src R :exports code
+  statsum <- function(df) {
+      classes <- sapply(df, class)
+      means <- sapply(df[classes == "numeric"], mean)
+      counts <- sapply(df[classes == "factor"], table)
+      return(list(means, counts))}
+    
+  statsum(iris) 
+#+end_src
+
+#+RESULTS: ex3.2
+#+begin_example
+> statsum <- function(df) {
++     classes <- sapply(df, class)
++     means <- sapply(df[classes == "numeric"], mean)
++     counts <- sapply(df[classes == "factor"], table)
++     return(list(means, counts))}
+>   
+> statsum(iris) 
+[[1]]
+Sepal.Length  Sepal.Width Petal.Length  Petal.Width 
+    5.843333     3.057333     3.758000     1.199333 
+
+[[2]]
+           Species
+setosa          50
+versicolor      50
+virginica       50
+
+> 
+#+end_example
+
+** Exercise 3 prototype						  :prototype:
+
+1) [@1] Add argument checking code to return an error if the argument to your function is not a data.frame
+
+#+name: ex4.1
+#+begin_src R :eval no :exports code
+  statsum <- function(df) {
+      if(class(df) != "data.frame") stop("df must be a data.frame!")
+      classes <- sapply(df, class)
+      means <- sapply(df[classes == "numeric"], mean)
+      counts <- sapply(df[classes == "factor"], table)
+      return(list(means, counts))}
+    
+  statsum(1:10)
+  statsum(iris)
+#+end_src
+
+2) [@2] Insert a break point with =browser()= and step through your function
+
+#+name: ex4.2
+#+begin_src R :exports code
+  statsum <- function(df) {
+      if(class(df) != "data.frame") stop("df must be a data.frame!")
+  browser()
+      classes <- sapply(df, class)
+      means <- sapply(df[classes == "numeric"], mean)
+      counts <- sapply(df[classes == "factor"], table)
+      return(list(means, counts))
+  }
+  
+  statsum(iris)    
+#+end_src
+
+#+RESULTS: ex4.2
+#+begin_example
+> statsum <- function(df) {
++     if(class(df) != "data.frame") stop("df must be a data.frame!")
++ browser()
++     classes <- sapply(df, class)
++     means <- sapply(df[classes == "numeric"], mean)
++     counts <- sapply(df[classes == "factor"], table)
++     return(list(means, counts))
++ }
+> 
+> statsum(iris)    
+Called from: statsum(iris)
+Browse[1]> [[1]]
+Sepal.Length  Sepal.Width Petal.Length  Petal.Width 
+    5.843333     3.057333     3.758000     1.199333 
+
+[[2]]
+           Species
+setosa          50
+versicolor      50
+virginica       50
+
+> 
+#+end_example
+
+
+** Exercise 4 prototype						  :prototype:
+1) [@1] Modify your function so that it also returns the standard deviations of the numeric variables 
+
+#+name: ex5.1
+#+begin_src R :exports code
+  statsum <- function(df) {
+      if(class(df) != "data.frame") stop("df must be a data.frame!")
+      classes <- sapply(df, class)
+      means <- sapply(df[classes == "numeric"], mean)
+      sds <- sapply(df[classes == "numeric"], mean)
+      counts <- sapply(df[classes == "factor"], table)
+      return(list(cbind(means, sds), counts))}
+  
+  statsum(iris)
+#+end_src
+
+#+RESULTS: ex5.1
+#+begin_example
+> statsum <- function(df) {
++     if(class(df) != "data.frame") stop("df must be a data.frame!")
++     classes <- sapply(df, class)
++     means <- sapply(df[classes == "numeric"], mean)
++     sds <- sapply(df[classes == "numeric"], mean)
++     counts <- sapply(df[classes == "factor"], table)
++     return(list(cbind(means, sds), counts))}
+> 
+> statsum(iris)
+[[1]]
+                means      sds
+Sepal.Length 5.843333 5.843333
+Sepal.Width  3.057333 3.057333
+Petal.Length 3.758000 3.758000
+Petal.Width  1.199333 1.199333
+
+[[2]]
+           Species
+setosa          50
+versicolor      50
+virginica       50
+
+> 
+#+end_example
+
+2) [@2] Modify your function so that it returns a list of class "statsum"
+
+#+name: ex5.2
+#+begin_src R :exports code
+  statsum <- function(df) {
+      if(class(df) != "data.frame") stop("df must be a data.frame!")
+      classes <- sapply(df, class)
+      means <- sapply(df[classes == "numeric"], mean)
+      sds <- sapply(df[classes == "numeric"], mean)
+      counts <- sapply(df[classes == "factor"], table)
+      R <- list(cbind(means, sds), counts)
+      class(R) <- c("statsum", class(R))
+      return(R)}
+
+  str(statsum(iris))
+#+end_src
+
+#+RESULTS: ex5.2
+#+begin_example
+> statsum <- function(df) {
++     if(class(df) != "data.frame") stop("df must be a data.frame!")
++     classes <- sapply(df, class)
++     means <- sapply(df[classes == "numeric"], mean)
++     sds <- sapply(df[classes == "numeric"], mean)
++     counts <- sapply(df[classes == "factor"], table)
++     R <- list(cbind(means, sds), counts)
++     class(R) <- c("statsum", class(R))
++     return(R)}
+> 
+> str(statsum(iris))
+List of 2
+ $ : num [1:4, 1:2] 5.84 3.06 3.76 1.2 5.84 ...
+  ..- attr(*, "dimnames")=List of 2
+  .. ..$ : chr [1:4] "Sepal.Length" "Sepal.Width" "Petal.Length" "Petal.Width"
+  .. ..$ : chr [1:2] "means" "sds"
+ $ : int [1:3, 1] 50 50 50
+  ..- attr(*, "dimnames")=List of 2
+  .. ..$ : chr [1:3] "setosa" "versicolor" "virginica"
+  .. ..$ : chr "Species"
+ - attr(*, "class")= chr [1:2] "statsum" "list"
+> 
+#+end_example
+
+
+3 [@3] Write a print method for the statsum class
+
+#+name: ex5.3
+#+begin_src R :exports code
+  print.statsum <- function(x) {
+      cat("Numeric variable descriptive statistics:\n")
+      print(x[[1]], digits=2) 
+      cat("Factor variable counts:\n")
+      print(x[[2]])
+  }
+  
+  statsum(iris)
+#+end_src
+
+#+RESULTS: ex5.3
+#+begin_example
+> print.statsum <- function(x) {
++     cat("Numeric variable descriptive statistics:\n")
++     print(x[[1]], digits=2) 
++     cat("Factor variable counts:\n")
++     print(x[[2]])
++ }
+> 
+> statsum(iris)
+Numeric variable descriptive statistics:
+             means sds
+Sepal.Length   5.8 5.8
+Sepal.Width    3.1 3.1
+Petal.Length   3.8 3.8
+Petal.Width    1.2 1.2
+Factor variable counts:
+           Species
+setosa          50
+versicolor      50
+virginica       50
+> 
+#+end_example
+
 * Additional resources
 
 ** Additional reading and resources
@@ -1659,255 +1707,3 @@ http://www.jstatso|.org/v31/i01/paper
 - These workshops exist for you -- tell us what you need! 
 - http://tinyurl.com/RprogrammingFeedback 
 
-
-* Loops (supplemental)
-
-** Looping
-
-- A loop is a collection of commands that are run over and over again. 
-- A for loop runs the code a fixed number of times, or on a fixed set of objects.
-- A while loop runs the code until a condition is met.
-- If you're typing the same commands over and over again, you might want to use a loop!
-
-** Looping: for-loop examples
-For each value in a vector, print the number and its square
-#+name: firstForLoop
-#+begin_src R
-  # For-loop example
-  for (num in seq(-5,5)) {# for each number in [-5, 5]
-    cat(num, "squared is", num^2, "\n") # print the number
-  }
-#+end_src
-
-#+results: firstForLoop
-#+begin_example
-> # For-loop example
-> for (num in seq(-5,5)) {# for each number in [-5, 5]
-+   cat(num, "squared is", num^2, "\n") # print the number
-+ }
--5 squared is 25 
--4 squared is 16 
--3 squared is 9 
--2 squared is 4 
--1 squared is 1 
-0 squared is 0 
-1 squared is 1 
-2 squared is 4 
-3 squared is 9 
-4 squared is 16 
-5 squared is 25 
-> 
-#+end_example
-
-** Looping: while-loop example
-Goal: simulate rolling two dice until we roll two sixes
-
-#+name: whileLoopExample
-#+begin_src R
-  ## While-loop example: rolling dice
-  set.seed(15) # allows repoducible sample() results
-  dice <- seq(1,6) # set dice = [1 2 3 4 5 6]
-  roll <- 0 # set roll = 0
-  while (roll < 12) {
-    roll <- sample(dice,1) + sample(dice,1) # calculate sum of two rolls
-    cat("We rolled a ", roll, "\n") # print the result
-  } # end the loop 
-#+end_src
-
-#+results: whileLoopExample
-#+begin_example
-> ## While-loop example: rolling dice
-> set.seed(15) # allows repoducible sample() results
-> dice <- seq(1,6) # set dice = [1 2 3 4 5 6]
-> roll <- 0 # set roll = 0
-> while (roll < 12) {
-+   roll <- sample(dice,1) + sample(dice,1) # calculate sum of two rolls
-+   cat("We rolled a ", roll, "\n") # print the result
-+ } # end the loop 
-We rolled a  6 
-We rolled a  10 
-We rolled a  9 
-We rolled a  7 
-We rolled a  10 
-We rolled a  5 
-We rolled a  9 
-We rolled a  12 
-> 
-#+end_example
-
-** Using loops to fill in lists
-Often you will want to store the results from a loop. You can create an object to hold the results generated in the loop and fill in the values using indexing
-
-#+name: saveLoopResults
-#+begin_src R
-    ## save calculations done in a loop
-    Result <- list() # create an object to store the results
-      for (i in 1:5) {# for each i in [1, 5]
-        Result[[i]] <- 1:i ## assign the sequence 1 to i to Result
-    }
-    Result # print Result
-#+end_src
-
-#+RESULTS: saveLoopResults
-#+begin_example
-> ## save calculations done in a loop
-> Result <- list() # create an object to store the results
->   for (i in 1:5) {# for each i in [1, 5]
-+     Result[[i]] <- 1:i ## assign the sequence 1 to i to Result
-+ }
-> Result # print Result
-[[1]]
-[1] 1
-
-[[2]]
-[1] 1 2
-
-[[3]]
-[1] 1 2 3
-
-[[4]]
-[1] 1 2 3 4
-
-[[5]]
-[1] 1 2 3 4 5
-
-> 
-#+end_example
-
-
-** Word of caution: don't overuse loops!
-Most operations in R are vectorized -- This makes loops unnecessary in many cases
-
-- Use vector arithmatic instead of loops:
-
-#+name: sillyLoop1
-#+begin_src R 
-  x <- c() # create vector x
-  for(i in 1:5) x[i] <- i+i # double a vector using a loop
-  print(x) # print the result
-
-  1:5 + 1:5 #double a vector without a loop
-  1:5 + 5 # shorter vectors are recycled
-#+end_src
-
-#+RESULTS: sillyLoop1
-#+begin_example
-> x <- c() # create vector x
-> for(i in 1:5) x[i] <- i+i # double a vector using a loop
-> print(x) # print the result
-[1]  2  4  6  8 10
-> 
-> 1:5 + 1:5 #double a vector without a loop
-[1]  2  4  6  8 10
-> 1:5 + 5 # shorter vectors are recycled
-[1]  6  7  8  9 10
-> 
-#+end_example
-
-- Use paste instead of loops:
-
-#+name: pasteNotLoop
-#+begin_src R
-  ## Earlier we said
-    ## for (num in seq(-5,5)) {# for each number in [-5, 5]
-    ##   cat(num, "squared is", num^2, "\n") # print the number
-    ## }
-  ## a better way:
-  paste(1:5, "squared = ", (1:5)^2)
-#+end_src
-
-#+RESULTS: pasteNotLoop
-#+begin_example
-> ## Earlier we said
->   ## for (num in seq(-5,5)) {# for each number in [-5, 5]
->   ##   cat(num, "squared is", num^2, "\n") # print the number
->   ## }
-> ## a better way:
-> paste(1:5, "squared = ", (1:5)^2)
-[1] "1 squared =  1"  "2 squared =  4"  "3 squared =  9" 
-[4] "4 squared =  16" "5 squared =  25"
-> 
-#+end_example
-
-
-Loops are handy, but save them for when you really need them!
-
-** Exercise 5
-
-1) use a loop to get the =class()= of each column in the iris data set
-
-2) use the results from step 1 to select the numeric columns 
-
-3) use a loop to calculate the mean of each numeric column in the iris data
-
-
-** Exercise 5 prototype						  :prototype:
-
-1) use a loop to get the =class()= of each column in the iris data set
-
-#+name: ex2.1
-#+begin_src R
-  classes <- c()
-  for (name in names(iris)) {
-      classes[name] <- class(iris[[name]])
-  }
-  
-  classes
-#+end_src
-
-#+RESULTS: ex2.1
-#+begin_example
-> classes <- c()
-> for (name in names(iris)) {
-+     classes[name] <- class(iris[[name]])
-+ }
-> 
-> classes
-Sepal.Length  Sepal.Width Petal.Length  Petal.Width      Species 
-   "numeric"    "numeric"    "numeric"    "numeric"     "factor" 
-> 
-#+end_example
-
-2) use the results from step 1 to select the numeric columns 
-
-#+name: ex2.2
-#+begin_src R
-  iris.num <- iris[, names(classes)[classes=="numeric"]]
-  head(iris.num, 2)
-#+end_src
-
-#+RESULTS: ex2.2
-#+begin_example
-> iris.num <- iris[, names(classes)[classes=="numeric"]]
-> head(iris.num, 2)
-  Sepal.Length Sepal.Width Petal.Length Petal.Width
-1          5.1         3.5          1.4         0.2
-2          4.9         3.0          1.4         0.2
-> 
-#+end_example
-
-
-3) use a loop to calculate the mean of each numeric column in the iris data
-
-#+name: ex2.3
-#+begin_src R
-  iris.means <- c()
-  for(var in names(iris.num)) {
-      iris.means[[var]] <- mean(iris[[var]])
-  }
-
-iris.means
-#+end_src
-
-#+RESULTS: ex2.3
-#+begin_example
->   iris.means <- c()
->   for(var in names(iris.num)) {
-+       iris.means[[var]] <- mean(iris[[var]])
-+   }
-> 
-> iris.means
-Sepal.Length  Sepal.Width Petal.Length  Petal.Width 
-    5.843333     3.057333     3.758000     1.199333 
-> 
-#+end_example
