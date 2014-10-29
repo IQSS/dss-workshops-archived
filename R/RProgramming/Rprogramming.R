@@ -1336,6 +1336,7 @@ statsum(iris)
 # 
 # 10.1 Additional reading and resources
 # ─────────────────────────────────────
+#   • Learn from the best: [http://adv-r.had.co.nz/]
 #   • S3 system overview: [https://github.com/hadley/devtools/wiki/S3]
 #   • S4 system overview: [https://github.com/hadley/devtools/wiki/S4]
 #   • R documentation: [http://cran.r-project.org/manuals.html]
