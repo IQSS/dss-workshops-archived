@@ -1,4 +1,4 @@
-                   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+#                    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 #		      INTRODUCTION TO PROGRAMMING IN R
 #		     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 # 
@@ -87,12 +87,6 @@ char.var <- c("1", "2", "3", "4") # character vector
 log.var <- c(TRUE, TRUE, FALSE, TRUE) # logical vector
 char.var2 <- c(num.var, char.var) # numbers coverted to character
 
-> num.var <- c(1, 2, 3, 4) # numeric vector
-> char.var <- c("1", "2", "3", "4") # character vector
-> log.var <- c(TRUE, TRUE, FALSE, TRUE) # logical vector
-> char.var2 <- c(num.var, char.var) # numbers coverted to character
->
-
 #   Vectors have a \emph{class} which determines how functions treat them
 num.var <- "a"
 class(num.var)
@@ -100,19 +94,6 @@ mean(num.var) # take the mean of a numeric vector
 class(char.var)
 mean(char.var) # cannot average characters
 class(char.var2)
-
-> num.var <- "a"
-> class(num.var)
-[1] "character"
-> mean(num.var) # take the mean of a numeric vector
-[1] NA
-> class(char.var)
-[1] "character"
-> mean(char.var) # cannot average characters
-[1] NA
-> class(char.var2)
-[1] "character"
->
 
 # 2.2 Vector conversion and info
 # ──────────────────────────────
@@ -123,31 +104,11 @@ class(num.var2)
 mean(as.numeric(char.var2)) # now we can calculate the mean
 as.numeric(c("a", "b", "c")) # cannot convert letters to numeric
 
-> class(char.var2)
-[1] "character"
-> num.var2 <- as.numeric(char.var2) # convert to numeric
-> class(num.var2)
-[1] "numeric"
-> mean(as.numeric(char.var2)) # now we can calculate the mean
-[1] 2.5
-> as.numeric(c("a", "b", "c")) # cannot convert letters to numeric
-[1] NA NA NA
->
-
 #   In addition to class, you can examine the `length()' \\ and `str()'
 #   ucture of vectors
 ls() # list objects in our workspace
 length(char.var) # how many elements in char.var?
 str(num.var2) # what is the structure of num.var2?
-
-> ls() # list objects in our workspace
-[1] "char.var"  "char.var2" "log.var"   "num.var"	  "num.var2" 
-[6] "tmp"	     
-> length(char.var) # how many elements in char.var?
-[1] 4
-> str(num.var2) # what is the structure of num.var2?
- num [1:8] 1 2 3 4 1 2 3 4
->
 
 # 2.3 Factor vectors
 # ──────────────────
@@ -172,34 +133,6 @@ DF$x # select just the x column.
 # DF <- data.frame(x=1:10, y=1:7) # illegal becase lengths differ
 L <- list(x=1:5, y=1:3, z = DF)
 L # lists are much more flexible!
-
-> DF <- data.frame(x=1:5, y=letters[1:5])
-> DF # data.frame with two columns and 5 rows
-	x y
-1 1 a
-2 2 b
-3 3 c
-4 4 d
-5 5 e
-> 
-> # DF <- data.frame(x=1:10, y=1:7) # illegal becase lengths differ
-> L <- list(x=1:5, y=1:3, z = DF)
-> L # lists are much more flexible!
-$x
-[1] 1 2 3 4 5
-
-$y
-[1] 1 2 3
-
-$z
-	x y
-1 1 a
-2 2 b
-3 3 c
-4 4 d
-5 5 e
-
->
 
 # 2.5 Data types summary
 # ──────────────────────
@@ -253,24 +186,6 @@ names(x) <- letters[1:10] # give x names
 print(x) #print x
 x[c("a", "f")] # extract the values of a	and f from x
 
-> ## indexing vectors by position
-> x <- 101:110 # Creat a vector of integers from 101 to 110
-> x[c(4, 5)] # extract the fourth and fifth values of x
-[1] 104 105
-> x[4] <- 1 # change the 4th value to 1
-> x # print x
- [1] 101 102 103	 1 105 106 107 108 109 110
-> 
-> ## indexing vectors by name
-> names(x) <- letters[1:10] # give x names
-> print(x) #print x
-	a   b	c   d	e   f	g   h	i   j 
-101 102 103   1 105 106 107 108 109 110 
-> x[c("a", "f")] # extract the values of a  and f from x
-	a   f 
-101 106 
->
-
 # 3.2 Logical indexing
 # ────────────────────
 #   Elements can also be selected or replaced based on logical
@@ -278,14 +193,6 @@ x[c("a", "f")] # extract the values of a	and f from x
 # 
 x > 106 # shows which elements of x are > 106
 x[x > 106] # selects elements of x where x > 106
-
-> x > 106 # shows which elements of x are > 106
-	  a	b     c	    d	  e	f     g	    h	  i	j 
-FALSE FALSE FALSE FALSE FALSE FALSE  TRUE	 TRUE  TRUE  TRUE 
-> x[x > 106] # selects elements of x where x > 106 
-	g   h	i   j 
-107 108 109 110 
->
 
 #   Additional operators useful for logical indexing:
 #   ==: equal to
@@ -301,14 +208,6 @@ FALSE FALSE FALSE FALSE FALSE FALSE  TRUE	 TRUE  TRUE  TRUE
 x[x > 106 & x <= 108]
 x[x > 106 | names(x) %in% c("a", "b", "c")]
 
-> x[x > 106 & x <= 108]
-	g   h 
-107 108 
-> x[x > 106 | names(x) %in% c("a", "b", "c")]
-	a   b	c   g	h   i	j 
-101 102 103 107 108 109 110 
->
-
 # 3.3 Indexing matrices
 # ─────────────────────
 #   Extraction on matrices operate in two dimensions: first dimension
@@ -320,29 +219,6 @@ x[x > 106 | names(x) %in% c("a", "b", "c")]
 M[1:3, ] #extract rows 1 through 3, all columns
 M[c(5, 3, 1), 2:3] # rows 5, 3 and 1, columns 2 and 3
 M[M[, 1] %in% 4:2, 2] # second column where first column <=4 & >= 2
-
-> ## indexing matricies
->	 # create a matrix
-> (M <- cbind(x = 1:5, y = -1:-5, z = c(6, 3, 4, 2, 8)))
-	   x  y z
-[1,] 1 -1 6
-[2,] 2 -2 3
-[3,] 3 -3 4
-[4,] 4 -4 2
-[5,] 5 -5 8
-> M[1:3, ] #extract rows 1 through 3, all columns
-	   x  y z
-[1,] 1 -1 6
-[2,] 2 -2 3
-[3,] 3 -3 4
-> M[c(5, 3, 1), 2:3] # rows 5, 3 and 1, columns 2 and 3
-	    y z
-[1,] -5 8
-[2,] -3 4
-[3,] -1 6
-> M[M[, 1] %in% 4:2, 2] # second column where first column <=4 & >= 2
-[1] -2 -3 -4
->
 
 #   Note that unspecified index's (as in the column index in the example
 #   above ) return all values.
@@ -358,24 +234,6 @@ L[1] # a list with one element
 ## effectively taking it out of the list.
 L[[1]] # a vector
 
-> # Lists can be indexed with single brackets, similar to vector indexing
-> L[c(1, 2)] # the first two elements of L
-$x
-[1] 1 2 3 4 5
-
-$y
-[1] 1 2 3
-
-> L[1] # a list with one element
-$x
-[1] 1 2 3 4 5
-
-> ## double brackets select the content of a single selected element
-> ## effectively taking it out of the list.
-> L[[1]] # a vector
-[1] 1 2 3 4 5
->
-
 # 3.5 Indexing data.frames
 # ────────────────────────
 #   A data.frame can be indexed in the same ways as a matrix, and also the
@@ -384,27 +242,11 @@ $x
 DF[c(3, 1, 2), c(1, 2)] # rows 3, 1, and 2, columns 1 and 2
 DF[[1]] # column 1 as a vector
 
-> DF[c(3, 1, 2), c(1, 2)] # rows 3, 1, and 2, columns 1 and 2
-	x y
-3 3 c
-1 1 a
-2 2 b
-> DF[[1]] # column 1 as a vector
-[1] 1 2 3 4 5
->
-
 #   There is a subtle but important difference between `[ , n]' and `[n]'
 #   when indexing data.frames: the first form returns a vector, the second
 #   returns a data.frame with one column.
 str(DF[1])# a data.frame with one column
 str(DF[ ,1])# a vector
-
-> str(DF[1])# a data.frame with one column
-'data.frame':	5 obs. of  1 variable:
- $ x: int	 1 2 3 4 5
-> str(DF[ ,1])# a vector
- int [1:5] 1 2 3 4 5
->
 
 # 3.6 Extraction/replacement summary
 # ──────────────────────────────────
@@ -453,13 +295,6 @@ M <- matrix(1:20,
 apply(M, 1, mean) ## average across the rows
 apply(M, 2, sum) ## sum down the columns
 
-> M <- matrix(1:20, ncol=4)
-> apply(M, 2, mean) ## average across the rows
-[1]  3  8 13 18
-> apply(M, 2, sum) ## sum the columns
-[1] 15 40 65 90
->
-
 # 4.2 for loops
 # ─────────────
 #   We can alternatively calculate row and column means, but in this case
@@ -483,17 +318,6 @@ sapply(DF, class) # get the class of each column in the DF data.frame
 sapply(L, length) # get the length of each element in the L list
 sapply(DF, is.numeric) # check each column of DF to see if it is numeric
 
-> sapply(DF, class) # get the class of each column in the DF data.frame
-	      x		y 
-"integer"	 "factor" 
-> sapply(L, length) # get the length of each element in the L list
-x y z 
-5 3 2 
-> sapply(DF, is.numeric) # check each column of DF to see if it is numeric
-	  x	y 
- TRUE FALSE 
->
-
 #   See also: `lapply', `vapply', and `mapply'.
 # 
 # 4.4 Combining sapply and indexing
@@ -503,30 +327,9 @@ x y z
 #   • Recall that we can index using logical vectors:
 DF[, c(TRUE, FALSE)] # select the first column of DF, but not the second
 
-> DF[, c(TRUE, FALSE)] # select the first column of DF, but not the second
-[1] 1 2 3 4 5
->
-
-> ## recall that we can index using logical vectors:
-> DF[, c(TRUE, FALSE)] # select the first column of DF, but not the second
-[1] 1 2 3 4 5
->
-
 #   • `sapply()' can be used to generate the logical vector
 (DF.which.num <- sapply(DF, is.numeric))# check which columns of DF are numeric
 DF[DF.which.num] # select the numeric columns
-
-> (DF.which.num <- sapply(DF, is.numeric))# check which columns of DF are numeric
-	  x	y 
- TRUE FALSE 
-> DF[DF.which.num] # select the numeric columns
-	x
-1 1
-2 2
-3 3
-4 4
-5 5
->
 
 #   Note the difference between `DF[, 1]' and `DF[1]'! The first form
 #   returns a vector, the second a data.frame with one column.
@@ -578,20 +381,6 @@ y <- f() # assign y the value returned by f
 y # print y
 x # x in the global is not 1!
 
-> f <- function() { # define function f
-+ print("setting x to 1") # print a text string
-+ x <- 1} # set x to 1
-> 
-> y <- f() # assign y the value returned by f
-[1] "setting x to 1"
-> 
-> y # print y
-[1] 1
-> x # x in the global is not 1!
-	a   b	c   d	e   f	g   h	i   j 
-101 102 103   1 105 106 107 108 109 110 
->
-
 # 5.3 Writing functions example
 # ─────────────────────────────
 #   Goal: write a function that returns the square of it's argument
@@ -604,19 +393,6 @@ square <- function (x) { # define function named "square" with argument x
 square(x = 2) # square the value 2
 square(10) # square the value 10
 square(1:5) # square integers 1 through 5
-
-> square <- function (x) { # define function named "square" with argument x
-+	  return(x*x) # multiple the x argument by itself
-+ } # end the function definition
-> 
-> # check to see that the function works
-> square(x = 2) # square the value 2
-[1] 4
-> square(10) # square the value 10
-[1] 100
-> square(1:5) # square integers 1 through 5
-[1]  1  4	 9 16 25
->
 
 # 5.4 Debugging basics
 # ────────────────────
@@ -637,23 +413,6 @@ my.mean <- function (x, ...) {
 	L <- length(na.omit(x))
 	browser() # function will stop here so you can inspect S and L
 	return(S / L)}
-
-> ## Debugging
-> # write my.mean function
-> my.mean <- function (x, ...) {
-+	  S <- sum(x, ...)
-+	  L <- length(na.omit(x))
-+	  return(S / L)}
-> debug(my.mean) # turn debugger on for my.mean function
-> # mymean() # step through the function
-> undebug(my.mean) # to turn the debugger off
-> # insert breakpoints
-> my.mean <- function (x, ...) {
-+	  S <- sum(x, ...)
-+	  L <- length(na.omit(x))
-+	  browser() # function will stop here so you can inspect S and L
-+	  return(S / L)}
->
 
 #   Use `traceback()' to see what went wrong after the fact
 # 
@@ -717,23 +476,6 @@ isPositive(10)
 isPositive(-1)
 isPositive(0)
 
-> ## use branching to return different result depending on the sign of the input
-> isPositive <- function(x) { # define function "isPositive"
-+	  if (x > 0) { # if x is greater than zero, then
-+	    return(paste(x, "is positive \n")) } # say so! 
-+	  else { # otherwise
-+	      return(paste(x, "is negative \n"))} # say x is negative
-+ } # end function definition 
-> 
-> ## test the isPositive() function
-> isPositive(10)
-[1] "10 is positive \n"
-> isPositive(-1)
-[1] "-1 is negative \n"
-> isPositive(0)
-[1] "0 is negative \n"
->
-
 #   Need to do something different if x equals zero!
 # 
 # 6.3 Control flow examples
@@ -750,27 +492,10 @@ isPositive(0)
 	      return(paste(x, "is negative \n"))} # say x is negative
 	} # end function definition
 
-> ## add condition to handle the case that x is zero
->	  isPositive <- function(x) { # define function "isPositive"
-+	    if (x > 0) { # if x is greater than zero, then
-+	      return(paste(x, "is positive \n")) } # say so! 
-+	    else if (x == 0) { # otherwise if x is zero
-+	      return(paste(x, "is zero \n"))} # say so!
-+	    else { #otherwise
-+		return(paste(x, "is negative \n"))} # say x is negative
-+	  } # end function definition
->
-
 #   Test the new function
 # 
 isPositive(0) # test the isPositive() function
 isPositive("a") #oops, that will not work!
-
-> isPositive(0) # test the isPositive() function
-[1] "0 is zero \n"
-> isPositive("a") #oops, that will not work!
-[1] "a is positive \n"
->
 
 #   We fixed the problem when `x = 0', but now we need to make sure x is
 #   numeric of length one (unless we agree with R that `a' is positive!)
@@ -793,69 +518,10 @@ isPositive("a") #oops, that will not work!
 
 isPositive("a") # test the isPositive() function on character
 
-> isPositive("a")
-Error in isPositive("a") : x must be a numeric vector of length one!
-
-# 6.5 Control flow summary
-# ────────────────────────
-#   Key points:
-#   • code can be conditionally executed
-#   • conditions can be nested
-#   • conditional execution is often used for argument checking, among
-#     other things
-# 
-#   Functions introduced in this section
-#   paste: concatenates (character) vectors
-#   if: execute code only if condition is met
-#   else: used with *if*; code to execute if condition is not met
-# 
-# 6.6 Exercise 3
-# ──────────────
-#   1) Add argument checking code to return an error if the argument to
-#      your function is not a data.frame
-# 
-#   2) Insert a break point with `browser()' and step through your
-#      function
-# 
-# 7 The S3 object class system
-# ════════════════════════════
-# 
-# 7.1 The S3 object class system
-# ──────────────────────────────
-#   R has two major object systems:
-#   • Relatively informal "S3" classes
-#   • Stricter, more formal "S4" classes
-#   • We will cover only the S3 system, not the S4 system
-#   • Basic idea: functions have different methods for different types of
-#     objects
-# 
-# 7.2 Object class
-# ────────────────
-#   The class of an object can be retrieved and modified using the
-#   `class()' function:
-# 
-x <- 1:10
-class(x) 
-class(x) <- "foo"
-class(x)
-
-> x <- 1:10
-> class(x) 
-[1] "integer"
-> class(x) <- "foo"
-> class(x)
-[1] "foo"
->
-
 #   Objects are not limited to a single class, and can have many classes:
 # 
 class(x) <- c("A", "B")
 class(x)
-
-> class(x) <- c("A", "B")
-> class(x) 
-[1] "A" "B"
->
 
 # 7.3 Function methods
 # ────────────────────
@@ -869,19 +535,6 @@ class(x)
 methods(mean)
 # which functions have methods for data.frames?
 methods(class="data.frame")[1:9]
-
-> # see what methods have been defined for the mean function
-> methods(mean)
-[1] mean.Date	mean.default  mean.difftime mean.POSIXct 
-[5] mean.POSIXlt 
-> # which functions have methods for data.frames?
-> methods(class="data.frame")[1:9]
-[1] "[.data.frame"	     "[[.data.frame"	       
-[3] "[[<-.data.frame"	     "[<-.data.frame"	       
-[5] "$<-.data.frame"	     "aggregate.data.frame"    
-[7] "anyDuplicated.data.frame" "as.data.frame.data.frame"
-[9] "as.list.data.frame"	    
->
 
 # 7.4 Creating new function methods
 # ─────────────────────────────────
@@ -905,26 +558,6 @@ x <- as.character(x)
 class(x) <- "foo"
 mean(x)
 
-> # create a mean() method for objects of class "foo":
-> mean.foo <- function(x) { # mean method for "foo" class
-+	  if(is.numeric(x)) {
-+	    cat("The average is", mean.default(x))
-+	    return(invisible(mean.default(x))) #use mean.default for numeric
-+	  } else
-+	    cat("x is not numeric \n")} # otherwise say x not numeric
-> 
-> x <- 1:10
-> mean(x)
-[1] 5.5
-> class(x) <- "foo"
-> mean(x)
-The average is 5.5>  
-> x <- as.character(x)
-> class(x) <- "foo"
-> mean(x)
-x is not numeric 
->
-
 # 7.5 Creating generic functions
 # ──────────────────────────────
 #   S3 generics are most often used for print, summary, and plot methods,
@@ -942,26 +575,6 @@ disp.matrix <- function(x) {
 
 # test it out
 disp(matrix(runif(10), ncol=2))
-
-> # create a generic disp() function
-> disp <- function(x, ...) {
-+	  UseMethod("disp")
-+ }
-> 
-> # create a disp method for class "matrix"
-> disp.matrix <- function(x) {
-+	  print(round(x, digits=2))
-+ }
-> 
-> # test it out
-> disp(matrix(runif(10), ncol=2))	 
-	   [,1] [,2]
-[1,] 0.45 0.79
-[2,] 0.96 0.36
-[3,] 0.14 0.06
-[4,] 0.78 0.57
-[5,] 0.80 0.66
->
 
 # 7.6 S3 classes summary
 # ──────────────────────
@@ -1009,16 +622,8 @@ disp(matrix(runif(10), ncol=2))
 #   Floating point arithmetic is not exact:
 .1 == .3/3
 
-> .1 == .3/3
-[1] FALSE
->
-
 #   Solution: `use all.equal()':
 all.equal(.1, .3/3)
-
-> all.equal(.1, .3/3)
-[1] TRUE
->
 
 # 8.3 Missing values
 # ──────────────────
@@ -1027,17 +632,8 @@ all.equal(.1, .3/3)
 x <- c(1:10, NA, 12:20)
 c(mean(x), sd(x), median(x), min(x), sd(x))
 
-> x <- c(1:10, NA, 12:20)
-> c(mean(x), sd(x), median(x), min(x), sd(x))
-[1] NA NA NA NA NA
->
-
 #   NA is not equal to anything, not even NA
 NA == NA
-
-> NA == NA
-[1] NA
->
 
 #   Solutions: use `na.rm = TRUE' option when calculating, and is.na to
 #   test for missing
@@ -1054,17 +650,6 @@ str(x)
 # comparisons convert arguments to most general type
 1 > "a"
 
-> # combining values coereces them to the most general type
-> (x <- c(TRUE, FALSE, 1, 2, "a", "b"))
-[1] "TRUE"  "FALSE" "1"	  "2"	  "a"	  "b"	 
-> str(x)
- chr [1:6] "TRUE" "FALSE" "1" "2" "a" "b"
-> 
-> # comparisons convert arguments to most general type
-> 1 > "a"
-[1] FALSE
->
-
 #   Maybe this is what you expect… I would like to at least get a warning!
 # 
 # 8.5 Optional argument inconsistencies
@@ -1074,23 +659,9 @@ str(x)
 mean(1, 2, 3, 4, 5)*5
 sum(1, 2, 3, 4, 5)
 
-> mean(1, 2, 3, 4, 5)*5
-[1] 5
-> sum(1, 2, 3, 4, 5)
-[1] 15
->
-
 #   Why are these different?!?
 args(mean)
 args(sum)
-
-> args(mean)
-function (x, ...) 
-NULL
-> args(sum)
-function (..., na.rm = FALSE) 
-NULL
->
 
 #   Ouch. That is not nice at all!
 # 
@@ -1109,23 +680,6 @@ as.numeric(x)
 # you probably want
 as.numeric(as.character(x))
 
-> (x <- factor(c(5, 5, 6, 6), levels = c(6, 5)))
-[1] 5 5 6 6
-Levels: 6 5
-> 
-> str(x)
- Factor w/ 2 levels "6","5": 2 2 1 1
-> 
-> as.character(x)
-[1] "5" "5" "6" "6"
-> # here is where people sometimes get lost...
-> as.numeric(x)
-[1] 2 2 1 1
-> # you probably want
-> as.numeric(as.character(x))
-[1] 5 5 6 6
->
-
 # 9 Exercise solutions
 # ════════════════════
 # 
@@ -1139,17 +693,6 @@ Levels: 6 5
 class(iris)
 str(iris)
 
-> class(iris)
-[1] "data.frame"
-> str(iris)
-'data.frame':	150 obs. of  5 variables:
- $ Sepal.Length: num  5.1 4.9 4.7 4.6 5 5.4 4.6 5 4.4 4.9 ...
- $ Sepal.Width : num  3.5 3 3.2 3.1 3.6 3.9 3.4 3.4 2.9 3.1 ...
- $ Petal.Length: num  1.4 1.4 1.3 1.5 1.4 1.7 1.4 1.5 1.4 1.5 ...
- $ Petal.Width : num  0.2 0.2 0.2 0.2 0.2 0.4 0.3 0.2 0.2 0.1 ...
- $ Species     : Factor w/ 3 levels "setosa","versicolor",..: 1 1 1 1 1 1 1 1 1 1 ...
->
-
 #   2) Determine the class of each column in the iris data set
 class(iris$Species)
 class(iris$Sepal.Length)
@@ -1157,24 +700,9 @@ class(iris$Sepal.Width)
 class(iris$Petal.Length)
 class(iris$Petal.Width)
 
-> class(iris$Species)
-[1] "factor"
-> class(iris$Sepal.Length)
-[1] "numeric"
-> class(iris$Sepal.Width)
-[1] "numeric"
-> class(iris$Petal.Length)
-[1] "numeric"
-> class(iris$Petal.Width)
-[1] "numeric"
->
-
 #   3) BONUS (OPTIONAL): Create a new variable by `c' ombining the
 #      Petal.Length and Petal.Width columns
 petal <- c(iris$Petal.Length, iris$Petal.Width)
-
-> petal <- c(iris$Petal.Length, iris$Petal.Width)
->
 
 #   4) BONUS (OPTIONAL): Create a new data.frame with two columns; the
 #      first should be named /value/, and should be equal to the variable
@@ -1186,28 +714,6 @@ petals <- data.frame(value = petal,
 
 head(petals)
 tail(petals)
-
-> petals <- data.frame(value = petal,
-+			     variable = rep(c("Petal.Length", "Petal.Width"),
-+					    each = nrow(iris)))
-> 
-> head(petals)
-	value	  variable
-1	  1.4 Petal.Length
-2	  1.4 Petal.Length
-3	  1.3 Petal.Length
-4	  1.5 Petal.Length
-5	  1.4 Petal.Length
-6	  1.7 Petal.Length
-> tail(petals)
-	  value	   variable
-295   2.5 Petal.Width
-296   2.3 Petal.Width
-297   1.9 Petal.Width
-298   2.0 Petal.Width
-299   2.3 Petal.Width
-300   1.8 Petal.Width
->
 
 # 9.3 Exercise 1 prototype				       :prototype:
 # ────────────────────────
