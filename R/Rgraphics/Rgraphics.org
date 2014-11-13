@@ -11,7 +11,7 @@
 # property and/or the EXCLUDE_TAGS, place the curser on the poperty line 
 # and press C-c C-c
 
-#+PROPERTY: exports code
+#+PROPERTY: exports both
 #+EXCLUDE_TAGS: noexport mitsetup
 
 
@@ -672,14 +672,14 @@ There are two problems here--there are too many states to distinguish each one b
 We can remedy the deficiencies of the previous plot by faceting by state rather than mapping state to color.
 
 #+name: housingscatter2
-#+begin_src R :results output graphics :file images/housing2.png :width 800 :height 650
+#+begin_src R :results output graphics :file images/housingfoo2.png :width 800 :height 650
   (p5 <- p5 + geom_line() +
      facet_wrap(~State, ncol = 10))
 #+end_src
 
 
 #+RESULTS: housingscatter2
-[[file:images/housing2.png]]
+[[file:images/housingfoo2.png]]
 
 There is also a ~facet_grid()~ function for faceting in two dimensions.
 
