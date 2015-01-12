@@ -383,7 +383,11 @@ Other aesthetics are mapped in the same way as x and y in the previous example.
 
 ** Exercise I
 
-The data for the exercises is available in the ~dataSets/EconomistData.csv~ file. Read it in with ~dat <- read.csv("dataSets/EconomistData.csv")~
+The data for the exercises is available in the ~dataSets/EconomistData.csv~ file. Read it in with 
+#+BEGIN_SRC R
+  dat <- read.csv("dataSets/EconomistData.csv")
+#+END_SRC
+
 Original sources for these data are
   http://www.transparency.org/content/download/64476/1031428
   http://hdrstats.undp.org/en/indicators/display_cf_xls_indicator.cfm?indicator_id=103106&lang=en
@@ -709,6 +713,9 @@ Built-in themes include:
   p5 + theme_linedraw()
 #+end_src
 
+#+RESULTS: themex2
+[[file:images/themeex2.png]]
+
 ** Overriding theme defaults
 Specific theme elements can be overridden using ~theme()~. For example:
 #+name: opts
@@ -809,15 +816,6 @@ Building off of the graphics you created in the previous exercises, put the fini
 #+end_src
 
 #+RESULTS: ex1Prototype
-#+begin_example
-> # 1. Create a scatter plot with displacement on the =x= axis and horse power on the y axis.
-> (p.ex1 <- ggplot(housing, aes(x = disp, y = hp)) + geom_point())
-> # 2. Color the points in the previous plot blue.
-> p.ex1 + geom_point(color = "blue")
-> # 3. Color the points in the previous plot according to miles per gallon.
-> p.ex1 + geom_point(aes(color = mpg))
-> 
-#+end_example
 
 
 ** Exercise II Prototype					  :prototype:
@@ -834,13 +832,6 @@ Building off of the graphics you created in the previous exercises, put the fini
 #+end_src
 
 #+RESULTS: Exercise2Prototype
-#+begin_example
->                                         #Ex3.1
-> (myplot <- p6 + geom_point(aes(alpha = qsec)))
->                                         #Ex3.2
-> myplot + scale_alpha_continuous(range = c(.5, 1))
-> 
-#+end_example
 
 
 ** Exercise III Prototype                                         :prototype:
@@ -851,6 +842,8 @@ Building off of the graphics you created in the previous exercises, put the fini
                                           #Ex3.2
   myplot + scale_alpha_continuous(range = c(.5, 1))
 #+end_src
+
+#+RESULTS: Exercise3Prototype
 
 
 
