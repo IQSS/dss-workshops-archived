@@ -1,4 +1,4 @@
-                        _______________________
+*                        _______________________
 * 
 *                          INTRODUCTION TO STATA
 * 
@@ -28,8 +28,13 @@
 * 1.1 Documents for today                                       :labsetup:
 * ~~~~~~~~~~~~~~~~~~~~~~~
 * 
-*   USERNAME: dataclass PASSWORD: dataclass
-*   - Find class materials at [http://j.mp/intro-stata]
+*   Laptop users: you will need a copy of Stata installed on your machine
+*
+*   Lab computer users: log in using your Athena user name and password
+*
+*   Everyone:
+*   - Open a web broswer and download class materials from
+*     http://tutorials.iq.harvard.edu/Stata/StataIntro.zip
 *   - Download and extract to your desktop!
 * 
 * 

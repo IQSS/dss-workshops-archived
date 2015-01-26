@@ -4,7 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
 <title>Introduction to Stata</title>
-<!-- 2014-08-20 Wed 16:04 -->
+<!-- 2015-01-26 Mon 12:05 -->
 <meta  http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta  name="generator" content="Org-mode" />
 <meta  name="author" content="Ista Zahn" />
@@ -88,7 +88,16 @@
     { background-color: #ffff00; color: #000000; font-weight: bold; }
   /*]]>*/-->
 </style>
-<link rel="stylesheet" type="text/css" href="style.css" />
+<link rel="stylesheet" type="text/css" href="https://rawgit.com/fniessen/org-html-themes/master/styles/bigblow/css/htmlize.css"/>
+<link rel="stylesheet" type="text/css" href="https://rawgit.com/fniessen/org-html-themes/master/styles/bigblow/css/bigblow.css"/>
+<link rel="stylesheet" type="text/css" href="https://rawgit.com/fniessen/org-html-themes/master/styles/bigblow/css/hideshow.css"/>
+<script type="text/javascript" src="https://rawgit.com/fniessen/org-html-themes/master/styles/bigblow/js/jquery-1.11.0.min.js"></script>
+<script type="text/javascript" src="https://rawgit.com/fniessen/org-html-themes/master/styles/bigblow/js/jquery-ui-1.10.2.min.js"></script>
+<script type="text/javascript" src="https://rawgit.com/fniessen/org-html-themes/master/styles/bigblow/js/jquery.localscroll-min.js"></script>
+<script type="text/javascript" src="https://rawgit.com/fniessen/org-html-themes/master/styles/bigblow/js/jquery.scrollTo-1.4.3.1-min.js"></script>
+<script type="text/javascript" src="https://rawgit.com/fniessen/org-html-themes/master/styles/bigblow/js/jquery.zclip.min.js"></script>
+<script type="text/javascript" src="https://rawgit.com/fniessen/org-html-themes/master/styles/bigblow/js/bigblow.js"></script>
+<script type="text/javascript" src="https://rawgit.com/fniessen/org-html-themes/master/styles/bigblow/js/hideshow.js"></script>
 <script type="text/javascript">
 /*
 @licstart  The following is the entire license notice for the
@@ -145,7 +154,7 @@ for the JavaScript code in this tag.
 <ul>
 <li><a href="#sec-1">1. Introduction</a>
 <ul>
-<li><a href="#sec-1-1">1.1. Documents for today&#xa0;&#xa0;&#xa0;<span class="tag"><span class="labsetup">labsetup</span></span></a></li>
+<li><a href="#sec-1-1">1.1. Materials and setup&#xa0;&#xa0;&#xa0;<span class="tag"><span class="mitsetup">mitsetup</span></span></a></li>
 <li><a href="#sec-1-2">1.2. Organization</a></li>
 <li><a href="#sec-1-3">1.3. Workshop descripton</a></li>
 <li><a href="#sec-1-4">1.4. Why stata?</a></li>
@@ -199,20 +208,28 @@ for the JavaScript code in this tag.
 <h2 id="sec-1"><span class="section-number-2">1</span> Introduction</h2>
 <div class="outline-text-2" id="text-1">
 </div><div id="outline-container-sec-1-1" class="outline-3">
-<h3 id="sec-1-1"><span class="section-number-3">1.1</span> Documents for today&#xa0;&#xa0;&#xa0;<span class="tag"><span class="labsetup">labsetup</span></span></h3>
+<h3 id="sec-1-1"><span class="section-number-3">1.1</span> Materials and setup&#xa0;&#xa0;&#xa0;<span class="tag"><span class="mitsetup">mitsetup</span></span></h3>
 <div class="outline-text-3" id="text-1-1">
 <p>
-USERNAME: dataclass
-PASSWORD: dataclass
+Laptop users: you will need a copy of Stata installed on your machine
+</p>
+
+<p>
+Lab computer users: log in using your Athena user name and password
+</p>
+
+<p>
+Everyone: 
 </p>
 <ul class="org-ul">
-<li>Find class materials at <a href="http://j.mp/intro-stata">http://j.mp/intro-stata</a>
+<li>Find class materials at <a href="http://tutorials.iq.harvard.edu/Stata/StataIntro.zip">http://tutorials.iq.harvard.edu/Stata/StataIntro.zip</a>
 </li>
 <li>Download and extract to your desktop!
 </li>
 </ul>
 </div>
 </div>
+
 
 <div id="outline-container-sec-1-2" class="outline-3">
 <h3 id="sec-1-2"><span class="section-number-3">1.2</span> Organization</h3>
@@ -367,27 +384,40 @@ PASSWORD: dataclass
 <li>Single line and block comments
 </li>
 </ul>
+<p>
+
+</p>
 <div class="org-src-container">
 
-<pre class="src src-stata" id="commentSyntax"><span style="color: #b22222;">// comment</span>
- <span style="color: #008b8b;">describe</span> var
- <span style="color: #b22222;">/*</span>
-<span style="color: #b22222;"> comment block comment block comment block comment</span>
-<span style="color: #b22222;"> block comment block comment block </span>
-<span style="color: #b22222;">*/</span>
+<pre class="src src-stata" id="commentSyntax"><span style="color: #8D8D84; font-style: italic;">// comment</span>
+ <span style="color: #D0372D;">describe</span> var
+ <span style="color: #8D8D84;">/*</span>
+<span style="color: #8D8D84; font-style: italic;"> comment block comment block comment block comment</span>
+<span style="color: #8D8D84; font-style: italic;"> block comment block comment block </span>
+<span style="color: #8D8D84;">*/</span>
 </pre>
 </div>
+<p>
+
+</p>
+
 <ul class="org-ul">
 <li>Use <i>/</i> to break varlists over multiple lines:
 </li>
 </ul>
+<p>
+
+</p>
 <div class="org-src-container">
 
-<pre class="src src-stata" id="breakLines"><span style="color: #b22222;">// break commands over multible lines</span>
-describe var1 var2 var2 <span style="color: #b22222;">///</span>
+<pre class="src src-stata" id="breakLines"><span style="color: #8D8D84; font-style: italic;">// break commands over multible lines</span>
+describe var1 var2 var2 <span style="color: #8D8D84; font-style: italic;">///</span>
 var4 var5 var6
 </pre>
 </div>
+<p>
+
+</p>
 </div>
 </div>
 
@@ -406,16 +436,22 @@ var4 var5 var6
 </li>
 </ul>
 
+<p>
+
+</p>
 <div class="org-src-container">
 
-<pre class="src src-stata" id="firstSteps"><span style="color: #b22222;">// change directory</span>
-<span style="color: #a020f0;">cd</span> <span style="color: #8b2252;">"C://Users/dataclass/Desktop/StataIntro"</span>
-<span style="color: #b22222;">// start a log file to record your stata session</span>
-log <span style="color: #008b8b;">using</span> myStataLog.txt, text <span style="color: #a020f0;">replace</span>
-<span style="color: #b22222;">// Pause / resume logging with "log on" / "log off"</span>
-<span style="color: #b22222;">// Close lot with "log close"</span>
+<pre class="src src-stata" id="firstSteps"><span style="color: #8D8D84; font-style: italic;">// change directory</span>
+<span style="color: #0000FF;">cd</span> <span style="color: #008000;">"C://Users/dataclass/Desktop/StataIntro"</span>
+<span style="color: #8D8D84; font-style: italic;">// start a log file to record your stata session</span>
+log <span style="color: #D0372D;">using</span> myStataLog.txt, text <span style="color: #0000FF;">replace</span>
+<span style="color: #8D8D84; font-style: italic;">// Pause / resume logging with "log on" / "log off"</span>
+<span style="color: #8D8D84; font-style: italic;">// Close lot with "log close"</span>
 </pre>
 </div>
+<p>
+
+</p>
 </div>
 </div>
 
@@ -455,28 +491,24 @@ log <span style="color: #008b8b;">using</span> myStataLog.txt, text <span style=
 </li>
 </ul>
 
+<p>
+
+</p>
 <div class="org-src-container">
 
-<pre class="src src-stata" id="getData"><span style="color: #a020f0;">cd</span> dataSets
-<span style="color: #b22222;">// open the gss.dta data set</span>
-<span style="color: #a020f0;">use</span> gss.dta
-<span style="color: #b22222;">// saving your data file:</span>
-<span style="color: #a020f0;">save</span> newgss.dta, <span style="color: #a020f0;">replace</span>
-<span style="color: #b22222;">// the "replace" option tells stata it's OK to </span>
-<span style="color: #b22222;">//   write over an existing file</span>
+<pre class="src src-stata" id="getData"><span style="color: #0000FF;">cd</span> dataSets
+<span style="color: #8D8D84; font-style: italic;">// open the gss.dta data set</span>
+<span style="color: #0000FF;">use</span> gss.dta
+<span style="color: #8D8D84; font-style: italic;">// saving your data file:</span>
+<span style="color: #0000FF;">save</span> newgss.dta, <span style="color: #0000FF;">replace</span>
+<span style="color: #8D8D84; font-style: italic;">// the "replace" option tells stata it's OK to </span>
+<span style="color: #8D8D84; font-style: italic;">//   write over an existing file</span>
 </pre>
 </div>
 
-<pre class="example">
-cd dataSets
-/nfs/home/I/izahn/StataIntro/dataSets
+<p>
 
-use gss.dta
-
-save newgss.dta, replace
-(note: file newgss.dta not found)
-file newgss.dta saved
-</pre>
+</p>
 </div>
 </div>
 
@@ -521,53 +553,45 @@ file newgss.dta saved
 <li>Import delimited text files
 </li>
 </ul>
+<p>
+
+</p>
 <div class="org-src-container">
 
-<pre class="src src-stata" id="insheet"><span style="color: #b22222;">/* </span><span style="color: #b22222;">import data from a .csv file </span><span style="color: #b22222;">*/</span>
-<span style="color: #a020f0;">insheet</span> <span style="color: #008b8b;">using</span> gss.csv, <span style="color: #a020f0;">clear</span>
-<span style="color: #b22222;">/* </span><span style="color: #b22222;">save data to a .csv file </span><span style="color: #b22222;">*/</span>
-<span style="color: #a020f0;">outsheet</span> <span style="color: #008b8b;">using</span> gss_new.csv, <span style="color: #a020f0;">replace</span> comma
+<pre class="src src-stata" id="insheet"><span style="color: #8D8D84;">/* </span><span style="color: #8D8D84; font-style: italic;">import data from a .csv file </span><span style="color: #8D8D84;">*/</span>
+<span style="color: #0000FF;">insheet</span> <span style="color: #D0372D;">using</span> gss.csv, <span style="color: #0000FF;">clear</span>
+<span style="color: #8D8D84;">/* </span><span style="color: #8D8D84; font-style: italic;">save data to a .csv file </span><span style="color: #8D8D84;">*/</span>
+<span style="color: #0000FF;">outsheet</span> <span style="color: #D0372D;">using</span> gss_new.csv, <span style="color: #0000FF;">replace</span> comma
 </pre>
 </div>
 
-<pre class="example">
-insheet using gss.csv, clear
-(7 vars, 451 obs)
+<p>
 
-outsheet using gss_new.csv, replace comma
-</pre>
+</p>
 
 <ul class="org-ul">
 <li>Import data from SAS and Excel
 </li>
 </ul>
+<p>
+
+</p>
 <div class="org-src-container">
 
-<pre class="src src-stata" id="loadSAStransport"><span style="color: #b22222;">/* </span><span style="color: #b22222;">import/export SAS xport files </span><span style="color: #b22222;">*/</span>
-<span style="color: #a020f0;">clear</span>
+<pre class="src src-stata" id="loadSAStransport"><span style="color: #8D8D84;">/* </span><span style="color: #8D8D84; font-style: italic;">import/export SAS xport files </span><span style="color: #8D8D84;">*/</span>
+<span style="color: #0000FF;">clear</span>
 import sasxport gss.xpt
-export sasxport newFileName, <span style="color: #a020f0;">replace</span>
+export sasxport newFileName, <span style="color: #0000FF;">replace</span>
 
-<span style="color: #b22222;">/* </span><span style="color: #b22222;">import/export data from Excel </span><span style="color: #b22222;">*/</span>
-import excel <span style="color: #008b8b;">using</span> gss.xlsx, firstrow <span style="color: #a020f0;">clear</span>
-export excel newFileName.xls, <span style="color: #a020f0;">replace</span>
+<span style="color: #8D8D84;">/* </span><span style="color: #8D8D84; font-style: italic;">import/export data from Excel </span><span style="color: #8D8D84;">*/</span>
+import excel <span style="color: #D0372D;">using</span> gss.xlsx, firstrow <span style="color: #0000FF;">clear</span>
+export excel newFileName.xls, <span style="color: #0000FF;">replace</span>
 </pre>
 </div>
 
-<pre class="example">
-clear
-import sasxport gss.xpt
-export sasxport newFileName, replace
-warning:  internally recorded dataset name was shortened to newFileN in
-          newFileName.xpt
+<p>
 
-file newFileName.xpt saved
-
-
-import excel using gss.xlsx, firstrow clear
-export excel newFileName.xls, replace
-file newFileName.xls saved
-</pre>
+</p>
 </div>
 </div>
 
@@ -631,39 +655,40 @@ file newFileName.xls saved
 <li>Univariate distribution(s) using <b>hist</b>
 </li>
 </ul>
+<p>
+
+</p>
 <div class="org-src-container">
 
-<pre class="src src-stata" id="histograms"><span style="color: #b22222;">/* </span><span style="color: #b22222;">Histograms </span><span style="color: #b22222;">*/</span>
+<pre class="src src-stata" id="histograms"><span style="color: #8D8D84;">/* </span><span style="color: #8D8D84; font-style: italic;">Histograms </span><span style="color: #8D8D84;">*/</span>
 hist educ
-<span style="color: #b22222;">// histogram with normal curve; see 'help hist' for other options</span>
+<span style="color: #8D8D84; font-style: italic;">// histogram with normal curve; see 'help hist' for other options</span>
 hist age, normal
 </pre>
 </div>
 
-<pre class="example">
-hist educ
-(bin=14, start=1, width=1.3571429)
+<p>
 
-hist age, normal
-(bin=14, start=18, width=4.2142857)
-</pre>
+</p>
 
 <ul class="org-ul">
 <li>View bivariate distributions with scatterplots
 </li>
 </ul>
+<p>
+
+</p>
 <div class="org-src-container">
 
-<pre class="src src-stata" id="bivariateDisplay"><span style="color: #b22222;">/* </span><span style="color: #b22222;">scatterplots </span><span style="color: #b22222;">*/</span>
+<pre class="src src-stata" id="bivariateDisplay"><span style="color: #8D8D84;">/* </span><span style="color: #8D8D84; font-style: italic;">scatterplots </span><span style="color: #8D8D84;">*/</span>
 twoway (scatter educ age)
 graph matrix educ age inc
 </pre>
 </div>
 
-<pre class="example">
-twoway (scatter educ age)
-graph matrix educ age inc
-</pre>
+<p>
+
+</p>
 </div>
 </div>
 
@@ -677,80 +702,22 @@ graph matrix educ age inc
 </li>
 </ul>
 
+<p>
+
+</p>
 <div class="org-src-container">
 
-<pre class="src src-stata" id="byprocess"><span style="color: #b22222;">/* </span><span style="color: #b22222;">By Processing </span><span style="color: #b22222;">*/</span>
-<span style="color: #b22222;">// tabulate happy separately for men and women</span>
-bysort sex: <span style="color: #008b8b;">tab</span> happy
-<span style="color: #b22222;">// summarize eudcation by marital status</span>
-bysort marital: <span style="color: #008b8b;">sum</span> educ
+<pre class="src src-stata" id="byprocess"><span style="color: #8D8D84;">/* </span><span style="color: #8D8D84; font-style: italic;">By Processing </span><span style="color: #8D8D84;">*/</span>
+<span style="color: #8D8D84; font-style: italic;">// tabulate happy separately for men and women</span>
+bysort sex: <span style="color: #D0372D;">tab</span> happy
+<span style="color: #8D8D84; font-style: italic;">// summarize eudcation by marital status</span>
+bysort marital: <span style="color: #D0372D;">sum</span> educ
 </pre>
 </div>
 
-<pre class="example">
-bysort sex: tab happy
+<p>
 
--------------------------------------------------------------------------------
--&gt; sex = male
-
-      general |
-    happiness |      Freq.     Percent        Cum.
---------------+-----------------------------------
-   very happy |         32       28.07       28.07
- pretty happy |         68       59.65       87.72
-not too happy |         14       12.28      100.00
---------------+-----------------------------------
-        Total |        114      100.00
-
--------------------------------------------------------------------------------
--&gt; sex = female
-
-      general |
-    happiness |      Freq.     Percent        Cum.
---------------+-----------------------------------
-   very happy |         33       32.04       32.04
- pretty happy |         61       59.22       91.26
-not too happy |          9        8.74      100.00
---------------+-----------------------------------
-        Total |        103      100.00
-
-bysort marital: sum educ
-
--------------------------------------------------------------------------------
--&gt; marital = married
-
-    Variable |       Obs        Mean    Std. Dev.       Min        Max
--------------+--------------------------------------------------------
-        educ |       103    13.65049    3.374381          1         20
-
--------------------------------------------------------------------------------
--&gt; marital = widowed
-
-    Variable |       Obs        Mean    Std. Dev.       Min        Max
--------------+--------------------------------------------------------
-        educ |         6    12.33333     1.36626         11         15
-
--------------------------------------------------------------------------------
--&gt; marital = divorced
-
-    Variable |       Obs        Mean    Std. Dev.       Min        Max
--------------+--------------------------------------------------------
-        educ |        39    13.46154    2.501012          6         19
-
--------------------------------------------------------------------------------
--&gt; marital = separate
-
-    Variable |       Obs        Mean    Std. Dev.       Min        Max
--------------+--------------------------------------------------------
-        educ |         9    12.11111    2.803767          6         14
-
--------------------------------------------------------------------------------
--&gt; marital = never ma
-
-    Variable |       Obs        Mean    Std. Dev.       Min        Max
--------------+--------------------------------------------------------
-        educ |        60        13.7    3.004516          6         20
-</pre>
+</p>
 </div>
 </div>
 
@@ -807,54 +774,47 @@ bysort marital: sum educ
 <li>Variable labels
 </li>
 </ul>
+<p>
+
+</p>
 <div class="org-src-container">
 
-<pre class="src src-stata" id="variableLabels"><span style="color: #b22222;">/* </span><span style="color: #b22222;">Labelling and renaming </span><span style="color: #b22222;">*/</span>
-<span style="color: #b22222;">// Label variable inc "household income"</span>
-label var inc <span style="color: #8b2252;">"household income"</span>
+<pre class="src src-stata" id="variableLabels"><span style="color: #8D8D84;">/* </span><span style="color: #8D8D84; font-style: italic;">Labelling and renaming </span><span style="color: #8D8D84;">*/</span>
+<span style="color: #8D8D84; font-style: italic;">// Label variable inc "household income"</span>
+label var inc <span style="color: #008000;">"household income"</span>
 
-<span style="color: #b22222;">// change the name 'educ' to 'education'</span>
-<span style="color: #a020f0;">rename</span> educ education
+<span style="color: #8D8D84; font-style: italic;">// change the name 'educ' to 'education'</span>
+<span style="color: #0000FF;">rename</span> educ education
 
-<span style="color: #b22222;">// you can search names and labels with 'lookfor' </span>
+<span style="color: #8D8D84; font-style: italic;">// you can search names and labels with 'lookfor' </span>
 lookfor household
 </pre>
 </div>
 
-<pre class="example">
-label var inc "household income"
+<p>
 
-
-rename educ education
-
-
-lookfor household
-
-              storage   display    value
-variable name   type    format     label      variable label
--------------------------------------------------------------------------------
-inc             byte    %8.0g      rincom06   household income
-</pre>
+</p>
 
 <ul class="org-ul">
 <li>Value labels are a two step process: define a value label, then assign defined label to variable(s) 
 </li>
 </ul>
 
+<p>
+
+</p>
 <div class="org-src-container">
 
-<pre class="src src-stata" id="valueLabels"><span style="color: #b22222;">/*</span><span style="color: #b22222;">define a value label for sex </span><span style="color: #b22222;">*/</span>
-label define mySexLabel 1 <span style="color: #8b2252;">"Male"</span> 2 <span style="color: #8b2252;">"Female"</span>
-<span style="color: #b22222;">/* </span><span style="color: #b22222;">assign our label set to the sex variable</span><span style="color: #b22222;">*/</span>
+<pre class="src src-stata" id="valueLabels"><span style="color: #8D8D84;">/*</span><span style="color: #8D8D84; font-style: italic;">define a value label for sex </span><span style="color: #8D8D84;">*/</span>
+label define mySexLabel 1 <span style="color: #008000;">"Male"</span> 2 <span style="color: #008000;">"Female"</span>
+<span style="color: #8D8D84;">/* </span><span style="color: #8D8D84; font-style: italic;">assign our label set to the sex variable</span><span style="color: #8D8D84;">*/</span>
 label val sex  mySexLabel
 </pre>
 </div>
 
-<pre class="example">
-label define mySexLabel 1 "Male" 2 "Female"
+<p>
 
-label val sex  mySexLabel
-</pre>
+</p>
 </div>
 </div>
 
@@ -1017,58 +977,49 @@ label val sex  mySexLabel
 <li>Create new variables using "gen"
 </li>
 </ul>
+<p>
+
+</p>
 <div class="org-src-container">
 
-<pre class="src src-stata" id="genNewVars"><span style="color: #b22222;">// create a new variable named mc_inc</span>
-<span style="color: #b22222;">//   equal to inc minus the mean of inc</span>
-<span style="color: #a020f0;">gen</span> mc_inc = inc - 15.37
+<pre class="src src-stata" id="genNewVars"><span style="color: #8D8D84; font-style: italic;">// create a new variable named mc_inc</span>
+<span style="color: #8D8D84; font-style: italic;">//   equal to inc minus the mean of inc</span>
+<span style="color: #0000FF;">gen</span> mc_inc = inc - 15.37
 </pre>
 </div>
 
-<pre class="example">
-gen mc_inc = inc - 15.37
-</pre>
+<p>
+
+</p>
 
 <ul class="org-ul">
 <li>Sometimes useful to start with blank values and fill them in based on values of existing variables
 </li>
 </ul>
 
+<p>
+
+</p>
 <div class="org-src-container">
 
-<pre class="src src-stata" id="replaceExample"><span style="color: #b22222;">/* </span><span style="color: #b22222;">the 'generate and replace' strategy </span><span style="color: #b22222;">*/</span> 
-<span style="color: #b22222;">// generate a column of missings</span>
-<span style="color: #a020f0;">gen</span> age_wealth = .
-<span style="color: #b22222;">// Next, start adding your qualifications</span>
-<span style="color: #a020f0;">replace</span> age_wealth=1 if age&lt;30 &amp; inc &lt; 10
-<span style="color: #a020f0;">replace</span> age_wealth=2 if age&lt;30 &amp; inc &gt; 10
-<span style="color: #a020f0;">replace</span> age_wealth=3 if age&gt;30 &amp; inc &lt; 10
-<span style="color: #a020f0;">replace</span> age_wealth=4 if age&gt;30 &amp; inc &gt; 10
+<pre class="src src-stata" id="replaceExample"><span style="color: #8D8D84;">/* </span><span style="color: #8D8D84; font-style: italic;">the 'generate and replace' strategy </span><span style="color: #8D8D84;">*/</span> 
+<span style="color: #8D8D84; font-style: italic;">// generate a column of missings</span>
+<span style="color: #0000FF;">gen</span> age_wealth = .
+<span style="color: #8D8D84; font-style: italic;">// Next, start adding your qualifications</span>
+<span style="color: #0000FF;">replace</span> age_wealth=1 if age&lt;30 &amp; inc &lt; 10
+<span style="color: #0000FF;">replace</span> age_wealth=2 if age&lt;30 &amp; inc &gt; 10
+<span style="color: #0000FF;">replace</span> age_wealth=3 if age&gt;30 &amp; inc &lt; 10
+<span style="color: #0000FF;">replace</span> age_wealth=4 if age&gt;30 &amp; inc &gt; 10
 
-<span style="color: #b22222;">// conditions can also be combined with "or"</span>
-<span style="color: #a020f0;">gen</span> young=0
-<span style="color: #a020f0;">replace</span> young=1 if age_wealth==1 | age_wealth==2
+<span style="color: #8D8D84; font-style: italic;">// conditions can also be combined with "or"</span>
+<span style="color: #0000FF;">gen</span> young=0
+<span style="color: #0000FF;">replace</span> young=1 if age_wealth==1 | age_wealth==2
 </pre>
 </div>
 
-<pre class="example">
-gen age_wealth = .
-(217 missing values generated)
+<p>
 
-replace age_wealth=1 if age&lt;30 &amp; inc &lt; 10
-(19 real changes made)
-replace age_wealth=2 if age&lt;30 &amp; inc &gt; 10
-(26 real changes made)
-replace age_wealth=3 if age&gt;30 &amp; inc &lt; 10
-(22 real changes made)
-replace age_wealth=4 if age&gt;30 &amp; inc &gt; 10
-(134 real changes made)
-
-
-gen young=0
-replace young=1 if age_wealth==1 | age_wealth==2
-(45 real changes made)
-</pre>
+</p>
 </div>
 </div>
 
@@ -1141,8 +1092,8 @@ replace young=1 if age_wealth==1 | age_wealth==2
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Ista Zahn</p>
-<p class="date">Created: 2014-08-20 Wed 16:04</p>
-<p class="creator"><a href="http://www.gnu.org/software/emacs/">Emacs</a> 24.3.1 (<a href="http://orgmode.org">Org</a> mode 8.2.7c)</p>
+<p class="date">Created: 2015-01-26 Mon 12:05</p>
+<p class="creator"><a href="http://www.gnu.org/software/emacs/">Emacs</a> 24.4.1 (<a href="http://orgmode.org">Org</a> mode 8.2.10)</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
