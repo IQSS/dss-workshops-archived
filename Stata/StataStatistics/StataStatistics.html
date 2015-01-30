@@ -4,7 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
 <title>Regression in Stata</title>
-<!-- 2014-10-23 Thu 23:19 -->
+<!-- 2015-01-30 Fri 11:54 -->
 <meta  http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta  name="generator" content="Org-mode" />
 <style type="text/css">
@@ -153,56 +153,115 @@ for the JavaScript code in this tag.
 <ul>
 <li><a href="#sec-1">1. Introduction</a>
 <ul>
-<li><a href="#sec-1-1">1.1. Download workshop materials&#xa0;&#xa0;&#xa0;<span class="tag"><span class="setup">setup</span></span></a></li>
+<li><a href="#sec-1-1">1.1. Materials and setup&#xa0;&#xa0;&#xa0;<span class="tag"><span class="mitsetup">mitsetup</span></span></a></li>
 <li><a href="#sec-1-2">1.2. Organization</a></li>
 <li><a href="#sec-1-3">1.3. Today's Dataset</a></li>
 <li><a href="#sec-1-4">1.4. Opening Files in Stata</a></li>
-<li><a href="#sec-1-5">1.5. Steps for Running Regression</a></li>
 </ul>
 </li>
-<li><a href="#sec-2">2. Univariate regression</a>
+<li><a href="#sec-2">2. change directory</a></li>
+<li><a href="#sec-3">3. use the states data set</a>
 <ul>
-<li><a href="#sec-2-1">2.1. Univariate Regression: Preliminaries</a></li>
-<li><a href="#sec-2-2">2.2. Univariate Regression Preliminaries</a></li>
-<li><a href="#sec-2-3">2.3. Univariate Regression Preliminaries</a></li>
-<li><a href="#sec-2-4">2.4. Univariate Regression Preliminaries</a></li>
-<li><a href="#sec-2-5">2.5. Univariate Regression: SAT scores and Education Expenditures</a></li>
-<li><a href="#sec-2-6">2.6. Linear Regression Assumptions</a></li>
-<li><a href="#sec-2-7">2.7. Homoscedasticity</a></li>
-<li><a href="#sec-2-8">2.8. Testing Assumptions: Normality</a></li>
-<li><a href="#sec-2-9">2.9. Testing Assumptions: Homoscedasticity</a></li>
+<li><a href="#sec-3-1">3.1. Steps for Running Regression</a></li>
 </ul>
 </li>
-<li><a href="#sec-3">3. Multiple regression</a>
+<li><a href="#sec-4">4. Univariate regression</a>
 <ul>
-<li><a href="#sec-3-1">3.1. Multiple Regression</a></li>
-<li><a href="#sec-3-2">3.2. Multiple Regression Preliminaries</a></li>
-<li><a href="#sec-3-3">3.3. Multiple Regression</a></li>
-<li><a href="#sec-3-4">3.4. Exercise 1: Multiple Regression</a></li>
+<li><a href="#sec-4-1">4.1. Univariate Regression: Preliminaries</a></li>
 </ul>
 </li>
-<li><a href="#sec-4">4. Interactions</a>
+<li><a href="#sec-5">5. generate summary statistics for csat and expense</a>
 <ul>
-<li><a href="#sec-4-1">4.1. Interactions</a></li>
-<li><a href="#sec-4-2">4.2. Interactions</a></li>
-<li><a href="#sec-4-3">4.3. Categorical Predictors</a></li>
-<li><a href="#sec-4-4">4.4. Categorical Predictors</a></li>
-<li><a href="#sec-4-5">4.5. Exercise 2: Regression, Categorical Predictors, &amp; Interactions</a></li>
+<li><a href="#sec-5-1">5.1. Univariate Regression Preliminaries</a></li>
 </ul>
 </li>
-<li><a href="#sec-5">5. Exporting and saving results</a>
+<li><a href="#sec-6">6. look at codebok</a>
 <ul>
-<li><a href="#sec-5-1">5.1. Saving and exporting regression tables</a></li>
-<li><a href="#sec-5-2">5.2. Saving and replaying</a></li>
-<li><a href="#sec-5-3">5.3. Saving and replaying</a></li>
-<li><a href="#sec-5-4">5.4. Saving and replaying</a></li>
-<li><a href="#sec-5-5">5.5. Exporting into Excel</a></li>
+<li><a href="#sec-6-1">6.1. Univariate Regression Preliminaries</a></li>
 </ul>
 </li>
-<li><a href="#sec-6">6. Wrap-up</a>
+<li><a href="#sec-7">7. graph expense by csat</a>
 <ul>
-<li><a href="#sec-6-1">6.1. Help Us Make This Workshop Better</a></li>
-<li><a href="#sec-6-2">6.2. Additional resources</a></li>
+<li><a href="#sec-7-1">7.1. Univariate Regression Preliminaries</a></li>
+</ul>
+</li>
+<li><a href="#sec-8">8. correlate csat and expense</a>
+<ul>
+<li><a href="#sec-8-1">8.1. Univariate Regression: SAT scores and Education Expenditures</a></li>
+<li><a href="#sec-8-2">8.2. Linear Regression Assumptions</a></li>
+<li><a href="#sec-8-3">8.3. Homoscedasticity</a></li>
+<li><a href="#sec-8-4">8.4. Testing Assumptions: Normality</a></li>
+</ul>
+</li>
+<li><a href="#sec-9">9. graph the residual values of csat</a>
+<ul>
+<li><a href="#sec-9-1">9.1. Testing Assumptions: Homoscedasticity</a></li>
+</ul>
+</li>
+<li><a href="#sec-10">10. Multiple regression</a>
+<ul>
+<li><a href="#sec-10-1">10.1. Multiple Regression</a></li>
+<li><a href="#sec-10-2">10.2. Multiple Regression Preliminaries</a></li>
+</ul>
+</li>
+<li><a href="#sec-11">11. descriptive statistics and correlations</a>
+<ul>
+<li><a href="#sec-11-1">11.1. Multiple Regression</a></li>
+<li><a href="#sec-11-2">11.2. Exercise 1: Multiple Regression</a></li>
+</ul>
+</li>
+<li><a href="#sec-12">12. Interactions</a>
+<ul>
+<li><a href="#sec-12-1">12.1. Interactions</a></li>
+</ul>
+</li>
+<li><a href="#sec-13">13. generate product of percent and high</a>
+<ul>
+<li><a href="#sec-13-1">13.1. Interactions</a></li>
+</ul>
+</li>
+<li><a href="#sec-14">14. use the # sign to represent interactions</a></li>
+<li><a href="#sec-15">15. same as . regress csat c.percent##high</a>
+<ul>
+<li><a href="#sec-15-1">15.1. Categorical Predictors</a></li>
+</ul>
+</li>
+<li><a href="#sec-16">16. create region dummy codes using tab</a>
+<ul>
+<li><a href="#sec-16-1">16.1. Categorical Predictors</a></li>
+</ul>
+</li>
+<li><a href="#sec-17">17. regress csat on region using fvvarlist syntax</a></li>
+<li><a href="#sec-18">18. see help fvvarlist for details</a>
+<ul>
+<li><a href="#sec-18-1">18.1. Exercise 2: Regression, Categorical Predictors, &amp; Interactions</a></li>
+</ul>
+</li>
+<li><a href="#sec-19">19. Exporting and saving results</a>
+<ul>
+<li><a href="#sec-19-1">19.1. Saving and exporting regression tables</a></li>
+</ul>
+</li>
+<li><a href="#sec-20">20. install outreg2 package</a>
+<ul>
+<li><a href="#sec-20-1">20.1. Saving and replaying</a></li>
+</ul>
+</li>
+<li><a href="#sec-21">21. fit two regression models and store the results</a>
+<ul>
+<li><a href="#sec-21-1">21.1. Saving and replaying</a></li>
+</ul>
+</li>
+<li><a href="#sec-22">22. Compare Model1 and Model2 coefficients</a>
+<ul>
+<li><a href="#sec-22-1">22.1. Saving and replaying</a></li>
+<li><a href="#sec-22-2">22.2. Exporting into Excel</a></li>
+</ul>
+</li>
+<li><a href="#sec-23">23. Wrap-up</a>
+<ul>
+<li><a href="#sec-23-1">23.1. Help Us Make This Workshop Better</a></li>
+<li><a href="#sec-23-2">23.2. Additional resources</a></li>
 </ul>
 </li>
 </ul>
@@ -213,26 +272,30 @@ for the JavaScript code in this tag.
 <h2 id="sec-1"><span class="section-number-2">1</span> Introduction</h2>
 <div class="outline-text-2" id="text-1">
 </div><div id="outline-container-sec-1-1" class="outline-3">
-<h3 id="sec-1-1"><span class="section-number-3">1.1</span> Download workshop materials&#xa0;&#xa0;&#xa0;<span class="tag"><span class="setup">setup</span></span></h3>
+<h3 id="sec-1-1"><span class="section-number-3">1.1</span> Materials and setup&#xa0;&#xa0;&#xa0;<span class="tag"><span class="mitsetup">mitsetup</span></span></h3>
 <div class="outline-text-3" id="text-1-1">
+<p>
+Laptop users: you will need a copy of Stata installed on your machine
+</p>
+
+<p>
+Lab computer users: log in using your Athena user name and password
+</p>
+
+<p>
+Everyone: 
+</p>
 <ul class="org-ul">
-<li>Lab computer log in:
-<ul class="org-ul">
-<li>USERNAME: dataclass
+<li>Open a web browser and download class materials from <a href="http://tutorials.iq.harvard.edu/Stata/StataStatistics.zip">http://tutorials.iq.harvard.edu/Stata/StataStatistics.zip</a>.
 </li>
-<li>PASSWORD: on the board to your left
+<li>Extract the downloaded zip file and move the <code>StataStatistics</code> folder to your Desktop.
 </li>
-</ul>
-</li>
-<li>Download materials from <a href="http://tutorials.iq.harvard.edu/Stata/StataStatistics.zip">http://tutorials.iq.harvard.edu/Stata/StataStatistics.zip</a>
-</li>
-<li>Extract materials from the <code>StataStatistics.zip</code> file
-</li>
-<li>Launch Stata and open the <code>StataStatistics.do</code> file
+<li>Start the Stata program and open the <code>StataStatistics.do</code> file.
 </li>
 </ul>
 </div>
 </div>
+
 
 <div id="outline-container-sec-1-2" class="outline-3">
 <h3 id="sec-1-2"><span class="section-number-3">1.2</span> Organization</h3>
@@ -299,6 +362,21 @@ for the JavaScript code in this tag.
 </pre>
 </div>
 
+<p>
+#+begin<sub>example</sub>
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-2" class="outline-2">
+<h2 id="sec-2"><span class="section-number-2">2</span> change directory</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+cd "~/StataStatistics"
+/nfs/home/I/izahn/StataStatistics
+#+end<sub>example</sub>
+</p>
+
 <ul class="org-ul">
 <li>Use dir to see what is in the directory:
 </li>
@@ -309,6 +387,20 @@ for the JavaScript code in this tag.
 <pre class="src src-stata" id="dirCommand">dir
 </pre>
 </div>
+
+<pre class="example">
+dir
+
+total 580
+drwxr-xr-x. 2 izahn users   4096 Oct 23 21:34 images/
+-rw-r--r--. 1 izahn users   9424 Oct 23 21:34 StataStatistics.do
+-rw-r--r--. 1 izahn users  38143 Oct 23 21:34 StataStatistics.html
+-rw-r--r--. 1 izahn users  22427 Oct 23 21:34 StataStatistics.org
+-rw-r--r--. 1 izahn users 433417 Oct 23 21:34 StataStatistics.pdf
+-rw-r--r--. 1 izahn users  26185 Oct 23 21:34 StataStatistics.tex
+-rw-r--r--. 1 izahn users   8977 Oct 23 21:34 states.dta
+-rw-r--r--. 1 izahn users  18793 Oct 23 21:34 style.css
+</pre>
 
 <ul class="org-ul">
 <li>Load the data
@@ -321,12 +413,25 @@ for the JavaScript code in this tag.
 <span style="color: #0000FF;">use</span> states.dta
 </pre>
 </div>
+
+<p>
+#+begin<sub>example</sub>
+</p>
 </div>
+</div>
+<div id="outline-container-sec-3" class="outline-2">
+<h2 id="sec-3"><span class="section-number-2">3</span> use the states data set</h2>
+<div class="outline-text-2" id="text-3">
+<p>
+use states.dta
+(U.S. states data 1990-91)
+#+end<sub>example</sub>
+</p>
 </div>
 
-<div id="outline-container-sec-1-5" class="outline-3">
-<h3 id="sec-1-5"><span class="section-number-3">1.5</span> Steps for Running Regression</h3>
-<div class="outline-text-3" id="text-1-5">
+<div id="outline-container-sec-3-1" class="outline-3">
+<h3 id="sec-3-1"><span class="section-number-3">3.1</span> Steps for Running Regression</h3>
+<div class="outline-text-3" id="text-3-1">
 <ol class="org-ol">
 <li>Examine descriptive statistics
 </li>
@@ -341,12 +446,12 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-sec-2" class="outline-2">
-<h2 id="sec-2"><span class="section-number-2">2</span> Univariate regression</h2>
-<div class="outline-text-2" id="text-2">
-</div><div id="outline-container-sec-2-1" class="outline-3">
-<h3 id="sec-2-1"><span class="section-number-3">2.1</span> Univariate Regression: Preliminaries</h3>
-<div class="outline-text-3" id="text-2-1">
+<div id="outline-container-sec-4" class="outline-2">
+<h2 id="sec-4"><span class="section-number-2">4</span> Univariate regression</h2>
+<div class="outline-text-2" id="text-4">
+</div><div id="outline-container-sec-4-1" class="outline-3">
+<h3 id="sec-4-1"><span class="section-number-3">4.1</span> Univariate Regression: Preliminaries</h3>
+<div class="outline-text-3" id="text-4-1">
 <ul class="org-ul">
 <li>We want to predict csat scores from expense
 </li>
@@ -360,12 +465,32 @@ for the JavaScript code in this tag.
 sum csat expense
 </pre>
 </div>
+
+<p>
+#+begin<sub>example</sub>
+</p>
 </div>
+</div>
+</div>
+<div id="outline-container-sec-5" class="outline-2">
+<h2 id="sec-5"><span class="section-number-2">5</span> generate summary statistics for csat and expense</h2>
+<div class="outline-text-2" id="text-5">
+<p>
+sum csat expense
+</p>
+
+<p>
+    Variable |       Obs        Mean    Std. Dev.       Min        Max
+-&#x2014;&#x2014;&#x2014;&#x2014;+&#x2013;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;
+        csat |        51     944.098    66.93497        832       1093
+     expense |        51    5235.961    1401.155       2960       9259
+#+end<sub>example</sub>
+</p>
 </div>
 
-<div id="outline-container-sec-2-2" class="outline-3">
-<h3 id="sec-2-2"><span class="section-number-3">2.2</span> Univariate Regression Preliminaries</h3>
-<div class="outline-text-3" id="text-2-2">
+<div id="outline-container-sec-5-1" class="outline-3">
+<h3 id="sec-5-1"><span class="section-number-3">5.1</span> Univariate Regression Preliminaries</h3>
+<div class="outline-text-3" id="text-5-1">
 <ul class="org-ul">
 <li>We want to predict csat scores from expense
 </li>
@@ -379,12 +504,75 @@ sum csat expense
 <span style="color: #D0372D;">codebook</span> csat expense
 </pre>
 </div>
+
+<p>
+#+begin<sub>example</sub>
+</p>
 </div>
+</div>
+</div>
+<div id="outline-container-sec-6" class="outline-2">
+<h2 id="sec-6"><span class="section-number-2">6</span> look at codebok</h2>
+<div class="outline-text-2" id="text-6">
+<p>
+codebook csat expense
+</p>
+
+<hr  />
+<p>
+csat                                                   Mean composite SAT score
+</p>
+<hr  />
+
+<p>
+type:  numeric (int)
+</p>
+
+<p>
+        range:  [832,1093]                   units:  1
+unique values:  45                       missing .:  0/51
+</p>
+
+<p>
+    mean:   944.098
+std. dev:    66.935
+</p>
+
+<p>
+percentiles:        10%       25%       50%       75%       90%
+                    874       886       926       997      1024
+</p>
+
+<hr  />
+<p>
+expense                                         Per pupil expenditures prim&amp;sec
+</p>
+<hr  />
+
+<p>
+type:  numeric (int)
+</p>
+
+<p>
+        range:  [2960,9259]                  units:  1
+unique values:  51                       missing .:  0/51
+</p>
+
+<p>
+    mean:   5235.96
+std. dev:   1401.16
+</p>
+
+<p>
+           percentiles:        10%       25%       50%       75%       90%
+                              3782      4351      5000      5865      6738
+#+end<sub>example</sub>
+</p>
 </div>
 
-<div id="outline-container-sec-2-3" class="outline-3">
-<h3 id="sec-2-3"><span class="section-number-3">2.3</span> Univariate Regression Preliminaries</h3>
-<div class="outline-text-3" id="text-2-3">
+<div id="outline-container-sec-6-1" class="outline-3">
+<h3 id="sec-6-1"><span class="section-number-3">6.1</span> Univariate Regression Preliminaries</h3>
+<div class="outline-text-3" id="text-6-1">
 <ul class="org-ul">
 <li>Next, view relationship graphically
 </li>
@@ -399,17 +587,30 @@ twoway scatter expense csat
 </pre>
 </div>
 
+<p>
+#+begin<sub>example</sub>
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-7" class="outline-2">
+<h2 id="sec-7"><span class="section-number-2">7</span> graph expense by csat</h2>
+<div class="outline-text-2" id="text-7">
+<p>
+twoway scatter expense csat
+#+end<sub>example</sub>
+</p>
+
 
 <div class="figure">
 <p><img src="images/scatter1.png" alt="scatter1.png" />
 </p>
 </div>
 </div>
-</div>
 
-<div id="outline-container-sec-2-4" class="outline-3">
-<h3 id="sec-2-4"><span class="section-number-3">2.4</span> Univariate Regression Preliminaries</h3>
-<div class="outline-text-3" id="text-2-4">
+<div id="outline-container-sec-7-1" class="outline-3">
+<h3 id="sec-7-1"><span class="section-number-3">7.1</span> Univariate Regression Preliminaries</h3>
+<div class="outline-text-3" id="text-7-1">
 <ul class="org-ul">
 <li>Next look at the correlation matrix
 </li>
@@ -422,27 +623,76 @@ pwcorr csat expense, star(.05)
 </pre>
 </div>
 
+<p>
+#+begin<sub>example</sub>
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-8" class="outline-2">
+<h2 id="sec-8"><span class="section-number-2">8</span> correlate csat and expense</h2>
+<div class="outline-text-2" id="text-8">
+<p>
+pwcorr csat expense, star(.05)
+</p>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="left" />
+</colgroup>
+<tbody>
+<tr>
+<td class="left">csat  expense</td>
+</tr>
+</tbody>
+</table>
+<p>
+-&#x2014;&#x2014;&#x2014;&#x2014;+&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;
+        csat |   1.0000 
+     expense |  -0.4663*  1.0000
+#+end<sub>example</sub>
+</p>
+
 <ul class="org-ul">
 <li>Not very interesting with only one predictor
 </li>
 </ul>
 </div>
-</div>
 
-<div id="outline-container-sec-2-5" class="outline-3">
-<h3 id="sec-2-5"><span class="section-number-3">2.5</span> Univariate Regression: SAT scores and Education Expenditures</h3>
-<div class="outline-text-3" id="text-2-5">
+<div id="outline-container-sec-8-1" class="outline-3">
+<h3 id="sec-8-1"><span class="section-number-3">8.1</span> Univariate Regression: SAT scores and Education Expenditures</h3>
+<div class="outline-text-3" id="text-8-1">
 <div class="org-src-container">
 
 <pre class="src src-stata" id="regressionUnivar2">regress csat expense
 </pre>
 </div>
+
+<pre class="example">
+regress csat expense
+
+      Source |       SS       df       MS              Number of obs =      51
+-------------+------------------------------           F(  1,    49) =   13.61
+       Model |  48708.3001     1  48708.3001           Prob &gt; F      =  0.0006
+    Residual |   175306.21    49  3577.67775           R-squared     =  0.2174
+-------------+------------------------------           Adj R-squared =  0.2015
+       Total |   224014.51    50   4480.2902           Root MSE      =  59.814
+
+------------------------------------------------------------------------------
+        csat |      Coef.   Std. Err.      t    P&gt;|t|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+     expense |  -.0222756   .0060371    -3.69   0.001    -.0344077   -.0101436
+       _cons |   1060.732    32.7009    32.44   0.000     995.0175    1126.447
+------------------------------------------------------------------------------
+</pre>
 </div>
 </div>
 
-<div id="outline-container-sec-2-6" class="outline-3">
-<h3 id="sec-2-6"><span class="section-number-3">2.6</span> Linear Regression Assumptions</h3>
-<div class="outline-text-3" id="text-2-6">
+<div id="outline-container-sec-8-2" class="outline-3">
+<h3 id="sec-8-2"><span class="section-number-3">8.2</span> Linear Regression Assumptions</h3>
+<div class="outline-text-3" id="text-8-2">
 <ul class="org-ul">
 <li>Assumption 1: Normal Distribution
 </li>
@@ -458,9 +708,9 @@ pwcorr csat expense, star(.05)
 </div>
 </div>
 
-<div id="outline-container-sec-2-7" class="outline-3">
-<h3 id="sec-2-7"><span class="section-number-3">2.7</span> Homoscedasticity</h3>
-<div class="outline-text-3" id="text-2-7">
+<div id="outline-container-sec-8-3" class="outline-3">
+<h3 id="sec-8-3"><span class="section-number-3">8.3</span> Homoscedasticity</h3>
+<div class="outline-text-3" id="text-8-3">
 
 <div class="figure">
 <p><img src="images/heteroscedasticity.png" alt="heteroscedasticity.png" />
@@ -475,9 +725,9 @@ pwcorr csat expense, star(.05)
 </div>
 </div>
 
-<div id="outline-container-sec-2-8" class="outline-3">
-<h3 id="sec-2-8"><span class="section-number-3">2.8</span> Testing Assumptions: Normality</h3>
-<div class="outline-text-3" id="text-2-8">
+<div id="outline-container-sec-8-4" class="outline-3">
+<h3 id="sec-8-4"><span class="section-number-3">8.4</span> Testing Assumptions: Normality</h3>
+<div class="outline-text-3" id="text-8-4">
 <ul class="org-ul">
 <li>A simple histogram of the residuals can be informative
 </li>
@@ -491,22 +741,41 @@ histogram resid, normal
 </pre>
 </div>
 
+<p>
+#+begin<sub>example</sub>
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-9" class="outline-2">
+<h2 id="sec-9"><span class="section-number-2">9</span> graph the residual values of csat</h2>
+<div class="outline-text-2" id="text-9">
+<p>
+predict resid, residual
+histogram resid, normal
+(bin=7, start=-131.81111, width=38.329487)
+#+end<sub>example</sub>
+</p>
+
 
 <div class="figure">
 <p><img src="images/normalHist1.png" alt="normalHist1.png" />
 </p>
 </div>
 </div>
-</div>
 
-<div id="outline-container-sec-2-9" class="outline-3">
-<h3 id="sec-2-9"><span class="section-number-3">2.9</span> Testing Assumptions: Homoscedasticity</h3>
-<div class="outline-text-3" id="text-2-9">
+<div id="outline-container-sec-9-1" class="outline-3">
+<h3 id="sec-9-1"><span class="section-number-3">9.1</span> Testing Assumptions: Homoscedasticity</h3>
+<div class="outline-text-3" id="text-9-1">
 <div class="org-src-container">
 
 <pre class="src src-stata" id="homoscedasticityTest1">rvfplot
 </pre>
 </div>
+
+<pre class="example">
+rvfplot
+</pre>
 
 
 <div class="figure">
@@ -517,12 +786,12 @@ histogram resid, normal
 </div>
 </div>
 
-<div id="outline-container-sec-3" class="outline-2">
-<h2 id="sec-3"><span class="section-number-2">3</span> Multiple regression</h2>
-<div class="outline-text-2" id="text-3">
-</div><div id="outline-container-sec-3-1" class="outline-3">
-<h3 id="sec-3-1"><span class="section-number-3">3.1</span> Multiple Regression</h3>
-<div class="outline-text-3" id="text-3-1">
+<div id="outline-container-sec-10" class="outline-2">
+<h2 id="sec-10"><span class="section-number-2">10</span> Multiple regression</h2>
+<div class="outline-text-2" id="text-10">
+</div><div id="outline-container-sec-10-1" class="outline-3">
+<h3 id="sec-10-1"><span class="section-number-3">10.1</span> Multiple Regression</h3>
+<div class="outline-text-3" id="text-10-1">
 <ul class="org-ul">
 <li>Just keep adding predictors
 </li>
@@ -536,9 +805,9 @@ histogram resid, normal
 </div>
 </div>
 
-<div id="outline-container-sec-3-2" class="outline-3">
-<h3 id="sec-3-2"><span class="section-number-3">3.2</span> Multiple Regression Preliminaries</h3>
-<div class="outline-text-3" id="text-3-2">
+<div id="outline-container-sec-10-2" class="outline-3">
+<h3 id="sec-10-2"><span class="section-number-3">10.2</span> Multiple Regression Preliminaries</h3>
+<div class="outline-text-3" id="text-10-2">
 <ul class="org-ul">
 <li>As before, start with descriptive statistics and correlations
 </li>
@@ -551,12 +820,55 @@ sum income percent high
 pwcorr csat expense income percent high
 </pre>
 </div>
+
+<p>
+#+begin<sub>example</sub>
+</p>
 </div>
+</div>
+</div>
+<div id="outline-container-sec-11" class="outline-2">
+<h2 id="sec-11"><span class="section-number-2">11</span> descriptive statistics and correlations</h2>
+<div class="outline-text-2" id="text-11">
+<p>
+sum income percent high
+</p>
+
+<p>
+    Variable |       Obs        Mean    Std. Dev.       Min        Max
+-&#x2014;&#x2014;&#x2014;&#x2014;+&#x2013;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;
+      income |        51    33.95657    6.423134     23.465     48.618
+     percent |        51    35.76471    26.19281          4         81
+        high |        51    76.26078    5.588741       64.3       86.6
+pwcorr csat expense income percent high
+</p>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="left" />
+</colgroup>
+<tbody>
+<tr>
+<td class="left">csat  expense   income  percent     high</td>
+</tr>
+</tbody>
+</table>
+<p>
+-&#x2014;&#x2014;&#x2014;&#x2014;+&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;
+        csat |   1.0000 
+     expense |  -0.4663   1.0000 
+      income |  -0.4713   0.6784   1.0000 
+     percent |  -0.8758   0.6509   0.6733   1.0000 
+        high |   0.0858   0.3133   0.5099   0.1413   1.0000
+#+end<sub>example</sub>
+</p>
 </div>
 
-<div id="outline-container-sec-3-3" class="outline-3">
-<h3 id="sec-3-3"><span class="section-number-3">3.3</span> Multiple Regression</h3>
-<div class="outline-text-3" id="text-3-3">
+<div id="outline-container-sec-11-1" class="outline-3">
+<h3 id="sec-11-1"><span class="section-number-3">11.1</span> Multiple Regression</h3>
+<div class="outline-text-3" id="text-11-1">
 <ul class="org-ul">
 <li>regress csat on exense, income, percent, and high
 </li>
@@ -567,12 +879,33 @@ pwcorr csat expense income percent high
 <pre class="src src-stata" id="multipleRegression">regress csat expense income percent high
 </pre>
 </div>
+
+<pre class="example">
+regress csat expense income percent high
+
+      Source |       SS       df       MS              Number of obs =      51
+-------------+------------------------------           F(  4,    46) =   51.86
+       Model |  183354.603     4  45838.6508           Prob &gt; F      =  0.0000
+    Residual |  40659.9067    46  883.911016           R-squared     =  0.8185
+-------------+------------------------------           Adj R-squared =  0.8027
+       Total |   224014.51    50   4480.2902           Root MSE      =  29.731
+
+------------------------------------------------------------------------------
+        csat |      Coef.   Std. Err.      t    P&gt;|t|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+     expense |   .0045604    .004384     1.04   0.304    -.0042641     .013385
+      income |   .4437858   1.138947     0.39   0.699    -1.848795    2.736367
+     percent |  -2.533084   .2454477   -10.32   0.000    -3.027145   -2.039024
+        high |   2.086599   .9246023     2.26   0.029     .2254712    3.947727
+       _cons |   836.6197   58.33238    14.34   0.000     719.2027    954.0366
+------------------------------------------------------------------------------
+</pre>
 </div>
 </div>
 
-<div id="outline-container-sec-3-4" class="outline-3">
-<h3 id="sec-3-4"><span class="section-number-3">3.4</span> Exercise 1: Multiple Regression</h3>
-<div class="outline-text-3" id="text-3-4">
+<div id="outline-container-sec-11-2" class="outline-3">
+<h3 id="sec-11-2"><span class="section-number-3">11.2</span> Exercise 1: Multiple Regression</h3>
+<div class="outline-text-3" id="text-11-2">
 <p>
 Open the datafile, states.dta.
 </p>
@@ -588,12 +921,12 @@ Open the datafile, states.dta.
 </div>
 </div>
 
-<div id="outline-container-sec-4" class="outline-2">
-<h2 id="sec-4"><span class="section-number-2">4</span> Interactions</h2>
-<div class="outline-text-2" id="text-4">
-</div><div id="outline-container-sec-4-1" class="outline-3">
-<h3 id="sec-4-1"><span class="section-number-3">4.1</span> Interactions</h3>
-<div class="outline-text-3" id="text-4-1">
+<div id="outline-container-sec-12" class="outline-2">
+<h2 id="sec-12"><span class="section-number-2">12</span> Interactions</h2>
+<div class="outline-text-2" id="text-12">
+</div><div id="outline-container-sec-12-1" class="outline-3">
+<h3 id="sec-12-1"><span class="section-number-3">12.1</span> Interactions</h3>
+<div class="outline-text-3" id="text-12-1">
 <ul class="org-ul">
 <li>What if we wanted to test an interaction between percent &amp; high?
 </li>
@@ -608,12 +941,50 @@ Open the datafile, states.dta.
 regress csat expense income percent high percenthigh
 </pre>
 </div>
+
+<p>
+#+begin<sub>example</sub>
+</p>
 </div>
+</div>
+</div>
+<div id="outline-container-sec-13" class="outline-2">
+<h2 id="sec-13"><span class="section-number-2">13</span> generate product of percent and high</h2>
+<div class="outline-text-2" id="text-13">
+<p>
+gen percenthigh = percent*high
+regress csat expense income percent high percenthigh
+</p>
+
+<p>
+      Source |       SS       df       MS              Number of obs =      51
+-&#x2014;&#x2014;&#x2014;&#x2014;+&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;           F(  5,    45) =   46.11
+       Model |  187430.401     5  37486.0801           Prob &gt; F      =  0.0000
+    Residual |  36584.1091    45  812.980201           R-squared     =  0.8367
+-&#x2014;&#x2014;&#x2014;&#x2014;+&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;           Adj R-squared =  0.8185
+       Total |   224014.51    50   4480.2902           Root MSE      =  28.513
+</p>
+
+<hr  />
+<p>
+        csat |      Coef.   Std. Err.      t    P&gt;|t|     [95% Conf. Interval]
+-&#x2014;&#x2014;&#x2014;&#x2014;+-&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;
+     expense |   .0045575   .0042044     1.08   0.284    -.0039107    .0130256
+      income |   .0887856    1.10374     0.08   0.936    -2.134261    2.311832
+     percent |  -8.143002   2.516509    -3.24   0.002    -13.21151   -3.074493
+        high |   .4240906   1.156545     0.37   0.716    -1.905311    2.753492
+ percenthigh |   .0740926   .0330909     2.24   0.030     .0074441    .1407411
+       _cons |    972.525    82.5457    11.78   0.000     806.2695    1138.781
+</p>
+<hr  />
+<p>
+#+end<sub>example</sub>
+</p>
 </div>
 
-<div id="outline-container-sec-4-2" class="outline-3">
-<h3 id="sec-4-2"><span class="section-number-3">4.2</span> Interactions</h3>
-<div class="outline-text-3" id="text-4-2">
+<div id="outline-container-sec-13-1" class="outline-3">
+<h3 id="sec-13-1"><span class="section-number-3">13.1</span> Interactions</h3>
+<div class="outline-text-3" id="text-13-1">
 <ul class="org-ul">
 <li>What if we wanted to test an interaction between percent &amp; high?
 </li>
@@ -628,12 +999,73 @@ regress csat percent high c.percent#c.high
 * same <span style="color: #D0372D;">as</span> . <span style="color: #D0372D;">regress</span> csat c.percent##high
 </pre>
 </div>
+
+<p>
+#+begin<sub>example</sub>
+</p>
 </div>
+</div>
+</div>
+<div id="outline-container-sec-14" class="outline-2">
+<h2 id="sec-14"><span class="section-number-2">14</span> use the # sign to represent interactions</h2>
+<div class="outline-text-2" id="text-14">
+<p>
+regress csat percent high c.percent#c.high
+</p>
+
+<p>
+      Source |       SS       df       MS              Number of obs =      51
+-&#x2014;&#x2014;&#x2014;&#x2014;+&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;           F(  3,    47) =   77.39
+       Model |  186302.091     3  62100.6971           Prob &gt; F      =  0.0000
+    Residual |  37712.4186    47  802.391885           R-squared     =  0.8317
+-&#x2014;&#x2014;&#x2014;&#x2014;+&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;           Adj R-squared =  0.8209
+       Total |   224014.51    50   4480.2902           Root MSE      =  28.327
+</p>
+
+<hr  />
+<p>
+        csat |      Coef.   Std. Err.      t    P&gt;|t|     [95% Conf. Interval]
+-&#x2014;&#x2014;&#x2014;&#x2014;+-&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;
+     percent |   -8.15717   2.488388    -3.28   0.002    -13.16316   -3.151179
+        high |   .6674578   1.082615     0.62   0.541    -1.510482    2.845398
+</p>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<tbody>
+<tr>
+</tr>
+</tbody>
+</table>
+<p>
+c.percent#|
+   c.high |   .0764271   .0324919     2.35   0.023     .0110619    .1417924
+</p>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<tbody>
+<tr>
+</tr>
+</tbody>
+</table>
+<p>
+_cons |   974.9354   81.98078    11.89   0.000     810.0113    1139.859
+</p>
+<hr  />
+</div>
+</div>
+<div id="outline-container-sec-15" class="outline-2">
+<h2 id="sec-15"><span class="section-number-2">15</span> same as . regress csat c.percent##high</h2>
+<div class="outline-text-2" id="text-15">
+<p>
+#+end<sub>example</sub>
+</p>
 </div>
 
-<div id="outline-container-sec-4-3" class="outline-3">
-<h3 id="sec-4-3"><span class="section-number-3">4.3</span> Categorical Predictors</h3>
-<div class="outline-text-3" id="text-4-3">
+<div id="outline-container-sec-15-1" class="outline-3">
+<h3 id="sec-15-1"><span class="section-number-3">15.1</span> Categorical Predictors</h3>
+<div class="outline-text-3" id="text-15-1">
 <ul class="org-ul">
 <li>For categorical variables, we first need to dummy code
 </li>
@@ -648,18 +1080,40 @@ regress csat percent high c.percent#c.high
 <div class="org-src-container">
 
 <pre class="src src-stata" id="makedummycodes1">* create region dummy codes <span style="color: #D0372D;">using</span> <span style="color: #D0372D;">tab</span> 
-tab region, <span style="color: #0000FF;">gen</span>(region) <span style="color: #b22222; font-style: italic;">// could also use gen / replace</span>
+tab region, <span style="color: #0000FF;">gen</span>(region) <span style="color: #8D8D84; font-style: italic;">// could also use gen / replace</span>
 
 *regress csat <span style="color: #D0372D;">on</span> region
 regress csat region1 region2 region3
 </pre>
 </div>
+
+<p>
+#+begin<sub>example</sub>
+</p>
 </div>
+</div>
+</div>
+<div id="outline-container-sec-16" class="outline-2">
+<h2 id="sec-16"><span class="section-number-2">16</span> create region dummy codes using tab</h2>
+<div class="outline-text-2" id="text-16">
+<p>
+tab region, gen(region) // could also use gen / replace
+option / not allowed
+r(198);
+</p>
+
+<p>
+*regress csat on region
+regress csat region1 region2 region3
+variable region1 not found
+r(111);
+#+end<sub>example</sub>
+</p>
 </div>
 
-<div id="outline-container-sec-4-4" class="outline-3">
-<h3 id="sec-4-4"><span class="section-number-3">4.4</span> Categorical Predictors</h3>
-<div class="outline-text-3" id="text-4-4">
+<div id="outline-container-sec-16-1" class="outline-3">
+<h3 id="sec-16-1"><span class="section-number-3">16.1</span> Categorical Predictors</h3>
+<div class="outline-text-3" id="text-16-1">
 <ul class="org-ul">
 <li>For categorical variables, we first need to dummy code
 </li>
@@ -678,12 +1132,61 @@ regress csat region1 region2 region3
 regress csat i.region
 </pre>
 </div>
+
+<p>
+#+begin<sub>example</sub>
+</p>
 </div>
+</div>
+</div>
+<div id="outline-container-sec-17" class="outline-2">
+<h2 id="sec-17"><span class="section-number-2">17</span> regress csat on region using fvvarlist syntax</h2>
+</div>
+<div id="outline-container-sec-18" class="outline-2">
+<h2 id="sec-18"><span class="section-number-2">18</span> see help fvvarlist for details</h2>
+<div class="outline-text-2" id="text-18">
+<p>
+regress csat i.region
+</p>
+
+<p>
+      Source |       SS       df       MS              Number of obs =      50
+-&#x2014;&#x2014;&#x2014;&#x2014;+&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;           F(  3,    46) =    9.61
+       Model |  82049.4719     3   27349.824           Prob &gt; F      =  0.0000
+    Residual |  130911.908    46  2845.91105           R-squared     =  0.3853
+-&#x2014;&#x2014;&#x2014;&#x2014;+&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;           Adj R-squared =  0.3452
+       Total |   212961.38    49  4346.15061           Root MSE      =  53.347
+</p>
+
+<hr  />
+<p>
+        csat |      Coef.   Std. Err.      t    P&gt;|t|     [95% Conf. Interval]
+-&#x2014;&#x2014;&#x2014;&#x2014;+-&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;
+      region |
+    N. East  |  -56.75214   23.13285    -2.45   0.018    -103.3161   -10.18813
+      South  |  -16.30769   19.91948    -0.82   0.417    -56.40353    23.78814
+    Midwest  |   63.77564   21.35592     2.99   0.005      20.7884    106.7629
+</p>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<tbody>
+<tr>
+</tr>
+</tbody>
+</table>
+<p>
+_cons |   946.3077   14.79582    63.96   0.000     916.5253    976.0901
+</p>
+<hr  />
+<p>
+#+end<sub>example</sub>
+</p>
 </div>
 
-<div id="outline-container-sec-4-5" class="outline-3">
-<h3 id="sec-4-5"><span class="section-number-3">4.5</span> Exercise 2: Regression, Categorical Predictors, &amp; Interactions</h3>
-<div class="outline-text-3" id="text-4-5">
+<div id="outline-container-sec-18-1" class="outline-3">
+<h3 id="sec-18-1"><span class="section-number-3">18.1</span> Exercise 2: Regression, Categorical Predictors, &amp; Interactions</h3>
+<div class="outline-text-3" id="text-18-1">
 <p>
 Open the datafile, states.dta.
 </p>
@@ -697,12 +1200,12 @@ Open the datafile, states.dta.
 </div>
 </div>
 
-<div id="outline-container-sec-5" class="outline-2">
-<h2 id="sec-5"><span class="section-number-2">5</span> Exporting and saving results</h2>
-<div class="outline-text-2" id="text-5">
-</div><div id="outline-container-sec-5-1" class="outline-3">
-<h3 id="sec-5-1"><span class="section-number-3">5.1</span> Saving and exporting regression tables</h3>
-<div class="outline-text-3" id="text-5-1">
+<div id="outline-container-sec-19" class="outline-2">
+<h2 id="sec-19"><span class="section-number-2">19</span> Exporting and saving results</h2>
+<div class="outline-text-2" id="text-19">
+</div><div id="outline-container-sec-19-1" class="outline-3">
+<h3 id="sec-19-1"><span class="section-number-3">19.1</span> Saving and exporting regression tables</h3>
+<div class="outline-text-3" id="text-19-1">
 <ul class="org-ul">
 <li>Usually when we're running regression, we'll be testing multiple models at a time
 </li>
@@ -720,12 +1223,112 @@ Open the datafile, states.dta.
 findit outreg2
 </pre>
 </div>
+
+<p>
+#+begin<sub>example</sub>
+</p>
 </div>
+</div>
+</div>
+<div id="outline-container-sec-20" class="outline-2">
+<h2 id="sec-20"><span class="section-number-2">20</span> install outreg2 package</h2>
+<div class="outline-text-2" id="text-20">
+<p>
+findit outreg2
+</p>
+
+<p>
+Search of official help files, FAQs, Examples, SJs, and STBs
+</p>
+<hr  />
+
+<p>
+Web resources from Stata and other users
+</p>
+<hr  />
+
+<p>
+(contacting <a href="http://www.stata.com">http://www.stata.com</a>)
+</p>
+
+<p>
+8 packages found (Stata Journal and STB listed first)
+</p>
+<hr  />
+
+<p>
+e_ from <a href="http://kk-adofiles.googlecode.com/hg">http://kk-adofiles.googlecode.com/hg</a>
+    e_. / Add mean of e(depvar) to ereturn after a regression / / By Keith
+    Kranker / $ / example: / . regress y x1 x2 / . e<sub>add</sub><sub>mean</sub><sub>y</sub> / . outreg2 /
+    Program by Keith Kranker
+</p>
+
+<p>
+corrtex from <a href="http://fmwww.bc.edu/RePEc/bocode/c">http://fmwww.bc.edu/RePEc/bocode/c</a>
+    'CORRTEX': module to generate correlation tables formatted in LaTeX /
+    corrtex produces a correlation table in LaTeX format.  This / command is
+    inspired by mktab and outreg/outreg2 commands, and / its code heavily
+    borrows from mkcorr and sutex commands.  This / command offers a number of
+</p>
+
+<p>
+mean2 from <a href="http://fmwww.bc.edu/RePEc/bocode/m">http://fmwww.bc.edu/RePEc/bocode/m</a>
+    'MEAN2': module to make a table of estimate means with subpopulation
+    differences / mean2 provides a fast and easy way to make a table of
+    estimate / means with subpopulation differences.  / KW: mean / KW: survey
+    / KW: lincom / KW: outreg2 / Requires: Stata version 9 /
+</p>
+
+<p>
+mfx2 from <a href="http://fmwww.bc.edu/RePEc/bocode/m">http://fmwww.bc.edu/RePEc/bocode/m</a>
+    'MFX2': module to enhance mfx command for obtaining marginal effects or
+    elasticities after estimation / mfx2 obtains marginal effects or
+    elasticities after estimation. / It is probably most useful after
+    multiple-outcome commands like / ologit, oprobit, gologit2, slogit,
+</p>
+
+<p>
+mkest from <a href="http://fmwww.bc.edu/RePEc/bocode/m">http://fmwww.bc.edu/RePEc/bocode/m</a>
+    'MKEST': module to convert variables to estimates matrix / mkest provides
+    a fast and easy way to convert variables into / estimates matrices e(b)
+    and e(V). mkest thus facilitates / exporting of variables into non-Stata
+    format through programs / such as est<sub>table</sub>, xml<sub>tab</sub>, or outreg2.  / KW:
+</p>
+
+<p>
+outreg2 from <a href="http://fmwww.bc.edu/RePEc/bocode/o">http://fmwww.bc.edu/RePEc/bocode/o</a>
+    'OUTREG2': module to arrange regression outputs into an illustrative table
+    / outreg2 provides a fast and easy way to produce an illustrative / table
+    of regression outputs. The regression outputs are produced / piecemeal and
+    are difficult to compare without some type of / rearrangement. outreg2
+</p>
+
+<p>
+regdis from <a href="http://fmwww.bc.edu/RePEc/bocode/r">http://fmwww.bc.edu/RePEc/bocode/r</a>
+    'REGDIS': module to control variables and decimals in regression displays
+    / regdis provides a fast and easy way to control variables and / decimals
+    in regression displays. In addition to setting the / number of decimals to
+    be displayed, regdis will also drop/keep / variables from the standard
+</p>
+
+<p>
+sum2 from <a href="http://fmwww.bc.edu/RePEc/bocode/s">http://fmwww.bc.edu/RePEc/bocode/s</a>
+    'SUM2': module to store summary statistics / sum2 provides a fast and easy
+    way to store summary statistics for / use with standard table-making
+    programs such as outreg, / outreg2, estimates<sub>table</sub>, xmltab, etc. sum2 was
+    motivated in part / by mfx2 and margeff that do the same thing for
+</p>
+
+
+<p>
+(end of search)
+#+end<sub>example</sub>
+</p>
 </div>
 
-<div id="outline-container-sec-5-2" class="outline-3">
-<h3 id="sec-5-2"><span class="section-number-3">5.2</span> Saving and replaying</h3>
-<div class="outline-text-3" id="text-5-2">
+<div id="outline-container-sec-20-1" class="outline-3">
+<h3 id="sec-20-1"><span class="section-number-3">20.1</span> Saving and replaying</h3>
+<div class="outline-text-3" id="text-20-1">
 <ul class="org-ul">
 <li>You can store regression model results in Stata
 </li>
@@ -740,12 +1343,98 @@ regress csat expense income percent high i.region
 estimates store Model2
 </pre>
 </div>
+
+<p>
+#+begin<sub>example</sub>
+</p>
 </div>
+</div>
+</div>
+<div id="outline-container-sec-21" class="outline-2">
+<h2 id="sec-21"><span class="section-number-2">21</span> fit two regression models and store the results</h2>
+<div class="outline-text-2" id="text-21">
+<p>
+regress csat expense income percent high
+</p>
+
+<p>
+      Source |       SS       df       MS              Number of obs =      51
+-&#x2014;&#x2014;&#x2014;&#x2014;+&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;           F(  4,    46) =   51.86
+       Model |  183354.603     4  45838.6508           Prob &gt; F      =  0.0000
+    Residual |  40659.9067    46  883.911016           R-squared     =  0.8185
+-&#x2014;&#x2014;&#x2014;&#x2014;+&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;           Adj R-squared =  0.8027
+       Total |   224014.51    50   4480.2902           Root MSE      =  29.731
+</p>
+
+<hr  />
+<p>
+        csat |      Coef.   Std. Err.      t    P&gt;|t|     [95% Conf. Interval]
+-&#x2014;&#x2014;&#x2014;&#x2014;+-&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;
+     expense |   .0045604    .004384     1.04   0.304    -.0042641     .013385
+      income |   .4437858   1.138947     0.39   0.699    -1.848795    2.736367
+     percent |  -2.533084   .2454477   -10.32   0.000    -3.027145   -2.039024
+        high |   2.086599   .9246023     2.26   0.029     .2254712    3.947727
+       _cons |   836.6197   58.33238    14.34   0.000     719.2027    954.0366
+</p>
+<hr  />
+<p>
+estimates store Model1
+regress csat expense income percent high i.region
+</p>
+
+<p>
+      Source |       SS       df       MS              Number of obs =      50
+-&#x2014;&#x2014;&#x2014;&#x2014;+&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;           F(  7,    42) =   51.07
+       Model |  190570.293     7  27224.3275           Prob &gt; F      =  0.0000
+    Residual |  22391.0874    42  533.121128           R-squared     =  0.8949
+-&#x2014;&#x2014;&#x2014;&#x2014;+&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;           Adj R-squared =  0.8773
+       Total |   212961.38    49  4346.15061           Root MSE      =  23.089
+</p>
+
+<hr  />
+<p>
+        csat |      Coef.   Std. Err.      t    P&gt;|t|     [95% Conf. Interval]
+-&#x2014;&#x2014;&#x2014;&#x2014;+-&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;
+     expense |   -.004375   .0044603    -0.98   0.332    -.0133763    .0046263
+      income |   1.306164    .950279     1.37   0.177    -.6115765    3.223905
+     percent |  -2.965514   .2496481   -11.88   0.000    -3.469325   -2.461704
+        high |   3.544804   1.075863     3.29   0.002     1.373625    5.715983
+</p>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<tbody>
+<tr>
+</tr>
+</tbody>
+</table>
+<p>
+  region |
+N. East  |   80.81334    15.4341     5.24   0.000     49.66607    111.9606
+  South  |   33.61225   13.94521     2.41   0.020     5.469676    61.75483
+Midwest  |   32.15421   10.20145     3.15   0.003     11.56686    52.74157
+</p>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<tbody>
+<tr>
+</tr>
+</tbody>
+</table>
+<p>
+_cons |   724.8289   79.25065     9.15   0.000     564.8946    884.7631
+</p>
+<hr  />
+<p>
+estimates store Model2
+#+end<sub>example</sub>
+</p>
 </div>
 
-<div id="outline-container-sec-5-3" class="outline-3">
-<h3 id="sec-5-3"><span class="section-number-3">5.3</span> Saving and replaying</h3>
-<div class="outline-text-3" id="text-5-3">
+<div id="outline-container-sec-21-1" class="outline-3">
+<h3 id="sec-21-1"><span class="section-number-3">21.1</span> Saving and replaying</h3>
+<div class="outline-text-3" id="text-21-1">
 <ul class="org-ul">
 <li>Stored models can be recalled
 </li>
@@ -757,12 +1446,63 @@ estimates store Model2
 estimates replay Model1
 </pre>
 </div>
+
+<p>
+#+begin<sub>example</sub>
+</p>
 </div>
+</div>
+</div>
+<div id="outline-container-sec-22" class="outline-2">
+<h2 id="sec-22"><span class="section-number-2">22</span> Compare Model1 and Model2 coefficients</h2>
+<div class="outline-text-2" id="text-22">
+<p>
+estimates table Model1 Model2
+</p>
+
+<hr  />
+<p>
+    Variable |   Model1       Model2    
+-&#x2014;&#x2014;&#x2014;&#x2014;+&#x2013;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;&#x2014;
+     expense |  .00456044   -.00437502  
+      income |  .44378583    1.3061642  
+     percent | -2.5330843   -2.9655142  
+        high |  2.0865991    3.5448038  
+</p>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<tbody>
+<tr>
+</tr>
+</tbody>
+</table>
+<p>
+  region |
+N. East  |               80.813342  
+  South  |               33.612251  
+Midwest  |               32.154215  
+</p>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<tbody>
+<tr>
+</tr>
+</tbody>
+</table>
+<p>
+_cons |  836.61966    724.82886  
+</p>
+<hr  />
+<p>
+#+end<sub>example</sub>
+</p>
 </div>
 
-<div id="outline-container-sec-5-4" class="outline-3">
-<h3 id="sec-5-4"><span class="section-number-3">5.4</span> Saving and replaying</h3>
-<div class="outline-text-3" id="text-5-4">
+<div id="outline-container-sec-22-1" class="outline-3">
+<h3 id="sec-22-1"><span class="section-number-3">22.1</span> Saving and replaying</h3>
+<div class="outline-text-3" id="text-22-1">
 <ul class="org-ul">
 <li>Stored models can be compared
 </li>
@@ -777,9 +1517,9 @@ estimates <span style="color: #D0372D;">table</span> Model1 Model2
 </div>
 </div>
 
-<div id="outline-container-sec-5-5" class="outline-3">
-<h3 id="sec-5-5"><span class="section-number-3">5.5</span> Exporting into Excel</h3>
-<div class="outline-text-3" id="text-5-5">
+<div id="outline-container-sec-22-2" class="outline-3">
+<h3 id="sec-22-2"><span class="section-number-3">22.2</span> Exporting into Excel</h3>
+<div class="outline-text-3" id="text-22-2">
 <ul class="org-ul">
 <li>Avoid human error when transferring coefficients into tables
 </li>
@@ -792,16 +1532,22 @@ estimates <span style="color: #D0372D;">table</span> Model1 Model2
 <pre class="src src-stata" id="outregdemo">outreg2 [Model1 Model2] <span style="color: #D0372D;">using</span> csatprediction.xls, <span style="color: #0000FF;">replace</span>
 </pre>
 </div>
+
+<pre class="example">
+outreg2 [Model1 Model2] using csatprediction.xls, replace
+unrecognized command:  outreg2
+r(199);
+</pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-sec-6" class="outline-2">
-<h2 id="sec-6"><span class="section-number-2">6</span> Wrap-up</h2>
-<div class="outline-text-2" id="text-6">
-</div><div id="outline-container-sec-6-1" class="outline-3">
-<h3 id="sec-6-1"><span class="section-number-3">6.1</span> Help Us Make This Workshop Better</h3>
-<div class="outline-text-3" id="text-6-1">
+<div id="outline-container-sec-23" class="outline-2">
+<h2 id="sec-23"><span class="section-number-2">23</span> Wrap-up</h2>
+<div class="outline-text-2" id="text-23">
+</div><div id="outline-container-sec-23-1" class="outline-3">
+<h3 id="sec-23-1"><span class="section-number-3">23.1</span> Help Us Make This Workshop Better</h3>
+<div class="outline-text-3" id="text-23-1">
 <ul class="org-ul">
 <li>Please take a moment to fill out a very short feedback form
 </li>
@@ -813,9 +1559,9 @@ estimates <span style="color: #D0372D;">table</span> Model1 Model2
 </div>
 </div>
 
-<div id="outline-container-sec-6-2" class="outline-3">
-<h3 id="sec-6-2"><span class="section-number-3">6.2</span> Additional resources</h3>
-<div class="outline-text-3" id="text-6-2">
+<div id="outline-container-sec-23-2" class="outline-3">
+<h3 id="sec-23-2"><span class="section-number-3">23.2</span> Additional resources</h3>
+<div class="outline-text-3" id="text-23-2">
 <ul class="org-ul">
 <li>training and consulting
 <ul class="org-ul">
@@ -846,7 +1592,7 @@ estimates <span style="color: #D0372D;">table</span> Model1 Model2
 </div>
 </div>
 <div id="postamble" class="status">
-<p class="date">Created: 2014-10-23 Thu 23:19</p>
+<p class="date">Created: 2015-01-30 Fri 11:54</p>
 <p class="creator"><a href="http://www.gnu.org/software/emacs/">Emacs</a> 24.4.1 (<a href="http://orgmode.org">Org</a> mode 8.2.10)</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
