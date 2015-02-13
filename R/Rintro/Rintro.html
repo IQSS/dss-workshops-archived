@@ -4,7 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
 <title>Introduction to R</title>
-<!-- 2015-01-08 Thu 17:13 -->
+<!-- 2015-02-12 Thu 23:10 -->
 <meta  http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta  name="generator" content="Org-mode" />
 <meta  name="author" content="Ista Zahn" />
@@ -156,8 +156,9 @@ for the JavaScript code in this tag.
 <ul>
 <li><a href="#sec-1-1">1.1. Materials and setup</a>
 <ul>
-<li><a href="#sec-1-1-1">1.1.1. Laptop users: You should have R installed &#x2013;if not:</a></li>
-<li><a href="#sec-1-1-2">1.1.2. Everyone: Download workshop materials:</a></li>
+<li><a href="#sec-1-1-1">1.1.1. Lab computer users: Log in using your Athena user name and password.&#xa0;&#xa0;&#xa0;<span class="tag"><span class="mitsetup">mitsetup</span></span></a></li>
+<li><a href="#sec-1-1-2">1.1.2. Laptop users: You should have R installed &#x2013;if not:</a></li>
+<li><a href="#sec-1-1-3">1.1.3. Everyone: Download workshop materials:</a></li>
 </ul>
 </li>
 <li><a href="#sec-1-2">1.2. What is R?</a></li>
@@ -171,8 +172,9 @@ for the JavaScript code in this tag.
 <li><a href="#sec-2-2">2.2. R GUI alternatives (Windows default)</a></li>
 <li><a href="#sec-2-3">2.3. R GUI Alternatives (Rstudio on Mac)</a></li>
 <li><a href="#sec-2-4">2.4. R GUI Alternatives (Emacs with ESS)</a></li>
-<li><a href="#sec-2-5">2.5. Things to keep in mind</a></li>
-<li><a href="#sec-2-6">2.6. Exercise 0</a></li>
+<li><a href="#sec-2-5">2.5. Launch RStudio on Athena&#xa0;&#xa0;&#xa0;<span class="tag"><span class="mitsetup">mitsetup</span></span></a></li>
+<li><a href="#sec-2-6">2.6. Things to keep in mind</a></li>
+<li><a href="#sec-2-7">2.7. Exercise 0</a></li>
 </ul>
 </li>
 <li><a href="#sec-3">3. Data and Functions</a>
@@ -247,17 +249,21 @@ for the JavaScript code in this tag.
 <h3 id="sec-1-1"><span class="section-number-3">1.1</span> Materials and setup</h3>
 <div class="outline-text-3" id="text-1-1">
 </div><div id="outline-container-sec-1-1-1" class="outline-4">
-<h4 id="sec-1-1-1"><span class="section-number-4">1.1.1</span> Laptop users: You should have R installed &#x2013;if not:</h4>
-<div class="outline-text-4" id="text-1-1-1">
-</div><ol class="org-ol"><li><a id="sec-1-1-1-1" name="sec-1-1-1-1"></a>Open a web browser and go to <a href="http://cran.r-project.org">http://cran.r-project.org</a> and download and install it<br  /></li>
-<li><a id="sec-1-1-1-2" name="sec-1-1-1-2"></a>Also helpful to install RStudio (download from <a href="http://rstudio.com">http://rstudio.com</a>)<br  /></li></ol>
+<h4 id="sec-1-1-1"><span class="section-number-4">1.1.1</span> Lab computer users: Log in using your Athena user name and password.&#xa0;&#xa0;&#xa0;<span class="tag"><span class="mitsetup">mitsetup</span></span></h4>
 </div>
 
 <div id="outline-container-sec-1-1-2" class="outline-4">
-<h4 id="sec-1-1-2"><span class="section-number-4">1.1.2</span> Everyone: Download workshop materials:</h4>
+<h4 id="sec-1-1-2"><span class="section-number-4">1.1.2</span> Laptop users: You should have R installed &#x2013;if not:</h4>
 <div class="outline-text-4" id="text-1-1-2">
-</div><ol class="org-ol"><li><a id="sec-1-1-2-1" name="sec-1-1-2-1"></a>Download materials from <a href="http://tutorials.iq.harvard.edu/R/Rintro.zip">http://tutorials.iq.harvard.edu/R/Rintro.zip</a><br  /></li>
-<li><a id="sec-1-1-2-2" name="sec-1-1-2-2"></a>Extract the zip file containing the materials to your desktop<br  /></li></ol>
+</div><ol class="org-ol"><li><a id="sec-1-1-2-1" name="sec-1-1-2-1"></a>Open a web browser and go to <a href="http://cran.r-project.org">http://cran.r-project.org</a> and download and install it<br  /></li>
+<li><a id="sec-1-1-2-2" name="sec-1-1-2-2"></a>Also helpful to install RStudio (download from <a href="http://rstudio.com">http://rstudio.com</a>)<br  /></li></ol>
+</div>
+
+<div id="outline-container-sec-1-1-3" class="outline-4">
+<h4 id="sec-1-1-3"><span class="section-number-4">1.1.3</span> Everyone: Download workshop materials:</h4>
+<div class="outline-text-4" id="text-1-1-3">
+</div><ol class="org-ol"><li><a id="sec-1-1-3-1" name="sec-1-1-3-1"></a>Download materials from <a href="http://tutorials.iq.harvard.edu/R/Rintro.zip">http://tutorials.iq.harvard.edu/R/Rintro.zip</a><br  /></li>
+<li><a id="sec-1-1-3-2" name="sec-1-1-3-2"></a>Extract the zip file containing the materials to your desktop<br  /></li></ol>
 </div>
 </div>
 
@@ -490,8 +496,41 @@ Emacs + ESS is a very powerful combination, but can be difficult to set up
 
 
 <div id="outline-container-sec-2-5" class="outline-3">
-<h3 id="sec-2-5"><span class="section-number-3">2.5</span> Things to keep in mind</h3>
+<h3 id="sec-2-5"><span class="section-number-3">2.5</span> Launch RStudio on Athena&#xa0;&#xa0;&#xa0;<span class="tag"><span class="mitsetup">mitsetup</span></span></h3>
 <div class="outline-text-3" id="text-2-5">
+<ul class="org-ul">
+<li>To start R <b>type these commands in the terminal</b>:
+</li>
+</ul>
+<pre class="example">
+add r
+rstudio
+</pre>
+<ul class="org-ul">
+<li>Open up today's R script
+
+<ul class="org-ul">
+<li>In RStudio, Go to <b>File =&gt; Open Script</b>
+</li>
+
+<li>Locate and open the <code>Rintro.R</code> script in the Rintro folder in your home directory
+</li>
+</ul>
+</li>
+
+<li>Go to <b>Tools =&gt; Set working directory =&gt; To source file location</b> (more on the working directory later)
+</li>
+
+<li>I encourage you to add your own notes to this file!
+</li>
+</ul>
+</div>
+</div>
+
+
+<div id="outline-container-sec-2-6" class="outline-3">
+<h3 id="sec-2-6"><span class="section-number-3">2.6</span> Things to keep in mind</h3>
+<div class="outline-text-3" id="text-2-6">
 <ul class="org-ul">
 <li>Case sensitive, like Stata (unlike SAS)
 </li>
@@ -524,9 +563,9 @@ Emacs + ESS is a very powerful combination, but can be difficult to set up
 </div>
 
 
-<div id="outline-container-sec-2-6" class="outline-3">
-<h3 id="sec-2-6"><span class="section-number-3">2.6</span> Exercise 0</h3>
-<div class="outline-text-3" id="text-2-6">
+<div id="outline-container-sec-2-7" class="outline-3">
+<h3 id="sec-2-7"><span class="section-number-3">2.7</span> Exercise 0</h3>
+<div class="outline-text-3" id="text-2-7">
 <ol class="org-ol">
 <li>Try to get R to add 2 plus 2.
 </li>
@@ -1999,7 +2038,7 @@ by(datGSS$incomdol, datGSS$sex, sd)
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Ista Zahn</p>
-<p class="date">Created: 2015-01-08 Thu 17:13</p>
+<p class="date">Created: 2015-02-12 Thu 23:10</p>
 <p class="creator"><a href="http://www.gnu.org/software/emacs/">Emacs</a> 24.4.1 (<a href="http://orgmode.org">Org</a> mode 8.2.10)</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
