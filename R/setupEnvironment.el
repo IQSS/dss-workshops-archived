@@ -1,11 +1,15 @@
 ;; make R save and restore instead of using sessions; this gives the input and output as displayed by the R console
-(set (make-local-variable 'org-babel-R-command) "R --silent --save --restore")
+(setq-local org-babel-R-command "R --silent --save --restore")
 
 ;; don't let orgmode resize images (this means you must set them to the correct size when generating!)
-(set (make-local-variable 'org-latex-image-default-option) "")
+(setq-local org-latex-image-default-option "")
+
+;; add next button at the bottom of the page
+(setq-local org-confirm-babel-evaluate nil)
+(setq-local org-html-postamble "<p><button onclick=\"clickNextTab()\">Next</button></p>")
 
 ;; present all output in blocks
-(set (make-local-variable 'org-babel-min-lines-for-block-output) 0)
+(setq-local org-babel-min-lines-for-block-output 0)
 
 ;; do not re-evaluate source code on export
 (set (make-local-variable 'org-export-babel-evaluate) nil)
