@@ -4,7 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
 <title>Introduction to R</title>
-<!-- 2015-04-17 Fri 08:56 -->
+<!-- 2015-04-17 Fri 17:14 -->
 <meta  http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta  name="generator" content="Org-mode" />
 <meta  name="author" content="Ista Zahn" />
@@ -203,12 +203,10 @@ for the JavaScript code in this tag.
 <li><a href="#sec-6">6. Data Manipulation</a>
 <ul>
 <li><a href="#sec-6-1">6.1. data.frame objects</a></li>
-<li><a href="#sec-6-2">6.2. data.frame meta-data</a></li>
-<li><a href="#sec-6-3">6.3. Logical operators</a></li>
-<li><a href="#sec-6-4">6.4. Extracting subsets of data.frames</a></li>
-<li><a href="#sec-6-5">6.5. Transforming data.frames</a></li>
-<li><a href="#sec-6-6">6.6. Exporting Data</a></li>
-<li><a href="#sec-6-7">6.7. Exercise 2: Data manipulation</a></li>
+<li><a href="#sec-6-2">6.2. Extracting subsets of data.frames</a></li>
+<li><a href="#sec-6-3">6.3. Transforming data.frames</a></li>
+<li><a href="#sec-6-4">6.4. Exporting Data</a></li>
+<li><a href="#sec-6-5">6.5. Exercise 2: Data manipulation</a></li>
 </ul>
 </li>
 <li><a href="#sec-7">7. Basic Statistics and Graphs</a>
@@ -603,7 +601,7 @@ Values can be assigned names and used in subsequent operations
 
 <div class="org-src-container">
 
-<pre class="src src-R" id="firstRExample">x <span style="color: #D0372D;">&lt;-</span> <span style="color: #6434A3;">11</span> <span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">Assign the value 10 to a variable named x</span>
+<pre class="src src-R" id="firstRExample">x <span style="color: #D0372D;">&lt;-</span> <span style="color: #6434A3;">10</span> <span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">Assign the value 10 to a variable named x</span>
 x <span style="color: #D0372D;">+</span> <span style="color: #6434A3;">1</span> <span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">Add 1 to x</span>
 y <span style="color: #D0372D;">&lt;-</span> x <span style="color: #D0372D;">+</span> <span style="color: #6434A3;">1</span> <span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">Assign y the value x + 1</span>
 y
@@ -611,12 +609,12 @@ y
 </div>
 
 <pre class="example">
-&gt; x &lt;- 11 # Assign the value 10 to a variable named x
+&gt; x &lt;- 10 # Assign the value 10 to a variable named x
 &gt; x + 1 # Add 1 to x
-[1] 12
+[1] 11
 &gt; y &lt;- x + 1 # Assign y the value x + 1
 &gt; y
-[1] 12
+[1] 11
 &gt;
 </pre>
 
@@ -637,15 +635,15 @@ x
 
 <pre class="example">
 &gt; ls() # List variables in workspace
-[1] "x" "y"
+[1] "comet"      "fit"        "nwbuilding" "x"          "y"         
 &gt; x # Print the value of x
-[1] 11
+[1] 10
 &gt; x &lt;- 100 # Overwrite x. Note that no warning is given!
 &gt; x
 [1] 100
 &gt; rm(x) # Delete x
 &gt; ls()
-[1] "y"
+[1] "comet"      "fit"        "nwbuilding" "y"         
 &gt;
 </pre>
 </div>
@@ -699,10 +697,10 @@ a <span style="color: #D0372D;">&lt;-</span> <span style="color: #006699;">sqrt<
 &gt; #?sqrt
 &gt; a &lt;- sqrt(y) # Call the sqrt function with argument x=y
 &gt; round(a, digits = 2) # Call round() with arguments x=x and digits=2
-[1] 3.46
+[1] 3.32
 &gt; # Functions can be nested so an alternative is
 &gt; round(sqrt(y), digits = 5) # Take sqrt of a and round
-[1] 3.4641
+[1] 3.31662
 &gt;
 </pre>
 </div>
@@ -891,10 +889,8 @@ It can be convenient to list files in a directory without leaving R
 
 <pre class="example">
 &gt; list.files("dataSets") # list files in the dataSets folder
- [1] "gss.csv"            "gss.dta"            "gssInfo.csv"       
- [4] "gss.rds"            "gss.sas7bdat"       "gss.sav"           
- [7] "gss.xlsx"           "statesCodebook.txt" "states.csv"        
-[10] "states.dta"         "states.xlsx"       
+[1] "gss.csv"      "gss.dta"      "gssInfo.csv"  "gss.rds"     
+[5] "gss.sas7bdat" "gss.sav"      "gss.xlsx"    
 &gt; # list.files("dataSets", pattern = ".csv") # restrict to .csv files  
 &gt;
 </pre>
@@ -1051,7 +1047,8 @@ In addition to importing individual datasets, R can save and load entire workspa
 
 <pre class="example">
 &gt; ls() # list objects in our workspace
-[1] "a"        "datGSS"   "gss.data" "y"       
+[1] "a"          "comet"      "datGSS"     "fit"        "gss.data"  
+[6] "nwbuilding" "y"         
 &gt; save.image(file="myWorkspace.RData") # save workspace 
 &gt; rm(list=ls()) # remove all objects from our workspace 
 &gt; ls() # list stored objects to make sure they are deleted
@@ -1074,7 +1071,8 @@ character(0)
 <pre class="example">
 &gt; load("myWorkspace.RData") # load myWorkspace.RData
 &gt; ls() # list objects
-[1] "a"        "datGSS"   "gss.data" "y"       
+[1] "a"          "comet"      "datGSS"     "fit"        "gss.data"  
+[6] "nwbuilding" "y"         
 &gt;
 </pre>
 
@@ -1139,47 +1137,80 @@ When you close R you will be asked if you want to save your workspace &#x2013; i
 </div>
 </div>
 
+
 <div id="outline-container-sec-6-2" class="outline-3">
-<h3 id="sec-6-2"><span class="section-number-3">6.2</span> data.frame meta-data</h3>
+<h3 id="sec-6-2"><span class="section-number-3">6.2</span> Extracting subsets of data.frames</h3>
 <div class="outline-text-3" id="text-6-2">
 <p>
-A number of functions are available for inspecting data.frame objects:
+You can extract subsets of data.frames using the <code>subset()</code> function<sup><a id="fnr.1" name="fnr.1" class="footref" href="#fn.1">1</a></sup>. Use the <code>select</code> argument to select columns:
 </p>
-
 <div class="org-src-container">
 
-<pre class="src src-R" id="getAttributes"><span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">row and column names</span>
-<span style="color: #006699;">head</span><span style="color: #006FE0;">(</span><span style="color: #006699;">names</span><span style="color: #006FE0;">(</span>datGSS<span style="color: #006FE0;">))</span> <span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">variable names in datGSS</span>
-<span style="color: #006699;">head</span><span style="color: #006FE0;">(</span><span style="color: #006699;">rownames</span><span style="color: #006FE0;">(</span>datGSS<span style="color: #006FE0;">))</span> <span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">first few rownames of datGSS</span>
-<span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">dimensions</span>
-<span style="color: #006699;">dim</span><span style="color: #006FE0;">(</span>datGSS<span style="color: #006FE0;">)</span>
-<span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">structure</span>
-<span style="color: #8D8D84;">#</span><span style="color: #8D8D84; font-style: italic;">str(datGSS) # get structure</span>
+<pre class="src src-R" id="indexingDataFrame"><span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">selecting specifig columns</span>
+<span style="color: #006699;">head</span><span style="color: #006FE0;">(</span><span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">first n rows</span>
+     <span style="color: #006699;">subset</span><span style="color: #006FE0;">(</span>datGSS,            
+            select <span style="color: #D0372D;">=</span> <span style="color: #6434A3;">1</span>:<span style="color: #6434A3;">4</span> <span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">column 1 to 5</span>
+            <span style="color: #006FE0;">)</span>,
+     n <span style="color: #D0372D;">=</span> <span style="color: #6434A3;">10</span><span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">show first 10 rows</span>
+     <span style="color: #006FE0;">)</span>
+</pre>
+</div>
+<p>
+and the <code>subset</code> argument to select rows:
+</p>
+<div class="org-src-container">
+
+<pre class="src src-R"><span style="color: #006699;">subset</span><span style="color: #006FE0;">(</span>datGSS,
+       <span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">rows where age &gt; 90</span>
+       subset <span style="color: #D0372D;">=</span> age <span style="color: #D0372D;">&gt;</span> <span style="color: #6434A3;">90</span>,
+       <span style="color: #8D8D84;">## </span><span style="color: #8D8D84; font-style: italic;">sex and age columns</span>
+       select <span style="color: #D0372D;">=</span> <span style="color: #006699;">c</span><span style="color: #006FE0;">(</span><span style="color: #008000;">"sex"</span>, <span style="color: #008000;">"age"</span><span style="color: #006FE0;">))</span>
+
+<span style="color: #8D8D84;">## </span><span style="color: #8D8D84; font-style: italic;">the $ operator can be used to extract a single column</span>
+<span style="color: #006699;">str</span><span style="color: #006FE0;">(</span>datGSS$age<span style="color: #006FE0;">)</span>
 </pre>
 </div>
 
 <pre class="example">
-&gt; # row and column names
-&gt; head(names(datGSS)) # variable names in datGSS
-[1] "age"      "educ"     "emailhrs" "hrs1"     "sex"      "usecomp" 
-&gt; head(rownames(datGSS)) # first few rownames of datGSS
-[1] "1" "2" "3" "4" "5" "6"
-&gt; # dimensions
-&gt; dim(datGSS)
-[1] 1419   35
-&gt; # structure
-&gt; #str(datGSS) # get structure
+&gt; subset(datGSS,
++        # rows where age &gt; 90
++        subset = age &gt; 90,
++        ## sex and age columns
++        select = c("sex", "age"))
+       sex age
+315 Female  99
+665   Male  99
+&gt; 
+&gt; ## the $ operator can be used to extract a single column
+&gt; str(datGSS$age)
+ num [1:1419] 69 27 19 21 19 87 42 19 78 70 ...
 &gt;
 </pre>
-</div>
-</div>
 
+<pre class="example">
+&gt; # selecting specifig columns
+&gt; head(# first n rows
++      subset(datGSS,            
++             select = 1:4 # column 1 to 5
++             ),
++      n = 10# show first 10 rows
++      )
+   age educ emailhrs hrs1
+1   69   12       -1   -1
+2   27   10       -1   60
+3   19   11        0   32
+4   21    9       -1   20
+5   19   11       50   -1
+6   87    8       -1   -1
+7   42   11        3   -1
+8   19   11       -1   -1
+9   78    7       -1   -1
+10  70    9       -1   22
+&gt;
+</pre>
 
-<div id="outline-container-sec-6-3" class="outline-3">
-<h3 id="sec-6-3"><span class="section-number-3">6.3</span> Logical operators</h3>
-<div class="outline-text-3" id="text-6-3">
 <p>
-It is often useful to select just those rows of your data where some condition holds&#x2013;for example select only rows where sex is 1 (male). The following operators allow you to do this:
+In the previous example we used <code>&gt;</code> to select rows where age was greater than 90. Other relational and logical operators are listed below.
 </p>
 
 <dl class="org-dl">
@@ -1200,77 +1231,12 @@ It is often useful to select just those rows of your data where some condition h
 <dt> | </dt><dd>or
 </dd>
 </dl>
-
-<p>
-Note the double equals signs for testing equality. The following example show how to use some of these operators to extract and replace elements matching specific conditions.
-</p>
 </div>
 </div>
 
-
-<div id="outline-container-sec-6-4" class="outline-3">
-<h3 id="sec-6-4"><span class="section-number-3">6.4</span> Extracting subsets of data.frames</h3>
-<div class="outline-text-3" id="text-6-4">
-<p>
-You can extract subsets of data.frames using the <code>subset()</code> function.
-</p>
-
-<div class="org-src-container">
-
-<pre class="src src-R" id="indexingDataFrame"><span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">extracting subsets</span>
-<span style="color: #006699;">subset</span><span style="color: #006FE0;">(</span>datGSS,
-       <span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">rows 1 through 3</span>
-       subset <span style="color: #D0372D;">=</span> <span style="color: #006699;">rownames</span><span style="color: #006FE0;">(</span>datGSS<span style="color: #006FE0;">)</span> <span style="color: #D0372D;">%</span><span style="color: #0000FF;">in</span><span style="color: #D0372D;">%</span> <span style="color: #6434A3;">1</span>:<span style="color: #6434A3;">3</span>,
-       <span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">column 1 to 5</span>
-       select <span style="color: #D0372D;">=</span> <span style="color: #6434A3;">1</span>:<span style="color: #6434A3;">4</span><span style="color: #006FE0;">)</span>
-
-<span style="color: #006699;">subset</span><span style="color: #006FE0;">(</span>datGSS,
-       <span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">rows where age &gt; 90</span>
-       subset <span style="color: #D0372D;">=</span> age <span style="color: #D0372D;">&gt;</span> <span style="color: #6434A3;">90</span>,
-       <span style="color: #8D8D84;">## </span><span style="color: #8D8D84; font-style: italic;">sex and age columns</span>
-       select <span style="color: #D0372D;">=</span> <span style="color: #006699;">c</span><span style="color: #006FE0;">(</span><span style="color: #008000;">"sex"</span>, <span style="color: #008000;">"age"</span><span style="color: #006FE0;">))</span>
-
-<span style="color: #8D8D84;">## </span><span style="color: #8D8D84; font-style: italic;">the $ operator can be used to extract a single column</span>
-<span style="color: #006699;">str</span><span style="color: #006FE0;">(</span>datGSS$age<span style="color: #006FE0;">)</span>
-</pre>
-</div>
-
-<pre class="example">
-&gt; # extracting subsets
-&gt; subset(datGSS,
-+        # rows 1 through 3
-+        subset = rownames(datGSS) %in% 1:3,
-+        # column 1 to 5
-+        select = 1:4)
-  age educ emailhrs hrs1
-1  69   12       -1   -1
-2  27   10       -1   60
-3  19   11        0   32
-&gt;                                         
-&gt; subset(datGSS,
-+        # rows where age &gt; 90
-+        subset = age &gt; 90,
-+        ## sex and age columns
-+        select = c("sex", "age"))
-       sex age
-315 Female  99
-665   Male  99
-&gt; 
-&gt; ## the $ operator can be used to extract a single column
-&gt; str(datGSS$age)
- num [1:1419] 69 27 19 21 19 87 42 19 78 70 ...
-&gt;
-</pre>
-
-<p>
-Note that <code>subset()</code> is a convenience function; see <code>?Extract</code> for a more powerful (and complicated) way to subset data.
-</p>
-</div>
-</div>
-
-<div id="outline-container-sec-6-5" class="outline-3">
-<h3 id="sec-6-5"><span class="section-number-3">6.5</span> Transforming data.frames</h3>
-<div class="outline-text-3" id="text-6-5">
+<div id="outline-container-sec-6-3" class="outline-3">
+<h3 id="sec-6-3"><span class="section-number-3">6.3</span> Transforming data.frames</h3>
+<div class="outline-text-3" id="text-6-3">
 <p>
 You can modify data.frames using the <code>transform()</code> function. 
 </p>
@@ -1333,9 +1299,9 @@ Note that <code>transform</code> is a convenience function; see <code>?Extract</
 </div>
 </div>
 
-<div id="outline-container-sec-6-6" class="outline-3">
-<h3 id="sec-6-6"><span class="section-number-3">6.6</span> Exporting Data</h3>
-<div class="outline-text-3" id="text-6-6">
+<div id="outline-container-sec-6-4" class="outline-3">
+<h3 id="sec-6-4"><span class="section-number-3">6.4</span> Exporting Data</h3>
+<div class="outline-text-3" id="text-6-4">
 <p>
 Now that we have made some changes to our GSS data set, we might want to save those changes to a file. Everything we have done so far has only modified the data in R; the files have remained unchanged. 
 </p>
@@ -1364,9 +1330,9 @@ Now that we have made some changes to our GSS data set, we might want to save th
 </div>
 
 
-<div id="outline-container-sec-6-7" class="outline-3">
-<h3 id="sec-6-7"><span class="section-number-3">6.7</span> Exercise 2: Data manipulation</h3>
-<div class="outline-text-3" id="text-6-7">
+<div id="outline-container-sec-6-5" class="outline-3">
+<h3 id="sec-6-5"><span class="section-number-3">6.5</span> Exercise 2: Data manipulation</h3>
+<div class="outline-text-3" id="text-6-5">
 <p>
 Use the gss.rds data set
 </p>
@@ -2039,7 +2005,17 @@ Using the datGSS data.frame
 </div>
 </div>
 </div>
+<div id="footnotes">
+<h2 class="footnotes">Footnotes: </h2>
+<div id="text-footnotes">
+
+<div class="footdef"><sup><a id="fn.1" name="fn.1" class="footnum" href="#fnr.1">1</a></sup> <p class="footpara">
+Note that <code>subset()</code> is a convenience function; see <code>?Extract</code> for a more powerful (and complicated) way to subset data.
+</p></div>
+
+
 </div>
+</div></div>
 <div id="postamble" class="status">
 <p><button onclick="clickNextTab()">Next</button></p>
 <p><a rel='license' href='http://creativecommons.org/licenses/by-sa/4.0/'><img alt='Creative Commons License' style='border-width:0' src='https://i.creativecommons.org/l/by-sa/4.0/80x15.png' /></a><br /><span xmlns:dct='http://purl.org/dc/terms/' property='dct:title'>These IQSS statistical software workshop materials</span> by <a xmlns:cc='http://creativecommons.org/ns#' href='http://rtc.iq.harvard.edu' property='cc:attributionName' rel='cc:attributionURL'>Harvard University</a> are licensed under a <a rel='license' href='http://creativecommons.org/licenses/by-sa/4.0/'>Creative Commons Attribution-ShareAlike 4.0 International License</a>.</p>

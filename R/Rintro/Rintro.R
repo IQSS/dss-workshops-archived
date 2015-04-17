@@ -20,51 +20,50 @@
 ## 1 Workshop Materials and Introduction
 ## ═════════════════════════════════════
 
-## 1.1 Materials and setup
+## 1.1 License
+## ───────────
+
+##   These IQSS Statistical Software Workshop materials are licensed by Harvard
+##   University under a Creative Commons Attribution-ShareAlike 4.0 International License.
+##   See http://creativecommons.org/licenses/by-sa/4.0/ for details.
+  
+## 1.2 Materials and setup
 ## ───────────────────────
 
-## 1.1.1 Laptop users: You should have R installed –if not:
+## 1.2.1 Lab computer users: Log in using the user name and password on the board to your left.
+## ╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌
+
+## 1.2.2 Laptop users: You should have R installed –if not:
 ## ╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌
+##   Open a web browser and go to http://cran.r-project.org and download and install it
+##   Also helpful to install RStudio (download from http://rstudio.com),
 
-## ◊ 1.1.1.1 Open a web browser and go to [http://cran.r-project.org] and download and install it
-
-## ◊ 1.1.1.2 Also helpful to install RStudio (download from [http://rstudio.com])
-
-## 1.1.2 Everyone: Download workshop materials:
+## 1.2.3 Everyone: Download workshop materials:
 ## ╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌
+##   Download materials from [http://tutorials.iq.harvard.edu/R/Rintro.zip] and
+##   extract the zip file containing the materials to your desktop.
 
-## ◊ 1.1.2.1 Download materials from [http://tutorials.iq.harvard.edu/R/Rintro.zip]
-
-## ◊ 1.1.2.2 Extract the zip file containing the materials to your desktop
-
-## 1.2 What is R?
+## 1.3 What is R?
 ## ──────────────
 
 ##   R is a programming language designed for statistical computing.
 ##   Notable characteristics include:
-
 ##   • Vast capabilities, wide range of statistical and graphical
 ##     techniques
-
 ##   • Very popular in academia, growing popularity in business:
 ##     [http://r4stats.com/articles/popularity/]
-
 ##   • Written primarily by statisticians
-
 ##   • FREE (no cost, open source)
-
 ##   • Excellent community support: mailing list, blogs, tutorials
-
 ##   • Easy to extend by writing new functions
 
-## 1.3 InspiRation
+## 1.4 InspiRation
 ## ───────────────
 
 ##   OK, it's free and popular, but what makes R worth learning? In a word,
 ##   "packages". If you have a data manipulation, analysis or visualization
 ##   task, chances are good that there is an R package for that. For
 ##   example:
-
 ##   • Want to interactively explore the shape of the Churyumov–Gerasimenko
 ##     comet?
 
@@ -92,7 +91,7 @@ summary(forecast(fit))
 ##   do, you're probably not the first to try doing it R, and chances are
 ##   good that someone has already written a package for that.
 
-## 1.4 Coming to R
+## 1.5 Coming to R
 ## ───────────────
 
 ##   Comming from…
@@ -108,55 +107,53 @@ summary(forecast(fit))
 ## ───────────────────────────────
 
 ##   The old-school way is to run R directly in a terminal
-
-##   But hardly anybody does it that way anymore!
+##   but hardly anybody does it that way anymore!
 
 ## 2.2 R GUI alternatives (Windows default)
 ## ────────────────────────────────────────
-
 ##   The default windows GUI is not very good
 ##   • No parentheses matching or syntax highlighting
 ##   • No work-space browser
 
 ## 2.3 R GUI Alternatives (Rstudio on Mac)
 ## ───────────────────────────────────────
-
 ##   Rstudio has many useful features, including parentheses matching and
-##   auto-completion
+##   auto-completion.
 
 ## 2.4 R GUI Alternatives (Emacs with ESS)
 ## ───────────────────────────────────────
-
 ##   Emacs + ESS is a very powerful combination, but can be difficult to
 ##   set up
 
-## 2.5 Things to keep in mind
+## 2.5 Launch RStudio                                            :labsetup:
+## ──────────────────
+##   • Open the RStudio program
+##   • Open up today's R script
+##     • In RStudio, Go to *File => Open Script*
+##     • Locate and open the `Rintro.R' script in the Rintro folder on your
+##       desktop
+##   • Go to *Tools => Set working directory => To source file location*
+##     (more on the working directory later)
+##   • I encourage you to add your own notes to this file!
+
+## 2.6 Things to keep in mind
 ## ──────────────────────────
-
 ##   • Case sensitive, like Stata (unlike SAS)
-
 ##   • Comments can be put almost anywhere, starting with a hash mark
 ##     ('`#''); everything to the end of the line is a comment
-
 ##   • The command prompt "`>'" indicates that R is ready to receive
 ##     commands
-
 ##   • If a command is not complete at the end of a line, R will give a
 ##     different prompt, '`+'' by default
-
 ##   • Parentheses must always match (first thing to check if you get an
 ##     error)
-
 ##   • R Does not care about spaces between commands or arguments
-
 ##   • Names should start with a letter and should not contain spaces
-
 ##   • Can use "." in object names (e.g., "my.data")
-
 ##   • Use forward slash ("/") instead of backslash in path names, even on
 ##     Windows
 
-## 2.6 Exercise 0
+## 2.7 Exercise 0
 ## ──────────────
 
 ##   1. Try to get R to add 2 plus 2.
@@ -177,7 +174,7 @@ summary(forecast(fit))
 ##     values
 ##   • The name on the left gets the value on the right.
 
-x <- 11 # Assign the value 10 to a variable named x
+x <- 10 # Assign the value 10 to a variable named x
 x + 1 # Add 1 to x
 y <- x + 1 # Assign y the value x + 1
 y
@@ -224,57 +221,44 @@ round(sqrt(y), digits = 5) # Take sqrt of a and round
 ##   R has extensive built-in documentation that can be accessed through R
 ##   commands or through the GUI.
 ##   • Start html help, search/browse using web browser
-##     • at the R console:
-##       ┌────
-##       │ help.start()
-##       └────
 
-##     • or use the help menu from you GUI
+help.start()
 
-##   • Look up the documentation for a function
-##     ┌────
-##     │ help(plot)
-##     └────
+##   or use the help menu from you GUI
 
-##     ┌────
-##     │ ?kmeans
-##     └────
+##   Look up the documentation for a function
 
-##   • Look up documentation for a package
-##     ┌────
-##     │ help(package="stats")
-##     └────
+help(plot) # or
+?kmeans
 
-##   • Search documentation from R (not always the best way… google often
-##     works better)
-##     ┌────
-##     │ help.search("classification")
-##     └────
+##   Look up documentation for a package
+
+help(package="stats")
+
+##   Search documentation from R (not always the best way… google often
+##   works better)
+
+help.search("classification")
 
 ## 4.2 R packages and libraries
 ## ────────────────────────────
 
 ##   There are thousands of R packages that extend R's capabilities.
-
 ##   • To view available packages:
-##     ┌────
-##     │ library()
-##     └────
+
+library()
 
 ##   • To see what packages are loaded:
-##     ┌────
-##     │ search()
-##     └────
+
+search()
 
 ##   • To load a package:
-##     ┌────
-##     │ library("car")
-##     └────
+
+library("car")
 
 ##   • Install new package:
-##     ┌────
-##     │ install.packages("stringdist")
-##     └────
+
+install.packages("stringdist")
 
 ## 5 Getting data into R
 ## ═════════════════════
@@ -285,7 +269,8 @@ round(sqrt(y), digits = 5) # Take sqrt of a and round
 ##   The next few examples use a subset of the General Social Survey data
 ##   set. The variables in this subset include
 
-head(read.csv("dataSets/gssInfo.csv")) 
+head(read.csv("dataSets/gssInfo.csv"))
+
 #see gssInfo.csv for rest of the variable descriptions
 
 ## 5.2 The "working directory" and listing files
@@ -393,61 +378,29 @@ ls() # list objects
 
 ## 6.1 data.frame objects
 ## ──────────────────────
-
 ##   • Usually data read into R will be stored as a *data.frame*
-
 ##   • A data.frame is a list of vectors of equal length
 ##     • Each vector in the list forms a column
 ##     • Each column can be a differnt type of vector
 ##     • Often the columns are variables and the rows are observations
-
 ##   • A data.frame has two dimensions corresponding the number of rows and
 ##     the number of columns (in that order)
 
-## 6.2 data.frame meta-data
-## ────────────────────────
-
-##   A number of functions are available for inspecting data.frame objects:
-
-# row and column names
-head(names(datGSS)) # variable names in datGSS
-head(rownames(datGSS)) # first few rownames of datGSS
-# dimensions
-dim(datGSS)
-# structure
-#str(datGSS) # get structure
-
-## 6.3 Logical operators
-## ─────────────────────
-
-##   It is often useful to select just those rows of your data where some
-##   condition holds–for example select only rows where sex is 1 (male).
-##   The following operators allow you to do this:
-
-##   ==: equal to
-##   !=: not equal to
-##   >: greater than
-##   <: less than
-##   >=: greater than or equal to
-##   <=: less than or equal to
-##   &: and
-##   |: or
-
-##   Note the double equals signs for testing equality. The following
-##   example show how to use some of these operators to extract and replace
-##   elements matching specific conditions.
-
-## 6.4 Extracting subsets of data.frames
+## 6.2 Extracting subsets of data.frames
 ## ─────────────────────────────────────
 
-##   You can extract subsets of data.frames using the `subset()' function.
+##   You can extract subsets of data.frames using the `subset()'
+##   function[1]. Use the `select' argument to select columns:
 
-# extracting subsets
-subset(datGSS,
-       # rows 1 through 3
-       subset = rownames(datGSS) %in% 1:3,
-       # column 1 to 5
-       select = 1:4)
+# selecting specifig columns
+head(# first n rows
+     subset(datGSS,            
+            select = 1:4 # column 1 to 5
+            ),
+     n = 10# show first 10 rows
+     )
+
+##   and the `subset' argument to select rows:
 
 subset(datGSS,
        # rows where age > 90
@@ -458,10 +411,20 @@ subset(datGSS,
 ## the $ operator can be used to extract a single column
 str(datGSS$age)
 
-##   Note that `subset()' is a convenience function; see `?Extract' for a
-##   more powerful (and complicated) way to subset data.
+##   In the previous example we used `>' to select rows where age was
+##   greater than 90. Other relational and logical operators are listed
+##   below.
 
-## 6.5 Transforming data.frames
+##   ==: equal to
+##   !=: not equal to
+##   >: greater than
+##   <: less than
+##   >=: greater than or equal to
+##   <=: less than or equal to
+##   &: and
+##   |: or
+
+## 6.3 Transforming data.frames
 ## ────────────────────────────
 
 ##   You can modify data.frames using the `transform()' function.
@@ -487,7 +450,7 @@ head(subset(datGSS,
 ##   Note that `transform' is a convenience function; see `?Extract' for a
 ##   more powerful way to modify data.frames.
 
-## 6.6 Exporting Data
+## 6.4 Exporting Data
 ## ──────────────────
 
 ##   Now that we have made some changes to our GSS data set, we might want
@@ -501,7 +464,7 @@ write.dta(datGSS, file = "gss.dta")
 # write data to an R file
 saveRDS(datGSS, file = "gss.rds")
 
-## 6.7 Exercise 2: Data manipulation
+## 6.5 Exercise 2: Data manipulation
 ## ─────────────────────────────────
 
 ##   Use the gss.rds data set
@@ -637,30 +600,22 @@ with(datGSS, # Plot factor X factor
 
 ## 8.1 Help us make this workshop better!
 ## ──────────────────────────────────────
-
 ##   • Please take a moment to fill out a very short feedback form
-
 ##   • These workshops exist for you – tell us what you need!
-
 ##   • [http://tinyurl.com/R-intro-feedback]
 
 ## 8.2 Additional resources
 ## ────────────────────────
-
 ##   • IQSS workshops:
 ##     [http://projects.iq.harvard.edu/rtc/filter_by/workshops]
-
 ##   • IQSS statistical consulting: [http://rtc.iq.harvard.edu]
-
 ##   • Software (all free!):
 ##     • R and R package download: [http://cran.r-project.org]
 ##     • Rstudio download: [http://rstudio.org]
 ##     • ESS (emacs R package): [http://ess.r-project.org/]
-
 ##   • Online tutorials
 ##     • [http://www.codeschool.com/courses/try-r]
 ##     • [http://www.datamind.org]
-
 ##   • Getting help:
 ##     • Documentation and tutorials:
 ##       [http://cran.r-project.org/other-docs.html]
@@ -680,13 +635,18 @@ with(datGSS, # Plot factor X factor
 2 + 2
 
 ##   2) Try to figure out how evaluate lines directly from your R script.
+
 ##   `In Rstudo this is 'Control-Enter'; may be different in another GUI'
+
 ##   3) R includes extensive documentation, including a file named "An
 ##      introduction to R". Try to find this help file.
+
 ##   `Go to the main help page by running 'help.start() or using the GUI
 ##   menu, find and click on the link to "An Introduction to R".'
+
 ##   4) Go to [http://cran.r-project.org/web/views/] and skim the topic
 ##      closest to your field/interests.
+
 ##   `I like the machine learning topic!'
 
 ## 9.2 Exercise 1 solution                                      :prototype:
@@ -769,3 +729,9 @@ by(datGSS$incomdol, datGSS$sex, sd)
 ##      y-axis
 
 plot(subset(datGSS, select = c("educ", "incomdol")))
+
+## Footnotes
+## ─────────
+
+## [1] Note that `subset()' is a convenience function; see `?Extract' for
+## a more powerful (and complicated) way to subset data.

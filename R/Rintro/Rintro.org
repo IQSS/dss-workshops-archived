@@ -263,7 +263,7 @@ Values can be assigned names and used in subsequent operations
 
 #+name: firstRExample
 #+begin_src R 
-  x <- 11 # Assign the value 10 to a variable named x
+  x <- 10 # Assign the value 10 to a variable named x
   x + 1 # Add 1 to x
   y <- x + 1 # Assign y the value x + 1
   y
@@ -271,12 +271,12 @@ Values can be assigned names and used in subsequent operations
 
 #+RESULTS: firstRExample
 #+begin_example
-> x <- 11 # Assign the value 10 to a variable named x
+> x <- 10 # Assign the value 10 to a variable named x
 > x + 1 # Add 1 to x
-[1] 12
+[1] 11
 > y <- x + 1 # Assign y the value x + 1
 > y
-[1] 12
+[1] 11
 > 
 #+end_example
 
@@ -295,15 +295,15 @@ Saved variables can be listed, overwritten and deleted
 #+RESULTS: listOverwriteDelete
 #+begin_example
 > ls() # List variables in workspace
-[1] "x" "y"
+[1] "comet"      "fit"        "nwbuilding" "x"          "y"         
 > x # Print the value of x
-[1] 11
+[1] 10
 > x <- 100 # Overwrite x. Note that no warning is given!
 > x
 [1] 100
 > rm(x) # Delete x
 > ls()
-[1] "y"
+[1] "comet"      "fit"        "nwbuilding" "y"         
 > 
 #+end_example
 
@@ -335,10 +335,10 @@ Examples:
 > #?sqrt
 > a <- sqrt(y) # Call the sqrt function with argument x=y
 > round(a, digits = 2) # Call round() with arguments x=x and digits=2
-[1] 3.46
+[1] 3.32
 > # Functions can be nested so an alternative is
 > round(sqrt(y), digits = 5) # Take sqrt of a and round
-[1] 3.4641
+[1] 3.31662
 > 
 #+end_example
 
@@ -444,10 +444,8 @@ We can also set the working directory using paths relative to the current workin
 #+RESULTS: listFilesExample
 #+begin_example
 > list.files("dataSets") # list files in the dataSets folder
- [1] "gss.csv"            "gss.dta"            "gssInfo.csv"       
- [4] "gss.rds"            "gss.sas7bdat"       "gss.sav"           
- [7] "gss.xlsx"           "statesCodebook.txt" "states.csv"        
-[10] "states.dta"         "states.xlsx"       
+[1] "gss.csv"      "gss.dta"      "gssInfo.csv"  "gss.rds"     
+[5] "gss.sas7bdat" "gss.sav"      "gss.xlsx"    
 > # list.files("dataSets", pattern = ".csv") # restrict to .csv files  
 > 
 #+end_example
@@ -537,7 +535,8 @@ In addition to importing individual datasets, R can save and load entire workspa
 #+RESULTS: saveDelete
 #+begin_example
 > ls() # list objects in our workspace
-[1] "a"        "datGSS"   "gss.data" "y"       
+[1] "a"          "comet"      "datGSS"     "fit"        "gss.data"  
+[6] "nwbuilding" "y"         
 > save.image(file="myWorkspace.RData") # save workspace 
 > rm(list=ls()) # remove all objects from our workspace 
 > ls() # list stored objects to make sure they are deleted
@@ -557,7 +556,8 @@ character(0)
 #+begin_example
 > load("myWorkspace.RData") # load myWorkspace.RData
 > ls() # list objects
-[1] "a"        "datGSS"   "gss.data" "y"       
+[1] "a"          "comet"      "datGSS"     "fit"        "gss.data"  
+[6] "nwbuilding" "y"         
 > 
 #+end_example
 
@@ -591,64 +591,22 @@ When you close R you will be asked if you want to save your workspace -- if you 
 
 - A data.frame has two dimensions corresponding the number of rows and the number of columns (in that order)
 
-** data.frame meta-data
- A number of functions are available for inspecting data.frame objects:
-
-#+name: getAttributes
-#+begin_src R
-  # row and column names
-  head(names(datGSS)) # variable names in datGSS
-  head(rownames(datGSS)) # first few rownames of datGSS
-  # dimensions
-  dim(datGSS)
-  # structure
-  #str(datGSS) # get structure
-#+end_src
-
-#+RESULTS: getAttributes
-#+begin_example
-> # row and column names
-> head(names(datGSS)) # variable names in datGSS
-[1] "age"      "educ"     "emailhrs" "hrs1"     "sex"      "usecomp" 
-> head(rownames(datGSS)) # first few rownames of datGSS
-[1] "1" "2" "3" "4" "5" "6"
-> # dimensions
-> dim(datGSS)
-[1] 1419   35
-> # structure
-> #str(datGSS) # get structure
-> 
-#+end_example
-
-
-** Logical operators
-It is often useful to select just those rows of your data where some condition holds--for example select only rows where sex is 1 (male). The following operators allow you to do this:
-
-- == :: equal to 
-- != :: not equal to
-- > :: greater than
-- < :: less than
-- >= :: greater than or equal to
-- <= :: less than or equal to
-- & :: and
-- | :: or
-
-Note the double equals signs for testing equality. The following example show how to use some of these operators to extract and replace elements matching specific conditions.
-
 
 ** Extracting subsets of data.frames
 
-You can extract subsets of data.frames using the =subset()= function.
-
+You can extract subsets of data.frames using the =subset()= function[fn:1]. Use the =select= argument to select columns:
 #+name: indexingDataFrame
 #+begin_src R 
-  # extracting subsets
-  subset(datGSS,
-         # rows 1 through 3
-         subset = rownames(datGSS) %in% 1:3,
-         # column 1 to 5
-         select = 1:4)
-                                          
+  # selecting specifig columns
+  head(# first n rows
+       subset(datGSS,            
+              select = 1:4 # column 1 to 5
+              ),
+       n = 10# show first 10 rows
+       )
+#+end_src
+and the =subset= argument to select rows:
+#+begin_src R                                          
   subset(datGSS,
          # rows where age > 90
          subset = age > 90,
@@ -659,19 +617,8 @@ You can extract subsets of data.frames using the =subset()= function.
   str(datGSS$age)
 #+end_src
 
-#+RESULTS: indexingDataFrame
+#+RESULTS:
 #+begin_example
-> # extracting subsets
-> subset(datGSS,
-+        # rows 1 through 3
-+        subset = rownames(datGSS) %in% 1:3,
-+        # column 1 to 5
-+        select = 1:4)
-  age educ emailhrs hrs1
-1  69   12       -1   -1
-2  27   10       -1   60
-3  19   11        0   32
->                                         
 > subset(datGSS,
 +        # rows where age > 90
 +        subset = age > 90,
@@ -687,7 +634,39 @@ You can extract subsets of data.frames using the =subset()= function.
 > 
 #+end_example
 
-Note that =subset()= is a convenience function; see =?Extract= for a more powerful (and complicated) way to subset data.
+#+RESULTS: indexingDataFrame
+#+begin_example
+> # selecting specifig columns
+> head(# first n rows
++      subset(datGSS,            
++             select = 1:4 # column 1 to 5
++             ),
++      n = 10# show first 10 rows
++      )
+   age educ emailhrs hrs1
+1   69   12       -1   -1
+2   27   10       -1   60
+3   19   11        0   32
+4   21    9       -1   20
+5   19   11       50   -1
+6   87    8       -1   -1
+7   42   11        3   -1
+8   19   11       -1   -1
+9   78    7       -1   -1
+10  70    9       -1   22
+> 
+#+end_example
+
+In the previous example we used =>= to select rows where age was greater than 90. Other relational and logical operators are listed below.
+
+- == :: equal to 
+- != :: not equal to
+- > :: greater than
+- < :: less than
+- >= :: greater than or equal to
+- <= :: less than or equal to
+- & :: and
+- | :: or
 
 ** Transforming data.frames
 
@@ -1363,6 +1342,11 @@ datGSS$sex: Female
 > system("rm dataSets/NewGSS.csv")
 > 
 #+end_example
+
+* Footnotes
+
+[fn:1] Note that =subset()= is a convenience function; see =?Extract= for a more powerful (and complicated) way to subset data.
+
 
 
 
