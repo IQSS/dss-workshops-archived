@@ -4,7 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
 <title>Introduction to R</title>
-<!-- 2015-04-17 Fri 17:14 -->
+<!-- 2015-04-22 Wed 15:06 -->
 <meta  http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta  name="generator" content="Org-mode" />
 <meta  name="author" content="Ista Zahn" />
@@ -88,16 +88,10 @@
     { background-color: #ffff00; color: #000000; font-weight: bold; }
   /*]]>*/-->
 </style>
-<link rel="stylesheet" type="text/css" href="https://rawgit.com/fniessen/org-html-themes/master/styles/bigblow/css/htmlize.css"/>
-<link rel="stylesheet" type="text/css" href="https://rawgit.com/fniessen/org-html-themes/master/styles/bigblow/css/bigblow.css"/>
-<link rel="stylesheet" type="text/css" href="https://rawgit.com/fniessen/org-html-themes/master/styles/bigblow/css/hideshow.css"/>
-<script type="text/javascript" src="https://rawgit.com/fniessen/org-html-themes/master/styles/bigblow/js/jquery-1.11.0.min.js"></script>
-<script type="text/javascript" src="https://rawgit.com/fniessen/org-html-themes/master/styles/bigblow/js/jquery-ui-1.10.2.min.js"></script>
-<script type="text/javascript" src="https://rawgit.com/fniessen/org-html-themes/master/styles/bigblow/js/jquery.localscroll-min.js"></script>
-<script type="text/javascript" src="https://rawgit.com/fniessen/org-html-themes/master/styles/bigblow/js/jquery.scrollTo-1.4.3.1-min.js"></script>
-<script type="text/javascript" src="https://rawgit.com/fniessen/org-html-themes/master/styles/bigblow/js/jquery.zclip.min.js"></script>
-<script type="text/javascript" src="https://rawgit.com/fniessen/org-html-themes/master/styles/bigblow/js/bigblow.js"></script>
-<script type="text/javascript" src="https://rawgit.com/fniessen/org-html-themes/master/styles/bigblow/js/hideshow.js"></script>
+<link rel="stylesheet" type="text/css" href="http://www.pirilampo.org/styles/readtheorg/css/readtheorg.css"/>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="http://www.pirilampo.org/styles/readtheorg/js/readtheorg.js"></script>
 <script type="text/javascript">
 /*
 @licstart  The following is the entire license notice for the
@@ -154,17 +148,10 @@ for the JavaScript code in this tag.
 <ul>
 <li><a href="#sec-1">1. Workshop Materials and Introduction</a>
 <ul>
-<li><a href="#sec-1-1">1.1. License</a></li>
-<li><a href="#sec-1-2">1.2. Materials and setup</a>
-<ul>
-<li><a href="#sec-1-2-1">1.2.1. Lab computer users: Log in using the user name and password on the board to your left.&#xa0;&#xa0;&#xa0;<span class="tag"><span class="labsetup">labsetup</span></span></a></li>
-<li><a href="#sec-1-2-2">1.2.2. Laptop users: You should have R installed &#x2013;if not:</a></li>
-<li><a href="#sec-1-2-3">1.2.3. Everyone: Download workshop materials:</a></li>
-</ul>
-</li>
-<li><a href="#sec-1-3">1.3. What is R?</a></li>
-<li><a href="#sec-1-4">1.4. InspiRation</a></li>
-<li><a href="#sec-1-5">1.5. Coming to R</a></li>
+<li><a href="#sec-1-1">1.1. Materials and setup</a></li>
+<li><a href="#sec-1-2">1.2. What is R?</a></li>
+<li><a href="#sec-1-3">1.3. InspiRation</a></li>
+<li><a href="#sec-1-4">1.4. Coming to R</a></li>
 </ul>
 </li>
 <li><a href="#sec-2">2. Graphical User Interfaces</a>
@@ -245,39 +232,37 @@ for the JavaScript code in this tag.
 <h2 id="sec-1"><span class="section-number-2">1</span> Workshop Materials and Introduction</h2>
 <div class="outline-text-2" id="text-1">
 </div><div id="outline-container-sec-1-1" class="outline-3">
-<h3 id="sec-1-1"><span class="section-number-3">1.1</span> License</h3>
+<h3 id="sec-1-1"><span class="section-number-3">1.1</span> Materials and setup</h3>
 <div class="outline-text-3" id="text-1-1">
 <p>
-<a href="http://creativecommons.org/licenses/by-sa/4.0/"><img src="https://i.creativecommons.org/l/by-sa/4.0/88x31.png" alt="88x31.png" /></a> These IQSS Statistical Software Workshop materials are licensed by <a href="http://rtc.iq.harvard.edu">Harvard University</a> under a <a href="http://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 International License</a>.
+Lab computer users: Log in using the user name and password on the board to your left.
 </p>
+
+<p>
+Laptop users: You should have R installed &#x2013;if not:
+</p>
+<ul class="org-ul">
+<li>Open a web browser and go to <a href="http://cran.r-project.org">http://cran.r-project.org</a> and download and install it
+</li>
+<li>Also helpful to install RStudio (download from <a href="http://rstudio.com">http://rstudio.com</a>)
+</li>
+</ul>
+
+<p>
+Everyone: Download workshop materials:
+</p>
+<ul class="org-ul">
+<li>Download materials from <a href="http://tutorials.iq.harvard.edu/R/Rintro.zip">http://tutorials.iq.harvard.edu/R/Rintro.zip</a>
+</li>
+<li>Extract the zip file containing the materials to your desktop
+</li>
+</ul>
 </div>
 </div>
 
 <div id="outline-container-sec-1-2" class="outline-3">
-<h3 id="sec-1-2"><span class="section-number-3">1.2</span> Materials and setup</h3>
+<h3 id="sec-1-2"><span class="section-number-3">1.2</span> What is R?</h3>
 <div class="outline-text-3" id="text-1-2">
-</div><div id="outline-container-sec-1-2-1" class="outline-4">
-<h4 id="sec-1-2-1"><span class="section-number-4">1.2.1</span> Lab computer users: Log in using the user name and password on the board to your left.&#xa0;&#xa0;&#xa0;<span class="tag"><span class="labsetup">labsetup</span></span></h4>
-</div>
-
-<div id="outline-container-sec-1-2-2" class="outline-4">
-<h4 id="sec-1-2-2"><span class="section-number-4">1.2.2</span> Laptop users: You should have R installed &#x2013;if not:</h4>
-<div class="outline-text-4" id="text-1-2-2">
-</div><ol class="org-ol"><li><a id="sec-1-2-2-1" name="sec-1-2-2-1"></a>Open a web browser and go to <a href="http://cran.r-project.org">http://cran.r-project.org</a> and download and install it<br  /></li>
-<li><a id="sec-1-2-2-2" name="sec-1-2-2-2"></a>Also helpful to install RStudio (download from <a href="http://rstudio.com">http://rstudio.com</a>)<br  /></li></ol>
-</div>
-
-<div id="outline-container-sec-1-2-3" class="outline-4">
-<h4 id="sec-1-2-3"><span class="section-number-4">1.2.3</span> Everyone: Download workshop materials:</h4>
-<div class="outline-text-4" id="text-1-2-3">
-</div><ol class="org-ol"><li><a id="sec-1-2-3-1" name="sec-1-2-3-1"></a>Download materials from <a href="http://tutorials.iq.harvard.edu/R/Rintro.zip">http://tutorials.iq.harvard.edu/R/Rintro.zip</a><br  /></li>
-<li><a id="sec-1-2-3-2" name="sec-1-2-3-2"></a>Extract the zip file containing the materials to your desktop<br  /></li></ol>
-</div>
-</div>
-
-<div id="outline-container-sec-1-3" class="outline-3">
-<h3 id="sec-1-3"><span class="section-number-3">1.3</span> What is R?</h3>
-<div class="outline-text-3" id="text-1-3">
 <p>
 R is a programming language designed for statistical computing. Notable characteristics include:
 </p>
@@ -304,9 +289,9 @@ R is a programming language designed for statistical computing. Notable characte
 </div>
 </div>
 
-<div id="outline-container-sec-1-4" class="outline-3">
-<h3 id="sec-1-4"><span class="section-number-3">1.4</span> InspiRation</h3>
-<div class="outline-text-3" id="text-1-4">
+<div id="outline-container-sec-1-3" class="outline-3">
+<h3 id="sec-1-3"><span class="section-number-3">1.3</span> InspiRation</h3>
+<div class="outline-text-3" id="text-1-3">
 <p>
 OK, it's free and popular, but what makes R worth learning? In a word,
 "packages". If you have a data manipulation, analysis or visualization
@@ -406,9 +391,9 @@ These a just a few examples, but generally whatever you're trying to do, you're 
 </div>
 </div>
 
-<div id="outline-container-sec-1-5" class="outline-3">
-<h3 id="sec-1-5"><span class="section-number-3">1.5</span> Coming to R</h3>
-<div class="outline-text-3" id="text-1-5">
+<div id="outline-container-sec-1-4" class="outline-3">
+<h3 id="sec-1-4"><span class="section-number-3">1.4</span> Coming to R</h3>
+<div class="outline-text-3" id="text-1-4">
 <p>
 Comming from&#x2026;
 </p>
@@ -2017,7 +2002,6 @@ Note that <code>subset()</code> is a convenience function; see <code>?Extract</c
 </div>
 </div></div>
 <div id="postamble" class="status">
-<p><button onclick="clickNextTab()">Next</button></p>
 <p><a rel='license' href='http://creativecommons.org/licenses/by-sa/4.0/'><img alt='Creative Commons License' style='border-width:0' src='https://i.creativecommons.org/l/by-sa/4.0/80x15.png' /></a><br /><span xmlns:dct='http://purl.org/dc/terms/' property='dct:title'>These IQSS statistical software workshop materials</span> by <a xmlns:cc='http://creativecommons.org/ns#' href='http://rtc.iq.harvard.edu' property='cc:attributionName' rel='cc:attributionURL'>Harvard University</a> are licensed under a <a rel='license' href='http://creativecommons.org/licenses/by-sa/4.0/'>Creative Commons Attribution-ShareAlike 4.0 International License</a>.</p>
 </div>
 </body>

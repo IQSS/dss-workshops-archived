@@ -4,11 +4,10 @@
 ;; don't let orgmode resize images (this means you must set them to the correct size when generating!)
 (setq-local org-latex-image-default-option "")
 
-;; add next button at the bottom of the page
+;; add license note at the bottom of the page
 (setq-local org-confirm-babel-evaluate nil)
 (setq-local org-html-postamble
-            "<p><button onclick=\"clickNextTab()\">Next</button></p>
-<p><a rel='license' href='http://creativecommons.org/licenses/by-sa/4.0/'><img alt='Creative Commons License' style='border-width:0' src='https://i.creativecommons.org/l/by-sa/4.0/80x15.png' /></a><br /><span xmlns:dct='http://purl.org/dc/terms/' property='dct:title'>These IQSS statistical software workshop materials</span> by <a xmlns:cc='http://creativecommons.org/ns#' href='http://rtc.iq.harvard.edu' property='cc:attributionName' rel='cc:attributionURL'>Harvard University</a> are licensed under a <a rel='license' href='http://creativecommons.org/licenses/by-sa/4.0/'>Creative Commons Attribution-ShareAlike 4.0 International License</a>.</p>")
+            "<p><a rel='license' href='http://creativecommons.org/licenses/by-sa/4.0/'><img alt='Creative Commons License' style='border-width:0' src='https://i.creativecommons.org/l/by-sa/4.0/80x15.png' /></a><br /><span xmlns:dct='http://purl.org/dc/terms/' property='dct:title'>These IQSS statistical software workshop materials</span> by <a xmlns:cc='http://creativecommons.org/ns#' href='http://rtc.iq.harvard.edu' property='cc:attributionName' rel='cc:attributionURL'>Harvard University</a> are licensed under a <a rel='license' href='http://creativecommons.org/licenses/by-sa/4.0/'>Creative Commons Attribution-ShareAlike 4.0 International License</a>.</p>")
 
 ;; resize images
 (setq org-image-actual-width '(600))
