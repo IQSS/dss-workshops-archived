@@ -4,99 +4,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
 <title>Introduction To Programming In R</title>
-<!-- 2015-04-13 Mon 15:55 -->
+<!-- 2015-04-22 Wed 22:40 -->
 <meta  http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta  name="generator" content="Org-mode" />
-<style type="text/css">
- <!--/*--><![CDATA[/*><!--*/
-  .title  { text-align: center; }
-  .todo   { font-family: monospace; color: red; }
-  .done   { color: green; }
-  .tag    { background-color: #eee; font-family: monospace;
-            padding: 2px; font-size: 80%; font-weight: normal; }
-  .timestamp { color: #bebebe; }
-  .timestamp-kwd { color: #5f9ea0; }
-  .right  { margin-left: auto; margin-right: 0px;  text-align: right; }
-  .left   { margin-left: 0px;  margin-right: auto; text-align: left; }
-  .center { margin-left: auto; margin-right: auto; text-align: center; }
-  .underline { text-decoration: underline; }
-  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
-  p.verse { margin-left: 3%; }
-  pre {
-    border: 1px solid #ccc;
-    box-shadow: 3px 3px 3px #eee;
-    padding: 8pt;
-    font-family: monospace;
-    overflow: auto;
-    margin: 1.2em;
-  }
-  pre.src {
-    position: relative;
-    overflow: visible;
-    padding-top: 1.2em;
-  }
-  pre.src:before {
-    display: none;
-    position: absolute;
-    background-color: white;
-    top: -10px;
-    right: 10px;
-    padding: 3px;
-    border: 1px solid black;
-  }
-  pre.src:hover:before { display: inline;}
-  pre.src-sh:before    { content: 'sh'; }
-  pre.src-bash:before  { content: 'sh'; }
-  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
-  pre.src-R:before     { content: 'R'; }
-  pre.src-perl:before  { content: 'Perl'; }
-  pre.src-java:before  { content: 'Java'; }
-  pre.src-sql:before   { content: 'SQL'; }
-
-  table { border-collapse:collapse; }
-  caption.t-above { caption-side: top; }
-  caption.t-bottom { caption-side: bottom; }
-  td, th { vertical-align:top;  }
-  th.right  { text-align: center;  }
-  th.left   { text-align: center;   }
-  th.center { text-align: center; }
-  td.right  { text-align: right;  }
-  td.left   { text-align: left;   }
-  td.center { text-align: center; }
-  dt { font-weight: bold; }
-  .footpara:nth-child(2) { display: inline; }
-  .footpara { display: block; }
-  .footdef  { margin-bottom: 1em; }
-  .figure { padding: 1em; }
-  .figure p { text-align: center; }
-  .inlinetask {
-    padding: 10px;
-    border: 2px solid gray;
-    margin: 10px;
-    background: #ffffcc;
-  }
-  #org-div-home-and-up
-   { text-align: right; font-size: 70%; white-space: nowrap; }
-  textarea { overflow-x: auto; }
-  .linenr { font-size: smaller }
-  .code-highlighted { background-color: #ffff00; }
-  .org-info-js_info-navigation { border-style: none; }
-  #org-info-js_console-label
-    { font-size: 10px; font-weight: bold; white-space: nowrap; }
-  .org-info-js_search-highlight
-    { background-color: #ffff00; color: #000000; font-weight: bold; }
-  /*]]>*/-->
-</style>
-<link rel="stylesheet" type="text/css" href="https://rawgit.com/fniessen/org-html-themes/master/styles/bigblow/css/htmlize.css"/>
-<link rel="stylesheet" type="text/css" href="https://rawgit.com/fniessen/org-html-themes/master/styles/bigblow/css/bigblow.css"/>
-<link rel="stylesheet" type="text/css" href="https://rawgit.com/fniessen/org-html-themes/master/styles/bigblow/css/hideshow.css"/>
-<script type="text/javascript" src="https://rawgit.com/fniessen/org-html-themes/master/styles/bigblow/js/jquery-1.11.0.min.js"></script>
-<script type="text/javascript" src="https://rawgit.com/fniessen/org-html-themes/master/styles/bigblow/js/jquery-ui-1.10.2.min.js"></script>
-<script type="text/javascript" src="https://rawgit.com/fniessen/org-html-themes/master/styles/bigblow/js/jquery.localscroll-min.js"></script>
-<script type="text/javascript" src="https://rawgit.com/fniessen/org-html-themes/master/styles/bigblow/js/jquery.scrollTo-1.4.3.1-min.js"></script>
-<script type="text/javascript" src="https://rawgit.com/fniessen/org-html-themes/master/styles/bigblow/js/jquery.zclip.min.js"></script>
-<script type="text/javascript" src="https://rawgit.com/fniessen/org-html-themes/master/styles/bigblow/js/bigblow.js"></script>
-<script type="text/javascript" src="https://rawgit.com/fniessen/org-html-themes/master/styles/bigblow/js/hideshow.js"></script>
+<link rel="stylesheet" type="text/css" href="http://tutorials.iq.harvard.edu/org-html-themes/styles/readtheorg/css/readtheorg.css"/>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="http://tutorials.iq.harvard.edu/org-html-themes/styles/readtheorg/js/readtheorg.js"></script>
 <script type="text/javascript">
 /*
 @licstart  The following is the entire license notice for the
@@ -193,99 +107,99 @@ for the JavaScript code in this tag.
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#sec-1">1. Workshop overview and materials</a>
+<li><a href="#sec-1">Workshop overview and materials</a>
 <ul>
-<li><a href="#sec-1-1">1.1. License</a></li>
-<li><a href="#sec-1-2">1.2. Workshop description</a></li>
-<li><a href="#sec-1-3">1.3. Materials and setup</a></li>
-<li><a href="#sec-1-4">1.4. Running example</a></li>
+<li><a href="#sec-1-1">License</a></li>
+<li><a href="#sec-1-2">Workshop description</a></li>
+<li><a href="#sec-1-3">Materials and setup</a></li>
+<li><a href="#sec-1-4">Running example</a></li>
 </ul>
 </li>
-<li><a href="#sec-2">2. Data types</a>
+<li><a href="#sec-2">Data types</a>
 <ul>
-<li><a href="#sec-2-1">2.1. Vectors and data classes</a></li>
-<li><a href="#sec-2-2">2.2. Vector conversion and info</a></li>
-<li><a href="#sec-2-3">2.3. Factor vectors</a></li>
-<li><a href="#sec-2-4">2.4. Lists and data.frames</a></li>
-<li><a href="#sec-2-5">2.5. Data types summary</a></li>
-<li><a href="#sec-2-6">2.6. Exercise 0</a></li>
+<li><a href="#sec-2-1">Vectors and data classes</a></li>
+<li><a href="#sec-2-2">Vector conversion and info</a></li>
+<li><a href="#sec-2-3">Factor vectors</a></li>
+<li><a href="#sec-2-4">Lists and data.frames</a></li>
+<li><a href="#sec-2-5">Data types summary</a></li>
+<li><a href="#sec-2-6">Exercise 0</a></li>
 </ul>
 </li>
-<li><a href="#sec-3">3. Extracting and replacing object elements</a>
+<li><a href="#sec-3">Extracting and replacing object elements</a>
 <ul>
-<li><a href="#sec-3-1">3.1. Indexing by position or name</a></li>
-<li><a href="#sec-3-2">3.2. Logical indexing</a></li>
-<li><a href="#sec-3-3">3.3. Indexing matrices</a></li>
-<li><a href="#sec-3-4">3.4. Indexing lists</a></li>
-<li><a href="#sec-3-5">3.5. Indexing data.frames</a></li>
-<li><a href="#sec-3-6">3.6. Extraction/replacement summary</a></li>
-<li><a href="#sec-3-7">3.7. Exercise 1</a></li>
+<li><a href="#sec-3-1">Indexing by position or name</a></li>
+<li><a href="#sec-3-2">Logical indexing</a></li>
+<li><a href="#sec-3-3">Indexing matrices</a></li>
+<li><a href="#sec-3-4">Indexing lists</a></li>
+<li><a href="#sec-3-5">Indexing data.frames</a></li>
+<li><a href="#sec-3-6">Extraction/replacement summary</a></li>
+<li><a href="#sec-3-7">Exercise 1</a></li>
 </ul>
 </li>
-<li><a href="#sec-4">4. Looping and applying</a>
+<li><a href="#sec-4">Looping and applying</a>
 <ul>
-<li><a href="#sec-4-1">4.1. The apply function</a></li>
-<li><a href="#sec-4-2">4.2. for loops</a></li>
-<li><a href="#sec-4-3">4.3. The sapply function</a></li>
-<li><a href="#sec-4-4">4.4. Combining sapply and indexing</a></li>
-<li><a href="#sec-4-5">4.5. Applying functions summary</a></li>
+<li><a href="#sec-4-1">The apply function</a></li>
+<li><a href="#sec-4-2">for loops</a></li>
+<li><a href="#sec-4-3">The sapply function</a></li>
+<li><a href="#sec-4-4">Combining sapply and indexing</a></li>
+<li><a href="#sec-4-5">Applying functions summary</a></li>
 </ul>
 </li>
-<li><a href="#sec-5">5. Writing functions</a>
+<li><a href="#sec-5">Writing functions</a>
 <ul>
-<li><a href="#sec-5-1">5.1. Functions</a></li>
-<li><a href="#sec-5-2">5.2. Function return value</a></li>
-<li><a href="#sec-5-3">5.3. Writing functions example</a></li>
-<li><a href="#sec-5-4">5.4. Debugging basics</a></li>
-<li><a href="#sec-5-5">5.5. Writing functions summary</a></li>
-<li><a href="#sec-5-6">5.6. Exercise 2</a></li>
+<li><a href="#sec-5-1">Functions</a></li>
+<li><a href="#sec-5-2">Function return value</a></li>
+<li><a href="#sec-5-3">Writing functions example</a></li>
+<li><a href="#sec-5-4">Debugging basics</a></li>
+<li><a href="#sec-5-5">Writing functions summary</a></li>
+<li><a href="#sec-5-6">Exercise 2</a></li>
 </ul>
 </li>
-<li><a href="#sec-6">6. Control flow</a>
+<li><a href="#sec-6">Control flow</a>
 <ul>
-<li><a href="#sec-6-1">6.1. Control flow</a></li>
-<li><a href="#sec-6-2">6.2. Control flow examples</a></li>
-<li><a href="#sec-6-3">6.3. Control flow examples</a></li>
-<li><a href="#sec-6-4">6.4. Control flow examples</a></li>
-<li><a href="#sec-6-5">6.5. Control flow summary</a></li>
-<li><a href="#sec-6-6">6.6. Exercise 3</a></li>
+<li><a href="#sec-6-1">Control flow</a></li>
+<li><a href="#sec-6-2">Control flow examples</a></li>
+<li><a href="#sec-6-3">Control flow examples</a></li>
+<li><a href="#sec-6-4">Control flow examples</a></li>
+<li><a href="#sec-6-5">Control flow summary</a></li>
+<li><a href="#sec-6-6">Exercise 3</a></li>
 </ul>
 </li>
-<li><a href="#sec-7">7. The S3 object class system</a>
+<li><a href="#sec-7">The S3 object class system</a>
 <ul>
-<li><a href="#sec-7-1">7.1. The S3 object class system</a></li>
-<li><a href="#sec-7-2">7.2. Object class</a></li>
-<li><a href="#sec-7-3">7.3. Function methods</a></li>
-<li><a href="#sec-7-4">7.4. Creating new function methods</a></li>
-<li><a href="#sec-7-5">7.5. Creating generic functions</a></li>
-<li><a href="#sec-7-6">7.6. S3 classes summary</a></li>
-<li><a href="#sec-7-7">7.7. Exercise 4</a></li>
+<li><a href="#sec-7-1">The S3 object class system</a></li>
+<li><a href="#sec-7-2">Object class</a></li>
+<li><a href="#sec-7-3">Function methods</a></li>
+<li><a href="#sec-7-4">Creating new function methods</a></li>
+<li><a href="#sec-7-5">Creating generic functions</a></li>
+<li><a href="#sec-7-6">S3 classes summary</a></li>
+<li><a href="#sec-7-7">Exercise 4</a></li>
 </ul>
 </li>
-<li><a href="#sec-8">8. Things that may surprise you</a>
+<li><a href="#sec-8">Things that may surprise you</a>
 <ul>
-<li><a href="#sec-8-1">8.1. Gotcha's</a></li>
-<li><a href="#sec-8-2">8.2. Floating point comparison</a></li>
-<li><a href="#sec-8-3">8.3. Missing values</a></li>
-<li><a href="#sec-8-4">8.4. Automatic type conversion</a></li>
-<li><a href="#sec-8-5">8.5. Optional argument inconsistencies</a></li>
-<li><a href="#sec-8-6">8.6. Trouble with Factors</a></li>
+<li><a href="#sec-8-1">Gotcha's</a></li>
+<li><a href="#sec-8-2">Floating point comparison</a></li>
+<li><a href="#sec-8-3">Missing values</a></li>
+<li><a href="#sec-8-4">Automatic type conversion</a></li>
+<li><a href="#sec-8-5">Optional argument inconsistencies</a></li>
+<li><a href="#sec-8-6">Trouble with Factors</a></li>
 </ul>
 </li>
-<li><a href="#sec-9">9. Exercise solutions</a>
+<li><a href="#sec-9">Exercise solutions</a>
 <ul>
-<li><a href="#sec-9-1">9.1. Exercise 0 prototype&#xa0;&#xa0;&#xa0;<span class="tag"><span class="prototype">prototype</span></span></a></li>
-<li><a href="#sec-9-2">9.2. Exercise 0</a></li>
-<li><a href="#sec-9-3">9.3. Exercise 1 prototype&#xa0;&#xa0;&#xa0;<span class="tag"><span class="prototype">prototype</span></span></a></li>
-<li><a href="#sec-9-4">9.4. Exercise 2 prototype&#xa0;&#xa0;&#xa0;<span class="tag"><span class="prototype">prototype</span></span></a></li>
-<li><a href="#sec-9-5">9.5. Exercise 3 prototype&#xa0;&#xa0;&#xa0;<span class="tag"><span class="prototype">prototype</span></span></a></li>
-<li><a href="#sec-9-6">9.6. Exercise 4 prototype&#xa0;&#xa0;&#xa0;<span class="tag"><span class="prototype">prototype</span></span></a></li>
+<li><a href="#sec-9-1">Exercise 0 prototype&#xa0;&#xa0;&#xa0;<span class="tag"><span class="prototype">prototype</span></span></a></li>
+<li><a href="#sec-9-2">Exercise 0</a></li>
+<li><a href="#sec-9-3">Exercise 1 prototype&#xa0;&#xa0;&#xa0;<span class="tag"><span class="prototype">prototype</span></span></a></li>
+<li><a href="#sec-9-4">Exercise 2 prototype&#xa0;&#xa0;&#xa0;<span class="tag"><span class="prototype">prototype</span></span></a></li>
+<li><a href="#sec-9-5">Exercise 3 prototype&#xa0;&#xa0;&#xa0;<span class="tag"><span class="prototype">prototype</span></span></a></li>
+<li><a href="#sec-9-6">Exercise 4 prototype&#xa0;&#xa0;&#xa0;<span class="tag"><span class="prototype">prototype</span></span></a></li>
 </ul>
 </li>
-<li><a href="#sec-10">10. Additional resources</a>
+<li><a href="#sec-10">Additional resources</a>
 <ul>
-<li><a href="#sec-10-1">10.1. Additional reading and resources</a></li>
-<li><a href="#sec-10-2">10.2. Feedback</a></li>
+<li><a href="#sec-10-1">Additional reading and resources</a></li>
+<li><a href="#sec-10-2">Feedback</a></li>
 </ul>
 </li>
 </ul>
@@ -293,10 +207,10 @@ for the JavaScript code in this tag.
 </div>
 
 <div id="outline-container-sec-1" class="outline-2">
-<h2 id="sec-1"><span class="section-number-2">1</span> Workshop overview and materials</h2>
+<h2 id="sec-1">Workshop overview and materials</h2>
 <div class="outline-text-2" id="text-1">
 </div><div id="outline-container-sec-1-1" class="outline-3">
-<h3 id="sec-1-1"><span class="section-number-3">1.1</span> License</h3>
+<h3 id="sec-1-1">License</h3>
 <div class="outline-text-3" id="text-1-1">
 <p>
 <a href="http://creativecommons.org/licenses/by-sa/4.0/"><img src="https://i.creativecommons.org/l/by-sa/4.0/88x31.png" alt="88x31.png" /></a> These IQSS Statistical Software Workshop materials are licensed by <a href="http://rtc.iq.harvard.edu">Harvard University</a> under a <a href="http://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 International License</a>.
@@ -305,7 +219,7 @@ for the JavaScript code in this tag.
 </div>
 
 <div id="outline-container-sec-1-2" class="outline-3">
-<h3 id="sec-1-2"><span class="section-number-3">1.2</span> Workshop description</h3>
+<h3 id="sec-1-2">Workshop description</h3>
 <div class="outline-text-3" id="text-1-2">
 <p>
 This is an intermediate/advanced R course appropriate for those with basic knowledge of R. It is intended for those already comfortable with using R for data analysis who wish to move on to writing their own functions. Prerequisite: basic familiarity with R, such as acquired from an introductory R workshop.
@@ -346,7 +260,7 @@ For further details and registration information, please contact us at <a href="
 </div>
 
 <div id="outline-container-sec-1-3" class="outline-3">
-<h3 id="sec-1-3"><span class="section-number-3">1.3</span> Materials and setup</h3>
+<h3 id="sec-1-3">Materials and setup</h3>
 <div class="outline-text-3" id="text-1-3">
 <p>
 Everyone should have R installed &#x2013;if not:
@@ -373,7 +287,7 @@ Materials for this workshop include slides, example data sets, and example code.
 </div>
 
 <div id="outline-container-sec-1-4" class="outline-3">
-<h3 id="sec-1-4"><span class="section-number-3">1.4</span> Running example</h3>
+<h3 id="sec-1-4">Running example</h3>
 <div class="outline-text-3" id="text-1-4">
 <p>
 Throughout this workshop we will return to a running example that involves calculating descriptive statistics for every column of a data.frame. We will often use the built-in <i>iris</i> data set. You can load the iris data by evaluating <code>data(iris)</code> at the R prompt.
@@ -387,10 +301,10 @@ Our main example today consists of writing a statistical summary function that c
 </div>
 
 <div id="outline-container-sec-2" class="outline-2">
-<h2 id="sec-2"><span class="section-number-2">2</span> Data types</h2>
+<h2 id="sec-2">Data types</h2>
 <div class="outline-text-2" id="text-2">
 </div><div id="outline-container-sec-2-1" class="outline-3">
-<h3 id="sec-2-1"><span class="section-number-3">2.1</span> Vectors and data classes</h3>
+<h3 id="sec-2-1">Vectors and data classes</h3>
 <div class="outline-text-3" id="text-2-1">
 <p>
 Values can be combined into vectors using the <code>c()</code> function
@@ -445,7 +359,7 @@ Vectors have a \emph{class} which determines how functions treat them
 
 
 <div id="outline-container-sec-2-2" class="outline-3">
-<h3 id="sec-2-2"><span class="section-number-3">2.2</span> Vector conversion and info</h3>
+<h3 id="sec-2-2">Vector conversion and info</h3>
 <div class="outline-text-3" id="text-2-2">
 <p>
 Vectors can be converted from one class to another
@@ -498,7 +412,7 @@ In addition to class, you can examine the <code>length()</code> \\ and <code>str
 </div>
 
 <div id="outline-container-sec-2-3" class="outline-3">
-<h3 id="sec-2-3"><span class="section-number-3">2.3</span> Factor vectors</h3>
+<h3 id="sec-2-3">Factor vectors</h3>
 <div class="outline-text-3" id="text-2-3">
 <p>
 Factors are stored as numbers, but have character labels. Factors are useful for
@@ -517,7 +431,7 @@ Most of the time we can treat factors as though they were character vectors
 </div>
 
 <div id="outline-container-sec-2-4" class="outline-3">
-<h3 id="sec-2-4"><span class="section-number-3">2.4</span> Lists and data.frames</h3>
+<h3 id="sec-2-4">Lists and data.frames</h3>
 <div class="outline-text-3" id="text-2-4">
 <ul class="org-ul">
 <li>A <i>data.frame</i> is a list of vectors, each of the same length
@@ -571,7 +485,7 @@ $z
 </div>
 
 <div id="outline-container-sec-2-5" class="outline-3">
-<h3 id="sec-2-5"><span class="section-number-3">2.5</span> Data types summary</h3>
+<h3 id="sec-2-5">Data types summary</h3>
 <div class="outline-text-3" id="text-2-5">
 <p>
 Key points:
@@ -613,7 +527,7 @@ Functions introduced in this section:
 </div>
 
 <div id="outline-container-sec-2-6" class="outline-3">
-<h3 id="sec-2-6"><span class="section-number-3">2.6</span> Exercise 0</h3>
+<h3 id="sec-2-6">Exercise 0</h3>
 <div class="outline-text-3" id="text-2-6">
 <p>
 Use the built-in <i>iris</i> data set (comes with R, will be available in your workspace automatically).
@@ -633,10 +547,10 @@ Use the built-in <i>iris</i> data set (comes with R, will be available in your w
 </div>
 
 <div id="outline-container-sec-3" class="outline-2">
-<h2 id="sec-3"><span class="section-number-2">3</span> Extracting and replacing object elements</h2>
+<h2 id="sec-3">Extracting and replacing object elements</h2>
 <div class="outline-text-2" id="text-3">
 </div><div id="outline-container-sec-3-1" class="outline-3">
-<h3 id="sec-3-1"><span class="section-number-3">3.1</span> Indexing by position or name</h3>
+<h3 id="sec-3-1">Indexing by position or name</h3>
 <div class="outline-text-3" id="text-3-1">
 <p>
 Parts of vectors, matricies, data.frames, and lists can be extracted or replaced based on position or name
@@ -679,7 +593,7 @@ x<span style="color: #006FE0;">[</span><span style="color: #006699;">c</span><sp
 </div>
 
 <div id="outline-container-sec-3-2" class="outline-3">
-<h3 id="sec-3-2"><span class="section-number-3">3.2</span> Logical indexing</h3>
+<h3 id="sec-3-2">Logical indexing</h3>
 <div class="outline-text-3" id="text-3-2">
 <p>
 Elements can also be selected or replaced based on logical (TRUE/FALSE) vectors.
@@ -747,7 +661,7 @@ x<span style="color: #006FE0;">[</span>x <span style="color: #D0372D;">&gt;</spa
 
 
 <div id="outline-container-sec-3-3" class="outline-3">
-<h3 id="sec-3-3"><span class="section-number-3">3.3</span> Indexing matrices</h3>
+<h3 id="sec-3-3">Indexing matrices</h3>
 <div class="outline-text-3" id="text-3-3">
 <p>
 Extraction on matrices operate in two dimensions: first dimension refers to rows, second dimension refers to columns
@@ -797,7 +711,7 @@ Note that unspecified index's (as in the column index in the example above ) ret
 
 
 <div id="outline-container-sec-3-4" class="outline-3">
-<h3 id="sec-3-4"><span class="section-number-3">3.4</span> Indexing lists</h3>
+<h3 id="sec-3-4">Indexing lists</h3>
 <div class="outline-text-3" id="text-3-4">
 <p>
 Lists can be indexed in the same way as vectors, with the following extension:
@@ -836,7 +750,7 @@ $x
 </div>
 
 <div id="outline-container-sec-3-5" class="outline-3">
-<h3 id="sec-3-5"><span class="section-number-3">3.5</span> Indexing data.frames</h3>
+<h3 id="sec-3-5">Indexing data.frames</h3>
 <div class="outline-text-3" id="text-3-5">
 <p>
 A data.frame can be indexed in the same ways as a matrix, and also the same ways as a list:
@@ -882,7 +796,7 @@ There is a subtle but important difference between <code>[ , n]</code> and <code
 </div>
 
 <div id="outline-container-sec-3-6" class="outline-3">
-<h3 id="sec-3-6"><span class="section-number-3">3.6</span> Extraction/replacement summary</h3>
+<h3 id="sec-3-6">Extraction/replacement summary</h3>
 <div class="outline-text-3" id="text-3-6">
 <p>
 Key points:
@@ -914,7 +828,7 @@ Functions introduced in this section:
 
 
 <div id="outline-container-sec-3-7" class="outline-3">
-<h3 id="sec-3-7"><span class="section-number-3">3.7</span> Exercise 1</h3>
+<h3 id="sec-3-7">Exercise 1</h3>
 <div class="outline-text-3" id="text-3-7">
 <ol class="org-ol">
 <li>Select just the Sepal.Length and Species columns from the <i>iris</i> data set (built-in, will be available in your workspace automatically) and save the result to a new data.frame named <i>iris.2</i>
@@ -931,14 +845,14 @@ Functions introduced in this section:
 </div>
 
 <div id="outline-container-sec-4" class="outline-2">
-<h2 id="sec-4"><span class="section-number-2">4</span> Looping and applying</h2>
+<h2 id="sec-4">Looping and applying</h2>
 <div class="outline-text-2" id="text-4">
 <p>
 <code>for</code> and <code>while</code> loops in R work much the same as they do in other programming languages. R also has an <code>apply</code> family of functions that are sometimes more convenient.
 </p>
 </div>
 <div id="outline-container-sec-4-1" class="outline-3">
-<h3 id="sec-4-1"><span class="section-number-3">4.1</span> The apply function</h3>
+<h3 id="sec-4-1">The apply function</h3>
 <div class="outline-text-3" id="text-4-1">
 <p>
 The apply function is used to apply a function to the rows or columns of a matrix
@@ -966,7 +880,7 @@ The apply function is used to apply a function to the rows or columns of a matri
 </div>
 
 <div id="outline-container-sec-4-2" class="outline-3">
-<h3 id="sec-4-2"><span class="section-number-3">4.2</span> for loops</h3>
+<h3 id="sec-4-2">for loops</h3>
 <div class="outline-text-3" id="text-4-2">
 <p>
 We can alternatively calculate row and column means, but in this case <code>apply</code> is easier.
@@ -989,7 +903,7 @@ M.sums <span style="color: #D0372D;">&lt;-</span> <span style="color: #006699;">
 
 
 <div id="outline-container-sec-4-3" class="outline-3">
-<h3 id="sec-4-3"><span class="section-number-3">4.3</span> The sapply function</h3>
+<h3 id="sec-4-3">The sapply function</h3>
 <div class="outline-text-3" id="text-4-3">
 <p>
 It is often useful to apply a function to each element of a vector, list, or data.frame; you can use the <code>sapply</code> function for this
@@ -1022,7 +936,7 @@ See also: <code>lapply</code>, <code>vapply</code>, and <code>mapply</code>.
 </div>
 </div>
 <div id="outline-container-sec-4-4" class="outline-3">
-<h3 id="sec-4-4"><span class="section-number-3">4.4</span> Combining sapply and indexing</h3>
+<h3 id="sec-4-4">Combining sapply and indexing</h3>
 <div class="outline-text-3" id="text-4-4">
 <p>
 The <code>sapply</code> function can be used in combination with indexing to extract elements that meet certain criteria
@@ -1082,7 +996,7 @@ Note the difference between <code>DF[, 1]</code> and <code>DF[1]</code>! The fir
 </div>
 
 <div id="outline-container-sec-4-5" class="outline-3">
-<h3 id="sec-4-5"><span class="section-number-3">4.5</span> Applying functions summary</h3>
+<h3 id="sec-4-5">Applying functions summary</h3>
 <div class="outline-text-3" id="text-4-5">
 <p>
 Key points:
@@ -1111,10 +1025,10 @@ Functions introduced in this section:
 </div>
 
 <div id="outline-container-sec-5" class="outline-2">
-<h2 id="sec-5"><span class="section-number-2">5</span> Writing functions</h2>
+<h2 id="sec-5">Writing functions</h2>
 <div class="outline-text-2" id="text-5">
 </div><div id="outline-container-sec-5-1" class="outline-3">
-<h3 id="sec-5-1"><span class="section-number-3">5.1</span> Functions</h3>
+<h3 id="sec-5-1">Functions</h3>
 <div class="outline-text-3" id="text-5-1">
 <ul class="org-ul">
 <li>A function is a collection of commands that takes input(s) and returns output.
@@ -1132,7 +1046,7 @@ Functions introduced in this section:
 </div>
 
 <div id="outline-container-sec-5-2" class="outline-3">
-<h3 id="sec-5-2"><span class="section-number-3">5.2</span> Function return value</h3>
+<h3 id="sec-5-2">Function return value</h3>
 <div class="outline-text-3" id="text-5-2">
 <ul class="org-ul">
 <li>The return value of a function can be:
@@ -1190,7 +1104,7 @@ x <span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style
 
 
 <div id="outline-container-sec-5-3" class="outline-3">
-<h3 id="sec-5-3"><span class="section-number-3">5.3</span> Writing functions example</h3>
+<h3 id="sec-5-3">Writing functions example</h3>
 <div class="outline-text-3" id="text-5-3">
 <p>
 Goal: write a function that returns the square of it's argument
@@ -1228,7 +1142,7 @@ Goal: write a function that returns the square of it's argument
 
 
 <div id="outline-container-sec-5-4" class="outline-3">
-<h3 id="sec-5-4"><span class="section-number-3">5.4</span> Debugging basics</h3>
+<h3 id="sec-5-4">Debugging basics</h3>
 <div class="outline-text-3" id="text-5-4">
 <p>
 Stepping througth functions and setting breakpoints
@@ -1288,7 +1202,7 @@ Use <code>traceback()</code> to see what went wrong after the fact
 
 
 <div id="outline-container-sec-5-5" class="outline-3">
-<h3 id="sec-5-5"><span class="section-number-3">5.5</span> Writing functions summary</h3>
+<h3 id="sec-5-5">Writing functions summary</h3>
 <div class="outline-text-3" id="text-5-5">
 <p>
 Key points:
@@ -1324,7 +1238,7 @@ Functions introduced in this section
 
 
 <div id="outline-container-sec-5-6" class="outline-3">
-<h3 id="sec-5-6"><span class="section-number-3">5.6</span> Exercise 2</h3>
+<h3 id="sec-5-6">Exercise 2</h3>
 <div class="outline-text-3" id="text-5-6">
 <ol class="org-ol">
 <li>Write a function that takes a data.frame as an argument and returns the mean of each numeric column in the data frame. Test your function using the iris data.
@@ -1338,10 +1252,10 @@ Functions introduced in this section
 </div>
 
 <div id="outline-container-sec-6" class="outline-2">
-<h2 id="sec-6"><span class="section-number-2">6</span> Control flow</h2>
+<h2 id="sec-6">Control flow</h2>
 <div class="outline-text-2" id="text-6">
 </div><div id="outline-container-sec-6-1" class="outline-3">
-<h3 id="sec-6-1"><span class="section-number-3">6.1</span> Control flow</h3>
+<h3 id="sec-6-1">Control flow</h3>
 <div class="outline-text-3" id="text-6-1">
 <ul class="org-ul">
 <li>Basic idea: if some condition is true, do one thing. If false, do something else
@@ -1355,7 +1269,7 @@ Functions introduced in this section
 </div>
 
 <div id="outline-container-sec-6-2" class="outline-3">
-<h3 id="sec-6-2"><span class="section-number-3">6.2</span> Control flow examples</h3>
+<h3 id="sec-6-2">Control flow examples</h3>
 <div class="outline-text-3" id="text-6-2">
 <p>
 Goal: write a function that tells us if a number is positive or negative
@@ -1404,7 +1318,7 @@ Need to do something different if x equals zero!
 </div>
 
 <div id="outline-container-sec-6-3" class="outline-3">
-<h3 id="sec-6-3"><span class="section-number-3">6.3</span> Control flow examples</h3>
+<h3 id="sec-6-3">Control flow examples</h3>
 <div class="outline-text-3" id="text-6-3">
 <p>
 Add a condition to handle <code>x = 0</code>
@@ -1463,7 +1377,7 @@ We fixed the problem when <code>x = 0</code>, but now we need to make sure x is 
 </div>
 
 <div id="outline-container-sec-6-4" class="outline-3">
-<h3 id="sec-6-4"><span class="section-number-3">6.4</span> Control flow examples</h3>
+<h3 id="sec-6-4">Control flow examples</h3>
 <div class="outline-text-3" id="text-6-4">
 <p>
 Do something reasonable if x is not numeric
@@ -1496,7 +1410,7 @@ Error in isPositive("a") : x must be a numeric vector of length one!
 
 
 <div id="outline-container-sec-6-5" class="outline-3">
-<h3 id="sec-6-5"><span class="section-number-3">6.5</span> Control flow summary</h3>
+<h3 id="sec-6-5">Control flow summary</h3>
 <div class="outline-text-3" id="text-6-5">
 <p>
 Key points:
@@ -1526,7 +1440,7 @@ Functions introduced in this section
 
 
 <div id="outline-container-sec-6-6" class="outline-3">
-<h3 id="sec-6-6"><span class="section-number-3">6.6</span> Exercise 3</h3>
+<h3 id="sec-6-6">Exercise 3</h3>
 <div class="outline-text-3" id="text-6-6">
 <ol class="org-ol">
 <li>Add argument checking code to return an error if the argument to your function is not a data.frame
@@ -1540,10 +1454,10 @@ Functions introduced in this section
 </div>
 
 <div id="outline-container-sec-7" class="outline-2">
-<h2 id="sec-7"><span class="section-number-2">7</span> The S3 object class system</h2>
+<h2 id="sec-7">The S3 object class system</h2>
 <div class="outline-text-2" id="text-7">
 </div><div id="outline-container-sec-7-1" class="outline-3">
-<h3 id="sec-7-1"><span class="section-number-3">7.1</span> The S3 object class system</h3>
+<h3 id="sec-7-1">The S3 object class system</h3>
 <div class="outline-text-3" id="text-7-1">
 <p>
 R has two major object systems: 
@@ -1562,7 +1476,7 @@ R has two major object systems:
 </div>
 
 <div id="outline-container-sec-7-2" class="outline-3">
-<h3 id="sec-7-2"><span class="section-number-3">7.2</span> Object class</h3>
+<h3 id="sec-7-2">Object class</h3>
 <div class="outline-text-3" id="text-7-2">
 <p>
 The class of an object can be retrieved and modified using the <code>class()</code> function:
@@ -1609,7 +1523,7 @@ Objects are not limited to a single class, and can have many classes:
 
 
 <div id="outline-container-sec-7-3" class="outline-3">
-<h3 id="sec-7-3"><span class="section-number-3">7.3</span> Function methods</h3>
+<h3 id="sec-7-3">Function methods</h3>
 <div class="outline-text-3" id="text-7-3">
 <ul class="org-ul">
 <li>Functions can have many methods, allowing us to have (e.g.) one plot() function that does different things depending on what is being plotted()
@@ -1646,7 +1560,7 @@ Objects are not limited to a single class, and can have many classes:
 
 
 <div id="outline-container-sec-7-4" class="outline-3">
-<h3 id="sec-7-4"><span class="section-number-3">7.4</span> Creating new function methods</h3>
+<h3 id="sec-7-4">Creating new function methods</h3>
 <div class="outline-text-3" id="text-7-4">
 <p>
 To create a new method for a function that is already generic all you have to do is name your function <code>function.class</code>
@@ -1699,7 +1613,7 @@ x is not numeric
 
 
 <div id="outline-container-sec-7-5" class="outline-3">
-<h3 id="sec-7-5"><span class="section-number-3">7.5</span> Creating generic functions</h3>
+<h3 id="sec-7-5">Creating generic functions</h3>
 <div class="outline-text-3" id="text-7-5">
 <p>
 S3 generics are most often used for print, summary, and plot methods, but sometimes you may want to create a new generic function
@@ -1748,7 +1662,7 @@ S3 generics are most often used for print, summary, and plot methods, but someti
 
 
 <div id="outline-container-sec-7-6" class="outline-3">
-<h3 id="sec-7-6"><span class="section-number-3">7.6</span> S3 classes summary</h3>
+<h3 id="sec-7-6">S3 classes summary</h3>
 <div class="outline-text-3" id="text-7-6">
 <p>
 Key points:
@@ -1785,7 +1699,7 @@ Functions introduced in this section
 
 
 <div id="outline-container-sec-7-7" class="outline-3">
-<h3 id="sec-7-7"><span class="section-number-3">7.7</span> Exercise 4</h3>
+<h3 id="sec-7-7">Exercise 4</h3>
 <div class="outline-text-3" id="text-7-7">
 <ol class="org-ol">
 <li>Modify your function so that it also returns the standard deviations of the numeric variables 
@@ -1804,10 +1718,10 @@ Functions introduced in this section
 
 
 <div id="outline-container-sec-8" class="outline-2">
-<h2 id="sec-8"><span class="section-number-2">8</span> Things that may surprise you</h2>
+<h2 id="sec-8">Things that may surprise you</h2>
 <div class="outline-text-2" id="text-8">
 </div><div id="outline-container-sec-8-1" class="outline-3">
-<h3 id="sec-8-1"><span class="section-number-3">8.1</span> Gotcha's</h3>
+<h3 id="sec-8-1">Gotcha's</h3>
 <div class="outline-text-3" id="text-8-1">
 <ul class="org-ul">
 <li>There are an unfortunately large number of surprises in R programming
@@ -1822,7 +1736,7 @@ Functions introduced in this section
 
 
 <div id="outline-container-sec-8-2" class="outline-3">
-<h3 id="sec-8-2"><span class="section-number-3">8.2</span> Floating point comparison</h3>
+<h3 id="sec-8-2">Floating point comparison</h3>
 <div class="outline-text-3" id="text-8-2">
 <p>
 Floating point arithmetic is not exact:
@@ -1857,7 +1771,7 @@ Solution: <code>use all.equal()</code>:
 </div>
 
 <div id="outline-container-sec-8-3" class="outline-3">
-<h3 id="sec-8-3"><span class="section-number-3">8.3</span> Missing values</h3>
+<h3 id="sec-8-3">Missing values</h3>
 <div class="outline-text-3" id="text-8-3">
 <p>
 R does not exclude missing values by default &#x2013; a single missing value in a vector means that many thing are unknown:
@@ -1898,7 +1812,7 @@ Solutions: use <code>na.rm = TRUE</code> option when calculating, and is.na to t
 </div>
 
 <div id="outline-container-sec-8-4" class="outline-3">
-<h3 id="sec-8-4"><span class="section-number-3">8.4</span> Automatic type conversion</h3>
+<h3 id="sec-8-4">Automatic type conversion</h3>
 <div class="outline-text-3" id="text-8-4">
 <p>
 Automatic type conversion happens a lot which is often useful, but makes it easy to miss mistakes
@@ -1935,7 +1849,7 @@ Maybe this is what you expect&#x2026; I would like to at least get a warning!
 </div>
 
 <div id="outline-container-sec-8-5" class="outline-3">
-<h3 id="sec-8-5"><span class="section-number-3">8.5</span> Optional argument inconsistencies</h3>
+<h3 id="sec-8-5">Optional argument inconsistencies</h3>
 <div class="outline-text-3" id="text-8-5">
 <p>
 Functions you might expect to work similarly don't always:
@@ -1983,7 +1897,7 @@ Ouch. That is not nice at all!
 </div>
 
 <div id="outline-container-sec-8-6" class="outline-3">
-<h3 id="sec-8-6"><span class="section-number-3">8.6</span> Trouble with Factors</h3>
+<h3 id="sec-8-6">Trouble with Factors</h3>
 <div class="outline-text-3" id="text-8-6">
 <p>
 Factors sometimes behave as numbers, and sometimes as characters, which can be confusing!
@@ -2026,14 +1940,14 @@ Levels: 6 5
 </div>
 
 <div id="outline-container-sec-9" class="outline-2">
-<h2 id="sec-9"><span class="section-number-2">9</span> Exercise solutions</h2>
+<h2 id="sec-9">Exercise solutions</h2>
 <div class="outline-text-2" id="text-9">
 </div><div id="outline-container-sec-9-1" class="outline-3">
-<h3 id="sec-9-1"><span class="section-number-3">9.1</span> Exercise 0 prototype&#xa0;&#xa0;&#xa0;<span class="tag"><span class="prototype">prototype</span></span></h3>
+<h3 id="sec-9-1">Exercise 0 prototype&#xa0;&#xa0;&#xa0;<span class="tag"><span class="prototype">prototype</span></span></h3>
 </div>
 
 <div id="outline-container-sec-9-2" class="outline-3">
-<h3 id="sec-9-2"><span class="section-number-3">9.2</span> Exercise 0</h3>
+<h3 id="sec-9-2">Exercise 0</h3>
 <div class="outline-text-3" id="text-9-2">
 <p>
 Use the built-in <i>iris</i> data set (comes with R, will be available in your workspace automatically).
@@ -2148,7 +2062,7 @@ Use the built-in <i>iris</i> data set (comes with R, will be available in your w
 
 
 <div id="outline-container-sec-9-3" class="outline-3">
-<h3 id="sec-9-3"><span class="section-number-3">9.3</span> Exercise 1 prototype&#xa0;&#xa0;&#xa0;<span class="tag"><span class="prototype">prototype</span></span></h3>
+<h3 id="sec-9-3">Exercise 1 prototype&#xa0;&#xa0;&#xa0;<span class="tag"><span class="prototype">prototype</span></span></h3>
 <div class="outline-text-3" id="text-9-3">
 <ol class="org-ol">
 <li value="1">Select just the Sepal.Length and Species columns from the <i>iris</i> data set (built-in, will be available in your workspace automatically) and save the result to a new data.frame named <i>iris.2</i>
@@ -2204,7 +2118,7 @@ iris2 <span style="color: #D0372D;">&lt;-</span> iris<span style="color: #006FE0
 
 
 <div id="outline-container-sec-9-4" class="outline-3">
-<h3 id="sec-9-4"><span class="section-number-3">9.4</span> Exercise 2 prototype&#xa0;&#xa0;&#xa0;<span class="tag"><span class="prototype">prototype</span></span></h3>
+<h3 id="sec-9-4">Exercise 2 prototype&#xa0;&#xa0;&#xa0;<span class="tag"><span class="prototype">prototype</span></span></h3>
 <div class="outline-text-3" id="text-9-4">
 <ol class="org-ol">
 <li value="1">Write a function that takes a data.frame as an argument and returns the mean of each numeric column in the data frame. Test your function using the iris data.
@@ -2242,7 +2156,7 @@ iris2 <span style="color: #D0372D;">&lt;-</span> iris<span style="color: #006FE0
 </div>
 
 <div id="outline-container-sec-9-5" class="outline-3">
-<h3 id="sec-9-5"><span class="section-number-3">9.5</span> Exercise 3 prototype&#xa0;&#xa0;&#xa0;<span class="tag"><span class="prototype">prototype</span></span></h3>
+<h3 id="sec-9-5">Exercise 3 prototype&#xa0;&#xa0;&#xa0;<span class="tag"><span class="prototype">prototype</span></span></h3>
 <div class="outline-text-3" id="text-9-5">
 <ol class="org-ol">
 <li value="1">Add argument checking code to return an error if the argument to your function is not a data.frame
@@ -2287,7 +2201,7 @@ iris2 <span style="color: #D0372D;">&lt;-</span> iris<span style="color: #006FE0
 
 
 <div id="outline-container-sec-9-6" class="outline-3">
-<h3 id="sec-9-6"><span class="section-number-3">9.6</span> Exercise 4 prototype&#xa0;&#xa0;&#xa0;<span class="tag"><span class="prototype">prototype</span></span></h3>
+<h3 id="sec-9-6">Exercise 4 prototype&#xa0;&#xa0;&#xa0;<span class="tag"><span class="prototype">prototype</span></span></h3>
 <div class="outline-text-3" id="text-9-6">
 <ol class="org-ol">
 <li value="1">Modify your function so that it also returns the standard deviations of the numeric variables 
@@ -2351,10 +2265,10 @@ iris2 <span style="color: #D0372D;">&lt;-</span> iris<span style="color: #006FE0
 </div>
 
 <div id="outline-container-sec-10" class="outline-2">
-<h2 id="sec-10"><span class="section-number-2">10</span> Additional resources</h2>
+<h2 id="sec-10">Additional resources</h2>
 <div class="outline-text-2" id="text-10">
 </div><div id="outline-container-sec-10-1" class="outline-3">
-<h3 id="sec-10-1"><span class="section-number-3">10.1</span> Additional reading and resources</h3>
+<h3 id="sec-10-1">Additional reading and resources</h3>
 <div class="outline-text-3" id="text-10-1">
 <ul class="org-ul">
 <li>Learn from the best: <a href="http://adv-r.had.co.nz/">http://adv-r.had.co.nz/</a>
@@ -2400,7 +2314,7 @@ iris2 <span style="color: #D0372D;">&lt;-</span> iris<span style="color: #006FE0
 
 
 <div id="outline-container-sec-10-2" class="outline-3">
-<h3 id="sec-10-2"><span class="section-number-3">10.2</span> Feedback</h3>
+<h3 id="sec-10-2">Feedback</h3>
 <div class="outline-text-3" id="text-10-2">
 <ul class="org-ul">
 <li>Help Us Make This Workshop Better!
@@ -2417,8 +2331,7 @@ iris2 <span style="color: #D0372D;">&lt;-</span> iris<span style="color: #006FE0
 </div>
 </div>
 <div id="postamble" class="status">
-<p><button onclick="clickNextTab()">Next</button></p>
-<p><a rel='license' href='http://creativecommons.org/licenses/by-sa/4.0/'><img alt='Creative Commons License' style='border-width:0' src='https://i.creativecommons.org/l/by-sa/4.0/80x15.png' /></a><br /><span xmlns:dct='http://purl.org/dc/terms/' property='dct:title'>These IQSS statistical software workshop materials</span> by <a xmlns:cc='http://creativecommons.org/ns#' href='http://rtc.iq.harvard.edu' property='cc:attributionName' rel='cc:attributionURL'>Harvard University</a> are licensed under a <a rel='license' href='http://creativecommons.org/licenses/by-sa/4.0/'>Creative Commons Attribution-ShareAlike 4.0 International License</a>.</p>
+<p><a rel='license' href='http://creativecommons.org/licenses/by-sa/4.0/'><img alt='Creative Commons License' style='border-width:0' src='https://i.creativecommons.org/l/by-sa/4.0/80x15.png' /></a><span xmlns:dct='http://purl.org/dc/terms/' property='dct:title'> These statistical software workshop materials</span> by <a xmlns:cc='http://creativecommons.org/ns#' href='http://rtc.iq.harvard.edu' property='cc:attributionName' rel='cc:attributionURL'>Harvard University</a> are licensed under a <a rel='license' href='http://creativecommons.org/licenses/by-sa/4.0/'>Creative Commons Attribution-ShareAlike 4.0 International License</a>.</p> <p> Presented by <a href='http://rtc.iq.harvard.edu'>Research Technology Consulting</a> at <br></br> <a href='http://iq.harvard.edu'><img style='margin-left: auto; margin-right: auto;' alt='The Institute for Quantitative Social Science' title='IQSS logo' src='http://static.projects.iq.harvard.edu/files/styles/os_files_small/public/rtc/files/iqsslogo-2014_0.png'></img></a></p>
 </div>
 </body>
 </html>

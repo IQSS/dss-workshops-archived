@@ -4,99 +4,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
 <title>Introduction to R Graphics with <code>ggplot2</code></title>
-<!-- 2015-02-27 Fri 08:53 -->
+<!-- 2015-04-22 Wed 22:40 -->
 <meta  http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta  name="generator" content="Org-mode" />
-<style type="text/css">
- <!--/*--><![CDATA[/*><!--*/
-  .title  { text-align: center; }
-  .todo   { font-family: monospace; color: red; }
-  .done   { color: green; }
-  .tag    { background-color: #eee; font-family: monospace;
-            padding: 2px; font-size: 80%; font-weight: normal; }
-  .timestamp { color: #bebebe; }
-  .timestamp-kwd { color: #5f9ea0; }
-  .right  { margin-left: auto; margin-right: 0px;  text-align: right; }
-  .left   { margin-left: 0px;  margin-right: auto; text-align: left; }
-  .center { margin-left: auto; margin-right: auto; text-align: center; }
-  .underline { text-decoration: underline; }
-  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
-  p.verse { margin-left: 3%; }
-  pre {
-    border: 1px solid #ccc;
-    box-shadow: 3px 3px 3px #eee;
-    padding: 8pt;
-    font-family: monospace;
-    overflow: auto;
-    margin: 1.2em;
-  }
-  pre.src {
-    position: relative;
-    overflow: visible;
-    padding-top: 1.2em;
-  }
-  pre.src:before {
-    display: none;
-    position: absolute;
-    background-color: white;
-    top: -10px;
-    right: 10px;
-    padding: 3px;
-    border: 1px solid black;
-  }
-  pre.src:hover:before { display: inline;}
-  pre.src-sh:before    { content: 'sh'; }
-  pre.src-bash:before  { content: 'sh'; }
-  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
-  pre.src-R:before     { content: 'R'; }
-  pre.src-perl:before  { content: 'Perl'; }
-  pre.src-java:before  { content: 'Java'; }
-  pre.src-sql:before   { content: 'SQL'; }
-
-  table { border-collapse:collapse; }
-  caption.t-above { caption-side: top; }
-  caption.t-bottom { caption-side: bottom; }
-  td, th { vertical-align:top;  }
-  th.right  { text-align: center;  }
-  th.left   { text-align: center;   }
-  th.center { text-align: center; }
-  td.right  { text-align: right;  }
-  td.left   { text-align: left;   }
-  td.center { text-align: center; }
-  dt { font-weight: bold; }
-  .footpara:nth-child(2) { display: inline; }
-  .footpara { display: block; }
-  .footdef  { margin-bottom: 1em; }
-  .figure { padding: 1em; }
-  .figure p { text-align: center; }
-  .inlinetask {
-    padding: 10px;
-    border: 2px solid gray;
-    margin: 10px;
-    background: #ffffcc;
-  }
-  #org-div-home-and-up
-   { text-align: right; font-size: 70%; white-space: nowrap; }
-  textarea { overflow-x: auto; }
-  .linenr { font-size: smaller }
-  .code-highlighted { background-color: #ffff00; }
-  .org-info-js_info-navigation { border-style: none; }
-  #org-info-js_console-label
-    { font-size: 10px; font-weight: bold; white-space: nowrap; }
-  .org-info-js_search-highlight
-    { background-color: #ffff00; color: #000000; font-weight: bold; }
-  /*]]>*/-->
-</style>
-<link rel="stylesheet" type="text/css" href="https://rawgit.com/fniessen/org-html-themes/master/styles/bigblow/css/htmlize.css"/>
-<link rel="stylesheet" type="text/css" href="https://rawgit.com/fniessen/org-html-themes/master/styles/bigblow/css/bigblow.css"/>
-<link rel="stylesheet" type="text/css" href="https://rawgit.com/fniessen/org-html-themes/master/styles/bigblow/css/hideshow.css"/>
-<script type="text/javascript" src="https://rawgit.com/fniessen/org-html-themes/master/styles/bigblow/js/jquery-1.11.0.min.js"></script>
-<script type="text/javascript" src="https://rawgit.com/fniessen/org-html-themes/master/styles/bigblow/js/jquery-ui-1.10.2.min.js"></script>
-<script type="text/javascript" src="https://rawgit.com/fniessen/org-html-themes/master/styles/bigblow/js/jquery.localscroll-min.js"></script>
-<script type="text/javascript" src="https://rawgit.com/fniessen/org-html-themes/master/styles/bigblow/js/jquery.scrollTo-1.4.3.1-min.js"></script>
-<script type="text/javascript" src="https://rawgit.com/fniessen/org-html-themes/master/styles/bigblow/js/jquery.zclip.min.js"></script>
-<script type="text/javascript" src="https://rawgit.com/fniessen/org-html-themes/master/styles/bigblow/js/bigblow.js"></script>
-<script type="text/javascript" src="https://rawgit.com/fniessen/org-html-themes/master/styles/bigblow/js/hideshow.js"></script>
+<link rel="stylesheet" type="text/css" href="http://tutorials.iq.harvard.edu/org-html-themes/styles/readtheorg/css/readtheorg.css"/>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="http://tutorials.iq.harvard.edu/org-html-themes/styles/readtheorg/js/readtheorg.js"></script>
 <script type="text/javascript">
 /*
 @licstart  The following is the entire license notice for the
@@ -151,97 +65,97 @@ for the JavaScript code in this tag.
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#sec-1">1. Introduction</a>
+<li><a href="#sec-1">Introduction</a>
 <ul>
-<li><a href="#sec-1-1">1.1. Materials and setup</a>
+<li><a href="#sec-1-1">Materials and setup</a>
 <ul>
-<li><a href="#sec-1-1-1">1.1.1. Lab computer users: Log in using the user name and password on the board to your left.&#xa0;&#xa0;&#xa0;<span class="tag"><span class="labsetup">labsetup</span></span></a></li>
-<li><a href="#sec-1-1-2">1.1.2. Laptop users: You should have R installed &#x2013;if not:</a></li>
-<li><a href="#sec-1-1-3">1.1.3. Everyone: Download workshop materials:</a></li>
+<li><a href="#sec-1-1-1">Lab computer users: Log in using the user name and password on the board to your left.&#xa0;&#xa0;&#xa0;<span class="tag"><span class="labsetup">labsetup</span></span></a></li>
+<li><a href="#sec-1-1-2">Laptop users: You should have R installed &#x2013;if not:</a></li>
+<li><a href="#sec-1-1-3">Everyone: Download workshop materials:</a></li>
 </ul>
 </li>
-<li><a href="#sec-1-2">1.2. Workshop Overview</a></li>
-<li><a href="#sec-1-3">1.3. Starting A The End</a></li>
-<li><a href="#sec-1-4">1.4. Why <code>ggplot2</code>?</a></li>
-<li><a href="#sec-1-5">1.5. What Is The Grammar Of Graphics?</a></li>
-<li><a href="#sec-1-6">1.6. The structure of a <code>ggplot</code></a></li>
-<li><a href="#sec-1-7">1.7. Example Data: <code>Housing prices</code></a></li>
-<li><a href="#sec-1-8">1.8. <code>ggplot2</code> VS Base Graphics</a></li>
-<li><a href="#sec-1-9">1.9. <code>ggplot2</code> VS Base for simple graphs</a></li>
-<li><a href="#sec-1-10">1.10. <code>ggplot2</code> Base graphics VS <code>ggplot</code> for more complex graphs:</a></li>
+<li><a href="#sec-1-2">Workshop Overview</a></li>
+<li><a href="#sec-1-3">Starting A The End</a></li>
+<li><a href="#sec-1-4">Why <code>ggplot2</code>?</a></li>
+<li><a href="#sec-1-5">What Is The Grammar Of Graphics?</a></li>
+<li><a href="#sec-1-6">The structure of a <code>ggplot</code></a></li>
+<li><a href="#sec-1-7">Example Data: <code>Housing prices</code></a></li>
+<li><a href="#sec-1-8"><code>ggplot2</code> VS Base Graphics</a></li>
+<li><a href="#sec-1-9"><code>ggplot2</code> VS Base for simple graphs</a></li>
+<li><a href="#sec-1-10"><code>ggplot2</code> Base graphics VS <code>ggplot</code> for more complex graphs:</a></li>
 </ul>
 </li>
-<li><a href="#sec-2">2. Geometric Objects And Aesthetics</a>
+<li><a href="#sec-2">Geometric Objects And Aesthetics</a>
 <ul>
-<li><a href="#sec-2-1">2.1. Aesthetic Mapping</a></li>
-<li><a href="#sec-2-2">2.2. Geometic Objects (<code>geom</code>)</a></li>
-<li><a href="#sec-2-3">2.3. Points (Scatterplot)</a></li>
-<li><a href="#sec-2-4">2.4. Lines (Prediction Line)</a></li>
-<li><a href="#sec-2-5">2.5. Smoothers</a></li>
-<li><a href="#sec-2-6">2.6. Text (Label Points)</a></li>
-<li><a href="#sec-2-7">2.7. Aesthetic Mapping VS Assignment</a></li>
-<li><a href="#sec-2-8">2.8. Mapping Variables To Other Aesthetics</a></li>
-<li><a href="#sec-2-9">2.9. Exercise I</a></li>
+<li><a href="#sec-2-1">Aesthetic Mapping</a></li>
+<li><a href="#sec-2-2">Geometic Objects (<code>geom</code>)</a></li>
+<li><a href="#sec-2-3">Points (Scatterplot)</a></li>
+<li><a href="#sec-2-4">Lines (Prediction Line)</a></li>
+<li><a href="#sec-2-5">Smoothers</a></li>
+<li><a href="#sec-2-6">Text (Label Points)</a></li>
+<li><a href="#sec-2-7">Aesthetic Mapping VS Assignment</a></li>
+<li><a href="#sec-2-8">Mapping Variables To Other Aesthetics</a></li>
+<li><a href="#sec-2-9">Exercise I</a></li>
 </ul>
 </li>
-<li><a href="#sec-3">3. Statistical Transformations</a>
+<li><a href="#sec-3">Statistical Transformations</a>
 <ul>
-<li><a href="#sec-3-1">3.1. Statistical Transformations</a></li>
-<li><a href="#sec-3-2">3.2. Setting Statistical Transformation Arguments</a></li>
-<li><a href="#sec-3-3">3.3. Changing The Statistical Transformation</a></li>
-<li><a href="#sec-3-4">3.4. Exercise II</a></li>
+<li><a href="#sec-3-1">Statistical Transformations</a></li>
+<li><a href="#sec-3-2">Setting Statistical Transformation Arguments</a></li>
+<li><a href="#sec-3-3">Changing The Statistical Transformation</a></li>
+<li><a href="#sec-3-4">Exercise II</a></li>
 </ul>
 </li>
-<li><a href="#sec-4">4. Scales</a>
+<li><a href="#sec-4">Scales</a>
 <ul>
-<li><a href="#sec-4-1">4.1. Scales: Controlling Aesthetic Mapping</a></li>
-<li><a href="#sec-4-2">4.2. Common Scale Arguments</a></li>
-<li><a href="#sec-4-3">4.3. Scale Modification Examples</a></li>
-<li><a href="#sec-4-4">4.4. Using different color scales</a></li>
-<li><a href="#sec-4-5">4.5. Available Scales</a></li>
-<li><a href="#sec-4-6">4.6. Exercise II</a></li>
+<li><a href="#sec-4-1">Scales: Controlling Aesthetic Mapping</a></li>
+<li><a href="#sec-4-2">Common Scale Arguments</a></li>
+<li><a href="#sec-4-3">Scale Modification Examples</a></li>
+<li><a href="#sec-4-4">Using different color scales</a></li>
+<li><a href="#sec-4-5">Available Scales</a></li>
+<li><a href="#sec-4-6">Exercise II</a></li>
 </ul>
 </li>
-<li><a href="#sec-5">5. Faceting</a>
+<li><a href="#sec-5">Faceting</a>
 <ul>
-<li><a href="#sec-5-1">5.1. Faceting</a></li>
-<li><a href="#sec-5-2">5.2. What is the trend in housing prices in each state?</a></li>
-<li><a href="#sec-5-3">5.3. Faceting to the rescue</a></li>
+<li><a href="#sec-5-1">Faceting</a></li>
+<li><a href="#sec-5-2">What is the trend in housing prices in each state?</a></li>
+<li><a href="#sec-5-3">Faceting to the rescue</a></li>
 </ul>
 </li>
-<li><a href="#sec-6">6. Themes</a>
+<li><a href="#sec-6">Themes</a>
 <ul>
-<li><a href="#sec-6-1">6.1. Themes</a></li>
-<li><a href="#sec-6-2">6.2. Overriding theme defaults</a></li>
-<li><a href="#sec-6-3">6.3. Creating and saving new themes</a></li>
+<li><a href="#sec-6-1">Themes</a></li>
+<li><a href="#sec-6-2">Overriding theme defaults</a></li>
+<li><a href="#sec-6-3">Creating and saving new themes</a></li>
 </ul>
 </li>
-<li><a href="#sec-7">7. The #1 FAQ</a>
+<li><a href="#sec-7">The #1 FAQ</a>
 <ul>
-<li><a href="#sec-7-1">7.1. Map Aesthetic To Different Columns</a>
+<li><a href="#sec-7-1">Map Aesthetic To Different Columns</a>
 <ul>
-<li><a href="#sec-7-1-1">7.1.1. Wrong</a></li>
-<li><a href="#sec-7-1-2">7.1.2. Right</a></li>
+<li><a href="#sec-7-1-1">Wrong</a></li>
+<li><a href="#sec-7-1-2">Right</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li><a href="#sec-8">8. Putting It All Together</a>
+<li><a href="#sec-8">Putting It All Together</a>
 <ul>
-<li><a href="#sec-8-1">8.1. Challenge: Recreate This <code>Economist</code> Graph</a></li>
+<li><a href="#sec-8-1">Challenge: Recreate This <code>Economist</code> Graph</a></li>
 </ul>
 </li>
-<li><a href="#sec-9">9. Challenge Solution&#xa0;&#xa0;&#xa0;<span class="tag"><span class="prototype">prototype</span></span></a>
+<li><a href="#sec-9">Challenge Solution&#xa0;&#xa0;&#xa0;<span class="tag"><span class="prototype">prototype</span></span></a>
 <ul>
-<li><a href="#sec-9-1">9.1. Challenge Solution&#xa0;&#xa0;&#xa0;<span class="tag"><span class="prototype">prototype</span></span></a></li>
-<li><a href="#sec-9-2">9.2. Challenge Solution&#xa0;&#xa0;&#xa0;<span class="tag"><span class="prototype">prototype</span></span></a></li>
-<li><a href="#sec-9-3">9.3. Challenge Solution&#xa0;&#xa0;&#xa0;<span class="tag"><span class="prototype">prototype</span></span></a></li>
+<li><a href="#sec-9-1">Challenge Solution&#xa0;&#xa0;&#xa0;<span class="tag"><span class="prototype">prototype</span></span></a></li>
+<li><a href="#sec-9-2">Challenge Solution&#xa0;&#xa0;&#xa0;<span class="tag"><span class="prototype">prototype</span></span></a></li>
+<li><a href="#sec-9-3">Challenge Solution&#xa0;&#xa0;&#xa0;<span class="tag"><span class="prototype">prototype</span></span></a></li>
 </ul>
 </li>
-<li><a href="#sec-10">10. Wrap-up</a>
+<li><a href="#sec-10">Wrap-up</a>
 <ul>
-<li><a href="#sec-10-1">10.1. Help Us Make This Workshop Even Better!</a></li>
-<li><a href="#sec-10-2">10.2. Additional resources</a></li>
+<li><a href="#sec-10-1">Help Us Make This Workshop Even Better!</a></li>
+<li><a href="#sec-10-2">Additional resources</a></li>
 </ul>
 </li>
 </ul>
@@ -249,39 +163,39 @@ for the JavaScript code in this tag.
 </div>
 
 <div id="outline-container-sec-1" class="outline-2">
-<h2 id="sec-1"><span class="section-number-2">1</span> Introduction</h2>
+<h2 id="sec-1">Introduction</h2>
 <div class="outline-text-2" id="text-1">
 </div><div id="outline-container-sec-1-1" class="outline-3">
-<h3 id="sec-1-1"><span class="section-number-3">1.1</span> Materials and setup</h3>
+<h3 id="sec-1-1">Materials and setup</h3>
 <div class="outline-text-3" id="text-1-1">
 </div><div id="outline-container-sec-1-1-1" class="outline-4">
-<h4 id="sec-1-1-1"><span class="section-number-4">1.1.1</span> Lab computer users: Log in using the user name and password on the board to your left.&#xa0;&#xa0;&#xa0;<span class="tag"><span class="labsetup">labsetup</span></span></h4>
+<h4 id="sec-1-1-1">Lab computer users: Log in using the user name and password on the board to your left.&#xa0;&#xa0;&#xa0;<span class="tag"><span class="labsetup">labsetup</span></span></h4>
 </div>
 
 <div id="outline-container-sec-1-1-2" class="outline-4">
-<h4 id="sec-1-1-2"><span class="section-number-4">1.1.2</span> Laptop users: You should have R installed &#x2013;if not:</h4>
+<h4 id="sec-1-1-2">Laptop users: You should have R installed &#x2013;if not:</h4>
 <div class="outline-text-4" id="text-1-1-2">
-</div><ol class="org-ol"><li><a id="sec-1-1-2-1" name="sec-1-1-2-1"></a>Open a web browser and go to <a href="http://cran.r-project.org">http://cran.r-project.org</a> and download and install it<br  /></li>
+</div><ul class="org-ul"><li><a id="sec-1-1-2-1" name="sec-1-1-2-1"></a>Open a web browser and go to <a href="http://cran.r-project.org">http://cran.r-project.org</a> and download and install it<br  /></li>
 <li><a id="sec-1-1-2-2" name="sec-1-1-2-2"></a>Also helpful to install RStudio (download from <a href="http://rstudio.com">http://rstudio.com</a>)<br  /></li>
-<li><a id="sec-1-1-2-3" name="sec-1-1-2-3"></a>In R, type <code>install.packages("ggplot2")</code> to install the ggplot2 package.<br  /></li></ol>
+<li><a id="sec-1-1-2-3" name="sec-1-1-2-3"></a>In R, type <code>install.packages("ggplot2")</code> to install the ggplot2 package.<br  /></li></ul>
 </div>
 
 <div id="outline-container-sec-1-1-3" class="outline-4">
-<h4 id="sec-1-1-3"><span class="section-number-4">1.1.3</span> Everyone: Download workshop materials:</h4>
+<h4 id="sec-1-1-3">Everyone: Download workshop materials:</h4>
 <div class="outline-text-4" id="text-1-1-3">
-</div><ol class="org-ol"><li><a id="sec-1-1-3-1" name="sec-1-1-3-1"></a>Download materials from <a href="http://tutorials.iq.harvard.edu/R/Rgraphics.zip">http://tutorials.iq.harvard.edu/R/Rgraphics.zip</a><br  /></li>
+</div><ul class="org-ul"><li><a id="sec-1-1-3-1" name="sec-1-1-3-1"></a>Download materials from <a href="http://tutorials.iq.harvard.edu/R/Rgraphics.zip">http://tutorials.iq.harvard.edu/R/Rgraphics.zip</a><br  /></li>
 <li><a id="sec-1-1-3-2" name="sec-1-1-3-2"></a>Extract the zip file containing the materials to your desktop<br  /><div class="outline-text-5" id="text-1-1-3-2">
 <p>
 Workshop notes are available in .hmtl format. Open a file browser, navigate to your desktop and open Rgraphics.html
 </p>
 </div>
-</li></ol>
+</li></ul>
 </div>
 </div>
 
 
 <div id="outline-container-sec-1-2" class="outline-3">
-<h3 id="sec-1-2"><span class="section-number-3">1.2</span> Workshop Overview</h3>
+<h3 id="sec-1-2">Workshop Overview</h3>
 <div class="outline-text-3" id="text-1-2">
 <p>
 Class Structure and Organization:
@@ -311,7 +225,7 @@ This is an intermediate R course:
 
 
 <div id="outline-container-sec-1-3" class="outline-3">
-<h3 id="sec-1-3"><span class="section-number-3">1.3</span> Starting A The End</h3>
+<h3 id="sec-1-3">Starting A The End</h3>
 <div class="outline-text-3" id="text-1-3">
 <p>
 My goal: by the end of the workshop you will be able to reproduce this graphic from the Economist:
@@ -327,7 +241,7 @@ My goal: by the end of the workshop you will be able to reproduce this graphic f
 
 
 <div id="outline-container-sec-1-4" class="outline-3">
-<h3 id="sec-1-4"><span class="section-number-3">1.4</span> Why <code>ggplot2</code>?</h3>
+<h3 id="sec-1-4">Why <code>ggplot2</code>?</h3>
 <div class="outline-text-3" id="text-1-4">
 <p>
 Advantages of ggplot2
@@ -363,7 +277,7 @@ That said, there are some things you cannot (or should not) do With ggplot2:
 
 
 <div id="outline-container-sec-1-5" class="outline-3">
-<h3 id="sec-1-5"><span class="section-number-3">1.5</span> What Is The Grammar Of Graphics?</h3>
+<h3 id="sec-1-5">What Is The Grammar Of Graphics?</h3>
 <div class="outline-text-3" id="text-1-5">
 <p>
 The basic idea: independently specify plot building blocks and combine them to create just about any kind of graphical display you want. Building blocks of a graph include:
@@ -391,7 +305,7 @@ The basic idea: independently specify plot building blocks and combine them to c
 
 
 <div id="outline-container-sec-1-6" class="outline-3">
-<h3 id="sec-1-6"><span class="section-number-3">1.6</span> The structure of a <code>ggplot</code></h3>
+<h3 id="sec-1-6">The structure of a <code>ggplot</code></h3>
 <div class="outline-text-3" id="text-1-6">
 <p>
 The <code>ggplot()</code> function is used to initialize the basic graph structure, then we add to it. The structure of a ggplot looks like this:
@@ -431,7 +345,7 @@ Don't be afraid, you will understand this by the end of the workshop! The basic 
 
 
 <div id="outline-container-sec-1-7" class="outline-3">
-<h3 id="sec-1-7"><span class="section-number-3">1.7</span> Example Data: <code>Housing prices</code></h3>
+<h3 id="sec-1-7">Example Data: <code>Housing prices</code></h3>
 <div class="outline-text-3" id="text-1-7">
 <p>
 Let's look at housing prices.
@@ -463,7 +377,7 @@ Let's look at housing prices.
 </div>
 
 <div id="outline-container-sec-1-8" class="outline-3">
-<h3 id="sec-1-8"><span class="section-number-3">1.8</span> <code>ggplot2</code> VS Base Graphics</h3>
+<h3 id="sec-1-8"><code>ggplot2</code> VS Base Graphics</h3>
 <div class="outline-text-3" id="text-1-8">
 <p>
 Compared to base graphics, <code>ggplot2</code>
@@ -483,7 +397,7 @@ Compared to base graphics, <code>ggplot2</code>
 
 
 <div id="outline-container-sec-1-9" class="outline-3">
-<h3 id="sec-1-9"><span class="section-number-3">1.9</span> <code>ggplot2</code> VS Base for simple graphs</h3>
+<h3 id="sec-1-9"><code>ggplot2</code> VS Base for simple graphs</h3>
 <div class="outline-text-3" id="text-1-9">
 <p>
 Base graphics histogram example:
@@ -523,7 +437,7 @@ Base wins!
 
 
 <div id="outline-container-sec-1-10" class="outline-3">
-<h3 id="sec-1-10"><span class="section-number-3">1.10</span> <code>ggplot2</code> Base graphics VS <code>ggplot</code> for more complex graphs:</h3>
+<h3 id="sec-1-10"><code>ggplot2</code> Base graphics VS <code>ggplot</code> for more complex graphs:</h3>
 <div class="outline-text-3" id="text-1-10">
 <p>
 Base colored scatter plot example:
@@ -579,10 +493,10 @@ Base colored scatter plot example:
 </div>
 
 <div id="outline-container-sec-2" class="outline-2">
-<h2 id="sec-2"><span class="section-number-2">2</span> Geometric Objects And Aesthetics</h2>
+<h2 id="sec-2">Geometric Objects And Aesthetics</h2>
 <div class="outline-text-2" id="text-2">
 </div><div id="outline-container-sec-2-1" class="outline-3">
-<h3 id="sec-2-1"><span class="section-number-3">2.1</span> Aesthetic Mapping</h3>
+<h3 id="sec-2-1">Aesthetic Mapping</h3>
 <div class="outline-text-3" id="text-2-1">
 <p>
 In ggplot land <i>aesthetic</i> means "something you can see". Examples include:
@@ -609,7 +523,7 @@ Each type of geom accepts only a subset of all aesthetics&#x2013;refer to the ge
 </div>
 
 <div id="outline-container-sec-2-2" class="outline-3">
-<h3 id="sec-2-2"><span class="section-number-3">2.2</span> Geometic Objects (<code>geom</code>)</h3>
+<h3 id="sec-2-2">Geometic Objects (<code>geom</code>)</h3>
 <div class="outline-text-3" id="text-2-2">
 <p>
 Geometric objects are the actual marks we put on a plot. Examples include:
@@ -641,7 +555,7 @@ or simply type <code>geom_&lt;tab&gt;</code> in any good R IDE (such as Rstudio 
 </div>
 
 <div id="outline-container-sec-2-3" class="outline-3">
-<h3 id="sec-2-3"><span class="section-number-3">2.3</span> Points (Scatterplot)</h3>
+<h3 id="sec-2-3">Points (Scatterplot)</h3>
 <div class="outline-text-3" id="text-2-3">
 <p>
 Now that we know about geometric objects and aesthetic mapping, we can make a ggplot. <code>geom_point</code> requires mappings for x and y, all others are optional.
@@ -665,7 +579,7 @@ Now that we know about geometric objects and aesthetic mapping, we can make a gg
 </div>
 </div>
 <div id="outline-container-sec-2-4" class="outline-3">
-<h3 id="sec-2-4"><span class="section-number-3">2.4</span> Lines (Prediction Line)</h3>
+<h3 id="sec-2-4">Lines (Prediction Line)</h3>
 <div class="outline-text-3" id="text-2-4">
 <p>
 A plot constructed with <code>ggplot</code> can have more than one geom. In that case the mappings established in the <code>ggplot()</code> call are plot defaults that can be added to or overridden. Our plot could use a regression line:
@@ -692,7 +606,7 @@ p1 <span style="color: #D0372D;">+</span> <span style="color: #006699;">geom_poi
 </div>
 
 <div id="outline-container-sec-2-5" class="outline-3">
-<h3 id="sec-2-5"><span class="section-number-3">2.5</span> Smoothers</h3>
+<h3 id="sec-2-5">Smoothers</h3>
 <div class="outline-text-3" id="text-2-5">
 <p>
 Not all geometric objects are simple shapes&#x2013;the smooth geom includes a line and a ribbon.
@@ -716,7 +630,7 @@ Not all geometric objects are simple shapes&#x2013;the smooth geom includes a li
 </div>
 
 <div id="outline-container-sec-2-6" class="outline-3">
-<h3 id="sec-2-6"><span class="section-number-3">2.6</span> Text (Label Points)</h3>
+<h3 id="sec-2-6">Text (Label Points)</h3>
 <div class="outline-text-3" id="text-2-6">
 <p>
 Each <code>geom</code> accepts a particualar set of mappings&#x2013;for example <code>geom_text()</code> accepts a <code>labels</code> mapping.
@@ -739,7 +653,7 @@ Each <code>geom</code> accepts a particualar set of mappings&#x2013;for example 
 </div>
 
 <div id="outline-container-sec-2-7" class="outline-3">
-<h3 id="sec-2-7"><span class="section-number-3">2.7</span> Aesthetic Mapping VS Assignment</h3>
+<h3 id="sec-2-7">Aesthetic Mapping VS Assignment</h3>
 <div class="outline-text-3" id="text-2-7">
 <p>
 Note that variables are mapped to aesthetics with the <code>aes()</code> function, while fixed aesthetics are set outside the <code>aes()</code> call. This sometimes leads to confusion, as in this example:
@@ -763,7 +677,7 @@ Note that variables are mapped to aesthetics with the <code>aes()</code> functio
 
 
 <div id="outline-container-sec-2-8" class="outline-3">
-<h3 id="sec-2-8"><span class="section-number-3">2.8</span> Mapping Variables To Other Aesthetics</h3>
+<h3 id="sec-2-8">Mapping Variables To Other Aesthetics</h3>
 <div class="outline-text-3" id="text-2-8">
 <p>
 Other aesthetics are mapped in the same way as x and y in the previous example.
@@ -786,7 +700,7 @@ Other aesthetics are mapped in the same way as x and y in the previous example.
 </div>
 
 <div id="outline-container-sec-2-9" class="outline-3">
-<h3 id="sec-2-9"><span class="section-number-3">2.9</span> Exercise I</h3>
+<h3 id="sec-2-9">Exercise I</h3>
 <div class="outline-text-3" id="text-2-9">
 <p>
 The data for the exercises is available in the <code>dataSets/EconomistData.csv</code> file. Read it in with 
@@ -824,10 +738,10 @@ These data consist of <i>Human Development Index</i> and <i>Corruption Perceptio
 </div>
 
 <div id="outline-container-sec-3" class="outline-2">
-<h2 id="sec-3"><span class="section-number-2">3</span> Statistical Transformations</h2>
+<h2 id="sec-3">Statistical Transformations</h2>
 <div class="outline-text-2" id="text-3">
 </div><div id="outline-container-sec-3-1" class="outline-3">
-<h3 id="sec-3-1"><span class="section-number-3">3.1</span> Statistical Transformations</h3>
+<h3 id="sec-3-1">Statistical Transformations</h3>
 <div class="outline-text-3" id="text-3-1">
 <p>
 Some plot types (such as scatterplots) do not require transformations&#x2013;each point is plotted at x and y coordinates equal to the original value. Other plots, such as boxplots, histograms, prediction lines etc. require statistical transformations:
@@ -861,7 +775,7 @@ NULL
 </div>
 
 <div id="outline-container-sec-3-2" class="outline-3">
-<h3 id="sec-3-2"><span class="section-number-3">3.2</span> Setting Statistical Transformation Arguments</h3>
+<h3 id="sec-3-2">Setting Statistical Transformation Arguments</h3>
 <div class="outline-text-3" id="text-3-2">
 <p>
 Arguments to <code>stat_</code> functions can be passed through <code>geom_</code> functions. This can be slightly annoying because in order to change it you have to first determine which stat the geom uses, then determine the arguments to that stat. 
@@ -912,7 +826,7 @@ but I prefer to construct my layers with <code>geom_</code> calls rather than <c
 </div>
 
 <div id="outline-container-sec-3-3" class="outline-3">
-<h3 id="sec-3-3"><span class="section-number-3">3.3</span> Changing The Statistical Transformation</h3>
+<h3 id="sec-3-3">Changing The Statistical Transformation</h3>
 <div class="outline-text-3" id="text-3-3">
 <p>
 Sometimes the default statistical transformation is not what you need. This is often the case with pre-summarized data:
@@ -981,7 +895,7 @@ What is the problem with the previous plot? Basically we take binned and summari
 </div>
 
 <div id="outline-container-sec-3-4" class="outline-3">
-<h3 id="sec-3-4"><span class="section-number-3">3.4</span> Exercise II</h3>
+<h3 id="sec-3-4">Exercise II</h3>
 <div class="outline-text-3" id="text-3-4">
 <ol class="org-ol">
 <li>Re-create a scatter plot with CPI on the x axis and HDI on the y axis (as you did in the previous exercise).
@@ -998,10 +912,10 @@ What is the problem with the previous plot? Basically we take binned and summari
 </div>
 
 <div id="outline-container-sec-4" class="outline-2">
-<h2 id="sec-4"><span class="section-number-2">4</span> Scales</h2>
+<h2 id="sec-4">Scales</h2>
 <div class="outline-text-2" id="text-4">
 </div><div id="outline-container-sec-4-1" class="outline-3">
-<h3 id="sec-4-1"><span class="section-number-3">4.1</span> Scales: Controlling Aesthetic Mapping</h3>
+<h3 id="sec-4-1">Scales: Controlling Aesthetic Mapping</h3>
 <div class="outline-text-3" id="text-4-1">
 <p>
 Aesthetic mapping (i.e., with <code>aes()</code>) only says that a variable should be mapped to an aesthetic. It doesn't say <i>how</i> that should happy. For example, when mapping a variable to <i>shape</i> with <code>aes(shape = x)</code> you don't say <i>what</i> shapes should be used. Similarly, <code>aes(color = z)</code> doesn't say <i>what</i> colors should be used. Describing what colors/shapes/sizes etc. to use is done by modifying the corresponding <i>scale</i>. In <code>ggplot2</code> scales include
@@ -1025,7 +939,7 @@ Scales are modified with a series of functions using a <code>scale_&lt;aesthetic
 </div>
 
 <div id="outline-container-sec-4-2" class="outline-3">
-<h3 id="sec-4-2"><span class="section-number-3">4.2</span> Common Scale Arguments</h3>
+<h3 id="sec-4-2">Common Scale Arguments</h3>
 <div class="outline-text-3" id="text-4-2">
 <p>
 The following arguments are common to most scales in ggplot2:
@@ -1048,7 +962,7 @@ Specific scale functions may have additional arguments; for example, the <code>s
 </div>
 
 <div id="outline-container-sec-4-3" class="outline-3">
-<h3 id="sec-4-3"><span class="section-number-3">4.3</span> Scale Modification Examples</h3>
+<h3 id="sec-4-3">Scale Modification Examples</h3>
 <div class="outline-text-3" id="text-4-3">
 <p>
 Start by constructing a dotplot showing the distribution of home values by Date and State.
@@ -1135,7 +1049,7 @@ Next change the low and high values to blue and red:
 </div>
 
 <div id="outline-container-sec-4-4" class="outline-3">
-<h3 id="sec-4-4"><span class="section-number-3">4.4</span> Using different color scales</h3>
+<h3 id="sec-4-4">Using different color scales</h3>
 <div class="outline-text-3" id="text-4-4">
 <p>
 ggplot2 has a wide variety of color scales; here is an example using <code>scale_color_gradient2</code> to interpolate between three different colors.
@@ -1163,7 +1077,7 @@ ggplot2 has a wide variety of color scales; here is an example using <code>scale
 </div>
 
 <div id="outline-container-sec-4-5" class="outline-3">
-<h3 id="sec-4-5"><span class="section-number-3">4.5</span> Available Scales</h3>
+<h3 id="sec-4-5">Available Scales</h3>
 <div class="outline-text-3" id="text-4-5">
 <ul class="org-ul">
 <li>Partial combination matrix of available scales
@@ -1282,7 +1196,7 @@ ggplot2 has a wide variety of color scales; here is an example using <code>scale
 </div>
 
 <div id="outline-container-sec-4-6" class="outline-3">
-<h3 id="sec-4-6"><span class="section-number-3">4.6</span> Exercise II</h3>
+<h3 id="sec-4-6">Exercise II</h3>
 <div class="outline-text-3" id="text-4-6">
 <ol class="org-ol">
 <li>Create a scatter plot with CPI on the x axis and HDI on the y axis. Color the points to indicate region.
@@ -1298,10 +1212,10 @@ ggplot2 has a wide variety of color scales; here is an example using <code>scale
 
 
 <div id="outline-container-sec-5" class="outline-2">
-<h2 id="sec-5"><span class="section-number-2">5</span> Faceting</h2>
+<h2 id="sec-5">Faceting</h2>
 <div class="outline-text-2" id="text-5">
 </div><div id="outline-container-sec-5-1" class="outline-3">
-<h3 id="sec-5-1"><span class="section-number-3">5.1</span> Faceting</h3>
+<h3 id="sec-5-1">Faceting</h3>
 <div class="outline-text-3" id="text-5-1">
 <ul class="org-ul">
 <li>Faceting is <code>ggplot2</code> parlance for <b>small multiples</b>
@@ -1324,7 +1238,7 @@ ggplot2 has a wide variety of color scales; here is an example using <code>scale
 
 
 <div id="outline-container-sec-5-2" class="outline-3">
-<h3 id="sec-5-2"><span class="section-number-3">5.2</span> What is the trend in housing prices in each state?</h3>
+<h3 id="sec-5-2">What is the trend in housing prices in each state?</h3>
 <div class="outline-text-3" id="text-5-2">
 <ul class="org-ul">
 <li>Start by using a technique we already know&#x2013;map State to color:
@@ -1351,7 +1265,7 @@ There are two problems here&#x2013;there are too many states to distinguish each
 </div>
 
 <div id="outline-container-sec-5-3" class="outline-3">
-<h3 id="sec-5-3"><span class="section-number-3">5.3</span> Faceting to the rescue</h3>
+<h3 id="sec-5-3">Faceting to the rescue</h3>
 <div class="outline-text-3" id="text-5-3">
 <p>
 We can remedy the deficiencies of the previous plot by faceting by state rather than mapping state to color.
@@ -1379,10 +1293,10 @@ There is also a <code>facet_grid()</code> function for faceting in two dimension
 </div>
 
 <div id="outline-container-sec-6" class="outline-2">
-<h2 id="sec-6"><span class="section-number-2">6</span> Themes</h2>
+<h2 id="sec-6">Themes</h2>
 <div class="outline-text-2" id="text-6">
 </div><div id="outline-container-sec-6-1" class="outline-3">
-<h3 id="sec-6-1"><span class="section-number-3">6.1</span> Themes</h3>
+<h3 id="sec-6-1">Themes</h3>
 <div class="outline-text-3" id="text-6-1">
 <p>
 The <code>ggplot2</code> theme system handles non-data plot elements such as
@@ -1436,7 +1350,7 @@ Built-in themes include:
 </div>
 
 <div id="outline-container-sec-6-2" class="outline-3">
-<h3 id="sec-6-2"><span class="section-number-3">6.2</span> Overriding theme defaults</h3>
+<h3 id="sec-6-2">Overriding theme defaults</h3>
 <div class="outline-text-3" id="text-6-2">
 <p>
 Specific theme elements can be overridden using <code>theme()</code>. For example:
@@ -1461,7 +1375,7 @@ All theme options are documented in <code>?theme</code>.
 </div>
 
 <div id="outline-container-sec-6-3" class="outline-3">
-<h3 id="sec-6-3"><span class="section-number-3">6.3</span> Creating and saving new themes</h3>
+<h3 id="sec-6-3">Creating and saving new themes</h3>
 <div class="outline-text-3" id="text-6-3">
 <p>
 You can create new themes, as in the following example:
@@ -1492,17 +1406,17 @@ p5 <span style="color: #D0372D;">+</span> theme_new
 </div>
 
 <div id="outline-container-sec-7" class="outline-2">
-<h2 id="sec-7"><span class="section-number-2">7</span> The #1 FAQ</h2>
+<h2 id="sec-7">The #1 FAQ</h2>
 <div class="outline-text-2" id="text-7">
 </div><div id="outline-container-sec-7-1" class="outline-3">
-<h3 id="sec-7-1"><span class="section-number-3">7.1</span> Map Aesthetic To Different Columns</h3>
+<h3 id="sec-7-1">Map Aesthetic To Different Columns</h3>
 <div class="outline-text-3" id="text-7-1">
 <p>
 The most frequently asked question goes something like this: <i>I have two variables in my data.frame, and I'd like to plot them as separate points, with different color depending on which variable it is. How do I do that?</i>
 </p>
 </div>
 <div id="outline-container-sec-7-1-1" class="outline-4">
-<h4 id="sec-7-1-1"><span class="section-number-4">7.1.1</span> Wrong</h4>
+<h4 id="sec-7-1-1">Wrong</h4>
 <div class="outline-text-4" id="text-7-1-1">
 <div class="org-src-container">
 
@@ -1528,7 +1442,7 @@ The most frequently asked question goes something like this: <i>I have two varia
 </div>
 
 <div id="outline-container-sec-7-1-2" class="outline-4">
-<h4 id="sec-7-1-2"><span class="section-number-4">7.1.2</span> Right</h4>
+<h4 id="sec-7-1-2">Right</h4>
 <div class="outline-text-4" id="text-7-1-2">
 <div class="org-src-container">
 
@@ -1558,10 +1472,10 @@ home.land.byyear <span style="color: #D0372D;">&lt;-</span> <span style="color: 
 </div>
 
 <div id="outline-container-sec-8" class="outline-2">
-<h2 id="sec-8"><span class="section-number-2">8</span> Putting It All Together</h2>
+<h2 id="sec-8">Putting It All Together</h2>
 <div class="outline-text-2" id="text-8">
 </div><div id="outline-container-sec-8-1" class="outline-3">
-<h3 id="sec-8-1"><span class="section-number-3">8.1</span> Challenge: Recreate This <code>Economist</code> Graph</h3>
+<h3 id="sec-8-1">Challenge: Recreate This <code>Economist</code> Graph</h3>
 <div class="outline-text-3" id="text-8-1">
 <p>
 <a href="images/Economist1.pdf">images/Economist1.pdf</a>
@@ -1585,7 +1499,7 @@ Building off of the graphics you created in the previous exercises, put the fini
 </div>
 
 <div id="outline-container-sec-9" class="outline-2">
-<h2 id="sec-9"><span class="section-number-2">9</span> Challenge Solution&#xa0;&#xa0;&#xa0;<span class="tag"><span class="prototype">prototype</span></span></h2>
+<h2 id="sec-9">Challenge Solution&#xa0;&#xa0;&#xa0;<span class="tag"><span class="prototype">prototype</span></span></h2>
 <div class="outline-text-2" id="text-9">
 <p>
 Create basic scatter plot
@@ -1612,7 +1526,7 @@ Create basic scatter plot
 </div>
 
 <div id="outline-container-sec-9-1" class="outline-3">
-<h3 id="sec-9-1"><span class="section-number-3">9.1</span> Challenge Solution&#xa0;&#xa0;&#xa0;<span class="tag"><span class="prototype">prototype</span></span></h3>
+<h3 id="sec-9-1">Challenge Solution&#xa0;&#xa0;&#xa0;<span class="tag"><span class="prototype">prototype</span></span></h3>
 <div class="outline-text-3" id="text-9-1">
 <p>
 Add labels
@@ -1640,7 +1554,7 @@ Add labels
 </div>
 
 <div id="outline-container-sec-9-2" class="outline-3">
-<h3 id="sec-9-2"><span class="section-number-3">9.2</span> Challenge Solution&#xa0;&#xa0;&#xa0;<span class="tag"><span class="prototype">prototype</span></span></h3>
+<h3 id="sec-9-2">Challenge Solution&#xa0;&#xa0;&#xa0;<span class="tag"><span class="prototype">prototype</span></span></h3>
 <div class="outline-text-3" id="text-9-2">
 <p>
 Add smoothing line
@@ -1668,7 +1582,7 @@ Add smoothing line
 </div>
 
 <div id="outline-container-sec-9-3" class="outline-3">
-<h3 id="sec-9-3"><span class="section-number-3">9.3</span> Challenge Solution&#xa0;&#xa0;&#xa0;<span class="tag"><span class="prototype">prototype</span></span></h3>
+<h3 id="sec-9-3">Challenge Solution&#xa0;&#xa0;&#xa0;<span class="tag"><span class="prototype">prototype</span></span></h3>
 <div class="outline-text-3" id="text-9-3">
 <p>
 Finishing touches
@@ -1695,10 +1609,10 @@ Finishing touches
 
 
 <div id="outline-container-sec-10" class="outline-2">
-<h2 id="sec-10"><span class="section-number-2">10</span> Wrap-up</h2>
+<h2 id="sec-10">Wrap-up</h2>
 <div class="outline-text-2" id="text-10">
 </div><div id="outline-container-sec-10-1" class="outline-3">
-<h3 id="sec-10-1"><span class="section-number-3">10.1</span> Help Us Make This Workshop Even Better!</h3>
+<h3 id="sec-10-1">Help Us Make This Workshop Even Better!</h3>
 <div class="outline-text-3" id="text-10-1">
 <ul class="org-ul">
 <li>Please take a moment to fill out a very short feedback form 
@@ -1712,7 +1626,7 @@ Finishing touches
 </div>
 
 <div id="outline-container-sec-10-2" class="outline-3">
-<h3 id="sec-10-2"><span class="section-number-3">10.2</span> Additional resources</h3>
+<h3 id="sec-10-2">Additional resources</h3>
 <div class="outline-text-3" id="text-10-2">
 <ul class="org-ul">
 <li>ggplot2 resources
@@ -1741,7 +1655,7 @@ Finishing touches
 </div>
 </div>
 <div id="postamble" class="status">
-<p><button onclick="clickNextTab()">Next</button></p>
+<p><a rel='license' href='http://creativecommons.org/licenses/by-sa/4.0/'><img alt='Creative Commons License' style='border-width:0' src='https://i.creativecommons.org/l/by-sa/4.0/80x15.png' /></a><span xmlns:dct='http://purl.org/dc/terms/' property='dct:title'> These statistical software workshop materials</span> by <a xmlns:cc='http://creativecommons.org/ns#' href='http://rtc.iq.harvard.edu' property='cc:attributionName' rel='cc:attributionURL'>Harvard University</a> are licensed under a <a rel='license' href='http://creativecommons.org/licenses/by-sa/4.0/'>Creative Commons Attribution-ShareAlike 4.0 International License</a>.</p> <p> Presented by <a href='http://rtc.iq.harvard.edu'>Research Technology Consulting</a> at <br></br> <a href='http://iq.harvard.edu'><img style='margin-left: auto; margin-right: auto;' alt='The Institute for Quantitative Social Science' title='IQSS logo' src='http://static.projects.iq.harvard.edu/files/styles/os_files_small/public/rtc/files/iqsslogo-2014_0.png'></img></a></p>
 </div>
 </body>
 </html>

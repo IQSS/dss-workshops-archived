@@ -4,89 +4,9 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
 <title>Regression Models in R</title>
-<!-- 2015-04-22 Wed 16:18 -->
+<!-- 2015-04-22 Wed 22:40 -->
 <meta  http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta  name="generator" content="Org-mode" />
-<style type="text/css">
- <!--/*--><![CDATA[/*><!--*/
-  .title  { text-align: center; }
-  .todo   { font-family: monospace; color: red; }
-  .done   { color: green; }
-  .tag    { background-color: #eee; font-family: monospace;
-            padding: 2px; font-size: 80%; font-weight: normal; }
-  .timestamp { color: #bebebe; }
-  .timestamp-kwd { color: #5f9ea0; }
-  .right  { margin-left: auto; margin-right: 0px;  text-align: right; }
-  .left   { margin-left: 0px;  margin-right: auto; text-align: left; }
-  .center { margin-left: auto; margin-right: auto; text-align: center; }
-  .underline { text-decoration: underline; }
-  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
-  p.verse { margin-left: 3%; }
-  pre {
-    border: 1px solid #ccc;
-    box-shadow: 3px 3px 3px #eee;
-    padding: 8pt;
-    font-family: monospace;
-    overflow: auto;
-    margin: 1.2em;
-  }
-  pre.src {
-    position: relative;
-    overflow: visible;
-    padding-top: 1.2em;
-  }
-  pre.src:before {
-    display: none;
-    position: absolute;
-    background-color: white;
-    top: -10px;
-    right: 10px;
-    padding: 3px;
-    border: 1px solid black;
-  }
-  pre.src:hover:before { display: inline;}
-  pre.src-sh:before    { content: 'sh'; }
-  pre.src-bash:before  { content: 'sh'; }
-  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
-  pre.src-R:before     { content: 'R'; }
-  pre.src-perl:before  { content: 'Perl'; }
-  pre.src-java:before  { content: 'Java'; }
-  pre.src-sql:before   { content: 'SQL'; }
-
-  table { border-collapse:collapse; }
-  caption.t-above { caption-side: top; }
-  caption.t-bottom { caption-side: bottom; }
-  td, th { vertical-align:top;  }
-  th.right  { text-align: center;  }
-  th.left   { text-align: center;   }
-  th.center { text-align: center; }
-  td.right  { text-align: right;  }
-  td.left   { text-align: left;   }
-  td.center { text-align: center; }
-  dt { font-weight: bold; }
-  .footpara:nth-child(2) { display: inline; }
-  .footpara { display: block; }
-  .footdef  { margin-bottom: 1em; }
-  .figure { padding: 1em; }
-  .figure p { text-align: center; }
-  .inlinetask {
-    padding: 10px;
-    border: 2px solid gray;
-    margin: 10px;
-    background: #ffffcc;
-  }
-  #org-div-home-and-up
-   { text-align: right; font-size: 70%; white-space: nowrap; }
-  textarea { overflow-x: auto; }
-  .linenr { font-size: smaller }
-  .code-highlighted { background-color: #ffff00; }
-  .org-info-js_info-navigation { border-style: none; }
-  #org-info-js_console-label
-    { font-size: 10px; font-weight: bold; white-space: nowrap; }
-  .org-info-js_search-highlight
-    { background-color: #ffff00; color: #000000; font-weight: bold; }
-  /*]]>*/-->
-</style>
 <link rel="stylesheet" type="text/css" href="http://tutorials.iq.harvard.edu/org-html-themes/styles/readtheorg/css/readtheorg.css"/>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
@@ -145,69 +65,69 @@ for the JavaScript code in this tag.
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#sec-1">1. Introduction</a>
+<li><a href="#sec-1">Introduction</a>
 <ul>
-<li><a href="#sec-1-1">1.1. Workshop description</a></li>
-<li><a href="#sec-1-2">1.2. Materials and Setup&#xa0;&#xa0;&#xa0;<span class="tag"><span class="labsetup">labsetup</span></span></a></li>
-<li><a href="#sec-1-3">1.3. Launch RStudio&#xa0;&#xa0;&#xa0;<span class="tag"><span class="labsetup">labsetup</span></span></a></li>
-<li><a href="#sec-1-4">1.4. Set working directory</a></li>
-<li><a href="#sec-1-5">1.5. Load the states data</a></li>
+<li><a href="#sec-1-1">Workshop description</a></li>
+<li><a href="#sec-1-2">Materials and Setup&#xa0;&#xa0;&#xa0;<span class="tag"><span class="labsetup">labsetup</span></span></a></li>
+<li><a href="#sec-1-3">Launch RStudio&#xa0;&#xa0;&#xa0;<span class="tag"><span class="labsetup">labsetup</span></span></a></li>
+<li><a href="#sec-1-4">Set working directory</a></li>
+<li><a href="#sec-1-5">Load the states data</a></li>
 </ul>
 </li>
-<li><a href="#sec-2">2. Linear regression</a>
+<li><a href="#sec-2">Linear regression</a>
 <ul>
-<li><a href="#sec-2-1">2.1. Examine the data before fitting models</a></li>
-<li><a href="#sec-2-2">2.2. Plot the data before fitting models</a></li>
-<li><a href="#sec-2-3">2.3. Linear regression example</a></li>
-<li><a href="#sec-2-4">2.4. Why is the association between expense and SAT scores <i>negative</i>?</a></li>
-<li><a href="#sec-2-5">2.5. The lm class and methods</a></li>
-<li><a href="#sec-2-6">2.6. Linear Regression Assumptions</a></li>
-<li><a href="#sec-2-7">2.7. Comparing models</a></li>
-<li><a href="#sec-2-8">2.8. Exercise 0: least squares regression</a></li>
+<li><a href="#sec-2-1">Examine the data before fitting models</a></li>
+<li><a href="#sec-2-2">Plot the data before fitting models</a></li>
+<li><a href="#sec-2-3">Linear regression example</a></li>
+<li><a href="#sec-2-4">Why is the association between expense and SAT scores <i>negative</i>?</a></li>
+<li><a href="#sec-2-5">The lm class and methods</a></li>
+<li><a href="#sec-2-6">Linear Regression Assumptions</a></li>
+<li><a href="#sec-2-7">Comparing models</a></li>
+<li><a href="#sec-2-8">Exercise 0: least squares regression</a></li>
 </ul>
 </li>
-<li><a href="#sec-3">3. Interactions and factors</a>
+<li><a href="#sec-3">Interactions and factors</a>
 <ul>
-<li><a href="#sec-3-1">3.1. Modeling interactions</a></li>
-<li><a href="#sec-3-2">3.2. Regression with categorical predictors</a></li>
-<li><a href="#sec-3-3">3.3. Setting factor reference groups and contrasts</a></li>
-<li><a href="#sec-3-4">3.4. Exercise 1: interactions and factors</a></li>
+<li><a href="#sec-3-1">Modeling interactions</a></li>
+<li><a href="#sec-3-2">Regression with categorical predictors</a></li>
+<li><a href="#sec-3-3">Setting factor reference groups and contrasts</a></li>
+<li><a href="#sec-3-4">Exercise 1: interactions and factors</a></li>
 </ul>
 </li>
-<li><a href="#sec-4">4. Regression with binary outcomes</a>
+<li><a href="#sec-4">Regression with binary outcomes</a>
 <ul>
-<li><a href="#sec-4-1">4.1. Logistic regression</a></li>
-<li><a href="#sec-4-2">4.2. Logistic regression example</a></li>
-<li><a href="#sec-4-3">4.3. Logistic regression coefficients</a></li>
-<li><a href="#sec-4-4">4.4. Generating predicted values</a></li>
-<li><a href="#sec-4-5">4.5. Packages for  computing and graphing predicted values</a></li>
-<li><a href="#sec-4-6">4.6. Exercise 2: logistic regression</a></li>
+<li><a href="#sec-4-1">Logistic regression</a></li>
+<li><a href="#sec-4-2">Logistic regression example</a></li>
+<li><a href="#sec-4-3">Logistic regression coefficients</a></li>
+<li><a href="#sec-4-4">Generating predicted values</a></li>
+<li><a href="#sec-4-5">Packages for  computing and graphing predicted values</a></li>
+<li><a href="#sec-4-6">Exercise 2: logistic regression</a></li>
 </ul>
 </li>
-<li><a href="#sec-5">5. Multilevel Modeling</a>
+<li><a href="#sec-5">Multilevel Modeling</a>
 <ul>
-<li><a href="#sec-5-1">5.1. Multilevel modeling overview</a></li>
-<li><a href="#sec-5-2">5.2. The Exam data</a></li>
-<li><a href="#sec-5-3">5.3. The null model and ICC</a></li>
-<li><a href="#sec-5-4">5.4. Adding fixed-effects predictors</a></li>
-<li><a href="#sec-5-5">5.5. Multiple degree of freedom comparisons</a></li>
-<li><a href="#sec-5-6">5.6. Random slopes</a></li>
-<li><a href="#sec-5-7">5.7. Test the significance of the random slope</a></li>
-<li><a href="#sec-5-8">5.8. Exercise 3: multilevel modeling</a></li>
+<li><a href="#sec-5-1">Multilevel modeling overview</a></li>
+<li><a href="#sec-5-2">The Exam data</a></li>
+<li><a href="#sec-5-3">The null model and ICC</a></li>
+<li><a href="#sec-5-4">Adding fixed-effects predictors</a></li>
+<li><a href="#sec-5-5">Multiple degree of freedom comparisons</a></li>
+<li><a href="#sec-5-6">Random slopes</a></li>
+<li><a href="#sec-5-7">Test the significance of the random slope</a></li>
+<li><a href="#sec-5-8">Exercise 3: multilevel modeling</a></li>
 </ul>
 </li>
-<li><a href="#sec-6">6. Exercise solutions&#xa0;&#xa0;&#xa0;<span class="tag"><span class="prototype">prototype</span></span></a>
+<li><a href="#sec-6">Exercise solutions&#xa0;&#xa0;&#xa0;<span class="tag"><span class="prototype">prototype</span></span></a>
 <ul>
-<li><a href="#sec-6-1">6.1. Exercise 0 prototype</a></li>
-<li><a href="#sec-6-2">6.2. Exercise 1: prototype</a></li>
-<li><a href="#sec-6-3">6.3. Exercise 2 prototype</a></li>
-<li><a href="#sec-6-4">6.4. Exercise 3 prototype</a></li>
+<li><a href="#sec-6-1">Exercise 0 prototype</a></li>
+<li><a href="#sec-6-2">Exercise 1: prototype</a></li>
+<li><a href="#sec-6-3">Exercise 2 prototype</a></li>
+<li><a href="#sec-6-4">Exercise 3 prototype</a></li>
 </ul>
 </li>
-<li><a href="#sec-7">7. Wrap-up</a>
+<li><a href="#sec-7">Wrap-up</a>
 <ul>
-<li><a href="#sec-7-1">7.1. Help us make this workshop better!</a></li>
-<li><a href="#sec-7-2">7.2. Additional resources</a></li>
+<li><a href="#sec-7-1">Help us make this workshop better!</a></li>
+<li><a href="#sec-7-2">Additional resources</a></li>
 </ul>
 </li>
 </ul>
@@ -215,10 +135,10 @@ for the JavaScript code in this tag.
 </div>
 
 <div id="outline-container-sec-1" class="outline-2">
-<h2 id="sec-1"><span class="section-number-2">1</span> Introduction</h2>
+<h2 id="sec-1">Introduction</h2>
 <div class="outline-text-2" id="text-1">
 </div><div id="outline-container-sec-1-1" class="outline-3">
-<h3 id="sec-1-1"><span class="section-number-3">1.1</span> Workshop description</h3>
+<h3 id="sec-1-1">Workshop description</h3>
 <div class="outline-text-3" id="text-1-1">
 <ul class="org-ul">
 <li>This is an intermediate/advanced R course
@@ -244,7 +164,7 @@ for the JavaScript code in this tag.
 </div>
 
 <div id="outline-container-sec-1-2" class="outline-3">
-<h3 id="sec-1-2"><span class="section-number-3">1.2</span> Materials and Setup&#xa0;&#xa0;&#xa0;<span class="tag"><span class="labsetup">labsetup</span></span></h3>
+<h3 id="sec-1-2">Materials and Setup&#xa0;&#xa0;&#xa0;<span class="tag"><span class="labsetup">labsetup</span></span></h3>
 <div class="outline-text-3" id="text-1-2">
 <p>
 Lab computer users: Log in using the user name and password on the board to your left.
@@ -273,7 +193,7 @@ Everyone:
 </div>
 
 <div id="outline-container-sec-1-3" class="outline-3">
-<h3 id="sec-1-3"><span class="section-number-3">1.3</span> Launch RStudio&#xa0;&#xa0;&#xa0;<span class="tag"><span class="labsetup">labsetup</span></span></h3>
+<h3 id="sec-1-3">Launch RStudio&#xa0;&#xa0;&#xa0;<span class="tag"><span class="labsetup">labsetup</span></span></h3>
 <div class="outline-text-3" id="text-1-3">
 <ul class="org-ul">
 <li>Open the RStudio program from the Windows start menu
@@ -298,7 +218,7 @@ Everyone:
 
 
 <div id="outline-container-sec-1-4" class="outline-3">
-<h3 id="sec-1-4"><span class="section-number-3">1.4</span> Set working directory</h3>
+<h3 id="sec-1-4">Set working directory</h3>
 <div class="outline-text-3" id="text-1-4">
 <p>
 It is often helpful to start your R session by setting your working directory so you don't have to type the full path names to your data and other files
@@ -341,7 +261,7 @@ You might also start by listing the files in your working directory
 </div>
 
 <div id="outline-container-sec-1-5" class="outline-3">
-<h3 id="sec-1-5"><span class="section-number-3">1.5</span> Load the states data</h3>
+<h3 id="sec-1-5">Load the states data</h3>
 <div class="outline-text-3" id="text-1-5">
 <p>
 The <i>states.dta</i> data comes from <a href="http://anawida.de/teach/SS14/anawida/4.linReg/data/states.dta.txt">http://anawida.de/teach/SS14/anawida/4.linReg/data/states.dta.txt</a> and appears to have originally appeared in <i>Statistics with Stata</i> by Lawrence C. Hamilton.
@@ -381,10 +301,10 @@ states.info <span style="color: #D0372D;">&lt;-</span> <span style="color: #0066
 
 
 <div id="outline-container-sec-2" class="outline-2">
-<h2 id="sec-2"><span class="section-number-2">2</span> Linear regression</h2>
+<h2 id="sec-2">Linear regression</h2>
 <div class="outline-text-2" id="text-2">
 </div><div id="outline-container-sec-2-1" class="outline-3">
-<h3 id="sec-2-1"><span class="section-number-3">2.1</span> Examine the data before fitting models</h3>
+<h3 id="sec-2-1">Examine the data before fitting models</h3>
 <div class="outline-text-3" id="text-2-1">
 <p>
 Start by examining the data to check for problems.
@@ -422,7 +342,7 @@ csat     -0.466  1.000
 </div>
 
 <div id="outline-container-sec-2-2" class="outline-3">
-<h3 id="sec-2-2"><span class="section-number-3">2.2</span> Plot the data before fitting models</h3>
+<h3 id="sec-2-2">Plot the data before fitting models</h3>
 <div class="outline-text-3" id="text-2-2">
 <p>
 Plot the data to look for multivariate outliers, non-linear relationships etc.
@@ -444,7 +364,7 @@ Plot the data to look for multivariate outliers, non-linear relationships etc.
 </div>
 
 <div id="outline-container-sec-2-3" class="outline-3">
-<h3 id="sec-2-3"><span class="section-number-3">2.3</span> Linear regression example</h3>
+<h3 id="sec-2-3">Linear regression example</h3>
 <div class="outline-text-3" id="text-2-3">
 <ul class="org-ul">
 <li>Linear regression models can be fit with the <code>lm()</code> function
@@ -492,7 +412,7 @@ F-statistic: 13.6 on 1 and 49 DF,  p-value: 0.000563
 </div>
 
 <div id="outline-container-sec-2-4" class="outline-3">
-<h3 id="sec-2-4"><span class="section-number-3">2.4</span> Why is the association between expense and SAT scores <i>negative</i>?</h3>
+<h3 id="sec-2-4">Why is the association between expense and SAT scores <i>negative</i>?</h3>
 <div class="outline-text-3" id="text-2-4">
 <p>
 Many people find it surprising that the per-capita expenditure on students is negatively related to SAT scores. The beauty of multiple regression is that we can try to pull these apart. What would the association between expense and SAT scores be if there were no difference among the states in the percentage of students taking the SAT?
@@ -530,7 +450,7 @@ F-statistic:   88 on 2 and 48 DF,  p-value: &lt;2e-16
 </div>
 
 <div id="outline-container-sec-2-5" class="outline-3">
-<h3 id="sec-2-5"><span class="section-number-3">2.5</span> The lm class and methods</h3>
+<h3 id="sec-2-5">The lm class and methods</h3>
 <div class="outline-text-3" id="text-2-5">
 <p>
 OK, we fit our model. Now what?
@@ -587,7 +507,7 @@ expense      -0.0344   -0.0101
 
 
 <div id="outline-container-sec-2-6" class="outline-3">
-<h3 id="sec-2-6"><span class="section-number-3">2.6</span> Linear Regression Assumptions</h3>
+<h3 id="sec-2-6">Linear Regression Assumptions</h3>
 <div class="outline-text-3" id="text-2-6">
 <ul class="org-ul">
 <li>Ordinary least squares regression relies on several assumptions, including that the residuals are normally distributed and homoscedastic, the errors are independent and the relationships are linear.
@@ -612,7 +532,7 @@ expense      -0.0344   -0.0101
 </div>
 
 <div id="outline-container-sec-2-7" class="outline-3">
-<h3 id="sec-2-7"><span class="section-number-3">2.7</span> Comparing models</h3>
+<h3 id="sec-2-7">Comparing models</h3>
 <div class="outline-text-3" id="text-2-7">
 <p>
 Do congressional voting patterns predict SAT scores over and above expense? Fit two models and compare them:
@@ -656,7 +576,7 @@ senate         0.4982    0.51356    0.97 3.37e-01
 
 
 <div id="outline-container-sec-2-8" class="outline-3">
-<h3 id="sec-2-8"><span class="section-number-3">2.8</span> Exercise 0: least squares regression</h3>
+<h3 id="sec-2-8">Exercise 0: least squares regression</h3>
 <div class="outline-text-3" id="text-2-8">
 <p>
 Use the <i>states.rds</i> data set. Fit a model predicting  energy consumed per capita (energy) from the percentage of residents living in metropolitan areas (metro). Be sure to 
@@ -678,10 +598,10 @@ Select one or more additional predictors to add to your model and repeat steps 1
 </div>
 
 <div id="outline-container-sec-3" class="outline-2">
-<h2 id="sec-3"><span class="section-number-2">3</span> Interactions and factors</h2>
+<h2 id="sec-3">Interactions and factors</h2>
 <div class="outline-text-2" id="text-3">
 </div><div id="outline-container-sec-3-1" class="outline-3">
-<h3 id="sec-3-1"><span class="section-number-3">3.1</span> Modeling interactions</h3>
+<h3 id="sec-3-1">Modeling interactions</h3>
 <div class="outline-text-3" id="text-3-1">
 <p>
 Interactions allow us assess the extent to which the association between one predictor and the outcome depends on a second predictor. For example: Does the association between expense and SAT scores depend on the median income in the state?
@@ -713,7 +633,7 @@ expense:income    0.00138   0.000864    1.60 0.115539488253
 </div>
 
 <div id="outline-container-sec-3-2" class="outline-3">
-<h3 id="sec-3-2"><span class="section-number-3">3.2</span> Regression with categorical predictors</h3>
+<h3 id="sec-3-2">Regression with categorical predictors</h3>
 <div class="outline-text-3" id="text-3-2">
 <p>
 Let's try to predict SAT scores from region, a categorical variable. Note that you must make sure R does not think your categorical variable is numeric. 
@@ -764,7 +684,7 @@ Again, <b>make sure to tell R which variables are categorical by converting them
 </div>
 
 <div id="outline-container-sec-3-3" class="outline-3">
-<h3 id="sec-3-3"><span class="section-number-3">3.3</span> Setting factor reference groups and contrasts</h3>
+<h3 id="sec-3-3">Setting factor reference groups and contrasts</h3>
 <div class="outline-text-3" id="text-3-3">
 <p>
 In the previous example we use the default contrasts for region. The default in R is treatment contrasts, with the first level as the reference. We can change the reference group or use another coding scheme using the <code>C</code> function.
@@ -817,7 +737,7 @@ See also <code>?contrasts</code>, <code>?contr.treatment</code>, and <code>?rele
 </div>
 
 <div id="outline-container-sec-3-4" class="outline-3">
-<h3 id="sec-3-4"><span class="section-number-3">3.4</span> Exercise 1: interactions and factors</h3>
+<h3 id="sec-3-4">Exercise 1: interactions and factors</h3>
 <div class="outline-text-3" id="text-3-4">
 <p>
 Use the states data set.
@@ -835,10 +755,10 @@ Use the states data set.
 </div>
 
 <div id="outline-container-sec-4" class="outline-2">
-<h2 id="sec-4"><span class="section-number-2">4</span> Regression with binary outcomes</h2>
+<h2 id="sec-4">Regression with binary outcomes</h2>
 <div class="outline-text-2" id="text-4">
 </div><div id="outline-container-sec-4-1" class="outline-3">
-<h3 id="sec-4-1"><span class="section-number-3">4.1</span> Logistic regression</h3>
+<h3 id="sec-4-1">Logistic regression</h3>
 <div class="outline-text-3" id="text-4-1">
 <p>
 This far we have used the <code>lm</code> function to fit our regression models. <code>lm</code> is great, but limited&#x2013;in particular it only fits models for continuous dependent variables. For categorical dependent variables we can use the <code>glm()</code> function.
@@ -874,7 +794,7 @@ labs <span style="color: #D0372D;">&lt;-</span> <span style="color: #006699;">at
 </div>
 
 <div id="outline-container-sec-4-2" class="outline-3">
-<h3 id="sec-4-2"><span class="section-number-3">4.2</span> Logistic regression example</h3>
+<h3 id="sec-4-2">Logistic regression example</h3>
 <div class="outline-text-3" id="text-4-2">
 <p>
 Let's predict the probability of being diagnosed with hypertension based on age, sex, sleep, and bmi
@@ -917,7 +837,7 @@ bmi          0.01857   0.000951   19.53 6.49e-85
 </div>
 
 <div id="outline-container-sec-4-3" class="outline-3">
-<h3 id="sec-4-3"><span class="section-number-3">4.3</span> Logistic regression coefficients</h3>
+<h3 id="sec-4-3">Logistic regression coefficients</h3>
 <div class="outline-text-3" id="text-4-3">
 <p>
 Generalized linear models use link functions, so raw coefficients are difficult to interpret. For example, the age coefficient of .06 in the previous model tells us that for every one unit increase in age, the log odds of hypertension diagnosis increases by 0.06. Since most of us are not used to thinking in log odds this is not too helpful!
@@ -951,7 +871,7 @@ bmi            1.019   0.000951   19.53 6.49e-85
 </div>
 
 <div id="outline-container-sec-4-4" class="outline-3">
-<h3 id="sec-4-4"><span class="section-number-3">4.4</span> Generating predicted values</h3>
+<h3 id="sec-4-4">Generating predicted values</h3>
 <div class="outline-text-3" id="text-4-4">
 <p>
 In addition to transforming the log-odds produced by <code>glm</code> to odds, we can use the <code>predict()</code> function to make direct statements about the predictors in our model. For example, we can ask "How much more likely is a 63 year old female to have hypertension compared to a 33 year old female?".
@@ -996,7 +916,7 @@ This tells us that a 33 year old female has a 13% probability of having been dia
 </div>
 
 <div id="outline-container-sec-4-5" class="outline-3">
-<h3 id="sec-4-5"><span class="section-number-3">4.5</span> Packages for  computing and graphing predicted values</h3>
+<h3 id="sec-4-5">Packages for  computing and graphing predicted values</h3>
 <div class="outline-text-3" id="text-4-5">
 <p>
 Instead of doing all this ourselves, we can use the effects package to compute quantities of interest for us (cf. the Zelig package).
@@ -1020,7 +940,7 @@ Instead of doing all this ourselves, we can use the effects package to compute q
 
 
 <div id="outline-container-sec-4-6" class="outline-3">
-<h3 id="sec-4-6"><span class="section-number-3">4.6</span> Exercise 2: logistic regression</h3>
+<h3 id="sec-4-6">Exercise 2: logistic regression</h3>
 <div class="outline-text-3" id="text-4-6">
 <p>
 Use the NH11 data set that we loaded earlier.
@@ -1042,10 +962,10 @@ Note that the data is not perfectly clean and ready to be modeled. You will need
 
 
 <div id="outline-container-sec-5" class="outline-2">
-<h2 id="sec-5"><span class="section-number-2">5</span> Multilevel Modeling</h2>
+<h2 id="sec-5">Multilevel Modeling</h2>
 <div class="outline-text-2" id="text-5">
 </div><div id="outline-container-sec-5-1" class="outline-3">
-<h3 id="sec-5-1"><span class="section-number-3">5.1</span> Multilevel modeling overview</h3>
+<h3 id="sec-5-1">Multilevel modeling overview</h3>
 <div class="outline-text-3" id="text-5-1">
 <ul class="org-ul">
 <li>Multi-level (AKA hierarchical) models are a type of mixed-effects models 
@@ -1085,7 +1005,7 @@ Note that the data is not perfectly clean and ready to be modeled. You will need
 
 
 <div id="outline-container-sec-5-2" class="outline-3">
-<h3 id="sec-5-2"><span class="section-number-3">5.2</span> The Exam data</h3>
+<h3 id="sec-5-2">The Exam data</h3>
 <div class="outline-text-3" id="text-5-2">
 <p>
 The Exam data set contans exam scores of 4,059 students from 65 schools in Inner London. The variable names are as follows:
@@ -1129,7 +1049,7 @@ The Exam data set contans exam scores of 4,059 students from 65 schools in Inner
 
 
 <div id="outline-container-sec-5-3" class="outline-3">
-<h3 id="sec-5-3"><span class="section-number-3">5.3</span> The null model and ICC</h3>
+<h3 id="sec-5-3">The null model and ICC</h3>
 <div class="outline-text-3" id="text-5-3">
 <p>
 As a preliminary step it is often useful to partition the variance in the dependent variable into the various levels. This can be accomplished by running a null model (i.e., a model with a random effects grouping structure, but no fixed-effects predictors).
@@ -1178,7 +1098,7 @@ The is .169/(.169 + .848) = .17: 17% of the variance is at the school level.
 </div>
 </div>
 <div id="outline-container-sec-5-4" class="outline-3">
-<h3 id="sec-5-4"><span class="section-number-3">5.4</span> Adding fixed-effects predictors</h3>
+<h3 id="sec-5-4">Adding fixed-effects predictors</h3>
 <div class="outline-text-3" id="text-5-4">
 <p>
 Predict exam scores from student's standardized tests scores
@@ -1230,7 +1150,7 @@ standLRT 0.007
 
 
 <div id="outline-container-sec-5-5" class="outline-3">
-<h3 id="sec-5-5"><span class="section-number-3">5.5</span> Multiple degree of freedom comparisons</h3>
+<h3 id="sec-5-5">Multiple degree of freedom comparisons</h3>
 <div class="outline-text-3" id="text-5-5">
 <p>
 As with <code>lm</code> and <code>glm</code> models, you can compare the two <code>lmer</code> models using the <code>anova</code> function.
@@ -1258,7 +1178,7 @@ Norm2  4  9143  9169  -4568     9135  1684      1     &lt;2e-16
 
 
 <div id="outline-container-sec-5-6" class="outline-3">
-<h3 id="sec-5-6"><span class="section-number-3">5.6</span> Random slopes</h3>
+<h3 id="sec-5-6">Random slopes</h3>
 <div class="outline-text-3" id="text-5-6">
 <p>
 Add a random effect of students' standardized test scores as well. Now in addition to estimating the distribution of intercepts across schools, we also estimate the distribution of the slope of exam on standardized test.
@@ -1308,7 +1228,7 @@ standLRT 0.371
 </div>
 
 <div id="outline-container-sec-5-7" class="outline-3">
-<h3 id="sec-5-7"><span class="section-number-3">5.7</span> Test the significance of the random slope</h3>
+<h3 id="sec-5-7">Test the significance of the random slope</h3>
 <div class="outline-text-3" id="text-5-7">
 <p>
 To test the significance of a random slope just compare models with and without the random slope term 
@@ -1336,7 +1256,7 @@ Norm3  6 9108 9146  -4548     9096    39      2 0.0000000035
 
 
 <div id="outline-container-sec-5-8" class="outline-3">
-<h3 id="sec-5-8"><span class="section-number-3">5.8</span> Exercise 3: multilevel modeling</h3>
+<h3 id="sec-5-8">Exercise 3: multilevel modeling</h3>
 <div class="outline-text-3" id="text-5-8">
 <p>
 Use the dataset, bh1996:
@@ -1378,12 +1298,12 @@ within-group version is designated with a W. (e.g., W.HRS).
 
 
 <div id="outline-container-sec-6" class="outline-2">
-<h2 id="sec-6"><span class="section-number-2">6</span> Exercise solutions&#xa0;&#xa0;&#xa0;<span class="tag"><span class="prototype">prototype</span></span></h2>
+<h2 id="sec-6">Exercise solutions&#xa0;&#xa0;&#xa0;<span class="tag"><span class="prototype">prototype</span></span></h2>
 <div class="outline-text-2" id="text-6">
 </div>
 
 <div id="outline-container-sec-6-1" class="outline-3">
-<h3 id="sec-6-1"><span class="section-number-3">6.1</span> Exercise 0 prototype</h3>
+<h3 id="sec-6-1">Exercise 0 prototype</h3>
 <div class="outline-text-3" id="text-6-1">
 <p>
 Use the <i>states.rds</i> data set. 
@@ -1449,7 +1369,7 @@ mod.en.met.pop.waste <span style="color: #D0372D;">&lt;-</span> <span style="col
 </div>
 
 <div id="outline-container-sec-6-2" class="outline-3">
-<h3 id="sec-6-2"><span class="section-number-3">6.2</span> Exercise 1: prototype</h3>
+<h3 id="sec-6-2">Exercise 1: prototype</h3>
 <div class="outline-text-3" id="text-6-2">
 <p>
 Use the states data set.
@@ -1479,7 +1399,7 @@ Use the states data set.
 </div>
 
 <div id="outline-container-sec-6-3" class="outline-3">
-<h3 id="sec-6-3"><span class="section-number-3">6.3</span> Exercise 2 prototype</h3>
+<h3 id="sec-6-3">Exercise 2 prototype</h3>
 <div class="outline-text-3" id="text-6-3">
 <p>
 Use the NH11 data set that we loaded earlier. Note that the data is not perfectly clean and ready to be modeled. You will need to clean up at least some of the variables before fitting the model.
@@ -1521,7 +1441,7 @@ mod.wk.age.mar <span style="color: #D0372D;">&lt;-</span> <span style="color: #0
 
 
 <div id="outline-container-sec-6-4" class="outline-3">
-<h3 id="sec-6-4"><span class="section-number-3">6.4</span> Exercise 3 prototype</h3>
+<h3 id="sec-6-4">Exercise 3 prototype</h3>
 <div class="outline-text-3" id="text-6-4">
 <p>
 Use the dataset, bh1996:
@@ -1622,10 +1542,10 @@ Fixed effects:
 
 
 <div id="outline-container-sec-7" class="outline-2">
-<h2 id="sec-7"><span class="section-number-2">7</span> Wrap-up</h2>
+<h2 id="sec-7">Wrap-up</h2>
 <div class="outline-text-2" id="text-7">
 </div><div id="outline-container-sec-7-1" class="outline-3">
-<h3 id="sec-7-1"><span class="section-number-3">7.1</span> Help us make this workshop better!</h3>
+<h3 id="sec-7-1">Help us make this workshop better!</h3>
 <div class="outline-text-3" id="text-7-1">
 <ul class="org-ul">
 <li>Please take a moment to fill out a very short 
@@ -1645,7 +1565,7 @@ feedback form
 
 
 <div id="outline-container-sec-7-2" class="outline-3">
-<h3 id="sec-7-2"><span class="section-number-3">7.2</span> Additional resources</h3>
+<h3 id="sec-7-2">Additional resources</h3>
 <div class="outline-text-3" id="text-7-2">
 <ul class="org-ul">
 <li>IQSS workshops: <a href="http://projects.iq.harvard.edu/rtc/filter_by/workshops">http://projects.iq.harvard.edu/rtc/filter_by/workshops</a>
@@ -1675,7 +1595,7 @@ feedback form
 </div>
 </div>
 <div id="postamble" class="status">
-<p><a rel='license' href='http://creativecommons.org/licenses/by-sa/4.0/'><img alt='Creative Commons License' style='border-width:0' src='https://i.creativecommons.org/l/by-sa/4.0/80x15.png' /></a><br /><span xmlns:dct='http://purl.org/dc/terms/' property='dct:title'>These IQSS statistical software workshop materials</span> by <a xmlns:cc='http://creativecommons.org/ns#' href='http://rtc.iq.harvard.edu' property='cc:attributionName' rel='cc:attributionURL'>Harvard University</a> are licensed under a <a rel='license' href='http://creativecommons.org/licenses/by-sa/4.0/'>Creative Commons Attribution-ShareAlike 4.0 International License</a>.</p>
+<p><a rel='license' href='http://creativecommons.org/licenses/by-sa/4.0/'><img alt='Creative Commons License' style='border-width:0' src='https://i.creativecommons.org/l/by-sa/4.0/80x15.png' /></a><span xmlns:dct='http://purl.org/dc/terms/' property='dct:title'> These statistical software workshop materials</span> by <a xmlns:cc='http://creativecommons.org/ns#' href='http://rtc.iq.harvard.edu' property='cc:attributionName' rel='cc:attributionURL'>Harvard University</a> are licensed under a <a rel='license' href='http://creativecommons.org/licenses/by-sa/4.0/'>Creative Commons Attribution-ShareAlike 4.0 International License</a>.</p> <p> Presented by <a href='http://rtc.iq.harvard.edu'>Research Technology Consulting</a> at <br></br> <a href='http://iq.harvard.edu'><img style='margin-left: auto; margin-right: auto;' alt='The Institute for Quantitative Social Science' title='IQSS logo' src='http://static.projects.iq.harvard.edu/files/styles/os_files_small/public/rtc/files/iqsslogo-2014_0.png'></img></a></p>
 </div>
 </body>
 </html>
