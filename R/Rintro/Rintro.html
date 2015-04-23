@@ -4,7 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
 <title>Introduction to R</title>
-<!-- 2015-04-22 Wed 21:11 -->
+<!-- 2015-04-22 Wed 21:13 -->
 <meta  http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta  name="generator" content="Org-mode" />
 <meta  name="author" content="Ista Zahn" />
@@ -146,82 +146,82 @@ for the JavaScript code in this tag.
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#sec-1">1. Workshop Materials and Introduction</a>
+<li><a href="#sec-1">Workshop Materials and Introduction</a>
 <ul>
-<li><a href="#sec-1-1">1.1. Materials and setup</a></li>
-<li><a href="#sec-1-2">1.2. What is R?</a></li>
-<li><a href="#sec-1-3">1.3. InspiRation</a></li>
-<li><a href="#sec-1-4">1.4. Coming to R</a></li>
+<li><a href="#sec-1-1">Materials and setup</a></li>
+<li><a href="#sec-1-2">What is R?</a></li>
+<li><a href="#sec-1-3">InspiRation</a></li>
+<li><a href="#sec-1-4">Coming to R</a></li>
 </ul>
 </li>
-<li><a href="#sec-2">2. Graphical User Interfaces</a>
+<li><a href="#sec-2">Graphical User Interfaces</a>
 <ul>
-<li><a href="#sec-2-1">2.1. R GUI alternatives (no GUI)</a></li>
-<li><a href="#sec-2-2">2.2. R GUI alternatives (Windows default)</a></li>
-<li><a href="#sec-2-3">2.3. R GUI Alternatives (Rstudio on Mac)</a></li>
-<li><a href="#sec-2-4">2.4. R GUI Alternatives (Emacs with ESS)</a></li>
-<li><a href="#sec-2-5">2.5. Launch RStudio&#xa0;&#xa0;&#xa0;<span class="tag"><span class="labsetup">labsetup</span></span></a></li>
-<li><a href="#sec-2-6">2.6. Things to keep in mind</a></li>
-<li><a href="#sec-2-7">2.7. Exercise 0</a></li>
+<li><a href="#sec-2-1">R GUI alternatives (no GUI)</a></li>
+<li><a href="#sec-2-2">R GUI alternatives (Windows default)</a></li>
+<li><a href="#sec-2-3">R GUI Alternatives (Rstudio on Mac)</a></li>
+<li><a href="#sec-2-4">R GUI Alternatives (Emacs with ESS)</a></li>
+<li><a href="#sec-2-5">Launch RStudio&#xa0;&#xa0;&#xa0;<span class="tag"><span class="labsetup">labsetup</span></span></a></li>
+<li><a href="#sec-2-6">Things to keep in mind</a></li>
+<li><a href="#sec-2-7">Exercise 0</a></li>
 </ul>
 </li>
-<li><a href="#sec-3">3. Data and Functions</a>
+<li><a href="#sec-3">Data and Functions</a>
 <ul>
-<li><a href="#sec-3-1">3.1. Assignment</a></li>
-<li><a href="#sec-3-2">3.2. Functions</a></li>
+<li><a href="#sec-3-1">Assignment</a></li>
+<li><a href="#sec-3-2">Functions</a></li>
 </ul>
 </li>
-<li><a href="#sec-4">4. Help and package management</a>
+<li><a href="#sec-4">Help and package management</a>
 <ul>
-<li><a href="#sec-4-1">4.1. Asking R for help</a></li>
-<li><a href="#sec-4-2">4.2. R packages and libraries</a></li>
+<li><a href="#sec-4-1">Asking R for help</a></li>
+<li><a href="#sec-4-2">R packages and libraries</a></li>
 </ul>
 </li>
-<li><a href="#sec-5">5. Getting data into R</a>
+<li><a href="#sec-5">Getting data into R</a>
 <ul>
-<li><a href="#sec-5-1">5.1. The gss dataset</a></li>
-<li><a href="#sec-5-2">5.2. The "working directory" and listing files</a></li>
-<li><a href="#sec-5-3">5.3. Importing data from files</a></li>
-<li><a href="#sec-5-4">5.4. Checking imported data</a></li>
-<li><a href="#sec-5-5">5.5. Saving and loading R  workspaces</a></li>
-<li><a href="#sec-5-6">5.6. Exercise 1</a></li>
+<li><a href="#sec-5-1">The gss dataset</a></li>
+<li><a href="#sec-5-2">The "working directory" and listing files</a></li>
+<li><a href="#sec-5-3">Importing data from files</a></li>
+<li><a href="#sec-5-4">Checking imported data</a></li>
+<li><a href="#sec-5-5">Saving and loading R  workspaces</a></li>
+<li><a href="#sec-5-6">Exercise 1</a></li>
 </ul>
 </li>
-<li><a href="#sec-6">6. Data Manipulation</a>
+<li><a href="#sec-6">Data Manipulation</a>
 <ul>
-<li><a href="#sec-6-1">6.1. data.frame objects</a></li>
-<li><a href="#sec-6-2">6.2. Extracting subsets of data.frames</a></li>
-<li><a href="#sec-6-3">6.3. Transforming data.frames</a></li>
-<li><a href="#sec-6-4">6.4. Exporting Data</a></li>
-<li><a href="#sec-6-5">6.5. Exercise 2: Data manipulation</a></li>
+<li><a href="#sec-6-1">data.frame objects</a></li>
+<li><a href="#sec-6-2">Extracting subsets of data.frames</a></li>
+<li><a href="#sec-6-3">Transforming data.frames</a></li>
+<li><a href="#sec-6-4">Exporting Data</a></li>
+<li><a href="#sec-6-5">Exercise 2: Data manipulation</a></li>
 </ul>
 </li>
-<li><a href="#sec-7">7. Basic Statistics and Graphs</a>
+<li><a href="#sec-7">Basic Statistics and Graphs</a>
 <ul>
-<li><a href="#sec-7-1">7.1. Basic statistics</a></li>
-<li><a href="#sec-7-2">7.2. Counts and proportions</a></li>
-<li><a href="#sec-7-3">7.3. Statistics by classification factors</a></li>
-<li><a href="#sec-7-4">7.4. Correlations</a></li>
-<li><a href="#sec-7-5">7.5. Multiple regression</a></li>
-<li><a href="#sec-7-6">7.6. Save R output to a file</a></li>
-<li><a href="#sec-7-7">7.7. Basic graphics: Frequency bars</a></li>
-<li><a href="#sec-7-8">7.8. Basic graphics: Boxplots by group</a></li>
-<li><a href="#sec-7-9">7.9. Basic graphics: Mosaic chart</a></li>
-<li><a href="#sec-7-10">7.10. Exercise 3</a></li>
+<li><a href="#sec-7-1">Basic statistics</a></li>
+<li><a href="#sec-7-2">Counts and proportions</a></li>
+<li><a href="#sec-7-3">Statistics by classification factors</a></li>
+<li><a href="#sec-7-4">Correlations</a></li>
+<li><a href="#sec-7-5">Multiple regression</a></li>
+<li><a href="#sec-7-6">Save R output to a file</a></li>
+<li><a href="#sec-7-7">Basic graphics: Frequency bars</a></li>
+<li><a href="#sec-7-8">Basic graphics: Boxplots by group</a></li>
+<li><a href="#sec-7-9">Basic graphics: Mosaic chart</a></li>
+<li><a href="#sec-7-10">Exercise 3</a></li>
 </ul>
 </li>
-<li><a href="#sec-8">8. Wrap-up</a>
+<li><a href="#sec-8">Wrap-up</a>
 <ul>
-<li><a href="#sec-8-1">8.1. Help us make this workshop better!</a></li>
-<li><a href="#sec-8-2">8.2. Additional resources</a></li>
+<li><a href="#sec-8-1">Help us make this workshop better!</a></li>
+<li><a href="#sec-8-2">Additional resources</a></li>
 </ul>
 </li>
-<li><a href="#sec-9">9. Exercise solutions</a>
+<li><a href="#sec-9">Exercise solutions</a>
 <ul>
-<li><a href="#sec-9-1">9.1. Exercise 0 solution&#xa0;&#xa0;&#xa0;<span class="tag"><span class="prototype">prototype</span></span></a></li>
-<li><a href="#sec-9-2">9.2. Exercise 1 solution&#xa0;&#xa0;&#xa0;<span class="tag"><span class="prototype">prototype</span></span></a></li>
-<li><a href="#sec-9-3">9.3. Exercise 2 solution&#xa0;&#xa0;&#xa0;<span class="tag"><span class="prototype">prototype</span></span></a></li>
-<li><a href="#sec-9-4">9.4. Exercise 3 solution&#xa0;&#xa0;&#xa0;<span class="tag"><span class="prototype">prototype</span></span></a></li>
+<li><a href="#sec-9-1">Exercise 0 solution&#xa0;&#xa0;&#xa0;<span class="tag"><span class="prototype">prototype</span></span></a></li>
+<li><a href="#sec-9-2">Exercise 1 solution&#xa0;&#xa0;&#xa0;<span class="tag"><span class="prototype">prototype</span></span></a></li>
+<li><a href="#sec-9-3">Exercise 2 solution&#xa0;&#xa0;&#xa0;<span class="tag"><span class="prototype">prototype</span></span></a></li>
+<li><a href="#sec-9-4">Exercise 3 solution&#xa0;&#xa0;&#xa0;<span class="tag"><span class="prototype">prototype</span></span></a></li>
 </ul>
 </li>
 </ul>
@@ -229,10 +229,10 @@ for the JavaScript code in this tag.
 </div>
 
 <div id="outline-container-sec-1" class="outline-2">
-<h2 id="sec-1"><span class="section-number-2">1</span> Workshop Materials and Introduction</h2>
+<h2 id="sec-1">Workshop Materials and Introduction</h2>
 <div class="outline-text-2" id="text-1">
 </div><div id="outline-container-sec-1-1" class="outline-3">
-<h3 id="sec-1-1"><span class="section-number-3">1.1</span> Materials and setup</h3>
+<h3 id="sec-1-1">Materials and setup</h3>
 <div class="outline-text-3" id="text-1-1">
 <p>
 Lab computer users: Log in using the user name and password on the board to your left.
@@ -261,7 +261,7 @@ Everyone: Download workshop materials:
 </div>
 
 <div id="outline-container-sec-1-2" class="outline-3">
-<h3 id="sec-1-2"><span class="section-number-3">1.2</span> What is R?</h3>
+<h3 id="sec-1-2">What is R?</h3>
 <div class="outline-text-3" id="text-1-2">
 <p>
 R is a programming language designed for statistical computing. Notable characteristics include:
@@ -290,7 +290,7 @@ R is a programming language designed for statistical computing. Notable characte
 </div>
 
 <div id="outline-container-sec-1-3" class="outline-3">
-<h3 id="sec-1-3"><span class="section-number-3">1.3</span> InspiRation</h3>
+<h3 id="sec-1-3">InspiRation</h3>
 <div class="outline-text-3" id="text-1-3">
 <p>
 OK, it's free and popular, but what makes R worth learning? In a word,
@@ -392,7 +392,7 @@ These a just a few examples, but generally whatever you're trying to do, you're 
 </div>
 
 <div id="outline-container-sec-1-4" class="outline-3">
-<h3 id="sec-1-4"><span class="section-number-3">1.4</span> Coming to R</h3>
+<h3 id="sec-1-4">Coming to R</h3>
 <div class="outline-text-3" id="text-1-4">
 <p>
 Comming from&#x2026;
@@ -412,10 +412,10 @@ Comming from&#x2026;
 </div>
 
 <div id="outline-container-sec-2" class="outline-2">
-<h2 id="sec-2"><span class="section-number-2">2</span> Graphical User Interfaces</h2>
+<h2 id="sec-2">Graphical User Interfaces</h2>
 <div class="outline-text-2" id="text-2">
 </div><div id="outline-container-sec-2-1" class="outline-3">
-<h3 id="sec-2-1"><span class="section-number-3">2.1</span> R GUI alternatives (no GUI)</h3>
+<h3 id="sec-2-1">R GUI alternatives (no GUI)</h3>
 <div class="outline-text-3" id="text-2-1">
 <p>
 The old-school way is to run R directly in a terminal
@@ -435,7 +435,7 @@ But hardly anybody does it that way anymore!
 
 
 <div id="outline-container-sec-2-2" class="outline-3">
-<h3 id="sec-2-2"><span class="section-number-3">2.2</span> R GUI alternatives (Windows default)</h3>
+<h3 id="sec-2-2">R GUI alternatives (Windows default)</h3>
 <div class="outline-text-3" id="text-2-2">
 
 <div class="figure">
@@ -457,7 +457,7 @@ The default windows GUI is not very good
 
 
 <div id="outline-container-sec-2-3" class="outline-3">
-<h3 id="sec-2-3"><span class="section-number-3">2.3</span> R GUI Alternatives (Rstudio on Mac)</h3>
+<h3 id="sec-2-3">R GUI Alternatives (Rstudio on Mac)</h3>
 <div class="outline-text-3" id="text-2-3">
 
 <div class="figure">
@@ -473,7 +473,7 @@ Rstudio has many useful features, including parentheses matching and auto-comple
 
 
 <div id="outline-container-sec-2-4" class="outline-3">
-<h3 id="sec-2-4"><span class="section-number-3">2.4</span> R GUI Alternatives (Emacs with ESS)</h3>
+<h3 id="sec-2-4">R GUI Alternatives (Emacs with ESS)</h3>
 <div class="outline-text-3" id="text-2-4">
 
 <div class="figure">
@@ -489,7 +489,7 @@ Emacs + ESS is a very powerful combination, but can be difficult to set up
 
 
 <div id="outline-container-sec-2-5" class="outline-3">
-<h3 id="sec-2-5"><span class="section-number-3">2.5</span> Launch RStudio&#xa0;&#xa0;&#xa0;<span class="tag"><span class="labsetup">labsetup</span></span></h3>
+<h3 id="sec-2-5">Launch RStudio&#xa0;&#xa0;&#xa0;<span class="tag"><span class="labsetup">labsetup</span></span></h3>
 <div class="outline-text-3" id="text-2-5">
 <ul class="org-ul">
 <li>Open the RStudio program
@@ -516,7 +516,7 @@ Emacs + ESS is a very powerful combination, but can be difficult to set up
 </div>
 
 <div id="outline-container-sec-2-6" class="outline-3">
-<h3 id="sec-2-6"><span class="section-number-3">2.6</span> Things to keep in mind</h3>
+<h3 id="sec-2-6">Things to keep in mind</h3>
 <div class="outline-text-3" id="text-2-6">
 <ul class="org-ul">
 <li>Case sensitive, like Stata (unlike SAS)
@@ -551,7 +551,7 @@ Emacs + ESS is a very powerful combination, but can be difficult to set up
 
 
 <div id="outline-container-sec-2-7" class="outline-3">
-<h3 id="sec-2-7"><span class="section-number-3">2.7</span> Exercise 0</h3>
+<h3 id="sec-2-7">Exercise 0</h3>
 <div class="outline-text-3" id="text-2-7">
 <ol class="org-ol">
 <li>Try to get R to add 2 plus 2.
@@ -569,10 +569,10 @@ Emacs + ESS is a very powerful combination, but can be difficult to set up
 
 
 <div id="outline-container-sec-3" class="outline-2">
-<h2 id="sec-3"><span class="section-number-2">3</span> Data and Functions</h2>
+<h2 id="sec-3">Data and Functions</h2>
 <div class="outline-text-2" id="text-3">
 </div><div id="outline-container-sec-3-1" class="outline-3">
-<h3 id="sec-3-1"><span class="section-number-3">3.1</span> Assignment</h3>
+<h3 id="sec-3-1">Assignment</h3>
 <div class="outline-text-3" id="text-3-1">
 <p>
 Values can be assigned names and used in subsequent operations
@@ -636,7 +636,7 @@ x
 
 
 <div id="outline-container-sec-3-2" class="outline-3">
-<h3 id="sec-3-2"><span class="section-number-3">3.2</span> Functions</h3>
+<h3 id="sec-3-2">Functions</h3>
 <div class="outline-text-3" id="text-3-2">
 <p>
 Using R is mostly about applying <b>functions</b> to <b>variables</b>. Functions
@@ -694,10 +694,10 @@ a <span style="color: #D0372D;">&lt;-</span> <span style="color: #006699;">sqrt<
 
 
 <div id="outline-container-sec-4" class="outline-2">
-<h2 id="sec-4"><span class="section-number-2">4</span> Help and package management</h2>
+<h2 id="sec-4">Help and package management</h2>
 <div class="outline-text-2" id="text-4">
 </div><div id="outline-container-sec-4-1" class="outline-3">
-<h3 id="sec-4-1"><span class="section-number-3">4.1</span> Asking R for help</h3>
+<h3 id="sec-4-1">Asking R for help</h3>
 <div class="outline-text-3" id="text-4-1">
 <p>
 R has extensive built-in documentation that can be accessed through R commands or through the GUI.
@@ -752,7 +752,7 @@ R has extensive built-in documentation that can be accessed through R commands o
 </div>
 
 <div id="outline-container-sec-4-2" class="outline-3">
-<h3 id="sec-4-2"><span class="section-number-3">4.2</span> R packages and libraries</h3>
+<h3 id="sec-4-2">R packages and libraries</h3>
 <div class="outline-text-3" id="text-4-2">
 <p>
 There are thousands of R packages that extend R's capabilities.
@@ -797,10 +797,10 @@ There are thousands of R packages that extend R's capabilities.
 
 
 <div id="outline-container-sec-5" class="outline-2">
-<h2 id="sec-5"><span class="section-number-2">5</span> Getting data into R</h2>
+<h2 id="sec-5">Getting data into R</h2>
 <div class="outline-text-2" id="text-5">
 </div><div id="outline-container-sec-5-1" class="outline-3">
-<h3 id="sec-5-1"><span class="section-number-3">5.1</span> The gss dataset</h3>
+<h3 id="sec-5-1">The gss dataset</h3>
 <div class="outline-text-3" id="text-5-1">
 <p>
 The next few examples use a subset of the General Social Survey data set. The variables in this subset include
@@ -828,7 +828,7 @@ The next few examples use a subset of the General Social Survey data set. The va
 </div>
 
 <div id="outline-container-sec-5-2" class="outline-3">
-<h3 id="sec-5-2"><span class="section-number-3">5.2</span> The "working directory" and listing files</h3>
+<h3 id="sec-5-2">The "working directory" and listing files</h3>
 <div class="outline-text-3" id="text-5-2">
 <p>
 R knows the directory it was started in, and refers to this as the "working directory". Since our workshop examples are in the Rintro folder on the desktop, we should all take a moment to set that as our working directory:
@@ -884,7 +884,7 @@ It can be convenient to list files in a directory without leaving R
 
 
 <div id="outline-container-sec-5-3" class="outline-3">
-<h3 id="sec-5-3"><span class="section-number-3">5.3</span> Importing data from files</h3>
+<h3 id="sec-5-3">Importing data from files</h3>
 <div class="outline-text-3" id="text-5-3">
 <p>
 In order to read data from a file, you have to know what kind of file it is. The table below lists the functions needed to import data from common file formats.
@@ -976,7 +976,7 @@ datGSS <span style="color: #D0372D;">&lt;-</span> <span style="color: #006699;">
 
 
 <div id="outline-container-sec-5-4" class="outline-3">
-<h3 id="sec-5-4"><span class="section-number-3">5.4</span> Checking imported data</h3>
+<h3 id="sec-5-4">Checking imported data</h3>
 <div class="outline-text-3" id="text-5-4">
 <p>
 Always a good idea  to examine the imported data set&#x2013;usually we want the results to be a <code>data.frame</code>
@@ -1012,7 +1012,7 @@ Always a good idea  to examine the imported data set&#x2013;usually we want the 
 
 
 <div id="outline-container-sec-5-5" class="outline-3">
-<h3 id="sec-5-5"><span class="section-number-3">5.5</span> Saving and loading R  workspaces</h3>
+<h3 id="sec-5-5">Saving and loading R  workspaces</h3>
 <div class="outline-text-3" id="text-5-5">
 <p>
 In addition to importing individual datasets, R can save and load entire workspaces
@@ -1069,7 +1069,7 @@ When you close R you will be asked if you want to save your workspace &#x2013; i
 
 
 <div id="outline-container-sec-5-6" class="outline-3">
-<h3 id="sec-5-6"><span class="section-number-3">5.6</span> Exercise 1</h3>
+<h3 id="sec-5-6">Exercise 1</h3>
 <div class="outline-text-3" id="text-5-6">
 <ol class="org-ol">
 <li>Load the foreign package if you haven't already done so
@@ -1096,10 +1096,10 @@ When you close R you will be asked if you want to save your workspace &#x2013; i
 
 
 <div id="outline-container-sec-6" class="outline-2">
-<h2 id="sec-6"><span class="section-number-2">6</span> Data Manipulation</h2>
+<h2 id="sec-6">Data Manipulation</h2>
 <div class="outline-text-2" id="text-6">
 </div><div id="outline-container-sec-6-1" class="outline-3">
-<h3 id="sec-6-1"><span class="section-number-3">6.1</span> data.frame objects</h3>
+<h3 id="sec-6-1">data.frame objects</h3>
 <div class="outline-text-3" id="text-6-1">
 <ul class="org-ul">
 <li>Usually data read into R will be stored as a <b>data.frame</b>
@@ -1124,7 +1124,7 @@ When you close R you will be asked if you want to save your workspace &#x2013; i
 
 
 <div id="outline-container-sec-6-2" class="outline-3">
-<h3 id="sec-6-2"><span class="section-number-3">6.2</span> Extracting subsets of data.frames</h3>
+<h3 id="sec-6-2">Extracting subsets of data.frames</h3>
 <div class="outline-text-3" id="text-6-2">
 <p>
 You can extract subsets of data.frames using the <code>subset()</code> function<sup><a id="fnr.1" name="fnr.1" class="footref" href="#fn.1">1</a></sup>. Use the <code>select</code> argument to select columns:
@@ -1220,7 +1220,7 @@ In the previous example we used <code>&gt;</code> to select rows where age was g
 </div>
 
 <div id="outline-container-sec-6-3" class="outline-3">
-<h3 id="sec-6-3"><span class="section-number-3">6.3</span> Transforming data.frames</h3>
+<h3 id="sec-6-3">Transforming data.frames</h3>
 <div class="outline-text-3" id="text-6-3">
 <p>
 You can modify data.frames using the <code>transform()</code> function. 
@@ -1285,7 +1285,7 @@ Note that <code>transform</code> is a convenience function; see <code>?Extract</
 </div>
 
 <div id="outline-container-sec-6-4" class="outline-3">
-<h3 id="sec-6-4"><span class="section-number-3">6.4</span> Exporting Data</h3>
+<h3 id="sec-6-4">Exporting Data</h3>
 <div class="outline-text-3" id="text-6-4">
 <p>
 Now that we have made some changes to our GSS data set, we might want to save those changes to a file. Everything we have done so far has only modified the data in R; the files have remained unchanged. 
@@ -1316,7 +1316,7 @@ Now that we have made some changes to our GSS data set, we might want to save th
 
 
 <div id="outline-container-sec-6-5" class="outline-3">
-<h3 id="sec-6-5"><span class="section-number-3">6.5</span> Exercise 2: Data manipulation</h3>
+<h3 id="sec-6-5">Exercise 2: Data manipulation</h3>
 <div class="outline-text-3" id="text-6-5">
 <p>
 Use the gss.rds data set
@@ -1353,10 +1353,10 @@ Use the gss.rds data set
 
 
 <div id="outline-container-sec-7" class="outline-2">
-<h2 id="sec-7"><span class="section-number-2">7</span> Basic Statistics and Graphs</h2>
+<h2 id="sec-7">Basic Statistics and Graphs</h2>
 <div class="outline-text-2" id="text-7">
 </div><div id="outline-container-sec-7-1" class="outline-3">
-<h3 id="sec-7-1"><span class="section-number-3">7.1</span> Basic statistics</h3>
+<h3 id="sec-7-1">Basic statistics</h3>
 <div class="outline-text-3" id="text-7-1">
 <p>
 Descriptive statistics of single variables are straightforward:
@@ -1395,7 +1395,7 @@ Some of these functions (e.g., summary) will also work with data.frames and othe
 </div>
 
 <div id="outline-container-sec-7-2" class="outline-3">
-<h3 id="sec-7-2"><span class="section-number-3">7.2</span> Counts and proportions</h3>
+<h3 id="sec-7-2">Counts and proportions</h3>
 <div class="outline-text-3" id="text-7-2">
 <p>
 Start by using the <code>table()</code> function to tabulate counts, then perform additional computations if needed
@@ -1445,7 +1445,7 @@ sex      NAP VERY HAPPY PRETTY HAPPY NOT TOO HAPPY  DK  NA
 
 
 <div id="outline-container-sec-7-3" class="outline-3">
-<h3 id="sec-7-3"><span class="section-number-3">7.3</span> Statistics by classification factors</h3>
+<h3 id="sec-7-3">Statistics by classification factors</h3>
 <div class="outline-text-3" id="text-7-3">
 <p>
 The <code>by()</code> function can be used to perform a calculation separately for each level of a classifying variable
@@ -1487,7 +1487,7 @@ sex: Female
 </div>
 
 <div id="outline-container-sec-7-4" class="outline-3">
-<h3 id="sec-7-4"><span class="section-number-3">7.4</span> Correlations</h3>
+<h3 id="sec-7-4">Correlations</h3>
 <div class="outline-text-3" id="text-7-4">
 <p>
 Let's look at correlations among between age, income, and education
@@ -1539,7 +1539,7 @@ sample estimates:
 </div>
 
 <div id="outline-container-sec-7-5" class="outline-3">
-<h3 id="sec-7-5"><span class="section-number-3">7.5</span> Multiple regression</h3>
+<h3 id="sec-7-5">Multiple regression</h3>
 <div class="outline-text-3" id="text-7-5">
 <p>
 Modeling functions generally use the <i>formula</i> interface whith DV on left followed by "~" followed by predictors&#x2013;for details see
@@ -1589,7 +1589,7 @@ F-statistic: 4.314 on 2 and 1416 DF,  p-value: 0.01356
 
 
 <div id="outline-container-sec-7-6" class="outline-3">
-<h3 id="sec-7-6"><span class="section-number-3">7.6</span> Save R output to a file</h3>
+<h3 id="sec-7-6">Save R output to a file</h3>
 <div class="outline-text-3" id="text-7-6">
 <p>
 Earlier we learned how to write a data set to a file. But what if we want to write something that isn't in a nice rectangular format, like the results of our regression model? For that we can use the <code>sink()</code> function:
@@ -1635,7 +1635,7 @@ F-statistic: 4.314 on 2 and 1416 DF,  p-value: 0.01356
 
 
 <div id="outline-container-sec-7-7" class="outline-3">
-<h3 id="sec-7-7"><span class="section-number-3">7.7</span> Basic graphics: Frequency bars</h3>
+<h3 id="sec-7-7">Basic graphics: Frequency bars</h3>
 <div class="outline-text-3" id="text-7-7">
 <p>
 Thanks to classes and methods, you can <code>plot()</code> many  kinds of objects:
@@ -1655,7 +1655,7 @@ Thanks to classes and methods, you can <code>plot()</code> many  kinds of object
 </div>
 
 <div id="outline-container-sec-7-8" class="outline-3">
-<h3 id="sec-7-8"><span class="section-number-3">7.8</span> Basic graphics: Boxplots by group</h3>
+<h3 id="sec-7-8">Basic graphics: Boxplots by group</h3>
 <div class="outline-text-3" id="text-7-8">
 <p>
 Thanks to classes and methods, you can <code>plot()</code> many kinds of objects:
@@ -1675,7 +1675,7 @@ Thanks to classes and methods, you can <code>plot()</code> many kinds of objects
 </div>
 
 <div id="outline-container-sec-7-9" class="outline-3">
-<h3 id="sec-7-9"><span class="section-number-3">7.9</span> Basic graphics: Mosaic chart</h3>
+<h3 id="sec-7-9">Basic graphics: Mosaic chart</h3>
 <div class="outline-text-3" id="text-7-9">
 <p>
 Thanks to classes and methods, you can <code>plot()</code> many kinds of objects:
@@ -1695,7 +1695,7 @@ Thanks to classes and methods, you can <code>plot()</code> many kinds of objects
 </div>
 
 <div id="outline-container-sec-7-10" class="outline-3">
-<h3 id="sec-7-10"><span class="section-number-3">7.10</span> Exercise 3</h3>
+<h3 id="sec-7-10">Exercise 3</h3>
 <div class="outline-text-3" id="text-7-10">
 <p>
 Using the datGSS data.frame
@@ -1716,10 +1716,10 @@ Using the datGSS data.frame
 </div>
 
 <div id="outline-container-sec-8" class="outline-2">
-<h2 id="sec-8"><span class="section-number-2">8</span> Wrap-up</h2>
+<h2 id="sec-8">Wrap-up</h2>
 <div class="outline-text-2" id="text-8">
 </div><div id="outline-container-sec-8-1" class="outline-3">
-<h3 id="sec-8-1"><span class="section-number-3">8.1</span> Help us make this workshop better!</h3>
+<h3 id="sec-8-1">Help us make this workshop better!</h3>
 <div class="outline-text-3" id="text-8-1">
 <ul class="org-ul">
 <li>Please take a moment to fill out a very short feedback form
@@ -1735,7 +1735,7 @@ Using the datGSS data.frame
 </div>
 
 <div id="outline-container-sec-8-2" class="outline-3">
-<h3 id="sec-8-2"><span class="section-number-3">8.2</span> Additional resources</h3>
+<h3 id="sec-8-2">Additional resources</h3>
 <div class="outline-text-3" id="text-8-2">
 <ul class="org-ul">
 <li>IQSS workshops: <a href="http://projects.iq.harvard.edu/rtc/filter_by/workshops">http://projects.iq.harvard.edu/rtc/filter_by/workshops</a>
@@ -1783,12 +1783,12 @@ Using the datGSS data.frame
 
 
 <div id="outline-container-sec-9" class="outline-2">
-<h2 id="sec-9"><span class="section-number-2">9</span> Exercise solutions</h2>
+<h2 id="sec-9">Exercise solutions</h2>
 <div class="outline-text-2" id="text-9">
 </div>
 
 <div id="outline-container-sec-9-1" class="outline-3">
-<h3 id="sec-9-1"><span class="section-number-3">9.1</span> Exercise 0 solution&#xa0;&#xa0;&#xa0;<span class="tag"><span class="prototype">prototype</span></span></h3>
+<h3 id="sec-9-1">Exercise 0 solution&#xa0;&#xa0;&#xa0;<span class="tag"><span class="prototype">prototype</span></span></h3>
 <div class="outline-text-3" id="text-9-1">
 <ol class="org-ol">
 <li value="1">] Try to get R to add 2 plus 2.
@@ -1825,7 +1825,7 @@ Using the datGSS data.frame
 </div>
 
 <div id="outline-container-sec-9-2" class="outline-3">
-<h3 id="sec-9-2"><span class="section-number-3">9.2</span> Exercise 1 solution&#xa0;&#xa0;&#xa0;<span class="tag"><span class="prototype">prototype</span></span></h3>
+<h3 id="sec-9-2">Exercise 1 solution&#xa0;&#xa0;&#xa0;<span class="tag"><span class="prototype">prototype</span></span></h3>
 <div class="outline-text-3" id="text-9-2">
 <ol class="org-ol">
 <li value="1">Load the foreign package if you haven't already done so
@@ -1895,7 +1895,7 @@ dat <span style="color: #D0372D;">&lt;-</span> <span style="color: #006699;">rea
 
 
 <div id="outline-container-sec-9-3" class="outline-3">
-<h3 id="sec-9-3"><span class="section-number-3">9.3</span> Exercise 2 solution&#xa0;&#xa0;&#xa0;<span class="tag"><span class="prototype">prototype</span></span></h3>
+<h3 id="sec-9-3">Exercise 2 solution&#xa0;&#xa0;&#xa0;<span class="tag"><span class="prototype">prototype</span></span></h3>
 <div class="outline-text-3" id="text-9-3">
 <p>
 Use the gss.rds data set
@@ -1951,7 +1951,7 @@ Use the gss.rds data set
 </div>
 
 <div id="outline-container-sec-9-4" class="outline-3">
-<h3 id="sec-9-4"><span class="section-number-3">9.4</span> Exercise 3 solution&#xa0;&#xa0;&#xa0;<span class="tag"><span class="prototype">prototype</span></span></h3>
+<h3 id="sec-9-4">Exercise 3 solution&#xa0;&#xa0;&#xa0;<span class="tag"><span class="prototype">prototype</span></span></h3>
 <div class="outline-text-3" id="text-9-4">
 <p>
 Using the datGSS data.frame
@@ -2002,7 +2002,7 @@ Note that <code>subset()</code> is a convenience function; see <code>?Extract</c
 </div>
 </div></div>
 <div id="postamble" class="status">
-<p><a rel='license' href='http://creativecommons.org/licenses/by-sa/4.0/'><img alt='Creative Commons License' style='border-width:0' src='https://i.creativecommons.org/l/by-sa/4.0/80x15.png' /></a><br /><span xmlns:dct='http://purl.org/dc/terms/' property='dct:title'>These IQSS statistical software workshop materials</span> by <a xmlns:cc='http://creativecommons.org/ns#' href='http://rtc.iq.harvard.edu' property='cc:attributionName' rel='cc:attributionURL'>Harvard University</a> are licensed under a <a rel='license' href='http://creativecommons.org/licenses/by-sa/4.0/'>Creative Commons Attribution-ShareAlike 4.0 International License</a>.</p> <p> Presented by the <a href='http://rtc.iq.harvard.edu'>Research Technology Consulting Team</a> at <a href='http://iq.harvard.edu'><img alt='The Institute for Quantitative Social Science' title='IQSS logo' src='http://static.projects.iq.harvard.edu/files/styles/os_files_small/public/rtc/files/iqsslogo-2014_0.png'></img></a></p>
+<p><a rel='license' href='http://creativecommons.org/licenses/by-sa/4.0/'><img alt='Creative Commons License' style='border-width:0' src='https://i.creativecommons.org/l/by-sa/4.0/80x15.png' /></a><br /><span xmlns:dct='http://purl.org/dc/terms/' property='dct:title'>These IQSS statistical software workshop materials</span> by <a xmlns:cc='http://creativecommons.org/ns#' href='http://rtc.iq.harvard.edu' property='cc:attributionName' rel='cc:attributionURL'>Harvard University</a> are licensed under a <a rel='license' href='http://creativecommons.org/licenses/by-sa/4.0/'>Creative Commons Attribution-ShareAlike 4.0 International License</a>.</p> <p> Presented by the <a href='http://rtc.iq.harvard.edu'>Research Technology Consulting Team</a> at <br/> <a href='http://iq.harvard.edu'><img alt='The Institute for Quantitative Social Science' title='IQSS logo' src='http://static.projects.iq.harvard.edu/files/styles/os_files_small/public/rtc/files/iqsslogo-2014_0.png'></img></a></p>
 </div>
 </body>
 </html>
