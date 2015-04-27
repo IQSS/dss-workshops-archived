@@ -52,153 +52,12 @@
   (add-hook 'org-babel-after-execute-hook 'org-display-inline-images)
 #+end_src
 
-
-* COMMENT Documentation notes
-
-** Overview page
-Very nice overview, describes what this is and what it's good for.
-
-** Accessing the RCE
-Nice, but might be better to put something like
-#+BEGIN_QUOTE
-This guide assumes you already have an RCE account. If you do not, please contact us at support@help.hmdc.harvard.edu to request one. (RCE accounts are available to researchers at Harvard and MIT; see http://projects.iq.harvard.edu/user-services/research-computing-environment-sla for details).
-#+END_QUOTE
-at the top.
-
-** Working in the RCE
-Would be nice to have a pointer to menu at the left (e.g., as is done for http://projects.iq.harvard.edu/rce/nx4). That menu would benefit from better indication of hierarchy, e.g., more indentation or different font for sub-menu items. As it is now the indentation is one space, which makes it really hard to see where in the outline you are.
-
-*** RCE Basics
-I'm not sure we need the Desktop, Mouse, and Workspaces section, as most of this should hopefully be familiar already (e.g., OSX also has workspaces so most people are already familiar). Perhaps shorten and/or move some of this to the FAQ. The Directories information is very helpful. Maybe a good place to introduce login vs interactive vs batch. 
-
-*** Projects & Shared Space
-Good information, but somewhat redundant with the directories section of rce/book/rce-basics.
-
-*** Installing and Using Extensions 
-This section seems out of place. IMO people reading this documentation want to know how the RCE works, and the focus should be kept on that rather than digressing to discuss software-specific features. I think this is good information to have, but maybe put it at the end, sort of like an appendix.
-
-The instructions for installing packages in R may not be needed  since most of CRAN is already installed. People who want to install other things are probably after a development version, an old version, or software not distributed on CRAN. If we keep this section we should focus on these scenarios.
-
-*** Project Space Collaboration
-This section should probably go immediately after the "Projects and Shared Space" section.
-
-** Running Batch Jobs (rce/book/batch-processing-basics)
-The overview is kind of long, perhaps try to compact it. I'm not really sure how useful the "Condor System Components and Technology" section is. For example, I personally still don't know what a "ClassAd" is, nor have I ever needed to know.
-
-There is some information here that I'm not sure is accurate, in particular
-
-#+BEGIN_QUOTE
-  You can submit batch processing that requires more infrastructure than your workstation provides. For example, you could use a dataset that is larger in size than the memory on your workstation.
-#+END_QUOTE
-My understanding is that batch nodes have 4 GB of memory, which is ≤ most laptops these days, so unless I'm missing something this is unlikely to be true.
-
-*** Batch Basics (rce/book/batch-basics)
-The important information should be copied out of the pdf and presented in html as the rest of the documentation is. There is some redundancy between the information in the pdf and the rest of the documentation, e.g., we get introduced to the terminology again. The most useful part of the pdf IMO is the commands section.
-
-*** Batch workflow (rce/book/batch-workflow)
-Step 4 needs and example submit file. Would be helpful to reiterate that to run jobs in batch you need a submit file, which you can create by hand or by using condor_submit_util.
-
-*** Setting up your batch environment
-This section might be merged with the previous one.
-
-*** Determining batch parameters
-The first sentence: 
-#+BEGIN_QUOTE
-Before you submit dwarves.pl for batch processing, you need to determine the parameters for this submission.
-#+END_QUOTE
-is confusing, as this is the first mention of =dwarves.pl=, and it kind of comes out of nowhere.
-
-The opening sentence aside, this section is generally very clear and helpful. However I'm not sure about this:
-#+BEGIN_QUOTE
-A general rule for batch processing is that you have one output file for each input file. Therefore, if you have seven input files, you expect to have seven output files after processing is complete. A useful practice is to correlate the names of input and output files.
-#+END_QUOTE 
-and
-#+BEGIN_QUOTE
-A general rule for batch processing is that you execute your job one time for each input file that you use.
-#+END_QUOTE
-Personally I almost never work this way. Generally I'll have /one/ input file that includes logic for doing something different depending on the process ID. The way the documentation is written it sounds like if I want to run a simulation with some parameter =p= ranging from 1 to 100 I should have 100 =.R= files, each of which differs only in the value of =p=, which doesn't make much sense to me. 
-
-Of course the intention of the existing instructions might be to avoid the problem of passing process numbers into your program. That might be a good idea, but I'm not sure it's actually easier to generate the 100 =.R= files, and there are no instructions for this at the moment either.
-
-*** Batch example
-Ah, here come the dwarves! But there is no actual link to the =condor_example.tar.gz= file. Not sure if we just need to fix the link or if the example needs to be re-written.
-
-*** Make batch ready programs
-This probably needs to be expanded, and the email should probably be changed to [[mailto:help@iq.harvard.edu]].
-
-*** Submit with batch script
-#+BEGIN_QUOTE
-You can use the HMDC script to set up your submit file and submit your batch or create your submit file manually and submit to the cluster.
-#+END_QUOTE
-might be better as
-#+BEGIN_QUOTE
-You can use the =condor_submit_util= command line program to set up your submit file and submit your batch, or you can create your submit file manually and submit to the cluster with the =condor_submit= command line program.
-#+END_QUOTE
-Other references to "the script" should clarify which script (presumably =condor_submit_util=.
-
-*** Working interactively with script
-Ah, finally we learn how to actually submit our jobs! This section is very nice.
-
-*** Working with command line submit
-I'm not sure we really need this section -- now we have three ways to submit a batch job: a) =condor_submit_util= in interactive mode, =condor_submit_util= in command-line mode, or just write a .submit files and use =condor_submit=. I guess its nice to have options, but I feel like this is a little overwhelming.
-
-*** Saving and Reusing a Submit File
-The =$(PROCESS)= macro is really useful, it probably deserves its own section. There are more references to "the script" here, which I think should be changed to explicitly referring to =condor_submit_util=.
-
-*** Passing Arguments to the Program
-This starts to get confusing, I think because there is no clear acknowledgment that we are now talking about writing submit files by hand (or at least modifying them by hand).
-
-*** Script options
-"Automated Condor Submission script " should make clear that it is a reference to =condor_submit_util=. The second sentence, "The process it automates is describe in ." needs to be completed. 
-
-This section should come before (or be merged with) the /Working with command line submit/ section.
-
-*** Option conventions
-The first sentence, "Options for the condor_submit_util script are described in . " needs to be completed.
-
-*** Pattern Arguments
-This is helpful.
-
-*** Submit to batch manually
-Should reiterate at the top that there are two ways of submitting batch jobs: use =condor_submit_util= to both write and submit the .submit file, or write the .submit file manually and use =condor_submit=.
-
-Are the comments about permissions really needed? I don't think I've ever had to change permissions in order for condor to work.
-
-Step 4 is confusing. What example program are we referring to?
-
-*** Submit file basics
-This section is really good, but it needs a) an example submit file, and b) I don't understand the "required attributes" section. I'm pretty sure I've used submit files without these attributes, and I don't understand what they do.
-
-*** Submission weights
-Is the information in this section accurate? I don't see any information about submission weights in files I create with =condor_submit_util=.
-
-*** Example submit file
-Should merge with the "Submit file basics" section.
-
-*** Checking Your Process Status
-Needs pointer to menu at the left (e.g., as is done for http://projects.iq.harvard.edu/rce/nx4), or convert the bullet points to links.
-
-*** Managing Job Status
-This section is very nice and useful.
-
-*** Receiving email notifications
-I'm not sure we need this section.
-
-*** Removing your job
-In practice one almost always finds their job with =condor_q <username>=, using that to look up the job number. This part should be included in the example.
-
-*** Other Batch examples
-This is very useful. Its nice to see input/output examples.
-
-*** Submit a batch job from a RCE Powered (Interactive) job
-It may be helpful to add a note about the advantages of submitting a batch job from an interactive job are. I've personally never done this, and its not immediately clear why I might want to.
-
 * What is the RCE?
 The Research Computing Environment (RCE) is a large powerful computer cluster that you can use for computations that are too large to be conveniently done on a personal computer. The RCE is available to researchers at Harvard and MIT. 
 
 To obtain an RCE account send an email to [[mailto:help@iq.harvard.edu]]. You will receive a response asking you several questions about your requirements (e.g., if you need backups, how much data storage space you need). For details on the services provided and limitations and restrictions of the service refer to [[http://projects.iq.harvard.edu/user-services/research-computing-environment-sla]]
 
-You can use the RCE in one to two primary ways:
+You can use the RCE in one of two primary ways:
 - Interactive jobs :: Run your computation as you would on your PC, but on a much more powerful machine with up to 24 CPU cores and up to 256Gb of memory.
 - Batch jobs :: Run your computation in the background using up to several hundred computers at once.
 
@@ -242,7 +101,7 @@ For more details on project folders refer to [[http://projects.iq.harvard.edu/rc
 * Getting your data on and off the RCE
 People often use the RCE for memory or CPU intensive data analysis projects. If this is your intention as well, chances are that you have one or more (potentially large) data files that you will need to copy to the RCE. Remember that disk space in your home directory is limited, so if you have a large amount of data make sure to transfer it directly to your project space folder.
 
-The simplest approach is to us the NoMachine client to transfer data from your local machine to the RCE (and from the RCE to your local machine). Click on the red =!M= icon in the upper right-hand corner and select the =Send a file from the client= menu, as shown below.
+The simplest approach is to use the NoMachine client to transfer data from your local machine to the RCE (and from the RCE to your local machine). Click on the red =!M= icon in the upper right-hand corner and select the =Send a file from the client= menu, as shown below.
 [[file:images/NoMachineMenu.png]]
 
 If you prefer to transfer files using another file transfer client, anything that uses ssh (e.g., [[http://filezilla-project.org/][FileZilla]]) should work. Just point your favorite client to =rce.hmdc.harvard.edu=.
@@ -541,7 +400,7 @@ After submitting the jobs we may wish to monitor them, e.g. to check if they are
 #+END_EXAMPLE
 Perhaps the most important information returned by =condor_q= is the program status (the *ST* column). Status *I* means your job is in the queue but has not yet started running, *R* means the job is currently running, and *H* means the job is on hold. If you job is on hold you can get more information about what the problem might be by running =condor_q -hold=.
 
-You will know your job is finished when it is now longer listed in the =condor_q= output. When it finishes you can examine the output and/or error files to see if the program exited successfully.
+You will know your job is finished when it is no longer listed in the =condor_q= output. When it finishes you can examine the output and/or error files to see if the program exited successfully.
 
 *** Aggregating results
 When your batch job is finished you are usually left with multiple output files that need to be aggregated. In the case of our simulation example, we have files =output/out.0 -- output/out40=, each of which contains a single number representing the proportion of significant tests. We can aggregate them with a simple R script, like this:
@@ -588,7 +447,7 @@ We can use the =$(Process)= macro to pass information to our program, like this:
 
   Log = log.txt
   # Enter the number of processes to request.
-  Queue 41
+  Queue 40
 #+END_SRC
 Notice that we used =--args $(Process)= to pass the process number to the R program. =$(Process)= will be an integer starting from =0=. 
 
@@ -606,7 +465,7 @@ We now have a variable in R that tells us which process we are. Now we need to m
 
 There is one additional complication we need to handle: in the previous example we did need to keep track of the parameters used by each process because the parameters did not vary. Now that they do, it would be nice if we had output that recorded the value of the varying parameter as well as the result. We could of course just print the =n= parameter we calculated from the process number along with the result, but it will be easier to combine the outputs if we write them to a machine-readable format (e.g., a comma-separated-values file). You may have noticed that in the submit file above I omitted the =output= directive: that is because we are going to explicitly save the results in the R script, so we don't need the batch scheduler to save those output files for us.
 
-No we can set up the simulation as before, passing the =n= calculated above into our simulation function, writing the results to files. 
+Now we can set up the simulation as before, passing the =n= calculated above into our simulation function, writing the results to files. 
 #+BEGIN_SRC R :eval no :tangle examples/power2/power.R
     ## function to simulate data and perform a t.test
     sim.ttest <- function(mu1, mu2, sd, n1, n2) {
@@ -637,7 +496,7 @@ No we can set up the simulation as before, passing the =n= calculated above into
 Now we have all the required elements to submit out job, and can do so using =condor_submit= as before. 
 
 *** Aggregating results
-When your batch job is finished you are usually left with multiple output files that need to be aggregated. In the case of our simulation example, we have files =output/out.0 -- output/out40=, each of which contains a single number representing the proportion of significant tests. We can aggregate them with a simple R script, like this:
+Each of our 40 processes produced a file in the =output= directory name =out<process>csv=; our next task is to aggregate these results. The R script below reads each of these files, joins them together into a single data.frame, and plots the result.
 #+BEGIN_SRC R :eval no :tangle examples/power2/aggregate.R
   ## list all output files in the output directory
   output_files <- list.files("output",
@@ -658,6 +517,7 @@ When your batch job is finished you are usually left with multiple output files 
 Download the [[file:examples/power2.zip][power simulation example files]], to the RCE, extract the zip file, and run the example by calling =condor_submit power.submit= from the =power2= directory.
 
 * TODO Installing custom packages on the RCE
+
 
 ** Installing R packages
 
