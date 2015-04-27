@@ -1,0 +1,24 @@
+
+# Universe whould always be 'vanilla'. This line MUST be 
+#included in your submit file, exactly as shown below.
+Universe = vanilla
+
+# Enter the path to the R program.
+Executable = /usr/local/bin/R
+
+# Specify any arguments you want to pass to the executable
+# to make r not save or restore workspaces, and to 
+# run as quietly as possible
+Arguments = --no-save --no-restore --slave
+
+# Specify the relative path to the input file
+input = power.R
+
+# Specify where to output any results printed by your program.
+output = output/out.$(Process)
+# Specify where to save any errors returned by your program.
+error = output/error.$(Process)
+# Specify where to save the log file.
+Log = output/log
+# Enter the number of processes to request.
+Queue 100

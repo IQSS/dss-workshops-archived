@@ -1,0 +1,669 @@
+# -*- eval: (save-excursion (org-babel-goto-named-src-block "workshopPreamble") (org-babel-execute-src-block)) -*-
+#+TITLE:     RCE Quick-Start
+#+AUTHOR:    Ista Zahn 
+#+EMAIL:     istazahn@gmail.com
+#+DATE:      
+
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="http://tutorials.iq.harvard.edu/org-html-themes/styles/readtheorg/css/readtheorg.css"/>
+
+#+HTML_HEAD: <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+#+HTML_HEAD: <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+#+HTML_HEAD: <script type="text/javascript" src="http://tutorials.iq.harvard.edu/org-html-themes/styles/readtheorg/js/readtheorg.js"></script>
+
+
+#+PROPERTY: cache no
+#+PROPERTY: results output
+#+PROPERTY: exports both
+#+PROPERTY: session nil
+#+PROPERTY: comments no
+#+PROPERTY: header-args:R  :session *R*
+#+PROPERTY: header-args:python  :results output :session *Python*
+
+#+name: workshopPreamble
+#+begin_src emacs-lisp :exports none :results silent :tangle no
+  ;; default image width of 600
+  (setq-local org-image-actual-width 600)
+
+  ;; no subscripts
+  (setq-local org-export-with-sub-superscripts '{})
+
+  ;; present all output in blocks
+  (setq-local org-babel-min-lines-for-block-output 0)
+
+  ;; do not re-evaluate source code on export
+  (setq-local org-export-babel-evaluate nil)
+
+  ;; enable source code support in orgmode
+  (org-babel-do-load-languages
+   'org-babel-load-languages
+   '(;(stata . t) ;; requires custom ob-stata.el
+     (emacs-lisp . t)
+     (sh . t)
+     (R . t)
+     (latex . t)
+     (octave . t)
+     (ditaa . t)
+     (org . t)
+     (perl . t)
+     (python . t)
+     (matlab . t)))
+
+  ;; display images in the orgmode buffer automatically
+  (add-hook 'org-babel-after-execute-hook 'org-display-inline-images)
+#+end_src
+
+
+* COMMENT Documentation notes
+
+** Overview page
+Very nice overview, describes what this is and what it's good for.
+
+** Accessing the RCE
+Nice, but might be better to put something like
+#+BEGIN_QUOTE
+This guide assumes you already have an RCE account. If you do not, please contact us at support@help.hmdc.harvard.edu to request one. (RCE accounts are available to researchers at Harvard and MIT; see http://projects.iq.harvard.edu/user-services/research-computing-environment-sla for details).
+#+END_QUOTE
+at the top.
+
+** Working in the RCE
+Would be nice to have a pointer to menu at the left (e.g., as is done for http://projects.iq.harvard.edu/rce/nx4). That menu would benefit from better indication of hierarchy, e.g., more indentation or different font for sub-menu items. As it is now the indentation is one space, which makes it really hard to see where in the outline you are.
+
+*** RCE Basics
+I'm not sure we need the Desktop, Mouse, and Workspaces section, as most of this should hopefully be familiar already (e.g., OSX also has workspaces so most people are already familiar). Perhaps shorten and/or move some of this to the FAQ. The Directories information is very helpful. Maybe a good place to introduce login vs interactive vs batch. 
+
+*** Projects & Shared Space
+Good information, but somewhat redundant with the directories section of rce/book/rce-basics.
+
+*** Installing and Using Extensions 
+This section seems out of place. IMO people reading this documentation want to know how the RCE works, and the focus should be kept on that rather than digressing to discuss software-specific features. I think this is good information to have, but maybe put it at the end, sort of like an appendix.
+
+The instructions for installing packages in R may not be needed  since most of CRAN is already installed. People who want to install other things are probably after a development version, an old version, or software not distributed on CRAN. If we keep this section we should focus on these scenarios.
+
+*** Project Space Collaboration
+This section should probably go immediately after the "Projects and Shared Space" section.
+
+** Running Batch Jobs (rce/book/batch-processing-basics)
+The overview is kind of long, perhaps try to compact it. I'm not really sure how useful the "Condor System Components and Technology" section is. For example, I personally still don't know what a "ClassAd" is, nor have I ever needed to know.
+
+There is some information here that I'm not sure is accurate, in particular
+
+#+BEGIN_QUOTE
+  You can submit batch processing that requires more infrastructure than your workstation provides. For example, you could use a dataset that is larger in size than the memory on your workstation.
+#+END_QUOTE
+My understanding is that batch nodes have 4 GB of memory, which is ≤ most laptops these days, so unless I'm missing something this is unlikely to be true.
+
+*** Batch Basics (rce/book/batch-basics)
+The important information should be copied out of the pdf and presented in html as the rest of the documentation is. There is some redundancy between the information in the pdf and the rest of the documentation, e.g., we get introduced to the terminology again. The most useful part of the pdf IMO is the commands section.
+
+*** Batch workflow (rce/book/batch-workflow)
+Step 4 needs and example submit file. Would be helpful to reiterate that to run jobs in batch you need a submit file, which you can create by hand or by using condor_submit_util.
+
+*** Setting up your batch environment
+This section might be merged with the previous one.
+
+*** Determining batch parameters
+The first sentence: 
+#+BEGIN_QUOTE
+Before you submit dwarves.pl for batch processing, you need to determine the parameters for this submission.
+#+END_QUOTE
+is confusing, as this is the first mention of =dwarves.pl=, and it kind of comes out of nowhere.
+
+The opening sentence aside, this section is generally very clear and helpful. However I'm not sure about this:
+#+BEGIN_QUOTE
+A general rule for batch processing is that you have one output file for each input file. Therefore, if you have seven input files, you expect to have seven output files after processing is complete. A useful practice is to correlate the names of input and output files.
+#+END_QUOTE 
+and
+#+BEGIN_QUOTE
+A general rule for batch processing is that you execute your job one time for each input file that you use.
+#+END_QUOTE
+Personally I almost never work this way. Generally I'll have /one/ input file that includes logic for doing something different depending on the process ID. The way the documentation is written it sounds like if I want to run a simulation with some parameter =p= ranging from 1 to 100 I should have 100 =.R= files, each of which differs only in the value of =p=, which doesn't make much sense to me. 
+
+Of course the intention of the existing instructions might be to avoid the problem of passing process numbers into your program. That might be a good idea, but I'm not sure it's actually easier to generate the 100 =.R= files, and there are no instructions for this at the moment either.
+
+*** Batch example
+Ah, here come the dwarves! But there is no actual link to the =condor_example.tar.gz= file. Not sure if we just need to fix the link or if the example needs to be re-written.
+
+*** Make batch ready programs
+This probably needs to be expanded, and the email should probably be changed to [[mailto:help@iq.harvard.edu]].
+
+*** Submit with batch script
+#+BEGIN_QUOTE
+You can use the HMDC script to set up your submit file and submit your batch or create your submit file manually and submit to the cluster.
+#+END_QUOTE
+might be better as
+#+BEGIN_QUOTE
+You can use the =condor_submit_util= command line program to set up your submit file and submit your batch, or you can create your submit file manually and submit to the cluster with the =condor_submit= command line program.
+#+END_QUOTE
+Other references to "the script" should clarify which script (presumably =condor_submit_util=.
+
+*** Working interactively with script
+Ah, finally we learn how to actually submit our jobs! This section is very nice.
+
+*** Working with command line submit
+I'm not sure we really need this section -- now we have three ways to submit a batch job: a) =condor_submit_util= in interactive mode, =condor_submit_util= in command-line mode, or just write a .submit files and use =condor_submit=. I guess its nice to have options, but I feel like this is a little overwhelming.
+
+*** Saving and Reusing a Submit File
+The =$(PROCESS)= macro is really useful, it probably deserves its own section. There are more references to "the script" here, which I think should be changed to explicitly referring to =condor_submit_util=.
+
+*** Passing Arguments to the Program
+This starts to get confusing, I think because there is no clear acknowledgment that we are now talking about writing submit files by hand (or at least modifying them by hand).
+
+*** Script options
+"Automated Condor Submission script " should make clear that it is a reference to =condor_submit_util=. The second sentence, "The process it automates is describe in ." needs to be completed. 
+
+This section should come before (or be merged with) the /Working with command line submit/ section.
+
+*** Option conventions
+The first sentence, "Options for the condor_submit_util script are described in . " needs to be completed.
+
+*** Pattern Arguments
+This is helpful.
+
+*** Submit to batch manually
+Should reiterate at the top that there are two ways of submitting batch jobs: use =condor_submit_util= to both write and submit the .submit file, or write the .submit file manually and use =condor_submit=.
+
+Are the comments about permissions really needed? I don't think I've ever had to change permissions in order for condor to work.
+
+Step 4 is confusing. What example program are we referring to?
+
+*** Submit file basics
+This section is really good, but it needs a) an example submit file, and b) I don't understand the "required attributes" section. I'm pretty sure I've used submit files without these attributes, and I don't understand what they do.
+
+*** Submission weights
+Is the information in this section accurate? I don't see any information about submission weights in files I create with =condor_submit_util=.
+
+*** Example submit file
+Should merge with the "Submit file basics" section.
+
+*** Checking Your Process Status
+Needs pointer to menu at the left (e.g., as is done for http://projects.iq.harvard.edu/rce/nx4), or convert the bullet points to links.
+
+*** Managing Job Status
+This section is very nice and useful.
+
+*** Receiving email notifications
+I'm not sure we need this section.
+
+*** Removing your job
+In practice one almost always finds their job with =condor_q <username>=, using that to look up the job number. This part should be included in the example.
+
+*** Other Batch examples
+This is very useful. Its nice to see input/output examples.
+
+*** Submit a batch job from a RCE Powered (Interactive) job
+It may be helpful to add a note about the advantages of submitting a batch job from an interactive job are. I've personally never done this, and its not immediately clear why I might want to.
+
+* What is the RCE
+The Research Computing Environment (RCE) is a large powerful computer cluster that you can use for computations that are too large to be conveniently done on a personal computer. The RCE is available to researchers at Harvard and MIT. 
+
+To obtain an RCE account send an email to [[mailto:help@iq.harvard.edu]]. You will receive a response asking you several questions about your requirements (e.g., if you need backups, how much data storage space you need). For details on the services provided and limitations and restrictions of the service refer to [[http://projects.iq.harvard.edu/user-services/research-computing-environment-sla]]
+
+You can use the RCE in one to two primary ways:
+- Interactive jobs :: Run your computation as you would on your PC, but on a much more powerful machine with up to 24 CPU cores and up to 256Gb of memory.
+- Batch jobs :: Run your computation in the background using up to several hundred computers at once.
+
+Interactive jobs are good for memory intensive computations that may be unfeasible on your personal computer due to hardware limitations. Batch jobs are good for computations that can be run in parallel and/or computations that you expect to run for long periods of time.
+
+
+* Accessing the RCE
+You can access the RCE using the [[http://projects.iq.harvard.edu/rce/nx4_installation][nomachine]] remote desktop software, or via the command line using =ssh=. If you are a command line wizard and only need to run batch jobs =ssh= is the way to go; for most of us however =nomachine= is a much more useful way to access the RCE. It allows you to interact with the applications on the cluster much as you interact with applications on your local computer. To get started, download the NoMachine client for your operating system: [[http://downloads.hmdc.harvard.edu/nx/4/nomachine-client-windows-latest.zip][Windows]], [[http://downloads.hmdc.harvard.edu/nx/4/nomachine-client-osx-latest.dmg][OSX]], [[http://downloads.hmdc.harvard.edu/nx/4/nomachine-client-linux-latest.zip][Linux]]. 
+
+After downloading, Windows users should right-click on the =nomachine-client-windows-latest.zip= file and choose =Extract to here=. Open the =NoMachine Client= folder and double-click on the .Exe files to start the installation[fn:1]. Mac users should double-click on the =nomachine-client-osx-latest.dmg= and double-click on the installer package to begin the installation.
+
+Once you have installed the NoMachine software you should launch the NoMachine application and set up your login credentials. Once the application launches click =Continue=, then click =Click here to create a new connection=. Keep clicking =Continue= until you get to the Hosts screen. Fill in the Host field with =rce.hmdc.harvard.edu=. Keep clicking =Continue= until you get to the Name screen. fill in the Name field with =RCE6= and click =Done=.
+
+Once you have configured NoMachine you should test it out to make sure you can connect to the RCE. Click on the =RCE6= entry and then click =Connect=. Fill in the user name and password fields with your RCE user name and password. On the following screen click on =New virtual desktop or custom session=, then click on =Create a new virtual desktop= and click =Continue=. You should see an instruction screen; click =OK= and you should see your RCE desktop, which will look something like this:
+
+[[file:images/rceDesktop.png]]
+
+If you have any difficulties installing NoMachine, detailed documentation is available at [[http://projects.iq.harvard.edu/rce/nx4]]; if you do not find a solution there send and email to [[mailto:help@iq.harvard.edu]] and someone will assist you.
+
+* Power at your fingertips
+
+You can run applications on the RCE /interactively/ or using the /batch/ system. Often the first thing you will want to determine before using the RCE for a particular computation is whether your computation is more suitable for running in the interactive nodes or on the batch nodes. If you simply want a more powerful version of your PC (e.g., more memory, more CPUs) then the interactive nodes are what you want. If you want to split your task up into hundreds of pieces and run each piece simultaneously, then you want the batch modes.
+
+More specifically, the RCE provides three levels of service:
+- Login nodes :: Provides access to a desktop environment (similar to Remote Desktop) from which you can launch applications. The login nodes should not be used for computationally intensive jobs; the main function of the login nodes is to provide access to the interactive and batch nodes. You access the login nodes using the NoMachine client, as described in [[Accessing the RCE][Accessing the RCE]].
+- Interactive nodes :: Interactive nodes allow you to run applications on very powerful computers. You can launch applications on the interactive nodes from the login node desktop using the =Applications --> RCE Powered Applications= menu. Applications launched from this menu will run on more powerful machines with large memory resources (up to 256GB) and up to 24 CPU cores.
+- Batch nodes :: Where interactive nodes give you access to a single very powerful computer, batch nodes provide a swarm of hundreds of small computers. You can run your computation in parallel on each of them, which can provide dramatically reduced compute time for many applications. You access the batch nodes using the /command line/ which you can access by starting a terminal application from the  =Applications --> Accessories --> terminal= menu.
+
+* Project folders & shared space
+When your RCE account was created a home folder was set up for you, with /Documents/, /Downloads/, /Desktop/ and other common sub-directories. However you can only store a maximum of 5Gb in your home folder. For larger projects you should use a /project folder/; one was probably set up for you when your account was activated. There is a shortcut in your home directory named /shared_space/, which will contain any project folders you have access to. You should store large data sets and other large or numerous files in these project folders.
+
+Project space can be used privately, or shared with collaborators (hence the name, "shared space"). Because our researchers bring confidential data to the RCE, we keep all project space separate from your home directory. There are four types of project space:
+- Project space with long-term backups
+- Project space without long-term backups
+- Confidential project space with long-term backups
+- Confidential project space without long-term backups
+When you apply for an RCE account, you are asked which category would best suit your needs. Therefore, you should know ahead of time if your data is rated as confidential information by your IRB.
+
+For more details on project folders refer to [[http://projects.iq.harvard.edu/rce/book/projects-and-shared-space]] and http://projects.iq.harvard.edu/rce/book/project-space-collaboration.
+
+* Getting your data on and off the RCE
+People often use the RCE for memory or CPU intensive data analysis projects. If this is your intention as well, chances are that you have one or more (potentially large) data files that you will need to copy to the RCE. Remember that disk space in your home directory is limited, so if you have a large amount of data make sure to transfer it directly to your project space folder.
+
+The simplest approach is to us the NoMachine client to transfer data from your local machine to the RCE (and from the RCE to your local machine). Click on the red =!M= icon in the upper right-hand corner and select the =Send a file from the client= menu, as shown below.
+[[file:images/NoMachineMenu.png]]
+
+If you prefer to transfer files using another file transfer client, anything that uses ssh (e.g., [[http://filezilla-project.org/][FileZilla]]) should work. Just point your favorite client to =rce.hmdc.harvard.edu=.
+
+* Interactive jobs
+When you first log on to the RCE you are on a /login node/. The login nodes are not designed for intensive computation; the purpose of the login nodes is to provide access to the /interactive nodes/ and the /batch nodes/. Interactive jobs are useful when a) you need a lot of memory (e.g., because you need to load a large dataset into memory), and/or b) you want to use multiple cores to speed up your computation.
+
+** Launching applications on the interactive nodes
+Running applications on the interactive nodes is very easy; just log in [[Accessing the RCE][using NoMachine]] and launch your application from the =Application --> RCE Powered= menu. A dialog will open asking you how much memory you need and how many CPUs, and then your application will open. That's all there is to it! Well, we should say that the RCE is a shared resource, so please try not to request more memory or CPUs than you need. Also, applications running on the interactive nodes will expire after five days; you can request an extension, but if you fail to do so your job will be terminated 120 hours after it starts. For details refer to [[http://projects.iq.harvard.edu/rce/book/extending-rce-powered-application]].
+
+** Available RCE powered applications
+
+Available RCE powered applications include:
+- Gauss
+- Mathematica
+- Matlab/Octave
+- R/RStudio
+- SAS
+- Stata (MP and SE)
+- StatTransfer
+
+Other applications (e.g., Python/IPython, perl, tesseract, various Unix programs and utilities) can be run on the interactive nodes by launching a terminal on an interactive node (=Applications --> RCE Powered --> RCE Shell=) and launching your program from the command line.
+
+If you are using the interactive nodes primarily for the large memory they provide you should have all the information you need to begin taking advantage of the RCE. If you are also interested in using multiple CPU cores to speed up your computations, read on! The following sections contain examples illustrating techniques for utilizing multiple cores on the RCE.
+
+** Using multiple CPUs in R
+This section illustrates how to take advantage of multiple cores when running interactive jobs on the RCE. Since memory requirements are easy to satisfy (just specify how much you need when you launch and application via the =Application --> RCE Powered= menu), the examples presented here will focus on utilizing multiple CPUs. 
+
+There are many different packages for utilizing multiple cores in R, but one of the simplest is the [[https://stat.ethz.ch/R-manual/R-devel/library/parallel/doc/parallel.pdf][parallel]] package[fn:2]. To use it load the parallel package and use the =parLapply= function or the =mclapply= function. 
+
+*** Using multiple cores to speed up simulations
+Running computations in parallel on multiple cores is often an effective way to speed up computations. This can be especially useful when doing simulations, or when using resampling methods such as bootstrap or permutation tests. In this example parallel processing is used to simulate the sampling distribution of the mean for samples of various sizes.
+
+We start by setting up a helper function to repeatedly generate a sample of a given size and calculate the sample mean.
+#+BEGIN_SRC R
+  ## function to generate distribution of means for a range of sample sizes
+  meanDist <- function(n, nsamp = 5000) {
+    replicate(nsamp, mean(rnorm(n)))
+  }
+
+  ## range of sample sizes to iterate over
+  sampSizes <- seq(10, 500, by = 5)
+
+#+END_SRC
+
+#+RESULTS:
+
+Next iterate over a range of sample sizes, generating a distribution of means for each one. This can be slow because R normally uses only one core:
+#+BEGIN_SRC R
+  system.time(means <- lapply(sampSizes, meanDist))
+#+END_SRC
+
+#+RESULTS:
+#+begin_example
+   user  system elapsed 
+ 33.270   0.020  33.295
+#+end_example
+
+The simulation can be carried out much more rapidly using =mclapply= instead:
+#+BEGIN_SRC R
+  library(parallel) 
+  system.time(means <- mclapply(sampSizes, meanDist, mc.cores = 7))
+#+END_SRC
+
+#+RESULTS:
+#+begin_example
+   user  system elapsed 
+  36.48    1.01    5.68
+#+end_example
+
+Like =lapply= the =mclapply= function returns a list, which we can process as usual. For example, we can construct histograms of the sampling distributions of the mean that we simulated above:
+#+BEGIN_SRC R :results output graphics :file images/samplingDist.png :width 600 :height 300 :res 96
+  ## plot the distribution of means at various sample sizes
+  par(mfrow=c(6, 5), mar = c(0,0,2,2), cex = .7)
+  for(i in 1:30) {
+    hist(means[[i]], 
+         main = paste("n =", 
+                      sampSizes[i]), 
+         axes = FALSE,
+         xlim = range(unlist(means)))
+  }
+#+END_SRC
+
+#+ATTR_HTML: width="600"
+#+RESULTS:
+[[file:images/samplingDist.png]]
+
+
+*** Using multiple cores to speed up computations
+In the previous example we generated the data on each iteration. This kind of simulation can be useful, but often you want to parallelize a function that processes data from a (potentially large) number of files. This is also easy to do using the parallel package in R. In the following example we count number of characters in all the text files in the texlive directory.
+#+BEGIN_SRC R
+  ## List the files to iterate over
+  textFiles<- list.files("/usr/share/texlive/", 
+                         recursive = TRUE, 
+                         pattern = "\\.txt$|\\.tex$",
+                         full.names = TRUE)
+
+  ## function for counting characters (NOTE: this example isn't realistic -- it 
+  ## would be better to use the unix "wc" utility if you were doing this
+  ## in real life...)
+  countChars <-  function(x) {
+    sum(nchar(readLines(x, warn = FALSE), type = "width"))
+  }
+#+END_SRC
+
+#+RESULTS:
+
+We have
+#+BEGIN_SRC R
+  length(textFiles)
+#+END_SRC
+
+#+RESULTS:
+#+begin_example
+[1] 2087
+#+end_example
+text files to process. We can do this using a single core:
+#+BEGIN_SRC R
+  system.time(nchars <- unlist(lapply(textFiles, countChars)))
+#+END_SRC
+
+#+RESULTS:
+#+begin_example
+   user  system elapsed 
+  27.98    0.29   31.83
+#+end_example
+but this is too slow. We can do the computation more quickly using multiple cores:
+#+BEGIN_SRC R
+  system.time(nchars <- unlist(mclapply(textFiles, countChars, mc.cores = 7)))
+#+END_SRC
+
+#+RESULTS:
+#+begin_example
+   user  system elapsed 
+  26.85    0.68    4.96
+#+end_example
+and calculate the total number of characters in the text files by summing over the result
+#+BEGIN_SRC R
+  sum(nchars, na.rm = TRUE)
+#+END_SRC
+
+#+RESULTS:
+#+begin_example
+[1] 31831896
+#+end_example
+
+For more details and examples using the parallel package, refer to the [[https://stat.ethz.ch/R-manual/R-devel/library/parallel/doc/parallel.pdf][parallel package documentation]] or run =help(package = "parallel")= at the R prompt. For other ways of running computations in parallel refer to the [[http://cran.r-project.org/web/views/HighPerformanceComputing.html][HPC task view]].
+
+** TODO Parallel examples for python, matlab?
+I don't know this well enough to write good examples. I tried with python, but couldn't come up with an example where multiple processes was actually faster. Contributions appreciated. --Ista
+
+** Using multiple CPUs in other programming languages and applications
+Using multiple CPU cores in Stata, Matlab and SAS does not require explicit activation -- many functions will automatically use multiple cores if available. For Matlab user-written code can also take advantage of multiple CPUs using the =parfor= command. Python uses can run multiple processes using the [[https://docs.python.org/2/library/multiprocessing.html][multiprocessing]] library.
+
+* Batch jobs
+The RCE also provides access to a /batch nodes/, a cluster of many lower powered computers. While each individual batch node is not that powerful (each node has one CPU and 4 Gb of memory), there are hundreds of them, and combined they make for a very powerful system indeed. The batch nodes are good for jobs will run for a long time, and for groups of very similar jobs (e.g., simulations where a small number of parameters are varied).
+
+Running jobs on the batch nodes is somewhat more complicated than running interactive jobs on the RCE. The main access points are two /command line/ programs, =condor_submit_util= and =condor_submit=. =condor_submit_util= prompts you for inputs and uses them to write and submit a =submit file=. Alternatively, you can write the submit file yourself and submit it using =condor_submit=, as shown in the examples below. In this tutorial we focus on writing simple submit files and submitting them with =condor_submit=. For more details on automatically generating and submitting using =condor_submit_util= refer to the main [[http://projects.iq.harvard.edu/rce/book/batch-processing-basics][RCE batch job documentation]]. 
+
+** Preparing for batch submission
+
+In practical terms, running in "batch" means that you will not be able to interact with the running process. This means that all the information your program needs to successfully complete needs to be specified ahead of time. You can pass arguments to your process so that each job gets different inputs, but the script must process these arguments and do the right thing without further instruction.
+
+When you submit a job to the batch processing system each process will generate output and (perhaps) errors. It is usually a good idea to make a sub-folder to store these results. Thus your project folder should contain at least the following:
+- script or program to run
+- submit file
+- output directory
+
+When preparing your job for batch submission you usually need to figure out how to split up the computation, (with one piece going to each process), and how to tell each process which piece it is responsible for. The examples below illustrate how to do this.
+
+** Submit file overview
+In order to run jobs in parallel on the batch nodes you need to create a =submit file= that describes the process to be run on each node. If creating these files by hand you may use any text editor (e.g., =gedit=, accessible though the =Applications --> Accessories= menu on the RCE). 
+
+The submit file template below includes all required elements. (Note that this file is a template only -- see the next section for working examples.)
+#+BEGIN_SRC conf :eval no :tangle no
+  # Universe whould always be 'vanilla'. This line MUST be 
+  #included in your submit file, exactly as shown below.
+  Universe = vanilla
+
+  # Enter the path to the program you wish to run.
+  # The default runs the R program. To run another
+  # program just change '/user/local/bin/R' to the
+  # path to the program you want to run. For example,
+  # to run Stata set Executable to '/usr/local/bin/stata'.
+  Executable = /usr/local/bin/R
+
+  # Specify any arguments you want to pass to the executable.
+  Arguments = --no-save --no-restore --slave
+
+  # Specify the relative path to the input file (if any). If you
+  # are using R this should be your R script. If you are using
+  # Stata this should be your do file.
+  input = example.R
+
+  # Specify where to output any results printed by your program.
+  output = output/out.$(Process)
+  # Specify where to save any errors returned by your program.
+  error = output/error.$(Process)
+  # Specify where to save the log file.
+  Log = output/log
+  # Enter the number of processes to request. This should 
+  # always be the last part of your submit file.
+  Queue 10
+
+#+END_SRC
+This submit file instructs the scheduler to request 10 nodes (=Queue 10=), start R on each one (=Executable = /usr/local/bin/R=), run the code in example.R (=input = example.R=), write the output to files named out.0 -- out.9 in the output folder (=output = output/out.$(Process)=), write any errors to files named out.0 -- out.9 in the output folder (=error = output/error.$(Process)=), and write a log file in the output folder (=Log = output/log=). 
+
+** Batch example: Simple power simulation in R
+The simplest kind of batch job is one for which you just want to run the same code multiple times, without varying any parameters. For example, suppose that we wish to run a power simulation for a t.test with unequal group sizes. 
+
+*** R power simulation script
+The first step is to write a script or program to carry out the desired computation. The R script below simulates distributions with a specified mean difference, performs two-sample t-tests on the difference, and calculates the proportion of significant tests.
+#+BEGIN_SRC R :tangle examples/power1/power.R 
+  ## function to simulate data and perform a t.test
+  sim.ttest <- function(mu1, mu2, sd, n1, n2) {
+      d <- data.frame(x = c(rep("group1", n1), rep("group2", n2)),
+                      y = c(rnorm(n1, mean = mu1, sd = sd),
+                            rnorm(n2, mean = mu2, sd = sd)))
+      return(t.test(y ~ x, data = d)$p.value)
+  }
+
+  ##  run the function 10,000 times 
+  p <- replicate(10000,
+                 sim.ttest(mu1 = 1,
+                           mu2 = 1.3,
+                           sd = 1,
+                           n1 = 50,
+                           n2 = 150))
+  ## calculate the proportion of significant tests
+  cat(length(p[p < .05])/length(p))
+#+END_SRC
+
+#+RESULTS:
+#+begin_example
+[1] 0.4392
+#+end_example
+
+*** Submit file
+If we want to run this function one million times it may take a while, especially if our computer is an older less powerful model. So let's run it on 100 separate machines (each one will simulate the test 10000 times). To do that we need, in addition to the R script above, a submit file to request resources and run the computation. 
+#+BEGIN_SRC conf :eval no :tangle examples/power1/power.submit
+  # Universe whould always be 'vanilla'. This line MUST be 
+  #included in your submit file, exactly as shown below.
+  Universe = vanilla
+
+  # Enter the path to the R program.
+  Executable = /usr/local/bin/R
+
+  # Specify any arguments you want to pass to the executable
+  # to make r not save or restore workspaces, and to 
+  # run as quietly as possible
+  Arguments = --no-save --no-restore --slave
+
+  # Specify the relative path to the input file
+  input = power.R
+
+  # Specify where to output any results printed by your program.
+  output = output/out.$(Process)
+  # Specify where to save any errors returned by your program.
+  error = output/error.$(Process)
+  # Specify where to save the log file.
+  Log = output/log
+  # Enter the number of processes to request.
+  Queue 100
+#+END_SRC
+
+Now that we have our script and the submit file we can run submit the job as follows:
+1. make a project folder for this run if it doesn't exist
+2. save the R script (as power.R) and the submit file (as power.submit) in the project folder
+3. make a sub folder named =output=
+4. open a terminal and =cd= to the project folder
+5. run =condor_submit power.submit= to submit the jobs to the cluster
+
+#+BEGIN_SRC sh :exports none :results silent
+  cd examples
+  zip -r power1 power1
+#+END_SRC
+
+*** Monitoring submitted jobs
+After submitting the jobs we may wish to monitor them, e.g. to check if they are running. You can do this by running =condor_q <your_user_name>= in a terminal. If this returns nothing then you have no jobs in the queue. Otherwise you will see information for each request in the queue which will look something like this:
+#+BEGIN_EXAMPLE
+  -- Schedd: HMDC.batch@rce6-5.hmdc.harvard.edu : <10.0.0.10:9619?sock=7858_e19e_247>
+   ID      OWNER            SUBMITTED     RUN_TIME ST PRI SIZE CMD               
+   200.0   izahn           4/27 11:45   0+00:00:04 R  0   0.0  R --no-save --no-r
+   200.1   izahn           4/27 11:45   0+00:00:04 R  0   0.0  R --no-save --no-r
+   200.2   izahn           4/27 11:45   0+00:00:04 R  0   0.0  R --no-save --no-r
+   200.3   izahn           4/27 11:45   0+00:00:04 R  0   0.0  R --no-save --no-r
+   200.4   izahn           4/27 11:45   0+00:00:04 R  0   0.0  R --no-save --no-r
+   200.5   izahn           4/27 11:45   0+00:00:04 R  0   0.0  R --no-save --no-r
+   200.6   izahn           4/27 11:45   0+00:00:04 R  0   0.0  R --no-save --no-r
+   200.7   izahn           4/27 11:45   0+00:00:04 R  0   0.0  R --no-save --no-r
+   200.8   izahn           4/27 11:45   0+00:00:04 R  0   0.0  R --no-save --no-r
+   200.9   izahn           4/27 11:45   0+00:00:04 R  0   0.0  R --no-save --no-r
+   200.10  izahn           4/27 11:45   0+00:00:04 R  0   0.0  R --no-save --no-r
+   200.11  izahn           4/27 11:45   0+00:00:04 R  0   0.0  R --no-save --no-r
+   200.12  izahn           4/27 11:45   0+00:00:04 R  0   0.0  R --no-save --no-r
+#+END_EXAMPLE
+Perhaps the most important information returned by =condor_q= is the program status (the *ST* column). Status *I* means your job is in the queue but has not yet started running, *R* means the job is currently running, and *H* means the job is on hold. If you job is on hold you can get more information about what the problem might be by running =condor_q -hold=.
+
+You will know your job is finished when it is now longer listed in the =condor_q= output. When it finishes you can examine the output and/or error files to see if the program exited successfully.
+
+*** Aggregating results
+When your batch job is finished you are usually left with multiple output files that need to be aggregated. In the case of our simulation example, we have files =output/out.0 -- output/out40=, each of which contains a single number representing the proportion of significant tests. We can aggregate them with a simple R script, like this:
+#+BEGIN_SRC R :eval no :tangle examples/power1/aggregate.R
+  ## list all output files in the output directory
+  output_files <- list.files("output",
+                             pattern = "^out\\.[0-9]+$",
+                             full.names=TRUE)
+
+  ## read each file, convert it to a number, and take the average
+  mean(as.double(sapply(
+                        output_files,
+                        readLines,
+                        warn = FALSE)))
+#+END_SRC
+
+*** Try it yourself! 
+Download the [[file:examples/power1.zip][power simulation example files]], to the RCE, extract the zip file and running =condor_submit power.submit= in the =power1= directory.
+
+** Batch example: Power simulation in R with varying parameters
+The previous example was relatively simple, because we wanted to run exactly the same code on all 100 nodes. Often however you want each node to do something slightly different. For example, we may wish to vary the sample size from 100 -- 500 in increments of 10, to see how power changes as a function of that parameter. In that case we need to pass some additional information to each process, telling it which parameter space it is responsible for. 
+
+As it turns out, we almost already know how to do that: if you you look closely at the submit file in the previous example you will notice that we used =$(Process)= to append the process number to the output and error files. 
+*** Submit file passing process as an argument
+We can use the =$(Process)= macro to pass information to our program, like this:
+#+BEGIN_SRC conf :eval no :tangle examples/power2/power.submit
+  # Universe whould always be 'vanilla'. This line MUST be 
+  #included in your submit file, exactly as shown below.
+  Universe = vanilla
+
+  # Enter the path to the R program.
+  Executable = /usr/local/bin/R
+
+  # Specify any arguments you want to pass to the executable
+  # to make r not save or restore workspaces, and to 
+  # run as quietly as possible
+  Arguments = --no-save --no-restore --slave --args $(Process)
+
+  # Specify the relative path to the input file
+  input = power.R
+
+  # Specify where to save any errors returned by your program.
+  error = output/error.$(Process)
+
+  Log = log.txt
+  # Enter the number of processes to request.
+  Queue 41
+#+END_SRC
+Notice that we used =--args $(Process)= to pass the process number to the R program. =$(Process)= will be an integer starting from =0=. 
+
+*** R script argument processing
+Next we need to 1) retrieve the process number in our R program and 2) map it to the parameter space. We can retrieve the arguments in R like this:
+#+BEGIN_SRC R :eval no :tangle examples/power2/power.R
+  ## retrieve arguments passed from the command line.
+  process <- as.integer(as.character(commandArgs(trailingOnly = TRUE)))
+#+END_SRC
+We now have a variable in R that tells us which process we are. Now we need to map that to our parameter space; recall that we want to test sample sizes from 100 to 500, so we need to map =process 0= to =n = 100=,  =process 1= to =n = 110=, =process 2= to =n = 120= and so on:
+#+BEGIN_SRC R :tangle examples/power2/power.R
+  ## map process to sample size parameter.
+  n <- (process + 100) + (process*10 - process)
+#+END_SRC
+
+There is one additional complication we need to handle: in the previous example we did need to keep track of the parameters used by each process because the parameters did not vary. Now that they do, it would be nice if we had output that recorded the value of the varying parameter as well as the result. We could of course just print the =n= parameter we calculated from the process number along with the result, but it will be easier to combine the outputs if we write them to a machine-readable format (e.g., a comma-separated-values file). You may have noticed that in the submit file above I omitted the =output= directive: that is because we are going to explicitly save the results in the R script, so we don't need the batch scheduler to save those output files for us.
+
+No we can set up the simulation as before, passing the =n= calculated above into our simulation function, writing the results to files. 
+#+BEGIN_SRC R :eval no :tangle examples/power2/power.R
+    ## function to simulate data and perform a t.test
+    sim.ttest <- function(mu1, mu2, sd, n1, n2) {
+        d <- data.frame(x = c(rep("group1", n1), rep("group2", n2)),
+                        y = c(rnorm(n1, mean = mu1, sd = sd),
+                              rnorm(n2, mean = mu2, sd = sd)))
+        return(t.test(y ~ x, data = d)$p.value)
+    }
+
+    ##  run the function 10,000 times 
+    p <- replicate(10000,
+                   sim.ttest(mu1 = 1,
+                             mu2 = 1.3,
+                             sd = 1,
+                             n1 = n,
+                             n2 = n))
+  write.csv(data.frame(n = n, power = length(p[p < .05])/length(p)),
+            row.names = FALSE,
+            file = paste0("output/out", process, ".csv"))
+#+END_SRC
+
+#+BEGIN_SRC sh :exports none :results silent
+  cd examples
+  zip -r power2 power2
+#+END_SRC
+
+
+Now we have all the required elements to submit out job, and can do so using =condor_submit= as before. 
+
+*** Aggregating results
+When your batch job is finished you are usually left with multiple output files that need to be aggregated. In the case of our simulation example, we have files =output/out.0 -- output/out40=, each of which contains a single number representing the proportion of significant tests. We can aggregate them with a simple R script, like this:
+#+BEGIN_SRC R :eval no :tangle examples/power2/aggregate.R
+  ## list all output files in the output directory
+  output_files <- list.files("output",
+                             pattern = "^out[0-9]+\\.csv$",
+                             full.names=TRUE)
+
+  ## read each file and append them
+  results <- do.call(rbind, lapply(output_files, read.csv))
+
+  ## plot
+  plot(results)
+  abline(h = 0.8)
+#+END_SRC
+
+[[file:images/powerDist.png]]
+
+*** Try it yourself! 
+Download the [[file:examples/power2.zip][power simulation example files]], to the RCE, extract the zip file, and run the example by calling =condor_submit power.submit= from the =power2= directory.
+
+* TODO Installing custom packages
+
+* TODO Getting help
+
+* Footnotes
+
+[fn:1] Note: The Windows zipfile contains the NX client, plus optional font packages. HMDC recommends installing all font packages, though this is not required.
+
+[fn:2] For additional packages useful for parallel computing see the [[http://cran.r-project.org/web/views/HighPerformanceComputing.html][HPC task view]].
+
