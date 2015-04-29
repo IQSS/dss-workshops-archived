@@ -4,7 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
 <title>RCE Quick-Start</title>
-<!-- 2015-04-29 Wed 15:22 -->
+<!-- 2015-04-29 Wed 15:33 -->
 <meta  http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta  name="generator" content="Org-mode" />
 <meta  name="author" content="Ista Zahn" />
@@ -153,30 +153,30 @@ for the JavaScript code in this tag.
 <li><a href="#sec-5">5. Getting your data on and off the RCE</a></li>
 <li><a href="#sec-6">6. Interactive jobs</a>
 <ul>
-<li><a href="#sec-6-1">6.1. Launching applications on the interactive nodes</a></li>
-<li><a href="#sec-6-2">6.2. Available RCE powered applications</a></li>
-<li><a href="#sec-6-3">6.3. Using multiple CPUs in R</a>
+<li><a href="#sec-6-1">Launching applications on the interactive nodes</a></li>
+<li><a href="#sec-6-2">Available RCE powered applications</a></li>
+<li><a href="#sec-6-3">Using multiple CPUs in R</a>
 <ul>
-<li><a href="#sec-6-3-1">6.3.1. Using multiple cores to speed up simulations</a></li>
-<li><a href="#sec-6-3-2">6.3.2. Using multiple cores to speed up computations</a></li>
+<li><a href="#sec-6-3-1">Using multiple cores to speed up simulations</a></li>
+<li><a href="#sec-6-3-2">Using multiple cores to speed up computations</a></li>
 </ul>
 </li>
-<li><a href="#sec-6-4">6.4. <span class="todo TODO">TODO</span> Parallel examples for python, matlab?</a></li>
-<li><a href="#sec-6-5">6.5. Using multiple CPUs in other programming languages and applications</a></li>
+<li><a href="#sec-6-4"><span class="todo TODO">TODO</span> Parallel examples for python, matlab?</a></li>
+<li><a href="#sec-6-5">Using multiple CPUs in other programming languages and applications</a></li>
 </ul>
 </li>
 <li><a href="#sec-7">7. Batch jobs</a>
 <ul>
-<li><a href="#sec-7-1">7.1. Preparing for batch submission</a></li>
-<li><a href="#sec-7-2">7.2. Submit file overview</a></li>
-<li><a href="#sec-7-3">7.3. Batch examples</a></li>
+<li><a href="#sec-7-1">Preparing for batch submission</a></li>
+<li><a href="#sec-7-2">Submit file overview</a></li>
+<li><a href="#sec-7-3">Batch examples</a></li>
 </ul>
 </li>
 <li><a href="#sec-8">8. <span class="todo TODO">TODO</span> Installing custom packages on the RCE</a>
 <ul>
-<li><a href="#sec-8-1">8.1. Installing R packages</a></li>
-<li><a href="#sec-8-2">8.2. Installing Python packages</a></li>
-<li><a href="#sec-8-3">8.3. Installing Stata packages</a></li>
+<li><a href="#sec-8-1">Installing R packages</a></li>
+<li><a href="#sec-8-2">Installing Python packages</a></li>
+<li><a href="#sec-8-3">Installing Stata packages</a></li>
 </ul>
 </li>
 <li><a href="#sec-9">9. <span class="todo TODO">TODO</span> Getting help</a></li>
@@ -326,7 +326,7 @@ When you first log on to the RCE you are on a <i>login node</i>. The login nodes
 </div>
 
 <div id="outline-container-sec-6-1" class="outline-3">
-<h3 id="sec-6-1"><span class="section-number-3">6.1</span> Launching applications on the interactive nodes</h3>
+<h3 id="sec-6-1">Launching applications on the interactive nodes</h3>
 <div class="outline-text-3" id="text-6-1">
 <p>
 Running applications on the interactive nodes is very easy; just log in <a href="#sec-2">using NoMachine</a> and launch your application from the <code>Application --&gt; RCE Powered</code> menu. A dialog will open asking you how much memory you need and how many CPUs, and then your application will open. That's all there is to it! Well, we should say that the RCE is a shared resource, so please try not to request more memory or CPUs than you need. Also, applications running on the interactive nodes will expire after five days; you can request an extension, but if you fail to do so your job will be terminated 120 hours after it starts. For details refer to <a href="http://projects.iq.harvard.edu/rce/book/extending-rce-powered-application">http://projects.iq.harvard.edu/rce/book/extending-rce-powered-application</a>.
@@ -335,7 +335,7 @@ Running applications on the interactive nodes is very easy; just log in <a href=
 </div>
 
 <div id="outline-container-sec-6-2" class="outline-3">
-<h3 id="sec-6-2"><span class="section-number-3">6.2</span> Available RCE powered applications</h3>
+<h3 id="sec-6-2">Available RCE powered applications</h3>
 <div class="outline-text-3" id="text-6-2">
 <p>
 Available RCE powered applications include:
@@ -368,7 +368,7 @@ If you are using the interactive nodes primarily for the large memory they provi
 </div>
 
 <div id="outline-container-sec-6-3" class="outline-3">
-<h3 id="sec-6-3"><span class="section-number-3">6.3</span> Using multiple CPUs in R</h3>
+<h3 id="sec-6-3">Using multiple CPUs in R</h3>
 <div class="outline-text-3" id="text-6-3">
 <p>
 This section illustrates how to take advantage of multiple cores when running interactive jobs on the RCE. Since memory requirements are easy to satisfy (just specify how much you need when you launch and application via the <code>Application --&gt; RCE Powered</code> menu), the examples presented here will focus on utilizing multiple CPUs. 
@@ -380,7 +380,7 @@ There are many different packages for utilizing multiple cores in R, but one of 
 </div>
 
 <div id="outline-container-sec-6-3-1" class="outline-4">
-<h4 id="sec-6-3-1"><span class="section-number-4">6.3.1</span> Using multiple cores to speed up simulations</h4>
+<h4 id="sec-6-3-1">Using multiple cores to speed up simulations</h4>
 <div class="outline-text-4" id="text-6-3-1">
 <p>
 Running computations in parallel on multiple cores is often an effective way to speed up computations. This can be especially useful when doing simulations, or when using resampling methods such as bootstrap or permutation tests. In this example parallel processing is used to simulate the sampling distribution of the mean for samples of various sizes.
@@ -457,7 +457,7 @@ Like <code>lapply</code> the <code>mclapply</code> function returns a list, whic
 
 
 <div id="outline-container-sec-6-3-2" class="outline-4">
-<h4 id="sec-6-3-2"><span class="section-number-4">6.3.2</span> Using multiple cores to speed up computations</h4>
+<h4 id="sec-6-3-2">Using multiple cores to speed up computations</h4>
 <div class="outline-text-4" id="text-6-3-2">
 <p>
 In the previous example we generated the data on each iteration. This kind of simulation can be useful, but often you want to parallelize a function that processes data from a (potentially large) number of files. This is also easy to do using the parallel package in R. In the following example we count number of characters in all the text files in the texlive directory.
@@ -543,7 +543,7 @@ For more details and examples using the parallel package, refer to the <a href="
 </div>
 
 <div id="outline-container-sec-6-4" class="outline-3">
-<h3 id="sec-6-4"><span class="section-number-3">6.4</span> <span class="todo TODO">TODO</span> Parallel examples for python, matlab?</h3>
+<h3 id="sec-6-4"><span class="todo TODO">TODO</span> Parallel examples for python, matlab?</h3>
 <div class="outline-text-3" id="text-6-4">
 <p>
 I don't know this well enough to write good examples. I tried with python, but couldn't come up with an example where multiple processes was actually faster. Contributions appreciated. &#x2013;Ista
@@ -552,7 +552,7 @@ I don't know this well enough to write good examples. I tried with python, but c
 </div>
 
 <div id="outline-container-sec-6-5" class="outline-3">
-<h3 id="sec-6-5"><span class="section-number-3">6.5</span> Using multiple CPUs in other programming languages and applications</h3>
+<h3 id="sec-6-5">Using multiple CPUs in other programming languages and applications</h3>
 <div class="outline-text-3" id="text-6-5">
 <p>
 Using multiple CPU cores in Stata, Matlab and SAS does not require explicit activation &#x2013; many functions will automatically use multiple cores if available. For Matlab user-written code can also take advantage of multiple CPUs using the <code>parfor</code> command. Python uses can run multiple processes using the <a href="https://docs.python.org/2/library/multiprocessing.html">multiprocessing</a> library.
@@ -574,7 +574,7 @@ Running jobs on the batch nodes is somewhat more complicated than running intera
 </div>
 
 <div id="outline-container-sec-7-1" class="outline-3">
-<h3 id="sec-7-1"><span class="section-number-3">7.1</span> Preparing for batch submission</h3>
+<h3 id="sec-7-1">Preparing for batch submission</h3>
 <div class="outline-text-3" id="text-7-1">
 <p>
 In practical terms, running in "batch" means that you will not be able to interact with the running process. This means that all the information your program needs to successfully complete needs to be specified ahead of time. You can pass arguments to your process so that each job gets different inputs, but the script must process these arguments and do the right thing without further instruction.
@@ -599,7 +599,7 @@ When preparing your job for batch submission you usually need to figure out how 
 </div>
 
 <div id="outline-container-sec-7-2" class="outline-3">
-<h3 id="sec-7-2"><span class="section-number-3">7.2</span> Submit file overview</h3>
+<h3 id="sec-7-2">Submit file overview</h3>
 <div class="outline-text-3" id="text-7-2">
 <p>
 In order to run jobs in parallel on the batch nodes you need to create a <code>submit file</code> that describes the process to be run on each node. If creating these files by hand you may use any text editor (e.g., <code>gedit</code>, accessible though the <code>Applications --&gt; Accessories</code> menu on the RCE). 
@@ -647,7 +647,7 @@ This submit file instructs the scheduler to request 10 nodes (<code>Queue 10</co
 </div>
 
 <div id="outline-container-sec-7-3" class="outline-3">
-<h3 id="sec-7-3"><span class="section-number-3">7.3</span> Batch examples</h3>
+<h3 id="sec-7-3">Batch examples</h3>
 <div class="outline-text-3" id="text-7-3">
 <p>
 RCE users come from a variety of backgrounds and different people are more proficient with different software packages. Rather than show you generic examples, or pick an application to showcase, <b>we've prepared a separate page with <a href="examples/RCE_batch_examples.html">examples using different software packages</a>.</b>  
@@ -660,15 +660,15 @@ RCE users come from a variety of backgrounds and different people are more profi
 <h2 id="sec-8"><span class="section-number-2">8</span> <span class="todo TODO">TODO</span> Installing custom packages on the RCE</h2>
 <div class="outline-text-2" id="text-8">
 </div><div id="outline-container-sec-8-1" class="outline-3">
-<h3 id="sec-8-1"><span class="section-number-3">8.1</span> Installing R packages</h3>
+<h3 id="sec-8-1">Installing R packages</h3>
 </div>
 
 <div id="outline-container-sec-8-2" class="outline-3">
-<h3 id="sec-8-2"><span class="section-number-3">8.2</span> Installing Python packages</h3>
+<h3 id="sec-8-2">Installing Python packages</h3>
 </div>
 
 <div id="outline-container-sec-8-3" class="outline-3">
-<h3 id="sec-8-3"><span class="section-number-3">8.3</span> Installing Stata packages</h3>
+<h3 id="sec-8-3">Installing Stata packages</h3>
 </div>
 </div>
 
@@ -696,7 +696,7 @@ We use R for this example because it is the most commonly used program by RCE us
 </div></div>
 <div id="postamble" class="status">
 <p class="author">Author: Ista Zahn</p>
-<p class="date">Created: 2015-04-29 Wed 15:22</p>
+<p class="date">Created: 2015-04-29 Wed 15:33</p>
 <p class="creator"><a href="http://www.gnu.org/software/emacs/">Emacs</a> 24.5.1 (<a href="http://orgmode.org">Org</a> mode 8.2.10)</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>

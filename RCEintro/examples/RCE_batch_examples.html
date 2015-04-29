@@ -4,7 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
 <title>RCE Batch Processing Examples</title>
-<!-- 2015-04-29 Wed 15:24 -->
+<!-- 2015-04-29 Wed 15:33 -->
 <meta  http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta  name="generator" content="Org-mode" />
 <meta  name="author" content="Ista Zahn" />
@@ -148,21 +148,21 @@ for the JavaScript code in this tag.
 <ul>
 <li><a href="#sec-1">1. R Batch Processing Examples</a>
 <ul>
-<li><a href="#sec-1-1">1.1. Batch example: Simple power simulation in R</a>
+<li><a href="#sec-1-1">Batch example: Simple power simulation in R</a>
 <ul>
-<li><a href="#sec-1-1-1">1.1.1. R power simulation script</a></li>
-<li><a href="#sec-1-1-2">1.1.2. Submit file</a></li>
-<li><a href="#sec-1-1-3">1.1.3. Monitoring submitted jobs</a></li>
-<li><a href="#sec-1-1-4">1.1.4. Aggregating results</a></li>
-<li><a href="#sec-1-1-5">1.1.5. Try it yourself!</a></li>
+<li><a href="#sec-1-1-1">R power simulation script</a></li>
+<li><a href="#sec-1-1-2">Submit file</a></li>
+<li><a href="#sec-1-1-3">Monitoring submitted jobs</a></li>
+<li><a href="#sec-1-1-4">Aggregating results</a></li>
+<li><a href="#sec-1-1-5">Try it yourself!</a></li>
 </ul>
 </li>
-<li><a href="#sec-1-2">1.2. Batch example: Power simulation in R with varying parameters</a>
+<li><a href="#sec-1-2">Batch example: Power simulation in R with varying parameters</a>
 <ul>
-<li><a href="#sec-1-2-1">1.2.1. Submit file passing process as an argument</a></li>
-<li><a href="#sec-1-2-2">1.2.2. R script argument processing</a></li>
-<li><a href="#sec-1-2-3">1.2.3. Aggregating results</a></li>
-<li><a href="#sec-1-2-4">1.2.4. Try it yourself!</a></li>
+<li><a href="#sec-1-2-1">Submit file passing process as an argument</a></li>
+<li><a href="#sec-1-2-2">R script argument processing</a></li>
+<li><a href="#sec-1-2-3">Aggregating results</a></li>
+<li><a href="#sec-1-2-4">Try it yourself!</a></li>
 </ul>
 </li>
 </ul>
@@ -178,7 +178,7 @@ for the JavaScript code in this tag.
 <h2 id="sec-1"><span class="section-number-2">1</span> R Batch Processing Examples</h2>
 <div class="outline-text-2" id="text-1">
 </div><div id="outline-container-sec-1-1" class="outline-3">
-<h3 id="sec-1-1"><span class="section-number-3">1.1</span> Batch example: Simple power simulation in R</h3>
+<h3 id="sec-1-1">Batch example: Simple power simulation in R</h3>
 <div class="outline-text-3" id="text-1-1">
 <p>
 The simplest kind of batch job is one for which you just want to run the same code multiple times, without varying any parameters. For example, suppose that we wish to run a power simulation for a t.test with unequal group sizes. 
@@ -186,7 +186,7 @@ The simplest kind of batch job is one for which you just want to run the same co
 </div>
 
 <div id="outline-container-sec-1-1-1" class="outline-4">
-<h4 id="sec-1-1-1"><span class="section-number-4">1.1.1</span> R power simulation script</h4>
+<h4 id="sec-1-1-1">R power simulation script</h4>
 <div class="outline-text-4" id="text-1-1-1">
 <p>
 The first step is to write a script or program to carry out the desired computation. The R script below simulates distributions with a specified mean difference, performs two-sample t-tests on the difference, and calculates the proportion of significant tests.
@@ -216,7 +216,7 @@ p <span style="color: #D0372D;">&lt;-</span> <span style="color: #006699;">repli
 </div>
 
 <div id="outline-container-sec-1-1-2" class="outline-4">
-<h4 id="sec-1-1-2"><span class="section-number-4">1.1.2</span> Submit file</h4>
+<h4 id="sec-1-1-2">Submit file</h4>
 <div class="outline-text-4" id="text-1-1-2">
 <p>
 If we want to run this function one million times it may take a while, especially if our computer is an older less powerful model. So let's run it on 100 separate machines (each one will simulate the test 10000 times). To do that we need, in addition to the R script above, a submit file to request resources and run the computation. 
@@ -268,7 +268,7 @@ Now that we have our script and the submit file we can run submit the job as fol
 </div>
 
 <div id="outline-container-sec-1-1-3" class="outline-4">
-<h4 id="sec-1-1-3"><span class="section-number-4">1.1.3</span> Monitoring submitted jobs</h4>
+<h4 id="sec-1-1-3">Monitoring submitted jobs</h4>
 <div class="outline-text-4" id="text-1-1-3">
 <p>
 After submitting the jobs we may wish to monitor them, e.g. to check if they are running. You can do this by running <code>condor_q &lt;your_user_name&gt;</code> in a terminal. If this returns nothing then you have no jobs in the queue. Otherwise you will see information for each request in the queue which will look something like this:
@@ -301,7 +301,7 @@ You will know your job is finished when it is no longer listed in the <code>cond
 </div>
 
 <div id="outline-container-sec-1-1-4" class="outline-4">
-<h4 id="sec-1-1-4"><span class="section-number-4">1.1.4</span> Aggregating results</h4>
+<h4 id="sec-1-1-4">Aggregating results</h4>
 <div class="outline-text-4" id="text-1-1-4">
 <p>
 When your batch job is finished you are usually left with multiple output files that need to be aggregated. In the case of our simulation example, we have files <code>output/out.0 -- output/out40</code>, each of which contains a single number representing the proportion of significant tests. We can aggregate them with a simple R script, like this:
@@ -324,7 +324,7 @@ output_files <span style="color: #D0372D;">&lt;-</span> <span style="color: #006
 </div>
 
 <div id="outline-container-sec-1-1-5" class="outline-4">
-<h4 id="sec-1-1-5"><span class="section-number-4">1.1.5</span> Try it yourself!</h4>
+<h4 id="sec-1-1-5">Try it yourself!</h4>
 <div class="outline-text-4" id="text-1-1-5">
 <p>
 Download the <a href="R_examples/power1.zip">power simulation example files</a>, to the RCE, extract the zip file and running <code>condor_submit power.submit</code> in the <code>power1</code> directory.
@@ -334,7 +334,7 @@ Download the <a href="R_examples/power1.zip">power simulation example files</a>,
 </div>
 
 <div id="outline-container-sec-1-2" class="outline-3">
-<h3 id="sec-1-2"><span class="section-number-3">1.2</span> Batch example: Power simulation in R with varying parameters</h3>
+<h3 id="sec-1-2">Batch example: Power simulation in R with varying parameters</h3>
 <div class="outline-text-3" id="text-1-2">
 <p>
 The previous example was relatively simple, because we wanted to run exactly the same code on all 100 nodes. Often however you want each node to do something slightly different. For example, we may wish to vary the sample size from 100 &#x2013; 500 in increments of 10, to see how power changes as a function of that parameter. In that case we need to pass some additional information to each process, telling it which parameter space it is responsible for. 
@@ -345,7 +345,7 @@ As it turns out, we almost already know how to do that: if you you look closely 
 </p>
 </div>
 <div id="outline-container-sec-1-2-1" class="outline-4">
-<h4 id="sec-1-2-1"><span class="section-number-4">1.2.1</span> Submit file passing process as an argument</h4>
+<h4 id="sec-1-2-1">Submit file passing process as an argument</h4>
 <div class="outline-text-4" id="text-1-2-1">
 <p>
 We can use the <code>$(Process)</code> macro to pass information to our program, like this:
@@ -382,7 +382,7 @@ Notice that we used <code>--args $(Process)</code> to pass the process number to
 </div>
 
 <div id="outline-container-sec-1-2-2" class="outline-4">
-<h4 id="sec-1-2-2"><span class="section-number-4">1.2.2</span> R script argument processing</h4>
+<h4 id="sec-1-2-2">R script argument processing</h4>
 <div class="outline-text-4" id="text-1-2-2">
 <p>
 Next we need to 1) retrieve the process number in our R program and 2) map it to the parameter space. We can retrieve the arguments in R like this:
@@ -444,7 +444,7 @@ Now we have all the required elements to submit out job, and can do so using <co
 </div>
 
 <div id="outline-container-sec-1-2-3" class="outline-4">
-<h4 id="sec-1-2-3"><span class="section-number-4">1.2.3</span> Aggregating results</h4>
+<h4 id="sec-1-2-3">Aggregating results</h4>
 <div class="outline-text-4" id="text-1-2-3">
 <p>
 Each of our 40 processes produced a file in the <code>output</code> directory name <code>out&lt;process&gt;csv</code>; our next task is to aggregate these results. The R script below reads each of these files, joins them together into a single data.frame, and plots the result.
@@ -474,7 +474,7 @@ results <span style="color: #D0372D;">&lt;-</span> <span style="color: #006699;"
 </div>
 
 <div id="outline-container-sec-1-2-4" class="outline-4">
-<h4 id="sec-1-2-4"><span class="section-number-4">1.2.4</span> Try it yourself!</h4>
+<h4 id="sec-1-2-4">Try it yourself!</h4>
 <div class="outline-text-4" id="text-1-2-4">
 <p>
 Download the <a href="R_examples/power2.zip">power simulation example files</a>, to the RCE, extract the zip file, and run the example by calling <code>condor_submit power.submit</code> from the <code>power2</code> directory.
@@ -497,7 +497,7 @@ Download the <a href="R_examples/power2.zip">power simulation example files</a>,
 </div>
 </div>
 <div id="postamble" class="status">
-<h3><a href='../RCEintro.html'> Back to RCE Quick-Start Guide</a></h3>
+<h4><a href='../RCEintro.html'> Back to RCE Quick-Start Guide</a></h4>
 </div>
 </body>
 </html>
