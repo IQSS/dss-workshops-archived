@@ -166,11 +166,11 @@ When your batch job is finished you are usually left with multiple output files 
 *** Try it yourself! 
 Download the [[file:R_examples/power1.zip][power simulation example files]], to the RCE, extract the zip file and running =condor_submit power.submit= in the =power1= directory.
 
-* Batch example: Power simulation in R with varying parameters
+** Batch example: Power simulation in R with varying parameters
 The previous example was relatively simple, because we wanted to run exactly the same code on all 100 nodes. Often however you want each node to do something slightly different. For example, we may wish to vary the sample size from 100 -- 500 in increments of 10, to see how power changes as a function of that parameter. In that case we need to pass some additional information to each process, telling it which parameter space it is responsible for. 
 
 As it turns out, we almost already know how to do that: if you you look closely at the submit file in the previous example you will notice that we used =$(Process)= to append the process number to the output and error files. 
-** Submit file passing process as an argument
+*** Submit file passing process as an argument
 We can use the =$(Process)= macro to pass information to our program, like this:
 #+BEGIN_SRC conf :eval no :tangle R_examples/power2/power.submit
   # Universe whould always be 'vanilla'. This line MUST be 
@@ -197,7 +197,7 @@ We can use the =$(Process)= macro to pass information to our program, like this:
 #+END_SRC
 Notice that we used =--args $(Process)= to pass the process number to the R program. =$(Process)= will be an integer starting from =0=. 
 
-** R script argument processing
+*** R script argument processing
 Next we need to 1) retrieve the process number in our R program and 2) map it to the parameter space. We can retrieve the arguments in R like this:
 #+BEGIN_SRC R :eval no :tangle R_examples/power2/power.R
   ## retrieve arguments passed from the command line.
@@ -246,7 +246,7 @@ Now we can set up the simulation as before, passing the =n= calculated above int
 
 Now we have all the required elements to submit out job, and can do so using =condor_submit= as before. 
 
-** Aggregating results
+*** Aggregating results
 Each of our 40 processes produced a file in the =output= directory name =out<process>csv=; our next task is to aggregate these results. The R script below reads each of these files, joins them together into a single data.frame, and plots the result.
 #+BEGIN_SRC R :eval no :tangle R_examples/power2/aggregate.R
   ## list all output files in the output directory
@@ -264,7 +264,7 @@ Each of our 40 processes produced a file in the =output= directory name =out<pro
 
 [[file:R_examples/images/powerDist.png]]
 
-** Try it yourself! 
+*** Try it yourself! 
 Download the [[file:R_examples/power2.zip][power simulation example files]], to the RCE, extract the zip file, and run the example by calling =condor_submit power.submit= from the =power2= directory.
 
 * TODO Stata Batch Processing Examples
