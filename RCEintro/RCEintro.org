@@ -102,6 +102,7 @@ For more details on project folders refer to [[http://projects.iq.harvard.edu/rc
 People often use the RCE for memory or CPU intensive data analysis projects. If this is your intention as well, chances are that you have one or more (potentially large) data files that you will need to copy to the RCE. Remember that disk space in your home directory is limited, so if you have a large amount of data make sure to transfer it directly to your project space folder.
 
 The simplest approach is to use the NoMachine client to transfer data from your local machine to the RCE (and from the RCE to your local machine). Click on the red =!M= icon in the upper right-hand corner and select the =Send a file from the client= menu, as shown below.
+
 [[file:images/NoMachineMenu.png]]
 
 If you prefer to transfer files using another file transfer client, anything that uses ssh (e.g., [[http://filezilla-project.org/][FileZilla]]) should work. Just point your favorite client to =rce.hmdc.harvard.edu=.
@@ -157,7 +158,7 @@ Next iterate over a range of sample sizes, generating a distribution of means fo
 #+RESULTS:
 #+begin_example
    user  system elapsed 
- 33.270   0.020  33.295
+ 33.150   0.020  33.169
 #+end_example
 
 The simulation can be carried out much more rapidly using =mclapply= instead:
@@ -169,7 +170,7 @@ The simulation can be carried out much more rapidly using =mclapply= instead:
 #+RESULTS:
 #+begin_example
    user  system elapsed 
-  36.48    1.01    5.68
+ 29.460   0.640   5.334
 #+end_example
 
 Like =lapply= the =mclapply= function returns a list, which we can process as usual. For example, we can construct histograms of the sampling distributions of the mean that we simulated above:
@@ -215,37 +216,31 @@ We have
 #+END_SRC
 
 #+RESULTS:
-#+begin_example
-[1] 2087
-#+end_example
-text files to process. We can do this using a single core:
+=[1] 2153
+=text files to process. We can do this using a single core:
 #+BEGIN_SRC R
   system.time(nchars <- unlist(lapply(textFiles, countChars)))
 #+END_SRC
 
 #+RESULTS:
-#+begin_example
-   user  system elapsed 
-  27.98    0.29   31.83
-#+end_example
-but this is too slow. We can do the computation more quickly using multiple cores:
+=   user  system elapsed 
+ 28.520   0.180  32.298
+=but this is too slow. We can do the computation more quickly using multiple cores:
 #+BEGIN_SRC R
   system.time(nchars <- unlist(mclapply(textFiles, countChars, mc.cores = 7)))
 #+END_SRC
 
 #+RESULTS:
-#+begin_example
-   user  system elapsed 
-  26.85    0.68    4.96
-#+end_example
-and calculate the total number of characters in the text files by summing over the result
+=   user  system elapsed 
+ 27.400   0.580   5.397
+=and calculate the total number of characters in the text files by summing over the result
 #+BEGIN_SRC R
   sum(nchars, na.rm = TRUE)
 #+END_SRC
 
 #+RESULTS:
 #+begin_example
-[1] 31831896
+[1] 32408320
 #+end_example
 
 For more details and examples using the parallel package, refer to the [[https://stat.ethz.ch/R-manual/R-devel/library/parallel/doc/parallel.pdf][parallel package documentation]] or run =help(package = "parallel")= at the R prompt. For other ways of running computations in parallel refer to the [[http://cran.r-project.org/web/views/HighPerformanceComputing.html][HPC task view]].
@@ -335,9 +330,6 @@ The first step is to write a script or program to carry out the desired computat
 #+END_SRC
 
 #+RESULTS:
-#+begin_example
-[1] 0.4392
-#+end_example
 
 *** Submit file
 If we want to run this function one million times it may take a while, especially if our computer is an older less powerful model. So let's run it on 100 separate machines (each one will simulate the test 10000 times). To do that we need, in addition to the R script above, a submit file to request resources and run the computation. 
@@ -458,10 +450,15 @@ Next we need to 1) retrieve the process number in our R program and 2) map it to
   process <- as.integer(as.character(commandArgs(trailingOnly = TRUE)))
 #+END_SRC
 We now have a variable in R that tells us which process we are. Now we need to map that to our parameter space; recall that we want to test sample sizes from 100 to 500, so we need to map =process 0= to =n = 100=,  =process 1= to =n = 110=, =process 2= to =n = 120= and so on:
-#+BEGIN_SRC R :tangle examples/power2/power.R
+#+BEGIN_SRC R :eval no :tangle examples/power2/power.R
   ## map process to sample size parameter.
   n <- (process + 100) + (process*10 - process)
 #+END_SRC
+
+#+RESULTS:
+#+begin_example
+Error: object 'process' not found
+#+end_example
 
 There is one additional complication we need to handle: in the previous example we did need to keep track of the parameters used by each process because the parameters did not vary. Now that they do, it would be nice if we had output that recorded the value of the varying parameter as well as the result. We could of course just print the =n= parameter we calculated from the process number along with the result, but it will be easier to combine the outputs if we write them to a machine-readable format (e.g., a comma-separated-values file). You may have noticed that in the submit file above I omitted the =output= directive: that is because we are going to explicitly save the results in the R script, so we don't need the batch scheduler to save those output files for us.
 

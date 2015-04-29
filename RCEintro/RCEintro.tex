@@ -1,4 +1,4 @@
-% Created 2015-04-27 Mon 15:18
+% Created 2015-04-27 Mon 17:20
 \documentclass[11pt]{article}
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
@@ -29,13 +29,13 @@
 \tableofcontents
 
 
-\section{What is the RCE}
+\section{What is the RCE?}
 \label{sec-1}
 The Research Computing Environment (RCE) is a large powerful computer cluster that you can use for computations that are too large to be conveniently done on a personal computer. The RCE is available to researchers at Harvard and MIT. 
 
 To obtain an RCE account send an email to \url{mailto:help@iq.harvard.edu}. You will receive a response asking you several questions about your requirements (e.g., if you need backups, how much data storage space you need). For details on the services provided and limitations and restrictions of the service refer to \url{http://projects.iq.harvard.edu/user-services/research-computing-environment-sla}
 
-You can use the RCE in one to two primary ways:
+You can use the RCE in one of two primary ways:
 \begin{description}
 \item[{Interactive jobs}] Run your computation as you would on your PC, but on a much more powerful machine with up to 24 CPU cores and up to 256Gb of memory.
 \item[{Batch jobs}] Run your computation in the background using up to several hundred computers at once.
@@ -89,7 +89,7 @@ For more details on project folders refer to \url{http://projects.iq.harvard.edu
 \label{sec-5}
 People often use the RCE for memory or CPU intensive data analysis projects. If this is your intention as well, chances are that you have one or more (potentially large) data files that you will need to copy to the RCE. Remember that disk space in your home directory is limited, so if you have a large amount of data make sure to transfer it directly to your project space folder.
 
-The simplest approach is to us the NoMachine client to transfer data from your local machine to the RCE (and from the RCE to your local machine). Click on the red \texttt{!M} icon in the upper right-hand corner and select the \texttt{Send a file from the client} menu, as shown below.
+The simplest approach is to use the NoMachine client to transfer data from your local machine to the RCE (and from the RCE to your local machine). Click on the red \texttt{!M} icon in the upper right-hand corner and select the \texttt{Send a file from the client} menu, as shown below.
 \includegraphics[width=.9\linewidth]{images/NoMachineMenu.png}
 
 If you prefer to transfer files using another file transfer client, anything that uses ssh (e.g., \href{http://filezilla-project.org/}{FileZilla}) should work. Just point your favorite client to \texttt{rce.hmdc.harvard.edu}.
@@ -389,7 +389,7 @@ After submitting the jobs we may wish to monitor them, e.g. to check if they are
 \end{verbatim}
 Perhaps the most important information returned by \texttt{condor\_q} is the program status (the \textbf{ST} column). Status \textbf{I} means your job is in the queue but has not yet started running, \textbf{R} means the job is currently running, and \textbf{H} means the job is on hold. If you job is on hold you can get more information about what the problem might be by running \texttt{condor\_q -hold}.
 
-You will know your job is finished when it is now longer listed in the \texttt{condor\_q} output. When it finishes you can examine the output and/or error files to see if the program exited successfully.
+You will know your job is finished when it is no longer listed in the \texttt{condor\_q} output. When it finishes you can examine the output and/or error files to see if the program exited successfully.
 
 \subsubsection{Aggregating results}
 \label{sec-7-3-4}
@@ -440,7 +440,7 @@ error = output/error.$(Process)
 
 Log = log.txt
 # Enter the number of processes to request.
-Queue 41
+Queue 40
 \end{verbatim}
 Notice that we used \texttt{-{}-args \$(Process)} to pass the process number to the R program. \texttt{\$(Process)} will be an integer starting from \texttt{0}. 
 
@@ -459,7 +459,7 @@ n <- (process + 100) + (process*10 - process)
 
 There is one additional complication we need to handle: in the previous example we did need to keep track of the parameters used by each process because the parameters did not vary. Now that they do, it would be nice if we had output that recorded the value of the varying parameter as well as the result. We could of course just print the \texttt{n} parameter we calculated from the process number along with the result, but it will be easier to combine the outputs if we write them to a machine-readable format (e.g., a comma-separated-values file). You may have noticed that in the submit file above I omitted the \texttt{output} directive: that is because we are going to explicitly save the results in the R script, so we don't need the batch scheduler to save those output files for us.
 
-No we can set up the simulation as before, passing the \texttt{n} calculated above into our simulation function, writing the results to files. 
+Now we can set up the simulation as before, passing the \texttt{n} calculated above into our simulation function, writing the results to files. 
 \begin{verbatim}
   ## function to simulate data and perform a t.test
   sim.ttest <- function(mu1, mu2, sd, n1, n2) {
@@ -485,7 +485,7 @@ Now we have all the required elements to submit out job, and can do so using \te
 
 \subsubsection{Aggregating results}
 \label{sec-7-4-3}
-When your batch job is finished you are usually left with multiple output files that need to be aggregated. In the case of our simulation example, we have files \texttt{output/out.0 -{}- output/out40}, each of which contains a single number representing the proportion of significant tests. We can aggregate them with a simple R script, like this:
+Each of our 40 processes produced a file in the \texttt{output} directory name \texttt{out<process>csv}; our next task is to aggregate these results. The R script below reads each of these files, joins them together into a single data.frame, and plots the result.
 \begin{verbatim}
 ## list all output files in the output directory
 output_files <- list.files("output",
@@ -506,8 +506,18 @@ abline(h = 0.8)
 \label{sec-7-4-4}
 Download the \href{examples/power2.zip}{power simulation example files}, to the RCE, extract the zip file, and run the example by calling \texttt{condor\_submit power.submit} from the \texttt{power2} directory.
 
-\section{{\bfseries\sffamily TODO} Installing custom packages}
+\section{{\bfseries\sffamily TODO} Installing custom packages on the RCE}
 \label{sec-8}
+
+
+\subsection{Installing R packages}
+\label{sec-8-1}
+
+\subsection{Installing Python packages}
+\label{sec-8-2}
+
+\subsection{Installing Stata packages}
+\label{sec-8-3}
 
 \section{{\bfseries\sffamily TODO} Getting help}
 \label{sec-9}
