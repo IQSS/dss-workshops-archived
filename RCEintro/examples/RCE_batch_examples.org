@@ -1,6 +1,6 @@
 # -*- eval: (save-excursion (org-babel-goto-named-src-block "workshopPreamble") (org-babel-execute-src-block)) -*-
 #+TITLE:     RCE Batch Processing Examples
-#+AUTHOR:    Ista Zahn 
+#+AUTHOR:    Ista Zahn
 #+EMAIL:     istazahn@gmail.com
 #+DATE:      
 
@@ -50,14 +50,18 @@
 
   ;; display images in the orgmode buffer automatically
   (add-hook 'org-babel-after-execute-hook 'org-display-inline-images)
+
+  (setq-local org-html-postamble
+              "<h3><a href='../RCEintro.html'> Back to RCE Quick-Start Guide</a></h3>")
+
 #+end_src
 
+* R Batch Processing Examples
 
-
-* Batch example: Simple power simulation in R
+** Batch example: Simple power simulation in R
 The simplest kind of batch job is one for which you just want to run the same code multiple times, without varying any parameters. For example, suppose that we wish to run a power simulation for a t.test with unequal group sizes. 
 
-** R power simulation script
+*** R power simulation script
 The first step is to write a script or program to carry out the desired computation. The R script below simulates distributions with a specified mean difference, performs two-sample t-tests on the difference, and calculates the proportion of significant tests.
 #+BEGIN_SRC R :tangle R_examples/power1/power.R 
   ## function to simulate data and perform a t.test
@@ -81,7 +85,7 @@ The first step is to write a script or program to carry out the desired computat
 
 #+RESULTS:
 
-** Submit file
+*** Submit file
 If we want to run this function one million times it may take a while, especially if our computer is an older less powerful model. So let's run it on 100 separate machines (each one will simulate the test 10000 times). To do that we need, in addition to the R script above, a submit file to request resources and run the computation. 
 #+BEGIN_SRC conf :eval no :tangle R_examples/power1/power.submit
   # Universe whould always be 'vanilla'. This line MUST be 
@@ -121,7 +125,7 @@ Now that we have our script and the submit file we can run submit the job as fol
   zip -r power1 power1
 #+END_SRC
 
-** Monitoring submitted jobs
+*** Monitoring submitted jobs
 After submitting the jobs we may wish to monitor them, e.g. to check if they are running. You can do this by running =condor_q <your_user_name>= in a terminal. If this returns nothing then you have no jobs in the queue. Otherwise you will see information for each request in the queue which will look something like this:
 #+BEGIN_EXAMPLE
   -- Schedd: HMDC.batch@rce6-5.hmdc.harvard.edu : <10.0.0.10:9619?sock=7858_e19e_247>
@@ -144,7 +148,7 @@ Perhaps the most important information returned by =condor_q= is the program sta
 
 You will know your job is finished when it is no longer listed in the =condor_q= output. When it finishes you can examine the output and/or error files to see if the program exited successfully.
 
-** Aggregating results
+*** Aggregating results
 When your batch job is finished you are usually left with multiple output files that need to be aggregated. In the case of our simulation example, we have files =output/out.0 -- output/out40=, each of which contains a single number representing the proportion of significant tests. We can aggregate them with a simple R script, like this:
 #+BEGIN_SRC R :eval no :tangle R_examples/power1/aggregate.R
   ## list all output files in the output directory
@@ -159,7 +163,7 @@ When your batch job is finished you are usually left with multiple output files 
                         warn = FALSE)))
 #+END_SRC
 
-** Try it yourself! 
+*** Try it yourself! 
 Download the [[file:R_examples/power1.zip][power simulation example files]], to the RCE, extract the zip file and running =condor_submit power.submit= in the =power1= directory.
 
 * Batch example: Power simulation in R with varying parameters
@@ -263,3 +267,8 @@ Each of our 40 processes produced a file in the =output= directory name =out<pro
 ** Try it yourself! 
 Download the [[file:R_examples/power2.zip][power simulation example files]], to the RCE, extract the zip file, and run the example by calling =condor_submit power.submit= from the =power2= directory.
 
+* TODO Stata Batch Processing Examples
+
+* TODO Python Batch Processing Examples
+
+* TODO Matlab Batch Processing Examples
