@@ -4,7 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
 <title>RCE Quick-Start</title>
-<!-- 2015-04-29 Wed 15:09 -->
+<!-- 2015-04-29 Wed 15:22 -->
 <meta  http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta  name="generator" content="Org-mode" />
 <meta  name="author" content="Ista Zahn" />
@@ -411,8 +411,8 @@ Next iterate over a range of sample sizes, generating a distribution of means fo
 </div>
 
 <pre class="example">
-  user  system elapsed 
-33.150   0.020  33.169
+ user  system elapsed 
+33.85    0.04   33.90
 </pre>
 
 <p>
@@ -427,7 +427,7 @@ The simulation can be carried out much more rapidly using <code>mclapply</code> 
 
 <pre class="example">
   user  system elapsed 
-29.460   0.640   5.334
+35.060   0.560   5.384
 </pre>
 
 <p>
@@ -488,9 +488,14 @@ We have
 </pre>
 </div>
 
+<pre class="example">
+[1] 2153
+</pre>
+
+
+
 <p>
-=<sup><a id="fnr.3" name="fnr.3" class="footref" href="#fn.3">3</a></sup> 2153
-=text files to process. We can do this using a single core:
+text files to process. We can do this using a single core:
 </p>
 <div class="org-src-container">
 
@@ -498,10 +503,13 @@ We have
 </pre>
 </div>
 
+<pre class="example">
+  user  system elapsed 
+29.390   0.130  29.522
+</pre>
+
 <p>
-=   user  system elapsed 
- 28.520   0.180  32.298
-=but this is too slow. We can do the computation more quickly using multiple cores:
+but this is too slow. We can do the computation more quickly using multiple cores:
 </p>
 <div class="org-src-container">
 
@@ -509,10 +517,13 @@ We have
 </pre>
 </div>
 
+<pre class="example">
+  user  system elapsed 
+27.560   0.460   5.403
+</pre>
+
 <p>
-=   user  system elapsed 
- 27.400   0.580   5.397
-=and calculate the total number of characters in the text files by summing over the result
+and calculate the total number of characters in the text files by summing over the result
 </p>
 <div class="org-src-container">
 
@@ -630,7 +641,7 @@ Queue 10
 </pre>
 </div>
 <p>
-This submit file instructs the scheduler to request 10 nodes (<code>Queue 10</code>), start R<sup><a id="fnr.4" name="fnr.4" class="footref" href="#fn.4">4</a></sup> on each one (<code>Executable = /usr/local/bin/R</code>), run the code in example.R (<code>input = example.R</code>), write the output to files named out.0 &#x2013; out.9 in the output folder (<code>output = output/out.$(Process)</code>), write any errors to files named out.0 &#x2013; out.9 in the output folder (<code>error = output/error.$(Process)</code>), and write a log file in the output folder (<code>Log = output/log</code>). 
+This submit file instructs the scheduler to request 10 nodes (<code>Queue 10</code>), start R<sup><a id="fnr.3" name="fnr.3" class="footref" href="#fn.3">3</a></sup> on each one (<code>Executable = /usr/local/bin/R</code>), run the code in example.R (<code>input = example.R</code>), write the output to files named out.0 &#x2013; out.9 in the output folder (<code>output = output/out.$(Process)</code>), write any errors to files named out.0 &#x2013; out.9 in the output folder (<code>error = output/error.$(Process)</code>), and write a log file in the output folder (<code>Log = output/log</code>). 
 </p>
 </div>
 </div>
@@ -644,6 +655,7 @@ RCE users come from a variety of backgrounds and different people are more profi
 </div>
 </div>
 </div>
+
 <div id="outline-container-sec-8" class="outline-2">
 <h2 id="sec-8"><span class="section-number-2">8</span> <span class="todo TODO">TODO</span> Installing custom packages on the RCE</h2>
 <div class="outline-text-2" id="text-8">
@@ -675,9 +687,7 @@ Note: The Windows zipfile contains the NX client, plus optional font packages. H
 For additional packages useful for parallel computing see the <a href="http://cran.r-project.org/web/views/HighPerformanceComputing.html">HPC task view</a>.
 </p></div>
 
-<div class="footdef"><sup><a id="fn.3" name="fn.3" class="footnum" href="#fnr.3">3</a></sup> <p>DEFINITION NOT FOUND.</p></div>
-
-<div class="footdef"><sup><a id="fn.4" name="fn.4" class="footnum" href="#fnr.4">4</a></sup> <p class="footpara">
+<div class="footdef"><sup><a id="fn.3" name="fn.3" class="footnum" href="#fnr.3">3</a></sup> <p class="footpara">
 We use R for this example because it is the most commonly used program by RCE users. If you use Stata, Matlab, or something else, don't worry, we will have examples for you!
 </p></div>
 
@@ -686,7 +696,7 @@ We use R for this example because it is the most commonly used program by RCE us
 </div></div>
 <div id="postamble" class="status">
 <p class="author">Author: Ista Zahn</p>
-<p class="date">Created: 2015-04-29 Wed 15:09</p>
+<p class="date">Created: 2015-04-29 Wed 15:22</p>
 <p class="creator"><a href="http://www.gnu.org/software/emacs/">Emacs</a> 24.5.1 (<a href="http://orgmode.org">Org</a> mode 8.2.10)</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>

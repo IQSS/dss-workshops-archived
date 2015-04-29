@@ -158,7 +158,7 @@ Next iterate over a range of sample sizes, generating a distribution of means fo
 #+RESULTS:
 #+begin_example
    user  system elapsed 
- 33.150   0.020  33.169
+  33.85    0.04   33.90
 #+end_example
 
 The simulation can be carried out much more rapidly using =mclapply= instead:
@@ -170,7 +170,7 @@ The simulation can be carried out much more rapidly using =mclapply= instead:
 #+RESULTS:
 #+begin_example
    user  system elapsed 
- 29.460   0.640   5.334
+ 35.060   0.560   5.384
 #+end_example
 
 Like =lapply= the =mclapply= function returns a list, which we can process as usual. For example, we can construct histograms of the sampling distributions of the mean that we simulated above:
@@ -216,24 +216,35 @@ We have
 #+END_SRC
 
 #+RESULTS:
-=[1] 2153
-=text files to process. We can do this using a single core:
+#+begin_example
+[1] 2153
+#+end_example
+
+ 
+
+text files to process. We can do this using a single core:
 #+BEGIN_SRC R
   system.time(nchars <- unlist(lapply(textFiles, countChars)))
 #+END_SRC
 
 #+RESULTS:
-=   user  system elapsed 
- 28.520   0.180  32.298
-=but this is too slow. We can do the computation more quickly using multiple cores:
+#+begin_example
+   user  system elapsed 
+ 29.390   0.130  29.522
+#+end_example
+
+but this is too slow. We can do the computation more quickly using multiple cores:
 #+BEGIN_SRC R
   system.time(nchars <- unlist(mclapply(textFiles, countChars, mc.cores = 7)))
 #+END_SRC
 
 #+RESULTS:
-=   user  system elapsed 
- 27.400   0.580   5.397
-=and calculate the total number of characters in the text files by summing over the result
+#+begin_example
+   user  system elapsed 
+ 27.560   0.460   5.403
+#+end_example
+
+and calculate the total number of characters in the text files by summing over the result
 #+BEGIN_SRC R
   sum(nchars, na.rm = TRUE)
 #+END_SRC
@@ -306,6 +317,7 @@ This submit file instructs the scheduler to request 10 nodes (=Queue 10=), start
 
 ** Batch examples
 RCE users come from a variety of backgrounds and different people are more proficient with different software packages. Rather than show you generic examples, or pick an application to showcase, *we've prepared a separate page with [[file:examples/RCE_batch_examples.html][examples using different software packages]].*  
+
 * TODO Installing custom packages on the RCE
 
 
