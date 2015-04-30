@@ -79,7 +79,7 @@ Everyone:
 
 #+name: changeDirCommand
 #+begin_src stata
-  * change directory
+  ,* change directory
   cd "~/StataStatistics"
 #+end_src
 
@@ -116,7 +116,7 @@ drwxr-xr-x. 2 izahn users   4096 Oct 23 21:34 images/
 
 #+name: useCommand
 #+begin_src stata 
-  * use the states data set
+  ,* use the states data set
   use states.dta
 #+end_src
 
@@ -141,7 +141,7 @@ use states.dta
 
 #+name:sumStates
 #+begin_src stata 
-  * generate summary statistics for csat and expense
+  ,* generate summary statistics for csat and expense
   sum csat expense
 #+end_src
 
@@ -162,7 +162,7 @@ sum csat expense
 
 #+name: codebookStates
 #+begin_src stata 
-  * look at codebok
+  ,* look at codebok
   codebook csat expense
 #+end_src
 
@@ -208,7 +208,7 @@ expense                                         Per pupil expenditures prim&sec
 
 #+name: scatterplot1
 #+begin_src stata 
-  * graph expense by csat
+  ,* graph expense by csat
   twoway scatter expense csat
 #+end_src
 
@@ -226,7 +226,7 @@ twoway scatter expense csat
 
 #+name: regressionUnivar1
 #+begin_src stata 
-  * correlate csat and expense
+  ,* correlate csat and expense
   pwcorr csat expense, star(.05)
 #+end_src
 
@@ -292,7 +292,7 @@ regress csat expense
 
 #+name: normalitytest1
 #+begin_src stata 
-  * graph the residual values of csat
+  ,* graph the residual values of csat
   predict resid, residual
   histogram resid, normal 
 #+end_src
@@ -336,7 +336,7 @@ rvfplot
 
 #+name: statsCorrelations1
 #+begin_src stata 
-  * descriptive statistics and correlations
+  ,* descriptive statistics and correlations
   sum income percent high
   pwcorr csat expense income percent high
 #+end_src
@@ -407,7 +407,7 @@ Open the datafile, states.dta.
 
 #+name: genprodbyhand
 #+begin_src stata 
-  * generate product of percent and high
+  ,* generate product of percent and high
   gen percenthigh = percent*high 
   regress csat expense income percent high percenthigh
 #+end_src
@@ -443,9 +443,9 @@ regress csat expense income percent high percenthigh
 
 #+name: genprodbauto
 #+begin_src stata 
-  * use the # sign to represent interactions 
+  ,* use the # sign to represent interactions 
   regress csat percent high c.percent#c.high
-  * same as . regress csat c.percent##high
+  ,* same as . regress csat c.percent##high
 #+end_src
 
 #+RESULTS: genprodbauto
@@ -481,10 +481,10 @@ regress csat percent high c.percent#c.high
 
 #+name: makedummycodes1
 #+begin_src stata
-  * create region dummy codes using tab 
+  ,* create region dummy codes using tab 
   tab region, gen(region) // could also use gen / replace
-  
-  *regress csat on region
+
+  ,*regress csat on region
   regress csat region1 region2 region3
 #+end_src
 
@@ -508,8 +508,8 @@ r(111);
 
 #+name: regressdummycodes
 #+begin_src stata
-  * regress csat on region using fvvarlist syntax
-  * see help fvvarlist for details
+  ,* regress csat on region using fvvarlist syntax
+  ,* see help fvvarlist for details
   regress csat i.region
 #+end_src
 
@@ -553,8 +553,8 @@ Open the datafile, states.dta.
 
 #+name: getesttaboutreg
 #+begin_src stata 
- * install outreg2 package
- findit outreg2
+  ,* install outreg2 package
+  findit outreg2
 #+end_src
 
 #+RESULTS: getesttaboutreg
@@ -629,7 +629,7 @@ sum2 from http://fmwww.bc.edu/RePEc/bocode/s
 
 #+name: storerecall
 #+begin_src stata 
-  * fit two regression models and store the results
+  ,* fit two regression models and store the results
   regress csat expense income percent high
   estimates store Model1
   regress csat expense income percent high i.region
@@ -690,7 +690,7 @@ estimates store Model2
 
 #+name: storerecall2
 #+begin_src stata 
-  * Display Model1
+  ,* Display Model1
   estimates replay Model1
 #+end_src
 
@@ -721,7 +721,7 @@ estimates table Model1 Model2
 
 #+name: storerecall2
 #+begin_src stata 
-  * Compare Model1 and Model2 coefficients
+  ,* Compare Model1 and Model2 coefficients
   estimates table Model1 Model2
 #+end_src
 
