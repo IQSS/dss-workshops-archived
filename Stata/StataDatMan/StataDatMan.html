@@ -4,7 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
 <title>Data Management in Stata</title>
-<!-- 2014-10-16 Thu 22:05 -->
+<!-- 2015-04-30 Thu 09:37 -->
 <meta  http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta  name="generator" content="Org-mode" />
 <style type="text/css">
@@ -87,16 +87,10 @@
     { background-color: #ffff00; color: #000000; font-weight: bold; }
   /*]]>*/-->
 </style>
-<link rel="stylesheet" type="text/css" href="https://rawgit.com/fniessen/org-html-themes/master/styles/bigblow/css/htmlize.css"/>
-<link rel="stylesheet" type="text/css" href="https://rawgit.com/fniessen/org-html-themes/master/styles/bigblow/css/bigblow.css"/>
-<link rel="stylesheet" type="text/css" href="https://rawgit.com/fniessen/org-html-themes/master/styles/bigblow/css/hideshow.css"/>
-<script type="text/javascript" src="https://rawgit.com/fniessen/org-html-themes/master/styles/bigblow/js/jquery-1.11.0.min.js"></script>
-<script type="text/javascript" src="https://rawgit.com/fniessen/org-html-themes/master/styles/bigblow/js/jquery-ui-1.10.2.min.js"></script>
-<script type="text/javascript" src="https://rawgit.com/fniessen/org-html-themes/master/styles/bigblow/js/jquery.localscroll-min.js"></script>
-<script type="text/javascript" src="https://rawgit.com/fniessen/org-html-themes/master/styles/bigblow/js/jquery.scrollTo-1.4.3.1-min.js"></script>
-<script type="text/javascript" src="https://rawgit.com/fniessen/org-html-themes/master/styles/bigblow/js/jquery.zclip.min.js"></script>
-<script type="text/javascript" src="https://rawgit.com/fniessen/org-html-themes/master/styles/bigblow/js/bigblow.js"></script>
-<script type="text/javascript" src="https://rawgit.com/fniessen/org-html-themes/master/styles/bigblow/js/hideshow.js"></script>
+<link rel="stylesheet" type="text/css" href="http://tutorials.iq.harvard.edu/org-html-themes/styles/readtheorg/css/readtheorg.css"/>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="http://tutorials.iq.harvard.edu/org-html-themes/styles/readtheorg/js/readtheorg.js"></script>
 <script type="text/javascript">
 /*
 @licstart  The following is the entire license notice for the
@@ -151,77 +145,76 @@ for the JavaScript code in this tag.
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#sec-1">1. Introduction</a>
+<li><a href="#sec-1">Introduction</a>
 <ul>
-<li><a href="#sec-1-1">1.1. Materials and Setup</a></li>
-<li><a href="#sec-1-2">1.2. Workshop Description</a></li>
-<li><a href="#sec-1-3">1.3. Organization</a></li>
-<li><a href="#sec-1-4">1.4. Opening Files in Stata</a></li>
+<li><a href="#sec-1-1">Materials and Setup</a></li>
+<li><a href="#sec-1-2">Workshop Description</a></li>
+<li><a href="#sec-1-3">Organization</a></li>
+<li><a href="#sec-1-4">Opening Files in Stata</a></li>
 </ul>
 </li>
-<li><a href="#sec-2">2. Generating and replacing variables</a>
+<li><a href="#sec-2">Generating and replacing variables</a>
 <ul>
-<li><a href="#sec-2-1">2.1. Basic Data Manipulation Commands</a></li>
-<li><a href="#sec-2-2">2.2. Generate and Replace</a></li>
-<li><a href="#sec-2-3">2.3. Recode</a></li>
-<li><a href="#sec-2-4">2.4. egen</a></li>
-<li><a href="#sec-2-5">2.5. Exercise 1: Generate, Replace, Recode &amp; Egen</a></li>
+<li><a href="#sec-2-1">Basic Data Manipulation Commands</a></li>
+<li><a href="#sec-2-2">Generate and Replace</a></li>
+<li><a href="#sec-2-3">Recode</a></li>
+<li><a href="#sec-2-4">egen</a></li>
+<li><a href="#sec-2-5">Exercise 1: Generate, Replace, Recode &amp; Egen</a></li>
 </ul>
 </li>
-<li><a href="#sec-3">3. By processing</a>
+<li><a href="#sec-3">By processing</a>
 <ul>
-<li><a href="#sec-3-1">3.1. The "bysort" Command</a></li>
-<li><a href="#sec-3-2">3.2. By prefix vs. by options</a></li>
+<li><a href="#sec-3-1">The "bysort" Command</a></li>
+<li><a href="#sec-3-2">By prefix vs. by options</a></li>
 </ul>
 </li>
-<li><a href="#sec-4">4. Missing values</a>
+<li><a href="#sec-4">Missing values</a>
 <ul>
-<li><a href="#sec-4-1">4.1. Missing Values</a></li>
-<li><a href="#sec-4-2">4.2. Bulk Conversion to Missing Values</a></li>
+<li><a href="#sec-4-1">Missing Values</a></li>
+<li><a href="#sec-4-2">Bulk Conversion to Missing Values</a></li>
 </ul>
 </li>
-<li><a href="#sec-5">5. Variable types</a>
+<li><a href="#sec-5">Variable types</a>
 <ul>
-<li><a href="#sec-5-1">5.1. Variable Types</a></li>
-<li><a href="#sec-5-2">5.2. Converting to and from Strings</a></li>
-<li><a href="#sec-5-3">5.3. Converting Strings to Date/Time</a></li>
-<li><a href="#sec-5-4">5.4. Formatting Numbers as Dates</a></li>
-<li><a href="#sec-5-5">5.5. Exercise 2: Missing Values, String Conversion, and by Processing</a></li>
+<li><a href="#sec-5-1">Variable Types</a></li>
+<li><a href="#sec-5-2">Converting to and from Strings</a></li>
+<li><a href="#sec-5-3">Converting Strings to Date/Time</a></li>
+<li><a href="#sec-5-4">Formatting Numbers as Dates</a></li>
+<li><a href="#sec-5-5">Exercise 2: Missing Values, String Conversion, and by Processing</a></li>
 </ul>
 </li>
-<li><a href="#sec-6">6. Merging, appending, and joining</a>
+<li><a href="#sec-6">Merging, appending, and joining</a>
 <ul>
-<li><a href="#sec-6-1">6.1. Merging Datasets</a></li>
-<li><a href="#sec-6-2">6.2. Merging Datasets</a></li>
-<li><a href="#sec-6-3">6.3. Merge Options</a></li>
-<li><a href="#sec-6-4">6.4. Appending Datasets</a></li>
+<li><a href="#sec-6-1">Merging Datasets</a></li>
+<li><a href="#sec-6-2">Merging Datasets</a></li>
+<li><a href="#sec-6-3">Merge Options</a></li>
+<li><a href="#sec-6-4">Appending Datasets</a></li>
 </ul>
 </li>
-<li><a href="#sec-7">7. Creating summarized data sets</a>
+<li><a href="#sec-7">Creating summarized data sets</a>
 <ul>
-<li><a href="#sec-7-1">7.1. Collapse</a></li>
-<li><a href="#sec-7-2">7.2. Collapse Example</a></li>
-<li><a href="#sec-7-3">7.3. Exercise 3: Merge, Append, and Collapse</a></li>
+<li><a href="#sec-7-1">Collapse</a></li>
+<li><a href="#sec-7-2">Collapse Example</a></li>
+<li><a href="#sec-7-3">Exercise 3: Merge, Append, and Collapse</a></li>
 </ul>
 </li>
-<li><a href="#sec-8">8. Wrap-up</a>
+<li><a href="#sec-8">Wrap-up</a>
 <ul>
-<li><a href="#sec-8-1">8.1. Help Us Make This Workshop Better</a></li>
-<li><a href="#sec-8-2">8.2. Additional resources</a></li>
+<li><a href="#sec-8-1">Help Us Make This Workshop Better</a></li>
+<li><a href="#sec-8-2">Additional resources</a></li>
 </ul>
 </li>
 </ul>
 </div>
 </div>
-
 
 <div id="outline-container-sec-1" class="outline-2">
-<h2 id="sec-1"><span class="section-number-2">1</span> Introduction</h2>
+<h2 id="sec-1">Introduction</h2>
 <div class="outline-text-2" id="text-1">
 </div>
 
 <div id="outline-container-sec-1-1" class="outline-3">
-<h3 id="sec-1-1"><span class="section-number-3">1.1</span> Materials and Setup</h3>
+<h3 id="sec-1-1">Materials and Setup</h3>
 <div class="outline-text-3" id="text-1-1">
 <ul class="org-ul">
 <li>Lab computer log in:
@@ -245,7 +238,7 @@ for the JavaScript code in this tag.
 </div>
 
 <div id="outline-container-sec-1-2" class="outline-3">
-<h3 id="sec-1-2"><span class="section-number-3">1.2</span> Workshop Description</h3>
+<h3 id="sec-1-2">Workshop Description</h3>
 <div class="outline-text-3" id="text-1-2">
 <ul class="org-ul">
 <li>This is an Introduction to data management in Stata
@@ -261,7 +254,7 @@ for the JavaScript code in this tag.
 </div>
 
 <div id="outline-container-sec-1-3" class="outline-3">
-<h3 id="sec-1-3"><span class="section-number-3">1.3</span> Organization</h3>
+<h3 id="sec-1-3">Organization</h3>
 <div class="outline-text-3" id="text-1-3">
 <ul class="org-ul">
 <li>Please feel free to ask questions at any point if they are relevant to the current topic (or if you are lost!)
@@ -277,7 +270,7 @@ for the JavaScript code in this tag.
 </div>
 
 <div id="outline-container-sec-1-4" class="outline-3">
-<h3 id="sec-1-4"><span class="section-number-3">1.4</span> Opening Files in Stata</h3>
+<h3 id="sec-1-4">Opening Files in Stata</h3>
 <div class="outline-text-3" id="text-1-4">
 <ul class="org-ul">
 <li>Look at bottom left hand corner of Stata screen
@@ -309,10 +302,10 @@ dir dataSets
 </div>
 
 <div id="outline-container-sec-2" class="outline-2">
-<h2 id="sec-2"><span class="section-number-2">2</span> Generating and replacing variables</h2>
+<h2 id="sec-2">Generating and replacing variables</h2>
 <div class="outline-text-2" id="text-2">
 </div><div id="outline-container-sec-2-1" class="outline-3">
-<h3 id="sec-2-1"><span class="section-number-3">2.1</span> Basic Data Manipulation Commands</h3>
+<h3 id="sec-2-1">Basic Data Manipulation Commands</h3>
 <div class="outline-text-3" id="text-2-1">
 <p>
 Basic commands you'll use for generating new variables or recoding existing variables:
@@ -334,7 +327,7 @@ Many different means of accomplishing the same thing in Stata &#x2013; find what
 </div>
 
 <div id="outline-container-sec-2-2" class="outline-3">
-<h3 id="sec-2-2"><span class="section-number-3">2.2</span> Generate and Replace</h3>
+<h3 id="sec-2-2">Generate and Replace</h3>
 <div class="outline-text-3" id="text-2-2">
 <p>
 The <code>replace</code> command is often used with logic statements. Available logical operators include the following:
@@ -377,7 +370,7 @@ tab hapnew <span style="color: #8D8D84; font-style: italic;">// tabulate the new
 </div>
 
 <div id="outline-container-sec-2-3" class="outline-3">
-<h3 id="sec-2-3"><span class="section-number-3">2.3</span> Recode</h3>
+<h3 id="sec-2-3">Recode</h3>
 <div class="outline-text-3" id="text-2-3">
 <p>
 The <code>recode</code> command is basically generate and replace combined. You can recode an existing variable OR use recode to create a new variable (via the <code>gen</code> option).
@@ -451,7 +444,7 @@ tab wrkstat
 
 
 <div id="outline-container-sec-2-4" class="outline-3">
-<h3 id="sec-2-4"><span class="section-number-3">2.4</span> egen</h3>
+<h3 id="sec-2-4">egen</h3>
 <div class="outline-text-3" id="text-2-4">
 <p>
 The <code>egen</code> command ("extensions" to the <code>gen</code> command) provides convenient methods for performing many common data manipulation tasks.
@@ -487,7 +480,7 @@ You will need to refer to the documentation to discover what else <code>egen</co
 </div>
 
 <div id="outline-container-sec-2-5" class="outline-3">
-<h3 id="sec-2-5"><span class="section-number-3">2.5</span> Exercise 1: Generate, Replace, Recode &amp; Egen</h3>
+<h3 id="sec-2-5">Exercise 1: Generate, Replace, Recode &amp; Egen</h3>
 <div class="outline-text-3" id="text-2-5">
 <p>
 Open the gss.dta data.
@@ -506,10 +499,10 @@ Open the gss.dta data.
 
 
 <div id="outline-container-sec-3" class="outline-2">
-<h2 id="sec-3"><span class="section-number-2">3</span> By processing</h2>
+<h2 id="sec-3">By processing</h2>
 <div class="outline-text-2" id="text-3">
 </div><div id="outline-container-sec-3-1" class="outline-3">
-<h3 id="sec-3-1"><span class="section-number-3">3.1</span> The "bysort" Command</h3>
+<h3 id="sec-3-1">The "bysort" Command</h3>
 <div class="outline-text-3" id="text-3-1">
 <p>
 Sometimes, you'd like to create variables based on different categories of a single variable. For example, say you want to look at happiness based on whether an individual is male or female. The "bysort" prefix does just this:
@@ -529,7 +522,7 @@ bysort marital: <span style="color: #0000FF;">egen</span> marincomesd = <span st
 </div>
 
 <div id="outline-container-sec-3-2" class="outline-3">
-<h3 id="sec-3-2"><span class="section-number-3">3.2</span> By prefix vs. by options</h3>
+<h3 id="sec-3-2">By prefix vs. by options</h3>
 <div class="outline-text-3" id="text-3-2">
 <p>
 Some commands won't work with by prefix, but instead have a <code>by</code> option:
@@ -552,10 +545,10 @@ hist nethrs, <span style="color: #6434A3;">by</span>(sex)
 
 
 <div id="outline-container-sec-4" class="outline-2">
-<h2 id="sec-4"><span class="section-number-2">4</span> Missing values</h2>
+<h2 id="sec-4">Missing values</h2>
 <div class="outline-text-2" id="text-4">
 </div><div id="outline-container-sec-4-1" class="outline-3">
-<h3 id="sec-4-1"><span class="section-number-3">4.1</span> Missing Values</h3>
+<h3 id="sec-4-1">Missing Values</h3>
 <div class="outline-text-3" id="text-4-1">
 <p>
 You always need to consider how missing values are coded when recoding variables.
@@ -602,7 +595,7 @@ The correct value is 10%. Moral of the story? Be careful with missing values and
 </div>
 
 <div id="outline-container-sec-4-2" class="outline-3">
-<h3 id="sec-4-2"><span class="section-number-3">4.2</span> Bulk Conversion to Missing Values</h3>
+<h3 id="sec-4-2">Bulk Conversion to Missing Values</h3>
 <div class="outline-text-3" id="text-4-2">
 <p>
 Often the data collection/generating procedure will have used some other value besides "." to represent missing values. The <code>mvdecode</code> command will convert all these values to missing. For example:
@@ -632,10 +625,10 @@ than using "\<sub>all</sub>"
 </div>
 
 <div id="outline-container-sec-5" class="outline-2">
-<h2 id="sec-5"><span class="section-number-2">5</span> Variable types</h2>
+<h2 id="sec-5">Variable types</h2>
 <div class="outline-text-2" id="text-5">
 </div><div id="outline-container-sec-5-1" class="outline-3">
-<h3 id="sec-5-1"><span class="section-number-3">5.1</span> Variable Types</h3>
+<h3 id="sec-5-1">Variable Types</h3>
 <div class="outline-text-3" id="text-5-1">
 <p>
 Stata uses two main types of variables: String and Numeric. To be able to perform any mathematical operations, your variables need to be in a numeric format. Stata can store numbers with differing levels of precision, as described in the table below.
@@ -716,7 +709,7 @@ Stata uses two main types of variables: String and Numeric. To be able to perfor
 </div>
 
 <div id="outline-container-sec-5-2" class="outline-3">
-<h3 id="sec-5-2"><span class="section-number-3">5.2</span> Converting to and from Strings</h3>
+<h3 id="sec-5-2">Converting to and from Strings</h3>
 <div class="outline-text-3" id="text-5-2">
 <p>
 Stata provides several ways to convert to and from strings. You can use <code>tostring</code> and <code>destring</code> to convert from one type to the other:
@@ -746,7 +739,7 @@ Use <code>decode</code> and <code>encode</code> to convert to/from variable labe
 </div>
 
 <div id="outline-container-sec-5-3" class="outline-3">
-<h3 id="sec-5-3"><span class="section-number-3">5.3</span> Converting Strings to Date/Time</h3>
+<h3 id="sec-5-3">Converting Strings to Date/Time</h3>
 <div class="outline-text-3" id="text-5-3">
 <p>
 Often date/time variables start out as strings &#x2013; You'll need to convert them to numbers using one of the conversion functions listed below.
@@ -824,7 +817,7 @@ list date1 in 1/5
 </div>
 
 <div id="outline-container-sec-5-4" class="outline-3">
-<h3 id="sec-5-4"><span class="section-number-3">5.4</span> Formatting Numbers as Dates</h3>
+<h3 id="sec-5-4">Formatting Numbers as Dates</h3>
 <div class="outline-text-3" id="text-5-4">
 <p>
 Once you have converted the string to a number you can format it for display. You can simply accept the defaults used by your formatting string or provide details to customize it.
@@ -844,7 +837,7 @@ list date1 in 1/5
 </div>
 
 <div id="outline-container-sec-5-5" class="outline-3">
-<h3 id="sec-5-5"><span class="section-number-3">5.5</span> Exercise 2: Missing Values, String Conversion, and by Processing</h3>
+<h3 id="sec-5-5">Exercise 2: Missing Values, String Conversion, and by Processing</h3>
 <div class="outline-text-3" id="text-5-5">
 <ol class="org-ol">
 <li>Recode values "99" and "98" on the variable, "hrs1"  as "missing."
@@ -859,10 +852,10 @@ list date1 in 1/5
 </div>
 
 <div id="outline-container-sec-6" class="outline-2">
-<h2 id="sec-6"><span class="section-number-2">6</span> Merging, appending, and joining</h2>
+<h2 id="sec-6">Merging, appending, and joining</h2>
 <div class="outline-text-2" id="text-6">
 </div><div id="outline-container-sec-6-1" class="outline-3">
-<h3 id="sec-6-1"><span class="section-number-3">6.1</span> Merging Datasets</h3>
+<h3 id="sec-6-1">Merging Datasets</h3>
 <div class="outline-text-3" id="text-6-1">
 <p>
 You can <code>merge</code> variables from a second dataset to the dataset you're currently working with.
@@ -887,7 +880,7 @@ There are different ways that you might be interested in merging data:
 </div>
 
 <div id="outline-container-sec-6-2" class="outline-3">
-<h3 id="sec-6-2"><span class="section-number-3">6.2</span> Merging Datasets</h3>
+<h3 id="sec-6-2">Merging Datasets</h3>
 <div class="outline-text-3" id="text-6-2">
 <p>
 Before you begin:
@@ -917,7 +910,7 @@ Example: Let's say that we had one dataset with individual students (master) and
 </div>
 
 <div id="outline-container-sec-6-3" class="outline-3">
-<h3 id="sec-6-3"><span class="section-number-3">6.3</span> Merge Options</h3>
+<h3 id="sec-6-3">Merge Options</h3>
 <div class="outline-text-3" id="text-6-3">
 <p>
 There are several options that provide more fine-grain control over how the merge is carried out:
@@ -935,7 +928,7 @@ There are several options that provide more fine-grain control over how the merg
 
 
 <div id="outline-container-sec-6-4" class="outline-3">
-<h3 id="sec-6-4"><span class="section-number-3">6.4</span> Appending Datasets</h3>
+<h3 id="sec-6-4">Appending Datasets</h3>
 <div class="outline-text-3" id="text-6-4">
 <p>
 Sometimes you have observations in two  different datasets, or you'd like to add  observations to an existing dataset. In this case you can use the <code>append</code> command to add observations to the end of the observations in the master dataset. For example:
@@ -965,10 +958,10 @@ There is a "force" option will allow for data type mismatches, but again this is
 </div>
 
 <div id="outline-container-sec-7" class="outline-2">
-<h2 id="sec-7"><span class="section-number-2">7</span> Creating summarized data sets</h2>
+<h2 id="sec-7">Creating summarized data sets</h2>
 <div class="outline-text-2" id="text-7">
 </div><div id="outline-container-sec-7-1" class="outline-3">
-<h3 id="sec-7-1"><span class="section-number-3">7.1</span> Collapse</h3>
+<h3 id="sec-7-1">Collapse</h3>
 <div class="outline-text-3" id="text-7-1">
 <p>
 Collapse will take master data and create a new dataset of summary statistics
@@ -995,7 +988,7 @@ Before you collapse:
 </div>
 
 <div id="outline-container-sec-7-2" class="outline-3">
-<h3 id="sec-7-2"><span class="section-number-3">7.2</span> Collapse Example</h3>
+<h3 id="sec-7-2">Collapse Example</h3>
 <div class="outline-text-3" id="text-7-2">
 <p>
 Suppose you have a dataset with patient  information from multiple hospitals and you want to generate mean levels of patient satisfaction for hospital: 
@@ -1036,7 +1029,7 @@ collapse (mean) ptsatmean=ptsatisfaction (median) ptincmed=ptincome
 </div>
 
 <div id="outline-container-sec-7-3" class="outline-3">
-<h3 id="sec-7-3"><span class="section-number-3">7.3</span> Exercise 3: Merge, Append, and Collapse</h3>
+<h3 id="sec-7-3">Exercise 3: Merge, Append, and Collapse</h3>
 <div class="outline-text-3" id="text-7-3">
 <p>
 Open the gss2.dta dataset. This dataset contains only half of the variables that are in the complete gss dataset. 
@@ -1056,10 +1049,10 @@ Open the gss2.dta dataset. This dataset contains only half of the variables that
 </div>
 
 <div id="outline-container-sec-8" class="outline-2">
-<h2 id="sec-8"><span class="section-number-2">8</span> Wrap-up</h2>
+<h2 id="sec-8">Wrap-up</h2>
 <div class="outline-text-2" id="text-8">
 </div><div id="outline-container-sec-8-1" class="outline-3">
-<h3 id="sec-8-1"><span class="section-number-3">8.1</span> Help Us Make This Workshop Better</h3>
+<h3 id="sec-8-1">Help Us Make This Workshop Better</h3>
 <div class="outline-text-3" id="text-8-1">
 <ul class="org-ul">
 <li>Please take a moment to fill out a very short feedback form
@@ -1073,7 +1066,7 @@ Open the gss2.dta dataset. This dataset contains only half of the variables that
 </div>
 
 <div id="outline-container-sec-8-2" class="outline-3">
-<h3 id="sec-8-2"><span class="section-number-3">8.2</span> Additional resources</h3>
+<h3 id="sec-8-2">Additional resources</h3>
 <div class="outline-text-3" id="text-8-2">
 <ul class="org-ul">
 <li>training and consulting
@@ -1105,9 +1098,7 @@ Open the gss2.dta dataset. This dataset contains only half of the variables that
 </div>
 </div>
 <div id="postamble" class="status">
-<p class="date">Created: 2014-10-16 Thu 22:05</p>
-<p class="creator"><a href="http://www.gnu.org/software/emacs/">Emacs</a> 24.3.1 (<a href="http://orgmode.org">Org</a> mode 8.2.10)</p>
-<p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
+<p><a rel='license' href='http://creativecommons.org/licenses/by-sa/4.0/'><img alt='Creative Commons License' style='border-width:0' src='https://i.creativecommons.org/l/by-sa/4.0/80x15.png' /></a><span xmlns:dct='http://purl.org/dc/terms/' property='dct:title'> These statistical software workshop materials</span> by <a xmlns:cc='http://creativecommons.org/ns#' href='http://rtc.iq.harvard.edu' property='cc:attributionName' rel='cc:attributionURL'>Harvard University</a> are licensed under a <a rel='license' href='http://creativecommons.org/licenses/by-sa/4.0/'>Creative Commons Attribution-ShareAlike 4.0 International License</a>.</p> <p> Presented by <a href='http://rtc.iq.harvard.edu'>Research Technology Consulting</a> at <br></br> <a href='http://iq.harvard.edu'><img style='margin-left: auto; margin-right: auto;' alt='The Institute for Quantitative Social Science' title='IQSS logo' src='http://static.projects.iq.harvard.edu/files/styles/os_files_small/public/rtc/files/iqsslogo-2014_0.png'></img></a></p>
 </div>
 </body>
 </html>
