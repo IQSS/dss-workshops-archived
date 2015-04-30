@@ -83,13 +83,6 @@ Everyone:
   cd "~/StataStatistics"
 #+end_src
 
-#+RESULTS: changeDirCommand
-#+begin_example
-* change directory
-cd "~/StataStatistics"
-/nfs/home/I/izahn/StataStatistics
-#+end_example
-
 - Use dir to see what is in the directory:
 
 #+name: dirCommand
@@ -120,13 +113,6 @@ drwxr-xr-x. 2 izahn users   4096 Oct 23 21:34 images/
   use states.dta
 #+end_src
 
-#+RESULTS: useCommand
-#+begin_example
-* use the states data set
-use states.dta
-(U.S. states data 1990-91)
-#+end_example
-
 ** Steps for Running Regression
   1. Examine descriptive statistics
   2. Look at relationship graphically and test correlation(s)
@@ -147,7 +133,6 @@ use states.dta
 
 #+RESULTS: sumStates
 #+begin_example
-* generate summary statistics for csat and expense
 sum csat expense
 
     Variable |       Obs        Mean    Std. Dev.       Min        Max
@@ -168,7 +153,7 @@ sum csat expense
 
 #+RESULTS: codebookStates
 #+begin_example
-* look at codebok
+
 codebook csat expense
 
 -------------------------------------------------------------------------------
@@ -212,12 +197,6 @@ expense                                         Per pupil expenditures prim&sec
   twoway scatter expense csat
 #+end_src
 
-#+RESULTS: scatterplot1
-#+begin_example
-* graph expense by csat
-twoway scatter expense csat
-#+end_example
-
 #+attr_latex: :width .6\textwidth
 [[file:images/scatter1.png]]
 
@@ -232,7 +211,6 @@ twoway scatter expense csat
 
 #+RESULTS: regressionUnivar1
 #+begin_example
-* correlate csat and expense
 pwcorr csat expense, star(.05)
 
              |     csat  expense
@@ -297,14 +275,6 @@ regress csat expense
   histogram resid, normal 
 #+end_src
 
-#+RESULTS: normalitytest1
-#+begin_example
-* graph the residual values of csat
-predict resid, residual
-histogram resid, normal
-(bin=7, start=-131.81111, width=38.329487)
-#+end_example
-
 #+attr_latex: :width .6\textwidth
 [[file:images/normalHist1.png]]
 
@@ -314,11 +284,6 @@ histogram resid, normal
 #+begin_src stata 
   rvfplot
 #+end_src
-
-#+RESULTS: homoscedasticityTest1
-#+begin_example
-rvfplot
-#+end_example
 
 #+attr_latex: :width .6\textwidth
 [[file:images/fittedResidual1.png]]
@@ -343,7 +308,6 @@ rvfplot
 
 #+RESULTS: statsCorrelations1
 #+begin_example
-* descriptive statistics and correlations
 sum income percent high
 
     Variable |       Obs        Mean    Std. Dev.       Min        Max
@@ -414,7 +378,6 @@ Open the datafile, states.dta.
 
 #+RESULTS: genprodbyhand
 #+begin_example
-* generate product of percent and high
 gen percenthigh = percent*high
 regress csat expense income percent high percenthigh
 
@@ -450,7 +413,6 @@ regress csat expense income percent high percenthigh
 
 #+RESULTS: genprodbauto
 #+begin_example
-* use the # sign to represent interactions
 regress csat percent high c.percent#c.high
 
       Source |       SS       df       MS              Number of obs =      51
@@ -488,19 +450,6 @@ regress csat percent high c.percent#c.high
   regress csat region1 region2 region3
 #+end_src
 
-#+RESULTS: makedummycodes1
-#+begin_example
-* create region dummy codes using tab
-tab region, gen(region) // could also use gen / replace
-option / not allowed
-r(198);
-
-*regress csat on region
-regress csat region1 region2 region3
-variable region1 not found
-r(111);
-#+end_example
-
 ** Categorical Predictors
 - For categorical variables, we first need to dummy code
 - Use region as example
@@ -515,8 +464,6 @@ r(111);
 
 #+RESULTS: regressdummycodes
 #+begin_example
-* regress csat on region using fvvarlist syntax
-* see help fvvarlist for details
 regress csat i.region
 
       Source |       SS       df       MS              Number of obs =      50
@@ -559,7 +506,6 @@ Open the datafile, states.dta.
 
 #+RESULTS: getesttaboutreg
 #+begin_example
-* install outreg2 package
 findit outreg2
 
 Search of official help files, FAQs, Examples, SJs, and STBs
@@ -638,7 +584,6 @@ sum2 from http://fmwww.bc.edu/RePEc/bocode/s
 
 #+RESULTS: storerecall
 #+begin_example
-* fit two regression models and store the results
 regress csat expense income percent high
 
       Source |       SS       df       MS              Number of obs =      51
@@ -696,7 +641,6 @@ estimates store Model2
 
 #+RESULTS: storerecall2
 #+begin_example
-* Compare Model1 and Model2 coefficients
 estimates table Model1 Model2
 
 ----------------------------------------
@@ -733,13 +677,6 @@ estimates table Model1 Model2
 #+begin_src stata 
   outreg2 [Model1 Model2] using csatprediction.xls, replace
 #+end_src
-
-#+RESULTS: outregdemo
-#+begin_example
-outreg2 [Model1 Model2] using csatprediction.xls, replace
-unrecognized command:  outreg2
-r(199);
-#+end_example
 
 * Wrap-up
 
