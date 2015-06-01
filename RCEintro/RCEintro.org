@@ -66,7 +66,6 @@ You can use the RCE in one of two primary ways:
 
 Interactive jobs are good for memory intensive computations that may be unfeasible on your personal computer due to hardware limitations. Batch jobs are good for computations that can be run in parallel and/or computations that you expect to run for long periods of time.
 
-
 * Accessing the RCE
 You can access the RCE using the [[http://projects.iq.harvard.edu/rce/nx4_installation][nomachine]] remote desktop software, or via the command line using =ssh=. If you are a command line wizard and only need to run batch jobs =ssh= is the way to go; for most of us however =nomachine= is a much more useful way to access the RCE. It allows you to interact with the applications on the cluster much as you interact with applications on your local computer. 
 
@@ -177,7 +176,7 @@ Next iterate over a range of sample sizes, generating a distribution of means fo
 #+end_example
 
 The simulation can be carried out much more rapidly using =mclapply= instead:
-#+BEGIN_SRC R
+#+BEGIN_SRC R 
   library(parallel) 
   system.time(means <- mclapply(sampSizes, meanDist, mc.cores = 7))
 #+END_SRC
@@ -185,7 +184,7 @@ The simulation can be carried out much more rapidly using =mclapply= instead:
 #+RESULTS:
 #+begin_example
    user  system elapsed 
- 35.060   0.560   5.384
+ 29.180   0.170   5.255
 #+end_example
 
 Like =lapply= the =mclapply= function returns a list, which we can process as usual. For example, we can construct histograms of the sampling distributions of the mean that we simulated above:
@@ -334,7 +333,6 @@ RCE users come from a variety of backgrounds and different people are more profi
 - [[Matlab Batch Examples]]
 
 ** R Batch Examples
-
 *** Batch example: Simple power simulation in R
 The simplest kind of batch job is one for which you just want to run the same code multiple times, without varying any parameters. For example, suppose that we wish to run a power simulation for a t.test with unequal group sizes. 
 
@@ -363,7 +361,7 @@ The first step is to write a script or program to carry out the desired computat
 #+RESULTS:
 
 **** Submit file
-If we want to run this function one million times it may take a while, especially if our computer is an older less powerful model. So let's run it on 100 separate machines (each one will simulate the test 10000 times). To do that we need, in addition to the R script above, a submit file to request resources and run the computation. 
+If we want to run this function one million times it may take a while, especially if our computer is an older less powerful model. So let's run it on 100 separate machines (each one will simulate the test 10000 times). To do that we need, in addition to the R script above, a submit file to request resources and run the computation.  
 #+BEGIN_SRC conf :eval no :tangle R_examples/power1/power.submit
   # Universe whould always be 'vanilla'. This line MUST be 
   #included in your submit file, exactly as shown below.
@@ -372,9 +370,9 @@ If we want to run this function one million times it may take a while, especiall
   # Enter the path to the R program.
   Executable = /usr/local/bin/R
 
-  # Specify any arguments you want to pass to the executable
-  # to make r not save or restore workspaces, and to 
-  # run as quietly as possible
+  # Specify any arguments you want to pass to the executable.
+  # Here we pass arguments to make R not save or restore workspaces,
+  # and to run as quietly as possible.
   Arguments = --no-save --no-restore --slave
 
   # Specify the relative path to the input file
@@ -386,7 +384,9 @@ If we want to run this function one million times it may take a while, especiall
   error = output/error.$(Process)
   # Specify where to save the log file.
   Log = output/log
+
   # Enter the number of processes to request.
+  # This section should always come last.
   Queue 100
 #+END_SRC
 
@@ -398,7 +398,7 @@ Now that we have our script and the submit file we can run submit the job as fol
 5. run =condor_submit power.submit= to submit the jobs to the cluster
 
 #+BEGIN_SRC sh :exports none :results silent
-  cd examples
+  cd R_examples
   zip -r power1 power1
 #+END_SRC
 
@@ -539,12 +539,120 @@ Each of our 40 processes produced a file in the =output= directory name =out<pro
 **** Try it yourself! 
 Download the [[file:R_examples/power2.zip][power simulation example files]], to the RCE, extract the zip file, and run the example by calling =condor_submit power.submit= from the =power2= directory.
 
-** TODO Stata Batch Examples
+** Stata Batch Example
+In this example we use the batch system to bootstrap a distribution of means. Each process will calculate the mean for a single bootstrap sample and save the result. Since we need to give the output files unique names we will pass the batch process number to Stata and use it to construct the file names.
+
+#+BEGIN_SRC stata :tangle no :results silent :exports none
+  /* This code chunk generates the sample data for use in this example.
+     It is not meant to be displayed in the public-facing notes, we
+     just give them the generated data file. */
+    
+  clear all
+  set more off
+
+  set obs 10
+
+  gen id = _n
+  expand 5
+
+  bys id: gen time = _n
+  gen myvar = 10 * id + time + rnormal(0, 3)
+
+  save mydata, replace
+
+#+END_SRC
+
+*** Stata bootstrap do-file
+To use the batch system we need to write a do-file that does the calculation without further user input. The do-file below reads a Stata data set, sets a seed for random number generation, samples (with replacement) from the data, calculates the average value of the sampled data, and saves the result.
+#+BEGIN_SRC stata :eval no :tangle Stata_examples/bootstrap/bootstrap.do
+  set more off
+
+  // collect the arguments passed by submit file
+  args process
+
+  // load the dataset
+  use "mydata", clear
+
+  // sample with replacement
+  bsample, cluster(id) idcluster(newid)
+
+  // calculate the mean and standard deviation
+  collapse (mean) mean_myvar = myvar (sd) sd_myvar = myvar
+
+  // save the result, appending the process number to the file name
+  save "output/output_`process'.dta", replace
+#+END_SRC
+Note the use of =args process=, which retrieves the value of the process argument. The argument itself is specified in the =.submit= file (see below).
+*** Submit file
+The Stata code in the example above draws one bootstrap sample and calculates the mean. If we want to do this 1,000 times we could write a loop, but each iteration would be done sequentially. We can carry out this operation faster by running it simultaneously on hundreds of machines. We just need a =.submit= file like the one below:
+#+BEGIN_SRC conf :eval no :tangle Stata_examples/bootstrap/bootstrap.submit
+  # Universe whould always be 'vanilla'. This line MUST be 
+  #included in your submit file, exactly as shown below.
+  Universe = vanilla
+
+  # Enter the path to the Stata program.
+  Executable = /usr/local/bin/stata-mp
+
+  # Specify any arguments you want to pass to the executable.
+  # Here we pass arguments to make Stata run the bootstrap.do
+  # file. We also pass the process number, which will be used
+  # to append the process number to the output files.
+  Arguments = -q do bootstrap.do $(Process)
+
+  # Specify where to output any results printed by your program.
+  output = output/bootstrap$(Process).out
+  # Specify where to save any errors returned by your program.
+  error = output/bootstrap$(Process).err
+  # Specify where to save the log file.
+  Log = output/bootstrap$(Process).log
+
+  # Enter the number of processes to request.
+  # This section should always come last.
+  Queue 1000
+
+#+END_SRC
+Notice that we passed the =$(Process)= argument so that we can retrieve that value in the do-file and save each output to a unique file that includes the process name.
+
+#+BEGIN_SRC sh :exports none :results silent
+  cd Stata_examples
+  zip -r bootstrap bootstrap
+#+END_SRC
+
+*** Aggregating results
+Each of our 1000 processes produced a file in the =output= directory name =out<process>.dta=; our next task is to aggregate these results. The do-file below reads each of these files, joins them together, appends them, and plots the result.
+#+BEGIN_SRC Stata :eval no :tangle Stata_examples/bootstrap/aggregate.do
+
+  set more off
+
+  // collect the arguments passed by submit file
+  args process
+
+  // load the dataset
+  use "mydata", clear
+
+  // sample with replacement
+  bsample, cluster(id) idcluster(newid)
+
+  // calculate the mean and standard deviation
+  collapse (mean) mean_myvar = myvar (sd) sd_myvar = myvar
+
+  // save the result, appending the process number to the file name
+  save "output/output_`process'.dta", replace
+
+  // histogram
+  hist(mean_myvar)
+
+  // save graph
+  graph export tst.eps
+
+#+END_SRC
+
+[[file:images/powerDist.png]]
+
 
 ** TODO Python Batch Examples
 
 ** TODO Matlab Batch Examples
-
 
 
 * TODO Installing custom packages on the RCE
