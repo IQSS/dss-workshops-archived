@@ -172,7 +172,7 @@ Next iterate over a range of sample sizes, generating a distribution of means fo
 #+RESULTS:
 #+begin_example
    user  system elapsed 
-  33.85    0.04   33.90
+ 40.763   0.007  40.773
 #+end_example
 
 The simulation can be carried out much more rapidly using =mclapply= instead:
@@ -184,7 +184,7 @@ The simulation can be carried out much more rapidly using =mclapply= instead:
 #+RESULTS:
 #+begin_example
    user  system elapsed 
- 29.180   0.170   5.255
+ 35.746   1.874   6.569
 #+end_example
 
 Like =lapply= the =mclapply= function returns a list, which we can process as usual. For example, we can construct histograms of the sampling distributions of the mean that we simulated above:
@@ -231,7 +231,7 @@ We have
 
 #+RESULTS:
 #+begin_example
-[1] 2153
+[1] 0
 #+end_example
 
 text files to process. We can do this using a single core:
@@ -242,7 +242,7 @@ text files to process. We can do this using a single core:
 #+RESULTS:
 #+begin_example
    user  system elapsed 
- 29.390   0.130  29.522
+      0       0       0
 #+end_example
 
 but this is too slow. We can do the computation more quickly using multiple cores:
@@ -253,7 +253,7 @@ but this is too slow. We can do the computation more quickly using multiple core
 #+RESULTS:
 #+begin_example
    user  system elapsed 
- 27.560   0.460   5.403
+      0       0       0
 #+end_example
 
 and calculate the total number of characters in the text files by summing over the result
@@ -263,7 +263,7 @@ and calculate the total number of characters in the text files by summing over t
 
 #+RESULTS:
 #+begin_example
-[1] 32408320
+[1] 0
 #+end_example
 
 For more details and examples using the parallel package, refer to the [[https://stat.ethz.ch/R-manual/R-devel/library/parallel/doc/parallel.pdf][parallel package documentation]] or run =help(package = "parallel")= at the R prompt. For other ways of running computations in parallel refer to the [[http://cran.r-project.org/web/views/HighPerformanceComputing.html][HPC task view]].
@@ -621,23 +621,28 @@ Notice that we passed the =$(Process)= argument so that we can retrieve that val
 *** Aggregating results
 Each of our 1000 processes produced a file in the =output= directory name =out<process>.dta=; our next task is to aggregate these results. The do-file below reads each of these files, joins them together, appends them, and plots the result.
 #+BEGIN_SRC Stata :eval no :tangle Stata_examples/bootstrap/aggregate.do
-
+  clear
   set more off
 
-  // collect the arguments passed by submit file
-  args process
+  cd output
 
-  // load the dataset
-  use "mydata", clear
+  local list: dir . files "*.dta"
 
-  // sample with replacement
-  bsample, cluster(id) idcluster(newid)
+  di `list'
 
-  // calculate the mean and standard deviation
-  collapse (mean) mean_myvar = myvar (sd) sd_myvar = myvar
+  local f=1
+  foreach file of local list {
+          di "`file"'
+          if `f'== 1 {
+                  use `file', clear
+          }
+          else {
+                  append using `file'
+          }
+          local ++f
+  }
 
-  // save the result, appending the process number to the file name
-  save "output/output_`process'.dta", replace
+  saveold "`path'//mybootdata", replace
 
   // histogram
   hist(mean_myvar)
@@ -647,7 +652,6 @@ Each of our 1000 processes produced a file in the =output= directory name =out<p
 
 #+END_SRC
 
-[[file:images/powerDist.png]]
 
 
 ** TODO Python Batch Examples

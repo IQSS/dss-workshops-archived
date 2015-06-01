@@ -4,7 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
 <title>RCE Quick-Start</title>
-<!-- 2015-05-06 Wed 17:25 -->
+<!-- 2015-06-01 Mon 16:22 -->
 <meta  http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta  name="generator" content="Org-mode" />
 <meta  name="author" content="Ista Zahn" />
@@ -177,7 +177,13 @@ for the JavaScript code in this tag.
 <li><a href="#sec-8-1-2">Batch example: Power simulation in R with varying parameters</a></li>
 </ul>
 </li>
-<li><a href="#sec-8-2"><span class="todo TODO">TODO</span> Stata Batch Examples</a></li>
+<li><a href="#sec-8-2">Stata Batch Example</a>
+<ul>
+<li><a href="#sec-8-2-1">Stata bootstrap do-file</a></li>
+<li><a href="#sec-8-2-2">Submit file</a></li>
+<li><a href="#sec-8-2-3">Aggregating results</a></li>
+</ul>
+</li>
 <li><a href="#sec-8-3"><span class="todo TODO">TODO</span> Python Batch Examples</a></li>
 <li><a href="#sec-8-4"><span class="todo TODO">TODO</span> Matlab Batch Examples</a></li>
 </ul>
@@ -220,7 +226,6 @@ Interactive jobs are good for memory intensive computations that may be unfeasib
 </p>
 </div>
 </div>
-
 
 <div id="outline-container-sec-2" class="outline-2">
 <h2 id="sec-2"><span class="section-number-2">2</span> Accessing the RCE</h2>
@@ -425,13 +430,13 @@ We start by setting up a helper function to repeatedly generate a sample of a gi
 </p>
 <div class="org-src-container">
 
-<pre class="src src-R"><span style="color: #8D8D84;">## </span><span style="color: #8D8D84; font-style: italic;">function to generate distribution of means for a range of sample sizes</span>
-<span style="color: #006699;">meanDist</span> <span style="color: #D0372D;">&lt;-</span> <span style="color: #0000FF;">function</span><span style="color: #006FE0;">(</span>n, nsamp <span style="color: #D0372D;">=</span> <span style="color: #6434A3;">5000</span><span style="color: #006FE0;">)</span> <span style="color: #006FE0;">{</span>
-  <span style="color: #006699;">replicate</span><span style="color: #006FE0;">(</span>nsamp, <span style="color: #006699;">mean</span><span style="color: #006FE0;">(</span><span style="color: #006699;">rnorm</span><span style="color: #006FE0;">(</span>n<span style="color: #006FE0;">)))</span>
-<span style="color: #006FE0;">}</span>
+<pre class="src src-R"><span style="color: #6c6c6c; font-style: italic;">## </span><span style="color: #6c6c6c; font-style: italic;">function to generate distribution of means for a range of sample sizes</span>
+<span style="color: #ffd700;">meanDist</span> <span style="color: #5fafd7;">&lt;-</span> <span style="color: #a1db00;">function</span><span style="color: #d18aff;">(</span>n, nsamp <span style="color: #5fafd7;">=</span> <span style="color: #00d7af;">5000</span><span style="color: #d18aff;">)</span> <span style="color: #d18aff;">{</span>
+  <span style="color: #ffd700;">replicate</span><span style="color: #d18aff;">(</span>nsamp, <span style="color: #ffd700;">mean</span><span style="color: #d18aff;">(</span><span style="color: #ffd700;">rnorm</span><span style="color: #d18aff;">(</span>n<span style="color: #d18aff;">)))</span>
+<span style="color: #d18aff;">}</span>
 
-<span style="color: #8D8D84;">## </span><span style="color: #8D8D84; font-style: italic;">range of sample sizes to iterate over</span>
-sampSizes <span style="color: #D0372D;">&lt;-</span> <span style="color: #006699;">seq</span><span style="color: #006FE0;">(</span><span style="color: #6434A3;">10</span>, <span style="color: #6434A3;">500</span>, by <span style="color: #D0372D;">=</span> <span style="color: #6434A3;">5</span><span style="color: #006FE0;">)</span>
+<span style="color: #6c6c6c; font-style: italic;">## </span><span style="color: #6c6c6c; font-style: italic;">range of sample sizes to iterate over</span>
+sampSizes <span style="color: #5fafd7;">&lt;-</span> <span style="color: #ffd700;">seq</span><span style="color: #d18aff;">(</span><span style="color: #00d7af;">10</span>, <span style="color: #00d7af;">500</span>, by <span style="color: #5fafd7;">=</span> <span style="color: #00d7af;">5</span><span style="color: #d18aff;">)</span>
 </pre>
 </div>
 
@@ -440,13 +445,13 @@ Next iterate over a range of sample sizes, generating a distribution of means fo
 </p>
 <div class="org-src-container">
 
-<pre class="src src-R"><span style="color: #006699;">system.time</span><span style="color: #006FE0;">(</span>means <span style="color: #D0372D;">&lt;-</span> <span style="color: #006699;">lapply</span><span style="color: #006FE0;">(</span>sampSizes, meanDist<span style="color: #006FE0;">))</span>
+<pre class="src src-R"><span style="color: #ffd700;">system.time</span><span style="color: #d18aff;">(</span>means <span style="color: #5fafd7;">&lt;-</span> <span style="color: #ffd700;">lapply</span><span style="color: #d18aff;">(</span>sampSizes, meanDist<span style="color: #d18aff;">))</span>
 </pre>
 </div>
 
 <pre class="example">
- user  system elapsed 
-33.85    0.04   33.90
+  user  system elapsed 
+40.763   0.007  40.773
 </pre>
 
 <p>
@@ -454,14 +459,14 @@ The simulation can be carried out much more rapidly using <code>mclapply</code> 
 </p>
 <div class="org-src-container">
 
-<pre class="src src-R"><span style="color: #D0372D;">library</span><span style="color: #006FE0;">(</span>parallel<span style="color: #006FE0;">)</span> 
-<span style="color: #006699;">system.time</span><span style="color: #006FE0;">(</span>means <span style="color: #D0372D;">&lt;-</span> <span style="color: #006699;">mclapply</span><span style="color: #006FE0;">(</span>sampSizes, meanDist, mc.cores <span style="color: #D0372D;">=</span> <span style="color: #6434A3;">7</span><span style="color: #006FE0;">))</span>
+<pre class="src src-R"><span style="color: #5fafd7;">library</span><span style="color: #d18aff;">(</span>parallel<span style="color: #d18aff;">)</span> 
+<span style="color: #ffd700;">system.time</span><span style="color: #d18aff;">(</span>means <span style="color: #5fafd7;">&lt;-</span> <span style="color: #ffd700;">mclapply</span><span style="color: #d18aff;">(</span>sampSizes, meanDist, mc.cores <span style="color: #5fafd7;">=</span> <span style="color: #00d7af;">7</span><span style="color: #d18aff;">))</span>
 </pre>
 </div>
 
 <pre class="example">
   user  system elapsed 
-35.060   0.560   5.384
+35.746   1.874   6.569
 </pre>
 
 <p>
@@ -469,15 +474,15 @@ Like <code>lapply</code> the <code>mclapply</code> function returns a list, whic
 </p>
 <div class="org-src-container">
 
-<pre class="src src-R"><span style="color: #8D8D84;">## </span><span style="color: #8D8D84; font-style: italic;">plot the distribution of means at various sample sizes</span>
-<span style="color: #006699;">par</span><span style="color: #006FE0;">(</span>mfrow<span style="color: #D0372D;">=</span><span style="color: #006699;">c</span><span style="color: #006FE0;">(</span><span style="color: #6434A3;">6</span>, <span style="color: #6434A3;">5</span><span style="color: #006FE0;">)</span>, mar <span style="color: #D0372D;">=</span> <span style="color: #006699;">c</span><span style="color: #006FE0;">(</span><span style="color: #6434A3;">0</span>,<span style="color: #6434A3;">0</span>,<span style="color: #6434A3;">2</span>,<span style="color: #6434A3;">2</span><span style="color: #006FE0;">)</span>, cex <span style="color: #D0372D;">=</span> <span style="color: #6434A3;">.7</span><span style="color: #006FE0;">)</span>
-<span style="color: #0000FF;">for</span><span style="color: #006FE0;">(</span>i <span style="color: #0000FF;">in</span> <span style="color: #6434A3;">1</span>:<span style="color: #6434A3;">30</span><span style="color: #006FE0;">)</span> <span style="color: #006FE0;">{</span>
-  <span style="color: #006699;">hist</span><span style="color: #006FE0;">(</span>means<span style="color: #006FE0;">[[</span>i<span style="color: #006FE0;">]]</span>, 
-       main <span style="color: #D0372D;">=</span> <span style="color: #006699;">paste</span><span style="color: #006FE0;">(</span><span style="color: #008000;">"n ="</span>, 
-                    sampSizes<span style="color: #006FE0;">[</span>i<span style="color: #006FE0;">])</span>, 
-       axes <span style="color: #D0372D;">=</span> <span style="color: #6434A3;">FALSE</span>,
-       xlim <span style="color: #D0372D;">=</span> <span style="color: #006699;">range</span><span style="color: #006FE0;">(</span><span style="color: #006699;">unlist</span><span style="color: #006FE0;">(</span>means<span style="color: #006FE0;">)))</span>
-<span style="color: #006FE0;">}</span>
+<pre class="src src-R"><span style="color: #6c6c6c; font-style: italic;">## </span><span style="color: #6c6c6c; font-style: italic;">plot the distribution of means at various sample sizes</span>
+<span style="color: #ffd700;">par</span><span style="color: #d18aff;">(</span>mfrow<span style="color: #5fafd7;">=</span><span style="color: #ffd700;">c</span><span style="color: #d18aff;">(</span><span style="color: #00d7af;">6</span>, <span style="color: #00d7af;">5</span><span style="color: #d18aff;">)</span>, mar <span style="color: #5fafd7;">=</span> <span style="color: #ffd700;">c</span><span style="color: #d18aff;">(</span><span style="color: #00d7af;">0</span>,<span style="color: #00d7af;">0</span>,<span style="color: #00d7af;">2</span>,<span style="color: #00d7af;">2</span><span style="color: #d18aff;">)</span>, cex <span style="color: #5fafd7;">=</span> <span style="color: #00d7af;">.7</span><span style="color: #d18aff;">)</span>
+<span style="color: #a1db00;">for</span><span style="color: #d18aff;">(</span>i <span style="color: #a1db00;">in</span> <span style="color: #00d7af;">1</span>:<span style="color: #00d7af;">30</span><span style="color: #d18aff;">)</span> <span style="color: #d18aff;">{</span>
+  <span style="color: #ffd700;">hist</span><span style="color: #d18aff;">(</span>means<span style="color: #d18aff;">[[</span>i<span style="color: #d18aff;">]]</span>, 
+       main <span style="color: #5fafd7;">=</span> <span style="color: #ffd700;">paste</span><span style="color: #d18aff;">(</span><span style="color: #b22222;">"n ="</span>, 
+                    sampSizes<span style="color: #d18aff;">[</span>i<span style="color: #d18aff;">])</span>, 
+       axes <span style="color: #5fafd7;">=</span> <span style="color: #00d7af;">FALSE</span>,
+       xlim <span style="color: #5fafd7;">=</span> <span style="color: #ffd700;">range</span><span style="color: #d18aff;">(</span><span style="color: #ffd700;">unlist</span><span style="color: #d18aff;">(</span>means<span style="color: #d18aff;">)))</span>
+<span style="color: #d18aff;">}</span>
 </pre>
 </div>
 
@@ -496,18 +501,18 @@ In the previous example we generated the data on each iteration. This kind of si
 </p>
 <div class="org-src-container">
 
-<pre class="src src-R"><span style="color: #8D8D84;">## </span><span style="color: #8D8D84; font-style: italic;">List the files to iterate over</span>
-textFiles<span style="color: #D0372D;">&lt;-</span> <span style="color: #006699;">list.files</span><span style="color: #006FE0;">(</span><span style="color: #008000;">"/usr/share/texlive/"</span>, 
-                       recursive <span style="color: #D0372D;">=</span> <span style="color: #6434A3;">TRUE</span>, 
-                       pattern <span style="color: #D0372D;">=</span> <span style="color: #008000;">"\\.txt$|\\.tex$"</span>,
-                       full.names <span style="color: #D0372D;">=</span> <span style="color: #6434A3;">TRUE</span><span style="color: #006FE0;">)</span>
+<pre class="src src-R"><span style="color: #6c6c6c; font-style: italic;">## </span><span style="color: #6c6c6c; font-style: italic;">List the files to iterate over</span>
+textFiles<span style="color: #5fafd7;">&lt;-</span> <span style="color: #ffd700;">list.files</span><span style="color: #d18aff;">(</span><span style="color: #b22222;">"/usr/share/texlive/"</span>, 
+                       recursive <span style="color: #5fafd7;">=</span> <span style="color: #00d7af;">TRUE</span>, 
+                       pattern <span style="color: #5fafd7;">=</span> <span style="color: #b22222;">"\\.txt$|\\.tex$"</span>,
+                       full.names <span style="color: #5fafd7;">=</span> <span style="color: #00d7af;">TRUE</span><span style="color: #d18aff;">)</span>
 
-<span style="color: #8D8D84;">## </span><span style="color: #8D8D84; font-style: italic;">function for counting characters (NOTE: this example isn't realistic -- it </span>
-<span style="color: #8D8D84;">## </span><span style="color: #8D8D84; font-style: italic;">would be better to use the unix "wc" utility if you were doing this</span>
-<span style="color: #8D8D84;">## </span><span style="color: #8D8D84; font-style: italic;">in real life...)</span>
-<span style="color: #006699;">countChars</span> <span style="color: #D0372D;">&lt;-</span>  <span style="color: #0000FF;">function</span><span style="color: #006FE0;">(</span>x<span style="color: #006FE0;">)</span> <span style="color: #006FE0;">{</span>
-  <span style="color: #006699;">sum</span><span style="color: #006FE0;">(</span><span style="color: #006699;">nchar</span><span style="color: #006FE0;">(</span><span style="color: #006699;">readLines</span><span style="color: #006FE0;">(</span>x, warn <span style="color: #D0372D;">=</span> <span style="color: #6434A3;">FALSE</span><span style="color: #006FE0;">)</span>, type <span style="color: #D0372D;">=</span> <span style="color: #008000;">"width"</span><span style="color: #006FE0;">))</span>
-<span style="color: #006FE0;">}</span>
+<span style="color: #6c6c6c; font-style: italic;">## </span><span style="color: #6c6c6c; font-style: italic;">function for counting characters (NOTE: this example isn't realistic -- it </span>
+<span style="color: #6c6c6c; font-style: italic;">## </span><span style="color: #6c6c6c; font-style: italic;">would be better to use the unix "wc" utility if you were doing this</span>
+<span style="color: #6c6c6c; font-style: italic;">## </span><span style="color: #6c6c6c; font-style: italic;">in real life...)</span>
+<span style="color: #ffd700;">countChars</span> <span style="color: #5fafd7;">&lt;-</span>  <span style="color: #a1db00;">function</span><span style="color: #d18aff;">(</span>x<span style="color: #d18aff;">)</span> <span style="color: #d18aff;">{</span>
+  <span style="color: #ffd700;">sum</span><span style="color: #d18aff;">(</span><span style="color: #ffd700;">nchar</span><span style="color: #d18aff;">(</span><span style="color: #ffd700;">readLines</span><span style="color: #d18aff;">(</span>x, warn <span style="color: #5fafd7;">=</span> <span style="color: #00d7af;">FALSE</span><span style="color: #d18aff;">)</span>, type <span style="color: #5fafd7;">=</span> <span style="color: #b22222;">"width"</span><span style="color: #d18aff;">))</span>
+<span style="color: #d18aff;">}</span>
 </pre>
 </div>
 
@@ -516,12 +521,12 @@ We have
 </p>
 <div class="org-src-container">
 
-<pre class="src src-R"><span style="color: #006699;">length</span><span style="color: #006FE0;">(</span>textFiles<span style="color: #006FE0;">)</span>
+<pre class="src src-R"><span style="color: #ffd700;">length</span><span style="color: #d18aff;">(</span>textFiles<span style="color: #d18aff;">)</span>
 </pre>
 </div>
 
 <pre class="example">
-[1] 2153
+[1] 0
 </pre>
 
 <p>
@@ -529,13 +534,13 @@ text files to process. We can do this using a single core:
 </p>
 <div class="org-src-container">
 
-<pre class="src src-R"><span style="color: #006699;">system.time</span><span style="color: #006FE0;">(</span>nchars <span style="color: #D0372D;">&lt;-</span> <span style="color: #006699;">unlist</span><span style="color: #006FE0;">(</span><span style="color: #006699;">lapply</span><span style="color: #006FE0;">(</span>textFiles, countChars<span style="color: #006FE0;">)))</span>
+<pre class="src src-R"><span style="color: #ffd700;">system.time</span><span style="color: #d18aff;">(</span>nchars <span style="color: #5fafd7;">&lt;-</span> <span style="color: #ffd700;">unlist</span><span style="color: #d18aff;">(</span><span style="color: #ffd700;">lapply</span><span style="color: #d18aff;">(</span>textFiles, countChars<span style="color: #d18aff;">)))</span>
 </pre>
 </div>
 
 <pre class="example">
-  user  system elapsed 
-29.390   0.130  29.522
+user  system elapsed 
+   0       0       0
 </pre>
 
 <p>
@@ -543,13 +548,13 @@ but this is too slow. We can do the computation more quickly using multiple core
 </p>
 <div class="org-src-container">
 
-<pre class="src src-R"><span style="color: #006699;">system.time</span><span style="color: #006FE0;">(</span>nchars <span style="color: #D0372D;">&lt;-</span> <span style="color: #006699;">unlist</span><span style="color: #006FE0;">(</span><span style="color: #006699;">mclapply</span><span style="color: #006FE0;">(</span>textFiles, countChars, mc.cores <span style="color: #D0372D;">=</span> <span style="color: #6434A3;">7</span><span style="color: #006FE0;">)))</span>
+<pre class="src src-R"><span style="color: #ffd700;">system.time</span><span style="color: #d18aff;">(</span>nchars <span style="color: #5fafd7;">&lt;-</span> <span style="color: #ffd700;">unlist</span><span style="color: #d18aff;">(</span><span style="color: #ffd700;">mclapply</span><span style="color: #d18aff;">(</span>textFiles, countChars, mc.cores <span style="color: #5fafd7;">=</span> <span style="color: #00d7af;">7</span><span style="color: #d18aff;">)))</span>
 </pre>
 </div>
 
 <pre class="example">
-  user  system elapsed 
-27.560   0.460   5.403
+user  system elapsed 
+   0       0       0
 </pre>
 
 <p>
@@ -557,12 +562,12 @@ and calculate the total number of characters in the text files by summing over t
 </p>
 <div class="org-src-container">
 
-<pre class="src src-R"><span style="color: #006699;">sum</span><span style="color: #006FE0;">(</span>nchars, na.rm <span style="color: #D0372D;">=</span> <span style="color: #6434A3;">TRUE</span><span style="color: #006FE0;">)</span>
+<pre class="src src-R"><span style="color: #ffd700;">sum</span><span style="color: #d18aff;">(</span>nchars, na.rm <span style="color: #5fafd7;">=</span> <span style="color: #00d7af;">TRUE</span><span style="color: #d18aff;">)</span>
 </pre>
 </div>
 
 <pre class="example">
-[1] 32408320
+[1] 0
 </pre>
 
 <p>
@@ -633,33 +638,33 @@ The submit file template below includes all required elements. (Note that this f
 </p>
 <div class="org-src-container">
 
-<pre class="src src-conf"><span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">Universe whould always be 'vanilla'. This line MUST be </span>
-<span style="color: #8D8D84;">#</span><span style="color: #8D8D84; font-style: italic;">included in your submit file, exactly as shown below.</span>
-<span style="color: #BA36A5;">Universe</span> = vanilla
+<pre class="src src-conf"><span style="color: #6c6c6c; font-style: italic;"># </span><span style="color: #6c6c6c; font-style: italic;">Universe whould always be 'vanilla'. This line MUST be </span>
+<span style="color: #6c6c6c; font-style: italic;">#</span><span style="color: #6c6c6c; font-style: italic;">included in your submit file, exactly as shown below.</span>
+<span style="color: #ff8700;">Universe</span> = vanilla
 
-<span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">Enter the path to the program you wish to run.</span>
-<span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">The default runs the R program. To run another</span>
-<span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">program just change '/user/local/bin/R' to the</span>
-<span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">path to the program you want to run. For example,</span>
-<span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">to run Stata set Executable to '/usr/local/bin/stata'.</span>
-<span style="color: #BA36A5;">Executable</span> = /usr/local/bin/R
+<span style="color: #6c6c6c; font-style: italic;"># </span><span style="color: #6c6c6c; font-style: italic;">Enter the path to the program you wish to run.</span>
+<span style="color: #6c6c6c; font-style: italic;"># </span><span style="color: #6c6c6c; font-style: italic;">The default runs the R program. To run another</span>
+<span style="color: #6c6c6c; font-style: italic;"># </span><span style="color: #6c6c6c; font-style: italic;">program just change '/user/local/bin/R' to the</span>
+<span style="color: #6c6c6c; font-style: italic;"># </span><span style="color: #6c6c6c; font-style: italic;">path to the program you want to run. For example,</span>
+<span style="color: #6c6c6c; font-style: italic;"># </span><span style="color: #6c6c6c; font-style: italic;">to run Stata set Executable to '/usr/local/bin/stata'.</span>
+<span style="color: #ff8700;">Executable</span> = /usr/local/bin/R
 
-<span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">Specify any arguments you want to pass to the executable.</span>
-<span style="color: #BA36A5;">Arguments</span> = --no-save --no-restore --slave
+<span style="color: #6c6c6c; font-style: italic;"># </span><span style="color: #6c6c6c; font-style: italic;">Specify any arguments you want to pass to the executable.</span>
+<span style="color: #ff8700;">Arguments</span> = --no-save --no-restore --slave
 
-<span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">Specify the relative path to the input file (if any). If you</span>
-<span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">are using R this should be your R script. If you are using</span>
-<span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">Stata this should be your do file.</span>
-<span style="color: #BA36A5;">input</span> = example.R
+<span style="color: #6c6c6c; font-style: italic;"># </span><span style="color: #6c6c6c; font-style: italic;">Specify the relative path to the input file (if any). If you</span>
+<span style="color: #6c6c6c; font-style: italic;"># </span><span style="color: #6c6c6c; font-style: italic;">are using R this should be your R script. If you are using</span>
+<span style="color: #6c6c6c; font-style: italic;"># </span><span style="color: #6c6c6c; font-style: italic;">Stata this should be your do file.</span>
+<span style="color: #ff8700;">input</span> = example.R
 
-<span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">Specify where to output any results printed by your program.</span>
-<span style="color: #BA36A5;">output</span> = output/out.$(Process)
-<span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">Specify where to save any errors returned by your program.</span>
-<span style="color: #BA36A5;">error</span> = output/error.$(Process)
-<span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">Specify where to save the log file.</span>
-<span style="color: #BA36A5;">Log</span> = output/log
-<span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">Enter the number of processes to request. This should </span>
-<span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">always be the last part of your submit file.</span>
+<span style="color: #6c6c6c; font-style: italic;"># </span><span style="color: #6c6c6c; font-style: italic;">Specify where to output any results printed by your program.</span>
+<span style="color: #ff8700;">output</span> = output/out.$(Process)
+<span style="color: #6c6c6c; font-style: italic;"># </span><span style="color: #6c6c6c; font-style: italic;">Specify where to save any errors returned by your program.</span>
+<span style="color: #ff8700;">error</span> = output/error.$(Process)
+<span style="color: #6c6c6c; font-style: italic;"># </span><span style="color: #6c6c6c; font-style: italic;">Specify where to save the log file.</span>
+<span style="color: #ff8700;">Log</span> = output/log
+<span style="color: #6c6c6c; font-style: italic;"># </span><span style="color: #6c6c6c; font-style: italic;">Enter the number of processes to request. This should </span>
+<span style="color: #6c6c6c; font-style: italic;"># </span><span style="color: #6c6c6c; font-style: italic;">always be the last part of your submit file.</span>
 Queue 10
 </pre>
 </div>
@@ -679,7 +684,7 @@ RCE users come from a variety of backgrounds and different people are more profi
 <ul class="org-ul">
 <li><a href="#sec-8-1">R Batch Examples</a>
 </li>
-<li><a href="#sec-8-2">Stata Batch Examples</a>
+<li><i>Stata Batch Examples</i>
 </li>
 <li><a href="#sec-8-3">Python Batch Examples</a>
 </li>
@@ -705,23 +710,23 @@ The first step is to write a script or program to carry out the desired computat
 </p>
 <div class="org-src-container">
 
-<pre class="src src-R"><span style="color: #8D8D84;">## </span><span style="color: #8D8D84; font-style: italic;">function to simulate data and perform a t.test</span>
-<span style="color: #006699;">sim.ttest</span> <span style="color: #D0372D;">&lt;-</span> <span style="color: #0000FF;">function</span><span style="color: #006FE0;">(</span>mu1, mu2, sd, n1, n2<span style="color: #006FE0;">)</span> <span style="color: #006FE0;">{</span>
-    d <span style="color: #D0372D;">&lt;-</span> <span style="color: #006699;">data.frame</span><span style="color: #006FE0;">(</span>x <span style="color: #D0372D;">=</span> <span style="color: #006699;">c</span><span style="color: #006FE0;">(</span><span style="color: #006699;">rep</span><span style="color: #006FE0;">(</span><span style="color: #008000;">"group1"</span>, n1<span style="color: #006FE0;">)</span>, <span style="color: #006699;">rep</span><span style="color: #006FE0;">(</span><span style="color: #008000;">"group2"</span>, n2<span style="color: #006FE0;">))</span>,
-                    y <span style="color: #D0372D;">=</span> <span style="color: #006699;">c</span><span style="color: #006FE0;">(</span><span style="color: #006699;">rnorm</span><span style="color: #006FE0;">(</span>n1, mean <span style="color: #D0372D;">=</span> mu1, sd <span style="color: #D0372D;">=</span> sd<span style="color: #006FE0;">)</span>,
-                          <span style="color: #006699;">rnorm</span><span style="color: #006FE0;">(</span>n2, mean <span style="color: #D0372D;">=</span> mu2, sd <span style="color: #D0372D;">=</span> sd<span style="color: #006FE0;">)))</span>
-    <span style="color: #0000FF;">return</span><span style="color: #006FE0;">(</span><span style="color: #006699;">t.test</span><span style="color: #006FE0;">(</span>y ~ x, data <span style="color: #D0372D;">=</span> d<span style="color: #006FE0;">)</span>$p.value<span style="color: #006FE0;">)</span>
-<span style="color: #006FE0;">}</span>
+<pre class="src src-R"><span style="color: #6c6c6c; font-style: italic;">## </span><span style="color: #6c6c6c; font-style: italic;">function to simulate data and perform a t.test</span>
+<span style="color: #ffd700;">sim.ttest</span> <span style="color: #5fafd7;">&lt;-</span> <span style="color: #a1db00;">function</span><span style="color: #d18aff;">(</span>mu1, mu2, sd, n1, n2<span style="color: #d18aff;">)</span> <span style="color: #d18aff;">{</span>
+    d <span style="color: #5fafd7;">&lt;-</span> <span style="color: #ffd700;">data.frame</span><span style="color: #d18aff;">(</span>x <span style="color: #5fafd7;">=</span> <span style="color: #ffd700;">c</span><span style="color: #d18aff;">(</span><span style="color: #ffd700;">rep</span><span style="color: #d18aff;">(</span><span style="color: #b22222;">"group1"</span>, n1<span style="color: #d18aff;">)</span>, <span style="color: #ffd700;">rep</span><span style="color: #d18aff;">(</span><span style="color: #b22222;">"group2"</span>, n2<span style="color: #d18aff;">))</span>,
+                    y <span style="color: #5fafd7;">=</span> <span style="color: #ffd700;">c</span><span style="color: #d18aff;">(</span><span style="color: #ffd700;">rnorm</span><span style="color: #d18aff;">(</span>n1, mean <span style="color: #5fafd7;">=</span> mu1, sd <span style="color: #5fafd7;">=</span> sd<span style="color: #d18aff;">)</span>,
+                          <span style="color: #ffd700;">rnorm</span><span style="color: #d18aff;">(</span>n2, mean <span style="color: #5fafd7;">=</span> mu2, sd <span style="color: #5fafd7;">=</span> sd<span style="color: #d18aff;">)))</span>
+    <span style="color: #a1db00;">return</span><span style="color: #d18aff;">(</span><span style="color: #ffd700;">t.test</span><span style="color: #d18aff;">(</span>y ~ x, data <span style="color: #5fafd7;">=</span> d<span style="color: #d18aff;">)</span>$p.value<span style="color: #d18aff;">)</span>
+<span style="color: #d18aff;">}</span>
 
-<span style="color: #8D8D84;">##  </span><span style="color: #8D8D84; font-style: italic;">run the function 10,000 times </span>
-p <span style="color: #D0372D;">&lt;-</span> <span style="color: #006699;">replicate</span><span style="color: #006FE0;">(</span><span style="color: #6434A3;">10000</span>,
-               <span style="color: #006699;">sim.ttest</span><span style="color: #006FE0;">(</span>mu1 <span style="color: #D0372D;">=</span> <span style="color: #6434A3;">1</span>,
-                         mu2 <span style="color: #D0372D;">=</span> <span style="color: #6434A3;">1.3</span>,
-                         sd <span style="color: #D0372D;">=</span> <span style="color: #6434A3;">1</span>,
-                         n1 <span style="color: #D0372D;">=</span> <span style="color: #6434A3;">50</span>,
-                         n2 <span style="color: #D0372D;">=</span> <span style="color: #6434A3;">150</span><span style="color: #006FE0;">))</span>
-<span style="color: #8D8D84;">## </span><span style="color: #8D8D84; font-style: italic;">calculate the proportion of significant tests</span>
-<span style="color: #006699;">cat</span><span style="color: #006FE0;">(</span><span style="color: #006699;">length</span><span style="color: #006FE0;">(</span>p<span style="color: #006FE0;">[</span>p <span style="color: #D0372D;">&lt;</span> <span style="color: #6434A3;">.05</span><span style="color: #006FE0;">])</span><span style="color: #D0372D;">/</span><span style="color: #006699;">length</span><span style="color: #006FE0;">(</span>p<span style="color: #006FE0;">))</span>
+<span style="color: #6c6c6c; font-style: italic;">##  </span><span style="color: #6c6c6c; font-style: italic;">run the function 10,000 times </span>
+p <span style="color: #5fafd7;">&lt;-</span> <span style="color: #ffd700;">replicate</span><span style="color: #d18aff;">(</span><span style="color: #00d7af;">10000</span>,
+               <span style="color: #ffd700;">sim.ttest</span><span style="color: #d18aff;">(</span>mu1 <span style="color: #5fafd7;">=</span> <span style="color: #00d7af;">1</span>,
+                         mu2 <span style="color: #5fafd7;">=</span> <span style="color: #00d7af;">1.3</span>,
+                         sd <span style="color: #5fafd7;">=</span> <span style="color: #00d7af;">1</span>,
+                         n1 <span style="color: #5fafd7;">=</span> <span style="color: #00d7af;">50</span>,
+                         n2 <span style="color: #5fafd7;">=</span> <span style="color: #00d7af;">150</span><span style="color: #d18aff;">))</span>
+<span style="color: #6c6c6c; font-style: italic;">## </span><span style="color: #6c6c6c; font-style: italic;">calculate the proportion of significant tests</span>
+<span style="color: #ffd700;">cat</span><span style="color: #d18aff;">(</span><span style="color: #ffd700;">length</span><span style="color: #d18aff;">(</span>p<span style="color: #d18aff;">[</span>p <span style="color: #5fafd7;">&lt;</span> <span style="color: #00d7af;">.05</span><span style="color: #d18aff;">])</span><span style="color: #5fafd7;">/</span><span style="color: #ffd700;">length</span><span style="color: #d18aff;">(</span>p<span style="color: #d18aff;">))</span>
 </pre>
 </div>
 </div>
@@ -729,32 +734,34 @@ p <span style="color: #D0372D;">&lt;-</span> <span style="color: #006699;">repli
 
 <li><a id="sec-8-1-1-2" name="sec-8-1-1-2"></a>Submit file<br  /><div class="outline-text-5" id="text-8-1-1-2">
 <p>
-If we want to run this function one million times it may take a while, especially if our computer is an older less powerful model. So let's run it on 100 separate machines (each one will simulate the test 10000 times). To do that we need, in addition to the R script above, a submit file to request resources and run the computation. 
+If we want to run this function one million times it may take a while, especially if our computer is an older less powerful model. So let's run it on 100 separate machines (each one will simulate the test 10000 times). To do that we need, in addition to the R script above, a submit file to request resources and run the computation.  
 </p>
 <div class="org-src-container">
 
-<pre class="src src-conf"><span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">Universe whould always be 'vanilla'. This line MUST be </span>
-<span style="color: #8D8D84;">#</span><span style="color: #8D8D84; font-style: italic;">included in your submit file, exactly as shown below.</span>
-<span style="color: #BA36A5;">Universe</span> = vanilla
+<pre class="src src-conf"><span style="color: #6c6c6c; font-style: italic;"># </span><span style="color: #6c6c6c; font-style: italic;">Universe whould always be 'vanilla'. This line MUST be </span>
+<span style="color: #6c6c6c; font-style: italic;">#</span><span style="color: #6c6c6c; font-style: italic;">included in your submit file, exactly as shown below.</span>
+<span style="color: #ff8700;">Universe</span> = vanilla
 
-<span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">Enter the path to the R program.</span>
-<span style="color: #BA36A5;">Executable</span> = /usr/local/bin/R
+<span style="color: #6c6c6c; font-style: italic;"># </span><span style="color: #6c6c6c; font-style: italic;">Enter the path to the R program.</span>
+<span style="color: #ff8700;">Executable</span> = /usr/local/bin/R
 
-<span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">Specify any arguments you want to pass to the executable</span>
-<span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">to make r not save or restore workspaces, and to </span>
-<span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">run as quietly as possible</span>
-<span style="color: #BA36A5;">Arguments</span> = --no-save --no-restore --slave
+<span style="color: #6c6c6c; font-style: italic;"># </span><span style="color: #6c6c6c; font-style: italic;">Specify any arguments you want to pass to the executable.</span>
+<span style="color: #6c6c6c; font-style: italic;"># </span><span style="color: #6c6c6c; font-style: italic;">Here we pass arguments to make R not save or restore workspaces,</span>
+<span style="color: #6c6c6c; font-style: italic;"># </span><span style="color: #6c6c6c; font-style: italic;">and to run as quietly as possible.</span>
+<span style="color: #ff8700;">Arguments</span> = --no-save --no-restore --slave
 
-<span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">Specify the relative path to the input file</span>
-<span style="color: #BA36A5;">input</span> = power.R
+<span style="color: #6c6c6c; font-style: italic;"># </span><span style="color: #6c6c6c; font-style: italic;">Specify the relative path to the input file</span>
+<span style="color: #ff8700;">input</span> = power.R
 
-<span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">Specify where to output any results printed by your program.</span>
-<span style="color: #BA36A5;">output</span> = output/out.$(Process)
-<span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">Specify where to save any errors returned by your program.</span>
-<span style="color: #BA36A5;">error</span> = output/error.$(Process)
-<span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">Specify where to save the log file.</span>
-<span style="color: #BA36A5;">Log</span> = output/log
-<span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">Enter the number of processes to request.</span>
+<span style="color: #6c6c6c; font-style: italic;"># </span><span style="color: #6c6c6c; font-style: italic;">Specify where to output any results printed by your program.</span>
+<span style="color: #ff8700;">output</span> = output/out.$(Process)
+<span style="color: #6c6c6c; font-style: italic;"># </span><span style="color: #6c6c6c; font-style: italic;">Specify where to save any errors returned by your program.</span>
+<span style="color: #ff8700;">error</span> = output/error.$(Process)
+<span style="color: #6c6c6c; font-style: italic;"># </span><span style="color: #6c6c6c; font-style: italic;">Specify where to save the log file.</span>
+<span style="color: #ff8700;">Log</span> = output/log
+
+<span style="color: #6c6c6c; font-style: italic;"># </span><span style="color: #6c6c6c; font-style: italic;">Enter the number of processes to request.</span>
+<span style="color: #6c6c6c; font-style: italic;"># </span><span style="color: #6c6c6c; font-style: italic;">This section should always come last.</span>
 Queue 100
 </pre>
 </div>
@@ -814,16 +821,16 @@ When your batch job is finished you are usually left with multiple output files 
 </p>
 <div class="org-src-container">
 
-<pre class="src src-R"><span style="color: #8D8D84;">## </span><span style="color: #8D8D84; font-style: italic;">list all output files in the output directory</span>
-output_files <span style="color: #D0372D;">&lt;-</span> <span style="color: #006699;">list.files</span><span style="color: #006FE0;">(</span><span style="color: #008000;">"output"</span>,
-                           pattern <span style="color: #D0372D;">=</span> <span style="color: #008000;">"^out\\.[0-9]+$"</span>,
-                           full.names<span style="color: #D0372D;">=</span><span style="color: #6434A3;">TRUE</span><span style="color: #006FE0;">)</span>
+<pre class="src src-R"><span style="color: #6c6c6c; font-style: italic;">## </span><span style="color: #6c6c6c; font-style: italic;">list all output files in the output directory</span>
+output_files <span style="color: #5fafd7;">&lt;-</span> <span style="color: #ffd700;">list.files</span><span style="color: #d18aff;">(</span><span style="color: #b22222;">"output"</span>,
+                           pattern <span style="color: #5fafd7;">=</span> <span style="color: #b22222;">"^out\\.[0-9]+$"</span>,
+                           full.names<span style="color: #5fafd7;">=</span><span style="color: #00d7af;">TRUE</span><span style="color: #d18aff;">)</span>
 
-<span style="color: #8D8D84;">## </span><span style="color: #8D8D84; font-style: italic;">read each file, convert it to a number, and take the average</span>
-<span style="color: #006699;">mean</span><span style="color: #006FE0;">(</span><span style="color: #006699;">as.double</span><span style="color: #006FE0;">(</span><span style="color: #006699;">sapply</span><span style="color: #006FE0;">(</span>
+<span style="color: #6c6c6c; font-style: italic;">## </span><span style="color: #6c6c6c; font-style: italic;">read each file, convert it to a number, and take the average</span>
+<span style="color: #ffd700;">mean</span><span style="color: #d18aff;">(</span><span style="color: #ffd700;">as.double</span><span style="color: #d18aff;">(</span><span style="color: #ffd700;">sapply</span><span style="color: #d18aff;">(</span>
                       output_files,
                       readLines,
-                      warn <span style="color: #D0372D;">=</span> <span style="color: #6434A3;">FALSE</span><span style="color: #006FE0;">)))</span>
+                      warn <span style="color: #5fafd7;">=</span> <span style="color: #00d7af;">FALSE</span><span style="color: #d18aff;">)))</span>
 </pre>
 </div>
 </div>
@@ -854,26 +861,26 @@ We can use the <code>$(Process)</code> macro to pass information to our program,
 </p>
 <div class="org-src-container">
 
-<pre class="src src-conf"><span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">Universe whould always be 'vanilla'. This line MUST be </span>
-<span style="color: #8D8D84;">#</span><span style="color: #8D8D84; font-style: italic;">included in your submit file, exactly as shown below.</span>
-<span style="color: #BA36A5;">Universe</span> = vanilla
+<pre class="src src-conf"><span style="color: #6c6c6c; font-style: italic;"># </span><span style="color: #6c6c6c; font-style: italic;">Universe whould always be 'vanilla'. This line MUST be </span>
+<span style="color: #6c6c6c; font-style: italic;">#</span><span style="color: #6c6c6c; font-style: italic;">included in your submit file, exactly as shown below.</span>
+<span style="color: #ff8700;">Universe</span> = vanilla
 
-<span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">Enter the path to the R program.</span>
-<span style="color: #BA36A5;">Executable</span> = /usr/local/bin/R
+<span style="color: #6c6c6c; font-style: italic;"># </span><span style="color: #6c6c6c; font-style: italic;">Enter the path to the R program.</span>
+<span style="color: #ff8700;">Executable</span> = /usr/local/bin/R
 
-<span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">Specify any arguments you want to pass to the executable</span>
-<span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">to make r not save or restore workspaces, and to </span>
-<span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">run as quietly as possible</span>
-<span style="color: #BA36A5;">Arguments</span> = --no-save --no-restore --slave --args $(Process)
+<span style="color: #6c6c6c; font-style: italic;"># </span><span style="color: #6c6c6c; font-style: italic;">Specify any arguments you want to pass to the executable</span>
+<span style="color: #6c6c6c; font-style: italic;"># </span><span style="color: #6c6c6c; font-style: italic;">to make r not save or restore workspaces, and to </span>
+<span style="color: #6c6c6c; font-style: italic;"># </span><span style="color: #6c6c6c; font-style: italic;">run as quietly as possible</span>
+<span style="color: #ff8700;">Arguments</span> = --no-save --no-restore --slave --args $(Process)
 
-<span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">Specify the relative path to the input file</span>
-<span style="color: #BA36A5;">input</span> = power.R
+<span style="color: #6c6c6c; font-style: italic;"># </span><span style="color: #6c6c6c; font-style: italic;">Specify the relative path to the input file</span>
+<span style="color: #ff8700;">input</span> = power.R
 
-<span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">Specify where to save any errors returned by your program.</span>
-<span style="color: #BA36A5;">error</span> = output/error.$(Process)
+<span style="color: #6c6c6c; font-style: italic;"># </span><span style="color: #6c6c6c; font-style: italic;">Specify where to save any errors returned by your program.</span>
+<span style="color: #ff8700;">error</span> = output/error.$(Process)
 
-<span style="color: #BA36A5;">Log</span> = log.txt
-<span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">Enter the number of processes to request.</span>
+<span style="color: #ff8700;">Log</span> = log.txt
+<span style="color: #6c6c6c; font-style: italic;"># </span><span style="color: #6c6c6c; font-style: italic;">Enter the number of processes to request.</span>
 Queue 40
 </pre>
 </div>
@@ -889,8 +896,8 @@ Next we need to 1) retrieve the process number in our R program and 2) map it to
 </p>
 <div class="org-src-container">
 
-<pre class="src src-R"><span style="color: #8D8D84;">## </span><span style="color: #8D8D84; font-style: italic;">retrieve arguments passed from the command line.</span>
-process <span style="color: #D0372D;">&lt;-</span> <span style="color: #006699;">as.integer</span><span style="color: #006FE0;">(</span><span style="color: #006699;">as.character</span><span style="color: #006FE0;">(</span><span style="color: #006699;">commandArgs</span><span style="color: #006FE0;">(</span>trailingOnly <span style="color: #D0372D;">=</span> <span style="color: #6434A3;">TRUE</span><span style="color: #006FE0;">)))</span>
+<pre class="src src-R"><span style="color: #6c6c6c; font-style: italic;">## </span><span style="color: #6c6c6c; font-style: italic;">retrieve arguments passed from the command line.</span>
+process <span style="color: #5fafd7;">&lt;-</span> <span style="color: #ffd700;">as.integer</span><span style="color: #d18aff;">(</span><span style="color: #ffd700;">as.character</span><span style="color: #d18aff;">(</span><span style="color: #ffd700;">commandArgs</span><span style="color: #d18aff;">(</span>trailingOnly <span style="color: #5fafd7;">=</span> <span style="color: #00d7af;">TRUE</span><span style="color: #d18aff;">)))</span>
 </pre>
 </div>
 <p>
@@ -898,8 +905,8 @@ We now have a variable in R that tells us which process we are. Now we need to m
 </p>
 <div class="org-src-container">
 
-<pre class="src src-R"><span style="color: #8D8D84;">## </span><span style="color: #8D8D84; font-style: italic;">map process to sample size parameter.</span>
-n <span style="color: #D0372D;">&lt;-</span> <span style="color: #006FE0;">(</span>process <span style="color: #D0372D;">+</span> <span style="color: #6434A3;">100</span><span style="color: #006FE0;">)</span> <span style="color: #D0372D;">+</span> <span style="color: #006FE0;">(</span>process*<span style="color: #6434A3;">10</span> <span style="color: #D0372D;">-</span> process<span style="color: #006FE0;">)</span>
+<pre class="src src-R"><span style="color: #6c6c6c; font-style: italic;">## </span><span style="color: #6c6c6c; font-style: italic;">map process to sample size parameter.</span>
+n <span style="color: #5fafd7;">&lt;-</span> <span style="color: #d18aff;">(</span>process <span style="color: #5fafd7;">+</span> <span style="color: #00d7af;">100</span><span style="color: #d18aff;">)</span> <span style="color: #5fafd7;">+</span> <span style="color: #d18aff;">(</span>process*<span style="color: #00d7af;">10</span> <span style="color: #5fafd7;">-</span> process<span style="color: #d18aff;">)</span>
 </pre>
 </div>
 
@@ -912,24 +919,24 @@ Now we can set up the simulation as before, passing the <code>n</code> calculate
 </p>
 <div class="org-src-container">
 
-<pre class="src src-R">  <span style="color: #8D8D84;">## </span><span style="color: #8D8D84; font-style: italic;">function to simulate data and perform a t.test</span>
-  <span style="color: #006699;">sim.ttest</span> <span style="color: #D0372D;">&lt;-</span> <span style="color: #0000FF;">function</span><span style="color: #006FE0;">(</span>mu1, mu2, sd, n1, n2<span style="color: #006FE0;">)</span> <span style="color: #006FE0;">{</span>
-      d <span style="color: #D0372D;">&lt;-</span> <span style="color: #006699;">data.frame</span><span style="color: #006FE0;">(</span>x <span style="color: #D0372D;">=</span> <span style="color: #006699;">c</span><span style="color: #006FE0;">(</span><span style="color: #006699;">rep</span><span style="color: #006FE0;">(</span><span style="color: #008000;">"group1"</span>, n1<span style="color: #006FE0;">)</span>, <span style="color: #006699;">rep</span><span style="color: #006FE0;">(</span><span style="color: #008000;">"group2"</span>, n2<span style="color: #006FE0;">))</span>,
-                      y <span style="color: #D0372D;">=</span> <span style="color: #006699;">c</span><span style="color: #006FE0;">(</span><span style="color: #006699;">rnorm</span><span style="color: #006FE0;">(</span>n1, mean <span style="color: #D0372D;">=</span> mu1, sd <span style="color: #D0372D;">=</span> sd<span style="color: #006FE0;">)</span>,
-                            <span style="color: #006699;">rnorm</span><span style="color: #006FE0;">(</span>n2, mean <span style="color: #D0372D;">=</span> mu2, sd <span style="color: #D0372D;">=</span> sd<span style="color: #006FE0;">)))</span>
-      <span style="color: #0000FF;">return</span><span style="color: #006FE0;">(</span><span style="color: #006699;">t.test</span><span style="color: #006FE0;">(</span>y ~ x, data <span style="color: #D0372D;">=</span> d<span style="color: #006FE0;">)</span>$p.value<span style="color: #006FE0;">)</span>
-  <span style="color: #006FE0;">}</span>
+<pre class="src src-R">  <span style="color: #6c6c6c; font-style: italic;">## </span><span style="color: #6c6c6c; font-style: italic;">function to simulate data and perform a t.test</span>
+  <span style="color: #ffd700;">sim.ttest</span> <span style="color: #5fafd7;">&lt;-</span> <span style="color: #a1db00;">function</span><span style="color: #d18aff;">(</span>mu1, mu2, sd, n1, n2<span style="color: #d18aff;">)</span> <span style="color: #d18aff;">{</span>
+      d <span style="color: #5fafd7;">&lt;-</span> <span style="color: #ffd700;">data.frame</span><span style="color: #d18aff;">(</span>x <span style="color: #5fafd7;">=</span> <span style="color: #ffd700;">c</span><span style="color: #d18aff;">(</span><span style="color: #ffd700;">rep</span><span style="color: #d18aff;">(</span><span style="color: #b22222;">"group1"</span>, n1<span style="color: #d18aff;">)</span>, <span style="color: #ffd700;">rep</span><span style="color: #d18aff;">(</span><span style="color: #b22222;">"group2"</span>, n2<span style="color: #d18aff;">))</span>,
+                      y <span style="color: #5fafd7;">=</span> <span style="color: #ffd700;">c</span><span style="color: #d18aff;">(</span><span style="color: #ffd700;">rnorm</span><span style="color: #d18aff;">(</span>n1, mean <span style="color: #5fafd7;">=</span> mu1, sd <span style="color: #5fafd7;">=</span> sd<span style="color: #d18aff;">)</span>,
+                            <span style="color: #ffd700;">rnorm</span><span style="color: #d18aff;">(</span>n2, mean <span style="color: #5fafd7;">=</span> mu2, sd <span style="color: #5fafd7;">=</span> sd<span style="color: #d18aff;">)))</span>
+      <span style="color: #a1db00;">return</span><span style="color: #d18aff;">(</span><span style="color: #ffd700;">t.test</span><span style="color: #d18aff;">(</span>y ~ x, data <span style="color: #5fafd7;">=</span> d<span style="color: #d18aff;">)</span>$p.value<span style="color: #d18aff;">)</span>
+  <span style="color: #d18aff;">}</span>
 
-  <span style="color: #8D8D84;">##  </span><span style="color: #8D8D84; font-style: italic;">run the function 10,000 times </span>
-  p <span style="color: #D0372D;">&lt;-</span> <span style="color: #006699;">replicate</span><span style="color: #006FE0;">(</span><span style="color: #6434A3;">10000</span>,
-                 <span style="color: #006699;">sim.ttest</span><span style="color: #006FE0;">(</span>mu1 <span style="color: #D0372D;">=</span> <span style="color: #6434A3;">1</span>,
-                           mu2 <span style="color: #D0372D;">=</span> <span style="color: #6434A3;">1.3</span>,
-                           sd <span style="color: #D0372D;">=</span> <span style="color: #6434A3;">1</span>,
-                           n1 <span style="color: #D0372D;">=</span> n,
-                           n2 <span style="color: #D0372D;">=</span> n<span style="color: #006FE0;">))</span>
-<span style="color: #006699;">write.csv</span><span style="color: #006FE0;">(</span><span style="color: #006699;">data.frame</span><span style="color: #006FE0;">(</span>n <span style="color: #D0372D;">=</span> n, power <span style="color: #D0372D;">=</span> <span style="color: #006699;">length</span><span style="color: #006FE0;">(</span>p<span style="color: #006FE0;">[</span>p <span style="color: #D0372D;">&lt;</span> <span style="color: #6434A3;">.05</span><span style="color: #006FE0;">])</span><span style="color: #D0372D;">/</span><span style="color: #006699;">length</span><span style="color: #006FE0;">(</span>p<span style="color: #006FE0;">))</span>,
-          row.names <span style="color: #D0372D;">=</span> <span style="color: #6434A3;">FALSE</span>,
-          file <span style="color: #D0372D;">=</span> <span style="color: #006699;">paste0</span><span style="color: #006FE0;">(</span><span style="color: #008000;">"output/out"</span>, process, <span style="color: #008000;">".csv"</span><span style="color: #006FE0;">))</span>
+  <span style="color: #6c6c6c; font-style: italic;">##  </span><span style="color: #6c6c6c; font-style: italic;">run the function 10,000 times </span>
+  p <span style="color: #5fafd7;">&lt;-</span> <span style="color: #ffd700;">replicate</span><span style="color: #d18aff;">(</span><span style="color: #00d7af;">10000</span>,
+                 <span style="color: #ffd700;">sim.ttest</span><span style="color: #d18aff;">(</span>mu1 <span style="color: #5fafd7;">=</span> <span style="color: #00d7af;">1</span>,
+                           mu2 <span style="color: #5fafd7;">=</span> <span style="color: #00d7af;">1.3</span>,
+                           sd <span style="color: #5fafd7;">=</span> <span style="color: #00d7af;">1</span>,
+                           n1 <span style="color: #5fafd7;">=</span> n,
+                           n2 <span style="color: #5fafd7;">=</span> n<span style="color: #d18aff;">))</span>
+<span style="color: #ffd700;">write.csv</span><span style="color: #d18aff;">(</span><span style="color: #ffd700;">data.frame</span><span style="color: #d18aff;">(</span>n <span style="color: #5fafd7;">=</span> n, power <span style="color: #5fafd7;">=</span> <span style="color: #ffd700;">length</span><span style="color: #d18aff;">(</span>p<span style="color: #d18aff;">[</span>p <span style="color: #5fafd7;">&lt;</span> <span style="color: #00d7af;">.05</span><span style="color: #d18aff;">])</span><span style="color: #5fafd7;">/</span><span style="color: #ffd700;">length</span><span style="color: #d18aff;">(</span>p<span style="color: #d18aff;">))</span>,
+          row.names <span style="color: #5fafd7;">=</span> <span style="color: #00d7af;">FALSE</span>,
+          file <span style="color: #5fafd7;">=</span> <span style="color: #ffd700;">paste0</span><span style="color: #d18aff;">(</span><span style="color: #b22222;">"output/out"</span>, process, <span style="color: #b22222;">".csv"</span><span style="color: #d18aff;">))</span>
 </pre>
 </div>
 
@@ -945,17 +952,17 @@ Each of our 40 processes produced a file in the <code>output</code> directory na
 </p>
 <div class="org-src-container">
 
-<pre class="src src-R"><span style="color: #8D8D84;">## </span><span style="color: #8D8D84; font-style: italic;">list all output files in the output directory</span>
-output_files <span style="color: #D0372D;">&lt;-</span> <span style="color: #006699;">list.files</span><span style="color: #006FE0;">(</span><span style="color: #008000;">"output"</span>,
-                           pattern <span style="color: #D0372D;">=</span> <span style="color: #008000;">"^out[0-9]+\\.csv$"</span>,
-                           full.names<span style="color: #D0372D;">=</span><span style="color: #6434A3;">TRUE</span><span style="color: #006FE0;">)</span>
+<pre class="src src-R"><span style="color: #6c6c6c; font-style: italic;">## </span><span style="color: #6c6c6c; font-style: italic;">list all output files in the output directory</span>
+output_files <span style="color: #5fafd7;">&lt;-</span> <span style="color: #ffd700;">list.files</span><span style="color: #d18aff;">(</span><span style="color: #b22222;">"output"</span>,
+                           pattern <span style="color: #5fafd7;">=</span> <span style="color: #b22222;">"^out[0-9]+\\.csv$"</span>,
+                           full.names<span style="color: #5fafd7;">=</span><span style="color: #00d7af;">TRUE</span><span style="color: #d18aff;">)</span>
 
-<span style="color: #8D8D84;">## </span><span style="color: #8D8D84; font-style: italic;">read each file and append them</span>
-results <span style="color: #D0372D;">&lt;-</span> <span style="color: #006699;">do.call</span><span style="color: #006FE0;">(</span>rbind, <span style="color: #006699;">lapply</span><span style="color: #006FE0;">(</span>output_files, read.csv<span style="color: #006FE0;">))</span>
+<span style="color: #6c6c6c; font-style: italic;">## </span><span style="color: #6c6c6c; font-style: italic;">read each file and append them</span>
+results <span style="color: #5fafd7;">&lt;-</span> <span style="color: #ffd700;">do.call</span><span style="color: #d18aff;">(</span>rbind, <span style="color: #ffd700;">lapply</span><span style="color: #d18aff;">(</span>output_files, read.csv<span style="color: #d18aff;">))</span>
 
-<span style="color: #8D8D84;">## </span><span style="color: #8D8D84; font-style: italic;">plot</span>
-<span style="color: #006699;">plot</span><span style="color: #006FE0;">(</span>results<span style="color: #006FE0;">)</span>
-<span style="color: #006699;">abline</span><span style="color: #006FE0;">(</span>h <span style="color: #D0372D;">=</span> <span style="color: #6434A3;">0.8</span><span style="color: #006FE0;">)</span>
+<span style="color: #6c6c6c; font-style: italic;">## </span><span style="color: #6c6c6c; font-style: italic;">plot</span>
+<span style="color: #ffd700;">plot</span><span style="color: #d18aff;">(</span>results<span style="color: #d18aff;">)</span>
+<span style="color: #ffd700;">abline</span><span style="color: #d18aff;">(</span>h <span style="color: #5fafd7;">=</span> <span style="color: #00d7af;">0.8</span><span style="color: #d18aff;">)</span>
 </pre>
 </div>
 
@@ -977,8 +984,126 @@ Download the <a href="R_examples/power2.zip">power simulation example files</a>,
 </div>
 
 <div id="outline-container-sec-8-2" class="outline-3">
-<h3 id="sec-8-2"><span class="todo TODO">TODO</span> Stata Batch Examples</h3>
+<h3 id="sec-8-2">Stata Batch Example</h3>
+<div class="outline-text-3" id="text-8-2">
+<p>
+In this example we use the batch system to bootstrap a distribution of means. Each process will calculate the mean for a single bootstrap sample and save the result. Since we need to give the output files unique names we will pass the batch process number to Stata and use it to construct the file names.
+</p>
 </div>
+
+<div id="outline-container-sec-8-2-1" class="outline-4">
+<h4 id="sec-8-2-1">Stata bootstrap do-file</h4>
+<div class="outline-text-4" id="text-8-2-1">
+<p>
+To use the batch system we need to write a do-file that does the calculation without further user input. The do-file below reads a Stata data set, sets a seed for random number generation, samples (with replacement) from the data, calculates the average value of the sampled data, and saves the result.
+</p>
+<div class="org-src-container">
+
+<pre class="src src-stata"><span style="color: #5fafd7;">set</span> <span style="color: #5fafd7;">mo</span><span style="color: #00d7af;">re</span> off
+
+<span style="color: #6c6c6c; font-style: italic;">// collect the arguments passed by submit file</span>
+args process
+
+<span style="color: #6c6c6c; font-style: italic;">// load the dataset</span>
+<span style="color: #a1db00;">use</span> <span style="color: #b22222;">"mydata"</span>, <span style="color: #a1db00;">clear</span>
+
+<span style="color: #6c6c6c; font-style: italic;">// sample with replacement</span>
+<span style="color: #a1db00;">bsample</span>, cluster(id) idcluster(newid)
+
+<span style="color: #6c6c6c; font-style: italic;">// calculate the mean and standard deviation</span>
+collapse (mean) mean_myvar = myvar (sd) sd_myvar = myvar
+
+<span style="color: #6c6c6c; font-style: italic;">// save the result, appending the process number to the file name</span>
+<span style="color: #a1db00;">save</span> <span style="color: #b22222;">"output/output_`</span><span style="color: #ff8700;">process</span><span style="color: #b22222;">'.dta"</span>, <span style="color: #a1db00;">replace</span>
+</pre>
+</div>
+<p>
+Note the use of <code>args process</code>, which retrieves the value of the process argument. The argument itself is specified in the <code>.submit</code> file (see below).
+</p>
+</div>
+</div>
+<div id="outline-container-sec-8-2-2" class="outline-4">
+<h4 id="sec-8-2-2">Submit file</h4>
+<div class="outline-text-4" id="text-8-2-2">
+<p>
+The Stata code in the example above draws one bootstrap sample and calculates the mean. If we want to do this 1,000 times we could write a loop, but each iteration would be done sequentially. We can carry out this operation faster by running it simultaneously on hundreds of machines. We just need a <code>.submit</code> file like the one below:
+</p>
+<div class="org-src-container">
+
+<pre class="src src-conf"><span style="color: #6c6c6c; font-style: italic;"># </span><span style="color: #6c6c6c; font-style: italic;">Universe whould always be 'vanilla'. This line MUST be </span>
+<span style="color: #6c6c6c; font-style: italic;">#</span><span style="color: #6c6c6c; font-style: italic;">included in your submit file, exactly as shown below.</span>
+<span style="color: #ff8700;">Universe</span> = vanilla
+
+<span style="color: #6c6c6c; font-style: italic;"># </span><span style="color: #6c6c6c; font-style: italic;">Enter the path to the Stata program.</span>
+<span style="color: #ff8700;">Executable</span> = /usr/local/bin/stata-mp
+
+<span style="color: #6c6c6c; font-style: italic;"># </span><span style="color: #6c6c6c; font-style: italic;">Specify any arguments you want to pass to the executable.</span>
+<span style="color: #6c6c6c; font-style: italic;"># </span><span style="color: #6c6c6c; font-style: italic;">Here we pass arguments to make Stata run the bootstrap.do</span>
+<span style="color: #6c6c6c; font-style: italic;"># </span><span style="color: #6c6c6c; font-style: italic;">file. We also pass the process number, which will be used</span>
+<span style="color: #6c6c6c; font-style: italic;"># </span><span style="color: #6c6c6c; font-style: italic;">to append the process number to the output files.</span>
+<span style="color: #ff8700;">Arguments</span> = -q do bootstrap.do $(Process)
+
+<span style="color: #6c6c6c; font-style: italic;"># </span><span style="color: #6c6c6c; font-style: italic;">Specify where to output any results printed by your program.</span>
+<span style="color: #ff8700;">output</span> = output/bootstrap$(Process).out
+<span style="color: #6c6c6c; font-style: italic;"># </span><span style="color: #6c6c6c; font-style: italic;">Specify where to save any errors returned by your program.</span>
+<span style="color: #ff8700;">error</span> = output/bootstrap$(Process).err
+<span style="color: #6c6c6c; font-style: italic;"># </span><span style="color: #6c6c6c; font-style: italic;">Specify where to save the log file.</span>
+<span style="color: #ff8700;">Log</span> = output/bootstrap$(Process).log
+
+<span style="color: #6c6c6c; font-style: italic;"># </span><span style="color: #6c6c6c; font-style: italic;">Enter the number of processes to request.</span>
+<span style="color: #6c6c6c; font-style: italic;"># </span><span style="color: #6c6c6c; font-style: italic;">This section should always come last.</span>
+Queue 1000
+</pre>
+</div>
+<p>
+Notice that we passed the <code>$(Process)</code> argument so that we can retrieve that value in the do-file and save each output to a unique file that includes the process name.
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-8-2-3" class="outline-4">
+<h4 id="sec-8-2-3">Aggregating results</h4>
+<div class="outline-text-4" id="text-8-2-3">
+<p>
+Each of our 1000 processes produced a file in the <code>output</code> directory name <code>out&lt;process&gt;.dta</code>; our next task is to aggregate these results. The do-file below reads each of these files, joins them together, appends them, and plots the result.
+</p>
+<div class="org-src-container">
+
+<pre class="src src-Stata"><span style="color: #a1db00;">clear</span>
+<span style="color: #5fafd7;">set</span> <span style="color: #5fafd7;">mo</span><span style="color: #00d7af;">re</span> off
+
+<span style="color: #a1db00;">cd</span> output
+
+<span style="color: #5fafd7;">local</span><span style="color: #ff8700;"> list</span>: <span style="color: #5fafd7;">dir</span> . files <span style="color: #b22222;">"*.dta"</span>
+
+di `<span style="color: #ff8700;">list</span>'
+
+<span style="color: #5fafd7;">local</span><span style="color: #ff8700;"> f</span>=1
+foreach file of local <span style="color: #5fafd7;">list</span> {
+        <span style="color: #5fafd7;">di</span> <span style="color: #b22222;">"`file"</span>'
+        <span style="color: #5fafd7;">if</span> `<span style="color: #ff8700;">f</span>'== 1 {
+                <span style="color: #a1db00;">use</span> `<span style="color: #ff8700;">file</span>', <span style="color: #a1db00;">clear</span>
+        }
+        <span style="color: #5fafd7;">else</span> {
+                <span style="color: #a1db00;">append</span> <span style="color: #5fafd7;">using</span> `<span style="color: #ff8700;">file</span>'
+        }
+        <span style="color: #5fafd7;">local</span> ++f
+}
+
+saveold <span style="color: #b22222;">"`</span><span style="color: #ff8700;">path</span><span style="color: #b22222;">'//mybootdata"</span>, <span style="color: #a1db00;">replace</span>
+
+<span style="color: #6c6c6c; font-style: italic;">// histogram</span>
+hist(mean_myvar)
+
+<span style="color: #6c6c6c; font-style: italic;">// save graph</span>
+graph export tst.eps
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+
 
 <div id="outline-container-sec-8-3" class="outline-3">
 <h3 id="sec-8-3"><span class="todo TODO">TODO</span> Python Batch Examples</h3>
@@ -988,7 +1113,6 @@ Download the <a href="R_examples/power2.zip">power simulation example files</a>,
 <h3 id="sec-8-4"><span class="todo TODO">TODO</span> Matlab Batch Examples</h3>
 </div>
 </div>
-
 
 
 <div id="outline-container-sec-9" class="outline-2">
@@ -1027,7 +1151,7 @@ We use R for this example because it is the most commonly used program by RCE us
 </div></div>
 <div id="postamble" class="status">
 <p class="author">Author: Ista Zahn</p>
-<p class="date">Created: 2015-05-06 Wed 17:25</p>
+<p class="date">Created: 2015-06-01 Mon 16:22</p>
 <p class="creator"><a href="http://www.gnu.org/software/emacs/">Emacs</a> 24.5.1 (<a href="http://orgmode.org">Org</a> mode 8.2.10)</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>

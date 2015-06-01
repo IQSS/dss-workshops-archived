@@ -1,0 +1,10 @@
+Universe = vanilla
+Executable    = /usr/local/bin/stata-mp
+Arguments    = -q do bootstrap.do $(Cluster) $(Process)
+notification = Complete
+notify_user = sgoshev@iq.harvard.edu
+
+output    = condor_report/bootstrap$(Process).out
+error    = condor_report/bootstrap$(Process).err
+Log    =  condor_report/bootstrap$(Process).log
+Queue    10
