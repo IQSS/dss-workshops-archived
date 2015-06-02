@@ -4,7 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
 <title>Introduction To Programming In R</title>
-<!-- 2015-04-22 Wed 22:40 -->
+<!-- 2015-06-02 Tue 14:05 -->
 <meta  http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta  name="generator" content="Org-mode" />
 <link rel="stylesheet" type="text/css" href="http://tutorials.iq.harvard.edu/org-html-themes/styles/readtheorg/css/readtheorg.css"/>
@@ -57,48 +57,6 @@ for the JavaScript code in this tag.
  }
 /*]]>*///-->
 </script>
-<script type="text/javascript" src="http://orgmode.org/mathjax/MathJax.js"></script>
-<script type="text/javascript">
-<!--/*--><![CDATA[/*><!--*/
-    MathJax.Hub.Config({
-        // Only one of the two following lines, depending on user settings
-        // First allows browser-native MathML display, second forces HTML/CSS
-        //  config: ["MMLorHTML.js"], jax: ["input/TeX"],
-            jax: ["input/TeX", "output/HTML-CSS"],
-        extensions: ["tex2jax.js","TeX/AMSmath.js","TeX/AMSsymbols.js",
-                     "TeX/noUndefined.js"],
-        tex2jax: {
-            inlineMath: [ ["\\(","\\)"] ],
-            displayMath: [ ['$$','$$'], ["\\[","\\]"], ["\\begin{displaymath}","\\end{displaymath}"] ],
-            skipTags: ["script","noscript","style","textarea","pre","code"],
-            ignoreClass: "tex2jax_ignore",
-            processEscapes: false,
-            processEnvironments: true,
-            preview: "TeX"
-        },
-        showProcessingMessages: true,
-        displayAlign: "center",
-        displayIndent: "2em",
-
-        "HTML-CSS": {
-             scale: 100,
-             availableFonts: ["STIX","TeX"],
-             preferredFont: "TeX",
-             webFont: "TeX",
-             imageFont: "TeX",
-             showMathMenu: true,
-        },
-        MMLorHTML: {
-             prefer: {
-                 MSIE:    "MML",
-                 Firefox: "MML",
-                 Opera:   "HTML",
-                 other:   "HTML"
-             }
-        }
-    });
-/*]]>*///-->
-</script>
 </head>
 <body>
 <div id="content">
@@ -117,8 +75,8 @@ for the JavaScript code in this tag.
 </li>
 <li><a href="#sec-2">Data types</a>
 <ul>
-<li><a href="#sec-2-1">Vectors and data classes</a></li>
-<li><a href="#sec-2-2">Vector conversion and info</a></li>
+<li><a href="#sec-2-1">Vector types</a></li>
+<li><a href="#sec-2-2">Vector attributes</a></li>
 <li><a href="#sec-2-3">Factor vectors</a></li>
 <li><a href="#sec-2-4">Lists and data.frames</a></li>
 <li><a href="#sec-2-5">Data types summary</a></li>
@@ -304,17 +262,17 @@ Our main example today consists of writing a statistical summary function that c
 <h2 id="sec-2">Data types</h2>
 <div class="outline-text-2" id="text-2">
 </div><div id="outline-container-sec-2-1" class="outline-3">
-<h3 id="sec-2-1">Vectors and data classes</h3>
+<h3 id="sec-2-1">Vector types</h3>
 <div class="outline-text-3" id="text-2-1">
 <p>
-Values can be combined into vectors using the <code>c()</code> function
+Vectors are the building blocks of data objects in R. There are a few basic types, including <code>logical</code>, <code>integer</code> , <code>double</code>, <code>complex</code>, and <code>character</code>. Values can be combined into vectors using the <code>c()</code> function.
 </p>
 <div class="org-src-container">
 
-<pre class="src src-R" id="VectorsExample">num.var <span style="color: #D0372D;">&lt;-</span> <span style="color: #006699;">c</span><span style="color: #006FE0;">(</span><span style="color: #6434A3;">1</span>, <span style="color: #6434A3;">2</span>, <span style="color: #6434A3;">3</span>, <span style="color: #6434A3;">4</span><span style="color: #006FE0;">)</span> <span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">numeric vector</span>
-char.var <span style="color: #D0372D;">&lt;-</span> <span style="color: #006699;">c</span><span style="color: #006FE0;">(</span><span style="color: #008000;">"1"</span>, <span style="color: #008000;">"2"</span>, <span style="color: #008000;">"3"</span>, <span style="color: #008000;">"4"</span><span style="color: #006FE0;">)</span> <span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">character vector</span>
-log.var <span style="color: #D0372D;">&lt;-</span> <span style="color: #006699;">c</span><span style="color: #006FE0;">(</span><span style="color: #6434A3;">TRUE</span>, <span style="color: #6434A3;">TRUE</span>, <span style="color: #6434A3;">FALSE</span>, <span style="color: #6434A3;">TRUE</span><span style="color: #006FE0;">)</span> <span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">logical vector</span>
-char.var2 <span style="color: #D0372D;">&lt;-</span> <span style="color: #006699;">c</span><span style="color: #006FE0;">(</span>num.var, char.var<span style="color: #006FE0;">)</span> <span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">numbers coverted to character</span>
+<pre class="src src-R" id="VectorsExample">num.var <span style="color: #5fafd7;">&lt;-</span> <span style="color: #ffd700;">c</span><span style="color: #d18aff;">(</span><span style="color: #00d7af;">1</span>, <span style="color: #00d7af;">2</span>, <span style="color: #00d7af;">3</span>, <span style="color: #00d7af;">4</span><span style="color: #d18aff;">)</span> <span style="color: #6c6c6c; font-style: italic;"># </span><span style="color: #6c6c6c; font-style: italic;">numeric vector</span>
+char.var <span style="color: #5fafd7;">&lt;-</span> <span style="color: #ffd700;">c</span><span style="color: #d18aff;">(</span><span style="color: #b22222;">"1"</span>, <span style="color: #b22222;">"2"</span>, <span style="color: #b22222;">"3"</span>, <span style="color: #b22222;">"4"</span><span style="color: #d18aff;">)</span> <span style="color: #6c6c6c; font-style: italic;"># </span><span style="color: #6c6c6c; font-style: italic;">character vector</span>
+log.var <span style="color: #5fafd7;">&lt;-</span> <span style="color: #ffd700;">c</span><span style="color: #d18aff;">(</span><span style="color: #00d7af;">TRUE</span>, <span style="color: #00d7af;">TRUE</span>, <span style="color: #00d7af;">FALSE</span>, <span style="color: #00d7af;">TRUE</span><span style="color: #d18aff;">)</span> <span style="color: #6c6c6c; font-style: italic;"># </span><span style="color: #6c6c6c; font-style: italic;">logical vector</span>
+char.var2 <span style="color: #5fafd7;">&lt;-</span> <span style="color: #ffd700;">c</span><span style="color: #d18aff;">(</span>num.var, char.var<span style="color: #d18aff;">)</span> <span style="color: #6c6c6c; font-style: italic;"># </span><span style="color: #6c6c6c; font-style: italic;">numbers coverted to character</span>
 </pre>
 </div>
 
@@ -327,50 +285,15 @@ char.var2 <span style="color: #D0372D;">&lt;-</span> <span style="color: #006699
 </pre>
 
 <p>
-Vectors have a \emph{class} which determines how functions treat them
+Vectors can be converted from one class to another using one of the many functions beginning with <code>as.</code>, e.g., <code>as.numeric</code> and <code>as.character</code>.
 </p>
 <div class="org-src-container">
 
-<pre class="src src-R" id="classComputations">num.var <span style="color: #D0372D;">&lt;-</span> <span style="color: #008000;">"a"</span>
-<span style="color: #006699;">class</span><span style="color: #006FE0;">(</span>num.var<span style="color: #006FE0;">)</span>
-<span style="color: #006699;">mean</span><span style="color: #006FE0;">(</span>num.var<span style="color: #006FE0;">)</span> <span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">take the mean of a numeric vector</span>
-<span style="color: #006699;">class</span><span style="color: #006FE0;">(</span>char.var<span style="color: #006FE0;">)</span>
-<span style="color: #006699;">mean</span><span style="color: #006FE0;">(</span>char.var<span style="color: #006FE0;">)</span> <span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">cannot average characters</span>
-<span style="color: #006699;">class</span><span style="color: #006FE0;">(</span>char.var2<span style="color: #006FE0;">)</span>
-</pre>
-</div>
-
-<pre class="example">
-&gt; num.var &lt;- "a"
-&gt; class(num.var)
-[1] "character"
-&gt; mean(num.var) # take the mean of a numeric vector
-[1] NA
-&gt; class(char.var)
-[1] "character"
-&gt; mean(char.var) # cannot average characters
-[1] NA
-&gt; class(char.var2)
-[1] "character"
-&gt;
-</pre>
-</div>
-</div>
-
-
-<div id="outline-container-sec-2-2" class="outline-3">
-<h3 id="sec-2-2">Vector conversion and info</h3>
-<div class="outline-text-3" id="text-2-2">
-<p>
-Vectors can be converted from one class to another
-</p>
-<div class="org-src-container">
-
-<pre class="src src-R" id="VectorClassConversion"><span style="color: #006699;">class</span><span style="color: #006FE0;">(</span>char.var2<span style="color: #006FE0;">)</span>
-num.var2 <span style="color: #D0372D;">&lt;-</span> <span style="color: #006699;">as.numeric</span><span style="color: #006FE0;">(</span>char.var2<span style="color: #006FE0;">)</span> <span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">convert to numeric</span>
-<span style="color: #006699;">class</span><span style="color: #006FE0;">(</span>num.var2<span style="color: #006FE0;">)</span>
-<span style="color: #006699;">mean</span><span style="color: #006FE0;">(</span><span style="color: #006699;">as.numeric</span><span style="color: #006FE0;">(</span>char.var2<span style="color: #006FE0;">))</span> <span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">now we can calculate the mean</span>
-<span style="color: #006699;">as.numeric</span><span style="color: #006FE0;">(</span><span style="color: #006699;">c</span><span style="color: #006FE0;">(</span><span style="color: #008000;">"a"</span>, <span style="color: #008000;">"b"</span>, <span style="color: #008000;">"c"</span><span style="color: #006FE0;">))</span> <span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">cannot convert letters to numeric</span>
+<pre class="src src-R" id="VectorClassConversion"><span style="color: #ffd700;">class</span><span style="color: #d18aff;">(</span>char.var2<span style="color: #d18aff;">)</span>
+num.var2 <span style="color: #5fafd7;">&lt;-</span> <span style="color: #ffd700;">as.numeric</span><span style="color: #d18aff;">(</span>char.var2<span style="color: #d18aff;">)</span> <span style="color: #6c6c6c; font-style: italic;"># </span><span style="color: #6c6c6c; font-style: italic;">convert to numeric</span>
+<span style="color: #ffd700;">class</span><span style="color: #d18aff;">(</span>num.var2<span style="color: #d18aff;">)</span>
+<span style="color: #ffd700;">mean</span><span style="color: #d18aff;">(</span><span style="color: #ffd700;">as.numeric</span><span style="color: #d18aff;">(</span>char.var2<span style="color: #d18aff;">))</span> <span style="color: #6c6c6c; font-style: italic;"># </span><span style="color: #6c6c6c; font-style: italic;">now we can calculate the mean</span>
+<span style="color: #ffd700;">as.numeric</span><span style="color: #d18aff;">(</span><span style="color: #ffd700;">c</span><span style="color: #d18aff;">(</span><span style="color: #b22222;">"a"</span>, <span style="color: #b22222;">"b"</span>, <span style="color: #b22222;">"c"</span><span style="color: #d18aff;">))</span> <span style="color: #6c6c6c; font-style: italic;"># </span><span style="color: #6c6c6c; font-style: italic;">cannot convert letters to numeric</span>
 </pre>
 </div>
 
@@ -386,17 +309,39 @@ num.var2 <span style="color: #D0372D;">&lt;-</span> <span style="color: #006699;
 [1] NA NA NA
 &gt;
 </pre>
+</div>
+</div>
 
+<div id="outline-container-sec-2-2" class="outline-3">
+<h3 id="sec-2-2">Vector attributes</h3>
+<div class="outline-text-3" id="text-2-2">
 <p>
-In addition to class, you can examine the <code>length()</code> \\ and <code>str()</code> ucture of vectors
+Vectors (and other R objects for that matter) will always have <code>mode</code> and <code>length</code> attributes. They may optionally have other attributes such as names or comments. 
 </p>
 <div class="org-src-container">
 
-<pre class="src src-R" id="VectorLengthStructure"><span style="color: #006699;">ls</span><span style="color: #006FE0;">()</span> <span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">list objects in our workspace</span>
-<span style="color: #006699;">length</span><span style="color: #006FE0;">(</span>char.var<span style="color: #006FE0;">)</span> <span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">how many elements in char.var?</span>
-<span style="color: #006699;">str</span><span style="color: #006FE0;">(</span>num.var2<span style="color: #006FE0;">)</span> <span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">what is the structure of num.var2?</span>
+<pre class="src src-R"><span style="color: #ffd700;">ls</span><span style="color: #d18aff;">()</span> <span style="color: #6c6c6c; font-style: italic;"># </span><span style="color: #6c6c6c; font-style: italic;">list objects in our workspace</span>
+<span style="color: #ffd700;">length</span><span style="color: #d18aff;">(</span>char.var<span style="color: #d18aff;">)</span> <span style="color: #6c6c6c; font-style: italic;"># </span><span style="color: #6c6c6c; font-style: italic;">how many elements in char.var?</span>
+<span style="color: #ffd700;">str</span><span style="color: #d18aff;">(</span>num.var2<span style="color: #d18aff;">)</span> <span style="color: #6c6c6c; font-style: italic;"># </span><span style="color: #6c6c6c; font-style: italic;">what is the structure of num.var2?</span>
+<span style="color: #ffd700;">names</span><span style="color: #d18aff;">(</span>num.var2<span style="color: #d18aff;">)</span> <span style="color: #5fafd7;">&lt;-</span> <span style="color: #ffd700;">paste</span><span style="color: #d18aff;">(</span><span style="color: #b22222;">"element"</span>, <span style="color: #ffd700;">seq_along</span><span style="color: #d18aff;">(</span>num.var2<span style="color: #d18aff;">))</span>
+<span style="color: #ffd700;">str</span><span style="color: #d18aff;">(</span>num.var2<span style="color: #d18aff;">)</span>
 </pre>
 </div>
+
+<pre class="example">
+&gt; ls() # list objects in our workspace
+[1] "char.var"   "char.var2"  "isPositive" "log.var"    "num.var"   
+[6] "num.var2"   "petal"      "petals"     "updateIR"  
+&gt; length(char.var) # how many elements in char.var?
+[1] 4
+&gt; str(num.var2) # what is the structure of num.var2?
+ num [1:8] 1 2 3 4 1 2 3 4
+&gt; names(num.var2) &lt;- paste("element", seq_along(num.var2))
+&gt; str(num.var2)
+ Named num [1:8] 1 2 3 4 1 2 3 4
+ - attr(*, "names")= chr [1:8] "element 1" "element 2" "element 3" "element 4" ...
+&gt;
+</pre>
 
 <pre class="example">
 &gt; ls() # list objects in our workspace
@@ -442,13 +387,13 @@ Most of the time we can treat factors as though they were character vectors
 
 <div class="org-src-container">
 
-<pre class="src src-R" id="ListsAndDataframeExample">DF <span style="color: #D0372D;">&lt;-</span> <span style="color: #006699;">data.frame</span><span style="color: #006FE0;">(</span>x<span style="color: #D0372D;">=</span><span style="color: #6434A3;">1</span>:<span style="color: #6434A3;">5</span>, y<span style="color: #D0372D;">=</span>letters<span style="color: #006FE0;">[</span><span style="color: #6434A3;">1</span>:<span style="color: #6434A3;">5</span><span style="color: #006FE0;">])</span>
-DF <span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">data.frame with two columns and 5 rows</span>
-DF$x <span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">select just the x column.</span>
+<pre class="src src-R" id="ListsAndDataframeExample">DF <span style="color: #5fafd7;">&lt;-</span> <span style="color: #ffd700;">data.frame</span><span style="color: #d18aff;">(</span>x<span style="color: #5fafd7;">=</span><span style="color: #00d7af;">1</span>:<span style="color: #00d7af;">5</span>, y<span style="color: #5fafd7;">=</span>letters<span style="color: #d18aff;">[</span><span style="color: #00d7af;">1</span>:<span style="color: #00d7af;">5</span><span style="color: #d18aff;">])</span>
+DF <span style="color: #6c6c6c; font-style: italic;"># </span><span style="color: #6c6c6c; font-style: italic;">data.frame with two columns and 5 rows</span>
+DF$x <span style="color: #6c6c6c; font-style: italic;"># </span><span style="color: #6c6c6c; font-style: italic;">select just the x column.</span>
 
-<span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">DF &lt;- data.frame(x=1:10, y=1:7) # illegal becase lengths differ</span>
-L <span style="color: #D0372D;">&lt;-</span> <span style="color: #006699;">list</span><span style="color: #006FE0;">(</span>x<span style="color: #D0372D;">=</span><span style="color: #6434A3;">1</span>:<span style="color: #6434A3;">5</span>, y<span style="color: #D0372D;">=</span><span style="color: #6434A3;">1</span>:<span style="color: #6434A3;">3</span>, z <span style="color: #D0372D;">=</span> DF<span style="color: #006FE0;">)</span>
-L <span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">lists are much more flexible!</span>
+<span style="color: #6c6c6c; font-style: italic;"># </span><span style="color: #6c6c6c; font-style: italic;">DF &lt;- data.frame(x=1:10, y=1:7) # illegal becase lengths differ</span>
+L <span style="color: #5fafd7;">&lt;-</span> <span style="color: #ffd700;">list</span><span style="color: #d18aff;">(</span>x<span style="color: #5fafd7;">=</span><span style="color: #00d7af;">1</span>:<span style="color: #00d7af;">5</span>, y<span style="color: #5fafd7;">=</span><span style="color: #00d7af;">1</span>:<span style="color: #00d7af;">3</span>, z <span style="color: #5fafd7;">=</span> DF<span style="color: #d18aff;">)</span>
+L <span style="color: #6c6c6c; font-style: italic;"># </span><span style="color: #6c6c6c; font-style: italic;">lists are much more flexible!</span>
 </pre>
 </div>
 
@@ -557,16 +502,16 @@ Parts of vectors, matricies, data.frames, and lists can be extracted or replaced
 </p>
 <div class="org-src-container">
 
-<pre class="src src-R" id="indexingVectors"><span style="color: #8D8D84;">## </span><span style="color: #8D8D84; font-style: italic;">indexing vectors by position</span>
-x <span style="color: #D0372D;">&lt;-</span> <span style="color: #6434A3;">101</span>:<span style="color: #6434A3;">110</span> <span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">Creat a vector of integers from 101 to 110</span>
-x<span style="color: #006FE0;">[</span><span style="color: #006699;">c</span><span style="color: #006FE0;">(</span><span style="color: #6434A3;">4</span>, <span style="color: #6434A3;">5</span><span style="color: #006FE0;">)]</span> <span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">extract the fourth and fifth values of x</span>
-x<span style="color: #006FE0;">[</span><span style="color: #6434A3;">4</span><span style="color: #006FE0;">]</span> <span style="color: #D0372D;">&lt;-</span> <span style="color: #6434A3;">1</span> <span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">change the 4th value to 1</span>
-x <span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">print x</span>
+<pre class="src src-R" id="indexingVectors"><span style="color: #6c6c6c; font-style: italic;">## </span><span style="color: #6c6c6c; font-style: italic;">indexing vectors by position</span>
+x <span style="color: #5fafd7;">&lt;-</span> <span style="color: #00d7af;">101</span>:<span style="color: #00d7af;">110</span> <span style="color: #6c6c6c; font-style: italic;"># </span><span style="color: #6c6c6c; font-style: italic;">Creat a vector of integers from 101 to 110</span>
+x<span style="color: #d18aff;">[</span><span style="color: #ffd700;">c</span><span style="color: #d18aff;">(</span><span style="color: #00d7af;">4</span>, <span style="color: #00d7af;">5</span><span style="color: #d18aff;">)]</span> <span style="color: #6c6c6c; font-style: italic;"># </span><span style="color: #6c6c6c; font-style: italic;">extract the fourth and fifth values of x</span>
+x<span style="color: #d18aff;">[</span><span style="color: #00d7af;">4</span><span style="color: #d18aff;">]</span> <span style="color: #5fafd7;">&lt;-</span> <span style="color: #00d7af;">1</span> <span style="color: #6c6c6c; font-style: italic;"># </span><span style="color: #6c6c6c; font-style: italic;">change the 4th value to 1</span>
+x <span style="color: #6c6c6c; font-style: italic;"># </span><span style="color: #6c6c6c; font-style: italic;">print x</span>
 
-<span style="color: #8D8D84;">## </span><span style="color: #8D8D84; font-style: italic;">indexing vectors by name</span>
-<span style="color: #006699;">names</span><span style="color: #006FE0;">(</span>x<span style="color: #006FE0;">)</span> <span style="color: #D0372D;">&lt;-</span> letters<span style="color: #006FE0;">[</span><span style="color: #6434A3;">1</span>:<span style="color: #6434A3;">10</span><span style="color: #006FE0;">]</span> <span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">give x names</span>
-<span style="color: #006699;">print</span><span style="color: #006FE0;">(</span>x<span style="color: #006FE0;">)</span> <span style="color: #8D8D84;">#</span><span style="color: #8D8D84; font-style: italic;">print x</span>
-x<span style="color: #006FE0;">[</span><span style="color: #006699;">c</span><span style="color: #006FE0;">(</span><span style="color: #008000;">"a"</span>, <span style="color: #008000;">"f"</span><span style="color: #006FE0;">)]</span> <span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">extract the values of a  and f from x</span>
+<span style="color: #6c6c6c; font-style: italic;">## </span><span style="color: #6c6c6c; font-style: italic;">indexing vectors by name</span>
+<span style="color: #ffd700;">names</span><span style="color: #d18aff;">(</span>x<span style="color: #d18aff;">)</span> <span style="color: #5fafd7;">&lt;-</span> letters<span style="color: #d18aff;">[</span><span style="color: #00d7af;">1</span>:<span style="color: #00d7af;">10</span><span style="color: #d18aff;">]</span> <span style="color: #6c6c6c; font-style: italic;"># </span><span style="color: #6c6c6c; font-style: italic;">give x names</span>
+<span style="color: #ffd700;">print</span><span style="color: #d18aff;">(</span>x<span style="color: #d18aff;">)</span> <span style="color: #6c6c6c; font-style: italic;">#</span><span style="color: #6c6c6c; font-style: italic;">print x</span>
+x<span style="color: #d18aff;">[</span><span style="color: #ffd700;">c</span><span style="color: #d18aff;">(</span><span style="color: #b22222;">"a"</span>, <span style="color: #b22222;">"f"</span><span style="color: #d18aff;">)]</span> <span style="color: #6c6c6c; font-style: italic;"># </span><span style="color: #6c6c6c; font-style: italic;">extract the values of a  and f from x</span>
 </pre>
 </div>
 
@@ -601,8 +546,8 @@ Elements can also be selected or replaced based on logical (TRUE/FALSE) vectors.
 
 <div class="org-src-container">
 
-<pre class="src src-R" id="logicalIndexingVectors">x <span style="color: #D0372D;">&gt;</span> <span style="color: #6434A3;">106</span> <span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">shows which elements of x are &gt; 106</span>
-x<span style="color: #006FE0;">[</span>x <span style="color: #D0372D;">&gt;</span> <span style="color: #6434A3;">106</span><span style="color: #006FE0;">]</span> <span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">selects elements of x where x &gt; 106</span>
+<pre class="src src-R" id="logicalIndexingVectors">x <span style="color: #5fafd7;">&gt;</span> <span style="color: #00d7af;">106</span> <span style="color: #6c6c6c; font-style: italic;"># </span><span style="color: #6c6c6c; font-style: italic;">shows which elements of x are &gt; 106</span>
+x<span style="color: #d18aff;">[</span>x <span style="color: #5fafd7;">&gt;</span> <span style="color: #00d7af;">106</span><span style="color: #d18aff;">]</span> <span style="color: #6c6c6c; font-style: italic;"># </span><span style="color: #6c6c6c; font-style: italic;">selects elements of x where x &gt; 106</span>
 </pre>
 </div>
 
@@ -642,8 +587,8 @@ Additional operators useful for logical indexing:
 
 <div class="org-src-container">
 
-<pre class="src src-R" id="logicalIndexingVectors2">x<span style="color: #006FE0;">[</span>x <span style="color: #D0372D;">&gt;</span> <span style="color: #6434A3;">106</span> &amp; x <span style="color: #D0372D;">&lt;=</span> <span style="color: #6434A3;">108</span><span style="color: #006FE0;">]</span>
-x<span style="color: #006FE0;">[</span>x <span style="color: #D0372D;">&gt;</span> <span style="color: #6434A3;">106</span> | <span style="color: #006699;">names</span><span style="color: #006FE0;">(</span>x<span style="color: #006FE0;">)</span> <span style="color: #D0372D;">%</span><span style="color: #0000FF;">in</span><span style="color: #D0372D;">%</span> <span style="color: #006699;">c</span><span style="color: #006FE0;">(</span><span style="color: #008000;">"a"</span>, <span style="color: #008000;">"b"</span>, <span style="color: #008000;">"c"</span><span style="color: #006FE0;">)]</span>
+<pre class="src src-R" id="logicalIndexingVectors2">x<span style="color: #d18aff;">[</span>x <span style="color: #5fafd7;">&gt;</span> <span style="color: #00d7af;">106</span> &amp; x <span style="color: #5fafd7;">&lt;=</span> <span style="color: #00d7af;">108</span><span style="color: #d18aff;">]</span>
+x<span style="color: #d18aff;">[</span>x <span style="color: #5fafd7;">&gt;</span> <span style="color: #00d7af;">106</span> | <span style="color: #ffd700;">names</span><span style="color: #d18aff;">(</span>x<span style="color: #d18aff;">)</span> <span style="color: #5fafd7;">%</span><span style="color: #a1db00;">in</span><span style="color: #5fafd7;">%</span> <span style="color: #ffd700;">c</span><span style="color: #d18aff;">(</span><span style="color: #b22222;">"a"</span>, <span style="color: #b22222;">"b"</span>, <span style="color: #b22222;">"c"</span><span style="color: #d18aff;">)]</span>
 </pre>
 </div>
 
@@ -669,12 +614,12 @@ Extraction on matrices operate in two dimensions: first dimension refers to rows
 
 <div class="org-src-container">
 
-<pre class="src src-R" id="indexingMatricies"><span style="color: #8D8D84;">## </span><span style="color: #8D8D84; font-style: italic;">indexing matricies</span>
- <span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">create a matrix</span>
-<span style="color: #006FE0;">(</span>M <span style="color: #D0372D;">&lt;-</span> <span style="color: #006699;">cbind</span><span style="color: #006FE0;">(</span>x <span style="color: #D0372D;">=</span> <span style="color: #6434A3;">1</span>:<span style="color: #6434A3;">5</span>, y <span style="color: #D0372D;">=</span> <span style="color: #D0372D;">-</span><span style="color: #6434A3;">1</span>:<span style="color: #D0372D;">-</span><span style="color: #6434A3;">5</span>, z <span style="color: #D0372D;">=</span> <span style="color: #006699;">c</span><span style="color: #006FE0;">(</span><span style="color: #6434A3;">6</span>, <span style="color: #6434A3;">3</span>, <span style="color: #6434A3;">4</span>, <span style="color: #6434A3;">2</span>, <span style="color: #6434A3;">8</span><span style="color: #006FE0;">)))</span>
-M<span style="color: #006FE0;">[</span><span style="color: #6434A3;">1</span>:<span style="color: #6434A3;">3</span>, <span style="color: #006FE0;">]</span> <span style="color: #8D8D84;">#</span><span style="color: #8D8D84; font-style: italic;">extract rows 1 through 3, all columns</span>
-M<span style="color: #006FE0;">[</span><span style="color: #006699;">c</span><span style="color: #006FE0;">(</span><span style="color: #6434A3;">5</span>, <span style="color: #6434A3;">3</span>, <span style="color: #6434A3;">1</span><span style="color: #006FE0;">)</span>, <span style="color: #6434A3;">2</span>:<span style="color: #6434A3;">3</span><span style="color: #006FE0;">]</span> <span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">rows 5, 3 and 1, columns 2 and 3</span>
-M<span style="color: #006FE0;">[</span>M<span style="color: #006FE0;">[</span>, <span style="color: #6434A3;">1</span><span style="color: #006FE0;">]</span> <span style="color: #D0372D;">%</span><span style="color: #0000FF;">in</span><span style="color: #D0372D;">%</span> <span style="color: #6434A3;">4</span>:<span style="color: #6434A3;">2</span>, <span style="color: #6434A3;">2</span><span style="color: #006FE0;">]</span> <span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">second column where first column &lt;=4 &amp; &gt;= 2</span>
+<pre class="src src-R" id="indexingMatricies"><span style="color: #6c6c6c; font-style: italic;">## </span><span style="color: #6c6c6c; font-style: italic;">indexing matricies</span>
+ <span style="color: #6c6c6c; font-style: italic;"># </span><span style="color: #6c6c6c; font-style: italic;">create a matrix</span>
+<span style="color: #d18aff;">(</span>M <span style="color: #5fafd7;">&lt;-</span> <span style="color: #ffd700;">cbind</span><span style="color: #d18aff;">(</span>x <span style="color: #5fafd7;">=</span> <span style="color: #00d7af;">1</span>:<span style="color: #00d7af;">5</span>, y <span style="color: #5fafd7;">=</span> <span style="color: #5fafd7;">-</span><span style="color: #00d7af;">1</span>:<span style="color: #5fafd7;">-</span><span style="color: #00d7af;">5</span>, z <span style="color: #5fafd7;">=</span> <span style="color: #ffd700;">c</span><span style="color: #d18aff;">(</span><span style="color: #00d7af;">6</span>, <span style="color: #00d7af;">3</span>, <span style="color: #00d7af;">4</span>, <span style="color: #00d7af;">2</span>, <span style="color: #00d7af;">8</span><span style="color: #d18aff;">)))</span>
+M<span style="color: #d18aff;">[</span><span style="color: #00d7af;">1</span>:<span style="color: #00d7af;">3</span>, <span style="color: #d18aff;">]</span> <span style="color: #6c6c6c; font-style: italic;">#</span><span style="color: #6c6c6c; font-style: italic;">extract rows 1 through 3, all columns</span>
+M<span style="color: #d18aff;">[</span><span style="color: #ffd700;">c</span><span style="color: #d18aff;">(</span><span style="color: #00d7af;">5</span>, <span style="color: #00d7af;">3</span>, <span style="color: #00d7af;">1</span><span style="color: #d18aff;">)</span>, <span style="color: #00d7af;">2</span>:<span style="color: #00d7af;">3</span><span style="color: #d18aff;">]</span> <span style="color: #6c6c6c; font-style: italic;"># </span><span style="color: #6c6c6c; font-style: italic;">rows 5, 3 and 1, columns 2 and 3</span>
+M<span style="color: #d18aff;">[</span>M<span style="color: #d18aff;">[</span>, <span style="color: #00d7af;">1</span><span style="color: #d18aff;">]</span> <span style="color: #5fafd7;">%</span><span style="color: #a1db00;">in</span><span style="color: #5fafd7;">%</span> <span style="color: #00d7af;">4</span>:<span style="color: #00d7af;">2</span>, <span style="color: #00d7af;">2</span><span style="color: #d18aff;">]</span> <span style="color: #6c6c6c; font-style: italic;"># </span><span style="color: #6c6c6c; font-style: italic;">second column where first column &lt;=4 &amp; &gt;= 2</span>
 </pre>
 </div>
 
@@ -718,12 +663,12 @@ Lists can be indexed in the same way as vectors, with the following extension:
 </p>
 <div class="org-src-container">
 
-<pre class="src src-R" id="ListIndexing"><span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">Lists can be indexed with single brackets, similar to vector indexing</span>
-L<span style="color: #006FE0;">[</span><span style="color: #006699;">c</span><span style="color: #006FE0;">(</span><span style="color: #6434A3;">1</span>, <span style="color: #6434A3;">2</span><span style="color: #006FE0;">)]</span> <span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">the first two elements of L</span>
-L<span style="color: #006FE0;">[</span><span style="color: #6434A3;">1</span><span style="color: #006FE0;">]</span> <span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">a list with one element</span>
-<span style="color: #8D8D84;">## </span><span style="color: #8D8D84; font-style: italic;">double brackets select the content of a single selected element</span>
-<span style="color: #8D8D84;">## </span><span style="color: #8D8D84; font-style: italic;">effectively taking it out of the list.</span>
-L<span style="color: #006FE0;">[[</span><span style="color: #6434A3;">1</span><span style="color: #006FE0;">]]</span> <span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">a vector</span>
+<pre class="src src-R" id="ListIndexing"><span style="color: #6c6c6c; font-style: italic;"># </span><span style="color: #6c6c6c; font-style: italic;">Lists can be indexed with single brackets, similar to vector indexing</span>
+L<span style="color: #d18aff;">[</span><span style="color: #ffd700;">c</span><span style="color: #d18aff;">(</span><span style="color: #00d7af;">1</span>, <span style="color: #00d7af;">2</span><span style="color: #d18aff;">)]</span> <span style="color: #6c6c6c; font-style: italic;"># </span><span style="color: #6c6c6c; font-style: italic;">the first two elements of L</span>
+L<span style="color: #d18aff;">[</span><span style="color: #00d7af;">1</span><span style="color: #d18aff;">]</span> <span style="color: #6c6c6c; font-style: italic;"># </span><span style="color: #6c6c6c; font-style: italic;">a list with one element</span>
+<span style="color: #6c6c6c; font-style: italic;">## </span><span style="color: #6c6c6c; font-style: italic;">double brackets select the content of a single selected element</span>
+<span style="color: #6c6c6c; font-style: italic;">## </span><span style="color: #6c6c6c; font-style: italic;">effectively taking it out of the list.</span>
+L<span style="color: #d18aff;">[[</span><span style="color: #00d7af;">1</span><span style="color: #d18aff;">]]</span> <span style="color: #6c6c6c; font-style: italic;"># </span><span style="color: #6c6c6c; font-style: italic;">a vector</span>
 </pre>
 </div>
 
@@ -758,8 +703,8 @@ A data.frame can be indexed in the same ways as a matrix, and also the same ways
 
 <div class="org-src-container">
 
-<pre class="src src-R" id="DataFrameIndexing">DF<span style="color: #006FE0;">[</span><span style="color: #006699;">c</span><span style="color: #006FE0;">(</span><span style="color: #6434A3;">3</span>, <span style="color: #6434A3;">1</span>, <span style="color: #6434A3;">2</span><span style="color: #006FE0;">)</span>, <span style="color: #006699;">c</span><span style="color: #006FE0;">(</span><span style="color: #6434A3;">1</span>, <span style="color: #6434A3;">2</span><span style="color: #006FE0;">)]</span> <span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">rows 3, 1, and 2, columns 1 and 2</span>
-DF<span style="color: #006FE0;">[[</span><span style="color: #6434A3;">1</span><span style="color: #006FE0;">]]</span> <span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">column 1 as a vector</span>
+<pre class="src src-R" id="DataFrameIndexing">DF<span style="color: #d18aff;">[</span><span style="color: #ffd700;">c</span><span style="color: #d18aff;">(</span><span style="color: #00d7af;">3</span>, <span style="color: #00d7af;">1</span>, <span style="color: #00d7af;">2</span><span style="color: #d18aff;">)</span>, <span style="color: #ffd700;">c</span><span style="color: #d18aff;">(</span><span style="color: #00d7af;">1</span>, <span style="color: #00d7af;">2</span><span style="color: #d18aff;">)]</span> <span style="color: #6c6c6c; font-style: italic;"># </span><span style="color: #6c6c6c; font-style: italic;">rows 3, 1, and 2, columns 1 and 2</span>
+DF<span style="color: #d18aff;">[[</span><span style="color: #00d7af;">1</span><span style="color: #d18aff;">]]</span> <span style="color: #6c6c6c; font-style: italic;"># </span><span style="color: #6c6c6c; font-style: italic;">column 1 as a vector</span>
 </pre>
 </div>
 
@@ -779,8 +724,8 @@ There is a subtle but important difference between <code>[ , n]</code> and <code
 </p>
 <div class="org-src-container">
 
-<pre class="src src-R" id="dataFrameIndexingComplicated"><span style="color: #006699;">str</span><span style="color: #006FE0;">(</span>DF<span style="color: #006FE0;">[</span><span style="color: #6434A3;">1</span><span style="color: #006FE0;">])</span><span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">a data.frame with one column</span>
-<span style="color: #006699;">str</span><span style="color: #006FE0;">(</span>DF<span style="color: #006FE0;">[</span> ,<span style="color: #6434A3;">1</span><span style="color: #006FE0;">])</span><span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">a vector</span>
+<pre class="src src-R" id="dataFrameIndexingComplicated"><span style="color: #ffd700;">str</span><span style="color: #d18aff;">(</span>DF<span style="color: #d18aff;">[</span><span style="color: #00d7af;">1</span><span style="color: #d18aff;">])</span><span style="color: #6c6c6c; font-style: italic;"># </span><span style="color: #6c6c6c; font-style: italic;">a data.frame with one column</span>
+<span style="color: #ffd700;">str</span><span style="color: #d18aff;">(</span>DF<span style="color: #d18aff;">[</span> ,<span style="color: #00d7af;">1</span><span style="color: #d18aff;">])</span><span style="color: #6c6c6c; font-style: italic;"># </span><span style="color: #6c6c6c; font-style: italic;">a vector</span>
 </pre>
 </div>
 
@@ -859,12 +804,12 @@ The apply function is used to apply a function to the rows or columns of a matri
 </p>
 <div class="org-src-container">
 
-<pre class="src src-R" id="applyFunctionExample">M <span style="color: #D0372D;">&lt;-</span> <span style="color: #006699;">matrix</span><span style="color: #006FE0;">(</span><span style="color: #6434A3;">1</span>:<span style="color: #6434A3;">20</span>,
-            ncol<span style="color: #D0372D;">=</span><span style="color: #6434A3;">4</span>,
-            dimnames <span style="color: #D0372D;">=</span> <span style="color: #006699;">list</span><span style="color: #006FE0;">(</span><span style="color: #006699;">paste</span><span style="color: #006FE0;">(</span><span style="color: #008000;">"row"</span>, <span style="color: #6434A3;">1</span>:<span style="color: #6434A3;">5</span><span style="color: #006FE0;">)</span>,
-                            <span style="color: #006699;">paste</span><span style="color: #006FE0;">(</span><span style="color: #008000;">"col"</span>, <span style="color: #6434A3;">1</span>:<span style="color: #6434A3;">4</span><span style="color: #006FE0;">)))</span>
-<span style="color: #006699;">apply</span><span style="color: #006FE0;">(</span>M, <span style="color: #6434A3;">1</span>, mean<span style="color: #006FE0;">)</span> <span style="color: #8D8D84;">## </span><span style="color: #8D8D84; font-style: italic;">average across the rows</span>
-<span style="color: #006699;">apply</span><span style="color: #006FE0;">(</span>M, <span style="color: #6434A3;">2</span>, sum<span style="color: #006FE0;">)</span> <span style="color: #8D8D84;">## </span><span style="color: #8D8D84; font-style: italic;">sum down the columns</span>
+<pre class="src src-R" id="applyFunctionExample">M <span style="color: #5fafd7;">&lt;-</span> <span style="color: #ffd700;">matrix</span><span style="color: #d18aff;">(</span><span style="color: #00d7af;">1</span>:<span style="color: #00d7af;">20</span>,
+            ncol<span style="color: #5fafd7;">=</span><span style="color: #00d7af;">4</span>,
+            dimnames <span style="color: #5fafd7;">=</span> <span style="color: #ffd700;">list</span><span style="color: #d18aff;">(</span><span style="color: #ffd700;">paste</span><span style="color: #d18aff;">(</span><span style="color: #b22222;">"row"</span>, <span style="color: #00d7af;">1</span>:<span style="color: #00d7af;">5</span><span style="color: #d18aff;">)</span>,
+                            <span style="color: #ffd700;">paste</span><span style="color: #d18aff;">(</span><span style="color: #b22222;">"col"</span>, <span style="color: #00d7af;">1</span>:<span style="color: #00d7af;">4</span><span style="color: #d18aff;">)))</span>
+<span style="color: #ffd700;">apply</span><span style="color: #d18aff;">(</span>M, <span style="color: #00d7af;">1</span>, mean<span style="color: #d18aff;">)</span> <span style="color: #6c6c6c; font-style: italic;">## </span><span style="color: #6c6c6c; font-style: italic;">average across the rows</span>
+<span style="color: #ffd700;">apply</span><span style="color: #d18aff;">(</span>M, <span style="color: #00d7af;">2</span>, sum<span style="color: #d18aff;">)</span> <span style="color: #6c6c6c; font-style: italic;">## </span><span style="color: #6c6c6c; font-style: italic;">sum down the columns</span>
 </pre>
 </div>
 
@@ -887,15 +832,15 @@ We can alternatively calculate row and column means, but in this case <code>appl
 </p>
 <div class="org-src-container">
 
-<pre class="src src-R" id="forLoopExample">M.means <span style="color: #D0372D;">&lt;-</span> <span style="color: #006699;">c</span><span style="color: #006FE0;">()</span> <span style="color: #8D8D84;">## </span><span style="color: #8D8D84; font-style: italic;">empty vector to hold the result</span>
-<span style="color: #0000FF;">for</span> <span style="color: #006FE0;">(</span>row <span style="color: #0000FF;">in</span> <span style="color: #006699;">rownames</span><span style="color: #006FE0;">(</span>M<span style="color: #006FE0;">))</span> <span style="color: #006FE0;">{</span>
-    M.means<span style="color: #006FE0;">[</span>row<span style="color: #006FE0;">]</span> <span style="color: #D0372D;">&lt;-</span> <span style="color: #006699;">mean</span><span style="color: #006FE0;">(</span>M<span style="color: #006FE0;">[</span>row, <span style="color: #006FE0;">])</span>
-<span style="color: #006FE0;">}</span>
+<pre class="src src-R" id="forLoopExample">M.means <span style="color: #5fafd7;">&lt;-</span> <span style="color: #ffd700;">c</span><span style="color: #d18aff;">()</span> <span style="color: #6c6c6c; font-style: italic;">## </span><span style="color: #6c6c6c; font-style: italic;">empty vector to hold the result</span>
+<span style="color: #a1db00;">for</span> <span style="color: #d18aff;">(</span>row <span style="color: #a1db00;">in</span> <span style="color: #ffd700;">rownames</span><span style="color: #d18aff;">(</span>M<span style="color: #d18aff;">))</span> <span style="color: #d18aff;">{</span>
+    M.means<span style="color: #d18aff;">[</span>row<span style="color: #d18aff;">]</span> <span style="color: #5fafd7;">&lt;-</span> <span style="color: #ffd700;">mean</span><span style="color: #d18aff;">(</span>M<span style="color: #d18aff;">[</span>row, <span style="color: #d18aff;">])</span>
+<span style="color: #d18aff;">}</span>
 
-M.sums <span style="color: #D0372D;">&lt;-</span> <span style="color: #006699;">c</span><span style="color: #006FE0;">()</span> <span style="color: #8D8D84;">## </span><span style="color: #8D8D84; font-style: italic;">empty vector to hold the result</span>
-<span style="color: #0000FF;">for</span> <span style="color: #006FE0;">(</span>col <span style="color: #0000FF;">in</span> <span style="color: #006699;">colnames</span><span style="color: #006FE0;">(</span>M<span style="color: #006FE0;">))</span> <span style="color: #006FE0;">{</span>
-    M.sums<span style="color: #006FE0;">[</span>col<span style="color: #006FE0;">]</span> <span style="color: #D0372D;">&lt;-</span> <span style="color: #006699;">mean</span><span style="color: #006FE0;">(</span>M<span style="color: #006FE0;">[</span>, col<span style="color: #006FE0;">])</span>
-<span style="color: #006FE0;">}</span>
+M.sums <span style="color: #5fafd7;">&lt;-</span> <span style="color: #ffd700;">c</span><span style="color: #d18aff;">()</span> <span style="color: #6c6c6c; font-style: italic;">## </span><span style="color: #6c6c6c; font-style: italic;">empty vector to hold the result</span>
+<span style="color: #a1db00;">for</span> <span style="color: #d18aff;">(</span>col <span style="color: #a1db00;">in</span> <span style="color: #ffd700;">colnames</span><span style="color: #d18aff;">(</span>M<span style="color: #d18aff;">))</span> <span style="color: #d18aff;">{</span>
+    M.sums<span style="color: #d18aff;">[</span>col<span style="color: #d18aff;">]</span> <span style="color: #5fafd7;">&lt;-</span> <span style="color: #ffd700;">mean</span><span style="color: #d18aff;">(</span>M<span style="color: #d18aff;">[</span>, col<span style="color: #d18aff;">])</span>
+<span style="color: #d18aff;">}</span>
 </pre>
 </div>
 </div>
@@ -911,9 +856,9 @@ It is often useful to apply a function to each element of a vector, list, or dat
 
 <div class="org-src-container">
 
-<pre class="src src-R" id="sapplyExample"><span style="color: #006699;">sapply</span><span style="color: #006FE0;">(</span>DF, class<span style="color: #006FE0;">)</span> <span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">get the class of each column in the DF data.frame</span>
-<span style="color: #006699;">sapply</span><span style="color: #006FE0;">(</span>L, length<span style="color: #006FE0;">)</span> <span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">get the length of each element in the L list</span>
-<span style="color: #006699;">sapply</span><span style="color: #006FE0;">(</span>DF, is.numeric<span style="color: #006FE0;">)</span> <span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">check each column of DF to see if it is numeric</span>
+<pre class="src src-R" id="sapplyExample"><span style="color: #ffd700;">sapply</span><span style="color: #d18aff;">(</span>DF, class<span style="color: #d18aff;">)</span> <span style="color: #6c6c6c; font-style: italic;"># </span><span style="color: #6c6c6c; font-style: italic;">get the class of each column in the DF data.frame</span>
+<span style="color: #ffd700;">sapply</span><span style="color: #d18aff;">(</span>L, length<span style="color: #d18aff;">)</span> <span style="color: #6c6c6c; font-style: italic;"># </span><span style="color: #6c6c6c; font-style: italic;">get the length of each element in the L list</span>
+<span style="color: #ffd700;">sapply</span><span style="color: #d18aff;">(</span>DF, is.numeric<span style="color: #d18aff;">)</span> <span style="color: #6c6c6c; font-style: italic;"># </span><span style="color: #6c6c6c; font-style: italic;">check each column of DF to see if it is numeric</span>
 </pre>
 </div>
 
@@ -947,7 +892,7 @@ The <code>sapply</code> function can be used in combination with indexing to ext
 </ul>
 <div class="org-src-container">
 
-<pre class="src src-R" id="sapplyAndIndexing1">DF<span style="color: #006FE0;">[</span>, <span style="color: #006699;">c</span><span style="color: #006FE0;">(</span><span style="color: #6434A3;">TRUE</span>, <span style="color: #6434A3;">FALSE</span><span style="color: #006FE0;">)]</span> <span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">select the first column of DF, but not the second</span>
+<pre class="src src-R" id="sapplyAndIndexing1">DF<span style="color: #d18aff;">[</span>, <span style="color: #ffd700;">c</span><span style="color: #d18aff;">(</span><span style="color: #00d7af;">TRUE</span>, <span style="color: #00d7af;">FALSE</span><span style="color: #d18aff;">)]</span> <span style="color: #6c6c6c; font-style: italic;"># </span><span style="color: #6c6c6c; font-style: italic;">select the first column of DF, but not the second</span>
 </pre>
 </div>
 
@@ -970,8 +915,8 @@ The <code>sapply</code> function can be used in combination with indexing to ext
 </ul>
 <div class="org-src-container">
 
-<pre class="src src-R" id="sapplyAndIndexing2"><span style="color: #006FE0;">(</span>DF.which.num <span style="color: #D0372D;">&lt;-</span> <span style="color: #006699;">sapply</span><span style="color: #006FE0;">(</span>DF, is.numeric<span style="color: #006FE0;">))</span><span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">check which columns of DF are numeric</span>
-DF<span style="color: #006FE0;">[</span>DF.which.num<span style="color: #006FE0;">]</span> <span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">select the numeric columns</span>
+<pre class="src src-R" id="sapplyAndIndexing2"><span style="color: #d18aff;">(</span>DF.which.num <span style="color: #5fafd7;">&lt;-</span> <span style="color: #ffd700;">sapply</span><span style="color: #d18aff;">(</span>DF, is.numeric<span style="color: #d18aff;">))</span><span style="color: #6c6c6c; font-style: italic;"># </span><span style="color: #6c6c6c; font-style: italic;">check which columns of DF are numeric</span>
+DF<span style="color: #d18aff;">[</span>DF.which.num<span style="color: #d18aff;">]</span> <span style="color: #6c6c6c; font-style: italic;"># </span><span style="color: #6c6c6c; font-style: italic;">select the numeric columns</span>
 </pre>
 </div>
 
@@ -1073,14 +1018,14 @@ Functions introduced in this section:
 
 <div class="org-src-container">
 
-<pre class="src src-R" id="functionReturn"><span style="color: #006699;">f</span> <span style="color: #D0372D;">&lt;-</span> <span style="color: #0000FF;">function</span><span style="color: #006FE0;">()</span> <span style="color: #006FE0;">{</span> <span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">define function f</span>
-<span style="color: #006699;">print</span><span style="color: #006FE0;">(</span><span style="color: #008000;">"setting x to 1"</span><span style="color: #006FE0;">)</span> <span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">print a text string</span>
-x <span style="color: #D0372D;">&lt;-</span> <span style="color: #6434A3;">1</span><span style="color: #006FE0;">}</span> <span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">set x to 1</span>
+<pre class="src src-R" id="functionReturn"><span style="color: #ffd700;">f</span> <span style="color: #5fafd7;">&lt;-</span> <span style="color: #a1db00;">function</span><span style="color: #d18aff;">()</span> <span style="color: #d18aff;">{</span> <span style="color: #6c6c6c; font-style: italic;"># </span><span style="color: #6c6c6c; font-style: italic;">define function f</span>
+<span style="color: #ffd700;">print</span><span style="color: #d18aff;">(</span><span style="color: #b22222;">"setting x to 1"</span><span style="color: #d18aff;">)</span> <span style="color: #6c6c6c; font-style: italic;"># </span><span style="color: #6c6c6c; font-style: italic;">print a text string</span>
+x <span style="color: #5fafd7;">&lt;-</span> <span style="color: #00d7af;">1</span><span style="color: #d18aff;">}</span> <span style="color: #6c6c6c; font-style: italic;"># </span><span style="color: #6c6c6c; font-style: italic;">set x to 1</span>
 
-y <span style="color: #D0372D;">&lt;-</span> <span style="color: #006699;">f</span><span style="color: #006FE0;">()</span> <span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">assign y the value returned by f</span>
+y <span style="color: #5fafd7;">&lt;-</span> <span style="color: #ffd700;">f</span><span style="color: #d18aff;">()</span> <span style="color: #6c6c6c; font-style: italic;"># </span><span style="color: #6c6c6c; font-style: italic;">assign y the value returned by f</span>
 
-y <span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">print y</span>
-x <span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">x in the global is not 1!</span>
+y <span style="color: #6c6c6c; font-style: italic;"># </span><span style="color: #6c6c6c; font-style: italic;">print y</span>
+x <span style="color: #6c6c6c; font-style: italic;"># </span><span style="color: #6c6c6c; font-style: italic;">x in the global is not 1!</span>
 </pre>
 </div>
 
@@ -1112,14 +1057,14 @@ Goal: write a function that returns the square of it's argument
 
 <div class="org-src-container">
 
-<pre class="src src-R" id="firstFunctionExample"><span style="color: #006699;">square</span> <span style="color: #D0372D;">&lt;-</span> <span style="color: #0000FF;">function</span> <span style="color: #006FE0;">(</span>x<span style="color: #006FE0;">)</span> <span style="color: #006FE0;">{</span> <span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">define function named "square" with argument x</span>
-  <span style="color: #0000FF;">return</span><span style="color: #006FE0;">(</span>x*x<span style="color: #006FE0;">)</span> <span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">multiple the x argument by itself</span>
-<span style="color: #006FE0;">}</span> <span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">end the function definition</span>
+<pre class="src src-R" id="firstFunctionExample"><span style="color: #ffd700;">square</span> <span style="color: #5fafd7;">&lt;-</span> <span style="color: #a1db00;">function</span> <span style="color: #d18aff;">(</span>x<span style="color: #d18aff;">)</span> <span style="color: #d18aff;">{</span> <span style="color: #6c6c6c; font-style: italic;"># </span><span style="color: #6c6c6c; font-style: italic;">define function named "square" with argument x</span>
+  <span style="color: #a1db00;">return</span><span style="color: #d18aff;">(</span>x*x<span style="color: #d18aff;">)</span> <span style="color: #6c6c6c; font-style: italic;"># </span><span style="color: #6c6c6c; font-style: italic;">multiple the x argument by itself</span>
+<span style="color: #d18aff;">}</span> <span style="color: #6c6c6c; font-style: italic;"># </span><span style="color: #6c6c6c; font-style: italic;">end the function definition</span>
 
-<span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">check to see that the function works</span>
-<span style="color: #006699;">square</span><span style="color: #006FE0;">(</span>x <span style="color: #D0372D;">=</span> <span style="color: #6434A3;">2</span><span style="color: #006FE0;">)</span> <span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">square the value 2</span>
-<span style="color: #006699;">square</span><span style="color: #006FE0;">(</span><span style="color: #6434A3;">10</span><span style="color: #006FE0;">)</span> <span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">square the value 10</span>
-<span style="color: #006699;">square</span><span style="color: #006FE0;">(</span><span style="color: #6434A3;">1</span>:<span style="color: #6434A3;">5</span><span style="color: #006FE0;">)</span> <span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">square integers 1 through 5</span>
+<span style="color: #6c6c6c; font-style: italic;"># </span><span style="color: #6c6c6c; font-style: italic;">check to see that the function works</span>
+<span style="color: #ffd700;">square</span><span style="color: #d18aff;">(</span>x <span style="color: #5fafd7;">=</span> <span style="color: #00d7af;">2</span><span style="color: #d18aff;">)</span> <span style="color: #6c6c6c; font-style: italic;"># </span><span style="color: #6c6c6c; font-style: italic;">square the value 2</span>
+<span style="color: #ffd700;">square</span><span style="color: #d18aff;">(</span><span style="color: #00d7af;">10</span><span style="color: #d18aff;">)</span> <span style="color: #6c6c6c; font-style: italic;"># </span><span style="color: #6c6c6c; font-style: italic;">square the value 10</span>
+<span style="color: #ffd700;">square</span><span style="color: #d18aff;">(</span><span style="color: #00d7af;">1</span>:<span style="color: #00d7af;">5</span><span style="color: #d18aff;">)</span> <span style="color: #6c6c6c; font-style: italic;"># </span><span style="color: #6c6c6c; font-style: italic;">square integers 1 through 5</span>
 </pre>
 </div>
 
@@ -1150,21 +1095,21 @@ Stepping througth functions and setting breakpoints
 
 <div class="org-src-container">
 
-<pre class="src src-R" id="debug1"><span style="color: #8D8D84;">## </span><span style="color: #8D8D84; font-style: italic;">Debugging</span>
-<span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">write my.mean function</span>
-<span style="color: #006699;">my.mean</span> <span style="color: #D0372D;">&lt;-</span> <span style="color: #0000FF;">function</span> <span style="color: #006FE0;">(</span>x, ...<span style="color: #006FE0;">)</span> <span style="color: #006FE0;">{</span>
-  S <span style="color: #D0372D;">&lt;-</span> <span style="color: #006699;">sum</span><span style="color: #006FE0;">(</span>x, ...<span style="color: #006FE0;">)</span>
-  L <span style="color: #D0372D;">&lt;-</span> <span style="color: #006699;">length</span><span style="color: #006FE0;">(</span><span style="color: #006699;">na.omit</span><span style="color: #006FE0;">(</span>x<span style="color: #006FE0;">))</span>
-  <span style="color: #0000FF;">return</span><span style="color: #006FE0;">(</span>S <span style="color: #D0372D;">/</span> L<span style="color: #006FE0;">)}</span>
-<span style="color: #006699;">debug</span><span style="color: #006FE0;">(</span>my.mean<span style="color: #006FE0;">)</span> <span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">turn debugger on for my.mean function</span>
-<span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">mymean() # step through the function</span>
-<span style="color: #006699;">undebug</span><span style="color: #006FE0;">(</span>my.mean<span style="color: #006FE0;">)</span> <span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">to turn the debugger off</span>
-<span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">insert breakpoints</span>
-<span style="color: #006699;">my.mean</span> <span style="color: #D0372D;">&lt;-</span> <span style="color: #0000FF;">function</span> <span style="color: #006FE0;">(</span>x, ...<span style="color: #006FE0;">)</span> <span style="color: #006FE0;">{</span>
-  S <span style="color: #D0372D;">&lt;-</span> <span style="color: #006699;">sum</span><span style="color: #006FE0;">(</span>x, ...<span style="color: #006FE0;">)</span>
-  L <span style="color: #D0372D;">&lt;-</span> <span style="color: #006699;">length</span><span style="color: #006FE0;">(</span><span style="color: #006699;">na.omit</span><span style="color: #006FE0;">(</span>x<span style="color: #006FE0;">))</span>
-  <span style="color: #006699;">browser</span><span style="color: #006FE0;">()</span> <span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">function will stop here so you can inspect S and L</span>
-  <span style="color: #0000FF;">return</span><span style="color: #006FE0;">(</span>S <span style="color: #D0372D;">/</span> L<span style="color: #006FE0;">)}</span>
+<pre class="src src-R" id="debug1"><span style="color: #6c6c6c; font-style: italic;">## </span><span style="color: #6c6c6c; font-style: italic;">Debugging</span>
+<span style="color: #6c6c6c; font-style: italic;"># </span><span style="color: #6c6c6c; font-style: italic;">write my.mean function</span>
+<span style="color: #ffd700;">my.mean</span> <span style="color: #5fafd7;">&lt;-</span> <span style="color: #a1db00;">function</span> <span style="color: #d18aff;">(</span>x, ...<span style="color: #d18aff;">)</span> <span style="color: #d18aff;">{</span>
+  S <span style="color: #5fafd7;">&lt;-</span> <span style="color: #ffd700;">sum</span><span style="color: #d18aff;">(</span>x, ...<span style="color: #d18aff;">)</span>
+  L <span style="color: #5fafd7;">&lt;-</span> <span style="color: #ffd700;">length</span><span style="color: #d18aff;">(</span><span style="color: #ffd700;">na.omit</span><span style="color: #d18aff;">(</span>x<span style="color: #d18aff;">))</span>
+  <span style="color: #a1db00;">return</span><span style="color: #d18aff;">(</span>S <span style="color: #5fafd7;">/</span> L<span style="color: #d18aff;">)}</span>
+<span style="color: #ffd700;">debug</span><span style="color: #d18aff;">(</span>my.mean<span style="color: #d18aff;">)</span> <span style="color: #6c6c6c; font-style: italic;"># </span><span style="color: #6c6c6c; font-style: italic;">turn debugger on for my.mean function</span>
+<span style="color: #6c6c6c; font-style: italic;"># </span><span style="color: #6c6c6c; font-style: italic;">mymean() # step through the function</span>
+<span style="color: #ffd700;">undebug</span><span style="color: #d18aff;">(</span>my.mean<span style="color: #d18aff;">)</span> <span style="color: #6c6c6c; font-style: italic;"># </span><span style="color: #6c6c6c; font-style: italic;">to turn the debugger off</span>
+<span style="color: #6c6c6c; font-style: italic;"># </span><span style="color: #6c6c6c; font-style: italic;">insert breakpoints</span>
+<span style="color: #ffd700;">my.mean</span> <span style="color: #5fafd7;">&lt;-</span> <span style="color: #a1db00;">function</span> <span style="color: #d18aff;">(</span>x, ...<span style="color: #d18aff;">)</span> <span style="color: #d18aff;">{</span>
+  S <span style="color: #5fafd7;">&lt;-</span> <span style="color: #ffd700;">sum</span><span style="color: #d18aff;">(</span>x, ...<span style="color: #d18aff;">)</span>
+  L <span style="color: #5fafd7;">&lt;-</span> <span style="color: #ffd700;">length</span><span style="color: #d18aff;">(</span><span style="color: #ffd700;">na.omit</span><span style="color: #d18aff;">(</span>x<span style="color: #d18aff;">))</span>
+  <span style="color: #ffd700;">browser</span><span style="color: #d18aff;">()</span> <span style="color: #6c6c6c; font-style: italic;"># </span><span style="color: #6c6c6c; font-style: italic;">function will stop here so you can inspect S and L</span>
+  <span style="color: #a1db00;">return</span><span style="color: #d18aff;">(</span>S <span style="color: #5fafd7;">/</span> L<span style="color: #d18aff;">)}</span>
 </pre>
 </div>
 
@@ -1193,8 +1138,8 @@ Use <code>traceback()</code> to see what went wrong after the fact
 
 <div class="org-src-container">
 
-<pre class="src src-R" id="debugTraceback">myModel <span style="color: #D0372D;">&lt;-</span> <span style="color: #006699;">lm</span><span style="color: #006FE0;">(</span><span style="color: #6434A3;">NA</span>~<span style="color: #6434A3;">NA</span><span style="color: #006FE0;">)</span>
-<span style="color: #006699;">traceback</span><span style="color: #006FE0;">()</span>
+<pre class="src src-R" id="debugTraceback">myModel <span style="color: #5fafd7;">&lt;-</span> <span style="color: #ffd700;">lm</span><span style="color: #d18aff;">(</span><span style="color: #00d7af;">NA</span>~<span style="color: #00d7af;">NA</span><span style="color: #d18aff;">)</span>
+<span style="color: #ffd700;">traceback</span><span style="color: #d18aff;">()</span>
 </pre>
 </div>
 </div>
@@ -1277,18 +1222,18 @@ Goal: write a function that tells us if a number is positive or negative
 
 <div class="org-src-container">
 
-<pre class="src src-R" id="brachingExample1"><span style="color: #8D8D84;">## </span><span style="color: #8D8D84; font-style: italic;">use branching to return different result depending on the sign of the input</span>
-<span style="color: #006699;">isPositive</span> <span style="color: #D0372D;">&lt;-</span> <span style="color: #0000FF;">function</span><span style="color: #006FE0;">(</span>x<span style="color: #006FE0;">)</span> <span style="color: #006FE0;">{</span> <span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">define function "isPositive"</span>
-  <span style="color: #0000FF;">if</span> <span style="color: #006FE0;">(</span>x <span style="color: #D0372D;">&gt;</span> <span style="color: #6434A3;">0</span><span style="color: #006FE0;">)</span> <span style="color: #006FE0;">{</span> <span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">if x is greater than zero, then</span>
-    <span style="color: #0000FF;">return</span><span style="color: #006FE0;">(</span><span style="color: #006699;">paste</span><span style="color: #006FE0;">(</span>x, <span style="color: #008000;">"is positive \n"</span><span style="color: #006FE0;">))</span> <span style="color: #006FE0;">}</span> <span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">say so! </span>
-  <span style="color: #0000FF;">else</span> <span style="color: #006FE0;">{</span> <span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">otherwise</span>
-      <span style="color: #0000FF;">return</span><span style="color: #006FE0;">(</span><span style="color: #006699;">paste</span><span style="color: #006FE0;">(</span>x, <span style="color: #008000;">"is negative \n"</span><span style="color: #006FE0;">))}</span> <span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">say x is negative</span>
-<span style="color: #006FE0;">}</span> <span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">end function definition </span>
+<pre class="src src-R" id="brachingExample1"><span style="color: #6c6c6c; font-style: italic;">## </span><span style="color: #6c6c6c; font-style: italic;">use branching to return different result depending on the sign of the input</span>
+<span style="color: #ffd700;">isPositive</span> <span style="color: #5fafd7;">&lt;-</span> <span style="color: #a1db00;">function</span><span style="color: #d18aff;">(</span>x<span style="color: #d18aff;">)</span> <span style="color: #d18aff;">{</span> <span style="color: #6c6c6c; font-style: italic;"># </span><span style="color: #6c6c6c; font-style: italic;">define function "isPositive"</span>
+  <span style="color: #a1db00;">if</span> <span style="color: #d18aff;">(</span>x <span style="color: #5fafd7;">&gt;</span> <span style="color: #00d7af;">0</span><span style="color: #d18aff;">)</span> <span style="color: #d18aff;">{</span> <span style="color: #6c6c6c; font-style: italic;"># </span><span style="color: #6c6c6c; font-style: italic;">if x is greater than zero, then</span>
+    <span style="color: #a1db00;">return</span><span style="color: #d18aff;">(</span><span style="color: #ffd700;">paste</span><span style="color: #d18aff;">(</span>x, <span style="color: #b22222;">"is positive \n"</span><span style="color: #d18aff;">))</span> <span style="color: #d18aff;">}</span> <span style="color: #6c6c6c; font-style: italic;"># </span><span style="color: #6c6c6c; font-style: italic;">say so! </span>
+  <span style="color: #a1db00;">else</span> <span style="color: #d18aff;">{</span> <span style="color: #6c6c6c; font-style: italic;"># </span><span style="color: #6c6c6c; font-style: italic;">otherwise</span>
+      <span style="color: #a1db00;">return</span><span style="color: #d18aff;">(</span><span style="color: #ffd700;">paste</span><span style="color: #d18aff;">(</span>x, <span style="color: #b22222;">"is negative \n"</span><span style="color: #d18aff;">))}</span> <span style="color: #6c6c6c; font-style: italic;"># </span><span style="color: #6c6c6c; font-style: italic;">say x is negative</span>
+<span style="color: #d18aff;">}</span> <span style="color: #6c6c6c; font-style: italic;"># </span><span style="color: #6c6c6c; font-style: italic;">end function definition </span>
 
-<span style="color: #8D8D84;">## </span><span style="color: #8D8D84; font-style: italic;">test the isPositive() function</span>
-<span style="color: #006699;">isPositive</span><span style="color: #006FE0;">(</span><span style="color: #6434A3;">10</span><span style="color: #006FE0;">)</span>
-<span style="color: #006699;">isPositive</span><span style="color: #006FE0;">(</span><span style="color: #D0372D;">-</span><span style="color: #6434A3;">1</span><span style="color: #006FE0;">)</span>
-<span style="color: #006699;">isPositive</span><span style="color: #006FE0;">(</span><span style="color: #6434A3;">0</span><span style="color: #006FE0;">)</span>
+<span style="color: #6c6c6c; font-style: italic;">## </span><span style="color: #6c6c6c; font-style: italic;">test the isPositive() function</span>
+<span style="color: #ffd700;">isPositive</span><span style="color: #d18aff;">(</span><span style="color: #00d7af;">10</span><span style="color: #d18aff;">)</span>
+<span style="color: #ffd700;">isPositive</span><span style="color: #d18aff;">(</span><span style="color: #5fafd7;">-</span><span style="color: #00d7af;">1</span><span style="color: #d18aff;">)</span>
+<span style="color: #ffd700;">isPositive</span><span style="color: #d18aff;">(</span><span style="color: #00d7af;">0</span><span style="color: #d18aff;">)</span>
 </pre>
 </div>
 
@@ -1326,15 +1271,15 @@ Add a condition to handle <code>x = 0</code>
 
 <div class="org-src-container">
 
-<pre class="src src-R" id="brachingExample3"><span style="color: #8D8D84;">## </span><span style="color: #8D8D84; font-style: italic;">add condition to handle the case that x is zero</span>
-  <span style="color: #006699;">isPositive</span> <span style="color: #D0372D;">&lt;-</span> <span style="color: #0000FF;">function</span><span style="color: #006FE0;">(</span>x<span style="color: #006FE0;">)</span> <span style="color: #006FE0;">{</span> <span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">define function "isPositive"</span>
-    <span style="color: #0000FF;">if</span> <span style="color: #006FE0;">(</span>x <span style="color: #D0372D;">&gt;</span> <span style="color: #6434A3;">0</span><span style="color: #006FE0;">)</span> <span style="color: #006FE0;">{</span> <span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">if x is greater than zero, then</span>
-      <span style="color: #0000FF;">return</span><span style="color: #006FE0;">(</span><span style="color: #006699;">paste</span><span style="color: #006FE0;">(</span>x, <span style="color: #008000;">"is positive \n"</span><span style="color: #006FE0;">))</span> <span style="color: #006FE0;">}</span> <span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">say so! </span>
-    <span style="color: #0000FF;">else</span> <span style="color: #0000FF;">if</span> <span style="color: #006FE0;">(</span>x <span style="color: #D0372D;">==</span> <span style="color: #6434A3;">0</span><span style="color: #006FE0;">)</span> <span style="color: #006FE0;">{</span> <span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">otherwise if x is zero</span>
-      <span style="color: #0000FF;">return</span><span style="color: #006FE0;">(</span><span style="color: #006699;">paste</span><span style="color: #006FE0;">(</span>x, <span style="color: #008000;">"is zero \n"</span><span style="color: #006FE0;">))}</span> <span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">say so!</span>
-    <span style="color: #0000FF;">else</span> <span style="color: #006FE0;">{</span> <span style="color: #8D8D84;">#</span><span style="color: #8D8D84; font-style: italic;">otherwise</span>
-        <span style="color: #0000FF;">return</span><span style="color: #006FE0;">(</span><span style="color: #006699;">paste</span><span style="color: #006FE0;">(</span>x, <span style="color: #008000;">"is negative \n"</span><span style="color: #006FE0;">))}</span> <span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">say x is negative</span>
-  <span style="color: #006FE0;">}</span> <span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">end function definition</span>
+<pre class="src src-R" id="brachingExample3"><span style="color: #6c6c6c; font-style: italic;">## </span><span style="color: #6c6c6c; font-style: italic;">add condition to handle the case that x is zero</span>
+  <span style="color: #ffd700;">isPositive</span> <span style="color: #5fafd7;">&lt;-</span> <span style="color: #a1db00;">function</span><span style="color: #d18aff;">(</span>x<span style="color: #d18aff;">)</span> <span style="color: #d18aff;">{</span> <span style="color: #6c6c6c; font-style: italic;"># </span><span style="color: #6c6c6c; font-style: italic;">define function "isPositive"</span>
+    <span style="color: #a1db00;">if</span> <span style="color: #d18aff;">(</span>x <span style="color: #5fafd7;">&gt;</span> <span style="color: #00d7af;">0</span><span style="color: #d18aff;">)</span> <span style="color: #d18aff;">{</span> <span style="color: #6c6c6c; font-style: italic;"># </span><span style="color: #6c6c6c; font-style: italic;">if x is greater than zero, then</span>
+      <span style="color: #a1db00;">return</span><span style="color: #d18aff;">(</span><span style="color: #ffd700;">paste</span><span style="color: #d18aff;">(</span>x, <span style="color: #b22222;">"is positive \n"</span><span style="color: #d18aff;">))</span> <span style="color: #d18aff;">}</span> <span style="color: #6c6c6c; font-style: italic;"># </span><span style="color: #6c6c6c; font-style: italic;">say so! </span>
+    <span style="color: #a1db00;">else</span> <span style="color: #a1db00;">if</span> <span style="color: #d18aff;">(</span>x <span style="color: #5fafd7;">==</span> <span style="color: #00d7af;">0</span><span style="color: #d18aff;">)</span> <span style="color: #d18aff;">{</span> <span style="color: #6c6c6c; font-style: italic;"># </span><span style="color: #6c6c6c; font-style: italic;">otherwise if x is zero</span>
+      <span style="color: #a1db00;">return</span><span style="color: #d18aff;">(</span><span style="color: #ffd700;">paste</span><span style="color: #d18aff;">(</span>x, <span style="color: #b22222;">"is zero \n"</span><span style="color: #d18aff;">))}</span> <span style="color: #6c6c6c; font-style: italic;"># </span><span style="color: #6c6c6c; font-style: italic;">say so!</span>
+    <span style="color: #a1db00;">else</span> <span style="color: #d18aff;">{</span> <span style="color: #6c6c6c; font-style: italic;">#</span><span style="color: #6c6c6c; font-style: italic;">otherwise</span>
+        <span style="color: #a1db00;">return</span><span style="color: #d18aff;">(</span><span style="color: #ffd700;">paste</span><span style="color: #d18aff;">(</span>x, <span style="color: #b22222;">"is negative \n"</span><span style="color: #d18aff;">))}</span> <span style="color: #6c6c6c; font-style: italic;"># </span><span style="color: #6c6c6c; font-style: italic;">say x is negative</span>
+  <span style="color: #d18aff;">}</span> <span style="color: #6c6c6c; font-style: italic;"># </span><span style="color: #6c6c6c; font-style: italic;">end function definition</span>
 </pre>
 </div>
 
@@ -1357,8 +1302,8 @@ Test the new function
 
 <div class="org-src-container">
 
-<pre class="src src-R" id="brachingExample3.1"><span style="color: #006699;">isPositive</span><span style="color: #006FE0;">(</span><span style="color: #6434A3;">0</span><span style="color: #006FE0;">)</span> <span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">test the isPositive() function</span>
-<span style="color: #006699;">isPositive</span><span style="color: #006FE0;">(</span><span style="color: #008000;">"a"</span><span style="color: #006FE0;">)</span> <span style="color: #8D8D84;">#</span><span style="color: #8D8D84; font-style: italic;">oops, that will not work!</span>
+<pre class="src src-R" id="brachingExample3.1"><span style="color: #ffd700;">isPositive</span><span style="color: #d18aff;">(</span><span style="color: #00d7af;">0</span><span style="color: #d18aff;">)</span> <span style="color: #6c6c6c; font-style: italic;"># </span><span style="color: #6c6c6c; font-style: italic;">test the isPositive() function</span>
+<span style="color: #ffd700;">isPositive</span><span style="color: #d18aff;">(</span><span style="color: #b22222;">"a"</span><span style="color: #d18aff;">)</span> <span style="color: #6c6c6c; font-style: italic;">#</span><span style="color: #6c6c6c; font-style: italic;">oops, that will not work!</span>
 </pre>
 </div>
 
@@ -1385,19 +1330,19 @@ Do something reasonable if x is not numeric
 
 <div class="org-src-container">
 
-<pre class="src src-R" id="brachingExample5"><span style="color: #8D8D84;">## </span><span style="color: #8D8D84; font-style: italic;">add condition to handle the case that x is zero</span>
-  <span style="color: #006699;">isPositive</span> <span style="color: #D0372D;">&lt;-</span> <span style="color: #0000FF;">function</span><span style="color: #006FE0;">(</span>x<span style="color: #006FE0;">)</span> <span style="color: #006FE0;">{</span> <span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">define function "isPositive"</span>
-    <span style="color: #0000FF;">if</span><span style="color: #006FE0;">(</span>!<span style="color: #006699;">is.numeric</span><span style="color: #006FE0;">(</span>x<span style="color: #006FE0;">)</span> | <span style="color: #006699;">length</span><span style="color: #006FE0;">(</span>x<span style="color: #006FE0;">)</span> <span style="color: #D0372D;">&gt;</span> <span style="color: #6434A3;">1</span><span style="color: #006FE0;">)</span> <span style="color: #006FE0;">{</span>
-      <span style="color: #0000FF;">stop</span><span style="color: #006FE0;">(</span><span style="color: #008000;">"x must be a numeric vector of length one! \n"</span><span style="color: #006FE0;">)}</span>
-    <span style="color: #0000FF;">else</span> <span style="color: #0000FF;">if</span> <span style="color: #006FE0;">(</span>x <span style="color: #D0372D;">&gt;</span> <span style="color: #6434A3;">0</span><span style="color: #006FE0;">)</span> <span style="color: #006FE0;">{</span> <span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">if x is greater than zero, then</span>
-      <span style="color: #0000FF;">return</span><span style="color: #006FE0;">(</span><span style="color: #006699;">paste</span><span style="color: #006FE0;">(</span>x,<span style="color: #008000;">" is positive \n"</span><span style="color: #006FE0;">))</span> <span style="color: #006FE0;">}</span> <span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">say so! </span>
-    <span style="color: #0000FF;">else</span> <span style="color: #0000FF;">if</span> <span style="color: #006FE0;">(</span>x <span style="color: #D0372D;">==</span> <span style="color: #6434A3;">0</span><span style="color: #006FE0;">)</span> <span style="color: #006FE0;">{</span> <span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">otherwise if x is zero</span>
-      <span style="color: #0000FF;">return</span><span style="color: #006FE0;">(</span><span style="color: #006699;">paste</span><span style="color: #006FE0;">(</span>x,<span style="color: #008000;">" is zero \n"</span><span style="color: #006FE0;">))}</span> <span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">say so!</span>
-    <span style="color: #0000FF;">else</span> <span style="color: #006FE0;">{</span> <span style="color: #8D8D84;">#</span><span style="color: #8D8D84; font-style: italic;">otherwise</span>
-      <span style="color: #0000FF;">return</span><span style="color: #006FE0;">(</span><span style="color: #006699;">paste</span><span style="color: #006FE0;">(</span>x,<span style="color: #008000;">" is negative \n"</span><span style="color: #006FE0;">))}</span> <span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">say x is negative</span>
-  <span style="color: #006FE0;">}</span> <span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">end function definition</span>
+<pre class="src src-R" id="brachingExample5"><span style="color: #6c6c6c; font-style: italic;">## </span><span style="color: #6c6c6c; font-style: italic;">add condition to handle the case that x is zero</span>
+  <span style="color: #ffd700;">isPositive</span> <span style="color: #5fafd7;">&lt;-</span> <span style="color: #a1db00;">function</span><span style="color: #d18aff;">(</span>x<span style="color: #d18aff;">)</span> <span style="color: #d18aff;">{</span> <span style="color: #6c6c6c; font-style: italic;"># </span><span style="color: #6c6c6c; font-style: italic;">define function "isPositive"</span>
+    <span style="color: #a1db00;">if</span><span style="color: #d18aff;">(</span>!<span style="color: #ffd700;">is.numeric</span><span style="color: #d18aff;">(</span>x<span style="color: #d18aff;">)</span> | <span style="color: #ffd700;">length</span><span style="color: #d18aff;">(</span>x<span style="color: #d18aff;">)</span> <span style="color: #5fafd7;">&gt;</span> <span style="color: #00d7af;">1</span><span style="color: #d18aff;">)</span> <span style="color: #d18aff;">{</span>
+      <span style="color: #a1db00;">stop</span><span style="color: #d18aff;">(</span><span style="color: #b22222;">"x must be a numeric vector of length one! \n"</span><span style="color: #d18aff;">)}</span>
+    <span style="color: #a1db00;">else</span> <span style="color: #a1db00;">if</span> <span style="color: #d18aff;">(</span>x <span style="color: #5fafd7;">&gt;</span> <span style="color: #00d7af;">0</span><span style="color: #d18aff;">)</span> <span style="color: #d18aff;">{</span> <span style="color: #6c6c6c; font-style: italic;"># </span><span style="color: #6c6c6c; font-style: italic;">if x is greater than zero, then</span>
+      <span style="color: #a1db00;">return</span><span style="color: #d18aff;">(</span><span style="color: #ffd700;">paste</span><span style="color: #d18aff;">(</span>x,<span style="color: #b22222;">" is positive \n"</span><span style="color: #d18aff;">))</span> <span style="color: #d18aff;">}</span> <span style="color: #6c6c6c; font-style: italic;"># </span><span style="color: #6c6c6c; font-style: italic;">say so! </span>
+    <span style="color: #a1db00;">else</span> <span style="color: #a1db00;">if</span> <span style="color: #d18aff;">(</span>x <span style="color: #5fafd7;">==</span> <span style="color: #00d7af;">0</span><span style="color: #d18aff;">)</span> <span style="color: #d18aff;">{</span> <span style="color: #6c6c6c; font-style: italic;"># </span><span style="color: #6c6c6c; font-style: italic;">otherwise if x is zero</span>
+      <span style="color: #a1db00;">return</span><span style="color: #d18aff;">(</span><span style="color: #ffd700;">paste</span><span style="color: #d18aff;">(</span>x,<span style="color: #b22222;">" is zero \n"</span><span style="color: #d18aff;">))}</span> <span style="color: #6c6c6c; font-style: italic;"># </span><span style="color: #6c6c6c; font-style: italic;">say so!</span>
+    <span style="color: #a1db00;">else</span> <span style="color: #d18aff;">{</span> <span style="color: #6c6c6c; font-style: italic;">#</span><span style="color: #6c6c6c; font-style: italic;">otherwise</span>
+      <span style="color: #a1db00;">return</span><span style="color: #d18aff;">(</span><span style="color: #ffd700;">paste</span><span style="color: #d18aff;">(</span>x,<span style="color: #b22222;">" is negative \n"</span><span style="color: #d18aff;">))}</span> <span style="color: #6c6c6c; font-style: italic;"># </span><span style="color: #6c6c6c; font-style: italic;">say x is negative</span>
+  <span style="color: #d18aff;">}</span> <span style="color: #6c6c6c; font-style: italic;"># </span><span style="color: #6c6c6c; font-style: italic;">end function definition</span>
 
-<span style="color: #006699;">isPositive</span><span style="color: #006FE0;">(</span><span style="color: #008000;">"a"</span><span style="color: #006FE0;">)</span> <span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">test the isPositive() function on character</span>
+<span style="color: #ffd700;">isPositive</span><span style="color: #d18aff;">(</span><span style="color: #b22222;">"a"</span><span style="color: #d18aff;">)</span> <span style="color: #6c6c6c; font-style: italic;"># </span><span style="color: #6c6c6c; font-style: italic;">test the isPositive() function on character</span>
 </pre>
 </div>
 
@@ -1484,10 +1429,10 @@ The class of an object can be retrieved and modified using the <code>class()</co
 
 <div class="org-src-container">
 
-<pre class="src src-R" id="classExample">x <span style="color: #D0372D;">&lt;-</span> <span style="color: #6434A3;">1</span>:<span style="color: #6434A3;">10</span>
-<span style="color: #006699;">class</span><span style="color: #006FE0;">(</span>x<span style="color: #006FE0;">)</span> 
-<span style="color: #006699;">class</span><span style="color: #006FE0;">(</span>x<span style="color: #006FE0;">)</span> <span style="color: #D0372D;">&lt;-</span> <span style="color: #008000;">"foo"</span>
-<span style="color: #006699;">class</span><span style="color: #006FE0;">(</span>x<span style="color: #006FE0;">)</span>
+<pre class="src src-R" id="classExample">x <span style="color: #5fafd7;">&lt;-</span> <span style="color: #00d7af;">1</span>:<span style="color: #00d7af;">10</span>
+<span style="color: #ffd700;">class</span><span style="color: #d18aff;">(</span>x<span style="color: #d18aff;">)</span> 
+<span style="color: #ffd700;">class</span><span style="color: #d18aff;">(</span>x<span style="color: #d18aff;">)</span> <span style="color: #5fafd7;">&lt;-</span> <span style="color: #b22222;">"foo"</span>
+<span style="color: #ffd700;">class</span><span style="color: #d18aff;">(</span>x<span style="color: #d18aff;">)</span>
 </pre>
 </div>
 
@@ -1507,8 +1452,8 @@ Objects are not limited to a single class, and can have many classes:
 
 <div class="org-src-container">
 
-<pre class="src src-R" id="classExample2"><span style="color: #006699;">class</span><span style="color: #006FE0;">(</span>x<span style="color: #006FE0;">)</span> <span style="color: #D0372D;">&lt;-</span> <span style="color: #006699;">c</span><span style="color: #006FE0;">(</span><span style="color: #008000;">"A"</span>, <span style="color: #008000;">"B"</span><span style="color: #006FE0;">)</span>
-<span style="color: #006699;">class</span><span style="color: #006FE0;">(</span>x<span style="color: #006FE0;">)</span>
+<pre class="src src-R" id="classExample2"><span style="color: #ffd700;">class</span><span style="color: #d18aff;">(</span>x<span style="color: #d18aff;">)</span> <span style="color: #5fafd7;">&lt;-</span> <span style="color: #ffd700;">c</span><span style="color: #d18aff;">(</span><span style="color: #b22222;">"A"</span>, <span style="color: #b22222;">"B"</span><span style="color: #d18aff;">)</span>
+<span style="color: #ffd700;">class</span><span style="color: #d18aff;">(</span>x<span style="color: #d18aff;">)</span>
 </pre>
 </div>
 
@@ -1534,10 +1479,10 @@ Objects are not limited to a single class, and can have many classes:
 
 <div class="org-src-container">
 
-<pre class="src src-R" id="getMethods"><span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">see what methods have been defined for the mean function</span>
-<span style="color: #006699;">methods</span><span style="color: #006FE0;">(</span>mean<span style="color: #006FE0;">)</span>
-<span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">which functions have methods for data.frames?</span>
-<span style="color: #006699;">methods</span><span style="color: #006FE0;">(</span>class<span style="color: #D0372D;">=</span><span style="color: #008000;">"data.frame"</span><span style="color: #006FE0;">)[</span><span style="color: #6434A3;">1</span>:<span style="color: #6434A3;">9</span><span style="color: #006FE0;">]</span>
+<pre class="src src-R" id="getMethods"><span style="color: #6c6c6c; font-style: italic;"># </span><span style="color: #6c6c6c; font-style: italic;">see what methods have been defined for the mean function</span>
+<span style="color: #ffd700;">methods</span><span style="color: #d18aff;">(</span>mean<span style="color: #d18aff;">)</span>
+<span style="color: #6c6c6c; font-style: italic;"># </span><span style="color: #6c6c6c; font-style: italic;">which functions have methods for data.frames?</span>
+<span style="color: #ffd700;">methods</span><span style="color: #d18aff;">(</span>class<span style="color: #5fafd7;">=</span><span style="color: #b22222;">"data.frame"</span><span style="color: #d18aff;">)[</span><span style="color: #00d7af;">1</span>:<span style="color: #00d7af;">9</span><span style="color: #d18aff;">]</span>
 </pre>
 </div>
 
@@ -1568,22 +1513,22 @@ To create a new method for a function that is already generic all you have to do
 
 <div class="org-src-container">
 
-<pre class="src src-R" id="fooMean"><span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">create a mean() method for objects of class "foo":</span>
-<span style="color: #006699;">mean.foo</span> <span style="color: #D0372D;">&lt;-</span> <span style="color: #0000FF;">function</span><span style="color: #006FE0;">(</span>x<span style="color: #006FE0;">)</span> <span style="color: #006FE0;">{</span> <span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">mean method for "foo" class</span>
-  <span style="color: #0000FF;">if</span><span style="color: #006FE0;">(</span><span style="color: #006699;">is.numeric</span><span style="color: #006FE0;">(</span>x<span style="color: #006FE0;">))</span> <span style="color: #006FE0;">{</span>
-    <span style="color: #006699;">cat</span><span style="color: #006FE0;">(</span><span style="color: #008000;">"The average is"</span>, <span style="color: #006699;">mean.default</span><span style="color: #006FE0;">(</span>x<span style="color: #006FE0;">))</span>
-    <span style="color: #0000FF;">return</span><span style="color: #006FE0;">(</span><span style="color: #006699;">invisible</span><span style="color: #006FE0;">(</span><span style="color: #006699;">mean.default</span><span style="color: #006FE0;">(</span>x<span style="color: #006FE0;">)))</span> <span style="color: #8D8D84;">#</span><span style="color: #8D8D84; font-style: italic;">use mean.default for numeric</span>
-  <span style="color: #006FE0;">}</span> <span style="color: #0000FF;">else</span>
-    <span style="color: #006699;">cat</span><span style="color: #006FE0;">(</span><span style="color: #008000;">"x is not numeric \n"</span><span style="color: #006FE0;">)}</span> <span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">otherwise say x not numeric</span>
+<pre class="src src-R" id="fooMean"><span style="color: #6c6c6c; font-style: italic;"># </span><span style="color: #6c6c6c; font-style: italic;">create a mean() method for objects of class "foo":</span>
+<span style="color: #ffd700;">mean.foo</span> <span style="color: #5fafd7;">&lt;-</span> <span style="color: #a1db00;">function</span><span style="color: #d18aff;">(</span>x<span style="color: #d18aff;">)</span> <span style="color: #d18aff;">{</span> <span style="color: #6c6c6c; font-style: italic;"># </span><span style="color: #6c6c6c; font-style: italic;">mean method for "foo" class</span>
+  <span style="color: #a1db00;">if</span><span style="color: #d18aff;">(</span><span style="color: #ffd700;">is.numeric</span><span style="color: #d18aff;">(</span>x<span style="color: #d18aff;">))</span> <span style="color: #d18aff;">{</span>
+    <span style="color: #ffd700;">cat</span><span style="color: #d18aff;">(</span><span style="color: #b22222;">"The average is"</span>, <span style="color: #ffd700;">mean.default</span><span style="color: #d18aff;">(</span>x<span style="color: #d18aff;">))</span>
+    <span style="color: #a1db00;">return</span><span style="color: #d18aff;">(</span><span style="color: #ffd700;">invisible</span><span style="color: #d18aff;">(</span><span style="color: #ffd700;">mean.default</span><span style="color: #d18aff;">(</span>x<span style="color: #d18aff;">)))</span> <span style="color: #6c6c6c; font-style: italic;">#</span><span style="color: #6c6c6c; font-style: italic;">use mean.default for numeric</span>
+  <span style="color: #d18aff;">}</span> <span style="color: #a1db00;">else</span>
+    <span style="color: #ffd700;">cat</span><span style="color: #d18aff;">(</span><span style="color: #b22222;">"x is not numeric \n"</span><span style="color: #d18aff;">)}</span> <span style="color: #6c6c6c; font-style: italic;"># </span><span style="color: #6c6c6c; font-style: italic;">otherwise say x not numeric</span>
 
-x <span style="color: #D0372D;">&lt;-</span> <span style="color: #6434A3;">1</span>:<span style="color: #6434A3;">10</span>
-<span style="color: #006699;">mean</span><span style="color: #006FE0;">(</span>x<span style="color: #006FE0;">)</span>
-<span style="color: #006699;">class</span><span style="color: #006FE0;">(</span>x<span style="color: #006FE0;">)</span> <span style="color: #D0372D;">&lt;-</span> <span style="color: #008000;">"foo"</span>
-<span style="color: #006699;">mean</span><span style="color: #006FE0;">(</span>x<span style="color: #006FE0;">)</span>
+x <span style="color: #5fafd7;">&lt;-</span> <span style="color: #00d7af;">1</span>:<span style="color: #00d7af;">10</span>
+<span style="color: #ffd700;">mean</span><span style="color: #d18aff;">(</span>x<span style="color: #d18aff;">)</span>
+<span style="color: #ffd700;">class</span><span style="color: #d18aff;">(</span>x<span style="color: #d18aff;">)</span> <span style="color: #5fafd7;">&lt;-</span> <span style="color: #b22222;">"foo"</span>
+<span style="color: #ffd700;">mean</span><span style="color: #d18aff;">(</span>x<span style="color: #d18aff;">)</span>
 
-x <span style="color: #D0372D;">&lt;-</span> <span style="color: #006699;">as.character</span><span style="color: #006FE0;">(</span>x<span style="color: #006FE0;">)</span>
-<span style="color: #006699;">class</span><span style="color: #006FE0;">(</span>x<span style="color: #006FE0;">)</span> <span style="color: #D0372D;">&lt;-</span> <span style="color: #008000;">"foo"</span>
-<span style="color: #006699;">mean</span><span style="color: #006FE0;">(</span>x<span style="color: #006FE0;">)</span>
+x <span style="color: #5fafd7;">&lt;-</span> <span style="color: #ffd700;">as.character</span><span style="color: #d18aff;">(</span>x<span style="color: #d18aff;">)</span>
+<span style="color: #ffd700;">class</span><span style="color: #d18aff;">(</span>x<span style="color: #d18aff;">)</span> <span style="color: #5fafd7;">&lt;-</span> <span style="color: #b22222;">"foo"</span>
+<span style="color: #ffd700;">mean</span><span style="color: #d18aff;">(</span>x<span style="color: #d18aff;">)</span>
 </pre>
 </div>
 
@@ -1621,18 +1566,18 @@ S3 generics are most often used for print, summary, and plot methods, but someti
 
 <div class="org-src-container">
 
-<pre class="src src-R" id="createGeneric"><span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">create a generic disp() function</span>
-<span style="color: #006699;">disp</span> <span style="color: #D0372D;">&lt;-</span> <span style="color: #0000FF;">function</span><span style="color: #006FE0;">(</span>x, ...<span style="color: #006FE0;">)</span> <span style="color: #006FE0;">{</span>
-  <span style="color: #006699;">UseMethod</span><span style="color: #006FE0;">(</span><span style="color: #008000;">"disp"</span><span style="color: #006FE0;">)</span>
-<span style="color: #006FE0;">}</span>
+<pre class="src src-R" id="createGeneric"><span style="color: #6c6c6c; font-style: italic;"># </span><span style="color: #6c6c6c; font-style: italic;">create a generic disp() function</span>
+<span style="color: #ffd700;">disp</span> <span style="color: #5fafd7;">&lt;-</span> <span style="color: #a1db00;">function</span><span style="color: #d18aff;">(</span>x, ...<span style="color: #d18aff;">)</span> <span style="color: #d18aff;">{</span>
+  <span style="color: #ffd700;">UseMethod</span><span style="color: #d18aff;">(</span><span style="color: #b22222;">"disp"</span><span style="color: #d18aff;">)</span>
+<span style="color: #d18aff;">}</span>
 
-<span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">create a disp method for class "matrix"</span>
-<span style="color: #006699;">disp.matrix</span> <span style="color: #D0372D;">&lt;-</span> <span style="color: #0000FF;">function</span><span style="color: #006FE0;">(</span>x<span style="color: #006FE0;">)</span> <span style="color: #006FE0;">{</span>
-  <span style="color: #006699;">print</span><span style="color: #006FE0;">(</span><span style="color: #006699;">round</span><span style="color: #006FE0;">(</span>x, digits<span style="color: #D0372D;">=</span><span style="color: #6434A3;">2</span><span style="color: #006FE0;">))</span>
-<span style="color: #006FE0;">}</span>
+<span style="color: #6c6c6c; font-style: italic;"># </span><span style="color: #6c6c6c; font-style: italic;">create a disp method for class "matrix"</span>
+<span style="color: #ffd700;">disp.matrix</span> <span style="color: #5fafd7;">&lt;-</span> <span style="color: #a1db00;">function</span><span style="color: #d18aff;">(</span>x<span style="color: #d18aff;">)</span> <span style="color: #d18aff;">{</span>
+  <span style="color: #ffd700;">print</span><span style="color: #d18aff;">(</span><span style="color: #ffd700;">round</span><span style="color: #d18aff;">(</span>x, digits<span style="color: #5fafd7;">=</span><span style="color: #00d7af;">2</span><span style="color: #d18aff;">))</span>
+<span style="color: #d18aff;">}</span>
 
-<span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">test it out</span>
-<span style="color: #006699;">disp</span><span style="color: #006FE0;">(</span><span style="color: #006699;">matrix</span><span style="color: #006FE0;">(</span><span style="color: #006699;">runif</span><span style="color: #006FE0;">(</span><span style="color: #6434A3;">10</span><span style="color: #006FE0;">)</span>, ncol<span style="color: #D0372D;">=</span><span style="color: #6434A3;">2</span><span style="color: #006FE0;">))</span>
+<span style="color: #6c6c6c; font-style: italic;"># </span><span style="color: #6c6c6c; font-style: italic;">test it out</span>
+<span style="color: #ffd700;">disp</span><span style="color: #d18aff;">(</span><span style="color: #ffd700;">matrix</span><span style="color: #d18aff;">(</span><span style="color: #ffd700;">runif</span><span style="color: #d18aff;">(</span><span style="color: #00d7af;">10</span><span style="color: #d18aff;">)</span>, ncol<span style="color: #5fafd7;">=</span><span style="color: #00d7af;">2</span><span style="color: #d18aff;">))</span>
 </pre>
 </div>
 
@@ -1743,7 +1688,7 @@ Floating point arithmetic is not exact:
 </p>
 <div class="org-src-container">
 
-<pre class="src src-R" id="floatingPointExample"><span style="color: #6434A3;">.1</span> <span style="color: #D0372D;">==</span> <span style="color: #6434A3;">.3</span><span style="color: #D0372D;">/</span><span style="color: #6434A3;">3</span>
+<pre class="src src-R" id="floatingPointExample"><span style="color: #00d7af;">.1</span> <span style="color: #5fafd7;">==</span> <span style="color: #00d7af;">.3</span><span style="color: #5fafd7;">/</span><span style="color: #00d7af;">3</span>
 </pre>
 </div>
 
@@ -1758,7 +1703,7 @@ Solution: <code>use all.equal()</code>:
 </p>
 <div class="org-src-container">
 
-<pre class="src src-R" id="floatingPointExampleSolution"><span style="color: #006699;">all.equal</span><span style="color: #006FE0;">(</span><span style="color: #6434A3;">.1</span>, <span style="color: #6434A3;">.3</span><span style="color: #D0372D;">/</span><span style="color: #6434A3;">3</span><span style="color: #006FE0;">)</span>
+<pre class="src src-R" id="floatingPointExampleSolution"><span style="color: #ffd700;">all.equal</span><span style="color: #d18aff;">(</span><span style="color: #00d7af;">.1</span>, <span style="color: #00d7af;">.3</span><span style="color: #5fafd7;">/</span><span style="color: #00d7af;">3</span><span style="color: #d18aff;">)</span>
 </pre>
 </div>
 
@@ -1778,8 +1723,8 @@ R does not exclude missing values by default &#x2013; a single missing value in 
 </p>
 <div class="org-src-container">
 
-<pre class="src src-R" id="MissingDataExample">x <span style="color: #D0372D;">&lt;-</span> <span style="color: #006699;">c</span><span style="color: #006FE0;">(</span><span style="color: #6434A3;">1</span>:<span style="color: #6434A3;">10</span>, <span style="color: #6434A3;">NA</span>, <span style="color: #6434A3;">12</span>:<span style="color: #6434A3;">20</span><span style="color: #006FE0;">)</span>
-<span style="color: #006699;">c</span><span style="color: #006FE0;">(</span><span style="color: #006699;">mean</span><span style="color: #006FE0;">(</span>x<span style="color: #006FE0;">)</span>, <span style="color: #006699;">sd</span><span style="color: #006FE0;">(</span>x<span style="color: #006FE0;">)</span>, <span style="color: #006699;">median</span><span style="color: #006FE0;">(</span>x<span style="color: #006FE0;">)</span>, <span style="color: #006699;">min</span><span style="color: #006FE0;">(</span>x<span style="color: #006FE0;">)</span>, <span style="color: #006699;">sd</span><span style="color: #006FE0;">(</span>x<span style="color: #006FE0;">))</span>
+<pre class="src src-R" id="MissingDataExample">x <span style="color: #5fafd7;">&lt;-</span> <span style="color: #ffd700;">c</span><span style="color: #d18aff;">(</span><span style="color: #00d7af;">1</span>:<span style="color: #00d7af;">10</span>, <span style="color: #00d7af;">NA</span>, <span style="color: #00d7af;">12</span>:<span style="color: #00d7af;">20</span><span style="color: #d18aff;">)</span>
+<span style="color: #ffd700;">c</span><span style="color: #d18aff;">(</span><span style="color: #ffd700;">mean</span><span style="color: #d18aff;">(</span>x<span style="color: #d18aff;">)</span>, <span style="color: #ffd700;">sd</span><span style="color: #d18aff;">(</span>x<span style="color: #d18aff;">)</span>, <span style="color: #ffd700;">median</span><span style="color: #d18aff;">(</span>x<span style="color: #d18aff;">)</span>, <span style="color: #ffd700;">min</span><span style="color: #d18aff;">(</span>x<span style="color: #d18aff;">)</span>, <span style="color: #ffd700;">sd</span><span style="color: #d18aff;">(</span>x<span style="color: #d18aff;">))</span>
 </pre>
 </div>
 
@@ -1795,7 +1740,7 @@ NA is not equal to anything, not even NA
 </p>
 <div class="org-src-container">
 
-<pre class="src src-R" id="NAcomp"><span style="color: #6434A3;">NA</span> <span style="color: #D0372D;">==</span> <span style="color: #6434A3;">NA</span>
+<pre class="src src-R" id="NAcomp"><span style="color: #00d7af;">NA</span> <span style="color: #5fafd7;">==</span> <span style="color: #00d7af;">NA</span>
 </pre>
 </div>
 
@@ -1820,12 +1765,12 @@ Automatic type conversion happens a lot which is often useful, but makes it easy
 
 <div class="org-src-container">
 
-<pre class="src src-R" id="typeConversion"><span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">combining values coereces them to the most general type</span>
-<span style="color: #006FE0;">(</span>x <span style="color: #D0372D;">&lt;-</span> <span style="color: #006699;">c</span><span style="color: #006FE0;">(</span><span style="color: #6434A3;">TRUE</span>, <span style="color: #6434A3;">FALSE</span>, <span style="color: #6434A3;">1</span>, <span style="color: #6434A3;">2</span>, <span style="color: #008000;">"a"</span>, <span style="color: #008000;">"b"</span><span style="color: #006FE0;">))</span>
-<span style="color: #006699;">str</span><span style="color: #006FE0;">(</span>x<span style="color: #006FE0;">)</span>
+<pre class="src src-R" id="typeConversion"><span style="color: #6c6c6c; font-style: italic;"># </span><span style="color: #6c6c6c; font-style: italic;">combining values coereces them to the most general type</span>
+<span style="color: #d18aff;">(</span>x <span style="color: #5fafd7;">&lt;-</span> <span style="color: #ffd700;">c</span><span style="color: #d18aff;">(</span><span style="color: #00d7af;">TRUE</span>, <span style="color: #00d7af;">FALSE</span>, <span style="color: #00d7af;">1</span>, <span style="color: #00d7af;">2</span>, <span style="color: #b22222;">"a"</span>, <span style="color: #b22222;">"b"</span><span style="color: #d18aff;">))</span>
+<span style="color: #ffd700;">str</span><span style="color: #d18aff;">(</span>x<span style="color: #d18aff;">)</span>
 
-<span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">comparisons convert arguments to most general type</span>
-<span style="color: #6434A3;">1</span> <span style="color: #D0372D;">&gt;</span> <span style="color: #008000;">"a"</span>
+<span style="color: #6c6c6c; font-style: italic;"># </span><span style="color: #6c6c6c; font-style: italic;">comparisons convert arguments to most general type</span>
+<span style="color: #00d7af;">1</span> <span style="color: #5fafd7;">&gt;</span> <span style="color: #b22222;">"a"</span>
 </pre>
 </div>
 
@@ -1857,8 +1802,8 @@ Functions you might expect to work similarly don't always:
 
 <div class="org-src-container">
 
-<pre class="src src-R" id="MeanVSsd"><span style="color: #006699;">mean</span><span style="color: #006FE0;">(</span><span style="color: #6434A3;">1</span>, <span style="color: #6434A3;">2</span>, <span style="color: #6434A3;">3</span>, <span style="color: #6434A3;">4</span>, <span style="color: #6434A3;">5</span><span style="color: #006FE0;">)</span>*<span style="color: #6434A3;">5</span>
-<span style="color: #006699;">sum</span><span style="color: #006FE0;">(</span><span style="color: #6434A3;">1</span>, <span style="color: #6434A3;">2</span>, <span style="color: #6434A3;">3</span>, <span style="color: #6434A3;">4</span>, <span style="color: #6434A3;">5</span><span style="color: #006FE0;">)</span>
+<pre class="src src-R" id="MeanVSsd"><span style="color: #ffd700;">mean</span><span style="color: #d18aff;">(</span><span style="color: #00d7af;">1</span>, <span style="color: #00d7af;">2</span>, <span style="color: #00d7af;">3</span>, <span style="color: #00d7af;">4</span>, <span style="color: #00d7af;">5</span><span style="color: #d18aff;">)</span>*<span style="color: #00d7af;">5</span>
+<span style="color: #ffd700;">sum</span><span style="color: #d18aff;">(</span><span style="color: #00d7af;">1</span>, <span style="color: #00d7af;">2</span>, <span style="color: #00d7af;">3</span>, <span style="color: #00d7af;">4</span>, <span style="color: #00d7af;">5</span><span style="color: #d18aff;">)</span>
 </pre>
 </div>
 
@@ -1875,8 +1820,8 @@ Why are these different?!?
 </p>
 <div class="org-src-container">
 
-<pre class="src src-R" id="MeanVSsdExplained"><span style="color: #006699;">args</span><span style="color: #006FE0;">(</span>mean<span style="color: #006FE0;">)</span>
-<span style="color: #006699;">args</span><span style="color: #006FE0;">(</span>sum<span style="color: #006FE0;">)</span>
+<pre class="src src-R" id="MeanVSsdExplained"><span style="color: #ffd700;">args</span><span style="color: #d18aff;">(</span>mean<span style="color: #d18aff;">)</span>
+<span style="color: #ffd700;">args</span><span style="color: #d18aff;">(</span>sum<span style="color: #d18aff;">)</span>
 </pre>
 </div>
 
@@ -1905,15 +1850,15 @@ Factors sometimes behave as numbers, and sometimes as characters, which can be c
 
 <div class="org-src-container">
 
-<pre class="src src-R" id="factorTrouble"><span style="color: #006FE0;">(</span>x <span style="color: #D0372D;">&lt;-</span> <span style="color: #006699;">factor</span><span style="color: #006FE0;">(</span><span style="color: #006699;">c</span><span style="color: #006FE0;">(</span><span style="color: #6434A3;">5</span>, <span style="color: #6434A3;">5</span>, <span style="color: #6434A3;">6</span>, <span style="color: #6434A3;">6</span><span style="color: #006FE0;">)</span>, levels <span style="color: #D0372D;">=</span> <span style="color: #006699;">c</span><span style="color: #006FE0;">(</span><span style="color: #6434A3;">6</span>, <span style="color: #6434A3;">5</span><span style="color: #006FE0;">)))</span>
+<pre class="src src-R" id="factorTrouble"><span style="color: #d18aff;">(</span>x <span style="color: #5fafd7;">&lt;-</span> <span style="color: #ffd700;">factor</span><span style="color: #d18aff;">(</span><span style="color: #ffd700;">c</span><span style="color: #d18aff;">(</span><span style="color: #00d7af;">5</span>, <span style="color: #00d7af;">5</span>, <span style="color: #00d7af;">6</span>, <span style="color: #00d7af;">6</span><span style="color: #d18aff;">)</span>, levels <span style="color: #5fafd7;">=</span> <span style="color: #ffd700;">c</span><span style="color: #d18aff;">(</span><span style="color: #00d7af;">6</span>, <span style="color: #00d7af;">5</span><span style="color: #d18aff;">)))</span>
 
-<span style="color: #006699;">str</span><span style="color: #006FE0;">(</span>x<span style="color: #006FE0;">)</span>
+<span style="color: #ffd700;">str</span><span style="color: #d18aff;">(</span>x<span style="color: #d18aff;">)</span>
 
-<span style="color: #006699;">as.character</span><span style="color: #006FE0;">(</span>x<span style="color: #006FE0;">)</span>
-<span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">here is where people sometimes get lost...</span>
-<span style="color: #006699;">as.numeric</span><span style="color: #006FE0;">(</span>x<span style="color: #006FE0;">)</span>
-<span style="color: #8D8D84;"># </span><span style="color: #8D8D84; font-style: italic;">you probably want</span>
-<span style="color: #006699;">as.numeric</span><span style="color: #006FE0;">(</span><span style="color: #006699;">as.character</span><span style="color: #006FE0;">(</span>x<span style="color: #006FE0;">))</span>
+<span style="color: #ffd700;">as.character</span><span style="color: #d18aff;">(</span>x<span style="color: #d18aff;">)</span>
+<span style="color: #6c6c6c; font-style: italic;"># </span><span style="color: #6c6c6c; font-style: italic;">here is where people sometimes get lost...</span>
+<span style="color: #ffd700;">as.numeric</span><span style="color: #d18aff;">(</span>x<span style="color: #d18aff;">)</span>
+<span style="color: #6c6c6c; font-style: italic;"># </span><span style="color: #6c6c6c; font-style: italic;">you probably want</span>
+<span style="color: #ffd700;">as.numeric</span><span style="color: #d18aff;">(</span><span style="color: #ffd700;">as.character</span><span style="color: #d18aff;">(</span>x<span style="color: #d18aff;">))</span>
 </pre>
 </div>
 
@@ -1958,8 +1903,8 @@ Use the built-in <i>iris</i> data set (comes with R, will be available in your w
 </ol>
 <div class="org-src-container">
 
-<pre class="src src-R"><span style="color: #006699;">class</span><span style="color: #006FE0;">(</span>iris<span style="color: #006FE0;">)</span>
-<span style="color: #006699;">str</span><span style="color: #006FE0;">(</span>iris<span style="color: #006FE0;">)</span>
+<pre class="src src-R"><span style="color: #ffd700;">class</span><span style="color: #d18aff;">(</span>iris<span style="color: #d18aff;">)</span>
+<span style="color: #ffd700;">str</span><span style="color: #d18aff;">(</span>iris<span style="color: #d18aff;">)</span>
 </pre>
 </div>
 
@@ -1982,11 +1927,11 @@ Use the built-in <i>iris</i> data set (comes with R, will be available in your w
 </ol>
 <div class="org-src-container">
 
-<pre class="src src-R"><span style="color: #006699;">class</span><span style="color: #006FE0;">(</span>iris$Species<span style="color: #006FE0;">)</span>
-<span style="color: #006699;">class</span><span style="color: #006FE0;">(</span>iris$Sepal.Length<span style="color: #006FE0;">)</span>
-<span style="color: #006699;">class</span><span style="color: #006FE0;">(</span>iris$Sepal.Width<span style="color: #006FE0;">)</span>
-<span style="color: #006699;">class</span><span style="color: #006FE0;">(</span>iris$Petal.Length<span style="color: #006FE0;">)</span>
-<span style="color: #006699;">class</span><span style="color: #006FE0;">(</span>iris$Petal.Width<span style="color: #006FE0;">)</span>
+<pre class="src src-R"><span style="color: #ffd700;">class</span><span style="color: #d18aff;">(</span>iris$Species<span style="color: #d18aff;">)</span>
+<span style="color: #ffd700;">class</span><span style="color: #d18aff;">(</span>iris$Sepal.Length<span style="color: #d18aff;">)</span>
+<span style="color: #ffd700;">class</span><span style="color: #d18aff;">(</span>iris$Sepal.Width<span style="color: #d18aff;">)</span>
+<span style="color: #ffd700;">class</span><span style="color: #d18aff;">(</span>iris$Petal.Length<span style="color: #d18aff;">)</span>
+<span style="color: #ffd700;">class</span><span style="color: #d18aff;">(</span>iris$Petal.Width<span style="color: #d18aff;">)</span>
 </pre>
 </div>
 
@@ -2010,7 +1955,7 @@ Use the built-in <i>iris</i> data set (comes with R, will be available in your w
 </ol>
 <div class="org-src-container">
 
-<pre class="src src-R">petal <span style="color: #D0372D;">&lt;-</span> <span style="color: #006699;">c</span><span style="color: #006FE0;">(</span>iris$Petal.Length, iris$Petal.Width<span style="color: #006FE0;">)</span>
+<pre class="src src-R">petal <span style="color: #5fafd7;">&lt;-</span> <span style="color: #ffd700;">c</span><span style="color: #d18aff;">(</span>iris$Petal.Length, iris$Petal.Width<span style="color: #d18aff;">)</span>
 </pre>
 </div>
 
@@ -2025,12 +1970,12 @@ Use the built-in <i>iris</i> data set (comes with R, will be available in your w
 </ol>
 <div class="org-src-container">
 
-<pre class="src src-R">petals <span style="color: #D0372D;">&lt;-</span> <span style="color: #006699;">data.frame</span><span style="color: #006FE0;">(</span>value <span style="color: #D0372D;">=</span> petal,
-                     variable <span style="color: #D0372D;">=</span> <span style="color: #006699;">rep</span><span style="color: #006FE0;">(</span><span style="color: #006699;">c</span><span style="color: #006FE0;">(</span><span style="color: #008000;">"Petal.Length"</span>, <span style="color: #008000;">"Petal.Width"</span><span style="color: #006FE0;">)</span>,
-                                    each <span style="color: #D0372D;">=</span> <span style="color: #006699;">nrow</span><span style="color: #006FE0;">(</span>iris<span style="color: #006FE0;">)))</span>
+<pre class="src src-R">petals <span style="color: #5fafd7;">&lt;-</span> <span style="color: #ffd700;">data.frame</span><span style="color: #d18aff;">(</span>value <span style="color: #5fafd7;">=</span> petal,
+                     variable <span style="color: #5fafd7;">=</span> <span style="color: #ffd700;">rep</span><span style="color: #d18aff;">(</span><span style="color: #ffd700;">c</span><span style="color: #d18aff;">(</span><span style="color: #b22222;">"Petal.Length"</span>, <span style="color: #b22222;">"Petal.Width"</span><span style="color: #d18aff;">)</span>,
+                                    each <span style="color: #5fafd7;">=</span> <span style="color: #ffd700;">nrow</span><span style="color: #d18aff;">(</span>iris<span style="color: #d18aff;">)))</span>
 
-<span style="color: #006699;">head</span><span style="color: #006FE0;">(</span>petals<span style="color: #006FE0;">)</span>
-<span style="color: #006699;">tail</span><span style="color: #006FE0;">(</span>petals<span style="color: #006FE0;">)</span>
+<span style="color: #ffd700;">head</span><span style="color: #d18aff;">(</span>petals<span style="color: #d18aff;">)</span>
+<span style="color: #ffd700;">tail</span><span style="color: #d18aff;">(</span>petals<span style="color: #d18aff;">)</span>
 </pre>
 </div>
 
@@ -2070,9 +2015,9 @@ Use the built-in <i>iris</i> data set (comes with R, will be available in your w
 </ol>
 <div class="org-src-container">
 
-<pre class="src src-R" id="ex1.1"><span style="color: #006699;">data</span><span style="color: #006FE0;">(</span>iris<span style="color: #006FE0;">)</span>
-iris2 <span style="color: #D0372D;">&lt;-</span> iris<span style="color: #006FE0;">[</span><span style="color: #006699;">c</span><span style="color: #006FE0;">(</span><span style="color: #008000;">"Sepal.Length"</span>, <span style="color: #008000;">"Species"</span><span style="color: #006FE0;">)]</span>
-<span style="color: #006699;">str</span><span style="color: #006FE0;">(</span>iris2<span style="color: #006FE0;">)</span>
+<pre class="src src-R" id="ex1.1"><span style="color: #ffd700;">data</span><span style="color: #d18aff;">(</span>iris<span style="color: #d18aff;">)</span>
+iris2 <span style="color: #5fafd7;">&lt;-</span> iris<span style="color: #d18aff;">[</span><span style="color: #ffd700;">c</span><span style="color: #d18aff;">(</span><span style="color: #b22222;">"Sepal.Length"</span>, <span style="color: #b22222;">"Species"</span><span style="color: #d18aff;">)]</span>
+<span style="color: #ffd700;">str</span><span style="color: #d18aff;">(</span>iris2<span style="color: #d18aff;">)</span>
 </pre>
 </div>
 
@@ -2083,7 +2028,7 @@ iris2 <span style="color: #D0372D;">&lt;-</span> iris<span style="color: #006FE0
 
 <div class="org-src-container">
 
-<pre class="src src-R" id="ex.2"><span style="color: #006699;">mean</span><span style="color: #006FE0;">(</span>iris2<span style="color: #006FE0;">[</span> , <span style="color: #008000;">"Sepal.Length"</span><span style="color: #006FE0;">])</span>
+<pre class="src src-R" id="ex.2"><span style="color: #ffd700;">mean</span><span style="color: #d18aff;">(</span>iris2<span style="color: #d18aff;">[</span> , <span style="color: #b22222;">"Sepal.Length"</span><span style="color: #d18aff;">])</span>
 </pre>
 </div>
 
@@ -2094,11 +2039,11 @@ iris2 <span style="color: #D0372D;">&lt;-</span> iris<span style="color: #006FE0
 
 <div class="org-src-container">
 
-<pre class="src src-R" id="ex1.3"><span style="color: #006699;">mean</span><span style="color: #006FE0;">(</span>iris2<span style="color: #006FE0;">[</span>iris2<span style="color: #006FE0;">[[</span><span style="color: #008000;">"Species"</span><span style="color: #006FE0;">]]</span> <span style="color: #D0372D;">==</span> <span style="color: #008000;">"setosa"</span>, <span style="color: #008000;">"Sepal.Length"</span><span style="color: #006FE0;">])</span>
-<span style="color: #8D8D84;">## </span><span style="color: #8D8D84; font-style: italic;">shortcut:</span>
-<span style="color: #006699;">with</span><span style="color: #006FE0;">(</span>iris2, <span style="color: #006FE0;">{</span>
-    <span style="color: #006699;">print</span><span style="color: #006FE0;">(</span><span style="color: #006699;">mean</span><span style="color: #006FE0;">(</span>Sepal.Length<span style="color: #006FE0;">[</span>Species <span style="color: #D0372D;">==</span> <span style="color: #008000;">"setosa"</span><span style="color: #006FE0;">]))</span>
-<span style="color: #006FE0;">})</span>
+<pre class="src src-R" id="ex1.3"><span style="color: #ffd700;">mean</span><span style="color: #d18aff;">(</span>iris2<span style="color: #d18aff;">[</span>iris2<span style="color: #d18aff;">[[</span><span style="color: #b22222;">"Species"</span><span style="color: #d18aff;">]]</span> <span style="color: #5fafd7;">==</span> <span style="color: #b22222;">"setosa"</span>, <span style="color: #b22222;">"Sepal.Length"</span><span style="color: #d18aff;">])</span>
+<span style="color: #6c6c6c; font-style: italic;">## </span><span style="color: #6c6c6c; font-style: italic;">shortcut:</span>
+<span style="color: #ffd700;">with</span><span style="color: #d18aff;">(</span>iris2, <span style="color: #d18aff;">{</span>
+    <span style="color: #ffd700;">print</span><span style="color: #d18aff;">(</span><span style="color: #ffd700;">mean</span><span style="color: #d18aff;">(</span>Sepal.Length<span style="color: #d18aff;">[</span>Species <span style="color: #5fafd7;">==</span> <span style="color: #b22222;">"setosa"</span><span style="color: #d18aff;">]))</span>
+<span style="color: #d18aff;">})</span>
 </pre>
 </div>
 
@@ -2109,8 +2054,8 @@ iris2 <span style="color: #D0372D;">&lt;-</span> iris<span style="color: #006FE0
 
 <div class="org-src-container">
 
-<pre class="src src-R" id="ex1.4">m.minus.sd <span style="color: #D0372D;">&lt;-</span> <span style="color: #006699;">mean</span><span style="color: #006FE0;">(</span>iris2<span style="color: #006FE0;">[[</span><span style="color: #008000;">"Sepal.Length"</span><span style="color: #006FE0;">]])</span> <span style="color: #D0372D;">-</span> <span style="color: #006699;">sd</span><span style="color: #006FE0;">(</span>iris2<span style="color: #006FE0;">[[</span><span style="color: #008000;">"Sepal.Length"</span><span style="color: #006FE0;">]])</span>
-<span style="color: #006699;">length</span><span style="color: #006FE0;">(</span>iris2<span style="color: #006FE0;">[</span>iris2<span style="color: #006FE0;">[[</span><span style="color: #008000;">"Sepal.Length"</span><span style="color: #006FE0;">]]</span> <span style="color: #D0372D;">&lt;</span> m.minus.sd, <span style="color: #008000;">"Sepal.Length"</span><span style="color: #006FE0;">])</span>
+<pre class="src src-R" id="ex1.4">m.minus.sd <span style="color: #5fafd7;">&lt;-</span> <span style="color: #ffd700;">mean</span><span style="color: #d18aff;">(</span>iris2<span style="color: #d18aff;">[[</span><span style="color: #b22222;">"Sepal.Length"</span><span style="color: #d18aff;">]])</span> <span style="color: #5fafd7;">-</span> <span style="color: #ffd700;">sd</span><span style="color: #d18aff;">(</span>iris2<span style="color: #d18aff;">[[</span><span style="color: #b22222;">"Sepal.Length"</span><span style="color: #d18aff;">]])</span>
+<span style="color: #ffd700;">length</span><span style="color: #d18aff;">(</span>iris2<span style="color: #d18aff;">[</span>iris2<span style="color: #d18aff;">[[</span><span style="color: #b22222;">"Sepal.Length"</span><span style="color: #d18aff;">]]</span> <span style="color: #5fafd7;">&lt;</span> m.minus.sd, <span style="color: #b22222;">"Sepal.Length"</span><span style="color: #d18aff;">])</span>
 </pre>
 </div>
 </div>
@@ -2127,12 +2072,12 @@ iris2 <span style="color: #D0372D;">&lt;-</span> iris<span style="color: #006FE0
 
 <div class="org-src-container">
 
-<pre class="src src-R" id="ex3.1"><span style="color: #006699;">statsum</span> <span style="color: #D0372D;">&lt;-</span> <span style="color: #0000FF;">function</span><span style="color: #006FE0;">(</span>df<span style="color: #006FE0;">)</span> <span style="color: #006FE0;">{</span>
-    classes <span style="color: #D0372D;">&lt;-</span> <span style="color: #006699;">sapply</span><span style="color: #006FE0;">(</span>df, class<span style="color: #006FE0;">)</span>
-    means <span style="color: #D0372D;">&lt;-</span> <span style="color: #006699;">sapply</span><span style="color: #006FE0;">(</span>df<span style="color: #006FE0;">[</span>classes <span style="color: #D0372D;">==</span> <span style="color: #008000;">"numeric"</span><span style="color: #006FE0;">]</span>, mean<span style="color: #006FE0;">)</span>
-    <span style="color: #0000FF;">return</span><span style="color: #006FE0;">(</span>means<span style="color: #006FE0;">)}</span>
+<pre class="src src-R" id="ex3.1"><span style="color: #ffd700;">statsum</span> <span style="color: #5fafd7;">&lt;-</span> <span style="color: #a1db00;">function</span><span style="color: #d18aff;">(</span>df<span style="color: #d18aff;">)</span> <span style="color: #d18aff;">{</span>
+    classes <span style="color: #5fafd7;">&lt;-</span> <span style="color: #ffd700;">sapply</span><span style="color: #d18aff;">(</span>df, class<span style="color: #d18aff;">)</span>
+    means <span style="color: #5fafd7;">&lt;-</span> <span style="color: #ffd700;">sapply</span><span style="color: #d18aff;">(</span>df<span style="color: #d18aff;">[</span>classes <span style="color: #5fafd7;">==</span> <span style="color: #b22222;">"numeric"</span><span style="color: #d18aff;">]</span>, mean<span style="color: #d18aff;">)</span>
+    <span style="color: #a1db00;">return</span><span style="color: #d18aff;">(</span>means<span style="color: #d18aff;">)}</span>
 
-<span style="color: #006699;">statsum</span><span style="color: #006FE0;">(</span>iris<span style="color: #006FE0;">)</span>
+<span style="color: #ffd700;">statsum</span><span style="color: #d18aff;">(</span>iris<span style="color: #d18aff;">)</span>
 </pre>
 </div>
 
@@ -2143,13 +2088,13 @@ iris2 <span style="color: #D0372D;">&lt;-</span> iris<span style="color: #006FE0
 </ol>
 <div class="org-src-container">
 
-<pre class="src src-R" id="ex3.2"><span style="color: #006699;">statsum</span> <span style="color: #D0372D;">&lt;-</span> <span style="color: #0000FF;">function</span><span style="color: #006FE0;">(</span>df<span style="color: #006FE0;">)</span> <span style="color: #006FE0;">{</span>
-    classes <span style="color: #D0372D;">&lt;-</span> <span style="color: #006699;">sapply</span><span style="color: #006FE0;">(</span>df, class<span style="color: #006FE0;">)</span>
-    means <span style="color: #D0372D;">&lt;-</span> <span style="color: #006699;">sapply</span><span style="color: #006FE0;">(</span>df<span style="color: #006FE0;">[</span>classes <span style="color: #D0372D;">==</span> <span style="color: #008000;">"numeric"</span><span style="color: #006FE0;">]</span>, mean<span style="color: #006FE0;">)</span>
-    counts <span style="color: #D0372D;">&lt;-</span> <span style="color: #006699;">sapply</span><span style="color: #006FE0;">(</span>df<span style="color: #006FE0;">[</span>classes <span style="color: #D0372D;">==</span> <span style="color: #008000;">"factor"</span><span style="color: #006FE0;">]</span>, table<span style="color: #006FE0;">)</span>
-    <span style="color: #0000FF;">return</span><span style="color: #006FE0;">(</span><span style="color: #006699;">list</span><span style="color: #006FE0;">(</span>means, counts<span style="color: #006FE0;">))}</span>
+<pre class="src src-R" id="ex3.2"><span style="color: #ffd700;">statsum</span> <span style="color: #5fafd7;">&lt;-</span> <span style="color: #a1db00;">function</span><span style="color: #d18aff;">(</span>df<span style="color: #d18aff;">)</span> <span style="color: #d18aff;">{</span>
+    classes <span style="color: #5fafd7;">&lt;-</span> <span style="color: #ffd700;">sapply</span><span style="color: #d18aff;">(</span>df, class<span style="color: #d18aff;">)</span>
+    means <span style="color: #5fafd7;">&lt;-</span> <span style="color: #ffd700;">sapply</span><span style="color: #d18aff;">(</span>df<span style="color: #d18aff;">[</span>classes <span style="color: #5fafd7;">==</span> <span style="color: #b22222;">"numeric"</span><span style="color: #d18aff;">]</span>, mean<span style="color: #d18aff;">)</span>
+    counts <span style="color: #5fafd7;">&lt;-</span> <span style="color: #ffd700;">sapply</span><span style="color: #d18aff;">(</span>df<span style="color: #d18aff;">[</span>classes <span style="color: #5fafd7;">==</span> <span style="color: #b22222;">"factor"</span><span style="color: #d18aff;">]</span>, table<span style="color: #d18aff;">)</span>
+    <span style="color: #a1db00;">return</span><span style="color: #d18aff;">(</span><span style="color: #ffd700;">list</span><span style="color: #d18aff;">(</span>means, counts<span style="color: #d18aff;">))}</span>
 
-<span style="color: #006699;">statsum</span><span style="color: #006FE0;">(</span>iris<span style="color: #006FE0;">)</span>
+<span style="color: #ffd700;">statsum</span><span style="color: #d18aff;">(</span>iris<span style="color: #d18aff;">)</span>
 </pre>
 </div>
 </div>
@@ -2165,15 +2110,15 @@ iris2 <span style="color: #D0372D;">&lt;-</span> iris<span style="color: #006FE0
 
 <div class="org-src-container">
 
-<pre class="src src-R" id="ex4.1"><span style="color: #006699;">statsum</span> <span style="color: #D0372D;">&lt;-</span> <span style="color: #0000FF;">function</span><span style="color: #006FE0;">(</span>df<span style="color: #006FE0;">)</span> <span style="color: #006FE0;">{</span>
-    <span style="color: #0000FF;">if</span><span style="color: #006FE0;">(</span><span style="color: #006699;">class</span><span style="color: #006FE0;">(</span>df<span style="color: #006FE0;">)</span> !<span style="color: #D0372D;">=</span> <span style="color: #008000;">"data.frame"</span><span style="color: #006FE0;">)</span> <span style="color: #0000FF;">stop</span><span style="color: #006FE0;">(</span><span style="color: #008000;">"df must be a data.frame!"</span><span style="color: #006FE0;">)</span>
-    classes <span style="color: #D0372D;">&lt;-</span> <span style="color: #006699;">sapply</span><span style="color: #006FE0;">(</span>df, class<span style="color: #006FE0;">)</span>
-    means <span style="color: #D0372D;">&lt;-</span> <span style="color: #006699;">sapply</span><span style="color: #006FE0;">(</span>df<span style="color: #006FE0;">[</span>classes <span style="color: #D0372D;">==</span> <span style="color: #008000;">"numeric"</span><span style="color: #006FE0;">]</span>, mean<span style="color: #006FE0;">)</span>
-    counts <span style="color: #D0372D;">&lt;-</span> <span style="color: #006699;">sapply</span><span style="color: #006FE0;">(</span>df<span style="color: #006FE0;">[</span>classes <span style="color: #D0372D;">==</span> <span style="color: #008000;">"factor"</span><span style="color: #006FE0;">]</span>, table<span style="color: #006FE0;">)</span>
-    <span style="color: #0000FF;">return</span><span style="color: #006FE0;">(</span><span style="color: #006699;">list</span><span style="color: #006FE0;">(</span>means, counts<span style="color: #006FE0;">))}</span>
+<pre class="src src-R" id="ex4.1"><span style="color: #ffd700;">statsum</span> <span style="color: #5fafd7;">&lt;-</span> <span style="color: #a1db00;">function</span><span style="color: #d18aff;">(</span>df<span style="color: #d18aff;">)</span> <span style="color: #d18aff;">{</span>
+    <span style="color: #a1db00;">if</span><span style="color: #d18aff;">(</span><span style="color: #ffd700;">class</span><span style="color: #d18aff;">(</span>df<span style="color: #d18aff;">)</span> !<span style="color: #5fafd7;">=</span> <span style="color: #b22222;">"data.frame"</span><span style="color: #d18aff;">)</span> <span style="color: #a1db00;">stop</span><span style="color: #d18aff;">(</span><span style="color: #b22222;">"df must be a data.frame!"</span><span style="color: #d18aff;">)</span>
+    classes <span style="color: #5fafd7;">&lt;-</span> <span style="color: #ffd700;">sapply</span><span style="color: #d18aff;">(</span>df, class<span style="color: #d18aff;">)</span>
+    means <span style="color: #5fafd7;">&lt;-</span> <span style="color: #ffd700;">sapply</span><span style="color: #d18aff;">(</span>df<span style="color: #d18aff;">[</span>classes <span style="color: #5fafd7;">==</span> <span style="color: #b22222;">"numeric"</span><span style="color: #d18aff;">]</span>, mean<span style="color: #d18aff;">)</span>
+    counts <span style="color: #5fafd7;">&lt;-</span> <span style="color: #ffd700;">sapply</span><span style="color: #d18aff;">(</span>df<span style="color: #d18aff;">[</span>classes <span style="color: #5fafd7;">==</span> <span style="color: #b22222;">"factor"</span><span style="color: #d18aff;">]</span>, table<span style="color: #d18aff;">)</span>
+    <span style="color: #a1db00;">return</span><span style="color: #d18aff;">(</span><span style="color: #ffd700;">list</span><span style="color: #d18aff;">(</span>means, counts<span style="color: #d18aff;">))}</span>
 
-<span style="color: #006699;">statsum</span><span style="color: #006FE0;">(</span><span style="color: #6434A3;">1</span>:<span style="color: #6434A3;">10</span><span style="color: #006FE0;">)</span>
-<span style="color: #006699;">statsum</span><span style="color: #006FE0;">(</span>iris<span style="color: #006FE0;">)</span>
+<span style="color: #ffd700;">statsum</span><span style="color: #d18aff;">(</span><span style="color: #00d7af;">1</span>:<span style="color: #00d7af;">10</span><span style="color: #d18aff;">)</span>
+<span style="color: #ffd700;">statsum</span><span style="color: #d18aff;">(</span>iris<span style="color: #d18aff;">)</span>
 </pre>
 </div>
 
@@ -2184,16 +2129,16 @@ iris2 <span style="color: #D0372D;">&lt;-</span> iris<span style="color: #006FE0
 
 <div class="org-src-container">
 
-<pre class="src src-R" id="ex4.2"><span style="color: #006699;">statsum</span> <span style="color: #D0372D;">&lt;-</span> <span style="color: #0000FF;">function</span><span style="color: #006FE0;">(</span>df<span style="color: #006FE0;">)</span> <span style="color: #006FE0;">{</span>
-    <span style="color: #0000FF;">if</span><span style="color: #006FE0;">(</span><span style="color: #006699;">class</span><span style="color: #006FE0;">(</span>df<span style="color: #006FE0;">)</span> !<span style="color: #D0372D;">=</span> <span style="color: #008000;">"data.frame"</span><span style="color: #006FE0;">)</span> <span style="color: #0000FF;">stop</span><span style="color: #006FE0;">(</span><span style="color: #008000;">"df must be a data.frame!"</span><span style="color: #006FE0;">)</span>
-<span style="color: #006699;">browser</span><span style="color: #006FE0;">()</span>
-    classes <span style="color: #D0372D;">&lt;-</span> <span style="color: #006699;">sapply</span><span style="color: #006FE0;">(</span>df, class<span style="color: #006FE0;">)</span>
-    means <span style="color: #D0372D;">&lt;-</span> <span style="color: #006699;">sapply</span><span style="color: #006FE0;">(</span>df<span style="color: #006FE0;">[</span>classes <span style="color: #D0372D;">==</span> <span style="color: #008000;">"numeric"</span><span style="color: #006FE0;">]</span>, mean<span style="color: #006FE0;">)</span>
-    counts <span style="color: #D0372D;">&lt;-</span> <span style="color: #006699;">sapply</span><span style="color: #006FE0;">(</span>df<span style="color: #006FE0;">[</span>classes <span style="color: #D0372D;">==</span> <span style="color: #008000;">"factor"</span><span style="color: #006FE0;">]</span>, table<span style="color: #006FE0;">)</span>
-    <span style="color: #0000FF;">return</span><span style="color: #006FE0;">(</span><span style="color: #006699;">list</span><span style="color: #006FE0;">(</span>means, counts<span style="color: #006FE0;">))</span>
-<span style="color: #006FE0;">}</span>
+<pre class="src src-R" id="ex4.2"><span style="color: #ffd700;">statsum</span> <span style="color: #5fafd7;">&lt;-</span> <span style="color: #a1db00;">function</span><span style="color: #d18aff;">(</span>df<span style="color: #d18aff;">)</span> <span style="color: #d18aff;">{</span>
+    <span style="color: #a1db00;">if</span><span style="color: #d18aff;">(</span><span style="color: #ffd700;">class</span><span style="color: #d18aff;">(</span>df<span style="color: #d18aff;">)</span> !<span style="color: #5fafd7;">=</span> <span style="color: #b22222;">"data.frame"</span><span style="color: #d18aff;">)</span> <span style="color: #a1db00;">stop</span><span style="color: #d18aff;">(</span><span style="color: #b22222;">"df must be a data.frame!"</span><span style="color: #d18aff;">)</span>
+<span style="color: #ffd700;">browser</span><span style="color: #d18aff;">()</span>
+    classes <span style="color: #5fafd7;">&lt;-</span> <span style="color: #ffd700;">sapply</span><span style="color: #d18aff;">(</span>df, class<span style="color: #d18aff;">)</span>
+    means <span style="color: #5fafd7;">&lt;-</span> <span style="color: #ffd700;">sapply</span><span style="color: #d18aff;">(</span>df<span style="color: #d18aff;">[</span>classes <span style="color: #5fafd7;">==</span> <span style="color: #b22222;">"numeric"</span><span style="color: #d18aff;">]</span>, mean<span style="color: #d18aff;">)</span>
+    counts <span style="color: #5fafd7;">&lt;-</span> <span style="color: #ffd700;">sapply</span><span style="color: #d18aff;">(</span>df<span style="color: #d18aff;">[</span>classes <span style="color: #5fafd7;">==</span> <span style="color: #b22222;">"factor"</span><span style="color: #d18aff;">]</span>, table<span style="color: #d18aff;">)</span>
+    <span style="color: #a1db00;">return</span><span style="color: #d18aff;">(</span><span style="color: #ffd700;">list</span><span style="color: #d18aff;">(</span>means, counts<span style="color: #d18aff;">))</span>
+<span style="color: #d18aff;">}</span>
 
-<span style="color: #006699;">statsum</span><span style="color: #006FE0;">(</span>iris<span style="color: #006FE0;">)</span>
+<span style="color: #ffd700;">statsum</span><span style="color: #d18aff;">(</span>iris<span style="color: #d18aff;">)</span>
 </pre>
 </div>
 </div>
@@ -2210,15 +2155,15 @@ iris2 <span style="color: #D0372D;">&lt;-</span> iris<span style="color: #006FE0
 
 <div class="org-src-container">
 
-<pre class="src src-R" id="ex5.1"><span style="color: #006699;">statsum</span> <span style="color: #D0372D;">&lt;-</span> <span style="color: #0000FF;">function</span><span style="color: #006FE0;">(</span>df<span style="color: #006FE0;">)</span> <span style="color: #006FE0;">{</span>
-    <span style="color: #0000FF;">if</span><span style="color: #006FE0;">(</span><span style="color: #006699;">class</span><span style="color: #006FE0;">(</span>df<span style="color: #006FE0;">)</span> !<span style="color: #D0372D;">=</span> <span style="color: #008000;">"data.frame"</span><span style="color: #006FE0;">)</span> <span style="color: #0000FF;">stop</span><span style="color: #006FE0;">(</span><span style="color: #008000;">"df must be a data.frame!"</span><span style="color: #006FE0;">)</span>
-    classes <span style="color: #D0372D;">&lt;-</span> <span style="color: #006699;">sapply</span><span style="color: #006FE0;">(</span>df, class<span style="color: #006FE0;">)</span>
-    means <span style="color: #D0372D;">&lt;-</span> <span style="color: #006699;">sapply</span><span style="color: #006FE0;">(</span>df<span style="color: #006FE0;">[</span>classes <span style="color: #D0372D;">==</span> <span style="color: #008000;">"numeric"</span><span style="color: #006FE0;">]</span>, mean<span style="color: #006FE0;">)</span>
-    sds <span style="color: #D0372D;">&lt;-</span> <span style="color: #006699;">sapply</span><span style="color: #006FE0;">(</span>df<span style="color: #006FE0;">[</span>classes <span style="color: #D0372D;">==</span> <span style="color: #008000;">"numeric"</span><span style="color: #006FE0;">]</span>, mean<span style="color: #006FE0;">)</span>
-    counts <span style="color: #D0372D;">&lt;-</span> <span style="color: #006699;">sapply</span><span style="color: #006FE0;">(</span>df<span style="color: #006FE0;">[</span>classes <span style="color: #D0372D;">==</span> <span style="color: #008000;">"factor"</span><span style="color: #006FE0;">]</span>, table<span style="color: #006FE0;">)</span>
-    <span style="color: #0000FF;">return</span><span style="color: #006FE0;">(</span><span style="color: #006699;">list</span><span style="color: #006FE0;">(</span><span style="color: #006699;">cbind</span><span style="color: #006FE0;">(</span>means, sds<span style="color: #006FE0;">)</span>, counts<span style="color: #006FE0;">))}</span>
+<pre class="src src-R" id="ex5.1"><span style="color: #ffd700;">statsum</span> <span style="color: #5fafd7;">&lt;-</span> <span style="color: #a1db00;">function</span><span style="color: #d18aff;">(</span>df<span style="color: #d18aff;">)</span> <span style="color: #d18aff;">{</span>
+    <span style="color: #a1db00;">if</span><span style="color: #d18aff;">(</span><span style="color: #ffd700;">class</span><span style="color: #d18aff;">(</span>df<span style="color: #d18aff;">)</span> !<span style="color: #5fafd7;">=</span> <span style="color: #b22222;">"data.frame"</span><span style="color: #d18aff;">)</span> <span style="color: #a1db00;">stop</span><span style="color: #d18aff;">(</span><span style="color: #b22222;">"df must be a data.frame!"</span><span style="color: #d18aff;">)</span>
+    classes <span style="color: #5fafd7;">&lt;-</span> <span style="color: #ffd700;">sapply</span><span style="color: #d18aff;">(</span>df, class<span style="color: #d18aff;">)</span>
+    means <span style="color: #5fafd7;">&lt;-</span> <span style="color: #ffd700;">sapply</span><span style="color: #d18aff;">(</span>df<span style="color: #d18aff;">[</span>classes <span style="color: #5fafd7;">==</span> <span style="color: #b22222;">"numeric"</span><span style="color: #d18aff;">]</span>, mean<span style="color: #d18aff;">)</span>
+    sds <span style="color: #5fafd7;">&lt;-</span> <span style="color: #ffd700;">sapply</span><span style="color: #d18aff;">(</span>df<span style="color: #d18aff;">[</span>classes <span style="color: #5fafd7;">==</span> <span style="color: #b22222;">"numeric"</span><span style="color: #d18aff;">]</span>, mean<span style="color: #d18aff;">)</span>
+    counts <span style="color: #5fafd7;">&lt;-</span> <span style="color: #ffd700;">sapply</span><span style="color: #d18aff;">(</span>df<span style="color: #d18aff;">[</span>classes <span style="color: #5fafd7;">==</span> <span style="color: #b22222;">"factor"</span><span style="color: #d18aff;">]</span>, table<span style="color: #d18aff;">)</span>
+    <span style="color: #a1db00;">return</span><span style="color: #d18aff;">(</span><span style="color: #ffd700;">list</span><span style="color: #d18aff;">(</span><span style="color: #ffd700;">cbind</span><span style="color: #d18aff;">(</span>means, sds<span style="color: #d18aff;">)</span>, counts<span style="color: #d18aff;">))}</span>
 
-<span style="color: #006699;">statsum</span><span style="color: #006FE0;">(</span>iris<span style="color: #006FE0;">)</span>
+<span style="color: #ffd700;">statsum</span><span style="color: #d18aff;">(</span>iris<span style="color: #d18aff;">)</span>
 </pre>
 </div>
 
@@ -2229,17 +2174,17 @@ iris2 <span style="color: #D0372D;">&lt;-</span> iris<span style="color: #006FE0
 
 <div class="org-src-container">
 
-<pre class="src src-R" id="ex5.2"><span style="color: #006699;">statsum</span> <span style="color: #D0372D;">&lt;-</span> <span style="color: #0000FF;">function</span><span style="color: #006FE0;">(</span>df<span style="color: #006FE0;">)</span> <span style="color: #006FE0;">{</span>
-    <span style="color: #0000FF;">if</span><span style="color: #006FE0;">(</span><span style="color: #006699;">class</span><span style="color: #006FE0;">(</span>df<span style="color: #006FE0;">)</span> !<span style="color: #D0372D;">=</span> <span style="color: #008000;">"data.frame"</span><span style="color: #006FE0;">)</span> <span style="color: #0000FF;">stop</span><span style="color: #006FE0;">(</span><span style="color: #008000;">"df must be a data.frame!"</span><span style="color: #006FE0;">)</span>
-    classes <span style="color: #D0372D;">&lt;-</span> <span style="color: #006699;">sapply</span><span style="color: #006FE0;">(</span>df, class<span style="color: #006FE0;">)</span>
-    means <span style="color: #D0372D;">&lt;-</span> <span style="color: #006699;">sapply</span><span style="color: #006FE0;">(</span>df<span style="color: #006FE0;">[</span>classes <span style="color: #D0372D;">==</span> <span style="color: #008000;">"numeric"</span><span style="color: #006FE0;">]</span>, mean<span style="color: #006FE0;">)</span>
-    sds <span style="color: #D0372D;">&lt;-</span> <span style="color: #006699;">sapply</span><span style="color: #006FE0;">(</span>df<span style="color: #006FE0;">[</span>classes <span style="color: #D0372D;">==</span> <span style="color: #008000;">"numeric"</span><span style="color: #006FE0;">]</span>, mean<span style="color: #006FE0;">)</span>
-    counts <span style="color: #D0372D;">&lt;-</span> <span style="color: #006699;">sapply</span><span style="color: #006FE0;">(</span>df<span style="color: #006FE0;">[</span>classes <span style="color: #D0372D;">==</span> <span style="color: #008000;">"factor"</span><span style="color: #006FE0;">]</span>, table<span style="color: #006FE0;">)</span>
-    R <span style="color: #D0372D;">&lt;-</span> <span style="color: #006699;">list</span><span style="color: #006FE0;">(</span><span style="color: #006699;">cbind</span><span style="color: #006FE0;">(</span>means, sds<span style="color: #006FE0;">)</span>, counts<span style="color: #006FE0;">)</span>
-    <span style="color: #006699;">class</span><span style="color: #006FE0;">(</span>R<span style="color: #006FE0;">)</span> <span style="color: #D0372D;">&lt;-</span> <span style="color: #006699;">c</span><span style="color: #006FE0;">(</span><span style="color: #008000;">"statsum"</span>, <span style="color: #006699;">class</span><span style="color: #006FE0;">(</span>R<span style="color: #006FE0;">))</span>
-    <span style="color: #0000FF;">return</span><span style="color: #006FE0;">(</span>R<span style="color: #006FE0;">)}</span>
+<pre class="src src-R" id="ex5.2"><span style="color: #ffd700;">statsum</span> <span style="color: #5fafd7;">&lt;-</span> <span style="color: #a1db00;">function</span><span style="color: #d18aff;">(</span>df<span style="color: #d18aff;">)</span> <span style="color: #d18aff;">{</span>
+    <span style="color: #a1db00;">if</span><span style="color: #d18aff;">(</span><span style="color: #ffd700;">class</span><span style="color: #d18aff;">(</span>df<span style="color: #d18aff;">)</span> !<span style="color: #5fafd7;">=</span> <span style="color: #b22222;">"data.frame"</span><span style="color: #d18aff;">)</span> <span style="color: #a1db00;">stop</span><span style="color: #d18aff;">(</span><span style="color: #b22222;">"df must be a data.frame!"</span><span style="color: #d18aff;">)</span>
+    classes <span style="color: #5fafd7;">&lt;-</span> <span style="color: #ffd700;">sapply</span><span style="color: #d18aff;">(</span>df, class<span style="color: #d18aff;">)</span>
+    means <span style="color: #5fafd7;">&lt;-</span> <span style="color: #ffd700;">sapply</span><span style="color: #d18aff;">(</span>df<span style="color: #d18aff;">[</span>classes <span style="color: #5fafd7;">==</span> <span style="color: #b22222;">"numeric"</span><span style="color: #d18aff;">]</span>, mean<span style="color: #d18aff;">)</span>
+    sds <span style="color: #5fafd7;">&lt;-</span> <span style="color: #ffd700;">sapply</span><span style="color: #d18aff;">(</span>df<span style="color: #d18aff;">[</span>classes <span style="color: #5fafd7;">==</span> <span style="color: #b22222;">"numeric"</span><span style="color: #d18aff;">]</span>, mean<span style="color: #d18aff;">)</span>
+    counts <span style="color: #5fafd7;">&lt;-</span> <span style="color: #ffd700;">sapply</span><span style="color: #d18aff;">(</span>df<span style="color: #d18aff;">[</span>classes <span style="color: #5fafd7;">==</span> <span style="color: #b22222;">"factor"</span><span style="color: #d18aff;">]</span>, table<span style="color: #d18aff;">)</span>
+    R <span style="color: #5fafd7;">&lt;-</span> <span style="color: #ffd700;">list</span><span style="color: #d18aff;">(</span><span style="color: #ffd700;">cbind</span><span style="color: #d18aff;">(</span>means, sds<span style="color: #d18aff;">)</span>, counts<span style="color: #d18aff;">)</span>
+    <span style="color: #ffd700;">class</span><span style="color: #d18aff;">(</span>R<span style="color: #d18aff;">)</span> <span style="color: #5fafd7;">&lt;-</span> <span style="color: #ffd700;">c</span><span style="color: #d18aff;">(</span><span style="color: #b22222;">"statsum"</span>, <span style="color: #ffd700;">class</span><span style="color: #d18aff;">(</span>R<span style="color: #d18aff;">))</span>
+    <span style="color: #a1db00;">return</span><span style="color: #d18aff;">(</span>R<span style="color: #d18aff;">)}</span>
 
-<span style="color: #006699;">str</span><span style="color: #006FE0;">(</span><span style="color: #006699;">statsum</span><span style="color: #006FE0;">(</span>iris<span style="color: #006FE0;">))</span>
+<span style="color: #ffd700;">str</span><span style="color: #d18aff;">(</span><span style="color: #ffd700;">statsum</span><span style="color: #d18aff;">(</span>iris<span style="color: #d18aff;">))</span>
 </pre>
 </div>
 
@@ -2250,14 +2195,14 @@ iris2 <span style="color: #D0372D;">&lt;-</span> iris<span style="color: #006FE0
 
 <div class="org-src-container">
 
-<pre class="src src-R" id="ex5.3"><span style="color: #006699;">print.statsum</span> <span style="color: #D0372D;">&lt;-</span> <span style="color: #0000FF;">function</span><span style="color: #006FE0;">(</span>x<span style="color: #006FE0;">)</span> <span style="color: #006FE0;">{</span>
-    <span style="color: #006699;">cat</span><span style="color: #006FE0;">(</span><span style="color: #008000;">"Numeric variable descriptive statistics:\n"</span><span style="color: #006FE0;">)</span>
-    <span style="color: #006699;">print</span><span style="color: #006FE0;">(</span>x<span style="color: #006FE0;">[[</span><span style="color: #6434A3;">1</span><span style="color: #006FE0;">]]</span>, digits<span style="color: #D0372D;">=</span><span style="color: #6434A3;">2</span><span style="color: #006FE0;">)</span> 
-    <span style="color: #006699;">cat</span><span style="color: #006FE0;">(</span><span style="color: #008000;">"Factor variable counts:\n"</span><span style="color: #006FE0;">)</span>
-    <span style="color: #006699;">print</span><span style="color: #006FE0;">(</span>x<span style="color: #006FE0;">[[</span><span style="color: #6434A3;">2</span><span style="color: #006FE0;">]])</span>
-<span style="color: #006FE0;">}</span>
+<pre class="src src-R" id="ex5.3"><span style="color: #ffd700;">print.statsum</span> <span style="color: #5fafd7;">&lt;-</span> <span style="color: #a1db00;">function</span><span style="color: #d18aff;">(</span>x<span style="color: #d18aff;">)</span> <span style="color: #d18aff;">{</span>
+    <span style="color: #ffd700;">cat</span><span style="color: #d18aff;">(</span><span style="color: #b22222;">"Numeric variable descriptive statistics:\n"</span><span style="color: #d18aff;">)</span>
+    <span style="color: #ffd700;">print</span><span style="color: #d18aff;">(</span>x<span style="color: #d18aff;">[[</span><span style="color: #00d7af;">1</span><span style="color: #d18aff;">]]</span>, digits<span style="color: #5fafd7;">=</span><span style="color: #00d7af;">2</span><span style="color: #d18aff;">)</span> 
+    <span style="color: #ffd700;">cat</span><span style="color: #d18aff;">(</span><span style="color: #b22222;">"Factor variable counts:\n"</span><span style="color: #d18aff;">)</span>
+    <span style="color: #ffd700;">print</span><span style="color: #d18aff;">(</span>x<span style="color: #d18aff;">[[</span><span style="color: #00d7af;">2</span><span style="color: #d18aff;">]])</span>
+<span style="color: #d18aff;">}</span>
 
-<span style="color: #006699;">statsum</span><span style="color: #006FE0;">(</span>iris<span style="color: #006FE0;">)</span>
+<span style="color: #ffd700;">statsum</span><span style="color: #d18aff;">(</span>iris<span style="color: #d18aff;">)</span>
 </pre>
 </div>
 </div>

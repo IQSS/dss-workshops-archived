@@ -91,9 +91,9 @@ Our main example today consists of writing a statistical summary function that c
 
 * Data types
 
-** Vectors and data classes
+** Vector types
 
-Values can be combined into vectors using the ~c()~ function
+Vectors are the building blocks of data objects in R. There are a few basic types, including =logical=, =integer= , =double=, =complex=, and =character=. Values can be combined into vectors using the ~c()~ function.
 #+name: VectorsExample
 #+begin_src R
   num.var <- c(1, 2, 3, 4) # numeric vector
@@ -111,36 +111,7 @@ Values can be combined into vectors using the ~c()~ function
 > 
 #+end_example
 
-Vectors have a \emph{class} which determines how functions treat them
-#+name: classComputations
-#+begin_src R
-  num.var <- "a"
-  class(num.var)
-  mean(num.var) # take the mean of a numeric vector
-  class(char.var)
-  mean(char.var) # cannot average characters
-  class(char.var2)
-#+end_src
-
-#+RESULTS: classComputations
-#+begin_example
-> num.var <- "a"
-> class(num.var)
-[1] "character"
-> mean(num.var) # take the mean of a numeric vector
-[1] NA
-> class(char.var)
-[1] "character"
-> mean(char.var) # cannot average characters
-[1] NA
-> class(char.var2)
-[1] "character"
-> 
-#+end_example
-
-
-** Vector conversion and info
- Vectors can be converted from one class to another
+Vectors can be converted from one class to another using one of the many functions beginning with =as.=, e.g., =as.numeric= and =as.character=.
 #+name: VectorClassConversion
 #+begin_src R
   class(char.var2)
@@ -164,13 +135,31 @@ Vectors have a \emph{class} which determines how functions treat them
 > 
 #+end_example
 
- In addition to class, you can examine the ~length()~ \\ and ~str()~ ucture of vectors
-#+name: VectorLengthStructure
+** Vector attributes
+Vectors (and other R objects for that matter) will always have =mode= and =length= attributes. They may optionally have other attributes such as names or comments. 
 #+begin_src R
   ls() # list objects in our workspace
   length(char.var) # how many elements in char.var?
   str(num.var2) # what is the structure of num.var2?
+  names(num.var2) <- paste("element", seq_along(num.var2))
+  str(num.var2)
 #+end_src
+
+#+RESULTS:
+#+begin_example
+> ls() # list objects in our workspace
+[1] "char.var"   "char.var2"  "isPositive" "log.var"    "num.var"   
+[6] "num.var2"   "petal"      "petals"     "updateIR"  
+> length(char.var) # how many elements in char.var?
+[1] 4
+> str(num.var2) # what is the structure of num.var2?
+ num [1:8] 1 2 3 4 1 2 3 4
+> names(num.var2) <- paste("element", seq_along(num.var2))
+> str(num.var2)
+ Named num [1:8] 1 2 3 4 1 2 3 4
+ - attr(*, "names")= chr [1:8] "element 1" "element 2" "element 3" "element 4" ...
+> 
+#+end_example
 
 #+RESULTS: VectorLengthStructure
 #+begin_example
