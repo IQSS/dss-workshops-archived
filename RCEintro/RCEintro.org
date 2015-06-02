@@ -618,6 +618,8 @@ The Stata code in the example above draws one bootstrap sample and calculates th
 #+END_SRC
 Notice that we passed the =$(Process)= argument so that we can retrieve that value in the do-file and save each output to a unique file that includes the process name.
 
+To submit this job we open a terminal on the RCE, =cd= to the project folder and run =condor_submit bootstrap.submit= to submit the jobs to the cluster. The [[file:Stata_examples/bootstrap.zip][bootstrap example files are available for download]] so you can try it yourself.
+
 *** Monitoring submitted jobs
 After submitting the jobs we may wish to monitor them, e.g. to check if they are running. You can do this by running =condor_q <your_user_name>= in a terminal. If this returns nothing then you have no jobs in the queue. Otherwise you will see information for each request in the queue which will look something like this:
 #+BEGIN_EXAMPLE
@@ -680,6 +682,7 @@ Each of our 1000 processes produced a file in the =output= directory name =out<p
   zip -r bootstrap bootstrap
 #+END_SRC
 
+#+NAME: Try Stata batch example
 *** Try it yourself! 
 Download the [[file:Stata_examples/bootstrap.zip][bootstrap example files]], to the RCE, extract the zip file, and run the example by calling =condor_submit bootstrap.submit= from the =bootstrap= directory.
 
