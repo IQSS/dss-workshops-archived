@@ -618,6 +618,31 @@ Notice that we passed the =$(Process)= argument so that we can retrieve that val
   zip -r bootstrap bootstrap
 #+END_SRC
 
+
+*** Monitoring submitted jobs
+After submitting the jobs we may wish to monitor them, e.g. to check if they are running. You can do this by running =condor_q <your_user_name>= in a terminal. If this returns nothing then you have no jobs in the queue. Otherwise you will see information for each request in the queue which will look something like this:
+#+BEGIN_EXAMPLE
+  -- Schedd: HMDC.batch@rce6-5.hmdc.harvard.edu : <10.0.0.10:9619?sock=7858_e19e_247>
+   ID      OWNER            SUBMITTED     RUN_TIME ST PRI SIZE CMD               
+   200.0   izahn           4/27 11:45   0+00:00:04 R  0   0.0  R --no-save --no-r
+   200.1   izahn           4/27 11:45   0+00:00:04 R  0   0.0  R --no-save --no-r
+   200.2   izahn           4/27 11:45   0+00:00:04 R  0   0.0  R --no-save --no-r
+   200.3   izahn           4/27 11:45   0+00:00:04 R  0   0.0  R --no-save --no-r
+   200.4   izahn           4/27 11:45   0+00:00:04 R  0   0.0  R --no-save --no-r
+   200.5   izahn           4/27 11:45   0+00:00:04 R  0   0.0  R --no-save --no-r
+   200.6   izahn           4/27 11:45   0+00:00:04 R  0   0.0  R --no-save --no-r
+   200.7   izahn           4/27 11:45   0+00:00:04 R  0   0.0  R --no-save --no-r
+   200.8   izahn           4/27 11:45   0+00:00:04 R  0   0.0  R --no-save --no-r
+   200.9   izahn           4/27 11:45   0+00:00:04 R  0   0.0  R --no-save --no-r
+   200.10  izahn           4/27 11:45   0+00:00:04 R  0   0.0  R --no-save --no-r
+   200.11  izahn           4/27 11:45   0+00:00:04 R  0   0.0  R --no-save --no-r
+   200.12  izahn           4/27 11:45   0+00:00:04 R  0   0.0  R --no-save --no-r
+#+END_EXAMPLE
+Perhaps the most important information returned by =condor_q= is the program status (the *ST* column). Status *I* means your job is in the queue but has not yet started running, *R* means the job is currently running, and *H* means the job is on hold. If you job is on hold you can get more information about what the problem might be by running =condor_q -hold=.
+
+You will know your job is finished when it is no longer listed in the =condor_q= output. When it finishes you can examine the output and/or error files to see if the program exited successfully.
+
+
 *** Aggregating results
 Each of our 1000 processes produced a file in the =output= directory name =out<process>.dta=; our next task is to aggregate these results. The do-file below reads each of these files, joins them together, appends them, and plots the result.
 #+BEGIN_SRC Stata :eval no :tangle Stata_examples/bootstrap/aggregate.do
@@ -652,7 +677,8 @@ Each of our 1000 processes produced a file in the =output= directory name =out<p
 
 #+END_SRC
 
-
+*** Try it yourself! 
+Download the [[file:Stata_examples/bootstrap.zip][bootstrap example files]], to the RCE, extract the zip file, and run the example by calling =condor_submit bootstrap.submit= from the =bootstrap= directory.
 
 ** TODO Python Batch Examples
 
