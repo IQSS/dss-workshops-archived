@@ -1,13 +1,11 @@
 
 clear
 set more off
-
+// change to the output directory
 cd output
-
-local list: dir . files "*.dta"
-
-di `list'
-
+// get a list of the output files created by bootstrap.do
+local list: dir . files "output*.dta"
+//loop over the output files appending each one
 local f=1
 foreach file of local list {
         di "`file"'
@@ -19,11 +17,11 @@ foreach file of local list {
         }
         local ++f
 }
+// save the appended results
+saveold "mybootresults", replace
 
-saveold "`path'//mybootdata", replace
-
-// histogram
+// make a histogram
 hist(mean_myvar)
 
-// save graph
-graph export tst.eps
+// save the graph
+graph export "stata_bootstrap.eps", replace

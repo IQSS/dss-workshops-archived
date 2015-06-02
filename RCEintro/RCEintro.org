@@ -172,7 +172,7 @@ Next iterate over a range of sample sizes, generating a distribution of means fo
 #+RESULTS:
 #+begin_example
    user  system elapsed 
- 40.763   0.007  40.773
+ 42.220   0.027  42.254
 #+end_example
 
 The simulation can be carried out much more rapidly using =mclapply= instead:
@@ -184,7 +184,7 @@ The simulation can be carried out much more rapidly using =mclapply= instead:
 #+RESULTS:
 #+begin_example
    user  system elapsed 
- 35.746   1.874   6.569
+ 43.300   2.254   6.862
 #+end_example
 
 Like =lapply= the =mclapply= function returns a list, which we can process as usual. For example, we can construct histograms of the sampling distributions of the mean that we simulated above:
@@ -511,7 +511,7 @@ Now we can set up the simulation as before, passing the =n= calculated above int
 #+END_SRC
 
 #+BEGIN_SRC sh :exports none :results silent
-  cd examples
+  cd R_examples
   zip -r power2 power2
 #+END_SRC
 
@@ -573,6 +573,11 @@ To use the batch system we need to write a do-file that does the calculation wit
   // load the dataset
   use "mydata", clear
 
+  // set seed (shouldn't have to do this, but stata's
+  // random bsample defaults to the same seed each time).
+  // we nee to find a better way to do this.
+  set seed `process'
+
   // sample with replacement
   bsample, cluster(id) idcluster(newid)
 
@@ -613,30 +618,23 @@ The Stata code in the example above draws one bootstrap sample and calculates th
 #+END_SRC
 Notice that we passed the =$(Process)= argument so that we can retrieve that value in the do-file and save each output to a unique file that includes the process name.
 
-#+BEGIN_SRC sh :exports none :results silent
-  cd Stata_examples
-  zip -r bootstrap bootstrap
-#+END_SRC
-
-
 *** Monitoring submitted jobs
 After submitting the jobs we may wish to monitor them, e.g. to check if they are running. You can do this by running =condor_q <your_user_name>= in a terminal. If this returns nothing then you have no jobs in the queue. Otherwise you will see information for each request in the queue which will look something like this:
 #+BEGIN_EXAMPLE
   -- Schedd: HMDC.batch@rce6-5.hmdc.harvard.edu : <10.0.0.10:9619?sock=7858_e19e_247>
    ID      OWNER            SUBMITTED     RUN_TIME ST PRI SIZE CMD               
-   200.0   izahn           4/27 11:45   0+00:00:04 R  0   0.0  R --no-save --no-r
-   200.1   izahn           4/27 11:45   0+00:00:04 R  0   0.0  R --no-save --no-r
-   200.2   izahn           4/27 11:45   0+00:00:04 R  0   0.0  R --no-save --no-r
-   200.3   izahn           4/27 11:45   0+00:00:04 R  0   0.0  R --no-save --no-r
-   200.4   izahn           4/27 11:45   0+00:00:04 R  0   0.0  R --no-save --no-r
-   200.5   izahn           4/27 11:45   0+00:00:04 R  0   0.0  R --no-save --no-r
-   200.6   izahn           4/27 11:45   0+00:00:04 R  0   0.0  R --no-save --no-r
-   200.7   izahn           4/27 11:45   0+00:00:04 R  0   0.0  R --no-save --no-r
-   200.8   izahn           4/27 11:45   0+00:00:04 R  0   0.0  R --no-save --no-r
-   200.9   izahn           4/27 11:45   0+00:00:04 R  0   0.0  R --no-save --no-r
-   200.10  izahn           4/27 11:45   0+00:00:04 R  0   0.0  R --no-save --no-r
-   200.11  izahn           4/27 11:45   0+00:00:04 R  0   0.0  R --no-save --no-r
-   200.12  izahn           4/27 11:45   0+00:00:04 R  0   0.0  R --no-save --no-r
+  24072.0   izahn           6/2  10:22   0+00:00:06 R  0   0.0  stata-mp -q do boo
+  24072.1   izahn           6/2  10:22   0+00:00:06 R  0   0.0  stata-mp -q do boo
+  24072.2   izahn           6/2  10:22   0+00:00:06 R  0   0.0  stata-mp -q do boo
+  24072.6   izahn           6/2  10:22   0+00:00:06 R  0   0.0  stata-mp -q do boo
+  24072.8   izahn           6/2  10:22   0+00:00:06 R  0   0.0  stata-mp -q do boo
+  24072.9   izahn           6/2  10:22   0+00:00:06 R  0   0.0  stata-mp -q do boo
+  24072.10  izahn           6/2  10:22   0+00:00:05 R  0   0.0  stata-mp -q do boo
+  24072.11  izahn           6/2  10:22   0+00:00:06 R  0   0.0  stata-mp -q do boo
+  24072.12  izahn           6/2  10:22   0+00:00:06 R  0   0.0  stata-mp -q do boo
+  24072.13  izahn           6/2  10:22   0+00:00:06 R  0   0.0  stata-mp -q do boo
+  24072.14  izahn           6/2  10:22   0+00:00:05 R  0   0.0  stata-mp -q do boo
+
 #+END_EXAMPLE
 Perhaps the most important information returned by =condor_q= is the program status (the *ST* column). Status *I* means your job is in the queue but has not yet started running, *R* means the job is currently running, and *H* means the job is on hold. If you job is on hold you can get more information about what the problem might be by running =condor_q -hold=.
 
@@ -648,13 +646,11 @@ Each of our 1000 processes produced a file in the =output= directory name =out<p
 #+BEGIN_SRC Stata :eval no :tangle Stata_examples/bootstrap/aggregate.do
   clear
   set more off
-
+  // change to the output directory
   cd output
-
-  local list: dir . files "*.dta"
-
-  di `list'
-
+  // get a list of the output files created by bootstrap.do
+  local list: dir . files "output*.dta"
+  //loop over the output files appending each one
   local f=1
   foreach file of local list {
           di "`file"'
@@ -666,15 +662,22 @@ Each of our 1000 processes produced a file in the =output= directory name =out<p
           }
           local ++f
   }
+  // save the appended results
+  saveold "mybootresults", replace
 
-  saveold "`path'//mybootdata", replace
-
-  // histogram
+  // make a histogram
   hist(mean_myvar)
 
-  // save graph
-  graph export tst.eps
+  // save the graph
+  graph export "stata_bootstrap.eps", replace
 
+#+END_SRC
+
+[[file:images/stata_bootstrap.png]]
+
+#+BEGIN_SRC sh :exports none :results silent
+  cd Stata_examples
+  zip -r bootstrap bootstrap
 #+END_SRC
 
 *** Try it yourself! 
