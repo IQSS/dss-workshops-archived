@@ -4,7 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
 <title>RCE Quick-Start</title>
-<!-- 2015-06-02 Tue 10:15 -->
+<!-- 2015-06-02 Tue 10:47 -->
 <meta  http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta  name="generator" content="Org-mode" />
 <meta  name="author" content="Ista Zahn" />
@@ -1012,7 +1012,7 @@ args process
 <span style="color: #6c6c6c; font-style: italic;">// set seed (shouldn't have to do this, but stata's</span>
 <span style="color: #6c6c6c; font-style: italic;">// random bsample defaults to the same seed each time).</span>
 <span style="color: #6c6c6c; font-style: italic;">// we nee to find a better way to do this.</span>
-<span style="color: #5fafd7;">set</span> <span style="color: #5fafd7;">se</span><span style="color: #00d7af;">ed</span> (`<span style="color: #ff8700;">process</span>' + 100) * 987
+<span style="color: #5fafd7;">set</span> <span style="color: #5fafd7;">se</span><span style="color: #00d7af;">ed</span> `<span style="color: #ff8700;">process</span>'
 
 <span style="color: #6c6c6c; font-style: italic;">// sample with replacement</span>
 <span style="color: #a1db00;">bsample</span>, cluster(id) idcluster(newid)
@@ -1077,19 +1077,17 @@ After submitting the jobs we may wish to monitor them, e.g. to check if they are
 <pre class="example">
 -- Schedd: HMDC.batch@rce6-5.hmdc.harvard.edu : &lt;10.0.0.10:9619?sock=7858_e19e_247&gt;
  ID      OWNER            SUBMITTED     RUN_TIME ST PRI SIZE CMD               
- 200.0   izahn           4/27 11:45   0+00:00:04 R  0   0.0  R --no-save --no-r
- 200.1   izahn           4/27 11:45   0+00:00:04 R  0   0.0  R --no-save --no-r
- 200.2   izahn           4/27 11:45   0+00:00:04 R  0   0.0  R --no-save --no-r
- 200.3   izahn           4/27 11:45   0+00:00:04 R  0   0.0  R --no-save --no-r
- 200.4   izahn           4/27 11:45   0+00:00:04 R  0   0.0  R --no-save --no-r
- 200.5   izahn           4/27 11:45   0+00:00:04 R  0   0.0  R --no-save --no-r
- 200.6   izahn           4/27 11:45   0+00:00:04 R  0   0.0  R --no-save --no-r
- 200.7   izahn           4/27 11:45   0+00:00:04 R  0   0.0  R --no-save --no-r
- 200.8   izahn           4/27 11:45   0+00:00:04 R  0   0.0  R --no-save --no-r
- 200.9   izahn           4/27 11:45   0+00:00:04 R  0   0.0  R --no-save --no-r
- 200.10  izahn           4/27 11:45   0+00:00:04 R  0   0.0  R --no-save --no-r
- 200.11  izahn           4/27 11:45   0+00:00:04 R  0   0.0  R --no-save --no-r
- 200.12  izahn           4/27 11:45   0+00:00:04 R  0   0.0  R --no-save --no-r
+24072.0   izahn           6/2  10:22   0+00:00:06 R  0   0.0  stata-mp -q do boo
+24072.1   izahn           6/2  10:22   0+00:00:06 R  0   0.0  stata-mp -q do boo
+24072.2   izahn           6/2  10:22   0+00:00:06 R  0   0.0  stata-mp -q do boo
+24072.6   izahn           6/2  10:22   0+00:00:06 R  0   0.0  stata-mp -q do boo
+24072.8   izahn           6/2  10:22   0+00:00:06 R  0   0.0  stata-mp -q do boo
+24072.9   izahn           6/2  10:22   0+00:00:06 R  0   0.0  stata-mp -q do boo
+24072.10  izahn           6/2  10:22   0+00:00:05 R  0   0.0  stata-mp -q do boo
+24072.11  izahn           6/2  10:22   0+00:00:06 R  0   0.0  stata-mp -q do boo
+24072.12  izahn           6/2  10:22   0+00:00:06 R  0   0.0  stata-mp -q do boo
+24072.13  izahn           6/2  10:22   0+00:00:06 R  0   0.0  stata-mp -q do boo
+24072.14  izahn           6/2  10:22   0+00:00:05 R  0   0.0  stata-mp -q do boo
 </pre>
 <p>
 Perhaps the most important information returned by <code>condor_q</code> is the program status (the <b>ST</b> column). Status <b>I</b> means your job is in the queue but has not yet started running, <b>R</b> means the job is currently running, and <b>H</b> means the job is on hold. If you job is on hold you can get more information about what the problem might be by running <code>condor_q -hold</code>.
@@ -1112,13 +1110,11 @@ Each of our 1000 processes produced a file in the <code>output</code> directory 
 
 <pre class="src src-Stata"><span style="color: #a1db00;">clear</span>
 <span style="color: #5fafd7;">set</span> <span style="color: #5fafd7;">mo</span><span style="color: #00d7af;">re</span> off
-
+<span style="color: #6c6c6c; font-style: italic;">// change to the output directory</span>
 <span style="color: #a1db00;">cd</span> output
-
+<span style="color: #6c6c6c; font-style: italic;">// get a list of the output files created by bootstrap.do</span>
 <span style="color: #5fafd7;">local</span><span style="color: #ff8700;"> list</span>: <span style="color: #5fafd7;">dir</span> . files <span style="color: #b22222;">"output*.dta"</span>
-
-di `<span style="color: #ff8700;">list</span>'
-
+<span style="color: #6c6c6c; font-style: italic;">//loop over the output files appending each one</span>
 <span style="color: #5fafd7;">local</span><span style="color: #ff8700;"> f</span>=1
 foreach file of local <span style="color: #5fafd7;">list</span> {
         <span style="color: #5fafd7;">di</span> <span style="color: #b22222;">"`file"</span>'
@@ -1130,15 +1126,21 @@ foreach file of local <span style="color: #5fafd7;">list</span> {
         }
         <span style="color: #5fafd7;">local</span> ++f
 }
-
+<span style="color: #6c6c6c; font-style: italic;">// save the appended results</span>
 saveold <span style="color: #b22222;">"mybootresults"</span>, <span style="color: #a1db00;">replace</span>
 
-<span style="color: #6c6c6c; font-style: italic;">// histogram</span>
+<span style="color: #6c6c6c; font-style: italic;">// make a histogram</span>
 hist(mean_myvar)
 
-<span style="color: #6c6c6c; font-style: italic;">// save graph</span>
-graph export tst.eps, <span style="color: #a1db00;">replace</span>
+<span style="color: #6c6c6c; font-style: italic;">// save the graph</span>
+graph export <span style="color: #b22222;">"stata_bootstrap.eps"</span>, <span style="color: #a1db00;">replace</span>
 </pre>
+</div>
+
+
+<div class="figure">
+<p><img src="images/stata_bootstrap.png" alt="stata_bootstrap.png" />
+</p>
 </div>
 </div>
 </div>
@@ -1199,7 +1201,7 @@ We use R for this example because it is the most commonly used program by RCE us
 </div></div>
 <div id="postamble" class="status">
 <p class="author">Author: Ista Zahn</p>
-<p class="date">Created: 2015-06-02 Tue 10:15</p>
+<p class="date">Created: 2015-06-02 Tue 10:47</p>
 <p class="creator"><a href="http://www.gnu.org/software/emacs/">Emacs</a> 24.5.1 (<a href="http://orgmode.org">Org</a> mode 8.2.10)</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
