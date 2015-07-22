@@ -178,9 +178,6 @@ $(document).ready(function() {
 
     // Initialize hideShow
     hsInit();
-
-    // add sticky headers to tables
-    $('table').stickyTableHeaders();
 });
 
 function copyToClipboard(text)
