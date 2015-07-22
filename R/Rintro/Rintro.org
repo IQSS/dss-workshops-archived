@@ -23,6 +23,7 @@
   rm(list=ls())
   .First <- function() {
     require(foreign)
+    require(rio)
     options(width=70)
     options(useFancyQuotes=FALSE)
     options(show.signif.stars=FALSE)
@@ -444,19 +445,61 @@ We can also set the working directory using paths relative to the current workin
 > 
 #+end_example
 
+** Importing data from files the easy way
+In order to read data from a file, you usually have to know what kind of file it is. The table below lists some common data types.
 
-** Importing data from files
+| Common data types      |
+|------------------------|
+| comma separated (.csv) |
+| Stata (.dta)           |
+| SPSS (.sav)            |
+| SAS (.sas7bdat)        |
+| Excel (.xls, .xlsx)    |
+|------------------------|
+
+R is smart enough to recognize most common file formats for us using the =import()= function. To use this functionality we first need to install and attache the =rio= package.
+#+name: install_rio
+#+begin_src R
+  ## install and load the rio package
+  # install.packages("rio")
+  library(rio)
+  ## import data from a variety of formats
+  # read gss data from the gss.rds R file
+  datGSS <- import("dataSets/gss.rds")
+  # read gss data from the gss.csv comma separated file
+  gss.data <- import("dataSets/gss.csv")
+  # read a Stata dataset from gss.dta 
+  datGSS <- import("dataSets/gss.dta")
+#+end_src
+
+#+RESULTS: install_rio
+#+begin_example
+> ## install and load the rio package
+> # install.packages("rio")
+> library(rio)
+> ## import data from a variety of formats
+> # read gss data from the gss.rds R file
+> datGSS <- import("dataSets/gss.rds")
+> # read gss data from the gss.csv comma separated file
+> gss.data <- import("dataSets/gss.csv")
+> # read a Stata dataset from gss.dta 
+> datGSS <- import("dataSets/gss.dta")
+> 
+#+end_example
+
+** Importing data from files the hard way
 In order to read data from a file, you have to know what kind of file it is. The table below lists the functions needed to import data from common file formats.
 
-| data type               | function                | package         |
-|-------------------------+-------------------------+-----------------|
-| comma separated (.csv)  | read.csv()              | utils (default) |
-| other delimited formats | read.table()            | utils (default) |
-| Stata (.dta)            | read.dta()              | foreign         |
-| SPSS (.sav)             | read.spss()             | foreign         |
-| SAS (.sas7bdat)         | read.sas7bdat()         | sas7bdat        |
-| Excel (.xls, .xlsx)     | readWorksheetFromFile() | XLConnect       |
-|-------------------------+-------------------------+-----------------|
+| data type                  | function                | package         |
+|----------------------------+-------------------------+-----------------|
+| comma separated (.csv)     | read.csv()              | utils (default) |
+| other delimited formats    | read.table()            | utils (default) |
+| Stata version 7-12 (.dta)  | read.dta()              | foreign         |
+| Stata version 13-14 (.dta) | read_dta()              | haven           |
+| SPSS (.sav)                | read.spss()             | foreign         |
+| SAS (.sas7bdat)            | read.sas7bdat()         | sas7bdat        |
+| Excel (.xls, .xlsx)        | readWorksheetFromFile() | XLConnect       |
+|----------------------------+-------------------------+-----------------|
 
 Examples:
 #+name: readRDS
@@ -490,28 +533,11 @@ Examples:
 #+begin_src R
   class(datGSS) # check to see that test is what we expect it to be
   dim(datGSS) # how many rows and columns?
-  names(datGSS)[1:10] # first 10 column names
-  str(datGSS[1:5]) # more details about the first 5 columns
+  names(datGSS) # or colnames(datGSS)
+  str(datGSS[1:10]) # more details about the first 10 columns
 #+end_src
 
 #+RESULTS: ExamineStataData
-#+begin_example
-> class(datGSS) # check to see that test is what we expect it to be
-[1] "data.frame"
-> dim(datGSS) # how many rows and columns?
-[1] 1419   35
-> names(datGSS)[1:10] # first 10 column names
- [1] "age"      "educ"     "emailhrs" "hrs1"     "sex"      "usecomp" 
- [7] "usemail"  "useweb"   "webhrs"   "hapmar"  
-> str(datGSS[1:5]) # more details about the first 5 columns
-'data.frame':	1419 obs. of  5 variables:
- $ age     : num  69 27 19 21 19 87 42 19 78 70 ...
- $ educ    : num  12 10 11 9 11 8 11 11 7 9 ...
- $ emailhrs: num  -1 -1 0 -1 50 -1 3 -1 -1 -1 ...
- $ hrs1    : num  -1 60 32 20 -1 -1 -1 -1 -1 22 ...
- $ sex     : Factor w/ 2 levels "Male","Female": 1 1 1 1 1 2 1 2 2 2 ...
-> 
-#+end_example
 
 
 ** Saving and loading R  workspaces
@@ -560,17 +586,15 @@ When you close R you will be asked if you want to save your workspace -- if you 
 
 ** Exercise 1
 
-1. Load the foreign package if you haven't already done so
+1. Install and attach the =rio= package if you haven't already done so
 
-2. Look at the help page for the read.spss function
+2. Read the SPSS data set in dataSets/gss.sav and assign the result to an R data object named GSS.sav
 
-3. Read the SPSS data set in dataSets/gss.sav and assign the result to an R data object named GSS.sav
+3. Make sure that the data loaded in step 2 is a data.frame
 
-4. Make sure that the data loaded in step 2 is a data.frame (hint: check the arguments documented in the help page)
+4. Display the dimensions of the GSS.sav
 
-5. Display the dimensions of the GSS.sav. 
-
-6. BONUS: figure out how to read the Excel file "gss.xlsx" into R
+5. BONUS: figure out how to read the Excel file "gss.xlsx" into R
 
 
 * Data Manipulation
@@ -676,15 +700,16 @@ You can modify data.frames using the =transform()= function.
   datGSS <- transform(datGSS,
                       educ.diff = wifeduc - husbeduc)
 
-  ## ifelse() is also useful; note that the $ operator can
-  ## also be used to create new variables.
-  datGSS$young <- ifelse(datGSS$age < 30, "yes", "no")
+  datGSS$wifeduc_comp <- ifelse(
+                           is.na(datGSS$wifeduc), #condition
+                           mean(datGSS$wifeduc, na.rm=TRUE), # value if condition met
+                           datGSS$wifeduc) # value otherwise
 
-  ## examine our newly created variables
+    ## examine our newly created variables
   head(subset(datGSS,
-              select = c("age", "ageC", "young", "wifeduc",
-                         "husbeduc", "educ.diff")),
-       n = 8)
+              select = c("age", "ageC", "wifeduc", "wifeduc_comp",
+                         "husbeduc", "educ.diff")), n = 8)
+
 #+end_src
 
 #+RESULTS: replaceDataFrame
@@ -697,24 +722,25 @@ You can modify data.frames using the =transform()= function.
 > datGSS <- transform(datGSS,
 +                     educ.diff = wifeduc - husbeduc)
 > 
-> ## ifelse() is also useful; note that the $ operator can
-> ## also be used to create new variables.
-> datGSS$young <- ifelse(datGSS$age < 30, "yes", "no")
+> datGSS$wifeduc_comp <- ifelse(
++                          is.na(datGSS$wifeduc), #condition
++                          mean(datGSS$wifeduc, na.rm=TRUE), # value if condition met
++                          datGSS$wifeduc) # value otherwise
 > 
-> ## examine our newly created variables
+>   ## examine our newly created variables
 > head(subset(datGSS,
-+             select = c("age", "ageC", "young", "wifeduc",
-+                        "husbeduc", "educ.diff")),
-+      n = 8)
-  age       ageC young wifeduc husbeduc educ.diff
-1  69  22.363636    no      NA       NA        NA
-2  27 -19.636364   yes      13       10         3
-3  19 -27.636364   yes      NA       NA        NA
-4  21 -25.636364   yes      NA       NA        NA
-5  19 -27.636364   yes      NA       NA        NA
-6  87  40.363636    no      NA       NA        NA
-7  42  -4.636364    no      10       11        -1
-8  19 -27.636364   yes      NA       NA        NA
++             select = c("age", "ageC", "wifeduc", "wifeduc_complete",
++                        "husbeduc", "educ.diff")), n = 8)
+  age       ageC wifeduc wifeduc_complete husbeduc educ.diff
+1  69  22.363636      NA               NA       NA        NA
+2  27 -19.636364      13               13       10         3
+3  19 -27.636364      NA               NA       NA        NA
+4  21 -25.636364      NA               NA       NA        NA
+5  19 -27.636364      NA               NA       NA        NA
+6  87  40.363636      NA               NA       NA        NA
+7  42  -4.636364      10               10       11        -1
+8  19 -27.636364      NA               NA       NA        NA
+> 
 > 
 #+end_example
 
@@ -1103,42 +1129,31 @@ Using the datGSS data.frame
 #+end_example
 
 2) [@2] Try to figure out how evaluate lines directly from your R script.
+
 =In Rstudo this is 'Control-Enter'; may be different in another GUI=
+
 3) [@3] R includes extensive documentation, including a file named "An introduction to R". Try to find this help file.
+
 =Go to the main help page by running 'help.start() or using the GUI menu, find and click on the link to "An Introduction to R".=
+
 4) [@4] Go to [[http://cran.r-project.org/web/views/]] and skim the topic closest to your field/interests.
+
 =I like the machine learning topic!=
 
 ** Exercise 1 solution                                            :prototype:
 
-1) [@1] Load the foreign package if you haven't already done so
-#+BEGIN_SRC R
-  library(foreign)
+1) [@1] Attach the =rio= package if you haven't already done so
+#+BEGIN_SRC R :results silent
+  ## install.packages("rio")
+  library(rio)
 #+END_SRC
 
-#+RESULTS:
-#+begin_example
-> library(foreign)
-> 
-#+end_example
-
-2) [@2] Look at the help page for the read.spss function
-#+BEGIN_SRC R :eval no
-  help("read.spss")
+2) [@2] Read the SPSS data set in dataSets/gss.sav and assign the result to an R data object named GSS.sav
+#+BEGIN_SRC R :results silent
+  gss.data <- import("dataSets/gss.sav")
 #+END_SRC
 
-3) [@3] Read the SPSS data set in dataSets/gss.sav and assign the result to an R data object named GSS.sav
-#+BEGIN_SRC R
-  gss.data <- read.spss("dataSets/gss.sav", to.data.frame=TRUE)
-#+END_SRC
-
-#+RESULTS:
-#+begin_example
-> gss.data <- read.spss("dataSets/gss.sav", to.data.frame=TRUE)
-> 
-#+end_example
-
-4) [@4] Make sure that the data loaded in step 2 is a data.frame (hint: check the arguments documented in the help page)
+3) [@3] Make sure that the data loaded in step 2 is a data.frame (hint: check the arguments documented in the help page)
 #+BEGIN_SRC R
   class(gss.data)
 #+END_SRC
@@ -1150,7 +1165,7 @@ Using the datGSS data.frame
 > 
 #+end_example
 
-5) [@5] Display the dimensions of the GSS.sav. 
+4) [@4] Display the dimensions of the GSS.sav. 
 #+BEGIN_SRC R
   dim(gss.data)
   nrow(gss.data)
@@ -1170,15 +1185,13 @@ Using the datGSS data.frame
 
 6) [@6] BONUS: figure out how to read the Excel file "gss.xlsx" into R
 #+BEGIN_SRC R
-  library(XLConnect)
-  dat <- readWorksheetFromFile("dataSets/gss.xlsx", sheet = 1)
+  dat <- import("dataSets/gss.xlsx")
   class(dat); dim(dat)
 #+END_SRC
 
 #+RESULTS:
 #+begin_example
-> library(XLConnect)
-> dat <- readWorksheetFromFile("dataSets/gss.xlsx", sheet = 1)
+> dat <- import("dataSets/gss.xlsx")
 > class(dat); dim(dat)
 [1] "data.frame"
 [1] 1419   47
@@ -1188,15 +1201,9 @@ Using the datGSS data.frame
 
 ** Exercise 2 solution                                            :prototype:
 Use the gss.rds data set
-#+BEGIN_SRC R
-  gss <- readRDS("dataSets/gss.rds")
+#+BEGIN_SRC R :results silent
+  gss <- import("dataSets/gss.rds")
 #+END_SRC
-
-#+RESULTS:
-#+begin_example
-> gss <- readRDS("dataSets/gss.rds")
-> 
-#+end_example
 
 1) [@1] Create a subset of the data containing only rows where "usecomp" = "Yes". How many computer users are there?
 #+BEGIN_SRC R
@@ -1258,36 +1265,57 @@ Using the datGSS data.frame
 
 1) [@1] Cross-tabulate sex and emailhrs
 #+BEGIN_SRC R
-  with(datGSS, table(sex, emailhrs))
+  with(datGSS, table(emailhrs, sex))
 #+END_SRC
 
 #+RESULTS:
 #+begin_example
-> with(datGSS, table(sex, emailhrs))
-        emailhrs
-sex       -3  -2  -1   0 0.0166666666666667 0.0333333333333333
-  Male    13   1 303  29                  1                  0
-  Female  18   2 431  39                  0                  1
-        emailhrs
-sex      0.0833333333333333 0.166666666666667 0.25 0.266666666666667
-  Male                   11                11    6                 1
-  Female                  4                 5    7                 0
-        emailhrs
-sex      0.333333333333333 0.5 0.583333333333333 0.666666666666667
-  Male                   5  26                 2                 1
-  Female                10  16                 0                 0
-        emailhrs
-sex      0.75 0.833333333333333   1 1.25 1.5 1.66666666666667   2 2.5
-  Male      0                 1  47    1   5                0  32   0
-  Female    2                 0  66    0   4                1  50   3
-        emailhrs
-sex        3 3.5   4   5   6   7   8  10  12  14  15  16  18  20  21
-  Male    30   1  15  16   7  11   3  17   1   1   6   2   1   6   2
-  Female  30   3  12  24   6   8   9  15   0   3   7   0   0   8   0
-        emailhrs
-sex       25  30  35  40  50  60
-  Male     1   3   0   1   2   0
-  Female   1   2   1   8   0   1
+> with(datGSS, table(emailhrs, sex))
+                    sex
+emailhrs             Male Female
+  -3                   13     18
+  -2                    1      2
+  -1                  303    431
+  0                    29     39
+  0.0166666666666667    1      0
+  0.0333333333333333    0      1
+  0.0833333333333333   11      4
+  0.166666666666667    11      5
+  0.25                  6      7
+  0.266666666666667     1      0
+  0.333333333333333     5     10
+  0.5                  26     16
+  0.583333333333333     2      0
+  0.666666666666667     1      0
+  0.75                  0      2
+  0.833333333333333     1      0
+  1                    47     66
+  1.25                  1      0
+  1.5                   5      4
+  1.66666666666667      0      1
+  2                    32     50
+  2.5                   0      3
+  3                    30     30
+  3.5                   1      3
+  4                    15     12
+  5                    16     24
+  6                     7      6
+  7                    11      8
+  8                     3      9
+  10                   17     15
+  12                    1      0
+  14                    1      3
+  15                    6      7
+  16                    2      0
+  18                    1      0
+  20                    6      8
+  21                    2      0
+  25                    1      1
+  30                    3      2
+  35                    0      1
+  40                    1      8
+  50                    2      0
+  60                    0      1
 > 
 #+end_example
 
@@ -1315,13 +1343,24 @@ datGSS$sex: Female
 #+end_example
 
 3) [@3] Create a scatter plot with educ on the x-axis and incomdol on the y-axis
-#+BEGIN_SRC R :results output graphics :file ex3.png
+#+BEGIN_SRC R :results output graphics :file ex3.png :height 300
   plot(subset(datGSS, select = c("educ", "incomdol")))
 #+END_SRC
 
 #+RESULTS:
 [[file:ex3.png]]
 
+=That first attempt is pretty ugly, let's clean it up.=
+#+BEGIN_SRC R :results output graphics :file ex3_1.png :height 300
+  plot(log(incomdol) ~ jitter(educ, 8), # formula interface with log an jitter
+       data = subset(datGSS, # subsetting data as part of the plot call
+                     subset = educ < 97),
+       cex = .6 # make points smaller
+       )
+#+END_SRC
+
+#+RESULTS:
+[[file:ex3_1.png]]
 
 * Cleanup                                                          :noexport:
 #+name: cleanup
