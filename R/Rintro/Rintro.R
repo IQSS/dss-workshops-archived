@@ -9,8 +9,8 @@
 
 ## Workshop Materials and Introduction
 ## Graphical User Interfaces
-## Data and Functions
 ## Help and package management
+## Data and Functions
 ## Getting data into R
 ## Data Manipulation
 ## Basic Statistics and Graphs
@@ -39,21 +39,15 @@
 ## What is R?
 ## ──────────
 
-##   R is a programming language designed for statistical computing.
+##   R is a /programming language designed for statistical computing/.
 ##   Notable characteristics include:
-
 ##   • Vast capabilities, wide range of statistical and graphical
 ##     techniques
-
 ##   • Very popular in academia, growing popularity in business:
 ##     [http://r4stats.com/articles/popularity/]
-
 ##   • Written primarily by statisticians
-
 ##   • FREE (no cost, open source)
-
 ##   • Excellent community support: mailing list, blogs, tutorials
-
 ##   • Easy to extend by writing new functions
 
 ## InspiRation
@@ -77,15 +71,16 @@ library(ggmap)
 nwbuilding <- geocode("52 Oxford Street, Cambridge, MA") 
 ggmap(get_map("Cambridge, MA", zoom = 15)) +
   geom_point(data=nwbuilding, size = 7, shape = 13, color = "red")
+
 ##   • Want to forecast the population of Australia?
 library(forecast)
 fit <- auto.arima(austres)
 ## Projected numbers (in thousands) of Australian residents
-summary(forecast(fit))
+plot(forecast(fit))
 
-##   These a just a few examples, but generally whatever you're trying to
-##   do, you're probably not the first to try doing it R, and chances are
-##   good that someone has already written a package for that.
+##   Whatever you're trying to do, you're probably not the first to try
+##   doing it R. Chances are good that someone has already written a
+##   package for that.
 
 ## Coming to R
 ## ───────────
@@ -148,43 +143,73 @@ summary(forecast(fit))
 ##   • Go to *Tools => Set working directory => To source file location*
 ##     (more on the working directory later)
 
-##   • I encourage you to add your own notes to this file!
-
-## Things to keep in mind
-## ──────────────────────
-
-##   • Case sensitive, like Stata (unlike SAS)
-
-##   • Comments can be put almost anywhere, starting with a hash mark
-##     ('`#''); everything to the end of the line is a comment
-
-##   • The command prompt "`>'" indicates that R is ready to receive
-##     commands
-
-##   • If a command is not complete at the end of a line, R will give a
-##     different prompt, '`+'' by default
-
-##   • Parentheses must always match (first thing to check if you get an
-##     error)
-
-##   • R Does not care about spaces between commands or arguments
-
-##   • Names should start with a letter and should not contain spaces
-
-##   • Can use "." in object names (e.g., "my.data")
-
-##   • Use forward slash ("/") instead of backslash in path names, even on
-##     Windows
+##   • I encourage you to add your own notes to this file! Every line that
+##     starts with `#' is a comment that will be ignored by R. My comments
+##     all start with `##'; you can add your own, possibly using `#' or
+##     `###' to distinguish your comments from mine.
 
 ## Exercise 0
 ## ──────────
 
+##   The purpose of this exercise is mostly to give you an opportunity to
+##   explore the interface provided by RStudio (or whichever GUI you've
+##   decided to use). You may not know how to do these things; that's fine!
+##   This is an opportunity to learn. If you don't know how to do something
+##   you can can use internet search engines, search on [StackOverflow], or
+##   ask the person next to you.
+
+##   Also keep in mind that we are living in a golden age of tab
+##   completion. If you don't know the name of an R function, try guessing
+##   the first two or three letters and pressing TAB. If you guessed
+##   correctly the function you are looking for should appear in a pop up!
+
 ##   1. Try to get R to add 2 plus 2.
-##   2. Try to figure out how evaluate lines directly from your R script.
-##   3. R includes extensive documentation, including a file named "An
+##   2. Try to calculate the square root of 10.
+##   3. There is an R package named `car' (Companion to Applied
+##      Regression). Try to install this package.
+##   4. R includes extensive documentation, including a file named "An
 ##      introduction to R". Try to find this help file.
-##   4. Go to [http://cran.r-project.org/web/views/] and skim the topic
+##   5. Go to [http://cran.r-project.org/web/views/] and skim the topic
 ##      closest to your field/interests.
+
+##   [StackOverflow] http:stackoverflow.com
+
+## Help and package management
+## ═══════════════════════════
+
+## Asking R for help
+## ─────────────────
+
+##   R has extensive built-in documentation that can be accessed through R
+##   commands or through the GUI.
+##   • Start html help, search/browse using web browser
+##     • at the R console:
+help.start()
+##     • or use the help menu from you GUI
+
+##   • Look up the documentation for a function:
+help(plot)'
+?plot $$ same as above, ? is a shortcut to the help() function
+
+##   • Look up documentation for a package
+help(package="stats")
+
+##   • Search documentation from R (not always the best way… google often
+##     works better)
+## help.search("classification")
+
+## R packages and libraries
+## ────────────────────────
+
+##   There are thousands of R packages that extend R's capabilities.
+
+##   • To view available packages: `library()'
+
+##   • To see what packages are loaded: `search()'
+
+##   • To load a package: `library("car")'
+
+##   • Install new package: `install.packages("stringdist")'
 
 ## Data and Functions
 ## ══════════════════
@@ -220,8 +245,8 @@ ls()
 ##   • optionally perform side-effects such as writing a file to disk or
 ##     opening a graphics window
 
-##   The general form for calling R functions is
-# FunctionName(arg.1, arg.2, ... arg.n)
+##   The general form for calling R functions is `FunctionName(arg.1,
+##     arg.2, ... arg.n)'
 
 ##   Arguments can be matched by position or name
 
@@ -231,49 +256,6 @@ a <- sqrt(y) # Call the sqrt function with argument x=y
 round(a, digits = 2) # Call round() with arguments x=x and digits=2
 # Functions can be nested so an alternative is
 round(sqrt(y), digits = 5) # Take sqrt of a and round
-
-
-## Help and package management
-## ═══════════════════════════
-
-## Asking R for help
-## ─────────────────
-
-##   R has extensive built-in documentation that can be accessed through R
-##   commands or through the GUI.
-##   • Start html help, search/browse using web browser
-##     • at the R console:
-help.start()
-
-##     • or use the help menu from you GUI
-
-##   • Look up the documentation for a function
-help(plot)
-?kmeans
-
-##   • Look up documentation for a package
- help(package="stats")
-
-##   • Search documentation from R (not always the best way… google often
-##     works better)
-help.search("classification")
-
-## R packages and libraries
-## ────────────────────────
-
-##   There are thousands of R packages that extend R's capabilities.
-
-##   • To view available packages:
-library()
-
-##   • To see what packages are loaded:
-search()
-
-##   • To load a package:
-library("car")
-
-##   • Install new package:
-install.packages("stringdist")
 
 ## Getting data into R
 ## ═══════════════════
@@ -437,7 +419,6 @@ head(# first n rows
             ),
      n = 10# show first 10 rows
      )
-
 ##   and the `subset' argument to select rows:
 subset(datGSS,
        # rows where age > 90
@@ -452,14 +433,14 @@ str(datGSS$age)
 ##   greater than 90. Other relational and logical operators are listed
 ##   below.
 
-##   == : equal to
-##   != : not equal to
-##   >  : greater than
-##   <  : less than
-##   >= : greater than or equal to
-##   <= : less than or equal to
-##   &  : and
-##   |  : or
+##   ==: equal to
+##   !=: not equal to
+##   >: greater than
+##   <: less than
+##   >=: greater than or equal to
+##   <=: less than or equal to
+##   &: and
+##   |: or
 
 ## Transforming data.frames
 ## ────────────────────────
@@ -474,8 +455,6 @@ datGSS <- transform(datGSS,
 datGSS <- transform(datGSS,
                     educ.diff = wifeduc - husbeduc)
 
-## ifelse() is also useful; note that the $ operator can
-## also be used to create new variables.
 datGSS$wifeduc_comp <- ifelse(
                          is.na(datGSS$wifeduc), #condition
                          mean(datGSS$wifeduc, na.rm=TRUE), # value if condition met
@@ -518,7 +497,7 @@ saveRDS(datGSS, file = "gss.rds")
 ##      • How many rows does it have?
 ##      • How many columns does it have?
 ##      • What is the class of the "satjob" variable?
-##   4. BONUS: Generate a variable named "dual.earn" equal to 1 if
+##   4. BONUS (hard): Generate a variable named "dual.earn" equal to 1 if
 ##      both wkftwife = 1 and wkfthusb = 1, and zero otherwise
 
 ## Basic Statistics and Graphs
@@ -574,7 +553,7 @@ with(datGSS,
 
 ##   Modeling functions generally use the /formula/ interface whith DV on
 ##   left followed by "~" followed by predictors–for details see
-help("formula")
+##   `help("formula")'
 
 ##   • Predict the number of hours individuals spend on email (emailhrs)
 m1 <- lm(educ ~ sex + age, data = datGSS)
@@ -599,6 +578,7 @@ sink() ## sink with no arguments turns logging off
 ##   Thanks to classes and methods, you can `plot()' many kinds of objects:
 
 plot(datGSS$marital) # Plot a factor
+##   [file:images/examplePlot1.png]
 
 ## Basic graphics: Boxplots by group
 ## ─────────────────────────────────
@@ -606,15 +586,17 @@ plot(datGSS$marital) # Plot a factor
 ##   Thanks to classes and methods, you can `plot()' many kinds of objects:
 with(datGSS,
      plot(marital, educ)) # Plot ordinal by numeric
+##   [file:images/examplePlot2.png]
 
-# Basic graphics: Mosaic chart
+## Basic graphics: Mosaic chart
 ## ────────────────────────────
 
 ##   Thanks to classes and methods, you can `plot()' many kinds of objects:
 with(datGSS, # Plot factor X factor
      plot(marital, happy))
+##   [file:images/examplePlot3.png]
 
-# Exercise 3
+## Exercise 3
 ## ──────────
 
 ##   Using the datGSS data.frame
@@ -686,3 +668,80 @@ with(datGSS, # Plot factor X factor
 
 ##   `I like the machine learning topic!'
 
+## Exercise 1 solution                                          :prototype:
+## ───────────────────
+
+##   1) Attach the `rio' package if you haven't already done so
+## install.packages("rio")
+library(rio)
+
+##   2) Read the SPSS data set in dataSets/gss.sav and assign the result to
+##      an R data object named GSS.sav
+gss.data <- import("dataSets/gss.sav")
+
+##   3) Make sure that the data loaded in step 2 is a data.frame (hint:
+##      check the arguments documented in the help page)
+class(gss.data)
+
+##   4) Display the dimensions of the GSS.sav.
+dim(gss.data)
+nrow(gss.data)
+ncol(gss.data)
+
+##   6) BONUS: figure out how to read the Excel file "gss.xlsx" into R
+dat <- import("dataSets/gss.xlsx")
+class(dat); dim(dat)
+
+## Exercise 2 solution                                          :prototype:
+## ───────────────────
+
+##   Use the gss.rds data set
+gss <- import("dataSets/gss.rds")
+
+##   1) Create a subset of the data containing only rows where "usecomp" =
+##      "Yes". How many computer users are there?
+gss.usecomp <- subset(gss, usecomp == "Yes")
+nrow(gss.usecomp)
+
+##   2) Generate the following variables:
+##      • "rich" equal to 0 if rincdol is less than 100000, and 1 otherwise
+##      • "sinc" equal to incomdol - rincdol
+gss <- transform(gss,
+                 rich = ifelse(rincdol < 100000, 0, 1),
+                 sinc = incomdol - rincdol)
+head(subset(gss, select = c("rincdol", "incomdol", "rich", "sinc")))
+
+##   3) Generate a variable named "dual.earn" equal to 1 if both wkftwife =
+##      1 and wkfthusb = 1, and zero otherwise. How many dual earners are
+##      there?
+gss$dual.earn <- ifelse(gss$wkftwife == 1 & gss$wkfthusb == 1, 1, 0)
+nrow(subset(gss, dual.earn == 1))
+
+## Exercise 3 solution                                          :prototype:
+## ───────────────────
+
+##   Using the datGSS data.frame
+
+##   1) Cross-tabulate sex and emailhrs
+with(datGSS, table(emailhrs, sex))
+
+##   2) Calculate the mean and standard deviation of incomdol by sex
+by(datGSS$incomdol, datGSS$sex, mean)
+by(datGSS$incomdol, datGSS$sex, sd)
+
+##   3) Create a scatter plot with educ on the x-axis and incomdol on the
+##      y-axis
+plot(subset(datGSS, select = c("educ", "incomdol")))
+
+##   `That first attempt is pretty ugly, let's clean it up.'
+plot(log(incomdol) ~ jitter(educ, 8), # formula interface with log an jitter
+     data = subset(datGSS, # subsetting data as part of the plot call
+                   subset = educ < 97),
+     cex = .6 # make points smaller
+     )
+
+## Footnotes
+## ─────────
+
+## [1] Note that `subset()' is a convenience function; see `?Extract' for a
+## more powerful (and complicated) way to subset data.

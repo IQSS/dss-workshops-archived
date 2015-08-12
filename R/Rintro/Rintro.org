@@ -12,7 +12,7 @@
 # property and/or the EXCLUDE_TAGS, place the curser on the poperty line 
 # and press C-c C-c
 
-#+PROPERTY: exports both
+#+PROPERTY: exports code
 #+EXCLUDE_TAGS: noexport mitsetup
 
 
@@ -49,18 +49,12 @@ Everyone: Download workshop materials:
   - Extract the zip file containing the materials to your desktop
  
 ** What is R?
-R is a programming language designed for statistical computing. Notable characteristics include:
-
+R is a /programming language designed for statistical computing/. Notable characteristics include:
 - Vast capabilities, wide range of statistical and graphical techniques
-
 - Very popular in academia, growing popularity in business: [[http://r4stats.com/articles/popularity/]]
-
 - Written primarily by statisticians
-
 - FREE (no cost, open source)
-
 - Excellent community support: mailing list, blogs, tutorials
-
 - Easy to extend by writing new functions
 
 ** InspiRation 
@@ -91,54 +85,17 @@ task, chances are good that there is an R package for that. For example:
 [[file:images/hereweare.png]]
 
 - Want to forecast the population of Australia?
-#+BEGIN_SRC R
+#+BEGIN_SRC R :results output graphics :width 400 :pointsize 3 :res 200 :height 250 :file images/austop.png
   library(forecast)
   fit <- auto.arima(austres)
   ## Projected numbers (in thousands) of Australian residents
-  summary(forecast(fit))
+  plot(forecast(fit))
 #+END_SRC
 
 #+RESULTS:
-#+begin_example
-> library(forecast)
-> fit <- auto.arima(austres)
-> ## Projected numbers (in thousands) of Australian residents
-> summary(forecast(fit))
+[[file:images/austop.png]]
 
-Forecast method: ARIMA(0,2,1)(0,0,1)[4]                   
-
-Model Information:
-Series: austres 
-ARIMA(0,2,1)(0,0,1)[4]                    
-
-Coefficients:
-          ma1    sma1
-      -0.6089  0.1886
-s.e.   0.0966  0.1146
-
-sigma^2 estimated as 97.71:  log likelihood=-323.04
-AIC=652.09   AICc=652.38   BIC=659.48
-
-Error measures:
-                     ME     RMSE    MAE          MPE      MAPE
-Training set -0.6065688 9.964699 7.1448 -0.004158036 0.0463894
-                   MASE       ACF1
-Training set 0.03424753 0.03027738
-
-Forecasts:
-        Point Forecast    Lo 80    Hi 80    Lo 95    Hi 95
-1993 Q3       17704.38 17691.71 17717.05 17685.01 17723.76
-1993 Q4       17747.47 17725.77 17769.18 17714.28 17780.67
-1994 Q1       17794.53 17763.22 17825.85 17746.64 17842.42
-1994 Q2       17836.87 17795.18 17878.57 17773.11 17900.64
-1994 Q3       17880.64 17826.28 17935.00 17797.51 17963.77
-1994 Q4       17924.41 17856.46 17992.35 17820.50 18028.31
-1995 Q1       17968.17 17885.76 18050.59 17842.13 18094.21
-1995 Q2       18011.94 17914.20 18109.67 17862.47 18161.41
-> 
-#+end_example
-
-These a just a few examples, but generally whatever you're trying to do, you're probably not the first to try doing it R, and chances are good that someone has already written a package for that.
+Whatever you're trying to do, you're probably not the first to try doing it R. Chances are good that someone has already written a package for that.
 
 ** Coming to R
 Comming from...
@@ -148,6 +105,7 @@ Comming from...
 - matlab :: http://www.math.umaine.edu/~hiebeler/comp/matlabR.pdf
 - Python :: http://mathesaurus.sourceforge.net/matlab-python-xref.pdf
 #+LATEX: }
+
 
 * Graphical User Interfaces
 
@@ -218,34 +176,57 @@ Emacs + ESS is a very powerful combination, but can be difficult to set up
 
 - Go to *Tools => Set working directory => To source file location* (more on the working directory later)
 
-- I encourage you to add your own notes to this file!
-
-** Things to keep in mind
-
-- Case sensitive, like Stata (unlike SAS)
-
-- Comments can be put almost anywhere, starting with a hash mark ('=#='); everything to the end of the line is a comment
-
-- The command prompt "=>=" indicates that R is ready to receive commands
-
-- If a command is not complete at the end of a line, R will give a different prompt, '=+=' by default
-
-- Parentheses must always match (first thing to check if you get an error)
-
-- R Does not care about spaces between commands or arguments
-
-- Names should start with a letter and should not contain spaces
-
-- Can use "." in object names (e.g., "my.data")
-
-- Use forward slash ("/") instead of backslash in path names, even on Windows
+- I encourage you to add your own notes to this file! Every line that starts with =#= is a comment that will be ignored by R. My comments all start with =##=; you can add your own, possibly using =#= or =###= to distinguish your comments from mine.  
 
 
 ** Exercise 0
+The purpose of this exercise is mostly to give you an opportunity to explore the interface provided by RStudio (or whichever GUI you've decided to use). You may not know how to do these things; that's fine! This is an opportunity to learn. If you don't know how to do something you can can use internet search engines, search on [[http:stackoverflow.com][StackOverflow]], or ask the person next to you.
+
+Also keep in mind that we are living in a golden age of tab completion. If you don't know the name of an R function, try guessing the first two or three letters and pressing TAB. If you guessed correctly the function you are looking for should appear in a pop up! 
+
 1. Try to get R to add 2 plus 2.
-2. Try to figure out how evaluate lines directly from your R script.
-3. R includes extensive documentation, including a file named "An introduction to R". Try to find this help file.
-4. Go to [[http://cran.r-project.org/web/views/]] and skim the topic closest to your field/interests.
+2. Try to calculate the square root of 10.
+3. There is an R package named =car= (Companion to Applied Regression). Try to install this package.
+4. R includes extensive documentation, including a file named "An introduction to R". Try to find this help file.
+5. Go to [[http://cran.r-project.org/web/views/]] and skim the topic closest to your field/interests.
+
+
+* Help and package management
+  
+** Asking R for help
+R has extensive built-in documentation that can be accessed through R commands or through the GUI.
+- Start html help, search/browse using web browser
+  - at the R console:
+    src_R[:exports code :eval no]{help.start()}
+
+  - or use the help menu from you GUI
+
+- Look up the documentation for a function
+  src_R[:exports code :eval no]{help(plot)}
+
+  src_R[:exports code :eval no]{?kmeans}
+
+- Look up documentation for a package
+  src_R[:exports code :eval no]{help(package="stats")}
+
+- Search documentation from R (not always the best way... google often works better)
+  src_R[:exports code :eval no]{help.search("classification")}
+
+** R packages and libraries
+
+There are thousands of R packages that extend R's capabilities.
+
+- To view available packages: 
+  src_R[:exports code :eval no]{library()}
+
+- To see what packages are loaded: 
+  src_R[:exports code :eval no]{search()}
+
+- To load a package: 
+  src_R[:exports code :eval no]{library("car")}
+
+- Install new package: 
+  src_R[:exports code :eval no]{install.packages("stringdist")}
 
 
 * Data and Functions
@@ -336,44 +317,6 @@ Examples:
 [1] 3.31662
 > 
 #+end_example
-
-
-* Help and package management
-  
-** Asking R for help
-R has extensive built-in documentation that can be accessed through R commands or through the GUI.
-- Start html help, search/browse using web browser
-  - at the R console:
-    src_R[:exports code :eval no]{help.start()}
-
-  - or use the help menu from you GUI
-
-- Look up the documentation for a function
-  src_R[:exports code :eval no]{help(plot)}
-
-  src_R[:exports code :eval no]{?kmeans}
-
-- Look up documentation for a package
-  src_R[:exports code :eval no]{help(package="stats")}
-
-- Search documentation from R (not always the best way... google often works better)
-  src_R[:exports code :eval no]{help.search("classification")}
-
-** R packages and libraries
-
-There are thousands of R packages that extend R's capabilities.
-
-- To view available packages: 
-  src_R[:exports code :eval no]{library()}
-
-- To see what packages are loaded: 
-  src_R[:exports code :eval no]{search()}
-
-- To load a package: 
-  src_R[:exports code :eval no]{library("car")}
-
-- Install new package: 
-  src_R[:exports code :eval no]{install.packages("stringdist")}
 
 
 * Getting data into R
@@ -1362,6 +1305,7 @@ datGSS$sex: Female
 #+RESULTS:
 [[file:ex3_1.png]]
 
+
 * Cleanup                                                          :noexport:
 #+name: cleanup
 #+begin_src R :exports none
@@ -1375,6 +1319,7 @@ datGSS$sex: Female
 > system("rm dataSets/NewGSS.csv")
 > 
 #+end_example
+
 
 * Footnotes
 
