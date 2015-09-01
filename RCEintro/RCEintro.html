@@ -3,23 +3,30 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<title>RCE Quick-Start</title>
-<!-- 2015-06-02 Tue 12:23 -->
+<!-- 2015-09-01 Tue 16:06 -->
 <meta  http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta  name="viewport" content="width=device-width, initial-scale=1" />
+<title>RCE Quick-Start</title>
 <meta  name="generator" content="Org-mode" />
 <meta  name="author" content="Ista Zahn" />
 <style type="text/css">
  <!--/*--><![CDATA[/*><!--*/
-  .title  { text-align: center; }
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
   .todo   { font-family: monospace; color: red; }
-  .done   { color: green; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
   .tag    { background-color: #eee; font-family: monospace;
             padding: 2px; font-size: 80%; font-weight: normal; }
   .timestamp { color: #bebebe; }
   .timestamp-kwd { color: #5f9ea0; }
-  .right  { margin-left: auto; margin-right: 0px;  text-align: right; }
-  .left   { margin-left: 0px;  margin-right: auto; text-align: left; }
-  .center { margin-left: auto; margin-right: auto; text-align: center; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
   .underline { text-decoration: underline; }
   #postamble p, #preamble p { font-size: 90%; margin: .2em; }
   p.verse { margin-left: 3%; }
@@ -58,15 +65,14 @@
   caption.t-above { caption-side: top; }
   caption.t-bottom { caption-side: bottom; }
   td, th { vertical-align:top;  }
-  th.right  { text-align: center;  }
-  th.left   { text-align: center;   }
-  th.center { text-align: center; }
-  td.right  { text-align: right;  }
-  td.left   { text-align: left;   }
-  td.center { text-align: center; }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
   dt { font-weight: bold; }
-  .footpara:nth-child(2) { display: inline; }
-  .footpara { display: block; }
+  .footpara { display: inline; }
   .footdef  { margin-bottom: 1em; }
   .figure { padding: 1em; }
   .figure p { text-align: center; }
@@ -146,81 +152,79 @@ for the JavaScript code in this tag.
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#sec-1">1. What is the RCE?</a></li>
-<li><a href="#sec-2">2. Accessing the RCE</a></li>
-<li><a href="#sec-3">3. Power at your fingertips</a></li>
-<li><a href="#sec-4">4. Project folders &amp; shared space</a></li>
-<li><a href="#sec-5">5. Getting your data on and off the RCE</a></li>
-<li><a href="#sec-6">6. Interactive jobs</a>
+<li><a href="#orgheadline1">1. What is the RCE?</a></li>
+<li><a href="#orgheadline2">2. Accessing the RCE</a></li>
+<li><a href="#orgheadline3">3. Power at your fingertips</a></li>
+<li><a href="#orgheadline4">4. Project folders &amp; shared space</a></li>
+<li><a href="#orgheadline5">5. Getting your data on and off the RCE</a></li>
+<li><a href="#orgheadline14">6. Interactive jobs</a>
 <ul>
-<li><a href="#sec-6-1">Launching applications on the interactive nodes</a></li>
-<li><a href="#sec-6-2">Available RCE powered applications</a></li>
-<li><a href="#sec-6-3">Using multiple CPUs in interactive jobs</a>
+<li><a href="#orgheadline6">Launching applications on the interactive nodes</a></li>
+<li><a href="#orgheadline7">Available RCE powered applications</a></li>
+<li><a href="#orgheadline9">Using multiple CPUs in interactive jobs</a>
 <ul>
-<li><a href="#sec-6-3-1">Using multiple CPUs in interactive R programs</a></li>
-<li><a href="#sec-6-3-2">Using multiple CPUs in other programming languages and applications</a></li>
+<li><a href="#orgheadline12">Using multiple CPUs in interactive R programs</a></li>
+<li><a href="#orgheadline13">Using multiple CPUs in other programming languages and applications</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li><a href="#sec-7">7. Batch Jobs Overview</a>
+<li><a href="#orgheadline8">7. Batch Jobs Overview</a>
 <ul>
-<li><a href="#sec-7-1">Preparing for batch submission</a></li>
-<li><a href="#sec-7-2">Submit file overview</a></li>
+<li><a href="#orgheadline15">Preparing for batch submission</a></li>
+<li><a href="#orgheadline16">Submit file overview</a></li>
 </ul>
 </li>
-<li><a href="#sec-8">8. Batch Job Examples</a>
+<li><a href="#orgheadline37">8. Batch Job Examples</a>
 <ul>
-<li><a href="#sec-8-1">R Batch Examples</a>
+<li><a href="#orgheadline17">R Batch Examples</a>
 <ul>
-<li><a href="#sec-8-1-1">Batch example: Simple power simulation in R</a></li>
-<li><a href="#sec-8-1-2">Batch example: Power simulation in R with varying parameters</a></li>
+<li><a href="#orgheadline21">Batch example: Simple power simulation in R</a></li>
+<li><a href="#orgheadline27">Batch example: Power simulation in R with varying parameters</a></li>
 </ul>
 </li>
-<li><a href="#sec-8-2">Stata Batch Example</a>
+<li><a href="#orgheadline18">Stata Batch Examples</a>
 <ul>
-<li><a href="#sec-8-2-1">Stata bootstrap do-file</a></li>
-<li><a href="#sec-8-2-2">Submit file</a></li>
-<li><a href="#sec-8-2-3">Monitoring submitted jobs</a></li>
-<li><a href="#sec-8-2-4">Aggregating results</a></li>
-<li><a href="#sec-8-2-5">Try it yourself!</a></li>
+<li><a href="#orgheadline32">Stata bootstrap do-file</a></li>
+<li><a href="#orgheadline33">Submit file</a></li>
+<li><a href="#orgheadline34">Monitoring submitted jobs</a></li>
+<li><a href="#orgheadline35">Aggregating results</a></li>
+<li><a href="#orgheadline36">Try it yourself!</a></li>
 </ul>
 </li>
-<li><a href="#sec-8-3"><span class="todo TODO">TODO</span> Python Batch Examples</a></li>
-<li><a href="#sec-8-4"><span class="todo TODO">TODO</span> Matlab Batch Examples</a></li>
+<li><a href="#orgheadline19"><span class="todo nilTODO">TODO</span> Python Batch Examples</a></li>
+<li><a href="#orgheadline20"><span class="todo nilTODO">TODO</span> Matlab Batch Examples</a></li>
 </ul>
 </li>
-<li><a href="#sec-9">9. <span class="todo TODO">TODO</span> Installing custom packages on the RCE</a>
+<li><a href="#orgheadline41">9. <span class="todo nilTODO">TODO</span> Installing custom packages on the RCE</a>
 <ul>
-<li><a href="#sec-9-1">Installing R packages</a></li>
-<li><a href="#sec-9-2">Installing Python packages</a></li>
-<li><a href="#sec-9-3">Installing Stata packages</a></li>
+<li><a href="#orgheadline38">Installing R packages</a></li>
+<li><a href="#orgheadline39">Installing Python packages</a></li>
+<li><a href="#orgheadline40">Installing Stata packages</a></li>
 </ul>
 </li>
-<li><a href="#sec-10">10. <span class="todo TODO">TODO</span> Getting help</a></li>
+<li><a href="#orgheadline42">10. <span class="todo nilTODO">TODO</span> Getting help</a></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-sec-1" class="outline-2">
-<h2 id="sec-1"><span class="section-number-2">1</span> What is the RCE?</h2>
+<div id="outline-container-orgheadline1" class="outline-2">
+<h2 id="orgheadline1"><span class="section-number-2">1</span> What is the RCE?</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 The Research Computing Environment (RCE) is a large powerful computer cluster that you can use for computations that are too large to be conveniently done on a personal computer. The RCE is available to researchers at Harvard and MIT. 
 </p>
 
 <p>
-To obtain an RCE account send an email to <a href="mailto:help@iq.harvard.edu">mailto:help@iq.harvard.edu</a>. You will receive a response asking you several questions about your requirements (e.g., if you need backups, how much data storage space you need). For details on the services provided and limitations and restrictions of the service refer to <a href="http://projects.iq.harvard.edu/user-services/research-computing-environment-sla">http://projects.iq.harvard.edu/user-services/research-computing-environment-sla</a>
+To obtain an RCE account send an email to <a href="mailto:help@iq.harvard.edu">mailto:help@iq.harvard.edu</a>. You will receive a response asking you several questions about your requirements (e.g., if you need backups, how much data storage space you need). For details on the services provided and limitations and restrictions of the service refer to <a href="http://projects.iq.harvard.edu/user-services/research-computing-environment-sla">http://projects.iq.harvard.edu/user-services/research-computing-environment-sla</a>.
 </p>
 
 <p>
 You can use the RCE in one of two primary ways:
 </p>
 <dl class="org-dl">
-<dt> Interactive jobs </dt><dd>Run your computation as you would on your PC, but on a much more powerful machine with up to 24 CPU cores and up to 256Gb of memory.
-</dd>
-<dt> Batch jobs </dt><dd>Run your computation in the background using up to several hundred computers at once.
-</dd>
+<dt>Interactive jobs</dt><dd>Run your computation as you would on your PC, but on a much more powerful machine with up to 24 CPU cores and up to 256Gb of memory.</dd>
+<dt>Batch jobs</dt><dd>Run your computation in the background using up to several hundred computers at once.</dd>
 </dl>
 
 <p>
@@ -229,8 +233,8 @@ Interactive jobs are good for memory intensive computations that may be unfeasib
 </div>
 </div>
 
-<div id="outline-container-sec-2" class="outline-2">
-<h2 id="sec-2"><span class="section-number-2">2</span> Accessing the RCE</h2>
+<div id="outline-container-orgheadline2" class="outline-2">
+<h2 id="orgheadline2"><span class="section-number-2">2</span> Accessing the RCE</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 You can access the RCE using the <a href="http://projects.iq.harvard.edu/rce/nx4_installation">nomachine</a> remote desktop software, or via the command line using <code>ssh</code>. If you are a command line wizard and only need to run batch jobs <code>ssh</code> is the way to go; for most of us however <code>nomachine</code> is a much more useful way to access the RCE. It allows you to interact with the applications on the cluster much as you interact with applications on your local computer. 
@@ -240,16 +244,13 @@ You can access the RCE using the <a href="http://projects.iq.harvard.edu/rce/nx4
 To get started, download the NoMachine client for your operating system: 
 </p>
 <ul class="org-ul">
-<li><a href="http://downloads.hmdc.harvard.edu/nx/4/nomachine-client-windows-latest.zip">Windows</a>
-</li>
-<li><a href="http://downloads.hmdc.harvard.edu/nx/4/nomachine-client-osx-latest.dmg">OSX</a>
-</li>
-<li><a href="http://downloads.hmdc.harvard.edu/nx/4/nomachine-client-linux-latest.zip">Linux</a>
-</li>
+<li><a href="http://downloads.hmdc.harvard.edu/nx/4/nomachine-client-windows-latest.zip">Windows</a></li>
+<li><a href="http://downloads.hmdc.harvard.edu/nx/4/nomachine-client-osx-latest.dmg">OSX</a></li>
+<li><a href="http://downloads.hmdc.harvard.edu/nx/4/nomachine-client-linux-latest.zip">Linux</a></li>
 </ul>
 
 <p>
-After downloading, Windows users should right-click on the <code>nomachine-client-windows-latest.zip</code> file and choose <code>Extract to here</code>. Open the <code>NoMachine Client</code> folder and double-click on the .Exe files to start the installation<sup><a id="fnr.1" name="fnr.1" class="footref" href="#fn.1">1</a></sup>. Mac users should double-click on the <code>nomachine-client-osx-latest.dmg</code> and double-click on the installer package to begin the installation.
+After downloading, Windows users should right-click on the <code>nomachine-client-windows-latest.zip</code> file and choose <code>Extract to here</code>. Open the <code>NoMachine Client</code> folder and double-click on the .Exe files to start the installation<sup><a id="fnr.1" class="footref" href="#fn.1">1</a></sup>. Mac users should double-click on the <code>nomachine-client-osx-latest.dmg</code> and double-click on the installer package to begin the installation.
 </p>
 
 <p>
@@ -260,32 +261,22 @@ Once you have installed the NoMachine software you should launch the NoMachine a
 Once the application launches:
 </p>
 <ul class="org-ul">
-<li>Click <code>Continue</code>.
-</li>
-<li>Click <code>Click here to create a new connection</code>.
-</li>
-<li>Keep clicking <code>Continue</code> until you get to the Hosts screen.
-</li>
-<li>Fill in the Host field with <code>rce.hmdc.harvard.edu</code>.
-</li>
-<li>Keep clicking <code>Continue</code> until you get to the Name screen.
-</li>
-<li>Fill in the Name field with <code>RCE6</code> and click <code>Done</code>.
-</li>
+<li>Click <code>Continue</code>.</li>
+<li>Click <code>Click here to create a new connection</code>.</li>
+<li>Keep clicking <code>Continue</code> until you get to the Hosts screen.</li>
+<li>Fill in the Host field with <code>rce.hmdc.harvard.edu</code>.</li>
+<li>Keep clicking <code>Continue</code> until you get to the Name screen.</li>
+<li>Fill in the Name field with <code>RCE6</code> and click <code>Done</code>.</li>
 </ul>
 
 <p>
 Once you have configured NoMachine you should test it out to make sure you can connect to the RCE: 
 </p>
 <ul class="org-ul">
-<li>Click on the <code>RCE6</code> entry and then click <code>Connect</code>.
-</li>
-<li>Fill in the user name and password fields with your RCE user name and password.
-</li>
-<li>On the following screen click on <code>New virtual desktop or custom session</code>.
-</li>
-<li>Click on <code>Create a new virtual desktop</code> and click <code>Continue</code>.
-</li>
+<li>Click on the <code>RCE6</code> entry and then click <code>Connect</code>.</li>
+<li>Fill in the user name and password fields with your RCE user name and password.</li>
+<li>On the following screen click on <code>New virtual desktop or custom session</code>.</li>
+<li>Click on <code>Create a new virtual desktop</code> and click <code>Continue</code>.</li>
 </ul>
 
 <p>
@@ -304,8 +295,8 @@ If you have any difficulties installing NoMachine, detailed documentation is ava
 </div>
 </div>
 
-<div id="outline-container-sec-3" class="outline-2">
-<h2 id="sec-3"><span class="section-number-2">3</span> Power at your fingertips</h2>
+<div id="outline-container-orgheadline3" class="outline-2">
+<h2 id="orgheadline3"><span class="section-number-2">3</span> Power at your fingertips</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 You can run applications on the RCE <i>interactively</i> or using the <i>batch</i> system. If you simply want a more powerful version of your PC (e.g., more memory, more CPUs) then the interactive nodes are what you want. If you want to split your task up into hundreds of pieces and run each piece simultaneously, then you want the batch modes.
@@ -315,18 +306,15 @@ You can run applications on the RCE <i>interactively</i> or using the <i>batch</
 More specifically, the RCE provides three levels of service:
 </p>
 <dl class="org-dl">
-<dt> Login nodes </dt><dd>Provides access to a desktop environment (similar to Remote Desktop) from which you can launch applications. The login nodes should not be used for computationally intensive jobs; the main function of the login nodes is to provide access to the interactive and batch nodes. You access the login nodes using the NoMachine client, as described in <a href="#sec-2">Accessing the RCE</a>.
-</dd>
-<dt> Interactive nodes </dt><dd>Interactive nodes allow you to run applications on very powerful computers. You can launch applications on the interactive nodes from the login node desktop using the <code>Applications --&gt; RCE Powered Applications</code> menu. Applications launched from this menu will run on more powerful machines with large memory resources (up to 256GB) and up to 24 CPU cores.
-</dd>
-<dt> Batch nodes </dt><dd>Where interactive nodes give you access to a single very powerful computer, batch nodes provide a swarm of hundreds of small computers. You can run your computation in parallel on each of them, which can provide dramatically reduced compute time for many applications. You access the batch nodes using the <i>command line</i> which you can access by starting a terminal application from the  <code>Applications --&gt; Accessories --&gt; terminal</code> menu.
-</dd>
+<dt>Login nodes</dt><dd>Provides access to a desktop environment (similar to Remote Desktop) from which you can launch applications. The login nodes should not be used for computationally intensive jobs; the main function of the login nodes is to provide access to the interactive and batch nodes. You access the login nodes using the NoMachine client, as described in <a href="#orgheadline2">Accessing the RCE</a>.</dd>
+<dt>Interactive nodes</dt><dd>Interactive nodes allow you to run applications on very powerful computers. You can launch applications on the interactive nodes from the login node desktop using the <code>Applications --&gt; RCE Powered Applications</code> menu. Applications launched from this menu will run on more powerful machines with large memory resources (up to 256GB) and up to 24 CPU cores.</dd>
+<dt>Batch nodes</dt><dd>Where interactive nodes give you access to a single very powerful computer, batch nodes provide a swarm of hundreds of small computers. You can run your computation in parallel on each of them, which can provide dramatically reduced compute time for many applications. You access the batch nodes using the <i>command line</i> which you can access by starting a terminal application from the  <code>Applications --&gt; Accessories --&gt; terminal</code> menu.</dd>
 </dl>
 </div>
 </div>
 
-<div id="outline-container-sec-4" class="outline-2">
-<h2 id="sec-4"><span class="section-number-2">4</span> Project folders &amp; shared space</h2>
+<div id="outline-container-orgheadline4" class="outline-2">
+<h2 id="orgheadline4"><span class="section-number-2">4</span> Project folders &amp; shared space</h2>
 <div class="outline-text-2" id="text-4">
 <p>
 When your RCE account was created a home folder was set up for you, with <i>Documents</i>, <i>Downloads</i>, <i>Desktop</i> and other common sub-directories. However you can only store a maximum of 5Gb in your home folder. For larger projects you should use a <i>project folder</i>; one was probably set up for you when your account was activated. There is a shortcut in your home directory named <i>shared_space</i>, which will contain any project folders you have access to. You should store large data sets and other large or numerous files in these project folders.
@@ -338,11 +326,11 @@ Project space can be used privately, or shared with collaborators (hence the nam
 </div>
 </div>
 
-<div id="outline-container-sec-5" class="outline-2">
-<h2 id="sec-5"><span class="section-number-2">5</span> Getting your data on and off the RCE</h2>
+<div id="outline-container-orgheadline5" class="outline-2">
+<h2 id="orgheadline5"><span class="section-number-2">5</span> Getting your data on and off the RCE</h2>
 <div class="outline-text-2" id="text-5">
 <p>
-People often use the RCE for memory or CPU intensive data analysis projects. If this is your intention as well, chances are that you have one or more (potentially large) data files that you will need to copy to the RCE. Remember that disk space in your home directory is limited, so if you have a large amount of data make sure to transfer it directly to your <i>project space folder</i>.
+People often use the RCE for memory or CPU intensive data analysis projects. If this is your intention as well, chances are that you have one or more (potentially large) data files that you will need to copy to the RCE. Remember that disk space in your home directory is limited, so if you have a large amount of data make sure to <i>transfer data directly to your <a href="#orgheadline4">project space folder</a></i>.
 </p>
 
 <p>
@@ -361,44 +349,37 @@ If you prefer to transfer files using another file transfer client, anything tha
 </div>
 </div>
 
-<div id="outline-container-sec-6" class="outline-2">
-<h2 id="sec-6"><span class="section-number-2">6</span> Interactive jobs</h2>
+<div id="outline-container-orgheadline14" class="outline-2">
+<h2 id="orgheadline14"><span class="section-number-2">6</span> Interactive jobs</h2>
 <div class="outline-text-2" id="text-6">
 <p>
 When you first log on to the RCE you are on a <i>login node</i>. The login nodes are not designed for intensive computation; the purpose of the login nodes is to provide access to the <i>interactive nodes</i> and the <i>batch nodes</i>. Interactive jobs are useful when a) you need a lot of memory (e.g., because you need to load a large dataset into memory), and/or b) you want to use multiple cores to speed up your computation.
 </p>
 </div>
 
-<div id="outline-container-sec-6-1" class="outline-3">
-<h3 id="sec-6-1">Launching applications on the interactive nodes</h3>
-<div class="outline-text-3" id="text-6-1">
+<div id="outline-container-orgheadline6" class="outline-3">
+<h3 id="orgheadline6">Launching applications on the interactive nodes</h3>
+<div class="outline-text-3" id="text-orgheadline6">
 <p>
-Running applications on the interactive nodes is very easy; just log in <a href="#sec-2">using NoMachine</a> and launch your application from the <code>Application --&gt; RCE Powered</code> menu. A dialog will open asking you how much memory you need and how many CPUs, and then your application will open. That's all there is to it! Well, we should say that the RCE is a shared resource, so please try not to request more memory or CPUs than you need. Also, applications running on the interactive nodes will expire after five days; you can request an extension, but if you fail to do so your job will be terminated 120 hours after it starts. For details refer to <a href="http://projects.iq.harvard.edu/rce/book/extending-rce-powered-application">http://projects.iq.harvard.edu/rce/book/extending-rce-powered-application</a>.
+Running applications on the interactive nodes is very easy; just log in <a href="#orgheadline2">using NoMachine</a> and launch your application from the <code>Application --&gt; RCE Powered</code> menu. A dialog will open asking you how much memory you need and how many CPUs, and then your application will open. That's all there is to it! Well, we should say that the RCE is a shared resource, so please <i>try not to request more memory or CPUs than you need</i>. Also, applications running on the interactive nodes will expire after five days; you can request an extension, but if you fail to do so your job will be terminated 120 hours after it starts. For details refer to <a href="http://projects.iq.harvard.edu/rce/book/extending-rce-powered-application">http://projects.iq.harvard.edu/rce/book/extending-rce-powered-application</a>.
 </p>
 </div>
 </div>
 
-<div id="outline-container-sec-6-2" class="outline-3">
-<h3 id="sec-6-2">Available RCE powered applications</h3>
-<div class="outline-text-3" id="text-6-2">
+<div id="outline-container-orgheadline7" class="outline-3">
+<h3 id="orgheadline7">Available RCE powered applications</h3>
+<div class="outline-text-3" id="text-orgheadline7">
 <p>
 Available RCE powered applications include:
 </p>
 <ul class="org-ul">
-<li>Gauss
-</li>
-<li>Mathematica
-</li>
-<li>Matlab/Octave
-</li>
-<li>R/RStudio
-</li>
-<li>SAS
-</li>
-<li>Stata (MP and SE)
-</li>
-<li>StatTransfer
-</li>
+<li>Gauss</li>
+<li>Mathematica</li>
+<li>Matlab/Octave</li>
+<li>R/RStudio</li>
+<li>SAS</li>
+<li>Stata (MP and SE)</li>
+<li>StatTransfer</li>
 </ul>
 
 <p>
@@ -411,18 +392,18 @@ If you are using the interactive nodes primarily for the large memory they provi
 </div>
 </div>
 
-<div id="outline-container-sec-6-3" class="outline-3">
-<h3 id="sec-6-3">Using multiple CPUs in interactive jobs</h3>
-<div class="outline-text-3" id="text-6-3">
+<div id="outline-container-orgheadline9" class="outline-3">
+<h3 id="orgheadline9">Using multiple CPUs in interactive jobs</h3>
+<div class="outline-text-3" id="text-orgheadline9">
 <p>
-This section illustrates how to take advantage of multiple cores when running interactive jobs on the RCE, with the goal of getting CPU intensive tasks to run faster. <b>If you are not interested in running parallel processes in interactive jobs feel free to skip to the <a href="#sec-7">next section</a></b>.
+This section illustrates how to take advantage of multiple cores when running interactive jobs on the RCE, with the goal of getting CPU intensive tasks to run faster. <b>If you are not interested in running parallel processes in interactive jobs feel free to skip to the <a href="#orgheadline8">next section</a></b>.
 </p>
 </div>
 
-<div id="outline-container-sec-6-3-1" class="outline-4">
-<h4 id="sec-6-3-1">Using multiple CPUs in interactive R programs</h4>
-<div class="outline-text-4" id="text-6-3-1">
-</div><ul class="org-ul"><li><a id="sec-6-3-1-1" name="sec-6-3-1-1"></a>Using multiple cores to speed up simulations<br  /><div class="outline-text-5" id="text-6-3-1-1">
+<div id="outline-container-orgheadline12" class="outline-4">
+<h4 id="orgheadline12">Using multiple CPUs in interactive R programs</h4>
+<div class="outline-text-4" id="text-orgheadline12">
+</div><ul class="org-ul"><li><a id="orgheadline10"></a>Using multiple cores to speed up simulations<br  /><div class="outline-text-5" id="text-orgheadline10">
 <p>
 Running computations in parallel on multiple cores is often an effective way to speed up computations. This can be especially useful when doing simulations, or when using resampling methods such as bootstrap or permutation tests. In this example parallel processing is used to simulate the sampling distribution of the mean for samples of various sizes.
 </p>
@@ -432,13 +413,13 @@ We start by setting up a helper function to repeatedly generate a sample of a gi
 </p>
 <div class="org-src-container">
 
-<pre class="src src-R"><span style="color: #6c6c6c; font-style: italic;">## </span><span style="color: #6c6c6c; font-style: italic;">function to generate distribution of means for a range of sample sizes</span>
-<span style="color: #ffd700;">meanDist</span> <span style="color: #5fafd7;">&lt;-</span> <span style="color: #a1db00;">function</span><span style="color: #d18aff;">(</span>n, nsamp <span style="color: #5fafd7;">=</span> <span style="color: #00d7af;">5000</span><span style="color: #d18aff;">)</span> <span style="color: #d18aff;">{</span>
-  <span style="color: #ffd700;">replicate</span><span style="color: #d18aff;">(</span>nsamp, <span style="color: #ffd700;">mean</span><span style="color: #d18aff;">(</span><span style="color: #ffd700;">rnorm</span><span style="color: #d18aff;">(</span>n<span style="color: #d18aff;">)))</span>
-<span style="color: #d18aff;">}</span>
+<pre class="src src-R"><span style="color: #2aa198; background-color: #eff3ea;">## </span><span style="color: #2aa198; background-color: #eff3ea;">function to generate distribution of means for a range of sample sizes</span>
+<span style="color: #6c3163; font-weight: bold;">meanDist</span> <span style="color: #4e3163;">&lt;-</span> <span style="color: #237fbf; font-weight: bold;">function</span><span style="color: #2f96dc;">(</span>n, nsamp = 5000<span style="color: #2f96dc;">)</span> <span style="color: #2f96dc;">{</span>
+  replicate<span style="color: #6c3163;">(</span>nsamp, mean<span style="color: #2aa198;">(</span>rnorm<span style="color: #67b11d;">(</span>n<span style="color: #67b11d;">)</span><span style="color: #2aa198;">)</span><span style="color: #6c3163;">)</span>
+<span style="color: #2f96dc;">}</span>
 
-<span style="color: #6c6c6c; font-style: italic;">## </span><span style="color: #6c6c6c; font-style: italic;">range of sample sizes to iterate over</span>
-sampSizes <span style="color: #5fafd7;">&lt;-</span> <span style="color: #ffd700;">seq</span><span style="color: #d18aff;">(</span><span style="color: #00d7af;">10</span>, <span style="color: #00d7af;">500</span>, by <span style="color: #5fafd7;">=</span> <span style="color: #00d7af;">5</span><span style="color: #d18aff;">)</span>
+<span style="color: #2aa198; background-color: #eff3ea;">## </span><span style="color: #2aa198; background-color: #eff3ea;">range of sample sizes to iterate over</span>
+sampSizes <span style="color: #4e3163;">&lt;-</span> seq<span style="color: #2f96dc;">(</span>10, 500, by = 5<span style="color: #2f96dc;">)</span>
 </pre>
 </div>
 
@@ -447,7 +428,7 @@ Next iterate over a range of sample sizes, generating a distribution of means fo
 </p>
 <div class="org-src-container">
 
-<pre class="src src-R"><span style="color: #ffd700;">system.time</span><span style="color: #d18aff;">(</span>means <span style="color: #5fafd7;">&lt;-</span> <span style="color: #ffd700;">lapply</span><span style="color: #d18aff;">(</span>sampSizes, meanDist<span style="color: #d18aff;">))</span>
+<pre class="src src-R">system.time<span style="color: #2f96dc;">(</span>means <span style="color: #4e3163;">&lt;-</span> lapply<span style="color: #6c3163;">(</span>sampSizes, meanDist<span style="color: #6c3163;">)</span><span style="color: #2f96dc;">)</span>
 </pre>
 </div>
 
@@ -461,8 +442,8 @@ The simulation can be carried out much more rapidly using <code>mclapply</code> 
 </p>
 <div class="org-src-container">
 
-<pre class="src src-R"><span style="color: #5fafd7;">library</span><span style="color: #d18aff;">(</span>parallel<span style="color: #d18aff;">)</span> 
-<span style="color: #ffd700;">system.time</span><span style="color: #d18aff;">(</span>means <span style="color: #5fafd7;">&lt;-</span> <span style="color: #ffd700;">mclapply</span><span style="color: #d18aff;">(</span>sampSizes, meanDist, mc.cores <span style="color: #5fafd7;">=</span> <span style="color: #00d7af;">7</span><span style="color: #d18aff;">))</span>
+<pre class="src src-R"><span style="color: #4e3163;">library</span><span style="color: #2f96dc;">(</span>parallel<span style="color: #2f96dc;">)</span> 
+system.time<span style="color: #2f96dc;">(</span>means <span style="color: #4e3163;">&lt;-</span> mclapply<span style="color: #6c3163;">(</span>sampSizes, meanDist, mc.cores = 7<span style="color: #6c3163;">)</span><span style="color: #2f96dc;">)</span>
 </pre>
 </div>
 
@@ -476,15 +457,15 @@ Like <code>lapply</code> the <code>mclapply</code> function returns a list, whic
 </p>
 <div class="org-src-container">
 
-<pre class="src src-R"><span style="color: #6c6c6c; font-style: italic;">## </span><span style="color: #6c6c6c; font-style: italic;">plot the distribution of means at various sample sizes</span>
-<span style="color: #ffd700;">par</span><span style="color: #d18aff;">(</span>mfrow<span style="color: #5fafd7;">=</span><span style="color: #ffd700;">c</span><span style="color: #d18aff;">(</span><span style="color: #00d7af;">6</span>, <span style="color: #00d7af;">5</span><span style="color: #d18aff;">)</span>, mar <span style="color: #5fafd7;">=</span> <span style="color: #ffd700;">c</span><span style="color: #d18aff;">(</span><span style="color: #00d7af;">0</span>,<span style="color: #00d7af;">0</span>,<span style="color: #00d7af;">2</span>,<span style="color: #00d7af;">2</span><span style="color: #d18aff;">)</span>, cex <span style="color: #5fafd7;">=</span> <span style="color: #00d7af;">.7</span><span style="color: #d18aff;">)</span>
-<span style="color: #a1db00;">for</span><span style="color: #d18aff;">(</span>i <span style="color: #a1db00;">in</span> <span style="color: #00d7af;">1</span>:<span style="color: #00d7af;">30</span><span style="color: #d18aff;">)</span> <span style="color: #d18aff;">{</span>
-  <span style="color: #ffd700;">hist</span><span style="color: #d18aff;">(</span>means<span style="color: #d18aff;">[[</span>i<span style="color: #d18aff;">]]</span>, 
-       main <span style="color: #5fafd7;">=</span> <span style="color: #ffd700;">paste</span><span style="color: #d18aff;">(</span><span style="color: #b22222;">"n ="</span>, 
-                    sampSizes<span style="color: #d18aff;">[</span>i<span style="color: #d18aff;">])</span>, 
-       axes <span style="color: #5fafd7;">=</span> <span style="color: #00d7af;">FALSE</span>,
-       xlim <span style="color: #5fafd7;">=</span> <span style="color: #ffd700;">range</span><span style="color: #d18aff;">(</span><span style="color: #ffd700;">unlist</span><span style="color: #d18aff;">(</span>means<span style="color: #d18aff;">)))</span>
-<span style="color: #d18aff;">}</span>
+<pre class="src src-R"><span style="color: #2aa198; background-color: #eff3ea;">## </span><span style="color: #2aa198; background-color: #eff3ea;">plot the distribution of means at various sample sizes</span>
+par<span style="color: #2f96dc;">(</span>mfrow=c<span style="color: #6c3163;">(</span>6, 5<span style="color: #6c3163;">)</span>, mar = c<span style="color: #6c3163;">(</span>0,0,2,2<span style="color: #6c3163;">)</span>, cex = .7<span style="color: #2f96dc;">)</span>
+<span style="color: #237fbf; font-weight: bold;">for</span><span style="color: #2f96dc;">(</span>i <span style="color: #237fbf; font-weight: bold;">in</span> 1:30<span style="color: #2f96dc;">)</span> <span style="color: #2f96dc;">{</span>
+  hist<span style="color: #6c3163;">(</span>means<span style="color: #2aa198;">[</span><span style="color: #67b11d;">[</span>i<span style="color: #67b11d;">]</span><span style="color: #2aa198;">]</span>, 
+       main = paste<span style="color: #2aa198;">(</span><span style="color: #2aa198;">"n ="</span>, 
+                    sampSizes<span style="color: #67b11d;">[</span>i<span style="color: #67b11d;">]</span><span style="color: #2aa198;">)</span>, 
+       axes = <span style="color: #428374; font-weight: bold;">FALSE</span>,
+       xlim = range<span style="color: #2aa198;">(</span>unlist<span style="color: #67b11d;">(</span>means<span style="color: #67b11d;">)</span><span style="color: #2aa198;">)</span><span style="color: #6c3163;">)</span>
+<span style="color: #2f96dc;">}</span>
 </pre>
 </div>
 
@@ -493,28 +474,27 @@ Like <code>lapply</code> the <code>mclapply</code> function returns a list, whic
 <p><img src="images/samplingDist.png" alt="samplingDist.png" />
 </p>
 </div>
-</div>
-</li>
+</div></li>
 
 
-<li><a id="sec-6-3-1-2" name="sec-6-3-1-2"></a>Using multiple cores to speed up computations<br  /><div class="outline-text-5" id="text-6-3-1-2">
+<li><a id="orgheadline11"></a>Using multiple cores to speed up computations<br  /><div class="outline-text-5" id="text-orgheadline11">
 <p>
 In the previous example we generated the data on each iteration. This kind of simulation can be useful, but often you want to parallelize a function that processes data from a (potentially large) number of files. This is also easy to do using the parallel package in R. In the following example we count number of characters in all the text files in the texlive directory.
 </p>
 <div class="org-src-container">
 
-<pre class="src src-R"><span style="color: #6c6c6c; font-style: italic;">## </span><span style="color: #6c6c6c; font-style: italic;">List the files to iterate over</span>
-textFiles<span style="color: #5fafd7;">&lt;-</span> <span style="color: #ffd700;">list.files</span><span style="color: #d18aff;">(</span><span style="color: #b22222;">"/usr/share/texlive/"</span>, 
-                       recursive <span style="color: #5fafd7;">=</span> <span style="color: #00d7af;">TRUE</span>, 
-                       pattern <span style="color: #5fafd7;">=</span> <span style="color: #b22222;">"\\.txt$|\\.tex$"</span>,
-                       full.names <span style="color: #5fafd7;">=</span> <span style="color: #00d7af;">TRUE</span><span style="color: #d18aff;">)</span>
+<pre class="src src-R"><span style="color: #2aa198; background-color: #eff3ea;">## </span><span style="color: #2aa198; background-color: #eff3ea;">List the files to iterate over</span>
+textFiles<span style="color: #4e3163;">&lt;-</span> list.files<span style="color: #2f96dc;">(</span><span style="color: #2aa198;">"/usr/share/texlive/"</span>, 
+                       recursive = <span style="color: #428374; font-weight: bold;">TRUE</span>, 
+                       pattern = <span style="color: #2aa198;">"\\.txt$|\\.tex$"</span>,
+                       full.names = <span style="color: #428374; font-weight: bold;">TRUE</span><span style="color: #2f96dc;">)</span>
 
-<span style="color: #6c6c6c; font-style: italic;">## </span><span style="color: #6c6c6c; font-style: italic;">function for counting characters (NOTE: this example isn't realistic -- it </span>
-<span style="color: #6c6c6c; font-style: italic;">## </span><span style="color: #6c6c6c; font-style: italic;">would be better to use the unix "wc" utility if you were doing this</span>
-<span style="color: #6c6c6c; font-style: italic;">## </span><span style="color: #6c6c6c; font-style: italic;">in real life...)</span>
-<span style="color: #ffd700;">countChars</span> <span style="color: #5fafd7;">&lt;-</span>  <span style="color: #a1db00;">function</span><span style="color: #d18aff;">(</span>x<span style="color: #d18aff;">)</span> <span style="color: #d18aff;">{</span>
-  <span style="color: #ffd700;">sum</span><span style="color: #d18aff;">(</span><span style="color: #ffd700;">nchar</span><span style="color: #d18aff;">(</span><span style="color: #ffd700;">readLines</span><span style="color: #d18aff;">(</span>x, warn <span style="color: #5fafd7;">=</span> <span style="color: #00d7af;">FALSE</span><span style="color: #d18aff;">)</span>, type <span style="color: #5fafd7;">=</span> <span style="color: #b22222;">"width"</span><span style="color: #d18aff;">))</span>
-<span style="color: #d18aff;">}</span>
+<span style="color: #2aa198; background-color: #eff3ea;">## </span><span style="color: #2aa198; background-color: #eff3ea;">function for counting characters (NOTE: this example isn't realistic -- it </span>
+<span style="color: #2aa198; background-color: #eff3ea;">## </span><span style="color: #2aa198; background-color: #eff3ea;">would be better to use the unix "wc" utility if you were doing this</span>
+<span style="color: #2aa198; background-color: #eff3ea;">## </span><span style="color: #2aa198; background-color: #eff3ea;">in real life...)</span>
+<span style="color: #6c3163; font-weight: bold;">countChars</span> <span style="color: #4e3163;">&lt;-</span>  <span style="color: #237fbf; font-weight: bold;">function</span><span style="color: #2f96dc;">(</span>x<span style="color: #2f96dc;">)</span> <span style="color: #2f96dc;">{</span>
+  sum<span style="color: #6c3163;">(</span>nchar<span style="color: #2aa198;">(</span>readLines<span style="color: #67b11d;">(</span>x, warn = <span style="color: #428374; font-weight: bold;">FALSE</span><span style="color: #67b11d;">)</span>, type = <span style="color: #2aa198;">"width"</span><span style="color: #2aa198;">)</span><span style="color: #6c3163;">)</span>
+<span style="color: #2f96dc;">}</span>
 </pre>
 </div>
 
@@ -523,12 +503,12 @@ We have
 </p>
 <div class="org-src-container">
 
-<pre class="src src-R"><span style="color: #ffd700;">length</span><span style="color: #d18aff;">(</span>textFiles<span style="color: #d18aff;">)</span>
+<pre class="src src-R">length<span style="color: #2f96dc;">(</span>textFiles<span style="color: #2f96dc;">)</span>
 </pre>
 </div>
 
 <pre class="example">
-[1] 0
+[1] 2079
 </pre>
 
 <p>
@@ -536,13 +516,13 @@ text files to process. We can do this using a single core:
 </p>
 <div class="org-src-container">
 
-<pre class="src src-R"><span style="color: #ffd700;">system.time</span><span style="color: #d18aff;">(</span>nchars <span style="color: #5fafd7;">&lt;-</span> <span style="color: #ffd700;">unlist</span><span style="color: #d18aff;">(</span><span style="color: #ffd700;">lapply</span><span style="color: #d18aff;">(</span>textFiles, countChars<span style="color: #d18aff;">)))</span>
+<pre class="src src-R">system.time<span style="color: #2f96dc;">(</span>nchars <span style="color: #4e3163;">&lt;-</span> unlist<span style="color: #6c3163;">(</span>lapply<span style="color: #2aa198;">(</span>textFiles, countChars<span style="color: #2aa198;">)</span><span style="color: #6c3163;">)</span><span style="color: #2f96dc;">)</span>
 </pre>
 </div>
 
 <pre class="example">
-user  system elapsed 
-   0       0       0
+  user  system elapsed 
+29.023   0.226  32.107
 </pre>
 
 <p>
@@ -550,13 +530,13 @@ but this is too slow. We can do the computation more quickly using multiple core
 </p>
 <div class="org-src-container">
 
-<pre class="src src-R"><span style="color: #ffd700;">system.time</span><span style="color: #d18aff;">(</span>nchars <span style="color: #5fafd7;">&lt;-</span> <span style="color: #ffd700;">unlist</span><span style="color: #d18aff;">(</span><span style="color: #ffd700;">mclapply</span><span style="color: #d18aff;">(</span>textFiles, countChars, mc.cores <span style="color: #5fafd7;">=</span> <span style="color: #00d7af;">7</span><span style="color: #d18aff;">)))</span>
+<pre class="src src-R">system.time<span style="color: #2f96dc;">(</span>nchars <span style="color: #4e3163;">&lt;-</span> unlist<span style="color: #6c3163;">(</span>mclapply<span style="color: #2aa198;">(</span>textFiles, countChars, mc.cores = 7<span style="color: #2aa198;">)</span><span style="color: #6c3163;">)</span><span style="color: #2f96dc;">)</span>
 </pre>
 </div>
 
 <pre class="example">
-user  system elapsed 
-   0       0       0
+  user  system elapsed 
+23.141   0.537   5.200
 </pre>
 
 <p>
@@ -564,25 +544,24 @@ and calculate the total number of characters in the text files by summing over t
 </p>
 <div class="org-src-container">
 
-<pre class="src src-R"><span style="color: #ffd700;">sum</span><span style="color: #d18aff;">(</span>nchars, na.rm <span style="color: #5fafd7;">=</span> <span style="color: #00d7af;">TRUE</span><span style="color: #d18aff;">)</span>
+<pre class="src src-R">sum<span style="color: #2f96dc;">(</span>nchars, na.rm = <span style="color: #428374; font-weight: bold;">TRUE</span><span style="color: #2f96dc;">)</span>
 </pre>
 </div>
 
 <pre class="example">
-[1] 0
+[1] 31617376
 </pre>
 
 <p>
 For more details and examples using the parallel package, refer to the <a href="https://stat.ethz.ch/R-manual/R-devel/library/parallel/doc/parallel.pdf">parallel package documentation</a> or run <code>help(package = "parallel")</code> at the R prompt. For other ways of running computations in parallel refer to the <a href="http://cran.r-project.org/web/views/HighPerformanceComputing.html">HPC task view</a>.
 </p>
-</div>
-</li></ul>
+</div></li></ul>
 </div>
 
 
-<div id="outline-container-sec-6-3-2" class="outline-4">
-<h4 id="sec-6-3-2">Using multiple CPUs in other programming languages and applications</h4>
-<div class="outline-text-4" id="text-6-3-2">
+<div id="outline-container-orgheadline13" class="outline-4">
+<h4 id="orgheadline13">Using multiple CPUs in other programming languages and applications</h4>
+<div class="outline-text-4" id="text-orgheadline13">
 <p>
 Using multiple CPU cores in Stata, Matlab and SAS does not require explicit activation &#x2013; many functions will automatically use multiple cores if available. For Matlab user-written code can also take advantage of multiple CPUs using the <code>parfor</code> command. Python uses can run multiple processes using the <a href="https://docs.python.org/2/library/multiprocessing.html">multiprocessing</a> library.
 </p>
@@ -591,21 +570,21 @@ Using multiple CPU cores in Stata, Matlab and SAS does not require explicit acti
 </div>
 </div>
 
-<div id="outline-container-sec-7" class="outline-2">
-<h2 id="sec-7"><span class="section-number-2">7</span> Batch Jobs Overview</h2>
+<div id="outline-container-orgheadline8" class="outline-2">
+<h2 id="orgheadline8"><span class="section-number-2">7</span> Batch Jobs Overview</h2>
 <div class="outline-text-2" id="text-7">
 <p>
-The RCE provides access to <i>batch nodes</i>, a cluster of many lower powered computers. While each individual batch node is not that powerful (each node has one CPU and 4 Gb of memory), there are hundreds of them, and combined they make for a very powerful system indeed. The batch nodes are good for jobs will run for a long time, and for groups of very similar jobs (e.g., simulations where a small number of parameters are varied).
+The RCE provides access to <i>batch nodes</i>, a cluster of many computers. The batch nodes are good for jobs will run for a long time, and for groups of very similar jobs (e.g., simulations where a number of parameters are varied).
 </p>
 
 <p>
-Running jobs on the batch nodes is somewhat more complicated than running interactive jobs on the RCE. The main access points are two <i>command line</i> programs, <code>condor_submit_util</code> and <code>condor_submit</code>. In this tutorial we focus on writing simple submit files and submitting them with <code>condor_submit</code>. For more details on automatically generating and submitting using <code>condor_submit_util</code> refer to the main <a href="http://projects.iq.harvard.edu/rce/book/batch-processing-basics">RCE batch job documentation</a>. 
+Running jobs on the batch nodes is somewhat more complicated than running <a href="#orgheadline14">interactive jobs</a> on the RCE. The main access points are two <i>command line</i> programs, <code>condor_submit_util</code> and <code>condor_submit</code>. In this tutorial we focus on writing simple submit files and submitting them with <code>condor_submit</code>. For more details on automatically generating and submitting using <code>condor_submit_util</code> refer to the main <a href="http://projects.iq.harvard.edu/rce/book/batch-processing-basics">RCE batch job documentation</a>. 
 </p>
 </div>
 
-<div id="outline-container-sec-7-1" class="outline-3">
-<h3 id="sec-7-1">Preparing for batch submission</h3>
-<div class="outline-text-3" id="text-7-1">
+<div id="outline-container-orgheadline15" class="outline-3">
+<h3 id="orgheadline15">Preparing for batch submission</h3>
+<div class="outline-text-3" id="text-orgheadline15">
 <p>
 In practical terms, running in "batch" means that you will not be able to interact with the running process. This means that all the information your program needs to successfully complete needs to be specified ahead of time. You can pass arguments to your process so that each job gets different inputs, but the script must process these arguments and do the right thing without further instruction.
 </p>
@@ -614,12 +593,9 @@ In practical terms, running in "batch" means that you will not be able to intera
 When you submit a job to the batch processing system each process will generate output and (perhaps) errors. It is usually a good idea to make a sub-folder to store these results. Thus your project folder should contain at least the following:
 </p>
 <ul class="org-ul">
-<li>script or program to run
-</li>
-<li>submit file
-</li>
-<li>output directory
-</li>
+<li>script or program to run</li>
+<li>submit file</li>
+<li>output directory</li>
 </ul>
 
 <p>
@@ -628,9 +604,9 @@ When preparing your job for batch submission you usually need to figure out how 
 </div>
 </div>
 
-<div id="outline-container-sec-7-2" class="outline-3">
-<h3 id="sec-7-2">Submit file overview</h3>
-<div class="outline-text-3" id="text-7-2">
+<div id="outline-container-orgheadline16" class="outline-3">
+<h3 id="orgheadline16">Submit file overview</h3>
+<div class="outline-text-3" id="text-orgheadline16">
 <p>
 In order to run jobs in parallel on the batch nodes you need to create a <code>submit file</code> that describes the process to be run on each node. If creating these files by hand you may use any text editor (e.g., <code>gedit</code>, accessible though the <code>Applications --&gt; Accessories</code> menu on the RCE). 
 </p>
@@ -640,130 +616,132 @@ The submit file template below includes all required elements. (Note that this f
 </p>
 <div class="org-src-container">
 
-<pre class="src src-conf"><span style="color: #6c6c6c; font-style: italic;"># </span><span style="color: #6c6c6c; font-style: italic;">Universe whould always be 'vanilla'. This line MUST be </span>
-<span style="color: #6c6c6c; font-style: italic;">#</span><span style="color: #6c6c6c; font-style: italic;">included in your submit file, exactly as shown below.</span>
-<span style="color: #ff8700;">Universe</span> = vanilla
+<pre class="src src-conf"><span style="color: #2aa198; background-color: #eff3ea;"># </span><span style="color: #2aa198; background-color: #eff3ea;">Universe whould always be 'vanilla'. This line MUST be </span>
+<span style="color: #2aa198; background-color: #eff3ea;">#</span><span style="color: #2aa198; background-color: #eff3ea;">included in your submit file, exactly as shown below.</span>
+<span style="color: #715ab1;">Universe</span> = vanilla
 
-<span style="color: #6c6c6c; font-style: italic;"># </span><span style="color: #6c6c6c; font-style: italic;">Enter the path to the program you wish to run.</span>
-<span style="color: #6c6c6c; font-style: italic;"># </span><span style="color: #6c6c6c; font-style: italic;">The default runs the R program. To run another</span>
-<span style="color: #6c6c6c; font-style: italic;"># </span><span style="color: #6c6c6c; font-style: italic;">program just change '/user/local/bin/R' to the</span>
-<span style="color: #6c6c6c; font-style: italic;"># </span><span style="color: #6c6c6c; font-style: italic;">path to the program you want to run. For example,</span>
-<span style="color: #6c6c6c; font-style: italic;"># </span><span style="color: #6c6c6c; font-style: italic;">to run Stata set Executable to '/usr/local/bin/stata'.</span>
-<span style="color: #ff8700;">Executable</span> = /usr/local/bin/R
+<span style="color: #2aa198; background-color: #eff3ea;"># </span><span style="color: #2aa198; background-color: #eff3ea;">The following arguments are _optional_. If included</span>
+<span style="color: #2aa198; background-color: #eff3ea;"># </span><span style="color: #2aa198; background-color: #eff3ea;">they are used to specify the requirements for the</span>
+<span style="color: #2aa198; background-color: #eff3ea;"># </span><span style="color: #2aa198; background-color: #eff3ea;">submission.</span>
+<span style="color: #715ab1;">request_cpus</span> = 1
+<span style="color: #715ab1;">request_disk</span> = 4GB
+<span style="color: #715ab1;">request_memory</span> = 4GB
 
-<span style="color: #6c6c6c; font-style: italic;"># </span><span style="color: #6c6c6c; font-style: italic;">Specify any arguments you want to pass to the executable.</span>
-<span style="color: #ff8700;">Arguments</span> = --no-save --no-restore --slave
+<span style="color: #2aa198; background-color: #eff3ea;"># </span><span style="color: #2aa198; background-color: #eff3ea;">Enter the path to the program you wish to run.</span>
+<span style="color: #2aa198; background-color: #eff3ea;"># </span><span style="color: #2aa198; background-color: #eff3ea;">The default runs the R program. To run another</span>
+<span style="color: #2aa198; background-color: #eff3ea;"># </span><span style="color: #2aa198; background-color: #eff3ea;">program just change '/user/local/bin/R' to the</span>
+<span style="color: #2aa198; background-color: #eff3ea;"># </span><span style="color: #2aa198; background-color: #eff3ea;">path to the program you want to run. For example,</span>
+<span style="color: #2aa198; background-color: #eff3ea;"># </span><span style="color: #2aa198; background-color: #eff3ea;">to run Stata set Executable to '/usr/local/bin/stata'.</span>
+<span style="color: #715ab1;">Executable</span> = /usr/local/bin/R
 
-<span style="color: #6c6c6c; font-style: italic;"># </span><span style="color: #6c6c6c; font-style: italic;">Specify the relative path to the input file (if any). If you</span>
-<span style="color: #6c6c6c; font-style: italic;"># </span><span style="color: #6c6c6c; font-style: italic;">are using R this should be your R script. If you are using</span>
-<span style="color: #6c6c6c; font-style: italic;"># </span><span style="color: #6c6c6c; font-style: italic;">Stata this should be your do file.</span>
-<span style="color: #ff8700;">input</span> = example.R
+<span style="color: #2aa198; background-color: #eff3ea;"># </span><span style="color: #2aa198; background-color: #eff3ea;">Specify any arguments you want to pass to the executable.</span>
+<span style="color: #715ab1;">Arguments</span> = --no-save --no-restore --slave
 
-<span style="color: #6c6c6c; font-style: italic;"># </span><span style="color: #6c6c6c; font-style: italic;">Specify where to output any results printed by your program.</span>
-<span style="color: #ff8700;">output</span> = output/out.$(Process)
-<span style="color: #6c6c6c; font-style: italic;"># </span><span style="color: #6c6c6c; font-style: italic;">Specify where to save any errors returned by your program.</span>
-<span style="color: #ff8700;">error</span> = output/error.$(Process)
-<span style="color: #6c6c6c; font-style: italic;"># </span><span style="color: #6c6c6c; font-style: italic;">Specify where to save the log file.</span>
-<span style="color: #ff8700;">Log</span> = output/log
-<span style="color: #6c6c6c; font-style: italic;"># </span><span style="color: #6c6c6c; font-style: italic;">Enter the number of processes to request. This should </span>
-<span style="color: #6c6c6c; font-style: italic;"># </span><span style="color: #6c6c6c; font-style: italic;">always be the last part of your submit file.</span>
+<span style="color: #2aa198; background-color: #eff3ea;"># </span><span style="color: #2aa198; background-color: #eff3ea;">Specify the relative path to the input file (if any). If you</span>
+<span style="color: #2aa198; background-color: #eff3ea;"># </span><span style="color: #2aa198; background-color: #eff3ea;">are using R this should be your R script. If you are using</span>
+<span style="color: #2aa198; background-color: #eff3ea;"># </span><span style="color: #2aa198; background-color: #eff3ea;">Stata this should be your do file.</span>
+<span style="color: #715ab1;">input</span> = example.R
+
+<span style="color: #2aa198; background-color: #eff3ea;"># </span><span style="color: #2aa198; background-color: #eff3ea;">Specify where to output any results printed by your program.</span>
+<span style="color: #715ab1;">output</span> = output/out.$(Process)
+<span style="color: #2aa198; background-color: #eff3ea;"># </span><span style="color: #2aa198; background-color: #eff3ea;">Specify where to save any errors returned by your program.</span>
+<span style="color: #715ab1;">error</span> = output/error.$(Process)
+<span style="color: #2aa198; background-color: #eff3ea;"># </span><span style="color: #2aa198; background-color: #eff3ea;">Specify where to save the log file.</span>
+<span style="color: #715ab1;">Log</span> = output/log
+<span style="color: #2aa198; background-color: #eff3ea;"># </span><span style="color: #2aa198; background-color: #eff3ea;">Enter the number of processes to request. This should </span>
+<span style="color: #2aa198; background-color: #eff3ea;"># </span><span style="color: #2aa198; background-color: #eff3ea;">always be the last part of your submit file.</span>
 Queue 10
 </pre>
 </div>
 <p>
-This submit file instructs the scheduler to request 10 nodes (<code>Queue 10</code>), start R<sup><a id="fnr.2" name="fnr.2" class="footref" href="#fn.2">2</a></sup> on each one (<code>Executable = /usr/local/bin/R</code>), run the code in example.R (<code>input = example.R</code>), write the output to files named out.0 &#x2013; out.9 in the output folder (<code>output = output/out.$(Process)</code>), write any errors to files named out.0 &#x2013; out.9 in the output folder (<code>error = output/error.$(Process)</code>), and write a log file in the output folder (<code>Log = output/log</code>). 
+This submit file instructs the scheduler to request 10 nodes (<code>Queue 10</code>), start R<sup><a id="fnr.2" class="footref" href="#fn.2">2</a></sup> on each one (<code>Executable = /usr/local/bin/R</code>), run the code in example.R (<code>input = example.R</code>), write the output to files named out.0 &#x2013; out.9 in the output folder (<code>output = output/out.$(Process)</code>), write any errors to files named out.0 &#x2013; out.9 in the output folder (<code>error = output/error.$(Process)</code>), and write a log file in the output folder (<code>Log = output/log</code>). Each of the 10 requested nodes must be able to provide at least one cpu (<code>request_cpus = 1</code>), four Gb of disk space (<code>request_disk = 4GB</code>) and four Gb of memory (<code>request_memory = 4GB</code>).
 </p>
 </div>
 </div>
 </div>
 
-<div id="outline-container-sec-8" class="outline-2">
-<h2 id="sec-8"><span class="section-number-2">8</span> Batch Job Examples</h2>
+<div id="outline-container-orgheadline37" class="outline-2">
+<h2 id="orgheadline37"><span class="section-number-2">8</span> Batch Job Examples</h2>
 <div class="outline-text-2" id="text-8">
 <p>
 RCE users come from a variety of backgrounds and different people are more proficient with different software packages. Feel free to skip to the batch examples using the software you are most comfortable with:
 </p>
 <ul class="org-ul">
-<li><a href="#sec-8-1">R Batch Examples</a>
-</li>
-<li><i>Stata Batch Examples</i>
-</li>
-<li><a href="#sec-8-3">Python Batch Examples</a>
-</li>
-<li><a href="#sec-8-4">Matlab Batch Examples</a>
-</li>
+<li><a href="#orgheadline17">R Batch Examples</a></li>
+<li><a href="#orgheadline18">Stata Batch Examples</a></li>
+<li><a href="#orgheadline19">Python Batch Examples</a></li>
+<li><a href="#orgheadline20">Matlab Batch Examples</a></li>
 </ul>
 </div>
 
-<div id="outline-container-sec-8-1" class="outline-3">
-<h3 id="sec-8-1">R Batch Examples</h3>
-<div class="outline-text-3" id="text-8-1">
-</div><div id="outline-container-sec-8-1-1" class="outline-4">
-<h4 id="sec-8-1-1">Batch example: Simple power simulation in R</h4>
-<div class="outline-text-4" id="text-8-1-1">
+<div id="outline-container-orgheadline17" class="outline-3">
+<h3 id="orgheadline17">R Batch Examples</h3>
+<div class="outline-text-3" id="text-orgheadline17">
+</div><div id="outline-container-orgheadline21" class="outline-4">
+<h4 id="orgheadline21">Batch example: Simple power simulation in R</h4>
+<div class="outline-text-4" id="text-orgheadline21">
 <p>
 The simplest kind of batch job is one for which you just want to run the same code multiple times, without varying any parameters. For example, suppose that we wish to run a power simulation for a t.test with unequal group sizes. 
 </p>
 </div>
 
-<ul class="org-ul"><li><a id="sec-8-1-1-1" name="sec-8-1-1-1"></a>R power simulation script<br  /><div class="outline-text-5" id="text-8-1-1-1">
+<ul class="org-ul"><li><a id="orgheadline22"></a>R power simulation script<br  /><div class="outline-text-5" id="text-orgheadline22">
 <p>
 The first step is to write a script or program to carry out the desired computation. The R script below simulates distributions with a specified mean difference, performs two-sample t-tests on the difference, and calculates the proportion of significant tests.
 </p>
 <div class="org-src-container">
 
-<pre class="src src-R"><span style="color: #6c6c6c; font-style: italic;">## </span><span style="color: #6c6c6c; font-style: italic;">function to simulate data and perform a t.test</span>
-<span style="color: #ffd700;">sim.ttest</span> <span style="color: #5fafd7;">&lt;-</span> <span style="color: #a1db00;">function</span><span style="color: #d18aff;">(</span>mu1, mu2, sd, n1, n2<span style="color: #d18aff;">)</span> <span style="color: #d18aff;">{</span>
-    d <span style="color: #5fafd7;">&lt;-</span> <span style="color: #ffd700;">data.frame</span><span style="color: #d18aff;">(</span>x <span style="color: #5fafd7;">=</span> <span style="color: #ffd700;">c</span><span style="color: #d18aff;">(</span><span style="color: #ffd700;">rep</span><span style="color: #d18aff;">(</span><span style="color: #b22222;">"group1"</span>, n1<span style="color: #d18aff;">)</span>, <span style="color: #ffd700;">rep</span><span style="color: #d18aff;">(</span><span style="color: #b22222;">"group2"</span>, n2<span style="color: #d18aff;">))</span>,
-                    y <span style="color: #5fafd7;">=</span> <span style="color: #ffd700;">c</span><span style="color: #d18aff;">(</span><span style="color: #ffd700;">rnorm</span><span style="color: #d18aff;">(</span>n1, mean <span style="color: #5fafd7;">=</span> mu1, sd <span style="color: #5fafd7;">=</span> sd<span style="color: #d18aff;">)</span>,
-                          <span style="color: #ffd700;">rnorm</span><span style="color: #d18aff;">(</span>n2, mean <span style="color: #5fafd7;">=</span> mu2, sd <span style="color: #5fafd7;">=</span> sd<span style="color: #d18aff;">)))</span>
-    <span style="color: #a1db00;">return</span><span style="color: #d18aff;">(</span><span style="color: #ffd700;">t.test</span><span style="color: #d18aff;">(</span>y ~ x, data <span style="color: #5fafd7;">=</span> d<span style="color: #d18aff;">)</span>$p.value<span style="color: #d18aff;">)</span>
-<span style="color: #d18aff;">}</span>
+<pre class="src src-R"><span style="color: #2aa198; background-color: #eff3ea;">## </span><span style="color: #2aa198; background-color: #eff3ea;">function to simulate data and perform a t.test</span>
+<span style="color: #6c3163; font-weight: bold;">sim.ttest</span> <span style="color: #4e3163;">&lt;-</span> <span style="color: #237fbf; font-weight: bold;">function</span><span style="color: #2f96dc;">(</span>mu1, mu2, sd, n1, n2<span style="color: #2f96dc;">)</span> <span style="color: #2f96dc;">{</span>
+    d <span style="color: #4e3163;">&lt;-</span> data.frame<span style="color: #6c3163;">(</span>x = c<span style="color: #2aa198;">(</span>rep<span style="color: #67b11d;">(</span><span style="color: #2aa198;">"group1"</span>, n1<span style="color: #67b11d;">)</span>, rep<span style="color: #67b11d;">(</span><span style="color: #2aa198;">"group2"</span>, n2<span style="color: #67b11d;">)</span><span style="color: #2aa198;">)</span>,
+                    y = c<span style="color: #2aa198;">(</span>rnorm<span style="color: #67b11d;">(</span>n1, mean = mu1, sd = sd<span style="color: #67b11d;">)</span>,
+                          rnorm<span style="color: #67b11d;">(</span>n2, mean = mu2, sd = sd<span style="color: #67b11d;">)</span><span style="color: #2aa198;">)</span><span style="color: #6c3163;">)</span>
+    <span style="color: #237fbf; font-weight: bold;">return</span><span style="color: #6c3163;">(</span>t.test<span style="color: #2aa198;">(</span>y ~ x, data = d<span style="color: #2aa198;">)</span>$p.value<span style="color: #6c3163;">)</span>
+<span style="color: #2f96dc;">}</span>
 
-<span style="color: #6c6c6c; font-style: italic;">##  </span><span style="color: #6c6c6c; font-style: italic;">run the function 10,000 times </span>
-p <span style="color: #5fafd7;">&lt;-</span> <span style="color: #ffd700;">replicate</span><span style="color: #d18aff;">(</span><span style="color: #00d7af;">10000</span>,
-               <span style="color: #ffd700;">sim.ttest</span><span style="color: #d18aff;">(</span>mu1 <span style="color: #5fafd7;">=</span> <span style="color: #00d7af;">1</span>,
-                         mu2 <span style="color: #5fafd7;">=</span> <span style="color: #00d7af;">1.3</span>,
-                         sd <span style="color: #5fafd7;">=</span> <span style="color: #00d7af;">1</span>,
-                         n1 <span style="color: #5fafd7;">=</span> <span style="color: #00d7af;">50</span>,
-                         n2 <span style="color: #5fafd7;">=</span> <span style="color: #00d7af;">150</span><span style="color: #d18aff;">))</span>
-<span style="color: #6c6c6c; font-style: italic;">## </span><span style="color: #6c6c6c; font-style: italic;">calculate the proportion of significant tests</span>
-<span style="color: #ffd700;">cat</span><span style="color: #d18aff;">(</span><span style="color: #ffd700;">length</span><span style="color: #d18aff;">(</span>p<span style="color: #d18aff;">[</span>p <span style="color: #5fafd7;">&lt;</span> <span style="color: #00d7af;">.05</span><span style="color: #d18aff;">])</span><span style="color: #5fafd7;">/</span><span style="color: #ffd700;">length</span><span style="color: #d18aff;">(</span>p<span style="color: #d18aff;">))</span>
+<span style="color: #2aa198; background-color: #eff3ea;">##  </span><span style="color: #2aa198; background-color: #eff3ea;">run the function 10,000 times </span>
+p <span style="color: #4e3163;">&lt;-</span> replicate<span style="color: #2f96dc;">(</span>10000,
+               sim.ttest<span style="color: #6c3163;">(</span>mu1 = 1,
+                         mu2 = 1.3,
+                         sd = 1,
+                         n1 = 50,
+                         n2 = 150<span style="color: #6c3163;">)</span><span style="color: #2f96dc;">)</span>
+<span style="color: #2aa198; background-color: #eff3ea;">## </span><span style="color: #2aa198; background-color: #eff3ea;">calculate the proportion of significant tests</span>
+cat<span style="color: #2f96dc;">(</span>length<span style="color: #6c3163;">(</span>p<span style="color: #2aa198;">[</span>p &lt; .05<span style="color: #2aa198;">]</span><span style="color: #6c3163;">)</span>/length<span style="color: #6c3163;">(</span>p<span style="color: #6c3163;">)</span><span style="color: #2f96dc;">)</span>
 </pre>
 </div>
-</div>
-</li>
+</div></li>
 
-<li><a id="sec-8-1-1-2" name="sec-8-1-1-2"></a>Submit file<br  /><div class="outline-text-5" id="text-8-1-1-2">
+<li><a id="orgheadline23"></a>Submit file<br  /><div class="outline-text-5" id="text-orgheadline23">
 <p>
 If we want to run this function one million times it may take a while, especially if our computer is an older less powerful model. So let's run it on 100 separate machines (each one will simulate the test 10000 times). To do that we need, in addition to the R script above, a submit file to request resources and run the computation.  
 </p>
 <div class="org-src-container">
 
-<pre class="src src-conf"><span style="color: #6c6c6c; font-style: italic;"># </span><span style="color: #6c6c6c; font-style: italic;">Universe whould always be 'vanilla'. This line MUST be </span>
-<span style="color: #6c6c6c; font-style: italic;">#</span><span style="color: #6c6c6c; font-style: italic;">included in your submit file, exactly as shown below.</span>
-<span style="color: #ff8700;">Universe</span> = vanilla
+<pre class="src src-conf"><span style="color: #2aa198; background-color: #eff3ea;"># </span><span style="color: #2aa198; background-color: #eff3ea;">Universe whould always be 'vanilla'. This line MUST be </span>
+<span style="color: #2aa198; background-color: #eff3ea;">#</span><span style="color: #2aa198; background-color: #eff3ea;">included in your submit file, exactly as shown below.</span>
+<span style="color: #715ab1;">Universe</span> = vanilla
 
-<span style="color: #6c6c6c; font-style: italic;"># </span><span style="color: #6c6c6c; font-style: italic;">Enter the path to the R program.</span>
-<span style="color: #ff8700;">Executable</span> = /usr/local/bin/R
+<span style="color: #2aa198; background-color: #eff3ea;"># </span><span style="color: #2aa198; background-color: #eff3ea;">Enter the path to the R program.</span>
+<span style="color: #715ab1;">Executable</span> = /usr/local/bin/R
 
-<span style="color: #6c6c6c; font-style: italic;"># </span><span style="color: #6c6c6c; font-style: italic;">Specify any arguments you want to pass to the executable.</span>
-<span style="color: #6c6c6c; font-style: italic;"># </span><span style="color: #6c6c6c; font-style: italic;">Here we pass arguments to make R not save or restore workspaces,</span>
-<span style="color: #6c6c6c; font-style: italic;"># </span><span style="color: #6c6c6c; font-style: italic;">and to run as quietly as possible.</span>
-<span style="color: #ff8700;">Arguments</span> = --no-save --no-restore --slave
+<span style="color: #2aa198; background-color: #eff3ea;"># </span><span style="color: #2aa198; background-color: #eff3ea;">Specify any arguments you want to pass to the executable.</span>
+<span style="color: #2aa198; background-color: #eff3ea;"># </span><span style="color: #2aa198; background-color: #eff3ea;">Here we pass arguments to make R not save or restore workspaces,</span>
+<span style="color: #2aa198; background-color: #eff3ea;"># </span><span style="color: #2aa198; background-color: #eff3ea;">and to run as quietly as possible.</span>
+<span style="color: #715ab1;">Arguments</span> = --no-save --no-restore --slave
 
-<span style="color: #6c6c6c; font-style: italic;"># </span><span style="color: #6c6c6c; font-style: italic;">Specify the relative path to the input file</span>
-<span style="color: #ff8700;">input</span> = power.R
+<span style="color: #2aa198; background-color: #eff3ea;"># </span><span style="color: #2aa198; background-color: #eff3ea;">Specify the relative path to the input file</span>
+<span style="color: #715ab1;">input</span> = power.R
 
-<span style="color: #6c6c6c; font-style: italic;"># </span><span style="color: #6c6c6c; font-style: italic;">Specify where to output any results printed by your program.</span>
-<span style="color: #ff8700;">output</span> = output/out.$(Process)
-<span style="color: #6c6c6c; font-style: italic;"># </span><span style="color: #6c6c6c; font-style: italic;">Specify where to save any errors returned by your program.</span>
-<span style="color: #ff8700;">error</span> = output/error.$(Process)
-<span style="color: #6c6c6c; font-style: italic;"># </span><span style="color: #6c6c6c; font-style: italic;">Specify where to save the log file.</span>
-<span style="color: #ff8700;">Log</span> = output/log
+<span style="color: #2aa198; background-color: #eff3ea;"># </span><span style="color: #2aa198; background-color: #eff3ea;">Specify where to output any results printed by your program.</span>
+<span style="color: #715ab1;">output</span> = output/out.$(Process)
+<span style="color: #2aa198; background-color: #eff3ea;"># </span><span style="color: #2aa198; background-color: #eff3ea;">Specify where to save any errors returned by your program.</span>
+<span style="color: #715ab1;">error</span> = output/error.$(Process)
+<span style="color: #2aa198; background-color: #eff3ea;"># </span><span style="color: #2aa198; background-color: #eff3ea;">Specify where to save the log file.</span>
+<span style="color: #715ab1;">Log</span> = output/log
 
-<span style="color: #6c6c6c; font-style: italic;"># </span><span style="color: #6c6c6c; font-style: italic;">Enter the number of processes to request.</span>
-<span style="color: #6c6c6c; font-style: italic;"># </span><span style="color: #6c6c6c; font-style: italic;">This section should always come last.</span>
+<span style="color: #2aa198; background-color: #eff3ea;"># </span><span style="color: #2aa198; background-color: #eff3ea;">Enter the number of processes to request.</span>
+<span style="color: #2aa198; background-color: #eff3ea;"># </span><span style="color: #2aa198; background-color: #eff3ea;">This section should always come last.</span>
 Queue 100
 </pre>
 </div>
@@ -772,21 +750,15 @@ Queue 100
 Now that we have our script and the submit file we can run submit the job as follows:
 </p>
 <ol class="org-ol">
-<li>make a project folder for this run if it doesn't exist
-</li>
-<li>save the R script (as power.R) and the submit file (as power.submit) in the project folder
-</li>
-<li>make a sub folder named <code>output</code>
-</li>
-<li>open a terminal and <code>cd</code> to the project folder
-</li>
-<li>run <code>condor_submit power.submit</code> to submit the jobs to the cluster
-</li>
+<li>make a project folder for this run if it doesn't exist</li>
+<li>save the R script (as power.R) and the submit file (as power.submit) in the project folder</li>
+<li>make a sub folder named <code>output</code></li>
+<li>open a terminal and <code>cd</code> to the project folder</li>
+<li>run <code>condor_submit power.submit</code> to submit the jobs to the cluster</li>
 </ol>
-</div>
-</li>
+</div></li>
 
-<li><a id="sec-8-1-1-3" name="sec-8-1-1-3"></a>Monitoring submitted jobs<br  /><div class="outline-text-5" id="text-8-1-1-3">
+<li><a id="orgheadline24"></a>Monitoring submitted jobs<br  /><div class="outline-text-5" id="text-orgheadline24">
 <p>
 After submitting the jobs we may wish to monitor them, e.g. to check if they are running. You can do this by running <code>condor_q &lt;your_user_name&gt;</code> in a terminal. If this returns nothing then you have no jobs in the queue. Otherwise you will see information for each request in the queue which will look something like this:
 </p>
@@ -814,41 +786,38 @@ Perhaps the most important information returned by <code>condor_q</code> is the 
 <p>
 You will know your job is finished when it is no longer listed in the <code>condor_q</code> output. When it finishes you can examine the output and/or error files to see if the program exited successfully.
 </p>
-</div>
-</li>
+</div></li>
 
-<li><a id="sec-8-1-1-4" name="sec-8-1-1-4"></a>Aggregating results<br  /><div class="outline-text-5" id="text-8-1-1-4">
+<li><a id="orgheadline25"></a>Aggregating results<br  /><div class="outline-text-5" id="text-orgheadline25">
 <p>
 When your batch job is finished you are usually left with multiple output files that need to be aggregated. In the case of our simulation example, we have files <code>output/out.0 -- output/out40</code>, each of which contains a single number representing the proportion of significant tests. We can aggregate them with a simple R script, like this:
 </p>
 <div class="org-src-container">
 
-<pre class="src src-R"><span style="color: #6c6c6c; font-style: italic;">## </span><span style="color: #6c6c6c; font-style: italic;">list all output files in the output directory</span>
-output_files <span style="color: #5fafd7;">&lt;-</span> <span style="color: #ffd700;">list.files</span><span style="color: #d18aff;">(</span><span style="color: #b22222;">"output"</span>,
-                           pattern <span style="color: #5fafd7;">=</span> <span style="color: #b22222;">"^out\\.[0-9]+$"</span>,
-                           full.names<span style="color: #5fafd7;">=</span><span style="color: #00d7af;">TRUE</span><span style="color: #d18aff;">)</span>
+<pre class="src src-R"><span style="color: #2aa198; background-color: #eff3ea;">## </span><span style="color: #2aa198; background-color: #eff3ea;">list all output files in the output directory</span>
+output_files <span style="color: #4e3163;">&lt;-</span> list.files<span style="color: #2f96dc;">(</span><span style="color: #2aa198;">"output"</span>,
+                           pattern = <span style="color: #2aa198;">"^out\\.[0-9]+$"</span>,
+                           full.names=<span style="color: #428374; font-weight: bold;">TRUE</span><span style="color: #2f96dc;">)</span>
 
-<span style="color: #6c6c6c; font-style: italic;">## </span><span style="color: #6c6c6c; font-style: italic;">read each file, convert it to a number, and take the average</span>
-<span style="color: #ffd700;">mean</span><span style="color: #d18aff;">(</span><span style="color: #ffd700;">as.double</span><span style="color: #d18aff;">(</span><span style="color: #ffd700;">sapply</span><span style="color: #d18aff;">(</span>
+<span style="color: #2aa198; background-color: #eff3ea;">## </span><span style="color: #2aa198; background-color: #eff3ea;">read each file, convert it to a number, and take the average</span>
+mean<span style="color: #2f96dc;">(</span>as.double<span style="color: #6c3163;">(</span>sapply<span style="color: #2aa198;">(</span>
                       output_files,
                       readLines,
-                      warn <span style="color: #5fafd7;">=</span> <span style="color: #00d7af;">FALSE</span><span style="color: #d18aff;">)))</span>
+                      warn = <span style="color: #428374; font-weight: bold;">FALSE</span><span style="color: #2aa198;">)</span><span style="color: #6c3163;">)</span><span style="color: #2f96dc;">)</span>
 </pre>
 </div>
-</div>
-</li>
+</div></li>
 
-<li><a id="sec-8-1-1-5" name="sec-8-1-1-5"></a>Try it yourself!<br  /><div class="outline-text-5" id="text-8-1-1-5">
+<li><a id="orgheadline26"></a>Try it yourself!<br  /><div class="outline-text-5" id="text-orgheadline26">
 <p>
 Download the <a href="R_examples/power1.zip">power simulation example files</a>, to the RCE, extract the zip file and running <code>condor_submit power.submit</code> in the <code>power1</code> directory.
 </p>
-</div>
-</li></ul>
+</div></li></ul>
 </div>
 
-<div id="outline-container-sec-8-1-2" class="outline-4">
-<h4 id="sec-8-1-2">Batch example: Power simulation in R with varying parameters</h4>
-<div class="outline-text-4" id="text-8-1-2">
+<div id="outline-container-orgheadline27" class="outline-4">
+<h4 id="orgheadline27">Batch example: Power simulation in R with varying parameters</h4>
+<div class="outline-text-4" id="text-orgheadline27">
 <p>
 The previous example was relatively simple, because we wanted to run exactly the same code on all 100 nodes. Often however you want each node to do something slightly different. For example, we may wish to vary the sample size from 100 &#x2013; 500 in increments of 10, to see how power changes as a function of that parameter. In that case we need to pass some additional information to each process, telling it which parameter space it is responsible for. 
 </p>
@@ -857,49 +826,48 @@ The previous example was relatively simple, because we wanted to run exactly the
 As it turns out, we almost already know how to do that: if you you look closely at the submit file in the previous example you will notice that we used <code>$(Process)</code> to append the process number to the output and error files. 
 </p>
 </div>
-<ul class="org-ul"><li><a id="sec-8-1-2-1" name="sec-8-1-2-1"></a>Submit file passing process as an argument<br  /><div class="outline-text-5" id="text-8-1-2-1">
+<ul class="org-ul"><li><a id="orgheadline28"></a>Submit file passing process as an argument<br  /><div class="outline-text-5" id="text-orgheadline28">
 <p>
 We can use the <code>$(Process)</code> macro to pass information to our program, like this:
 </p>
 <div class="org-src-container">
 
-<pre class="src src-conf"><span style="color: #6c6c6c; font-style: italic;"># </span><span style="color: #6c6c6c; font-style: italic;">Universe whould always be 'vanilla'. This line MUST be </span>
-<span style="color: #6c6c6c; font-style: italic;">#</span><span style="color: #6c6c6c; font-style: italic;">included in your submit file, exactly as shown below.</span>
-<span style="color: #ff8700;">Universe</span> = vanilla
+<pre class="src src-conf"><span style="color: #2aa198; background-color: #eff3ea;"># </span><span style="color: #2aa198; background-color: #eff3ea;">Universe whould always be 'vanilla'. This line MUST be </span>
+<span style="color: #2aa198; background-color: #eff3ea;">#</span><span style="color: #2aa198; background-color: #eff3ea;">included in your submit file, exactly as shown below.</span>
+<span style="color: #715ab1;">Universe</span> = vanilla
 
-<span style="color: #6c6c6c; font-style: italic;"># </span><span style="color: #6c6c6c; font-style: italic;">Enter the path to the R program.</span>
-<span style="color: #ff8700;">Executable</span> = /usr/local/bin/R
+<span style="color: #2aa198; background-color: #eff3ea;"># </span><span style="color: #2aa198; background-color: #eff3ea;">Enter the path to the R program.</span>
+<span style="color: #715ab1;">Executable</span> = /usr/local/bin/R
 
-<span style="color: #6c6c6c; font-style: italic;"># </span><span style="color: #6c6c6c; font-style: italic;">Specify any arguments you want to pass to the executable</span>
-<span style="color: #6c6c6c; font-style: italic;"># </span><span style="color: #6c6c6c; font-style: italic;">to make r not save or restore workspaces, and to </span>
-<span style="color: #6c6c6c; font-style: italic;"># </span><span style="color: #6c6c6c; font-style: italic;">run as quietly as possible</span>
-<span style="color: #ff8700;">Arguments</span> = --no-save --no-restore --slave --args $(Process)
+<span style="color: #2aa198; background-color: #eff3ea;"># </span><span style="color: #2aa198; background-color: #eff3ea;">Specify any arguments you want to pass to the executable</span>
+<span style="color: #2aa198; background-color: #eff3ea;"># </span><span style="color: #2aa198; background-color: #eff3ea;">to make r not save or restore workspaces, and to </span>
+<span style="color: #2aa198; background-color: #eff3ea;"># </span><span style="color: #2aa198; background-color: #eff3ea;">run as quietly as possible</span>
+<span style="color: #715ab1;">Arguments</span> = --no-save --no-restore --slave --args $(Process)
 
-<span style="color: #6c6c6c; font-style: italic;"># </span><span style="color: #6c6c6c; font-style: italic;">Specify the relative path to the input file</span>
-<span style="color: #ff8700;">input</span> = power.R
+<span style="color: #2aa198; background-color: #eff3ea;"># </span><span style="color: #2aa198; background-color: #eff3ea;">Specify the relative path to the input file</span>
+<span style="color: #715ab1;">input</span> = power.R
 
-<span style="color: #6c6c6c; font-style: italic;"># </span><span style="color: #6c6c6c; font-style: italic;">Specify where to save any errors returned by your program.</span>
-<span style="color: #ff8700;">error</span> = output/error.$(Process)
+<span style="color: #2aa198; background-color: #eff3ea;"># </span><span style="color: #2aa198; background-color: #eff3ea;">Specify where to save any errors returned by your program.</span>
+<span style="color: #715ab1;">error</span> = output/error.$(Process)
 
-<span style="color: #ff8700;">Log</span> = log.txt
-<span style="color: #6c6c6c; font-style: italic;"># </span><span style="color: #6c6c6c; font-style: italic;">Enter the number of processes to request.</span>
+<span style="color: #715ab1;">Log</span> = log.txt
+<span style="color: #2aa198; background-color: #eff3ea;"># </span><span style="color: #2aa198; background-color: #eff3ea;">Enter the number of processes to request.</span>
 Queue 40
 </pre>
 </div>
 <p>
 Notice that we used <code>--args $(Process)</code> to pass the process number to the R program. <code>$(Process)</code> will be an integer starting from <code>0</code>. 
 </p>
-</div>
-</li>
+</div></li>
 
-<li><a id="sec-8-1-2-2" name="sec-8-1-2-2"></a>R script argument processing<br  /><div class="outline-text-5" id="text-8-1-2-2">
+<li><a id="orgheadline29"></a>R script argument processing<br  /><div class="outline-text-5" id="text-orgheadline29">
 <p>
 Next we need to 1) retrieve the process number in our R program and 2) map it to the parameter space. We can retrieve the arguments in R like this:
 </p>
 <div class="org-src-container">
 
-<pre class="src src-R"><span style="color: #6c6c6c; font-style: italic;">## </span><span style="color: #6c6c6c; font-style: italic;">retrieve arguments passed from the command line.</span>
-process <span style="color: #5fafd7;">&lt;-</span> <span style="color: #ffd700;">as.integer</span><span style="color: #d18aff;">(</span><span style="color: #ffd700;">as.character</span><span style="color: #d18aff;">(</span><span style="color: #ffd700;">commandArgs</span><span style="color: #d18aff;">(</span>trailingOnly <span style="color: #5fafd7;">=</span> <span style="color: #00d7af;">TRUE</span><span style="color: #d18aff;">)))</span>
+<pre class="src src-R"><span style="color: #2aa198; background-color: #eff3ea;">## </span><span style="color: #2aa198; background-color: #eff3ea;">retrieve arguments passed from the command line.</span>
+process <span style="color: #4e3163;">&lt;-</span> as.integer<span style="color: #2f96dc;">(</span>as.character<span style="color: #6c3163;">(</span>commandArgs<span style="color: #2aa198;">(</span>trailingOnly = <span style="color: #428374; font-weight: bold;">TRUE</span><span style="color: #2aa198;">)</span><span style="color: #6c3163;">)</span><span style="color: #2f96dc;">)</span>
 </pre>
 </div>
 <p>
@@ -907,8 +875,8 @@ We now have a variable in R that tells us which process we are. Now we need to m
 </p>
 <div class="org-src-container">
 
-<pre class="src src-R"><span style="color: #6c6c6c; font-style: italic;">## </span><span style="color: #6c6c6c; font-style: italic;">map process to sample size parameter.</span>
-n <span style="color: #5fafd7;">&lt;-</span> <span style="color: #d18aff;">(</span>process <span style="color: #5fafd7;">+</span> <span style="color: #00d7af;">100</span><span style="color: #d18aff;">)</span> <span style="color: #5fafd7;">+</span> <span style="color: #d18aff;">(</span>process*<span style="color: #00d7af;">10</span> <span style="color: #5fafd7;">-</span> process<span style="color: #d18aff;">)</span>
+<pre class="src src-R"><span style="color: #2aa198; background-color: #eff3ea;">## </span><span style="color: #2aa198; background-color: #eff3ea;">map process to sample size parameter.</span>
+n <span style="color: #4e3163;">&lt;-</span> <span style="color: #2f96dc;">(</span>process + 100<span style="color: #2f96dc;">)</span> + <span style="color: #2f96dc;">(</span>process*10 - process<span style="color: #2f96dc;">)</span>
 </pre>
 </div>
 
@@ -921,50 +889,49 @@ Now we can set up the simulation as before, passing the <code>n</code> calculate
 </p>
 <div class="org-src-container">
 
-<pre class="src src-R">  <span style="color: #6c6c6c; font-style: italic;">## </span><span style="color: #6c6c6c; font-style: italic;">function to simulate data and perform a t.test</span>
-  <span style="color: #ffd700;">sim.ttest</span> <span style="color: #5fafd7;">&lt;-</span> <span style="color: #a1db00;">function</span><span style="color: #d18aff;">(</span>mu1, mu2, sd, n1, n2<span style="color: #d18aff;">)</span> <span style="color: #d18aff;">{</span>
-      d <span style="color: #5fafd7;">&lt;-</span> <span style="color: #ffd700;">data.frame</span><span style="color: #d18aff;">(</span>x <span style="color: #5fafd7;">=</span> <span style="color: #ffd700;">c</span><span style="color: #d18aff;">(</span><span style="color: #ffd700;">rep</span><span style="color: #d18aff;">(</span><span style="color: #b22222;">"group1"</span>, n1<span style="color: #d18aff;">)</span>, <span style="color: #ffd700;">rep</span><span style="color: #d18aff;">(</span><span style="color: #b22222;">"group2"</span>, n2<span style="color: #d18aff;">))</span>,
-                      y <span style="color: #5fafd7;">=</span> <span style="color: #ffd700;">c</span><span style="color: #d18aff;">(</span><span style="color: #ffd700;">rnorm</span><span style="color: #d18aff;">(</span>n1, mean <span style="color: #5fafd7;">=</span> mu1, sd <span style="color: #5fafd7;">=</span> sd<span style="color: #d18aff;">)</span>,
-                            <span style="color: #ffd700;">rnorm</span><span style="color: #d18aff;">(</span>n2, mean <span style="color: #5fafd7;">=</span> mu2, sd <span style="color: #5fafd7;">=</span> sd<span style="color: #d18aff;">)))</span>
-      <span style="color: #a1db00;">return</span><span style="color: #d18aff;">(</span><span style="color: #ffd700;">t.test</span><span style="color: #d18aff;">(</span>y ~ x, data <span style="color: #5fafd7;">=</span> d<span style="color: #d18aff;">)</span>$p.value<span style="color: #d18aff;">)</span>
-  <span style="color: #d18aff;">}</span>
+<pre class="src src-R">  <span style="color: #2aa198; background-color: #eff3ea;">## </span><span style="color: #2aa198; background-color: #eff3ea;">function to simulate data and perform a t.test</span>
+  <span style="color: #6c3163; font-weight: bold;">sim.ttest</span> <span style="color: #4e3163;">&lt;-</span> <span style="color: #237fbf; font-weight: bold;">function</span><span style="color: #2f96dc;">(</span>mu1, mu2, sd, n1, n2<span style="color: #2f96dc;">)</span> <span style="color: #2f96dc;">{</span>
+      d <span style="color: #4e3163;">&lt;-</span> data.frame<span style="color: #6c3163;">(</span>x = c<span style="color: #2aa198;">(</span>rep<span style="color: #67b11d;">(</span><span style="color: #2aa198;">"group1"</span>, n1<span style="color: #67b11d;">)</span>, rep<span style="color: #67b11d;">(</span><span style="color: #2aa198;">"group2"</span>, n2<span style="color: #67b11d;">)</span><span style="color: #2aa198;">)</span>,
+                      y = c<span style="color: #2aa198;">(</span>rnorm<span style="color: #67b11d;">(</span>n1, mean = mu1, sd = sd<span style="color: #67b11d;">)</span>,
+                            rnorm<span style="color: #67b11d;">(</span>n2, mean = mu2, sd = sd<span style="color: #67b11d;">)</span><span style="color: #2aa198;">)</span><span style="color: #6c3163;">)</span>
+      <span style="color: #237fbf; font-weight: bold;">return</span><span style="color: #6c3163;">(</span>t.test<span style="color: #2aa198;">(</span>y ~ x, data = d<span style="color: #2aa198;">)</span>$p.value<span style="color: #6c3163;">)</span>
+  <span style="color: #2f96dc;">}</span>
 
-  <span style="color: #6c6c6c; font-style: italic;">##  </span><span style="color: #6c6c6c; font-style: italic;">run the function 10,000 times </span>
-  p <span style="color: #5fafd7;">&lt;-</span> <span style="color: #ffd700;">replicate</span><span style="color: #d18aff;">(</span><span style="color: #00d7af;">10000</span>,
-                 <span style="color: #ffd700;">sim.ttest</span><span style="color: #d18aff;">(</span>mu1 <span style="color: #5fafd7;">=</span> <span style="color: #00d7af;">1</span>,
-                           mu2 <span style="color: #5fafd7;">=</span> <span style="color: #00d7af;">1.3</span>,
-                           sd <span style="color: #5fafd7;">=</span> <span style="color: #00d7af;">1</span>,
-                           n1 <span style="color: #5fafd7;">=</span> n,
-                           n2 <span style="color: #5fafd7;">=</span> n<span style="color: #d18aff;">))</span>
-<span style="color: #ffd700;">write.csv</span><span style="color: #d18aff;">(</span><span style="color: #ffd700;">data.frame</span><span style="color: #d18aff;">(</span>n <span style="color: #5fafd7;">=</span> n, power <span style="color: #5fafd7;">=</span> <span style="color: #ffd700;">length</span><span style="color: #d18aff;">(</span>p<span style="color: #d18aff;">[</span>p <span style="color: #5fafd7;">&lt;</span> <span style="color: #00d7af;">.05</span><span style="color: #d18aff;">])</span><span style="color: #5fafd7;">/</span><span style="color: #ffd700;">length</span><span style="color: #d18aff;">(</span>p<span style="color: #d18aff;">))</span>,
-          row.names <span style="color: #5fafd7;">=</span> <span style="color: #00d7af;">FALSE</span>,
-          file <span style="color: #5fafd7;">=</span> <span style="color: #ffd700;">paste0</span><span style="color: #d18aff;">(</span><span style="color: #b22222;">"output/out"</span>, process, <span style="color: #b22222;">".csv"</span><span style="color: #d18aff;">))</span>
+  <span style="color: #2aa198; background-color: #eff3ea;">##  </span><span style="color: #2aa198; background-color: #eff3ea;">run the function 10,000 times </span>
+  p <span style="color: #4e3163;">&lt;-</span> replicate<span style="color: #2f96dc;">(</span>10000,
+                 sim.ttest<span style="color: #6c3163;">(</span>mu1 = 1,
+                           mu2 = 1.3,
+                           sd = 1,
+                           n1 = n,
+                           n2 = n<span style="color: #6c3163;">)</span><span style="color: #2f96dc;">)</span>
+write.csv<span style="color: #2f96dc;">(</span>data.frame<span style="color: #6c3163;">(</span>n = n, power = length<span style="color: #2aa198;">(</span>p<span style="color: #67b11d;">[</span>p &lt; .05<span style="color: #67b11d;">]</span><span style="color: #2aa198;">)</span>/length<span style="color: #2aa198;">(</span>p<span style="color: #2aa198;">)</span><span style="color: #6c3163;">)</span>,
+          row.names = <span style="color: #428374; font-weight: bold;">FALSE</span>,
+          file = paste0<span style="color: #6c3163;">(</span><span style="color: #2aa198;">"output/out"</span>, process, <span style="color: #2aa198;">".csv"</span><span style="color: #6c3163;">)</span><span style="color: #2f96dc;">)</span>
 </pre>
 </div>
 
 <p>
 Now we have all the required elements to submit out job, and can do so using <code>condor_submit</code> as before. 
 </p>
-</div>
-</li>
+</div></li>
 
-<li><a id="sec-8-1-2-3" name="sec-8-1-2-3"></a>Aggregating results<br  /><div class="outline-text-5" id="text-8-1-2-3">
+<li><a id="orgheadline30"></a>Aggregating results<br  /><div class="outline-text-5" id="text-orgheadline30">
 <p>
 Each of our 40 processes produced a file in the <code>output</code> directory name <code>out&lt;process&gt;csv</code>; our next task is to aggregate these results. The R script below reads each of these files, joins them together into a single data.frame, and plots the result.
 </p>
 <div class="org-src-container">
 
-<pre class="src src-R"><span style="color: #6c6c6c; font-style: italic;">## </span><span style="color: #6c6c6c; font-style: italic;">list all output files in the output directory</span>
-output_files <span style="color: #5fafd7;">&lt;-</span> <span style="color: #ffd700;">list.files</span><span style="color: #d18aff;">(</span><span style="color: #b22222;">"output"</span>,
-                           pattern <span style="color: #5fafd7;">=</span> <span style="color: #b22222;">"^out[0-9]+\\.csv$"</span>,
-                           full.names<span style="color: #5fafd7;">=</span><span style="color: #00d7af;">TRUE</span><span style="color: #d18aff;">)</span>
+<pre class="src src-R"><span style="color: #2aa198; background-color: #eff3ea;">## </span><span style="color: #2aa198; background-color: #eff3ea;">list all output files in the output directory</span>
+output_files <span style="color: #4e3163;">&lt;-</span> list.files<span style="color: #2f96dc;">(</span><span style="color: #2aa198;">"output"</span>,
+                           pattern = <span style="color: #2aa198;">"^out[0-9]+\\.csv$"</span>,
+                           full.names=<span style="color: #428374; font-weight: bold;">TRUE</span><span style="color: #2f96dc;">)</span>
 
-<span style="color: #6c6c6c; font-style: italic;">## </span><span style="color: #6c6c6c; font-style: italic;">read each file and append them</span>
-results <span style="color: #5fafd7;">&lt;-</span> <span style="color: #ffd700;">do.call</span><span style="color: #d18aff;">(</span>rbind, <span style="color: #ffd700;">lapply</span><span style="color: #d18aff;">(</span>output_files, read.csv<span style="color: #d18aff;">))</span>
+<span style="color: #2aa198; background-color: #eff3ea;">## </span><span style="color: #2aa198; background-color: #eff3ea;">read each file and append them</span>
+results <span style="color: #4e3163;">&lt;-</span> do.call<span style="color: #2f96dc;">(</span>rbind, lapply<span style="color: #6c3163;">(</span>output_files, read.csv<span style="color: #6c3163;">)</span><span style="color: #2f96dc;">)</span>
 
-<span style="color: #6c6c6c; font-style: italic;">## </span><span style="color: #6c6c6c; font-style: italic;">plot</span>
-<span style="color: #ffd700;">plot</span><span style="color: #d18aff;">(</span>results<span style="color: #d18aff;">)</span>
-<span style="color: #ffd700;">abline</span><span style="color: #d18aff;">(</span>h <span style="color: #5fafd7;">=</span> <span style="color: #00d7af;">0.8</span><span style="color: #d18aff;">)</span>
+<span style="color: #2aa198; background-color: #eff3ea;">## </span><span style="color: #2aa198; background-color: #eff3ea;">plot</span>
+plot<span style="color: #2f96dc;">(</span>results<span style="color: #2f96dc;">)</span>
+abline<span style="color: #2f96dc;">(</span>h = 0.8<span style="color: #2f96dc;">)</span>
 </pre>
 </div>
 
@@ -973,55 +940,52 @@ results <span style="color: #5fafd7;">&lt;-</span> <span style="color: #ffd700;"
 <p><img src="images/powerDist.png" alt="powerDist.png" />
 </p>
 </div>
-</div>
-</li>
+</div></li>
 
-<li><a id="sec-8-1-2-4" name="sec-8-1-2-4"></a>Try it yourself!<br  /><div class="outline-text-5" id="text-8-1-2-4">
+<li><a id="orgheadline31"></a>Try it yourself!<br  /><div class="outline-text-5" id="text-orgheadline31">
 <p>
 Download the <a href="R_examples/power2.zip">power simulation example files</a>, to the RCE, extract the zip file, and run the example by calling <code>condor_submit power.submit</code> from the <code>power2</code> directory.
 </p>
-</div>
-</li></ul>
+</div></li></ul>
 </div>
 </div>
 
-<div id="outline-container-sec-8-2" class="outline-3">
-<h3 id="sec-8-2">Stata Batch Example</h3>
-<div class="outline-text-3" id="text-8-2">
+<div id="outline-container-orgheadline18" class="outline-3">
+<h3 id="orgheadline18">Stata Batch Examples</h3>
+<div class="outline-text-3" id="text-orgheadline18">
 <p>
 In this example we use the batch system to bootstrap a distribution of means. Each process will calculate the mean for a single bootstrap sample and save the result. Since we need to give the output files unique names we will pass the batch process number to Stata and use it to construct the file names.
 </p>
 </div>
-
-<div id="outline-container-sec-8-2-1" class="outline-4">
-<h4 id="sec-8-2-1">Stata bootstrap do-file</h4>
-<div class="outline-text-4" id="text-8-2-1">
+<div id="outline-container-orgheadline32" class="outline-4">
+<h4 id="orgheadline32">Stata bootstrap do-file</h4>
+<div class="outline-text-4" id="text-orgheadline32">
 <p>
 To use the batch system we need to write a do-file that does the calculation without further user input. The do-file below reads a Stata data set, sets a seed for random number generation, samples (with replacement) from the data, calculates the average value of the sampled data, and saves the result.
 </p>
 <div class="org-src-container">
 
-<pre class="src src-stata"><span style="color: #5fafd7;">set</span> <span style="color: #5fafd7;">mo</span><span style="color: #00d7af;">re</span> off
+<pre class="src src-stata"><span style="color: #4e3163;">set</span> <span style="color: #4e3163;">mo</span><span style="color: #428374; font-weight: bold;">re</span> off
 
-<span style="color: #6c6c6c; font-style: italic;">// collect the arguments passed by submit file</span>
+<span style="color: #2aa198; background-color: #eff3ea;">// collect the arguments passed by submit file</span>
 args process
 
-<span style="color: #6c6c6c; font-style: italic;">// load the dataset</span>
-<span style="color: #a1db00;">use</span> <span style="color: #b22222;">"mydata"</span>, <span style="color: #a1db00;">clear</span>
+<span style="color: #2aa198; background-color: #eff3ea;">// load the dataset</span>
+<span style="color: #237fbf; font-weight: bold;">use</span> <span style="color: #2aa198;">"mydata"</span>, <span style="color: #237fbf; font-weight: bold;">clear</span>
 
-<span style="color: #6c6c6c; font-style: italic;">// set seed (shouldn't have to do this, but stata's</span>
-<span style="color: #6c6c6c; font-style: italic;">// random bsample defaults to the same seed each time).</span>
-<span style="color: #6c6c6c; font-style: italic;">// we nee to find a better way to do this.</span>
-<span style="color: #5fafd7;">set</span> <span style="color: #5fafd7;">se</span><span style="color: #00d7af;">ed</span> `<span style="color: #ff8700;">process</span>'
+<span style="color: #2aa198; background-color: #eff3ea;">// set seed (shouldn't have to do this, but stata's</span>
+<span style="color: #2aa198; background-color: #eff3ea;">// random bsample defaults to the same seed each time).</span>
+<span style="color: #2aa198; background-color: #eff3ea;">// we nee to find a better way to do this.</span>
+<span style="color: #4e3163;">set</span> <span style="color: #4e3163;">se</span><span style="color: #428374; font-weight: bold;">ed</span> <span style="color: #2f96dc;">`</span><span style="color: #715ab1;">process</span><span style="color: #2f96dc;">'</span>
 
-<span style="color: #6c6c6c; font-style: italic;">// sample with replacement</span>
-<span style="color: #a1db00;">bsample</span>, cluster(id) idcluster(newid)
+<span style="color: #2aa198; background-color: #eff3ea;">// sample with replacement</span>
+<span style="color: #237fbf; font-weight: bold;">bsample</span>, cluster<span style="color: #2f96dc;">(</span>id<span style="color: #2f96dc;">)</span> idcluster<span style="color: #2f96dc;">(</span>newid<span style="color: #2f96dc;">)</span>
 
-<span style="color: #6c6c6c; font-style: italic;">// calculate the mean and standard deviation</span>
-collapse (mean) mean_myvar = myvar (sd) sd_myvar = myvar
+<span style="color: #2aa198; background-color: #eff3ea;">// calculate the mean and standard deviation</span>
+collapse <span style="color: #2f96dc;">(</span>mean<span style="color: #2f96dc;">)</span> mean_myvar = myvar <span style="color: #2f96dc;">(</span>sd<span style="color: #2f96dc;">)</span> sd_myvar = myvar
 
-<span style="color: #6c6c6c; font-style: italic;">// save the result, appending the process number to the file name</span>
-<span style="color: #a1db00;">save</span> <span style="color: #b22222;">"output/output_`</span><span style="color: #ff8700;">process</span><span style="color: #b22222;">'.dta"</span>, <span style="color: #a1db00;">replace</span>
+<span style="color: #2aa198; background-color: #eff3ea;">// save the result, appending the process number to the file name</span>
+<span style="color: #237fbf; font-weight: bold;">save</span> <span style="color: #2aa198;">"output/output_`</span><span style="color: #715ab1;">process</span><span style="color: #2aa198;">'.dta"</span>, <span style="color: #237fbf; font-weight: bold;">replace</span>
 </pre>
 </div>
 <p>
@@ -1029,36 +993,36 @@ Note the use of <code>args process</code>, which retrieves the value of the proc
 </p>
 </div>
 </div>
-<div id="outline-container-sec-8-2-2" class="outline-4">
-<h4 id="sec-8-2-2">Submit file</h4>
-<div class="outline-text-4" id="text-8-2-2">
+<div id="outline-container-orgheadline33" class="outline-4">
+<h4 id="orgheadline33">Submit file</h4>
+<div class="outline-text-4" id="text-orgheadline33">
 <p>
 The Stata code in the example above draws one bootstrap sample and calculates the mean. If we want to do this 1,000 times we could write a loop, but each iteration would be done sequentially. We can carry out this operation faster by running it simultaneously on hundreds of machines. We just need a <code>.submit</code> file like the one below:
 </p>
 <div class="org-src-container">
 
-<pre class="src src-conf"><span style="color: #6c6c6c; font-style: italic;"># </span><span style="color: #6c6c6c; font-style: italic;">Universe whould always be 'vanilla'. This line MUST be </span>
-<span style="color: #6c6c6c; font-style: italic;">#</span><span style="color: #6c6c6c; font-style: italic;">included in your submit file, exactly as shown below.</span>
-<span style="color: #ff8700;">Universe</span> = vanilla
+<pre class="src src-conf"><span style="color: #2aa198; background-color: #eff3ea;"># </span><span style="color: #2aa198; background-color: #eff3ea;">Universe whould always be 'vanilla'. This line MUST be </span>
+<span style="color: #2aa198; background-color: #eff3ea;">#</span><span style="color: #2aa198; background-color: #eff3ea;">included in your submit file, exactly as shown below.</span>
+<span style="color: #715ab1;">Universe</span> = vanilla
 
-<span style="color: #6c6c6c; font-style: italic;"># </span><span style="color: #6c6c6c; font-style: italic;">Enter the path to the Stata program.</span>
-<span style="color: #ff8700;">Executable</span> = /usr/local/bin/stata-mp
+<span style="color: #2aa198; background-color: #eff3ea;"># </span><span style="color: #2aa198; background-color: #eff3ea;">Enter the path to the Stata program.</span>
+<span style="color: #715ab1;">Executable</span> = /usr/local/bin/stata-mp
 
-<span style="color: #6c6c6c; font-style: italic;"># </span><span style="color: #6c6c6c; font-style: italic;">Specify any arguments you want to pass to the executable.</span>
-<span style="color: #6c6c6c; font-style: italic;"># </span><span style="color: #6c6c6c; font-style: italic;">Here we pass arguments to make Stata run the bootstrap.do</span>
-<span style="color: #6c6c6c; font-style: italic;"># </span><span style="color: #6c6c6c; font-style: italic;">file. We also pass the process number, which will be used</span>
-<span style="color: #6c6c6c; font-style: italic;"># </span><span style="color: #6c6c6c; font-style: italic;">to append the process number to the output files.</span>
-<span style="color: #ff8700;">Arguments</span> = -q do bootstrap.do $(Process)
+<span style="color: #2aa198; background-color: #eff3ea;"># </span><span style="color: #2aa198; background-color: #eff3ea;">Specify any arguments you want to pass to the executable.</span>
+<span style="color: #2aa198; background-color: #eff3ea;"># </span><span style="color: #2aa198; background-color: #eff3ea;">Here we pass arguments to make Stata run the bootstrap.do</span>
+<span style="color: #2aa198; background-color: #eff3ea;"># </span><span style="color: #2aa198; background-color: #eff3ea;">file. We also pass the process number, which will be used</span>
+<span style="color: #2aa198; background-color: #eff3ea;"># </span><span style="color: #2aa198; background-color: #eff3ea;">to append the process number to the output files.</span>
+<span style="color: #715ab1;">Arguments</span> = -q do bootstrap.do $(Process)
 
-<span style="color: #6c6c6c; font-style: italic;"># </span><span style="color: #6c6c6c; font-style: italic;">Specify where to output any results printed by your program.</span>
-<span style="color: #ff8700;">output</span> = output/bootstrap$(Process).out
-<span style="color: #6c6c6c; font-style: italic;"># </span><span style="color: #6c6c6c; font-style: italic;">Specify where to save any errors returned by your program.</span>
-<span style="color: #ff8700;">error</span> = output/bootstrap$(Process).err
-<span style="color: #6c6c6c; font-style: italic;"># </span><span style="color: #6c6c6c; font-style: italic;">Specify where to save the log file.</span>
-<span style="color: #ff8700;">Log</span> = output/bootstrap$(Process).log
+<span style="color: #2aa198; background-color: #eff3ea;"># </span><span style="color: #2aa198; background-color: #eff3ea;">Specify where to output any results printed by your program.</span>
+<span style="color: #715ab1;">output</span> = output/bootstrap$(Process).out
+<span style="color: #2aa198; background-color: #eff3ea;"># </span><span style="color: #2aa198; background-color: #eff3ea;">Specify where to save any errors returned by your program.</span>
+<span style="color: #715ab1;">error</span> = output/bootstrap$(Process).err
+<span style="color: #2aa198; background-color: #eff3ea;"># </span><span style="color: #2aa198; background-color: #eff3ea;">Specify where to save the log file.</span>
+<span style="color: #715ab1;">Log</span> = output/bootstrap$(Process).log
 
-<span style="color: #6c6c6c; font-style: italic;"># </span><span style="color: #6c6c6c; font-style: italic;">Enter the number of processes to request.</span>
-<span style="color: #6c6c6c; font-style: italic;"># </span><span style="color: #6c6c6c; font-style: italic;">This section should always come last.</span>
+<span style="color: #2aa198; background-color: #eff3ea;"># </span><span style="color: #2aa198; background-color: #eff3ea;">Enter the number of processes to request.</span>
+<span style="color: #2aa198; background-color: #eff3ea;"># </span><span style="color: #2aa198; background-color: #eff3ea;">This section should always come last.</span>
 Queue 1000
 </pre>
 </div>
@@ -1072,9 +1036,9 @@ To submit this job we open a terminal on the RCE, <code>cd</code> to the project
 </div>
 </div>
 
-<div id="outline-container-sec-8-2-3" class="outline-4">
-<h4 id="sec-8-2-3">Monitoring submitted jobs</h4>
-<div class="outline-text-4" id="text-8-2-3">
+<div id="outline-container-orgheadline34" class="outline-4">
+<h4 id="orgheadline34">Monitoring submitted jobs</h4>
+<div class="outline-text-4" id="text-orgheadline34">
 <p>
 After submitting the jobs we may wish to monitor them, e.g. to check if they are running. You can do this by running <code>condor_q &lt;your_user_name&gt;</code> in a terminal. If this returns nothing then you have no jobs in the queue. Otherwise you will see information for each request in the queue which will look something like this:
 </p>
@@ -1104,40 +1068,40 @@ You will know your job is finished when it is no longer listed in the <code>cond
 </div>
 
 
-<div id="outline-container-sec-8-2-4" class="outline-4">
-<h4 id="sec-8-2-4">Aggregating results</h4>
-<div class="outline-text-4" id="text-8-2-4">
+<div id="outline-container-orgheadline35" class="outline-4">
+<h4 id="orgheadline35">Aggregating results</h4>
+<div class="outline-text-4" id="text-orgheadline35">
 <p>
 Each of our 1000 processes produced a file in the <code>output</code> directory name <code>out&lt;process&gt;.dta</code>; our next task is to aggregate these results. The do-file below reads each of these files, joins them together, appends them, and plots the result.
 </p>
 <div class="org-src-container">
 
-<pre class="src src-Stata"><span style="color: #a1db00;">clear</span>
-<span style="color: #5fafd7;">set</span> <span style="color: #5fafd7;">mo</span><span style="color: #00d7af;">re</span> off
-<span style="color: #6c6c6c; font-style: italic;">// change to the output directory</span>
-<span style="color: #a1db00;">cd</span> output
-<span style="color: #6c6c6c; font-style: italic;">// get a list of the output files created by bootstrap.do</span>
-<span style="color: #5fafd7;">local</span><span style="color: #ff8700;"> list</span>: <span style="color: #5fafd7;">dir</span> . files <span style="color: #b22222;">"output*.dta"</span>
-<span style="color: #6c6c6c; font-style: italic;">//loop over the output files appending each one</span>
-<span style="color: #5fafd7;">local</span><span style="color: #ff8700;"> f</span>=1
-foreach file of local <span style="color: #5fafd7;">list</span> {
-        <span style="color: #5fafd7;">di</span> <span style="color: #b22222;">"`file"</span>'
-        <span style="color: #5fafd7;">if</span> `<span style="color: #ff8700;">f</span>'== 1 {
-                <span style="color: #a1db00;">use</span> `<span style="color: #ff8700;">file</span>', <span style="color: #a1db00;">clear</span>
-        }
-        <span style="color: #5fafd7;">else</span> {
-                <span style="color: #a1db00;">append</span> <span style="color: #5fafd7;">using</span> `<span style="color: #ff8700;">file</span>'
-        }
-        <span style="color: #5fafd7;">local</span> ++f
-}
-<span style="color: #6c6c6c; font-style: italic;">// save the appended results</span>
-saveold <span style="color: #b22222;">"mybootresults"</span>, <span style="color: #a1db00;">replace</span>
+<pre class="src src-Stata"><span style="color: #237fbf; font-weight: bold;">clear</span>
+<span style="color: #4e3163;">set</span> <span style="color: #4e3163;">mo</span><span style="color: #428374; font-weight: bold;">re</span> off
+<span style="color: #2aa198; background-color: #eff3ea;">// change to the output directory</span>
+<span style="color: #237fbf; font-weight: bold;">cd</span> output
+<span style="color: #2aa198; background-color: #eff3ea;">// get a list of the output files created by bootstrap.do</span>
+<span style="color: #4e3163;">local</span><span style="color: #715ab1;"> list</span>: <span style="color: #4e3163;">dir</span> . files <span style="color: #2aa198;">"output*.dta"</span>
+<span style="color: #2aa198; background-color: #eff3ea;">//loop over the output files appending each one</span>
+<span style="color: #4e3163;">local</span><span style="color: #715ab1;"> f</span>=1
+foreach file of local <span style="color: #4e3163;">list</span> <span style="color: #2f96dc;">{</span>
+        <span style="color: #4e3163;">di</span> <span style="color: #2aa198;">"`file"</span><span style="color: #dc752f;">'</span>
+        <span style="color: #4e3163;">if</span> <span style="color: #2f96dc;">`</span><span style="color: #715ab1;">f</span><span style="color: #2f96dc;">'</span>== 1 <span style="color: #2f96dc;">{</span>
+                <span style="color: #237fbf; font-weight: bold;">use</span> <span style="color: #6c3163;">`</span><span style="color: #715ab1;">file</span><span style="color: #6c3163;">'</span>, <span style="color: #237fbf; font-weight: bold;">clear</span>
+        <span style="color: #2f96dc;">}</span>
+        <span style="color: #4e3163;">else</span> <span style="color: #2f96dc;">{</span>
+                <span style="color: #237fbf; font-weight: bold;">append</span> <span style="color: #4e3163;">using</span> <span style="color: #6c3163;">`</span><span style="color: #715ab1;">file</span><span style="color: #6c3163;">'</span>
+        <span style="color: #2f96dc;">}</span>
+        <span style="color: #4e3163;">local</span> ++f
+<span style="color: #dc752f;">}</span>
+<span style="color: #2aa198; background-color: #eff3ea;">// save the appended results</span>
+saveold <span style="color: #2aa198;">"mybootresults"</span>, <span style="color: #237fbf; font-weight: bold;">replace</span>
 
-<span style="color: #6c6c6c; font-style: italic;">// make a histogram</span>
-hist(mean_myvar)
+<span style="color: #2aa198; background-color: #eff3ea;">// make a histogram</span>
+hist<span style="color: #dc752f;">(</span>mean_myvar<span style="color: #dc752f;">)</span>
 
-<span style="color: #6c6c6c; font-style: italic;">// save the graph</span>
-graph export <span style="color: #b22222;">"stata_bootstrap.eps"</span>, <span style="color: #a1db00;">replace</span>
+<span style="color: #2aa198; background-color: #eff3ea;">// save the graph</span>
+graph export <span style="color: #2aa198;">"stata_bootstrap.eps"</span>, <span style="color: #237fbf; font-weight: bold;">replace</span>
 </pre>
 </div>
 
@@ -1148,9 +1112,9 @@ graph export <span style="color: #b22222;">"stata_bootstrap.eps"</span>, <span s
 </div>
 </div>
 </div>
-<div id="outline-container-sec-8-2-5" class="outline-4">
-<h4 id="sec-8-2-5">Try it yourself!</h4>
-<div class="outline-text-4" id="text-8-2-5">
+<div id="outline-container-orgheadline36" class="outline-4">
+<h4 id="orgheadline36">Try it yourself!</h4>
+<div class="outline-text-4" id="text-orgheadline36">
 <p>
 Download the <a href="Stata_examples/bootstrap.zip">bootstrap example files</a>, to the RCE, extract the zip file, and run the example by calling <code>condor_submit bootstrap.submit</code> from the <code>bootstrap</code> directory.
 </p>
@@ -1158,54 +1122,53 @@ Download the <a href="Stata_examples/bootstrap.zip">bootstrap example files</a>,
 </div>
 </div>
 
-<div id="outline-container-sec-8-3" class="outline-3">
-<h3 id="sec-8-3"><span class="todo TODO">TODO</span> Python Batch Examples</h3>
+<div id="outline-container-orgheadline19" class="outline-3">
+<h3 id="orgheadline19"><span class="todo TODO">TODO</span> Python Batch Examples</h3>
 </div>
 
-<div id="outline-container-sec-8-4" class="outline-3">
-<h3 id="sec-8-4"><span class="todo TODO">TODO</span> Matlab Batch Examples</h3>
+<div id="outline-container-orgheadline20" class="outline-3">
+<h3 id="orgheadline20"><span class="todo TODO">TODO</span> Matlab Batch Examples</h3>
 </div>
 </div>
 
 
-<div id="outline-container-sec-9" class="outline-2">
-<h2 id="sec-9"><span class="section-number-2">9</span> <span class="todo TODO">TODO</span> Installing custom packages on the RCE</h2>
+<div id="outline-container-orgheadline41" class="outline-2">
+<h2 id="orgheadline41"><span class="section-number-2">9</span> <span class="todo TODO">TODO</span> Installing custom packages on the RCE</h2>
 <div class="outline-text-2" id="text-9">
-</div><div id="outline-container-sec-9-1" class="outline-3">
-<h3 id="sec-9-1">Installing R packages</h3>
+</div><div id="outline-container-orgheadline38" class="outline-3">
+<h3 id="orgheadline38">Installing R packages</h3>
 </div>
 
-<div id="outline-container-sec-9-2" class="outline-3">
-<h3 id="sec-9-2">Installing Python packages</h3>
+<div id="outline-container-orgheadline39" class="outline-3">
+<h3 id="orgheadline39">Installing Python packages</h3>
 </div>
 
-<div id="outline-container-sec-9-3" class="outline-3">
-<h3 id="sec-9-3">Installing Stata packages</h3>
+<div id="outline-container-orgheadline40" class="outline-3">
+<h3 id="orgheadline40">Installing Stata packages</h3>
 </div>
 </div>
 
-<div id="outline-container-sec-10" class="outline-2">
-<h2 id="sec-10"><span class="section-number-2">10</span> <span class="todo TODO">TODO</span> Getting help</h2>
+<div id="outline-container-orgheadline42" class="outline-2">
+<h2 id="orgheadline42"><span class="section-number-2">10</span> <span class="todo TODO">TODO</span> Getting help</h2>
 </div>
 <div id="footnotes">
 <h2 class="footnotes">Footnotes: </h2>
 <div id="text-footnotes">
 
-<div class="footdef"><sup><a id="fn.1" name="fn.1" class="footnum" href="#fnr.1">1</a></sup> <p class="footpara">
+<div class="footdef"><sup><a id="fn.1" class="footnum" href="#fnr.1">1</a></sup> <div class="footpara"><p class="footpara">
 Note: The Windows zipfile contains the NX client, plus optional font packages. HMDC recommends installing all font packages, though this is not required.
-</p></div>
+</p></div></div>
 
-<div class="footdef"><sup><a id="fn.2" name="fn.2" class="footnum" href="#fnr.2">2</a></sup> <p class="footpara">
+<div class="footdef"><sup><a id="fn.2" class="footnum" href="#fnr.2">2</a></sup> <div class="footpara"><p class="footpara">
 We use R for this example because it is the most commonly used program by RCE users. If you use Stata, Matlab, or something else, don't worry, we will have examples for you!
-</p></div>
+</p></div></div>
 
 
 </div>
 </div></div>
 <div id="postamble" class="status">
 <p class="author">Author: Ista Zahn</p>
-<p class="date">Created: 2015-06-02 Tue 12:23</p>
-<p class="creator"><a href="http://www.gnu.org/software/emacs/">Emacs</a> 24.5.1 (<a href="http://orgmode.org">Org</a> mode 8.2.10)</p>
+<p class="date">Created: 2015-09-01 Tue 16:06</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
