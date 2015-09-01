@@ -292,7 +292,7 @@ When preparing your job for batch submission you usually need to figure out how 
 In order to run jobs in parallel on the batch nodes you need to create a =submit file= that describes the process to be run on each node. If creating these files by hand you may use any text editor (e.g., =gedit=, accessible though the =Applications --> Accessories= menu on the RCE). 
 
 The submit file template below includes all required elements. (Note that this file is a template only -- see the next section for working examples.)
-#+BEGIN_SRC conf :eval no :tangle no
+#+BEGIN_SRC conf :eval no :tangle template.submit
   # Universe whould always be 'vanilla'. This line MUST be 
   #included in your submit file, exactly as shown below.
   Universe = vanilla
@@ -331,6 +331,8 @@ The submit file template below includes all required elements. (Note that this f
 
 #+END_SRC
 This submit file instructs the scheduler to request 10 nodes (=Queue 10=), start R[fn:3] on each one (=Executable = /usr/local/bin/R=), run the code in example.R (=input = example.R=), write the output to files named out.0 -- out.9 in the output folder (=output = output/out.$(Process)=), write any errors to files named out.0 -- out.9 in the output folder (=error = output/error.$(Process)=), and write a log file in the output folder (=Log = output/log=). Each of the 10 requested nodes must be able to provide at least one cpu (=request_cpus = 1=), four Gb of disk space (=request_disk = 4GB=) and four Gb of memory (=request_memory = 4GB=).
+
+The elements included in the submit file template above should be suffucient for most jobs. You can [[file:template.submit][download this submit file template]] and modify it to suit your needs. For a complete description of the Condor submit file syntax, including less commonly used elements not described here refer to the [[http://research.cs.wisc.edu/htcondor/manual/current/condor_submit.html][official documentation]]. 
 
 * Batch Job Examples
 RCE users come from a variety of backgrounds and different people are more proficient with different software packages. Feel free to skip to the batch examples using the software you are most comfortable with:
