@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2015-08-12 Wed 16:41 -->
+<!-- 2015-09-04 Fri 11:51 -->
 <meta  http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta  name="viewport" content="width=device-width, initial-scale=1" />
 <title>Introduction to R</title>
@@ -230,12 +230,6 @@ ggmap<span style="color: #2f96dc;">(</span>get_map<span style="color: #6c3163;">
 </pre>
 </div>
 
-
-<div class="figure">
-<p><img src="images/hereweare.png" alt="hereweare.png" />
-</p>
-</div>
-
 <ul class="org-ul">
 <li>Want to forecast the population of Australia?</li>
 </ul>
@@ -246,12 +240,6 @@ fit <span style="color: #4e3163;">&lt;-</span> auto.arima<span style="color: #2f
 <span style="color: #2aa198; background-color: #eff3ea;">## </span><span style="color: #2aa198; background-color: #eff3ea;">Projected numbers (in thousands) of Australian residents</span>
 plot<span style="color: #2f96dc;">(</span>forecast<span style="color: #6c3163;">(</span>fit<span style="color: #6c3163;">)</span><span style="color: #2f96dc;">)</span>
 </pre>
-</div>
-
-
-<div class="figure">
-<p><img src="images/austop.png" alt="austop.png" />
-</p>
 </div>
 
 <p>
@@ -490,16 +478,6 @@ y
 </pre>
 </div>
 
-<pre class="example">
-&gt; x &lt;- 10 # Assign the value 10 to a variable named x
-&gt; x + 1 # Add 1 to x
-[1] 11
-&gt; y &lt;- x + 1 # Assign y the value x + 1
-&gt; y
-[1] 11
-&gt;
-</pre>
-
 
 <p>
 Saved variables can be listed, overwritten and deleted
@@ -514,20 +492,6 @@ rm<span style="color: #2f96dc;">(</span>x<span style="color: #2f96dc;">)</span> 
 ls<span style="color: #2f96dc;">()</span>
 </pre>
 </div>
-
-<pre class="example">
-&gt; ls() # List variables in workspace
-[1] "comet"      "fit"        "nwbuilding" "x"          "y"         
-&gt; x # Print the value of x
-[1] 10
-&gt; x &lt;- 100 # Overwrite x. Note that no warning is given!
-&gt; x
-[1] 100
-&gt; rm(x) # Delete x
-&gt; ls()
-[1] "comet"      "fit"        "nwbuilding" "y"         
-&gt;
-</pre>
 </div>
 </div>
 
@@ -567,17 +531,6 @@ round<span style="color: #2f96dc;">(</span>a, digits = 2<span style="color: #2f9
 round<span style="color: #2f96dc;">(</span>sqrt<span style="color: #6c3163;">(</span>y<span style="color: #6c3163;">)</span>, digits = 5<span style="color: #2f96dc;">)</span> <span style="color: #2aa198; background-color: #eff3ea;"># </span><span style="color: #2aa198; background-color: #eff3ea;">Take sqrt of a and round</span>
 </pre>
 </div>
-
-<pre class="example">
-&gt; #?sqrt
-&gt; a &lt;- sqrt(y) # Call the sqrt function with argument x=y
-&gt; round(a, digits = 2) # Call round() with arguments x=x and digits=2
-[1] 3.32
-&gt; # Functions can be nested so an alternative is
-&gt; round(sqrt(y), digits = 5) # Take sqrt of a and round
-[1] 3.31662
-&gt;
-</pre>
 </div>
 </div>
 </div>
@@ -598,19 +551,6 @@ The next few examples use a subset of the General Social Survey data set. The va
 <span style="color: #2aa198; background-color: #eff3ea;">#</span><span style="color: #2aa198; background-color: #eff3ea;">see gssInfo.csv for rest of the variable descriptions</span>
 </pre>
 </div>
-
-<pre class="example">
-&gt; head(read.csv("dataSets/gssInfo.csv")) 
-      var                      description
-1 marital                   marital status
-2     age                age of respondent
-3    educ highest year of school completed
-4     sex                  respondents sex
-5     inc               respondents income
-6   happy                general happiness
-&gt; #see gssInfo.csv for rest of the variable descriptions
-&gt;
-</pre>
 </div>
 </div>
 
@@ -639,16 +579,6 @@ setwd<span style="color: #2f96dc;">(</span><span style="color: #2aa198;">".."</s
 </pre>
 </div>
 
-<pre class="example">
-&gt; getwd() # get the current working directory
-[1] "/home/izahn/Documents/Work/IQSS/Classes/IQSS_Stats_Workshops/R/Rintro"
-&gt; setwd("dataSets") # set wd to the dataSets folder
-&gt; getwd()
-[1] "/home/izahn/Documents/Work/IQSS/Classes/IQSS_Stats_Workshops/R/Rintro/dataSets"
-&gt; setwd("..") # set wd to enclosing folder ("up")
-&gt;
-</pre>
-
 <p>
 It can be convenient to list files in a directory without leaving R
 </p>
@@ -658,14 +588,6 @@ It can be convenient to list files in a directory without leaving R
 <span style="color: #2aa198; background-color: #eff3ea;"># </span><span style="color: #2aa198; background-color: #eff3ea;">list.files("dataSets", pattern = ".csv") # restrict to .csv files</span>
 </pre>
 </div>
-
-<pre class="example">
-&gt; list.files("dataSets") # list files in the dataSets folder
-[1] "gss.csv"      "gss.dta"      "gssInfo.csv"  "gss.rds"     
-[5] "gss.sas7bdat" "gss.sav"      "gss.xlsx"    
-&gt; # list.files("dataSets", pattern = ".csv") # restrict to .csv files  
-&gt;
-</pre>
 </div>
 </div>
 
@@ -727,20 +649,6 @@ gss.data <span style="color: #4e3163;">&lt;-</span> import<span style="color: #2
 datGSS <span style="color: #4e3163;">&lt;-</span> import<span style="color: #2f96dc;">(</span><span style="color: #2aa198;">"dataSets/gss.dta"</span><span style="color: #2f96dc;">)</span>
 </pre>
 </div>
-
-<pre class="example">
-&gt; ## install and load the rio package
-&gt; # install.packages("rio")
-&gt; library(rio)
-&gt; ## import data from a variety of formats
-&gt; # read gss data from the gss.rds R file
-&gt; datGSS &lt;- import("dataSets/gss.rds")
-&gt; # read gss data from the gss.csv comma separated file
-&gt; gss.data &lt;- import("dataSets/gss.csv")
-&gt; # read a Stata dataset from gss.dta 
-&gt; datGSS &lt;- import("dataSets/gss.dta")
-&gt;
-</pre>
 </div>
 </div>
 
@@ -827,17 +735,6 @@ gss.data <span style="color: #4e3163;">&lt;-</span> read.csv<span style="color: 
 datGSS <span style="color: #4e3163;">&lt;-</span> read.dta<span style="color: #2f96dc;">(</span>file=<span style="color: #2aa198;">"dataSets/gss.dta"</span><span style="color: #2f96dc;">)</span>
 </pre>
 </div>
-
-<pre class="example">
-&gt; # read gss data from the gss.rds R file
-&gt; datGSS &lt;- readRDS("dataSets/gss.rds")
-&gt; # read gss data from the gss.csv comma separated file
-&gt; gss.data &lt;- read.csv("dataSets/gss.csv") # read gss data
-&gt; # read a Stata dataset from gss.dta 
-&gt; library(foreign) # load foreign data functions
-&gt; datGSS &lt;- read.dta(file="dataSets/gss.dta")
-&gt;
-</pre>
 </div>
 </div>
 
@@ -878,17 +775,6 @@ ls<span style="color: #2f96dc;">()</span> <span style="color: #2aa198; backgroun
 </pre>
 </div>
 
-<pre class="example">
-&gt; ls() # list objects in our workspace
-[1] "a"          "comet"      "datGSS"     "fit"        "gss.data"  
-[6] "nwbuilding" "y"         
-&gt; save.image(file="myWorkspace.RData") # save workspace 
-&gt; rm(list=ls()) # remove all objects from our workspace 
-&gt; ls() # list stored objects to make sure they are deleted
-character(0)
-&gt;
-</pre>
-
 <ul class="org-ul">
 <li>Load the "myWorkspace.RData" file and check that it is restored</li>
 </ul>
@@ -899,14 +785,6 @@ character(0)
 ls<span style="color: #2f96dc;">()</span> <span style="color: #2aa198; background-color: #eff3ea;"># </span><span style="color: #2aa198; background-color: #eff3ea;">list objects</span>
 </pre>
 </div>
-
-<pre class="example">
-&gt; load("myWorkspace.RData") # load myWorkspace.RData
-&gt; ls() # list objects
-[1] "a"          "comet"      "datGSS"     "fit"        "gss.data"  
-[6] "nwbuilding" "y"         
-&gt;
-</pre>
 
 <p>
 When you close R you will be asked if you want to save your workspace &#x2013; if you choose yes then your workspace will be restored next time you start R
@@ -989,44 +867,6 @@ str<span style="color: #2f96dc;">(</span>datGSS$age<span style="color: #2f96dc;"
 </pre>
 </div>
 
-<pre class="example">
-&gt; subset(datGSS,
-+        # rows where age &gt; 90
-+        subset = age &gt; 90,
-+        ## sex and age columns
-+        select = c("sex", "age"))
-       sex age
-315 Female  99
-665   Male  99
-&gt; 
-&gt; ## the $ operator can be used to extract a single column
-&gt; str(datGSS$age)
- num [1:1419] 69 27 19 21 19 87 42 19 78 70 ...
-&gt;
-</pre>
-
-<pre class="example">
-&gt; # selecting specifig columns
-&gt; head(# first n rows
-+      subset(datGSS,            
-+             select = 1:4 # column 1 to 5
-+             ),
-+      n = 10# show first 10 rows
-+      )
-   age educ emailhrs hrs1
-1   69   12       -1   -1
-2   27   10       -1   60
-3   19   11        0   32
-4   21    9       -1   20
-5   19   11       50   -1
-6   87    8       -1   -1
-7   42   11        3   -1
-8   19   11       -1   -1
-9   78    7       -1   -1
-10  70    9       -1   22
-&gt;
-</pre>
-
 <p>
 In the previous example we used <code>&gt;</code> to select rows where age was greater than 90. Other relational and logical operators are listed below.
 </p>
@@ -1073,37 +913,6 @@ head<span style="color: #2f96dc;">(</span>subset<span style="color: #6c3163;">(<
 </pre>
 </div>
 
-<pre class="example">
-&gt; # creating new variable mean centered age
-&gt; datGSS &lt;- transform(datGSS,
-+                     ageC = age - mean(age))
-&gt; 
-&gt;  #education difference between wifes and husbands
-&gt; datGSS &lt;- transform(datGSS,
-+                     educ.diff = wifeduc - husbeduc)
-&gt; 
-&gt; datGSS$wifeduc_comp &lt;- ifelse(
-+                          is.na(datGSS$wifeduc), #condition
-+                          mean(datGSS$wifeduc, na.rm=TRUE), # value if condition met
-+                          datGSS$wifeduc) # value otherwise
-&gt; 
-&gt;   ## examine our newly created variables
-&gt; head(subset(datGSS,
-+             select = c("age", "ageC", "wifeduc", "wifeduc_complete",
-+                        "husbeduc", "educ.diff")), n = 8)
-  age       ageC wifeduc wifeduc_complete husbeduc educ.diff
-1  69  22.363636      NA               NA       NA        NA
-2  27 -19.636364      13               13       10         3
-3  19 -27.636364      NA               NA       NA        NA
-4  21 -25.636364      NA               NA       NA        NA
-5  19 -27.636364      NA               NA       NA        NA
-6  87  40.363636      NA               NA       NA        NA
-7  42  -4.636364      10               10       11        -1
-8  19 -27.636364      NA               NA       NA        NA
-&gt; 
-&gt;
-</pre>
-
 <p>
 Note that <code>transform</code> is a convenience function; see <code>?Extract</code> for a more powerful way to modify data.frames.
 </p>
@@ -1127,16 +936,6 @@ write.dta<span style="color: #2f96dc;">(</span>datGSS, file = <span style="color
 saveRDS<span style="color: #2f96dc;">(</span>datGSS, file = <span style="color: #2aa198;">"gss.rds"</span><span style="color: #2f96dc;">)</span>
 </pre>
 </div>
-
-<pre class="example">
-&gt; # write data to a .csv file
-&gt; write.csv(datGSS, file = "gss.csv")
-&gt; # write data to a Stata file
-&gt; write.dta(datGSS, file = "gss.dta")
-&gt; # write data to an R file
-&gt; saveRDS(datGSS, file = "gss.rds")
-&gt;
-</pre>
 </div>
 </div>
 
@@ -1187,23 +986,6 @@ summary<span style="color: #2f96dc;">(</span>subset<span style="color: #6c3163;"
 </pre>
 </div>
 
-<pre class="example">
-&gt; mean(datGSS$educ) # calculate mean value of education
-[1] 13.47498
-&gt; sd(datGSS$educ) # calculate standard deviation of x
-[1] 5.389476
-&gt; # calculate min, max, quantiles, mean of educ, age, and ageC
-&gt; summary(subset(datGSS, select = c("educ", "age", "ageC")))
-      educ            age             ageC        
- Min.   : 0.00   Min.   :18.00   Min.   :-28.636  
- 1st Qu.:12.00   1st Qu.:32.00   1st Qu.:-14.636  
- Median :13.00   Median :44.00   Median : -2.636  
- Mean   :13.47   Mean   :46.64   Mean   :  0.000  
- 3rd Qu.:16.00   3rd Qu.:59.00   3rd Qu.: 12.364  
- Max.   :99.00   Max.   :99.00   Max.   : 52.364  
-&gt;
-</pre>
-
 
 <p>
 Some of these functions (e.g., summary) will also work with data.frames and other types of objects, others (such as <code>sd</code>) will not.
@@ -1225,19 +1007,6 @@ prop.table<span style="color: #2f96dc;">(</span>sex.counts<span style="color: #2
 </pre>
 </div>
 
-<pre class="example">
-&gt; sex.counts &lt;- table(datGSS$sex) # tabulate sex categories
-&gt; sex.counts
-
-  Male Female 
-   622    797 
-&gt; prop.table(sex.counts) # convert to proportions
-
-     Male    Female 
-0.4383369 0.5616631 
-&gt;
-</pre>
-
 <p>
 Add variables for crosstabs
 </p>
@@ -1247,15 +1016,6 @@ Add variables for crosstabs
 <pre class="src src-R" id="orgsrcblock18">table<span style="color: #2f96dc;">(</span>subset<span style="color: #6c3163;">(</span>datGSS, select = c<span style="color: #2aa198;">(</span><span style="color: #2aa198;">"sex"</span>, <span style="color: #2aa198;">"happy"</span><span style="color: #2aa198;">)</span><span style="color: #6c3163;">)</span><span style="color: #2f96dc;">)</span> <span style="color: #2aa198; background-color: #eff3ea;"># </span><span style="color: #2aa198; background-color: #eff3ea;">crosstab marital X happy</span>
 </pre>
 </div>
-
-<pre class="example">
-&gt; table(subset(datGSS, select = c("sex", "happy"))) # crosstab marital X happy
-        happy
-sex      NAP VERY HAPPY PRETTY HAPPY NOT TOO HAPPY  DK  NA
-  Male     0        189          350            73   0  10
-  Female   0        246          447            84   1  19
-&gt;
-</pre>
 </div>
 </div>
 
@@ -1274,32 +1034,6 @@ The <code>by()</code> function can be used to perform a calculation separately f
    FUN=summary<span style="color: #2f96dc;">)</span>
 </pre>
 </div>
-
-<pre class="example">
-&gt; by(subset(datGSS, select = c("income", "educ")),
-+    INDICES=datGSS["sex"],
-+    FUN=summary)
-sex: Male
-             income         educ      
- $40000 TO 49999: 59   Min.   : 4.00  
- $50000 TO 59999: 56   1st Qu.:12.00  
- $60000 TO 74999: 49   Median :13.00  
- $35000 TO 39999: 48   Mean   :13.68  
- REFUSED        : 48   3rd Qu.:16.00  
- $110000 OR OVER: 43   Max.   :99.00  
- (Other)        :319                  
----------------------------------------------------- 
-sex: Female
-             income         educ      
- REFUSED        : 76   Min.   : 0.00  
- $60000 TO 74999: 62   1st Qu.:12.00  
- $40000 TO 49999: 60   Median :12.00  
- $50000 TO 59999: 52   Mean   :13.32  
- $30000 TO 34999: 49   3rd Qu.:15.00  
- $25000 TO 29999: 42   Max.   :99.00  
- (Other)        :456                  
-&gt;
-</pre>
 </div>
 </div>
 
@@ -1315,15 +1049,6 @@ Let's look at correlations among between age, income, and education
 </pre>
 </div>
 
-<pre class="example">
-&gt; cor(subset(datGSS, select =  c("age", "incomdol", "educ")))
-                 age   incomdol        educ
-age       1.00000000 -0.1186564 -0.07362454
-incomdol -0.11865641  1.0000000  0.21013267
-educ     -0.07362454  0.2101327  1.00000000
-&gt;
-</pre>
-
 
 <p>
 For significance tests, use cor.test()
@@ -1334,24 +1059,6 @@ For significance tests, use cor.test()
      cor.test<span style="color: #6c3163;">(</span>age, educ<span style="color: #6c3163;">)</span><span style="color: #2f96dc;">)</span>
 </pre>
 </div>
-
-<pre class="example">
-&gt; with(datGSS,
-+      cor.test(age, educ))
-
-	Pearson's product-moment correlation
-
-data:  age and educ
-t = -2.779, df = 1417, p-value = 0.005525
-alternative hypothesis: true correlation is not equal to 0
-95 percent confidence interval:
- -0.12518333 -0.02166916
-sample estimates:
-        cor 
--0.07362454 
-
-&gt;
-</pre>
 </div>
 </div>
 
@@ -1373,30 +1080,6 @@ Modeling functions generally use the <i>formula</i> interface whith DV on left f
 summary<span style="color: #2f96dc;">(</span>m1<span style="color: #2f96dc;">)</span>
 </pre>
 </div>
-
-<pre class="example">
-&gt; m1 &lt;- lm(educ ~ sex + age, data = datGSS)
-&gt; summary(m1)
-
-Call:
-lm(formula = educ ~ sex + age, data = datGSS)
-
-Residuals:
-    Min      1Q  Median      3Q     Max 
--13.434  -1.785  -0.688   1.955  86.049 
-
-Coefficients:
-             Estimate Std. Error t value Pr(&gt;|t|)
-(Intercept) 14.652702   0.425691  34.421  &lt; 2e-16
-sexFemale   -0.275235   0.289290  -0.951  0.34156
-age         -0.021938   0.008238  -2.663  0.00783
-
-Residual standard error: 5.377 on 1416 degrees of freedom
-Multiple R-squared:  0.006056,	Adjusted R-squared:  0.004652 
-F-statistic: 4.314 on 2 and 1416 DF,  p-value: 0.01356
-
-&gt;
-</pre>
 </div>
 </div>
 
@@ -1416,33 +1099,6 @@ print<span style="color: #2f96dc;">(</span>summary<span style="color: #6c3163;">
 sink<span style="color: #2f96dc;">()</span> <span style="color: #2aa198; background-color: #eff3ea;">## </span><span style="color: #2aa198; background-color: #eff3ea;">sink with no arguments turns logging off</span>
 </pre>
 </div>
-
-<pre class="example">
-&gt; sink(file="output.txt", split=TRUE) # start logging
-&gt; print("This is the result from model 1\n")
-[1] "This is the result from model 1\n"
-&gt; print(summary(m1))
-
-Call:
-lm(formula = educ ~ sex + age, data = datGSS)
-
-Residuals:
-    Min      1Q  Median      3Q     Max 
--13.434  -1.785  -0.688   1.955  86.049 
-
-Coefficients:
-             Estimate Std. Error t value Pr(&gt;|t|)
-(Intercept) 14.652702   0.425691  34.421  &lt; 2e-16
-sexFemale   -0.275235   0.289290  -0.951  0.34156
-age         -0.021938   0.008238  -2.663  0.00783
-
-Residual standard error: 5.377 on 1416 degrees of freedom
-Multiple R-squared:  0.006056,	Adjusted R-squared:  0.004652 
-F-statistic: 4.314 on 2 and 1416 DF,  p-value: 0.01356
-
-&gt; sink() ## sink with no arguments turns logging off
-&gt;
-</pre>
 </div>
 </div>
 
