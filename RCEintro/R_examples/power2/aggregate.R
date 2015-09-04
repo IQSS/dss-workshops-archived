@@ -1,4 +1,3 @@
-
 ## list all output files in the output directory
 output_files <- list.files("output",
                            pattern = "^out[0-9]+\\.csv$",

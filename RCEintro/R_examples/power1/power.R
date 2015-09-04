@@ -1,4 +1,3 @@
-
 ## function to simulate data and perform a t.test
 sim.ttest <- function(mu1, mu2, sd, n1, n2) {
     d <- data.frame(x = c(rep("group1", n1), rep("group2", n2)),

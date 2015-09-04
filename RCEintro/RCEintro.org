@@ -224,17 +224,7 @@ In the previous example we generated the data on each iteration. This kind of si
 
 #+RESULTS:
 
-We have
-#+BEGIN_SRC R
-  length(textFiles)
-#+END_SRC
-
-#+RESULTS:
-#+begin_example
-[1] 2079
-#+end_example
-
-text files to process. We can do this using a single core:
+We have src_r{length(textFiles)} text files to process. We can do this using a single core:
 #+BEGIN_SRC R
   system.time(nchars <- unlist(lapply(textFiles, countChars)))
 #+END_SRC
@@ -255,7 +245,6 @@ but this is too slow. We can do the computation more quickly using multiple core
    user  system elapsed 
  23.141   0.537   5.200
 #+end_example
-
 and calculate the total number of characters in the text files by summing over the result
 #+BEGIN_SRC R
   sum(nchars, na.rm = TRUE)
@@ -267,6 +256,63 @@ and calculate the total number of characters in the text files by summing over t
 #+end_example
 
 For more details and examples using the parallel package, refer to the [[https://stat.ethz.ch/R-manual/R-devel/library/parallel/doc/parallel.pdf][parallel package documentation]] or run =help(package = "parallel")= at the R prompt. For other ways of running computations in parallel refer to the [[http://cran.r-project.org/web/views/HighPerformanceComputing.html][HPC task view]].
+
+*** Using multiple CUPs in Python
+Running computations in parallel on multiple cores is often an effective way to speed up computations. This can be useful when we want to iterate over a set of inputs, e.g., applying a function to each of a set of files. In this example we count the number of characters in all the files under the texlive directory. 
+
+#+BEGIN_SRC python
+  import os
+  import fnmatch
+  textFiles = []
+  for root, dirnames, filenames in os.walk('/usr/share/texlive'):
+      for filename in fnmatch.filter(filenames, '*.tex') + fnmatch.filter(filenames, "*.txt"):
+          textFiles.append(os.path.join(root, filename))
+#+END_SRC
+
+#+RESULTS:
+
+We have src_python{len(textFiles)} {{{results(=2080=)}}} text files to process. We can do this using a single core:
+#+BEGIN_SRC python :results silent
+  import time
+  start = time.time()
+
+  num_chars = 0
+  for fname in textFiles:
+      try:
+          with open(fname, 'r') as f:
+              for line in f:
+                  num_chars += len(line)
+      except:
+          pass
+
+  stop = time.time()
+#+END_SRC
+. It takes around src_python{print(stop - start)} {{{results(=1.2721843719482422=)}}} seconds to count the characters in these files, which is aleady pretty fast. But, for even more speed we can use the =multiprocessing= library to perform the operation using multiple cores:
+#+BEGIN_SRC python :results silent
+  import multiprocessing
+
+  def f(fname):
+      num_chars = []
+      try:
+          with open(fname, 'r') as this_file:
+              for line in this_file:
+                  num_chars.append(len(line))
+      except:
+          pass
+      return sum(num_chars)
+
+  start = time.time()
+
+  pool = multiprocessing.Pool(7)
+  nchar = pool.map(f, textFiles)
+  pool.close()
+  pool.join()
+
+  end = time.time()
+#+END_SRC
+which reduces the time to src_python{print(end - start)} {{{results(=0.33490753173828125=)}}} seconds.
+
+
 
 
 *** Using multiple CPUs in other programming languages and applications

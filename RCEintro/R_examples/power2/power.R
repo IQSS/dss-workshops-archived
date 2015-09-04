@@ -1,4 +1,3 @@
-
 ## retrieve arguments passed from the command line.
 process <- as.integer(as.character(commandArgs(trailingOnly = TRUE)))
 

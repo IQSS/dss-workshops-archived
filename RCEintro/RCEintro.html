@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2015-09-01 Tue 16:15 -->
+<!-- 2015-09-04 Fri 10:29 -->
 <meta  http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta  name="viewport" content="width=device-width, initial-scale=1" />
 <title>RCE Quick-Start</title>
@@ -157,53 +157,54 @@ for the JavaScript code in this tag.
 <li><a href="#orgheadline3">3. Power at your fingertips</a></li>
 <li><a href="#orgheadline4">4. Project folders &amp; shared space</a></li>
 <li><a href="#orgheadline5">5. Getting your data on and off the RCE</a></li>
-<li><a href="#orgheadline14">6. Interactive jobs</a>
+<li><a href="#orgheadline15">6. Interactive jobs</a>
 <ul>
 <li><a href="#orgheadline6">Launching applications on the interactive nodes</a></li>
 <li><a href="#orgheadline7">Available RCE powered applications</a></li>
 <li><a href="#orgheadline9">Using multiple CPUs in interactive jobs</a>
 <ul>
 <li><a href="#orgheadline12">Using multiple CPUs in interactive R programs</a></li>
-<li><a href="#orgheadline13">Using multiple CPUs in other programming languages and applications</a></li>
+<li><a href="#orgheadline13">Using multiple CUPs in Python</a></li>
+<li><a href="#orgheadline14">Using multiple CPUs in other programming languages and applications</a></li>
 </ul>
 </li>
 </ul>
 </li>
 <li><a href="#orgheadline8">7. Batch Jobs Overview</a>
 <ul>
-<li><a href="#orgheadline15">Preparing for batch submission</a></li>
-<li><a href="#orgheadline16">Submit file overview</a></li>
+<li><a href="#orgheadline16">Preparing for batch submission</a></li>
+<li><a href="#orgheadline17">Submit file overview</a></li>
 </ul>
 </li>
-<li><a href="#orgheadline37">8. Batch Job Examples</a>
+<li><a href="#orgheadline38">8. Batch Job Examples</a>
 <ul>
-<li><a href="#orgheadline17">R Batch Examples</a>
+<li><a href="#orgheadline18">R Batch Examples</a>
 <ul>
-<li><a href="#orgheadline21">Batch example: Simple power simulation in R</a></li>
-<li><a href="#orgheadline27">Batch example: Power simulation in R with varying parameters</a></li>
+<li><a href="#orgheadline22">Batch example: Simple power simulation in R</a></li>
+<li><a href="#orgheadline28">Batch example: Power simulation in R with varying parameters</a></li>
 </ul>
 </li>
-<li><a href="#orgheadline18">Stata Batch Examples</a>
+<li><a href="#orgheadline19">Stata Batch Examples</a>
 <ul>
-<li><a href="#orgheadline32">Stata bootstrap do-file</a></li>
-<li><a href="#orgheadline33">Submit file</a></li>
-<li><a href="#orgheadline34">Monitoring submitted jobs</a></li>
-<li><a href="#orgheadline35">Aggregating results</a></li>
-<li><a href="#orgheadline36">Try it yourself!</a></li>
+<li><a href="#orgheadline33">Stata bootstrap do-file</a></li>
+<li><a href="#orgheadline34">Submit file</a></li>
+<li><a href="#orgheadline35">Monitoring submitted jobs</a></li>
+<li><a href="#orgheadline36">Aggregating results</a></li>
+<li><a href="#orgheadline37">Try it yourself!</a></li>
 </ul>
 </li>
-<li><a href="#orgheadline19"><span class="todo nilTODO">TODO</span> Python Batch Examples</a></li>
-<li><a href="#orgheadline20"><span class="todo nilTODO">TODO</span> Matlab Batch Examples</a></li>
+<li><a href="#orgheadline20"><span class="todo nilTODO">TODO</span> Python Batch Examples</a></li>
+<li><a href="#orgheadline21"><span class="todo nilTODO">TODO</span> Matlab Batch Examples</a></li>
 </ul>
 </li>
-<li><a href="#orgheadline41">9. <span class="todo nilTODO">TODO</span> Installing custom packages on the RCE</a>
+<li><a href="#orgheadline42">9. <span class="todo nilTODO">TODO</span> Installing custom packages on the RCE</a>
 <ul>
-<li><a href="#orgheadline38">Installing R packages</a></li>
-<li><a href="#orgheadline39">Installing Python packages</a></li>
-<li><a href="#orgheadline40">Installing Stata packages</a></li>
+<li><a href="#orgheadline39">Installing R packages</a></li>
+<li><a href="#orgheadline40">Installing Python packages</a></li>
+<li><a href="#orgheadline41">Installing Stata packages</a></li>
 </ul>
 </li>
-<li><a href="#orgheadline42">10. <span class="todo nilTODO">TODO</span> Getting help</a></li>
+<li><a href="#orgheadline43">10. <span class="todo nilTODO">TODO</span> Getting help</a></li>
 </ul>
 </div>
 </div>
@@ -349,8 +350,8 @@ If you prefer to transfer files using another file transfer client, anything tha
 </div>
 </div>
 
-<div id="outline-container-orgheadline14" class="outline-2">
-<h2 id="orgheadline14"><span class="section-number-2">6</span> Interactive jobs</h2>
+<div id="outline-container-orgheadline15" class="outline-2">
+<h2 id="orgheadline15"><span class="section-number-2">6</span> Interactive jobs</h2>
 <div class="outline-text-2" id="text-6">
 <p>
 When you first log on to the RCE you are on a <i>login node</i>. The login nodes are not designed for intensive computation; the purpose of the login nodes is to provide access to the <i>interactive nodes</i> and the <i>batch nodes</i>. Interactive jobs are useful when a) you need a lot of memory (e.g., because you need to load a large dataset into memory), and/or b) you want to use multiple cores to speed up your computation.
@@ -499,20 +500,8 @@ textFiles<span style="color: #4e3163;">&lt;-</span> list.files<span style="color
 </div>
 
 <p>
-We have
-</p>
-<div class="org-src-container">
-
-<pre class="src src-R">length<span style="color: #2f96dc;">(</span>textFiles<span style="color: #2f96dc;">)</span>
-</pre>
-</div>
-
-<pre class="example">
-[1] 2079
-</pre>
-
-<p>
-text files to process. We can do this using a single core:
+We have <code class="src src-r">length<span style="color: #2f96dc;">(</span>textFiles<span style="color: #2f96dc;">)</span>
+</code> text files to process. We can do this using a single core:
 </p>
 <div class="org-src-container">
 
@@ -538,7 +527,6 @@ but this is too slow. We can do the computation more quickly using multiple core
   user  system elapsed 
 23.141   0.537   5.200
 </pre>
-
 <p>
 and calculate the total number of characters in the text files by summing over the result
 </p>
@@ -558,10 +546,86 @@ For more details and examples using the parallel package, refer to the <a href="
 </div></li></ul>
 </div>
 
-
 <div id="outline-container-orgheadline13" class="outline-4">
-<h4 id="orgheadline13">Using multiple CPUs in other programming languages and applications</h4>
+<h4 id="orgheadline13">Using multiple CUPs in Python</h4>
 <div class="outline-text-4" id="text-orgheadline13">
+<p>
+Running computations in parallel on multiple cores is often an effective way to speed up computations. This can be useful when we want to iterate over a set of inputs, e.g., applying a function to each of a set of files. In this example we count the number of characters in all the files under the texlive directory. 
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-python"><span style="color: #237fbf; font-weight: bold;">import</span> os
+<span style="color: #237fbf; font-weight: bold;">import</span> fnmatch
+<span style="color: #715ab1;">textFiles</span> = <span style="color: #2f96dc;">[]</span>
+<span style="color: #237fbf; font-weight: bold;">for</span> root, dirnames, filenames <span style="color: #237fbf; font-weight: bold;">in</span> os.walk<span style="color: #2f96dc;">(</span><span style="color: #2aa198;">'/usr/share/texlive'</span><span style="color: #2f96dc;">)</span>:
+    <span style="color: #237fbf; font-weight: bold;">for</span> filename <span style="color: #237fbf; font-weight: bold;">in</span> fnmatch.<span style="color: #1f71ab;">filter</span><span style="color: #2f96dc;">(</span>filenames, <span style="color: #2aa198;">'*.tex'</span><span style="color: #2f96dc;">)</span> + fnmatch.<span style="color: #1f71ab;">filter</span><span style="color: #2f96dc;">(</span>filenames, <span style="color: #2aa198;">"*.txt"</span><span style="color: #2f96dc;">)</span>:
+        textFiles.append<span style="color: #2f96dc;">(</span>os.path.join<span style="color: #6c3163;">(</span>root, filename<span style="color: #6c3163;">)</span><span style="color: #2f96dc;">)</span>
+</pre>
+</div>
+
+<p>
+We have <code class="src src-python"><span style="color: #1f71ab;">len</span><span style="color: #2f96dc;">(</span>textFiles<span style="color: #2f96dc;">)</span>
+</code> <code>2080</code> text files to process. We can do this using a single core:
+</p>
+<div class="org-src-container">
+
+<pre class="src src-python"><span style="color: #237fbf; font-weight: bold;">import</span> time
+<span style="color: #715ab1;">start</span> = time.time<span style="color: #2f96dc;">()</span>
+
+<span style="color: #715ab1;">num_chars</span> = <span style="color: #4e3163;">0</span>
+<span style="color: #237fbf; font-weight: bold;">for</span> fname <span style="color: #237fbf; font-weight: bold;">in</span> textFiles:
+    <span style="color: #237fbf; font-weight: bold;">try</span>:
+        <span style="color: #237fbf; font-weight: bold;">with</span> <span style="color: #1f71ab;">open</span><span style="color: #2f96dc;">(</span>fname, <span style="color: #2aa198;">'r'</span><span style="color: #2f96dc;">)</span> <span style="color: #237fbf; font-weight: bold;">as</span> f:
+            <span style="color: #237fbf; font-weight: bold;">for</span> line <span style="color: #237fbf; font-weight: bold;">in</span> f:
+                <span style="color: #715ab1;">num_chars</span> += <span style="color: #1f71ab;">len</span><span style="color: #2f96dc;">(</span>line<span style="color: #2f96dc;">)</span>
+    <span style="color: #237fbf; font-weight: bold;">except</span>:
+        <span style="color: #237fbf; font-weight: bold;">pass</span>
+
+<span style="color: #715ab1;">stop</span> = time.time<span style="color: #2f96dc;">()</span>
+</pre>
+</div>
+<p>
+. It takes around <code class="src src-python"><span style="color: #237fbf; font-weight: bold;">print</span><span style="color: #2f96dc;">(</span>stop - start<span style="color: #2f96dc;">)</span>
+</code> <code>1.2721843719482422</code> seconds to count the characters in these files, which is aleady pretty fast. But, for even more speed we can use the <code>multiprocessing</code> library to perform the operation using multiple cores:
+</p>
+<div class="org-src-container">
+
+<pre class="src src-python"><span style="color: #237fbf; font-weight: bold;">import</span> multiprocessing
+
+<span style="color: #237fbf; font-weight: bold;">def</span> <span style="color: #6c3163; font-weight: bold;">f</span><span style="color: #2f96dc;">(</span>fname<span style="color: #2f96dc;">)</span>:
+    <span style="color: #715ab1;">num_chars</span> = <span style="color: #2f96dc;">[]</span>
+    <span style="color: #237fbf; font-weight: bold;">try</span>:
+        <span style="color: #237fbf; font-weight: bold;">with</span> <span style="color: #1f71ab;">open</span><span style="color: #2f96dc;">(</span>fname, <span style="color: #2aa198;">'r'</span><span style="color: #2f96dc;">)</span> <span style="color: #237fbf; font-weight: bold;">as</span> this_file:
+            <span style="color: #237fbf; font-weight: bold;">for</span> line <span style="color: #237fbf; font-weight: bold;">in</span> this_file:
+                num_chars.append<span style="color: #2f96dc;">(</span><span style="color: #1f71ab;">len</span><span style="color: #6c3163;">(</span>line<span style="color: #6c3163;">)</span><span style="color: #2f96dc;">)</span>
+    <span style="color: #237fbf; font-weight: bold;">except</span>:
+        <span style="color: #237fbf; font-weight: bold;">pass</span>
+    <span style="color: #237fbf; font-weight: bold;">return</span> <span style="color: #1f71ab;">sum</span><span style="color: #2f96dc;">(</span>num_chars<span style="color: #2f96dc;">)</span>
+
+<span style="color: #715ab1;">start</span> = time.time<span style="color: #2f96dc;">()</span>
+
+<span style="color: #715ab1;">pool</span> = multiprocessing.Pool<span style="color: #2f96dc;">(</span><span style="color: #4e3163;">7</span><span style="color: #2f96dc;">)</span>
+<span style="color: #715ab1;">nchar</span> = pool.<span style="color: #1f71ab;">map</span><span style="color: #2f96dc;">(</span>f, textFiles<span style="color: #2f96dc;">)</span>
+pool.close<span style="color: #2f96dc;">()</span>
+pool.join<span style="color: #2f96dc;">()</span>
+
+<span style="color: #715ab1;">end</span> = time.time<span style="color: #2f96dc;">()</span>
+</pre>
+</div>
+<p>
+which reduces the time to <code class="src src-python"><span style="color: #237fbf; font-weight: bold;">print</span><span style="color: #2f96dc;">(</span>end - start<span style="color: #2f96dc;">)</span>
+</code> <code>0.33490753173828125</code> seconds.
+</p>
+</div>
+</div>
+
+
+
+
+<div id="outline-container-orgheadline14" class="outline-4">
+<h4 id="orgheadline14">Using multiple CPUs in other programming languages and applications</h4>
+<div class="outline-text-4" id="text-orgheadline14">
 <p>
 Using multiple CPU cores in Stata, Matlab and SAS does not require explicit activation &#x2013; many functions will automatically use multiple cores if available. For Matlab user-written code can also take advantage of multiple CPUs using the <code>parfor</code> command. Python uses can run multiple processes using the <a href="https://docs.python.org/2/library/multiprocessing.html">multiprocessing</a> library.
 </p>
@@ -578,13 +642,13 @@ The RCE provides access to <i>batch nodes</i>, a cluster of many computers. The 
 </p>
 
 <p>
-Running jobs on the batch nodes is somewhat more complicated than running <a href="#orgheadline14">interactive jobs</a> on the RCE. The main access points are two <i>command line</i> programs, <code>condor_submit_util</code> and <code>condor_submit</code>. In this tutorial we focus on writing simple submit files and submitting them with <code>condor_submit</code>. For more details on automatically generating and submitting using <code>condor_submit_util</code> refer to the main <a href="http://projects.iq.harvard.edu/rce/book/batch-processing-basics">RCE batch job documentation</a>. 
+Running jobs on the batch nodes is somewhat more complicated than running <a href="#orgheadline15">interactive jobs</a> on the RCE. The main access points are two <i>command line</i> programs, <code>condor_submit_util</code> and <code>condor_submit</code>. In this tutorial we focus on writing simple submit files and submitting them with <code>condor_submit</code>. For more details on automatically generating and submitting using <code>condor_submit_util</code> refer to the main <a href="http://projects.iq.harvard.edu/rce/book/batch-processing-basics">RCE batch job documentation</a>. 
 </p>
 </div>
 
-<div id="outline-container-orgheadline15" class="outline-3">
-<h3 id="orgheadline15">Preparing for batch submission</h3>
-<div class="outline-text-3" id="text-orgheadline15">
+<div id="outline-container-orgheadline16" class="outline-3">
+<h3 id="orgheadline16">Preparing for batch submission</h3>
+<div class="outline-text-3" id="text-orgheadline16">
 <p>
 In practical terms, running in "batch" means that you will not be able to interact with the running process. This means that all the information your program needs to successfully complete needs to be specified ahead of time. You can pass arguments to your process so that each job gets different inputs, but the script must process these arguments and do the right thing without further instruction.
 </p>
@@ -604,9 +668,9 @@ When preparing your job for batch submission you usually need to figure out how 
 </div>
 </div>
 
-<div id="outline-container-orgheadline16" class="outline-3">
-<h3 id="orgheadline16">Submit file overview</h3>
-<div class="outline-text-3" id="text-orgheadline16">
+<div id="outline-container-orgheadline17" class="outline-3">
+<h3 id="orgheadline17">Submit file overview</h3>
+<div class="outline-text-3" id="text-orgheadline17">
 <p>
 In order to run jobs in parallel on the batch nodes you need to create a <code>submit file</code> that describes the process to be run on each node. If creating these files by hand you may use any text editor (e.g., <code>gedit</code>, accessible though the <code>Applications --&gt; Accessories</code> menu on the RCE). 
 </p>
@@ -664,32 +728,32 @@ The elements included in the submit file template above should be suffucient for
 </div>
 </div>
 
-<div id="outline-container-orgheadline37" class="outline-2">
-<h2 id="orgheadline37"><span class="section-number-2">8</span> Batch Job Examples</h2>
+<div id="outline-container-orgheadline38" class="outline-2">
+<h2 id="orgheadline38"><span class="section-number-2">8</span> Batch Job Examples</h2>
 <div class="outline-text-2" id="text-8">
 <p>
 RCE users come from a variety of backgrounds and different people are more proficient with different software packages. Feel free to skip to the batch examples using the software you are most comfortable with:
 </p>
 <ul class="org-ul">
-<li><a href="#orgheadline17">R Batch Examples</a></li>
-<li><a href="#orgheadline18">Stata Batch Examples</a></li>
-<li><a href="#orgheadline19">Python Batch Examples</a></li>
-<li><a href="#orgheadline20">Matlab Batch Examples</a></li>
+<li><a href="#orgheadline18">R Batch Examples</a></li>
+<li><a href="#orgheadline19">Stata Batch Examples</a></li>
+<li><a href="#orgheadline20">Python Batch Examples</a></li>
+<li><a href="#orgheadline21">Matlab Batch Examples</a></li>
 </ul>
 </div>
 
-<div id="outline-container-orgheadline17" class="outline-3">
-<h3 id="orgheadline17">R Batch Examples</h3>
-<div class="outline-text-3" id="text-orgheadline17">
-</div><div id="outline-container-orgheadline21" class="outline-4">
-<h4 id="orgheadline21">Batch example: Simple power simulation in R</h4>
-<div class="outline-text-4" id="text-orgheadline21">
+<div id="outline-container-orgheadline18" class="outline-3">
+<h3 id="orgheadline18">R Batch Examples</h3>
+<div class="outline-text-3" id="text-orgheadline18">
+</div><div id="outline-container-orgheadline22" class="outline-4">
+<h4 id="orgheadline22">Batch example: Simple power simulation in R</h4>
+<div class="outline-text-4" id="text-orgheadline22">
 <p>
 The simplest kind of batch job is one for which you just want to run the same code multiple times, without varying any parameters. For example, suppose that we wish to run a power simulation for a t.test with unequal group sizes. 
 </p>
 </div>
 
-<ul class="org-ul"><li><a id="orgheadline22"></a>R power simulation script<br  /><div class="outline-text-5" id="text-orgheadline22">
+<ul class="org-ul"><li><a id="orgheadline23"></a>R power simulation script<br  /><div class="outline-text-5" id="text-orgheadline23">
 <p>
 The first step is to write a script or program to carry out the desired computation. The R script below simulates distributions with a specified mean difference, performs two-sample t-tests on the difference, and calculates the proportion of significant tests.
 </p>
@@ -716,7 +780,7 @@ cat<span style="color: #2f96dc;">(</span>length<span style="color: #6c3163;">(</
 </div>
 </div></li>
 
-<li><a id="orgheadline23"></a>Submit file<br  /><div class="outline-text-5" id="text-orgheadline23">
+<li><a id="orgheadline24"></a>Submit file<br  /><div class="outline-text-5" id="text-orgheadline24">
 <p>
 If we want to run this function one million times it may take a while, especially if our computer is an older less powerful model. So let's run it on 100 separate machines (each one will simulate the test 10000 times). To do that we need, in addition to the R script above, a submit file to request resources and run the computation.  
 </p>
@@ -762,7 +826,7 @@ Now that we have our script and the submit file we can run submit the job as fol
 </ol>
 </div></li>
 
-<li><a id="orgheadline24"></a>Monitoring submitted jobs<br  /><div class="outline-text-5" id="text-orgheadline24">
+<li><a id="orgheadline25"></a>Monitoring submitted jobs<br  /><div class="outline-text-5" id="text-orgheadline25">
 <p>
 After submitting the jobs we may wish to monitor them, e.g. to check if they are running. You can do this by running <code>condor_q &lt;your_user_name&gt;</code> in a terminal. If this returns nothing then you have no jobs in the queue. Otherwise you will see information for each request in the queue which will look something like this:
 </p>
@@ -792,7 +856,7 @@ You will know your job is finished when it is no longer listed in the <code>cond
 </p>
 </div></li>
 
-<li><a id="orgheadline25"></a>Aggregating results<br  /><div class="outline-text-5" id="text-orgheadline25">
+<li><a id="orgheadline26"></a>Aggregating results<br  /><div class="outline-text-5" id="text-orgheadline26">
 <p>
 When your batch job is finished you are usually left with multiple output files that need to be aggregated. In the case of our simulation example, we have files <code>output/out.0 -- output/out40</code>, each of which contains a single number representing the proportion of significant tests. We can aggregate them with a simple R script, like this:
 </p>
@@ -812,16 +876,16 @@ mean<span style="color: #2f96dc;">(</span>as.double<span style="color: #6c3163;"
 </div>
 </div></li>
 
-<li><a id="orgheadline26"></a>Try it yourself!<br  /><div class="outline-text-5" id="text-orgheadline26">
+<li><a id="orgheadline27"></a>Try it yourself!<br  /><div class="outline-text-5" id="text-orgheadline27">
 <p>
 Download the <a href="R_examples/power1.zip">power simulation example files</a>, to the RCE, extract the zip file and running <code>condor_submit power.submit</code> in the <code>power1</code> directory.
 </p>
 </div></li></ul>
 </div>
 
-<div id="outline-container-orgheadline27" class="outline-4">
-<h4 id="orgheadline27">Batch example: Power simulation in R with varying parameters</h4>
-<div class="outline-text-4" id="text-orgheadline27">
+<div id="outline-container-orgheadline28" class="outline-4">
+<h4 id="orgheadline28">Batch example: Power simulation in R with varying parameters</h4>
+<div class="outline-text-4" id="text-orgheadline28">
 <p>
 The previous example was relatively simple, because we wanted to run exactly the same code on all 100 nodes. Often however you want each node to do something slightly different. For example, we may wish to vary the sample size from 100 &#x2013; 500 in increments of 10, to see how power changes as a function of that parameter. In that case we need to pass some additional information to each process, telling it which parameter space it is responsible for. 
 </p>
@@ -830,7 +894,7 @@ The previous example was relatively simple, because we wanted to run exactly the
 As it turns out, we almost already know how to do that: if you you look closely at the submit file in the previous example you will notice that we used <code>$(Process)</code> to append the process number to the output and error files. 
 </p>
 </div>
-<ul class="org-ul"><li><a id="orgheadline28"></a>Submit file passing process as an argument<br  /><div class="outline-text-5" id="text-orgheadline28">
+<ul class="org-ul"><li><a id="orgheadline29"></a>Submit file passing process as an argument<br  /><div class="outline-text-5" id="text-orgheadline29">
 <p>
 We can use the <code>$(Process)</code> macro to pass information to our program, like this:
 </p>
@@ -864,7 +928,7 @@ Notice that we used <code>--args $(Process)</code> to pass the process number to
 </p>
 </div></li>
 
-<li><a id="orgheadline29"></a>R script argument processing<br  /><div class="outline-text-5" id="text-orgheadline29">
+<li><a id="orgheadline30"></a>R script argument processing<br  /><div class="outline-text-5" id="text-orgheadline30">
 <p>
 Next we need to 1) retrieve the process number in our R program and 2) map it to the parameter space. We can retrieve the arguments in R like this:
 </p>
@@ -919,7 +983,7 @@ Now we have all the required elements to submit out job, and can do so using <co
 </p>
 </div></li>
 
-<li><a id="orgheadline30"></a>Aggregating results<br  /><div class="outline-text-5" id="text-orgheadline30">
+<li><a id="orgheadline31"></a>Aggregating results<br  /><div class="outline-text-5" id="text-orgheadline31">
 <p>
 Each of our 40 processes produced a file in the <code>output</code> directory name <code>out&lt;process&gt;csv</code>; our next task is to aggregate these results. The R script below reads each of these files, joins them together into a single data.frame, and plots the result.
 </p>
@@ -946,7 +1010,7 @@ abline<span style="color: #2f96dc;">(</span>h = 0.8<span style="color: #2f96dc;"
 </div>
 </div></li>
 
-<li><a id="orgheadline31"></a>Try it yourself!<br  /><div class="outline-text-5" id="text-orgheadline31">
+<li><a id="orgheadline32"></a>Try it yourself!<br  /><div class="outline-text-5" id="text-orgheadline32">
 <p>
 Download the <a href="R_examples/power2.zip">power simulation example files</a>, to the RCE, extract the zip file, and run the example by calling <code>condor_submit power.submit</code> from the <code>power2</code> directory.
 </p>
@@ -954,16 +1018,16 @@ Download the <a href="R_examples/power2.zip">power simulation example files</a>,
 </div>
 </div>
 
-<div id="outline-container-orgheadline18" class="outline-3">
-<h3 id="orgheadline18">Stata Batch Examples</h3>
-<div class="outline-text-3" id="text-orgheadline18">
+<div id="outline-container-orgheadline19" class="outline-3">
+<h3 id="orgheadline19">Stata Batch Examples</h3>
+<div class="outline-text-3" id="text-orgheadline19">
 <p>
 In this example we use the batch system to bootstrap a distribution of means. Each process will calculate the mean for a single bootstrap sample and save the result. Since we need to give the output files unique names we will pass the batch process number to Stata and use it to construct the file names.
 </p>
 </div>
-<div id="outline-container-orgheadline32" class="outline-4">
-<h4 id="orgheadline32">Stata bootstrap do-file</h4>
-<div class="outline-text-4" id="text-orgheadline32">
+<div id="outline-container-orgheadline33" class="outline-4">
+<h4 id="orgheadline33">Stata bootstrap do-file</h4>
+<div class="outline-text-4" id="text-orgheadline33">
 <p>
 To use the batch system we need to write a do-file that does the calculation without further user input. The do-file below reads a Stata data set, sets a seed for random number generation, samples (with replacement) from the data, calculates the average value of the sampled data, and saves the result.
 </p>
@@ -997,9 +1061,9 @@ Note the use of <code>args process</code>, which retrieves the value of the proc
 </p>
 </div>
 </div>
-<div id="outline-container-orgheadline33" class="outline-4">
-<h4 id="orgheadline33">Submit file</h4>
-<div class="outline-text-4" id="text-orgheadline33">
+<div id="outline-container-orgheadline34" class="outline-4">
+<h4 id="orgheadline34">Submit file</h4>
+<div class="outline-text-4" id="text-orgheadline34">
 <p>
 The Stata code in the example above draws one bootstrap sample and calculates the mean. If we want to do this 1,000 times we could write a loop, but each iteration would be done sequentially. We can carry out this operation faster by running it simultaneously on hundreds of machines. We just need a <code>.submit</code> file like the one below:
 </p>
@@ -1040,9 +1104,9 @@ To submit this job we open a terminal on the RCE, <code>cd</code> to the project
 </div>
 </div>
 
-<div id="outline-container-orgheadline34" class="outline-4">
-<h4 id="orgheadline34">Monitoring submitted jobs</h4>
-<div class="outline-text-4" id="text-orgheadline34">
+<div id="outline-container-orgheadline35" class="outline-4">
+<h4 id="orgheadline35">Monitoring submitted jobs</h4>
+<div class="outline-text-4" id="text-orgheadline35">
 <p>
 After submitting the jobs we may wish to monitor them, e.g. to check if they are running. You can do this by running <code>condor_q &lt;your_user_name&gt;</code> in a terminal. If this returns nothing then you have no jobs in the queue. Otherwise you will see information for each request in the queue which will look something like this:
 </p>
@@ -1072,9 +1136,9 @@ You will know your job is finished when it is no longer listed in the <code>cond
 </div>
 
 
-<div id="outline-container-orgheadline35" class="outline-4">
-<h4 id="orgheadline35">Aggregating results</h4>
-<div class="outline-text-4" id="text-orgheadline35">
+<div id="outline-container-orgheadline36" class="outline-4">
+<h4 id="orgheadline36">Aggregating results</h4>
+<div class="outline-text-4" id="text-orgheadline36">
 <p>
 Each of our 1000 processes produced a file in the <code>output</code> directory name <code>out&lt;process&gt;.dta</code>; our next task is to aggregate these results. The do-file below reads each of these files, joins them together, appends them, and plots the result.
 </p>
@@ -1116,9 +1180,9 @@ graph export <span style="color: #2aa198;">"stata_bootstrap.eps"</span>, <span s
 </div>
 </div>
 </div>
-<div id="outline-container-orgheadline36" class="outline-4">
-<h4 id="orgheadline36">Try it yourself!</h4>
-<div class="outline-text-4" id="text-orgheadline36">
+<div id="outline-container-orgheadline37" class="outline-4">
+<h4 id="orgheadline37">Try it yourself!</h4>
+<div class="outline-text-4" id="text-orgheadline37">
 <p>
 Download the <a href="Stata_examples/bootstrap.zip">bootstrap example files</a>, to the RCE, extract the zip file, and run the example by calling <code>condor_submit bootstrap.submit</code> from the <code>bootstrap</code> directory.
 </p>
@@ -1126,34 +1190,34 @@ Download the <a href="Stata_examples/bootstrap.zip">bootstrap example files</a>,
 </div>
 </div>
 
-<div id="outline-container-orgheadline19" class="outline-3">
-<h3 id="orgheadline19"><span class="todo TODO">TODO</span> Python Batch Examples</h3>
-</div>
-
 <div id="outline-container-orgheadline20" class="outline-3">
-<h3 id="orgheadline20"><span class="todo TODO">TODO</span> Matlab Batch Examples</h3>
+<h3 id="orgheadline20"><span class="todo TODO">TODO</span> Python Batch Examples</h3>
+</div>
+
+<div id="outline-container-orgheadline21" class="outline-3">
+<h3 id="orgheadline21"><span class="todo TODO">TODO</span> Matlab Batch Examples</h3>
 </div>
 </div>
 
 
-<div id="outline-container-orgheadline41" class="outline-2">
-<h2 id="orgheadline41"><span class="section-number-2">9</span> <span class="todo TODO">TODO</span> Installing custom packages on the RCE</h2>
+<div id="outline-container-orgheadline42" class="outline-2">
+<h2 id="orgheadline42"><span class="section-number-2">9</span> <span class="todo TODO">TODO</span> Installing custom packages on the RCE</h2>
 <div class="outline-text-2" id="text-9">
-</div><div id="outline-container-orgheadline38" class="outline-3">
-<h3 id="orgheadline38">Installing R packages</h3>
-</div>
-
-<div id="outline-container-orgheadline39" class="outline-3">
-<h3 id="orgheadline39">Installing Python packages</h3>
+</div><div id="outline-container-orgheadline39" class="outline-3">
+<h3 id="orgheadline39">Installing R packages</h3>
 </div>
 
 <div id="outline-container-orgheadline40" class="outline-3">
-<h3 id="orgheadline40">Installing Stata packages</h3>
+<h3 id="orgheadline40">Installing Python packages</h3>
+</div>
+
+<div id="outline-container-orgheadline41" class="outline-3">
+<h3 id="orgheadline41">Installing Stata packages</h3>
 </div>
 </div>
 
-<div id="outline-container-orgheadline42" class="outline-2">
-<h2 id="orgheadline42"><span class="section-number-2">10</span> <span class="todo TODO">TODO</span> Getting help</h2>
+<div id="outline-container-orgheadline43" class="outline-2">
+<h2 id="orgheadline43"><span class="section-number-2">10</span> <span class="todo TODO">TODO</span> Getting help</h2>
 </div>
 <div id="footnotes">
 <h2 class="footnotes">Footnotes: </h2>
@@ -1172,7 +1236,7 @@ We use R for this example because it is the most commonly used program by RCE us
 </div></div>
 <div id="postamble" class="status">
 <p class="author">Author: Ista Zahn</p>
-<p class="date">Created: 2015-09-01 Tue 16:15</p>
+<p class="date">Created: 2015-09-04 Fri 10:29</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>

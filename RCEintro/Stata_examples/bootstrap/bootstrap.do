@@ -1,4 +1,3 @@
-
 set more off
 
 // collect the arguments passed by submit file

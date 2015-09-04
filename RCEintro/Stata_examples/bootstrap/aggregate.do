@@ -1,4 +1,3 @@
-
 clear
 set more off
 // change to the output directory
