@@ -6,7 +6,7 @@
 #+LANGUAGE:  en
 #+OPTIONS:   H:4 toc:t num:2
 
-#+PROPERTY:  padline no
+#+PROPERTY:  header-args :padline no
 #+SETUPFILE: setup/theme-readtheorg.setup
 
 #+begin_html
@@ -23,18 +23,21 @@
 
 ** Description
 
-Org mode provides basic HTML support.  Though, we can easily override CSS
-stylesheets and add our own HTML themes.
+Though you can easily override CSS stylesheets and add your own HTML themes, we
+can say (or write) that Org mode provides a /basic/ HTML support.
+
+*Org-HMTL themes* is an open source framework for providing you with a list of
+very nice (cross-browser) themes for all your Org documents.  Use them to *style
+your docs*, and your colleagues will come up to tell you that you are a genius!
+
+Share this content by tweeting this page:
 
 #+begin_html
 <script src="http://platform.twitter.com/widgets.js"></script>
 <a href="https://twitter.com/share" class="twitter-share-button" data-via="f_niessen">Tweet</a>
 #+end_html
 
-** Objective
-
-The goal of the *Org-HMTL themes* is to provide you with a list of very nice
-(cross-browser) themes.
+Follow [[https://twitter.com/f_niessen][f_niessen]] on Twitter for updates on Org-HTML themes!
 
 ** Requirements
 
@@ -66,11 +69,35 @@ share and maintain such spec.  Now, I can create a much neater spec which is
 available for the team's reference as a webpage." \\
 -- /Shankar R./
 
+"I like Bigblow the best.  I've exported most of my Org files using this theme
+and published them within my company's intranet.  Thanks for sharing this
+wonderful package!" \\
+-- /Richard K./
+
 ** About ReadTheOrg
 
 "OMG. The ReadTheOrg theme for exported HTML from org mode files is eye
 wateringly beautiful. Thank you!" \\
 -- /Rob Stewart/
+
+"It is fantastic, so beautiful.  I will switch several of my pages over to
+this theme." \\
+-- /Carsten D./
+
+"That is incredibly impressive.  Thanks for this." \\
+-- /Noah R./
+
+"Thank you!  I enjoy your themes.  The best ones I've ever found." \\
+-- /Kang T./
+
+"Awesome theme.  Wonderful job.  You're doing a wonderful thing --- it will
+enable people (at least those who use Emacs and Org mode) to put together
+on-line reference works in a much-more usable fashion than is currently
+available." \\
+-- /D. C. Toedt/
+
+"Extremely useful." \\
+-- /Thomas S. Dye/
 
 * Gallery
   :PROPERTIES:
@@ -113,6 +140,8 @@ ReadTheOrg is a clone of the official -- and great! -- theme (called [[https://g
 used in the [[http://docs.readthedocs.org/en/latest/][Read The Docs]] site.  It gives a beautiful and professional style to
 all your Org docs.
 
+*Thanks to the creator(s) of Sphinx!*
+
 #+ATTR_HTML: :width 640
 [[file:readtheorg.png]]
 
@@ -130,14 +159,15 @@ default structure of the HTML export)!
 I've written a demo page for the themes that provides a maximal working support
 of Org mode syntax.
 
-Please see the [[file:demo/org-mode-syntax.org][org-mode-syntax]] page for full examples of headings, code,
+Please see the [[https://github.com/fniessen/refcard-org-mode][Org mode refcard]] page for full examples of headings, code,
 admonitions, footnotes, tables and other details.
 
 * Installing a theme
 
 Using a theme from the [[id:79e0ed21-c3b0-4f00-bdab-29fbff9dcad4][theme gallery]] for your own Org documents is very easy:
-you just need to clone the Org-HTML themes project and add a =#+SETUPFILE:=
-directive in the preamble to include the CSS and JavaScript files.
+you just need to clone the Org-HTML themes project, add a =#+SETUPFILE:= directive
+in the preamble to include the CSS and JavaScript files, then export your Org
+mode file to HTML.
 
 You can either:
 
@@ -155,6 +185,9 @@ You can either:
   #+begin_src org :exports code
   ,#+SETUPFILE: path/to/Git/repo/setup/THEME-NAME.setup
   #+end_src
+
+Then export your Org mode file to HTML with =org-html-export-to-html= or with =C-c
+C-e h h=.
 
 ** Bigblow
 
@@ -183,6 +216,7 @@ your Org file instead:
 ,#+HTML_HEAD: <script type="text/javascript" src="http://www.pirilampo.org/styles/bigblow/js/jquery.zclip.min.js"></script>
 ,#+HTML_HEAD: <script type="text/javascript" src="http://www.pirilampo.org/styles/bigblow/js/bigblow.js"></script>
 ,#+HTML_HEAD: <script type="text/javascript" src="http://www.pirilampo.org/styles/bigblow/js/hideshow.js"></script>
+,#+HTML_HEAD: <script type="text/javascript" src="http://www.pirilampo.org/styles/lib/js/jquery.stickytableheaders.min.js"></script>
 #+end_src
 
 *** Local version
@@ -204,6 +238,7 @@ Here a local version (using relative paths):
 ,#+HTML_HEAD: <script type="text/javascript" src="styles/bigblow/js/jquery.zclip.min.js"></script>
 ,#+HTML_HEAD: <script type="text/javascript" src="styles/bigblow/js/bigblow.js"></script>
 ,#+HTML_HEAD: <script type="text/javascript" src="styles/bigblow/js/hideshow.js"></script>
+,#+HTML_HEAD: <script type="text/javascript" src="styles/lib/js/jquery.stickytableheaders.min.js"></script>
 #+end_src
 
 ** ReadTheOrg
@@ -221,10 +256,12 @@ your Org file instead:
 #+begin_src org :exports code :tangle setup/theme-readtheorg.setup
 # -*- mode: org; -*-
 
+,#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="http://www.pirilampo.org/styles/readtheorg/css/htmlize.css"/>
 ,#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="http://www.pirilampo.org/styles/readtheorg/css/readtheorg.css"/>
 
 ,#+HTML_HEAD: <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 ,#+HTML_HEAD: <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+,#+HTML_HEAD: <script type="text/javascript" src="http://www.pirilampo.org/styles/lib/js/jquery.stickytableheaders.js"></script>
 ,#+HTML_HEAD: <script type="text/javascript" src="http://www.pirilampo.org/styles/readtheorg/js/readtheorg.js"></script>
 #+end_src
 
@@ -240,11 +277,16 @@ I love contributions!  Patches under any form are always welcome!
 
 ** Donations
 
-If you like the org-html-themes project, you can show your appreciation and
-support future development by making a [[https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=VCVAS6KPDQ4JC&lc=BE&item_number=org%2dhtml%2dthemes&currency_code=EUR&bn=PP%2dDonationsBF%3abtn_donate_LG%2egif%3aNonHosted][donation]] through PayPal.
+If you like the org-html-themes project (or any of [[https://github.com/fniessen/][my other projects]]), you can
+show your appreciation and help support future development by making today
+a [[https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=VCVAS6KPDQ4JC&lc=BE&item_number=org%2dhtml%2dthemes&currency_code=EUR&bn=PP%2dDonationsBF%3abtn_donate_LG%2egif%3aNonHosted][donation]] through PayPal.
 
 Regardless of the donations, org-html-themes will always be free both as in
 beer and as in speech.
+
+** Follow me
+
+I have an [[https://twitter.com/f_niessen][f_niessen]] account on Twitter.  You should follow it.
 
 * License
 
@@ -264,3 +306,13 @@ A PARTICULAR PURPOSE. See the GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License along with
 this program. If not, see http://www.gnu.org/licenses/.
+
+#+begin_html
+<a href="http://opensource.org/licenses/GPL-3.0">
+  <img src="http://img.shields.io/:license-gpl-blue.svg" alt=":license-gpl-blue.svg" />
+</a>
+
+<a href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=VCVAS6KPDQ4JC&lc=BE&item_number=org%2dhtml%2dthemes&currency_code=EUR&bn=PP%2dDonationsBF%3abtn_donate_LG%2egif%3aNonHosted">
+  <img src="https://www.paypalobjects.com/en_US/i/btn/btn_donate_LG.gif" alt="btn_donate_LG.gif" />
+</a>
+#+end_html
