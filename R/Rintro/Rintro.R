@@ -85,7 +85,7 @@ plot(forecast(fit))
 ## Coming to R
 ## ───────────
 
-##   Comming from…
+##   Coming from…
 ##   Stata: [http://www.princeton.edu/~otorres/RStata.pdf]
 ##   SAS/SPSS: [http://www.et.bs.ehu.es/~etptupaf/pub/R/RforSAS&SPSSusers.pdf]
 ##   matlab: [http://www.math.umaine.edu/~hiebeler/comp/matlabR.pdf]
