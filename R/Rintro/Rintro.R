@@ -140,7 +140,7 @@ plot(forecast(fit))
 ##     • Locate and open the `Rintro.R' script in the Rintro folder on your
 ##       desktop
 
-##   • Go to *Tools => Set working directory => To source file location*
+##   • Go to *Session => Set working directory => To source file location*
 ##     (more on the working directory later)
 
 ##   • I encourage you to add your own notes to this file! Every line that
