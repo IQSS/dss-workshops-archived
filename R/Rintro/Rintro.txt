@@ -20,12 +20,10 @@ Graphical User Interfaces
 .. R GUI Alternatives (Emacs with ESS)
 .. Launch RStudio                                             :labsetup:
 .. Exercise 0
-Help and package management
-.. Asking R for help
-.. R packages and libraries
 Data and Functions
 .. Assignment
 .. Functions
+R packages
 Getting data into R
 .. The gss dataset
 .. The "working directory" and listing files
@@ -34,6 +32,7 @@ Getting data into R
 .. Checking imported data
 .. Saving and loading R  workspaces
 .. Exercise 1
+Asking R for help
 Data Manipulation
 .. data.frame objects
 .. Extracting subsets of data.frames
@@ -141,7 +140,7 @@ InspiRation
 Coming to R
 ───────────
 
-  Comming from…
+  Coming from…
   Stata: [http://www.princeton.edu/~otorres/RStata.pdf]
   SAS/SPSS: [http://www.et.bs.ehu.es/~etptupaf/pub/R/RforSAS&SPSSusers.pdf]
   matlab: [http://www.math.umaine.edu/~hiebeler/comp/matlabR.pdf]
@@ -238,43 +237,6 @@ Exercise 0
   [StackOverflow] http:stackoverflow.com
 
 
-Help and package management
-═══════════════════════════
-
-Asking R for help
-─────────────────
-
-  R has extensive built-in documentation that can be accessed through R
-  commands or through the GUI.
-  • Start html help, search/browse using web browser
-    • at the R console: `help.start()'
-
-    • or use the help menu from you GUI
-
-  • Look up the documentation for a function `help(plot)'
-
-    `?kmeans'
-
-  • Look up documentation for a package `help(package="stats")'
-
-  • Search documentation from R (not always the best way… google often
-    works better) `help.search("classification")'
-
-
-R packages and libraries
-────────────────────────
-
-  There are thousands of R packages that extend R's capabilities.
-
-  • To view available packages: `library()'
-
-  • To see what packages are loaded: `search()'
-
-  • To load a package: `library("car")'
-
-  • Install new package: `install.packages("stringdist")'
-
-
 Data and Functions
 ══════════════════
 
@@ -328,6 +290,24 @@ Functions
   │ # Functions can be nested so an alternative is
   │ round(sqrt(y), digits = 5) # Take sqrt of a and round
   └────
+
+
+R packages
+══════════
+
+  There are thousands of R packages that extend R's capabilities.
+
+  • To see what packages are loaded:
+  `search()'
+
+  • To view available packages:
+  `library()'
+
+  • To load a package:
+  `library("car")'
+
+  • Install new package:
+  `install.packages("stringdist")'
 
 
 Getting data into R
@@ -487,6 +467,29 @@ Exercise 1
   4. Display the dimensions of the GSS.sav
 
   5. BONUS: figure out how to read the Excel file "gss.xlsx" into R
+
+
+Asking R for help
+═════════════════
+
+  R has extensive built-in documentation that can be accessed through R
+  commands or through the GUI.
+  • Start html help, search/browse using web browser
+    • at the R console:
+  `help.start()'
+
+  • or use the help menu from you GUI
+  • Look up the documentation for a function
+  `help(plot)'
+
+  `?kmeans'
+
+  • Look up documentation for a package
+  `help(package="stats")'
+
+  • Search documentation from R (not always the best way… google often
+    works better)
+  `help.search("classification")'
 
 
 Data Manipulation

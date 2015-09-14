@@ -12,7 +12,7 @@
 # property and/or the EXCLUDE_TAGS, place the curser on the poperty line 
 # and press C-c C-c
 
-#+PROPERTY: exports both
+#+PROPERTY: exports code
 #+EXCLUDE_TAGS: noexport mitsetup
 
 
@@ -190,45 +190,6 @@ Also keep in mind that we are living in a golden age of tab completion. If you d
 4. R includes extensive documentation, including a file named "An introduction to R". Try to find this help file.
 5. Go to [[http://cran.r-project.org/web/views/]] and skim the topic closest to your field/interests.
 
-
-* Help and package management
-  
-** Asking R for help
-R has extensive built-in documentation that can be accessed through R commands or through the GUI.
-- Start html help, search/browse using web browser
-  - at the R console:
-    src_R[:exports code :eval no]{help.start()}
-
-  - or use the help menu from you GUI
-
-- Look up the documentation for a function
-  src_R[:exports code :eval no]{help(plot)}
-
-  src_R[:exports code :eval no]{?kmeans}
-
-- Look up documentation for a package
-  src_R[:exports code :eval no]{help(package="stats")}
-
-- Search documentation from R (not always the best way... google often works better)
-  src_R[:exports code :eval no]{help.search("classification")}
-
-** R packages and libraries
-
-There are thousands of R packages that extend R's capabilities.
-
-- To view available packages: 
-  src_R[:exports code :eval no]{library()}
-
-- To see what packages are loaded: 
-  src_R[:exports code :eval no]{search()}
-
-- To load a package: 
-  src_R[:exports code :eval no]{library("car")}
-
-- Install new package: 
-  src_R[:exports code :eval no]{install.packages("stringdist")}
-
-
 * Data and Functions
 
 ** Assignment
@@ -318,6 +279,22 @@ Examples:
 > 
 #+end_example
 
+
+* R packages
+
+There are thousands of R packages that extend R's capabilities.
+
+- To see what packages are loaded: 
+src_R[:exports code :eval no]{search()}
+
+- To view available packages: 
+src_R[:exports code :eval no]{library()}
+
+- To load a package: 
+src_R[:exports code :eval no]{library("car")}
+
+- Install new package: 
+src_R[:exports code :eval no]{install.packages("stringdist")}
 
 * Getting data into R
   
@@ -538,6 +515,25 @@ When you close R you will be asked if you want to save your workspace -- if you 
 4. Display the dimensions of the GSS.sav
 
 5. BONUS: figure out how to read the Excel file "gss.xlsx" into R
+  
+* Asking R for help
+R has extensive built-in documentation that can be accessed through R commands or through the GUI.
+- Start html help, search/browse using web browser
+  - at the R console:
+src_R[:exports code :eval no]{help.start()}
+
+  - or use the help menu from you GUI
+
+- Look up the documentation for a function
+src_R[:exports code :eval no]{help(plot)}
+
+src_R[:exports code :eval no]{?kmeans}
+
+- Look up documentation for a package
+src_R[:exports code :eval no]{help(package="stats")}
+
+- Search documentation from R (not always the best way... google often works better)
+src_R[:exports code :eval no]{help.search("classification")}
 
 
 * Data Manipulation
@@ -1020,6 +1016,7 @@ Using the datGSS data.frame
 2. Calculate the mean and standard deviation of incomdol by sex
 3. Save the results of the previous two calculations to a file
 4. Create a scatter plot with educ on the x-axis and incomdol on the y-axis
+
 
 * Wrap-up
 
