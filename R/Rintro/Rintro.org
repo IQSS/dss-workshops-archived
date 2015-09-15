@@ -12,7 +12,7 @@
 # property and/or the EXCLUDE_TAGS, place the curser on the poperty line 
 # and press C-c C-c
 
-#+PROPERTY: exports code
+#+PROPERTY: exports both
 #+EXCLUDE_TAGS: noexport mitsetup
 
 
@@ -76,7 +76,7 @@ task, chances are good that there is an R package for that. For example:
 - Want to find out where we are?
 #+BEGIN_SRC R :results output graphics :width 600 :height 600 :file images/hereweare.png
   library(ggmap)
-  nwbuilding <- geocode("52 Oxford Street, Cambridge, MA") 
+  nwbuilding <- geocode("1737 Cambridge Street Cambridge, MA 02138", source = "google") 
   ggmap(get_map("Cambridge, MA", zoom = 15)) +
     geom_point(data=nwbuilding, size = 7, shape = 13, color = "red")
 #+END_SRC
@@ -99,53 +99,40 @@ Whatever you're trying to do, you're probably not the first to try doing it R. C
 
 ** Coming to R
 Coming from...
-#+LATEX: {\footnotesize
 - Stata :: http://www.princeton.edu/~otorres/RStata.pdf
 - SAS/SPSS :: http://www.et.bs.ehu.es/~etptupaf/pub/R/RforSAS&SPSSusers.pdf 
 - matlab :: http://www.math.umaine.edu/~hiebeler/comp/matlabR.pdf
 - Python :: http://mathesaurus.sourceforge.net/matlab-python-xref.pdf
-#+LATEX: }
+
+* Graphical User Interfaces (GUIs)
 
 
-* Graphical User Interfaces
-
-
-** R GUI alternatives (no GUI)
+** R GUI alternatives
 
 The old-school way is to run R directly in a terminal
 
 #+attr_html: :width 95%
-#+attr_latex: :width .75\textwidth
 [[file:images/Rconsole.png]]
 
-But hardly anybody does it that way anymore!
-
-
-** R GUI alternatives (Windows default)
+But hardly anybody does it that way anymore! The Windows versio of R comes with a GUI that looks like this:
 
 #+attr_html: :width 95%
-#+attr_latex: :width .75\textwidth
 [[file:images/Rgui.png]]
 
 The default windows GUI is not very good
   - No parentheses matching or syntax highlighting
   - No work-space browser
 
-
-** R GUI Alternatives (Rstudio on Mac)
+RStudio (an alternative GUI for R) is shown below.
 #+attr_html: :width 95%
-#+attr_latex: :width .75\textwidth
 [[file:images/Rstudio.png]]
 
-Rstudio has many useful features, including parentheses matching and auto-completion
+Rstudio has many useful features, including parentheses matching and auto-completion. Rstudio is not the only advanced R interface; other alteratives include Emacs with ESS (shown below).
 
-
-** R GUI Alternatives (Emacs with ESS)
 #+attr_html: :width 95%
-#+attr_latex: :width .65\textwidth
 [[file:images/emacs.png]]
 
-Emacs + ESS is a very powerful combination, but can be difficult to set up
+Emacs + ESS is a very powerful combination, but can be difficult to set up.
 
 
 ** Launch RStudio on Athena					   :mitsetup:
@@ -232,7 +219,7 @@ Saved variables can be listed, overwritten and deleted
 #+RESULTS: listOverwriteDelete
 #+begin_example
 > ls() # List variables in workspace
-[1] "comet"      "fit"        "nwbuilding" "x"          "y"         
+[1] "comet" "fit"   "x"     "y"    
 > x # Print the value of x
 [1] 10
 > x <- 100 # Overwrite x. Note that no warning is given!
@@ -240,7 +227,7 @@ Saved variables can be listed, overwritten and deleted
 [1] 100
 > rm(x) # Delete x
 > ls()
-[1] "comet"      "fit"        "nwbuilding" "y"         
+[1] "comet" "fit"   "y"    
 > 
 #+end_example
 
@@ -253,7 +240,7 @@ Using R is mostly about applying *functions* to *variables*. Functions
   - optionally perform side-effects such as writing a file to disk or opening a graphics window
 
 The general form for calling R functions is 
-  src_R[:exports code :eval no]{FunctionName(arg.1, arg.2, ... arg.n)}
+src_R[:exports code :eval no]{FunctionName(arg.1, arg.2, ... arg.n)}
 
 Arguments can be matched by position or name
 
@@ -300,26 +287,26 @@ src_R[:exports code :eval no]{install.packages("stringdist")}
   
 
 ** The gss dataset
-  The next few examples use a subset of the General Social Survey data set. The variables in this subset include
+  The next few examples use a subset of the General Social Survey data set. The variables in this subset include those described below.
 #+name: GSSinfo
-#+begin_src R
-  head(read.csv("dataSets/gssInfo.csv")) 
+#+begin_src R :results value org table :colnames yes :exports results
+  read.csv("dataSets/gssInfo.csv")
   #see gssInfo.csv for rest of the variable descriptions
 #+end_src
 
 #+RESULTS: GSSinfo
-#+begin_example
-> head(read.csv("dataSets/gssInfo.csv")) 
-      var                      description
-1 marital                   marital status
-2     age                age of respondent
-3    educ highest year of school completed
-4     sex                  respondents sex
-5     inc               respondents income
-6   happy                general happiness
-> #see gssInfo.csv for rest of the variable descriptions
-> 
-#+end_example
+#+BEGIN_SRC org
+| var     | description                      |
+|---------+----------------------------------|
+| marital | marital status                   |
+| age     | age of respondent                |
+| educ    | highest year of school completed |
+| sex     | respondents sex                  |
+| inc     | respondents income               |
+| happy   | general happiness                |
+| region  |                                  |
+#+END_SRC
+
 
 ** The "working directory" and listing files
  R knows the directory it was started in, and refers to this as the "working directory". Since our workshop examples are in the Rintro folder on the desktop, we should all take a moment to set that as our working directory:
@@ -458,6 +445,32 @@ Examples:
 #+end_src
 
 #+RESULTS: ExamineStataData
+#+begin_example
+> class(datGSS) # check to see that test is what we expect it to be
+[1] "data.frame"
+> dim(datGSS) # how many rows and columns?
+[1] 1419   35
+> names(datGSS) # or colnames(datGSS)
+ [1] "age"      "educ"     "emailhrs" "hrs1"     "sex"      "usecomp" 
+ [7] "usemail"  "useweb"   "webhrs"   "hapmar"   "happy"    "speduc"  
+[13] "rincome"  "income"   "marital"  "postlife" "pres96"   "richwork"
+[19] "satjob"   "sibs"     "spdeg"    "spwrksta" "vote96"   "wrkstat" 
+[25] "zodiac"   "incomdol" "rincdol"  "husbeduc" "wifeduc"  "husbhr"  
+[31] "wifehr"   "husbft"   "wifeft"   "wkftwife" "wkfthusb"
+> str(datGSS[1:10]) # more details about the first 10 columns
+'data.frame':	1419 obs. of  10 variables:
+ $ age     : num  69 27 19 21 19 87 42 19 78 70 ...
+ $ educ    : num  12 10 11 9 11 8 11 11 7 9 ...
+ $ emailhrs: num  -1 -1 0 -1 50 -1 3 -1 -1 -1 ...
+ $ hrs1    : num  -1 60 32 20 -1 -1 -1 -1 -1 22 ...
+ $ sex     : Factor w/ 2 levels "Male","Female": 1 1 1 1 1 2 1 2 2 2 ...
+ $ usecomp : Factor w/ 3 levels "No","Yes","No answer": 1 1 2 1 2 1 2 2 1 1 ...
+ $ usemail : Factor w/ 3 levels "No","Yes","No answer": 1 1 1 1 2 1 2 1 1 1 ...
+ $ useweb  : Factor w/ 3 levels "No","Yes","No answer": 1 1 2 1 2 1 1 1 1 1 ...
+ $ webhrs  : num  -1 -1 36 -1 20 -1 0 -1 -1 -1 ...
+ $ hapmar  : Factor w/ 6 levels "NAP","VERY HAPPY",..: 1 2 1 1 1 1 2 1 1 1 ...
+> 
+#+end_example
 
 
 ** Saving and loading R  workspaces
@@ -475,8 +488,7 @@ In addition to importing individual datasets, R can save and load entire workspa
 #+RESULTS: saveDelete
 #+begin_example
 > ls() # list objects in our workspace
-[1] "a"          "comet"      "datGSS"     "fit"        "gss.data"  
-[6] "nwbuilding" "y"         
+[1] "a"        "comet"    "datGSS"   "fit"      "gss.data" "y"       
 > save.image(file="myWorkspace.RData") # save workspace 
 > rm(list=ls()) # remove all objects from our workspace 
 > ls() # list stored objects to make sure they are deleted
@@ -496,8 +508,7 @@ character(0)
 #+begin_example
 > load("myWorkspace.RData") # load myWorkspace.RData
 > ls() # list objects
-[1] "a"          "comet"      "datGSS"     "fit"        "gss.data"  
-[6] "nwbuilding" "y"         
+[1] "a"        "comet"    "datGSS"   "fit"      "gss.data" "y"       
 > 
 #+end_example
 
@@ -668,18 +679,17 @@ You can modify data.frames using the =transform()= function.
 > 
 >   ## examine our newly created variables
 > head(subset(datGSS,
-+             select = c("age", "ageC", "wifeduc", "wifeduc_complete",
++             select = c("age", "ageC", "wifeduc", "wifeduc_comp",
 +                        "husbeduc", "educ.diff")), n = 8)
-  age       ageC wifeduc wifeduc_complete husbeduc educ.diff
-1  69  22.363636      NA               NA       NA        NA
-2  27 -19.636364      13               13       10         3
-3  19 -27.636364      NA               NA       NA        NA
-4  21 -25.636364      NA               NA       NA        NA
-5  19 -27.636364      NA               NA       NA        NA
-6  87  40.363636      NA               NA       NA        NA
-7  42  -4.636364      10               10       11        -1
-8  19 -27.636364      NA               NA       NA        NA
-> 
+  age       ageC wifeduc wifeduc_comp husbeduc educ.diff
+1  69  22.363636      NA     13.28457       NA        NA
+2  27 -19.636364      13     13.00000       10         3
+3  19 -27.636364      NA     13.28457       NA        NA
+4  21 -25.636364      NA     13.28457       NA        NA
+5  19 -27.636364      NA     13.28457       NA        NA
+6  87  40.363636      NA     13.28457       NA        NA
+7  42  -4.636364      10     10.00000       11        -1
+8  19 -27.636364      NA     13.28457       NA        NA
 > 
 #+end_example
 
@@ -964,50 +974,44 @@ F-statistic: 4.314 on 2 and 1416 DF,  p-value: 0.01356
 
 Thanks to classes and methods, you can ~plot()~ many  kinds of objects:
 
-#+LATEX: \begin{columns} \column{.85\textwidth} \begin{block}{}
 #+name: plotExample
 #+begin_src R :results output graphics :exports both :no-expand :file images/examplePlot1.png :width 800 :height 500 :R-dev-args res=120 
   plot(datGSS$marital) # Plot a factor
 #+end_src
-#+ATTR_LATEX: :width .9\textwidth
+
+
 #+attr_html: width="50%" style="display:block;margin-left:auto;margin-right:auto;"
 #+RESULTS: plotExample
 [[file:images/examplePlot1.png]]
 
 
-
-#+LATEX: \end{block} \end{columns}
-
 ** Basic graphics: Boxplots by group
 
 Thanks to classes and methods, you can ~plot()~ many kinds of objects:
-#+LATEX: \begin{columns} \column{.85\textwidth} \begin{block}{}
 #+name: plotExample2
 #+begin_src R :results output graphics :exports both :no-expand :file images/examplePlot2.png :width 800 :height 500 :R-dev-args res=120 
   with(datGSS,
        plot(marital, educ)) # Plot ordinal by numeric
 #+end_src
-#+ATTR_LATEX: :width .9\textwidth
+
 #+attr_html: width="50%" style="display:block;margin-left:auto;margin-right:auto;"
 #+RESULTS: plotExample2
 [[file:images/examplePlot2.png]]
-#+LATEX: \end{block} \end{columns}
+
 
 ** Basic graphics: Mosaic chart
 
 Thanks to classes and methods, you can ~plot()~ many kinds of objects:
-#+LATEX: \begin{columns} \column{.85\textwidth} \begin{block}{}
 #+name: plotExample3
 #+begin_src R :results output graphics :exports both :no-expand :file images/examplePlot3.png :width 800 :height 500 :R-dev-args res=120 
   with(datGSS, # Plot factor X factor
        plot(marital, happy))
 #+end_src
-#+ATTR_LATEX: :width .95\textwidth
+
 #+attr_html: width="50%" style="display:block;margin-left:auto;margin-right:auto;"
 #+RESULTS: plotExample3
 [[file:images/examplePlot3.png]]
 
-#+LATEX: \end{block} \end{columns}
 
 ** Exercise 3
 Using the datGSS data.frame
