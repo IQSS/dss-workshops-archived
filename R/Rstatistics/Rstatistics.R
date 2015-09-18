@@ -2,7 +2,6 @@
 ##                          REGRESSION MODELS IN R
 ##                         ━━━━━━━━━━━━━━━━━━━━━━━━
 
-
 ## Table of Contents
 ## ─────────────────
 
@@ -13,10 +12,6 @@
 ## 5 Multilevel Modeling
 ## 6 Exercise solutions                                         :prototype:
 ## 7 Wrap-up
-
-
-
-
 
 ## 1 Introduction
 ## ══════════════
@@ -32,7 +27,6 @@
 ##     • Specify factor contrasts to test specific hypotheses
 ##     • Perform model comparisons
 ##     • Run and interpret variety of regression models in R
-
 
 ## 1.2 Materials and Setup                                          :setup:
 ## ───────────────────────
@@ -54,7 +48,6 @@
 ##   • Extract materials from RStatistics.zip (on lab machines /right-click
 ##     -> WinZip -> Extract to here/) and move to your desktop.
 
-
 ## 1.3 Launch RStudio                                            :labsetup:
 ## ──────────────────
 
@@ -69,14 +62,12 @@
 ##     (more on the working directory later)
 ##   • I encourage you to add your own notes to this file!
 
-
 ## 1.4 Set working directory
 ## ─────────────────────────
 
 ##   It is often helpful to start your R session by setting your working
 ##   directory so you don't have to type the full path names to your data
 ##   and other files
-
 
 # set the working directory
 # setwd("~/Desktop/Rstatistics")
@@ -86,7 +77,6 @@
 
 getwd() # where am I?
 list.files("dataSets") # files in the dataSets folder
-
 
 ## 1.5 Load the states data
 ## ────────────────────────
@@ -103,7 +93,6 @@ states.info <- data.frame(attributes(states.data)[c("names", "var.labels")])
 #look at last few labels
 tail(states.info, 8)
 
-
 ## 2 Linear regression
 ## ═══════════════════
 
@@ -112,13 +101,11 @@ tail(states.info, 8)
 
 ##   Start by examining the data to check for problems.
 
-
 # summary of expense and csat columns, all rows
 sts.ex.sat <- subset(states.data, select = c("expense", "csat"))
 summary(sts.ex.sat)
 # correlation between expense and csat
 cor(sts.ex.sat)
-
 
 ## 2.2 Plot the data before fitting models
 ## ───────────────────────────────────────
@@ -126,12 +113,8 @@ cor(sts.ex.sat)
 ##   Plot the data to look for multivariate outliers, non-linear
 ##   relationships etc.
 
-
 # scatter plot of expense vs csat
 plot(sts.ex.sat)
-
-##   [file:images/statesCorr1.png]
-
 
 ## 2.3 Linear regression example
 ## ─────────────────────────────
@@ -140,13 +123,11 @@ plot(sts.ex.sat)
 ##   • For example, we can use `lm' to predict SAT scores based on
 ##     per-pupal expenditures:
 
-
 # Fit our regression model
 sat.mod <- lm(csat ~ expense, # regression formula
               data=states.data) # data set
 # Summarize and print the results
 summary(sat.mod) # show regression coefficients table
-
 
 ## 2.4 Why is the association between expense and SAT scores /negative/?
 ## ─────────────────────────────────────────────────────────────────────
@@ -158,9 +139,7 @@ summary(sat.mod) # show regression coefficients table
 ##   difference among the states in the percentage of students taking the
 ##   SAT?
 
-
 summary(lm(csat ~ expense + percent, data = states.data))
-
 
 ## 2.5 The lm class and methods
 ## ────────────────────────────
@@ -168,17 +147,14 @@ summary(lm(csat ~ expense + percent, data = states.data))
 ##   OK, we fit our model. Now what?
 ##   • Examine the model object:
 
-
 class(sat.mod)
 names(sat.mod)
 methods(class = class(sat.mod))[1:9]
 
 ##   • Use function methods to get more information about the fit
 
-
 confint(sat.mod)
 # hist(residuals(sat.mod))
-
 
 ## 2.6 Linear Regression Assumptions
 ## ─────────────────────────────────
@@ -195,7 +171,6 @@ plot(sat.mod, which = c(1, 2)) # "which" argument optional
 
 ##   [file:images/regressionsAssumptions1.png]
 
-
 ## 2.7 Comparing models
 ## ────────────────────
 
@@ -210,7 +185,6 @@ sat.mod <- update(sat.mod, data=na.omit(states.data))
 anova(sat.mod, sat.voting.mod)
 coef(summary(sat.voting.mod))
 
-
 ## 2.8 Exercise 0: least squares regression
 ## ────────────────────────────────────────
 
@@ -224,7 +198,6 @@ coef(summary(sat.voting.mod))
 ##   Select one or more additional predictors to add to your model and
 ##   repeat steps 1-3. Is this model significantly better than the model
 ##   with /metro/ as the only predictor?
-
 
 ## 3 Interactions and factors
 ## ══════════════════════════
@@ -242,7 +215,6 @@ sat.expense.by.percent <- lm(csat ~ expense*income,
                              data=states.data) 
 #Show the results
   coef(summary(sat.expense.by.percent)) # show regression coefficients table
-
 
 ## 3.2 Regression with categorical predictors
 ## ──────────────────────────────────────────
@@ -264,7 +236,6 @@ anova(sat.region) # show ANOVA table
 ##   Again, *make sure to tell R which variables are categorical by
 ##   converting them to factors!*
 
-
 ## 3.3 Setting factor reference groups and contrasts
 ## ─────────────────────────────────────────────────
 
@@ -272,7 +243,6 @@ anova(sat.region) # show ANOVA table
 ##   default in R is treatment contrasts, with the first level as the
 ##   reference. We can change the reference group or use another coding
 ##   scheme using the `C' function.
-
 
 # print default contrasts
 contrasts(states.data$region)
@@ -285,7 +255,6 @@ coef(summary(lm(csat ~ C(region, contr.helmert),
 
 ##   See also `?contrasts', `?contr.treatment', and `?relevel'.
 
-
 ## 3.4 Exercise 1: interactions and factors
 ## ────────────────────────────────────────
 
@@ -296,7 +265,6 @@ coef(summary(lm(csat ~ C(region, contr.helmert),
 
 ##   2. Try adding region to the model. Are there significant differences
 ##      across the four regions?
-
 
 ## 4 Regression with binary outcomes
 ## ═════════════════════════════════
@@ -324,20 +292,16 @@ coef(summary(lm(csat ~ C(region, contr.helmert),
 
 ##   Load the National Health Interview Survey data:
 
-
 NH11 <- readRDS("dataSets/NatHealth2011.rds")
 labs <- attributes(NH11)$labels
 
-
 ##   [CDC website] http://www.cdc.gov/nchs/nhis.htm
-
 
 ## 4.2 Logistic regression example
 ## ───────────────────────────────
 
 ##   Let's predict the probability of being diagnosed with hypertension
 ##   based on age, sex, sleep, and bmi
-
 
 str(NH11$hypev) # check stucture of hypev
 levels(NH11$hypev) # check levels of hypev
@@ -347,7 +311,6 @@ NH11$hypev <- factor(NH11$hypev, levels=c("2 No", "1 Yes"))
 hyp.out <- glm(hypev~age_p+sex+sleep+bmi,
               data=NH11, family="binomial")
 coef(summary(hyp.out))
-
 
 ## 4.3 Logistic regression coefficients
 ## ────────────────────────────────────
@@ -361,11 +324,9 @@ coef(summary(hyp.out))
 ##   One solution is to transform the coefficients to make them easier to
 ##   interpret
 
-
 hyp.out.tab <- coef(summary(hyp.out))
 hyp.out.tab[, "Estimate"] <- exp(coef(hyp.out))
 hyp.out.tab
-
 
 ## 4.4 Generating predicted values
 ## ───────────────────────────────
@@ -375,7 +336,6 @@ hyp.out.tab
 ##   predictors in our model. For example, we can ask "How much more likely
 ##   is a 63 year old female to have hypertension compared to a 33 year old
 ##   female?".
-
 
 # Create a dataset with predictors set at desired levels
 predDat <- with(NH11,
@@ -392,19 +352,16 @@ cbind(predDat, predict(hyp.out, type = "response",
 ##   having been diagnosed with hypertension, while and 63 year old female
 ##   has a 48% probability of having been diagnosed.
 
-
 ## 4.5 Packages for  computing and graphing predicted values
 ## ─────────────────────────────────────────────────────────
 
 ##   Instead of doing all this ourselves, we can use the effects package to
 ##   compute quantities of interest for us (cf. the Zelig package).
 
-
 library(effects)
 plot(allEffects(hyp.out))
 
 ##   [file:images/effects1.png]
-
 
 ## 4.6 Exercise 2: logistic regression
 ## ───────────────────────────────────
@@ -419,7 +376,6 @@ plot(allEffects(hyp.out))
 ##   Note that the data is not perfectly clean and ready to be modeled. You
 ##   will need to clean up at least some of the variables before fitting
 ##   the model.
-
 
 ## 5 Multilevel Modeling
 ## ═════════════════════
@@ -443,9 +399,7 @@ plot(allEffects(hyp.out))
 ##     • Use the `lmer' function for liner mixed models, `glmer' for
 ##       generalized mixed models
 
-
 library(lme4)
-
 
 ## 5.2 The Exam data
 ## ─────────────────
@@ -467,9 +421,7 @@ library(lme4)
 ##   type: School type - levels are 'Mxd' and 'Sngl'.
 ##   student: Student id (within school) - a factor
 
-
 Exam <- readRDS("dataSets/Exam.rds")
-
 
 ## 5.3 The null model and ICC
 ## ──────────────────────────
@@ -479,7 +431,6 @@ Exam <- readRDS("dataSets/Exam.rds")
 ##   accomplished by running a null model (i.e., a model with a random
 ##   effects grouping structure, but no fixed-effects predictors).
 
-
 # null model, grouping by school but not fixed effects.
 Norm1 <-lmer(normexam ~ 1 + (1|school),
               data=Exam, REML = FALSE)
@@ -488,18 +439,15 @@ summary(Norm1)
 ##   The is .169/(.169 + .848) = .17: 17% of the variance is at the school
 ##   level.
 
-
 ## 5.4 Adding fixed-effects predictors
 ## ───────────────────────────────────
 
 ##   Predict exam scores from student's standardized tests scores
 
-
 Norm2 <-lmer(normexam~standLRT + (1|school),
              data=Exam,
              REML = FALSE) 
 summary(Norm2)
-
 
 ## 5.5 Multiple degree of freedom comparisons
 ## ──────────────────────────────────────────
@@ -507,9 +455,7 @@ summary(Norm2)
 ##   As with `lm' and `glm' models, you can compare the two `lmer' models
 ##   using the `anova' function.
 
-
 anova(Norm1, Norm2)
-
 
 ## 5.6 Random slopes
 ## ─────────────────
@@ -519,11 +465,9 @@ anova(Norm1, Norm2)
 ##   schools, we also estimate the distribution of the slope of exam on
 ##   standardized test.
 
-
 Norm3 <- lmer(normexam~standLRT + (standLRT|school), data=Exam,
                REML = FALSE) 
 summary(Norm3)
-
 
 ## 5.7 Test the significance of the random slope
 ## ─────────────────────────────────────────────
@@ -531,9 +475,7 @@ summary(Norm3)
 ##   To test the significance of a random slope just compare models with
 ##   and without the random slope term
 
-
 anova(Norm2, Norm3)
-
 
 ## 5.8 Exercise 3: multilevel modeling
 ## ───────────────────────────────────
@@ -561,12 +503,8 @@ data(bh1996, package="multilevel")
 ##      to the model and interpret your output. Test the significance of
 ##      this random term.
 
-
 ## 6 Exercise solutions                                         :prototype:
 ## ════════════════════
-
-
-
 
 ## 6.1 Exercise 0 prototype
 ## ────────────────────────
@@ -606,7 +544,6 @@ mod.en.met.pop.waste <- lm(energy ~ metro + pop + waste, data = states)
 summary(mod.en.met.pop.waste)
 anova(mod.en.met, mod.en.met.pop.waste)
 
-
 ## 6.2 Exercise 1: prototype
 ## ─────────────────────────
 
@@ -622,7 +559,6 @@ mod.en.metro.by.waste <- lm(energy ~ metro * waste, data = states)
 
 mod.en.region <- lm(energy ~ metro * waste + region, data = states)
 anova(mod.en.region)
-
 
 ## 6.3 Exercise 2 prototype
 ## ────────────────────────
@@ -651,7 +587,6 @@ summary(mod.wk.age.mar)
 
 library(effects)
 data.frame(Effect("r_maritl", mod.wk.age.mar))
-
 
 ## 6.4 Exercise 3 prototype
 ## ────────────────────────
@@ -703,7 +638,6 @@ summary(mod.grp1)
 mod.grp2 <- lmer(WBEING ~ HRS + LEAD + (1 + HRS | GRP), data = bh1996)
 anova(mod.grp1, mod.grp2)
 
-
 ## 7 Wrap-up
 ## ═════════
 
@@ -714,7 +648,6 @@ anova(mod.grp1, mod.grp2)
 ##   feedback form
 ##   • These workshops exist for you – tell us what you need!
 ##   • [http://tinyurl.com/RstatisticsFeedback]
-
 
 ## 7.2 Additional resources
 ## ────────────────────────

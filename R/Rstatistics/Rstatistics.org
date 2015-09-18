@@ -309,9 +309,11 @@ OK, we fit our model. Now what?
  [5] "fitted.values" "assign"        "qr"            "df.residual"  
  [9] "xlevels"       "call"          "terms"         "model"        
 > methods(class = class(sat.mod))[1:9]
-[1] "add1.lm"           "alias.lm"          "anova.lm"         
-[4] "case.names.lm"     "confint.lm"        "cooks.distance.lm"
-[7] "deviance.lm"       "dfbeta.lm"         "dfbetas.lm"       
+[1] "add1.lm"                   "alias.lm"                 
+[3] "anova.lm"                  "case.names.lm"            
+[5] "coerce,oldClass,S3-method" "confint.lm"               
+[7] "cooks.distance.lm"         "deviance.lm"              
+[9] "dfbeta.lm"                
 > 
 #+end_example
 
@@ -849,17 +851,6 @@ As with =lm= and =glm= models, you can compare the two =lmer= models using the =
 #+end_src
 
 #+RESULTS: mixedModelAnova
-#+begin_example
-> anova(Norm1, Norm2)
-Data: Exam
-Models:
-Norm1: normexam ~ 1 + (1 | school)
-Norm2: normexam ~ standLRT + (1 | school)
-      Df   AIC   BIC logLik deviance Chisq Chi Df Pr(>Chisq)
-Norm1  3 10826 10844  -5410    10820                        
-Norm2  4  9143  9169  -4568     9135  1684      1     <2e-16
-> 
-#+end_example
 
 
 ** Random slopes 
@@ -1438,6 +1429,31 @@ Note that the group identifier is named "GRP".
 #+END_SRC
 
 #+RESULTS:
+#+begin_example
+> library(lme4)
+> mod.grp0 <- lmer(WBEING ~ 1 + (1 | GRP), data = bh1996)
+> summary(mod.grp0)
+Linear mixed model fit by REML ['lmerMod']
+Formula: WBEING ~ 1 + (1 | GRP)
+   Data: bh1996
+
+REML criterion at convergence: 19347
+
+Scaled residuals: 
+   Min     1Q Median     3Q    Max 
+-3.322 -0.648  0.031  0.718  2.667 
+
+Random effects:
+ Groups   Name        Variance Std.Dev.
+ GRP      (Intercept) 0.0358   0.189   
+ Residual             0.7895   0.889   
+Number of obs: 7382, groups:  GRP, 99
+
+Fixed effects:
+            Estimate Std. Error t value
+(Intercept)   2.7743     0.0222     125
+> 
+#+end_example
 => library(lme4)
 > mod.grp0 <- lmer(WBEING ~ 1 + (1 | GRP), data = bh1996)
 > summary(mod.grp0)
