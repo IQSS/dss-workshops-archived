@@ -88,7 +88,7 @@ Materials for this workshop include slides, example data sets, and example code.
 ** Example project overview
 Throughout this workshop we will return to a running example that involves acquiring, processing, and analyzing data from the [[http://www.census.gov/cps/][Current Population Survey]] (CPS). In this context we will learn about finding and using R packages, importing and manipulating data, writing functions, and more.
 
-* I want all the data
+* Regular expressions, html parsing
 It is common for data to be made available on a website somewhere, either by a government agency, research group, or other organizations and entities. Often the data you want is spread over many files, and retrieving it all one file at a time is tedious and time consuming. Such is the case with the CPS data we will be using today.
 
 The Center for Economic and Policy Research has helpfully [[http://ceprdata.org/cps-uniform-data-extracts/cps-outgoing-rotation-group/cps-org-data/][compiled CPS data going back to 1979]][fn:1], one file per year. Although we could open a web browser and download these files one at a time, it will be faster and easier to instruct R to do that for us. Doing it this way will also give us an excuse to talk about regular expressions, package management, and other useful techniques.
@@ -281,7 +281,7 @@ If you look at the result from the previous two methods you might notice that th
 
 Wow, that was a _lot_ easier. Why oh why didn't we just do that in the first place? Well, it works for this specific case, but it is much less general than the regular expression method or the html parsing method we discussed previously. Those methods will work in the general case, while pasting the year number into the URLs only works because the URLs we want have a very regular and consistent form.
 
-* Iteration and functions
+* Iterating and defining new functions
 Now that we have a vector of URLs pointing to the data files we want to download, we want to iterate over the elements and download each file. We could do this verbosely by writing one line for each file:
 #+BEGIN_SRC R :results silent
   dir.create("dataSets")
@@ -368,7 +368,7 @@ The code above downloaded all the profile pics from http://projects.iq.harvard.e
 #+RESULTS:
 [[file:images/rtc_people.png]]
 
-** The applying functions
+** The apply family of functions
 You might have noticed that I slipped an example of =sapply= into the previous example. =sapply= is one of the apply family of functions in R that are useful for iteration. The apply family of functions includes:
 - apply :: apply a function to each dimension (e.g., row or column), of a matrix or array
 - lapply :: apply a function to each element of a vector or list
@@ -486,63 +486,221 @@ x y z
 > 
 #+end_example
 
-See also: =lapply=, =vapply=, and =mapply=.
-** Combining sapply and indexing
-The =sapply= function can be used in combination with indexing to extract elements that meet certain criteria
-- Recall that we can index using logical vectors:
-#+name: sapplyAndIndexing1
-#+begin_src R
-  DF[, c(TRUE, FALSE)] # select the first column of DF, but not the second
-#+end_src
+**** Back to the business at hand
+OK OK, we got sidetracked with profile pics and apply functions. Eyes on the prize; we want to import and process the files we downloaded from ceprdata.org. First we need to unzip them and check the size of each file
+#+BEGIN_SRC R
+  sapply(ceprFiles, unzip)
+  ceprDataFiles <- list.files(pattern = "\\.dta$")
+  file.size(ceprDataFiles)/1024^2 #give size in Mb
+#+END_SRC
 
-#+RESULTS: sapplyAndIndexing1
+#+RESULTS:
 #+begin_example
-> DF[, c(TRUE, FALSE)] # select the first column of DF, but not the second
-[1] 1 2 3 4 5
+> sapply(ceprFiles, unzip)
+    cepr_org_2010.zip     cepr_org_2011.zip     cepr_org_2012.zip 
+"./cepr_org_2010.dta" "./cepr_org_2011.dta" "./cepr_org_2012.dta" 
+    cepr_org_2013.zip     cepr_org_2014.zip 
+"./cepr_org_2013.dta" "./cepr_org_2014.dta" 
+> ceprDataFiles <- list.files(pattern = "\\.dta$")
+> file.size(ceprDataFiles)/1024^2 #give size in Mb
+[1] 68.47161 67.84723 68.07936 67.28913 67.57431
 > 
 #+end_example
 
-#+RESULTS: sapplyAndIndexing
+Finally we can read our data into R and get some information about it
+#+BEGIN_SRC R
+  library(foreign)
+  ceprData <- sapply(ceprDataFiles, read.dta, simplify = FALSE)
+  t(sapply(ceprData,
+           function(x) {
+             c(size = object.size(x)/1024^2, # Mb
+                                   observations = nrow(x),
+                                   variables = ncol(x),
+               n.numeric = sum(sapply(x, is.numeric)))
+             }))
+  (ceprDataInfo <- data.frame(
+     attributes(ceprData[[1]])[
+                 c("names", "var.labels", "formats")]))
+#+END_SRC
+
+#+RESULTS:
 #+begin_example
-> ## recall that we can index using logical vectors:
-> DF[, c(TRUE, FALSE)] # select the first column of DF, but not the second
-[1] 1 2 3 4 5
+> library(foreign)
+> ceprData <- sapply(ceprDataFiles, read.dta, simplify = FALSE)
+> t(sapply(ceprData,
++          function(x) {
++            c(size = object.size(x)/1024^2, # Mb
++                                  observations = nrow(x),
++                                  variables = ncol(x),
++              n.numeric = sum(sapply(x, is.numeric)))
++            }))
+                      size observations variables n.numeric
+cepr_org_2010.dta 231.0827       321277       153       115
+cepr_org_2011.dta 229.0271       318334       153       115
+cepr_org_2012.dta 227.8060       316408       153       116
+cepr_org_2013.dta 227.2044       315717       153       118
+cepr_org_2014.dta 229.7241       317056       153       119
+> (ceprDataInfo <- data.frame(
++    attributes(ceprData[[1]])[
++                c("names", "var.labels", "formats")]))
+           names                                  var.labels formats
+1           year                                        Year   %8.0g
+2          month                                       Month   %8.0g
+3        minsamp                             Month in sample   %8.0g
+4           hhid                                Household ID    %15s
+5          hhid2                         Household ID Part 2     %9s
+6       hrsample                         Household sample ID     %9s
+7       hrsersuf                     Household serial suffix     %9s
+8          hhnum                           Household counter     %9s
+9       hrlonglk                           Longitudinal link  %33.0g
+10        lineno                               Person number   %9.0g
+11        fnlwgt                                Final weight   %9.0g
+12        orgwgt                             Earnings weight   %9.0g
+13        lonwgt                         Longitudinal weight   %9.0g
+14        famwgt                               Family weight   %9.0g
+15           age                                               %8.0g
+16        female                                      Female   %8.0g
+17          wbho                                        Race   %8.0g
+18         wbhao                  Race/ethnicity, inc. Asian   %8.0g
+19         wbhom                            Race, inc. mixed   %8.0g
+20        wbhaom                  Race, inc. Asian and Mixed  %15.0g
+21      racehpia                  Hawaiian/Pacific Islanders   %8.0g
+22       racehpi             Hawaiian/Pacific Islanders Only   %8.0g
+23          educ                             Education level  %12.0g
+24        educ92                  Education level, post-1991  %40.0g
+25           vet                                     Veteran   %8.0g
+26       married                                     Married   %8.0g
+27       marstat                              Marital status  %13.0g
+28      ownchild                          Number of children   %8.0g
+29          ch02                                   Child 0-2   %8.0g
+30          ch05                                   Child 0-5   %8.0g
+31          ch35                                   Child 3-5   %8.0g
+32         ch613                                  Child 6-13   %8.0g
+33        ch1417                                 Child 14-17   %8.0g
+34        relahh                                               %8.0g
+35         hoh79                                               %9.0g
+36      famrel84                             Family relation  %26.0g
+37      famrel94                             Family relation  %21.0g
+38        famrel                             Family relation  %43.0g
+39       forborn                                Foreign born   %8.0g
+40       citizen                                  US citizen   %8.0g
+41      prcitshp                          Citizenship status  %54.0g
+42      penatvty                               Country birth  %30.0g
+43      pemntvty                       Country birth, mother  %30.0g
+44        refper                            Reference person   %8.0g
+45      pefntvty                       Country birth, father  %30.0g
+46       arrived                             Year entered US   %8.0g
+47      prinusyr                             Year entered US  %30.0g
+48         state                                       State   %8.0g
+49         metro                           Metropolitan area   %8.0g
+50      centcity                                Central city   %8.0g
+51        suburb                                     Suburbs   %8.0g
+52         rural                                       Rural   %8.0g
+53    fipscounty                            FIPS County Code   %9.0g
+54  principalcty                                               %9.0g
+55        cbsasz                                   CBSA Size  %33.0g
+56      cmsacode                                    CSA Code  %58.0g
+57    smsastat05                        Metro CBSA FIPS Code %149.0g
+58           nyc                   New York City, metro area   %8.0g
+59            la                     Los Angeles, metro area   %8.0g
+60        lfstat                          Labor-force status  %10.0g
+61          empl                                    Employed   %8.0g
+62          unem                                  Unemployed   %8.0g
+63        unempt                              Unemployed, PT   %8.0g
+64          nilf                          Not in labor force   %8.0g
+65       selfemp                               Self-employed   %8.0g
+66       selfinc                  Incorporated self-employed   %8.0g
+67       pubsect                               Public sector   %8.0g
+68        pubfed                            Federal employee   %8.0g
+69         pubst                              State employee   %8.0g
+70        publoc                              Local employee   %8.0g
+71       multjob                       Has more than one job   %8.0g
+72      multjobn                              Number of jobs   %8.0g
+73       unemdur               Unemployment duration (weeks)   %8.0g
+74      jobloser                                   Job loser   %8.0g
+75     jobleaver                                  Job leaver   %8.0g
+76       entrant                                     Entrant   %8.0g
+77      hourslwa                   Hours last week, all jobs   %9.0g
+78       hourslw                   Hours last week, all jobs   %9.0g
+79      reason79                     Why <35 hours last week   %9.0g
+80      reason94                     Why <35 hours last week  %33.0g
+81      absent79                        Why absent last week   %9.0g
+82      absent94                        Why absent last week  %30.0g
+83        abpaid                 Paid for time off last week   %9.0g
+84        uhours                       Usual hours, main job   %9.0g
+85       uhourse                       Usual hours, main job   %9.0g
+86       why3579                       Why usually <35 hours   %8.0g
+87       why3594                       Why usually <35 hours  %33.0g
+88        ptecon                        PT, economic reasons   %8.0g
+89       hrsvary                        Hours vary, main job   %8.0g
+90       prhrusl                      Usual hours, Basic CPS  %16.0g
+91      pehrusl1                     Usual hours, main (BLS)  %10.0g
+92      pehrusl2                      Usual hours, 2nd (BLS)  %10.0g
+93      pehruslt                      Usual hours, all (BLS)   %8.0g
+94      peernhro                      Usual hours, ORG (BLS)   %8.0g
+95        imphrs                   Hours, main job (imputed)   %9.0g
+96      hrsimptd                               Hours imputed   %9.0g
+97       uhoursi                        Hours, w/ imputation   %9.0g
+98         union                                       Union   %8.0g
+99         unmem                                Union member   %8.0g
+100        uncov                              Union coverage   %8.0g
+101     ind_nber                            2-digit industry  %56.0g
+102       ind_2d                            2-digit industry  %65.0g
+103        ind70                        3-digit industry SIC   %9.0g
+104        ind80                   3-digit industry SIC 1987   %9.0g
+105        ind03                 3-digit industry NAICS 2002   %9.0g
+106        ind09                            3-digit industry  %75.0g
+107        ind12                            3-digit industry   %9.0g
+108        ind14                 3-digit industry NAICS 2012   %9.0g
+109      ind_m03                       Major Industry Recode  %43.0g
+110        agric                                 Agriculture   %8.0g
+111        manuf                               Manufacturing   %8.0g
+112        servs                                    Services   %8.0g
+113       docc70                          2-digit occupation   %8.0g
+114       docc80                          2-digit occupation   %8.0g
+115       docc03                          2-digit occupation  %68.0g
+116        occ70                          3-digit occupation   %9.0g
+117        occ80                          3-digit occupation   %9.0g
+118        occ03                          3-digit occupation  %72.0g
+119        occ11                          3-digit occupation   %9.0g
+120        occ12                          3-digit occupation   %9.0g
+121      occ_m03                     Major Occupation Recode  %49.0g
+122      manag83                                     Manager   %8.0g
+123      manag03                                     Manager   %8.0g
+124      paidhre                                Paid by hour   %9.0g
+125     peernuot        DO YOU USUALLY RECEIVE OVERTIME PAY,   %8.0g
+126      uearnwk                                  Weekly pay   %8.0g
+127     uearnwke                                  Weekly pay   %9.0g
+128      earnwke                                  Weekly pay   %9.0g
+129           tc                    Weekly earnings topcoded   %8.0g
+130        wage1                                 Hourly wage   %9.0g
+131        wage2                                 Hourly wage   %9.0g
+132        wage3                                 Hourly wage   %9.0g
+133        wage4                                 Hourly wage   %9.0g
+134      weekpay                                  Weekly pay   %9.0g
+135       otcrec Usually receive overtime, tips, commissions   %8.0g
+136       otcamt Weekly earnings overtime, tips, commissions   %5.0f
+137           rw                            Real wage, 2014$   %5.2f
+138        rw_ot                            Real wage, 2014$   %5.2f
+139      blsimpt                  BLS allocated weekly hours   %8.0g
+140      blsimph               BLS allocated hourly earnings   %8.0g
+141      blsimpw               BLS allocated weekly earnings   %8.0g
+142        proxy                      Self or proxy response  %14.0g
+143      wholine                   Line number of respondent   %8.0g
+144     reltoref            Relationship to reference person  %31.0g
+145      schenrl         Enrolled in HS or College last week   %8.0g
+146        schhs                              Enrolled in HS   %8.0g
+147       schcol                         Enrolled in College   %8.0g
+148        schft                           Full-time Student   %8.0g
+149        schpt                           Part-time Student   %8.0g
+150       pdemp1                  Usually has paid employees   %8.0g
+151       pdemp2                  Usually has paid employees   %8.0g
+152       nmemp1                    Number of paid employees   %8.0g
+153       nmemp2                    Number of paid employees   %8.0g
 > 
 #+end_example
 
-- =sapply()= can be used to generate the logical vector
-#+name: sapplyAndIndexing2
-#+begin_src R
-  (DF.which.num <- sapply(DF, is.numeric))# check which columns of DF are numeric
-  DF[DF.which.num] # select the numeric columns
-#+end_src
 
-#+RESULTS: sapplyAndIndexing2
-#+begin_example
-> (DF.which.num <- sapply(DF, is.numeric))# check which columns of DF are numeric
-    x     y 
- TRUE FALSE 
-> DF[DF.which.num] # select the numeric columns
-  x
-1 1
-2 2
-3 3
-4 4
-5 5
-> 
-#+end_example
-
-Note the difference between =DF[, 1]= and =DF[1]=! The first form returns a vector, the second a data.frame with one column. 
-
-** Applying functions summary
-Key points:
-- R has convenient methods for applying functions to matricies, lists, and data.frames
-- other apply-style functions exist, e.g., lapply, tapply, and mapply (see documentation of these functions for details
-Functions introduced in this section: 
-- matrix :: create a matrix (vector with two dimensions)
-- apply :: apply a function to the rows or columns of a matrix
-- sapply :: apply a function to the elements of a list
-- is.numeric :: returns TRUE or FALSE, depending on the type of object 
 
 * Extracting and replacing object elements
 
