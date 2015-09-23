@@ -38,7 +38,9 @@
 * Workshop overview and materials
 
 ** Workshop description
-This is an intermediate/advanced R course appropriate for those with basic knowledge of R. It is intended for those already comfortable with using R for data analysis who wish to move on to writing their own functions. Prerequisite: basic familiarity with R, such as acquired from an introductory R workshop.
+This is an intermediate/advanced R course appropriate for those with basic knowledge of R. It is intended for those already comfortable with using R for data analysis who wish to move on to writing their own functions. To the extent possible this workshop uses real-world examples. That is to say that concepts are introduced as they are needed for a realistic analysis task. 
+
+ Prerequisite: basic familiarity with R, such as acquired from an introductory R workshop.
 
 - Learning objectives:
   - Index data objects by position, name or logical condition
@@ -56,7 +58,7 @@ For further details and registration information, please contact us at [[mailto:
 
 ** Materials and setup
 
-Everyone should have R installed --if not:
+Everyone should have R installed -- if not:
 
 - Open a web browser and go to [[http://cran.r-project.org]] and download and install it
 - Also helpful to install RStudio (download from [[http://rstudio.com]])
@@ -81,12 +83,271 @@ Materials for this workshop include slides, example data sets, and example code.
 
 - I encourage you to add your own notes to this file!
 
-** Running example
-Throughout this workshop we will return to a running example that involves calculating descriptive statistics for every column of a data.frame. We will often use the built-in /iris/ data set. You can load the iris data by evaluating =data(iris)= at the R prompt.
+** Example project overview
+Throughout this workshop we will return to a running example that involves acquiring, processing, and analyzing data from the [[http://www.census.gov/cps/][Current Population Survey]] (CPS). In this context we will learn about finding and using R packages, importing and manipulating data, writing functions, and more.
 
-Our main example today consists of writing a statistical summary function that calculates the min, mean, median, max, sd, and n for all numeric columns in a data.frame, the correlations among these variables, and the counts and proportions for all categorical columns. Typically I will describe a topic and give some generic examples, then ask you to use the technique to start building the summary.
+* I want all the data
+It is common for data to be made available on a website somewhere, either by a government agency, research group, or other organizations and entities. Often the data you want is spread over many files, and retrieving it all one file at a time is tedious and time consuming. Such is the case with the CPS data we will be using today.
 
-* Data types
+The Center for Economic and Policy Research has helpfully [[http://ceprdata.org/cps-uniform-data-extracts/cps-outgoing-rotation-group/cps-org-data/][compiled CPS data going back to 1979]][fn:1], one file per year. Although we could open a web browser and download these files one at a time, it will be faster and easier to instruct R to do that for us. Doing it this way will also give us an excuse to talk about regular expressions, package management, and other useful techniques.
+
+Our goal is to download all the Stata data sets from http://ceprdata.org/cps-uniform-data-extracts/cps-outgoing-rotation-group/cps-org-data/. In order to do that we need a list of the Uniform Resource Locators (URLs) of those files. The URLs we need are right there as links in the ceprdata.org webpage. All we have to do is read that data in a way R can understand. 
+
+
+** Searching text with regular expressions
+Although some will say you should never ever attempt to extract information from html using regular expressions[fn:2], it does work OK for simple tasks. The fist step is to read the html into R. We can do that using the =readLines= function, like this:
+
+#+BEGIN_SRC R
+  ## Read html page from ceprdata.org into R. Each line will be stored as 
+  ## an element in a vector of lines.
+  ceprHtmlIndex <- readLines(
+  "http://ceprdata.org/cps-uniform-data-extracts/cps-outgoing-rotation-group/cps-org-data/"
+  )
+#+END_SRC
+
+#+RESULTS:
+#+begin_example
+> ceprHtmlIndex <- readLines(
++ "http://ceprdata.org/cps-uniform-data-extracts/cps-outgoing-rotation-group/cps-org-data/"
++ )
+> 
+#+end_example
+
+OK, what are we working with?
+#+BEGIN_SRC R
+  ## how many lines do we have?
+  length(ceprHtmlIndex)
+  ## what do the first few lines look like?
+  head(ceprHtmlIndex, 10) ## look at the first few lines of html
+
+#+END_SRC
+
+#+RESULTS:
+#+begin_example
+> ## how many lines do we have?
+> length(ceprHtmlIndex)
+[1] 295
+> ## what do the first few lines look like?
+> head(ceprHtmlIndex, 10) ## look at the first 15 lines of html
+ [1] "<!doctype html>"                                                               
+ [2] "<!--[if lt IE 7]> <html class=\"no-js ie6 oldie\" lang=\"en-US\"> <![endif]-->"
+ [3] "<!--[if IE 7]>    <html class=\"no-js ie7 oldie\" lang=\"en-US\"> <![endif]-->"
+ [4] "<!--[if IE 8]>    <html class=\"no-js ie8 oldie\" lang=\"en-US\"> <![endif]-->"
+ [5] "<!--[if gt IE 8]><!--> <html class=\"no-js\" lang=\"en-US\"> <!--<![endif]-->" 
+ [6] "<head>"                                                                        
+ [7] "\t<meta charset=\"UTF-8\" />"                                                  
+ [8] ""                                                                              
+ [9] "\t<title>CPS ORG Data &#8211; ceprDATA</title>"                                
+[10] ""                                                                              
+> 
+#+end_example
+In html links are specified using the =<a>= (for /anchor/) tag. So now we want to search through our html and find lines that include an =a= tag. In R we can search for strings using the =grep= function.
+#+BEGIN_SRC R
+  ## find lines with links (a tags)
+  (aLineNumbers <- grep("<a", ceprHtmlIndex)) # line numbers containing <a> tags
+  head(aLines <- grep("<a", ceprHtmlIndex, value = TRUE)) # lines containing <a> tags
+#+END_SRC
+
+#+RESULTS:
+#+begin_example
+> ## find lines with links (a tags)
+> (aLineNumbers <- grep("<a", ceprHtmlIndex)) # line numbers containing <a> tags
+ [1] 141 143 149 150 151 152 153 154 155 156 167 169 173 175 176 177
+[17] 178 179 180 181 182 183 184 185 186 187 188 189 190 191 192 193
+[33] 194 195 196 197 198 199 200 201 202 203 204 205 206 207 208 209
+[49] 210 212 219 223 225 226 227 228 231 233 234 235 236 239 241 242
+[65] 243 244 247 249 250 251 252 255 257 258 259 260 263 264 265 267
+[81] 269 271 273 282 285 289
+> head(aLines <- grep("<a", ceprHtmlIndex, value = TRUE)) # lines containing <a> tags
+[1] "\t\t\t\t\t\t\t\t\t<h1 id=\"site-name\"><a href=\"http://ceprdata.org/\" title=\"Home\" rel=\"home\"><img src=\"http://s403740266.onlinehome.us/wp-content/uploads/2012/03/ceprdata_logo.png\"></a></h1>"
+[2] "\t\t\t\t<ul class=\"nav\"><li class=\"menu-item menu-item-type-taxonomy menu-item-object-category\"><a href=\"http://ceprdata.org/wp-login.php\">Log in</a></li></ul>\t\t\t\t</nav>"                    
+[3] "\t\t\t\t<ul id=\"menu-top-menu\" class=\"nav\"><li id=\"menu-item-9\" class=\"menu-item menu-item-type-custom menu-item-object-custom menu-item-9\"><a href=\"http://www.ceprdata.org\">Home</a></li>"  
+[4] "<li id=\"menu-item-8\" class=\"menu-item menu-item-type-post_type menu-item-object-page current-page-ancestor menu-item-8\"><a href=\"http://ceprdata.org/cps-uniform-data-extracts/\">CPS</a></li>"    
+[5] "<li id=\"menu-item-13\" class=\"menu-item menu-item-type-post_type menu-item-object-page menu-item-13\"><a href=\"http://ceprdata.org/sipp-uniform-data-extracts/\">SIPP</a></li>"                      
+[6] "<li id=\"menu-item-108\" class=\"menu-item menu-item-type-post_type menu-item-object-page menu-item-108\"><a href=\"http://ceprdata.org/acs-uniform-data-extracts/\">ACS</a></li>"                      
+> 
+#+end_example
+
+So far we've successfully matched all lines containing the string "<a". Our actual target is a bit more specific. If we inspect the elements we want to match using our web browser we'll see something like this:[[file:images/inspectHtml.png]] 
+
+#+BEGIN_SRC HTML :exports code
+  <a onclick="_gaq.push(['_trackEvent', 'File','Download', 'cepr_org_2011']);" href="/wp-content/cps/data/cepr_org_2014.zip">cepr_org_2014.zip</a>
+#+END_SRC
+This tells us that we want to match lines containing an "<a" followed (eventually) by ".zip". In order to perform this more sophisticated search we need to use /regular expressions/. In regular expressions the =.= matches any character (except new lines) and the =*= repeats the previous character zero or more times. So =<a.*\\.zip= means "find =<a= followed by any character repeated any number of times followed by =.zip=". Note that in =\\.= the backslashes escape the dot so that it is matched literally rather than matching any character. Let's try it out!
+#+BEGIN_SRC R
+  ## find lines with <a> tags refering to zip files
+  (dataLines <- grep("<a.*\\.zip", ceprHtmlIndex, value = TRUE))
+#+END_SRC
+
+#+RESULTS:
+#+begin_example
+> ## find lines with <a> tags refering to zip files
+> (dataLines <- grep("<a.*\\.zip", ceprHtmlIndex, value = TRUE))
+ [1] "<li><a onclick=\"_gaq.push(['_trackEvent', 'File','Download', 'cepr_org_2011']);\" href=\"/wp-content/cps/data/cepr_org_2014.zip\">cepr_org_2014.zip</a></li>"
+ [2] "<li><a href=\"/wp-content/cps/data/cepr_org_2013.zip\">cepr_org_2013.zip</a></li>"                                                                            
+ [3] "<li><a href=\"/wp-content/cps/data/cepr_org_2012.zip\">cepr_org_2012.zip</a></li>"                                                                            
+ [4] "<li><a href=\"/wp-content/cps/data/cepr_org_2011.zip\">cepr_org_2011.zip</a></li>"                                                                            
+ [5] "<li><a onclick=\"_gaq.push(['_trackEvent', 'File','Download', 'cepr_org_2010']);\" href=\"/wp-content/cps/data/cepr_org_2010.zip\">cepr_org_2010.zip</a></li>"
+ [6] "<li><a onclick=\"_gaq.push(['_trackEvent', 'File','Download', 'cepr_org_2009']);\" href=\"/wp-content/cps/data/cepr_org_2009.zip\">cepr_org_2009.zip</a></li>"
+ [7] "<li><a onclick=\"_gaq.push(['_trackEvent', 'File','Download', 'cepr_org_2008']);\" href=\"/wp-content/cps/data/cepr_org_2008.zip\">cepr_org_2008.zip</a></li>"
+ [8] "<li><a onclick=\"_gaq.push(['_trackEvent', 'File','Download', 'cepr_org_2007']);\" href=\"/wp-content/cps/data/cepr_org_2007.zip\">cepr_org_2007.zip</a></li>"
+ [9] "<li><a onclick=\"_gaq.push(['_trackEvent', 'File','Download', 'cepr_org_2006']);\" href=\"/wp-content/cps/data/cepr_org_2006.zip\">cepr_org_2006.zip</a></li>"
+[10] "<li><a onclick=\"_gaq.push(['_trackEvent', 'File','Download', 'cepr_org_2005']);\" href=\"/wp-content/cps/data/cepr_org_2005.zip\">cepr_org_2005.zip</a></li>"
+[11] "<li><a onclick=\"_gaq.push(['_trackEvent', 'File','Download', 'cepr_org_2004']);\" href=\"/wp-content/cps/data/cepr_org_2004.zip\">cepr_org_2004.zip</a></li>"
+[12] "<li><a onclick=\"_gaq.push(['_trackEvent', 'File','Download', 'cepr_org_2003']);\" href=\"/wp-content/cps/data/cepr_org_2003.zip\">cepr_org_2003.zip</a></li>"
+[13] "<li><a onclick=\"_gaq.push(['_trackEvent', 'File','Download', 'cepr_org_2002']);\" href=\"/wp-content/cps/data/cepr_org_2002.zip\">cepr_org_2002.zip</a></li>"
+[14] "<li><a onclick=\"_gaq.push(['_trackEvent', 'File','Download', 'cepr_org_2001']);\" href=\"/wp-content/cps/data/cepr_org_2001.zip\">cepr_org_2001.zip</a></li>"
+[15] "<li><a onclick=\"_gaq.push(['_trackEvent', 'File','Download', 'cepr_org_2000']);\" href=\"/wp-content/cps/data/cepr_org_2000.zip\">cepr_org_2000.zip</a></li>"
+[16] "<li><a onclick=\"_gaq.push(['_trackEvent', 'File','Download', 'cepr_org_1999']);\" href=\"/wp-content/cps/data/cepr_org_1999.zip\">cepr_org_1999.zip</a></li>"
+[17] "<li><a onclick=\"_gaq.push(['_trackEvent', 'File','Download', 'cepr_org_1998']);\" href=\"/wp-content/cps/data/cepr_org_1998.zip\">cepr_org_1998.zip</a></li>"
+[18] "<li><a onclick=\"_gaq.push(['_trackEvent', 'File','Download', 'cepr_org_1997']);\" href=\"/wp-content/cps/data/cepr_org_1997.zip\">cepr_org_1997.zip</a></li>"
+[19] "<li><a onclick=\"_gaq.push(['_trackEvent', 'File','Download', 'cepr_org_1996']);\" href=\"/wp-content/cps/data/cepr_org_1996.zip\">cepr_org_1996.zip</a></li>"
+[20] "<li><a onclick=\"_gaq.push(['_trackEvent', 'File','Download', 'cepr_org_1995']);\" href=\"/wp-content/cps/data/cepr_org_1995.zip\">cepr_org_1995.zip</a></li>"
+[21] "<li><a onclick=\"_gaq.push(['_trackEvent', 'File','Download', 'cepr_org_1994']);\" href=\"/wp-content/cps/data/cepr_org_1994.zip\">cepr_org_1994.zip</a></li>"
+[22] "<li><a onclick=\"_gaq.push(['_trackEvent', 'File','Download', 'cepr_org_1993']);\" href=\"/wp-content/cps/data/cepr_org_1993.zip\">cepr_org_1993.zip</a></li>"
+[23] "<li><a onclick=\"_gaq.push(['_trackEvent', 'File','Download', 'cepr_org_1992']);\" href=\"/wp-content/cps/data/cepr_org_1992.zip\">cepr_org_1992.zip</a></li>"
+[24] "<li><a onclick=\"_gaq.push(['_trackEvent', 'File','Download', 'cepr_org_1991']);\" href=\"/wp-content/cps/data/cepr_org_1991.zip\">cepr_org_1991.zip</a></li>"
+[25] "<li><a onclick=\"_gaq.push(['_trackEvent', 'File','Download', 'cepr_org_1990']);\" href=\"/wp-content/cps/data/cepr_org_1990.zip\">cepr_org_1990.zip</a></li>"
+[26] "<li><a onclick=\"_gaq.push(['_trackEvent', 'File','Download', 'cepr_org_1989']);\" href=\"/wp-content/cps/data/cepr_org_1989.zip\">cepr_org_1989.zip</a></li>"
+[27] "<li><a onclick=\"_gaq.push(['_trackEvent', 'File','Download', 'cepr_org_1988']);\" href=\"/wp-content/cps/data/cepr_org_1988.zip\">cepr_org_1988.zip</a></li>"
+[28] "<li><a onclick=\"_gaq.push(['_trackEvent', 'File','Download', 'cepr_org_1987']);\" href=\"/wp-content/cps/data/cepr_org_1987.zip\">cepr_org_1987.zip</a></li>"
+[29] "<li><a onclick=\"_gaq.push(['_trackEvent', 'File','Download', 'cepr_org_1986']);\" href=\"/wp-content/cps/data/cepr_org_1986.zip\">cepr_org_1986.zip</a></li>"
+[30] "<li><a onclick=\"_gaq.push(['_trackEvent', 'File','Download', 'cepr_org_1985']);\" href=\"/wp-content/cps/data/cepr_org_1985.zip\">cepr_org_1985.zip</a></li>"
+[31] "<li><a onclick=\"_gaq.push(['_trackEvent', 'File','Download', 'cepr_org_1984']);\" href=\"/wp-content/cps/data/cepr_org_1984.zip\">cepr_org_1984.zip</a></li>"
+[32] "<li><a onclick=\"_gaq.push(['_trackEvent', 'File','Download', 'cepr_org_1983']);\" href=\"/wp-content/cps/data/cepr_org_1983.zip\">cepr_org_1983.zip</a></li>"
+[33] "<li><a onclick=\"_gaq.push(['_trackEvent', 'File','Download', 'cepr_org_1982']);\" href=\"/wp-content/cps/data/cepr_org_1982.zip\">cepr_org_1982.zip</a></li>"
+[34] "<li><a onclick=\"_gaq.push(['_trackEvent', 'File','Download', 'cepr_org_1981']);\" href=\"/wp-content/cps/data/cepr_org_1981.zip\">cepr_org_1981.zip</a></li>"
+[35] "<li><a onclick=\"_gaq.push(['_trackEvent', 'File','Download', 'cepr_org_1980']);\" href=\"/wp-content/cps/data/cepr_org_1980.zip\">cepr_org_1980.zip</a></li>"
+[36] "<li><a onclick=\"_gaq.push(['_trackEvent', 'File','Download', 'cepr_org_1979']);\" href=\"/wp-content/cps/data/cepr_org_1979.zip\">cepr_org_1979.zip</a></li>"
+> 
+#+end_example
+We're getting close! We have identified the lines containing the information we need. Now we just need to extract the text following the =href= argument. For that we need to use another feature of regular expressions called /capture groups/ and /back references/. Here's how it works:
+#+BEGIN_SRC R
+  (dataURLs <- gsub("^.*href=\"(.*\\.zip)\".*$", "\\1", dataLines))
+#+END_SRC
+
+#+RESULTS:
+#+begin_example
+> (dataURLs <- gsub("^.*href=\"(.*\\.zip)\".*$", "\\1", dataLines))
+ [1] "/wp-content/cps/data/cepr_org_2014.zip"
+ [2] "/wp-content/cps/data/cepr_org_2013.zip"
+ [3] "/wp-content/cps/data/cepr_org_2012.zip"
+ [4] "/wp-content/cps/data/cepr_org_2011.zip"
+ [5] "/wp-content/cps/data/cepr_org_2010.zip"
+ [6] "/wp-content/cps/data/cepr_org_2009.zip"
+ [7] "/wp-content/cps/data/cepr_org_2008.zip"
+ [8] "/wp-content/cps/data/cepr_org_2007.zip"
+ [9] "/wp-content/cps/data/cepr_org_2006.zip"
+[10] "/wp-content/cps/data/cepr_org_2005.zip"
+[11] "/wp-content/cps/data/cepr_org_2004.zip"
+[12] "/wp-content/cps/data/cepr_org_2003.zip"
+[13] "/wp-content/cps/data/cepr_org_2002.zip"
+[14] "/wp-content/cps/data/cepr_org_2001.zip"
+[15] "/wp-content/cps/data/cepr_org_2000.zip"
+[16] "/wp-content/cps/data/cepr_org_1999.zip"
+[17] "/wp-content/cps/data/cepr_org_1998.zip"
+[18] "/wp-content/cps/data/cepr_org_1997.zip"
+[19] "/wp-content/cps/data/cepr_org_1996.zip"
+[20] "/wp-content/cps/data/cepr_org_1995.zip"
+[21] "/wp-content/cps/data/cepr_org_1994.zip"
+[22] "/wp-content/cps/data/cepr_org_1993.zip"
+[23] "/wp-content/cps/data/cepr_org_1992.zip"
+[24] "/wp-content/cps/data/cepr_org_1991.zip"
+[25] "/wp-content/cps/data/cepr_org_1990.zip"
+[26] "/wp-content/cps/data/cepr_org_1989.zip"
+[27] "/wp-content/cps/data/cepr_org_1988.zip"
+[28] "/wp-content/cps/data/cepr_org_1987.zip"
+[29] "/wp-content/cps/data/cepr_org_1986.zip"
+[30] "/wp-content/cps/data/cepr_org_1985.zip"
+[31] "/wp-content/cps/data/cepr_org_1984.zip"
+[32] "/wp-content/cps/data/cepr_org_1983.zip"
+[33] "/wp-content/cps/data/cepr_org_1982.zip"
+[34] "/wp-content/cps/data/cepr_org_1981.zip"
+[35] "/wp-content/cps/data/cepr_org_1980.zip"
+[36] "/wp-content/cps/data/cepr_org_1979.zip"
+> 
+#+end_example
+
+Great, we've matched all the data file links. The next step is to iterate over these links and download the data. But before we get there, let's look at a couple of alternative methods we could use to get the list of data file links.
+
+** Packages for reading and manipulating html
+In the previous section we extracted data file links from an html page using regular expressions. An alternative is to use a package dedicated to parsing XML and HTML. How do we find such a package?
+- Task views :: https://cran.r-project.org/web/views/WebTechnologies.html
+- R package search :: http://www.r-pkg.org/search.html?q=html+xml
+- Web search :: https://www.google.com/search?q=R+parse+html+xml&ie=utf-8&oe=utf-8
+
+For parsing html in R I recommend either the =httr= package or the =rvest= package, with the former being more flexible and the later being more user friendly. Let's use the friendlier one.
+
+#+BEGIN_SRC R
+  ## install.packages("rvest")
+  library(rvest)
+  dataPage <- html("http://ceprdata.org/cps-uniform-data-extracts/cps-outgoing-rotation-group/cps-org-data/")
+
+  ## find the link ("a") elemets extract the link ("href") attributes
+  allLinks <- html_attr(html_nodes(dataPage, "a"), "href")
+  dataLinks <- paste0("http://ceprdata.org",
+                      grep("^/wp-content/cps/data/.*\\.zip$",
+                           allLinks,
+                           value = TRUE))
+dataLinks
+#+END_SRC
+
+#+RESULTS:
+#+begin_example
+>   ## install.packages("rvest")
+>   library(rvest)
+>   dataPage <- html("http://ceprdata.org/cps-uniform-data-extracts/cps-outgoing-rotation-group/cps-org-data/")
+> 
+>   ## find the link ("a") elemets extract the link ("href") attributes
+>   allLinks <- html_attr(html_nodes(dataPage, "a"), "href")
+>   dataLinks <- paste0("http://ceprdata.org",
++                       grep("^/wp-content/cps/data/.*\\.zip$",
++                            allLinks,
++                            value = TRUE))
+> dataLinks
+ [1] "http://ceprdata.org/wp-content/cps/data/cepr_org_2014.zip"
+ [2] "http://ceprdata.org/wp-content/cps/data/cepr_org_2013.zip"
+ [3] "http://ceprdata.org/wp-content/cps/data/cepr_org_2012.zip"
+ [4] "http://ceprdata.org/wp-content/cps/data/cepr_org_2011.zip"
+ [5] "http://ceprdata.org/wp-content/cps/data/cepr_org_2010.zip"
+ [6] "http://ceprdata.org/wp-content/cps/data/cepr_org_2009.zip"
+ [7] "http://ceprdata.org/wp-content/cps/data/cepr_org_2008.zip"
+ [8] "http://ceprdata.org/wp-content/cps/data/cepr_org_2007.zip"
+ [9] "http://ceprdata.org/wp-content/cps/data/cepr_org_2006.zip"
+[10] "http://ceprdata.org/wp-content/cps/data/cepr_org_2005.zip"
+[11] "http://ceprdata.org/wp-content/cps/data/cepr_org_2004.zip"
+[12] "http://ceprdata.org/wp-content/cps/data/cepr_org_2003.zip"
+[13] "http://ceprdata.org/wp-content/cps/data/cepr_org_2002.zip"
+[14] "http://ceprdata.org/wp-content/cps/data/cepr_org_2001.zip"
+[15] "http://ceprdata.org/wp-content/cps/data/cepr_org_2000.zip"
+[16] "http://ceprdata.org/wp-content/cps/data/cepr_org_1999.zip"
+[17] "http://ceprdata.org/wp-content/cps/data/cepr_org_1998.zip"
+[18] "http://ceprdata.org/wp-content/cps/data/cepr_org_1997.zip"
+[19] "http://ceprdata.org/wp-content/cps/data/cepr_org_1996.zip"
+[20] "http://ceprdata.org/wp-content/cps/data/cepr_org_1995.zip"
+[21] "http://ceprdata.org/wp-content/cps/data/cepr_org_1994.zip"
+[22] "http://ceprdata.org/wp-content/cps/data/cepr_org_1993.zip"
+[23] "http://ceprdata.org/wp-content/cps/data/cepr_org_1992.zip"
+[24] "http://ceprdata.org/wp-content/cps/data/cepr_org_1991.zip"
+[25] "http://ceprdata.org/wp-content/cps/data/cepr_org_1990.zip"
+[26] "http://ceprdata.org/wp-content/cps/data/cepr_org_1989.zip"
+[27] "http://ceprdata.org/wp-content/cps/data/cepr_org_1988.zip"
+[28] "http://ceprdata.org/wp-content/cps/data/cepr_org_1987.zip"
+[29] "http://ceprdata.org/wp-content/cps/data/cepr_org_1986.zip"
+[30] "http://ceprdata.org/wp-content/cps/data/cepr_org_1985.zip"
+[31] "http://ceprdata.org/wp-content/cps/data/cepr_org_1984.zip"
+[32] "http://ceprdata.org/wp-content/cps/data/cepr_org_1983.zip"
+[33] "http://ceprdata.org/wp-content/cps/data/cepr_org_1982.zip"
+[34] "http://ceprdata.org/wp-content/cps/data/cepr_org_1981.zip"
+[35] "http://ceprdata.org/wp-content/cps/data/cepr_org_1980.zip"
+[36] "http://ceprdata.org/wp-content/cps/data/cepr_org_1979.zip"
+> 
+#+end_example
+
+Wow, that that was a lot easier. Why didn't we do that in the first place?!? Well, if we had done it the easy way I wouldn't have had an excuse to teach you about regular expressions!
+
+** Getting the list of data links the easy way
+If you look at the result from 
 
 ** Vector types
 
@@ -1700,3 +1961,8 @@ http://www.jstatso|.org/v31/i01/paper
 - These workshops exist for you -- tell us what you need! 
 - http://tinyurl.com/RprogrammingFeedback 
 
+* Footnotes
+
+[fn:2] http://stackoverflow.com/questions/4683046/regular-expression-for-extracting-script-tags 
+
+[fn:1] Center for Economic and Policy Research. 2015. CPS ORG Uniform Extracts, Version 2.0.1. Washington, DC.
