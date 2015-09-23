@@ -27,6 +27,7 @@
     options(useFancyQuotes=FALSE)
     options(show.signif.stars=FALSE)
     require(rvest)
+    require(readbitmap)
   }
 #+end_src
 
@@ -98,21 +99,13 @@ Our goal is to download all the Stata data sets from http://ceprdata.org/cps-uni
 ** Searching text with regular expressions
 Although some will say you should never ever attempt to extract information from html using regular expressions[fn:2], it does work OK for simple tasks. The fist step is to read the html into R. We can do that using the =readLines= function, like this:
 
-#+BEGIN_SRC R
+#+BEGIN_SRC R :results silent
   ## Read html page from ceprdata.org into R. Each line will be stored as 
   ## an element in a vector of lines.
   ceprHtmlIndex <- readLines(
   "http://ceprdata.org/cps-uniform-data-extracts/cps-outgoing-rotation-group/cps-org-data/"
   )
 #+END_SRC
-
-#+RESULTS:
-#+begin_example
-> ceprHtmlIndex <- readLines(
-+ "http://ceprdata.org/cps-uniform-data-extracts/cps-outgoing-rotation-group/cps-org-data/"
-+ )
-> 
-#+end_example
 
 OK, what are we working with?
 #+BEGIN_SRC R
@@ -129,7 +122,7 @@ OK, what are we working with?
 > length(ceprHtmlIndex)
 [1] 295
 > ## what do the first few lines look like?
-> head(ceprHtmlIndex, 10) ## look at the first 15 lines of html
+> head(ceprHtmlIndex, 10) ## look at the first few lines of html
  [1] "<!doctype html>"                                                               
  [2] "<!--[if lt IE 7]> <html class=\"no-js ie6 oldie\" lang=\"en-US\"> <![endif]-->"
  [3] "<!--[if IE 7]>    <html class=\"no-js ie7 oldie\" lang=\"en-US\"> <![endif]-->"
@@ -142,6 +135,7 @@ OK, what are we working with?
 [10] ""                                                                              
 > 
 #+end_example
+
 In html links are specified using the =<a>= (for /anchor/) tag. So now we want to search through our html and find lines that include an =a= tag. In R we can search for strings using the =grep= function.
 #+BEGIN_SRC R
   ## find lines with links (a tags)
@@ -177,95 +171,36 @@ So far we've successfully matched all lines containing the string "<a". Our actu
 This tells us that we want to match lines containing an "<a" followed (eventually) by ".zip". In order to perform this more sophisticated search we need to use /regular expressions/. In regular expressions the =.= matches any character (except new lines) and the =*= repeats the previous character zero or more times. So =<a.*\\.zip= means "find =<a= followed by any character repeated any number of times followed by =.zip=". Note that in =\\.= the backslashes escape the dot so that it is matched literally rather than matching any character. Let's try it out!
 #+BEGIN_SRC R
   ## find lines with <a> tags refering to zip files
-  (dataLines <- grep("<a.*\\.zip", ceprHtmlIndex, value = TRUE))
+  head(dataLines <- grep("<a.*\\.zip", ceprHtmlIndex, value = TRUE))
 #+END_SRC
 
 #+RESULTS:
 #+begin_example
 > ## find lines with <a> tags refering to zip files
-> (dataLines <- grep("<a.*\\.zip", ceprHtmlIndex, value = TRUE))
- [1] "<li><a onclick=\"_gaq.push(['_trackEvent', 'File','Download', 'cepr_org_2011']);\" href=\"/wp-content/cps/data/cepr_org_2014.zip\">cepr_org_2014.zip</a></li>"
- [2] "<li><a href=\"/wp-content/cps/data/cepr_org_2013.zip\">cepr_org_2013.zip</a></li>"                                                                            
- [3] "<li><a href=\"/wp-content/cps/data/cepr_org_2012.zip\">cepr_org_2012.zip</a></li>"                                                                            
- [4] "<li><a href=\"/wp-content/cps/data/cepr_org_2011.zip\">cepr_org_2011.zip</a></li>"                                                                            
- [5] "<li><a onclick=\"_gaq.push(['_trackEvent', 'File','Download', 'cepr_org_2010']);\" href=\"/wp-content/cps/data/cepr_org_2010.zip\">cepr_org_2010.zip</a></li>"
- [6] "<li><a onclick=\"_gaq.push(['_trackEvent', 'File','Download', 'cepr_org_2009']);\" href=\"/wp-content/cps/data/cepr_org_2009.zip\">cepr_org_2009.zip</a></li>"
- [7] "<li><a onclick=\"_gaq.push(['_trackEvent', 'File','Download', 'cepr_org_2008']);\" href=\"/wp-content/cps/data/cepr_org_2008.zip\">cepr_org_2008.zip</a></li>"
- [8] "<li><a onclick=\"_gaq.push(['_trackEvent', 'File','Download', 'cepr_org_2007']);\" href=\"/wp-content/cps/data/cepr_org_2007.zip\">cepr_org_2007.zip</a></li>"
- [9] "<li><a onclick=\"_gaq.push(['_trackEvent', 'File','Download', 'cepr_org_2006']);\" href=\"/wp-content/cps/data/cepr_org_2006.zip\">cepr_org_2006.zip</a></li>"
-[10] "<li><a onclick=\"_gaq.push(['_trackEvent', 'File','Download', 'cepr_org_2005']);\" href=\"/wp-content/cps/data/cepr_org_2005.zip\">cepr_org_2005.zip</a></li>"
-[11] "<li><a onclick=\"_gaq.push(['_trackEvent', 'File','Download', 'cepr_org_2004']);\" href=\"/wp-content/cps/data/cepr_org_2004.zip\">cepr_org_2004.zip</a></li>"
-[12] "<li><a onclick=\"_gaq.push(['_trackEvent', 'File','Download', 'cepr_org_2003']);\" href=\"/wp-content/cps/data/cepr_org_2003.zip\">cepr_org_2003.zip</a></li>"
-[13] "<li><a onclick=\"_gaq.push(['_trackEvent', 'File','Download', 'cepr_org_2002']);\" href=\"/wp-content/cps/data/cepr_org_2002.zip\">cepr_org_2002.zip</a></li>"
-[14] "<li><a onclick=\"_gaq.push(['_trackEvent', 'File','Download', 'cepr_org_2001']);\" href=\"/wp-content/cps/data/cepr_org_2001.zip\">cepr_org_2001.zip</a></li>"
-[15] "<li><a onclick=\"_gaq.push(['_trackEvent', 'File','Download', 'cepr_org_2000']);\" href=\"/wp-content/cps/data/cepr_org_2000.zip\">cepr_org_2000.zip</a></li>"
-[16] "<li><a onclick=\"_gaq.push(['_trackEvent', 'File','Download', 'cepr_org_1999']);\" href=\"/wp-content/cps/data/cepr_org_1999.zip\">cepr_org_1999.zip</a></li>"
-[17] "<li><a onclick=\"_gaq.push(['_trackEvent', 'File','Download', 'cepr_org_1998']);\" href=\"/wp-content/cps/data/cepr_org_1998.zip\">cepr_org_1998.zip</a></li>"
-[18] "<li><a onclick=\"_gaq.push(['_trackEvent', 'File','Download', 'cepr_org_1997']);\" href=\"/wp-content/cps/data/cepr_org_1997.zip\">cepr_org_1997.zip</a></li>"
-[19] "<li><a onclick=\"_gaq.push(['_trackEvent', 'File','Download', 'cepr_org_1996']);\" href=\"/wp-content/cps/data/cepr_org_1996.zip\">cepr_org_1996.zip</a></li>"
-[20] "<li><a onclick=\"_gaq.push(['_trackEvent', 'File','Download', 'cepr_org_1995']);\" href=\"/wp-content/cps/data/cepr_org_1995.zip\">cepr_org_1995.zip</a></li>"
-[21] "<li><a onclick=\"_gaq.push(['_trackEvent', 'File','Download', 'cepr_org_1994']);\" href=\"/wp-content/cps/data/cepr_org_1994.zip\">cepr_org_1994.zip</a></li>"
-[22] "<li><a onclick=\"_gaq.push(['_trackEvent', 'File','Download', 'cepr_org_1993']);\" href=\"/wp-content/cps/data/cepr_org_1993.zip\">cepr_org_1993.zip</a></li>"
-[23] "<li><a onclick=\"_gaq.push(['_trackEvent', 'File','Download', 'cepr_org_1992']);\" href=\"/wp-content/cps/data/cepr_org_1992.zip\">cepr_org_1992.zip</a></li>"
-[24] "<li><a onclick=\"_gaq.push(['_trackEvent', 'File','Download', 'cepr_org_1991']);\" href=\"/wp-content/cps/data/cepr_org_1991.zip\">cepr_org_1991.zip</a></li>"
-[25] "<li><a onclick=\"_gaq.push(['_trackEvent', 'File','Download', 'cepr_org_1990']);\" href=\"/wp-content/cps/data/cepr_org_1990.zip\">cepr_org_1990.zip</a></li>"
-[26] "<li><a onclick=\"_gaq.push(['_trackEvent', 'File','Download', 'cepr_org_1989']);\" href=\"/wp-content/cps/data/cepr_org_1989.zip\">cepr_org_1989.zip</a></li>"
-[27] "<li><a onclick=\"_gaq.push(['_trackEvent', 'File','Download', 'cepr_org_1988']);\" href=\"/wp-content/cps/data/cepr_org_1988.zip\">cepr_org_1988.zip</a></li>"
-[28] "<li><a onclick=\"_gaq.push(['_trackEvent', 'File','Download', 'cepr_org_1987']);\" href=\"/wp-content/cps/data/cepr_org_1987.zip\">cepr_org_1987.zip</a></li>"
-[29] "<li><a onclick=\"_gaq.push(['_trackEvent', 'File','Download', 'cepr_org_1986']);\" href=\"/wp-content/cps/data/cepr_org_1986.zip\">cepr_org_1986.zip</a></li>"
-[30] "<li><a onclick=\"_gaq.push(['_trackEvent', 'File','Download', 'cepr_org_1985']);\" href=\"/wp-content/cps/data/cepr_org_1985.zip\">cepr_org_1985.zip</a></li>"
-[31] "<li><a onclick=\"_gaq.push(['_trackEvent', 'File','Download', 'cepr_org_1984']);\" href=\"/wp-content/cps/data/cepr_org_1984.zip\">cepr_org_1984.zip</a></li>"
-[32] "<li><a onclick=\"_gaq.push(['_trackEvent', 'File','Download', 'cepr_org_1983']);\" href=\"/wp-content/cps/data/cepr_org_1983.zip\">cepr_org_1983.zip</a></li>"
-[33] "<li><a onclick=\"_gaq.push(['_trackEvent', 'File','Download', 'cepr_org_1982']);\" href=\"/wp-content/cps/data/cepr_org_1982.zip\">cepr_org_1982.zip</a></li>"
-[34] "<li><a onclick=\"_gaq.push(['_trackEvent', 'File','Download', 'cepr_org_1981']);\" href=\"/wp-content/cps/data/cepr_org_1981.zip\">cepr_org_1981.zip</a></li>"
-[35] "<li><a onclick=\"_gaq.push(['_trackEvent', 'File','Download', 'cepr_org_1980']);\" href=\"/wp-content/cps/data/cepr_org_1980.zip\">cepr_org_1980.zip</a></li>"
-[36] "<li><a onclick=\"_gaq.push(['_trackEvent', 'File','Download', 'cepr_org_1979']);\" href=\"/wp-content/cps/data/cepr_org_1979.zip\">cepr_org_1979.zip</a></li>"
+> head(dataLines <- grep("<a.*\\.zip", ceprHtmlIndex, value = TRUE))
+[1] "<li><a onclick=\"_gaq.push(['_trackEvent', 'File','Download', 'cepr_org_2011']);\" href=\"/wp-content/cps/data/cepr_org_2014.zip\">cepr_org_2014.zip</a></li>"
+[2] "<li><a href=\"/wp-content/cps/data/cepr_org_2013.zip\">cepr_org_2013.zip</a></li>"                                                                            
+[3] "<li><a href=\"/wp-content/cps/data/cepr_org_2012.zip\">cepr_org_2012.zip</a></li>"                                                                            
+[4] "<li><a href=\"/wp-content/cps/data/cepr_org_2011.zip\">cepr_org_2011.zip</a></li>"                                                                            
+[5] "<li><a onclick=\"_gaq.push(['_trackEvent', 'File','Download', 'cepr_org_2010']);\" href=\"/wp-content/cps/data/cepr_org_2010.zip\">cepr_org_2010.zip</a></li>"
+[6] "<li><a onclick=\"_gaq.push(['_trackEvent', 'File','Download', 'cepr_org_2009']);\" href=\"/wp-content/cps/data/cepr_org_2009.zip\">cepr_org_2009.zip</a></li>"
 > 
 #+end_example
+
 We're getting close! We have identified the lines containing the information we need. Now we just need to extract the text following the =href= argument. For that we need to use another feature of regular expressions called /capture groups/ and /back references/. Here's how it works:
 #+BEGIN_SRC R
-  (dataURLs <- gsub("^.*href=\"(.*\\.zip)\".*$", "\\1", dataLines))
+  head(dataURLs <- gsub("^.*href=\"(.*\\.zip)\".*$", "\\1", dataLines))
 #+END_SRC
 
 #+RESULTS:
 #+begin_example
-> (dataURLs <- gsub("^.*href=\"(.*\\.zip)\".*$", "\\1", dataLines))
- [1] "/wp-content/cps/data/cepr_org_2014.zip"
- [2] "/wp-content/cps/data/cepr_org_2013.zip"
- [3] "/wp-content/cps/data/cepr_org_2012.zip"
- [4] "/wp-content/cps/data/cepr_org_2011.zip"
- [5] "/wp-content/cps/data/cepr_org_2010.zip"
- [6] "/wp-content/cps/data/cepr_org_2009.zip"
- [7] "/wp-content/cps/data/cepr_org_2008.zip"
- [8] "/wp-content/cps/data/cepr_org_2007.zip"
- [9] "/wp-content/cps/data/cepr_org_2006.zip"
-[10] "/wp-content/cps/data/cepr_org_2005.zip"
-[11] "/wp-content/cps/data/cepr_org_2004.zip"
-[12] "/wp-content/cps/data/cepr_org_2003.zip"
-[13] "/wp-content/cps/data/cepr_org_2002.zip"
-[14] "/wp-content/cps/data/cepr_org_2001.zip"
-[15] "/wp-content/cps/data/cepr_org_2000.zip"
-[16] "/wp-content/cps/data/cepr_org_1999.zip"
-[17] "/wp-content/cps/data/cepr_org_1998.zip"
-[18] "/wp-content/cps/data/cepr_org_1997.zip"
-[19] "/wp-content/cps/data/cepr_org_1996.zip"
-[20] "/wp-content/cps/data/cepr_org_1995.zip"
-[21] "/wp-content/cps/data/cepr_org_1994.zip"
-[22] "/wp-content/cps/data/cepr_org_1993.zip"
-[23] "/wp-content/cps/data/cepr_org_1992.zip"
-[24] "/wp-content/cps/data/cepr_org_1991.zip"
-[25] "/wp-content/cps/data/cepr_org_1990.zip"
-[26] "/wp-content/cps/data/cepr_org_1989.zip"
-[27] "/wp-content/cps/data/cepr_org_1988.zip"
-[28] "/wp-content/cps/data/cepr_org_1987.zip"
-[29] "/wp-content/cps/data/cepr_org_1986.zip"
-[30] "/wp-content/cps/data/cepr_org_1985.zip"
-[31] "/wp-content/cps/data/cepr_org_1984.zip"
-[32] "/wp-content/cps/data/cepr_org_1983.zip"
-[33] "/wp-content/cps/data/cepr_org_1982.zip"
-[34] "/wp-content/cps/data/cepr_org_1981.zip"
-[35] "/wp-content/cps/data/cepr_org_1980.zip"
-[36] "/wp-content/cps/data/cepr_org_1979.zip"
+> head(dataURLs <- gsub("^.*href=\"(.*\\.zip)\".*$", "\\1", dataLines))
+[1] "/wp-content/cps/data/cepr_org_2014.zip"
+[2] "/wp-content/cps/data/cepr_org_2013.zip"
+[3] "/wp-content/cps/data/cepr_org_2012.zip"
+[4] "/wp-content/cps/data/cepr_org_2011.zip"
+[5] "/wp-content/cps/data/cepr_org_2010.zip"
+[6] "/wp-content/cps/data/cepr_org_2009.zip"
 > 
 #+end_example
 
@@ -291,7 +226,7 @@ For parsing html in R I recommend either the =httr= package or the =rvest= packa
                           allLinks,
                           value = TRUE),
                      sep = "")
-dataLinks
+head(dataLinks)
 #+END_SRC
 
 #+RESULTS:
@@ -307,43 +242,13 @@ dataLinks
 +                           allLinks,
 +                           value = TRUE),
 +                      sep = "")
-> dataLinks
- [1] "http://ceprdata.org/wp-content/cps/data/cepr_org_2014.zip"
- [2] "http://ceprdata.org/wp-content/cps/data/cepr_org_2013.zip"
- [3] "http://ceprdata.org/wp-content/cps/data/cepr_org_2012.zip"
- [4] "http://ceprdata.org/wp-content/cps/data/cepr_org_2011.zip"
- [5] "http://ceprdata.org/wp-content/cps/data/cepr_org_2010.zip"
- [6] "http://ceprdata.org/wp-content/cps/data/cepr_org_2009.zip"
- [7] "http://ceprdata.org/wp-content/cps/data/cepr_org_2008.zip"
- [8] "http://ceprdata.org/wp-content/cps/data/cepr_org_2007.zip"
- [9] "http://ceprdata.org/wp-content/cps/data/cepr_org_2006.zip"
-[10] "http://ceprdata.org/wp-content/cps/data/cepr_org_2005.zip"
-[11] "http://ceprdata.org/wp-content/cps/data/cepr_org_2004.zip"
-[12] "http://ceprdata.org/wp-content/cps/data/cepr_org_2003.zip"
-[13] "http://ceprdata.org/wp-content/cps/data/cepr_org_2002.zip"
-[14] "http://ceprdata.org/wp-content/cps/data/cepr_org_2001.zip"
-[15] "http://ceprdata.org/wp-content/cps/data/cepr_org_2000.zip"
-[16] "http://ceprdata.org/wp-content/cps/data/cepr_org_1999.zip"
-[17] "http://ceprdata.org/wp-content/cps/data/cepr_org_1998.zip"
-[18] "http://ceprdata.org/wp-content/cps/data/cepr_org_1997.zip"
-[19] "http://ceprdata.org/wp-content/cps/data/cepr_org_1996.zip"
-[20] "http://ceprdata.org/wp-content/cps/data/cepr_org_1995.zip"
-[21] "http://ceprdata.org/wp-content/cps/data/cepr_org_1994.zip"
-[22] "http://ceprdata.org/wp-content/cps/data/cepr_org_1993.zip"
-[23] "http://ceprdata.org/wp-content/cps/data/cepr_org_1992.zip"
-[24] "http://ceprdata.org/wp-content/cps/data/cepr_org_1991.zip"
-[25] "http://ceprdata.org/wp-content/cps/data/cepr_org_1990.zip"
-[26] "http://ceprdata.org/wp-content/cps/data/cepr_org_1989.zip"
-[27] "http://ceprdata.org/wp-content/cps/data/cepr_org_1988.zip"
-[28] "http://ceprdata.org/wp-content/cps/data/cepr_org_1987.zip"
-[29] "http://ceprdata.org/wp-content/cps/data/cepr_org_1986.zip"
-[30] "http://ceprdata.org/wp-content/cps/data/cepr_org_1985.zip"
-[31] "http://ceprdata.org/wp-content/cps/data/cepr_org_1984.zip"
-[32] "http://ceprdata.org/wp-content/cps/data/cepr_org_1983.zip"
-[33] "http://ceprdata.org/wp-content/cps/data/cepr_org_1982.zip"
-[34] "http://ceprdata.org/wp-content/cps/data/cepr_org_1981.zip"
-[35] "http://ceprdata.org/wp-content/cps/data/cepr_org_1980.zip"
-[36] "http://ceprdata.org/wp-content/cps/data/cepr_org_1979.zip"
+> head(dataLinks)
+[1] "http://ceprdata.org/wp-content/cps/data/cepr_org_2014.zip"
+[2] "http://ceprdata.org/wp-content/cps/data/cepr_org_2013.zip"
+[3] "http://ceprdata.org/wp-content/cps/data/cepr_org_2012.zip"
+[4] "http://ceprdata.org/wp-content/cps/data/cepr_org_2011.zip"
+[5] "http://ceprdata.org/wp-content/cps/data/cepr_org_2010.zip"
+[6] "http://ceprdata.org/wp-content/cps/data/cepr_org_2009.zip"
 > 
 #+end_example
 
@@ -352,7 +257,7 @@ Wow, that that was a lot easier. Why didn't we do that in the first place?!? Wel
 ** Getting the list of data links the easy way
 If you look at the result from the previous two methods you might notice that the URLs are all the same save for the year number. This suggests an even easier way to construct the list of URLs:
 #+BEGIN_SRC R
-  (dataLinks <- paste("http://ceprdata.org/wp-content/cps/data/cepr_org_",
+  head(dataLinks <- paste("http://ceprdata.org/wp-content/cps/data/cepr_org_",
                       1979:2014,
                       ".zip",
                       sep = ""))
@@ -361,46 +266,16 @@ If you look at the result from the previous two methods you might notice that th
 
 #+RESULTS:
 #+begin_example
-> (dataLinks <- paste("http://ceprdata.org/wp-content/cps/data/cepr_org_",
+> head(dataLinks <- paste("http://ceprdata.org/wp-content/cps/data/cepr_org_",
 +                     1979:2014,
 +                     ".zip",
 +                     sep = ""))
- [1] "http://ceprdata.org/wp-content/cps/data/cepr_org_1979.zip"
- [2] "http://ceprdata.org/wp-content/cps/data/cepr_org_1980.zip"
- [3] "http://ceprdata.org/wp-content/cps/data/cepr_org_1981.zip"
- [4] "http://ceprdata.org/wp-content/cps/data/cepr_org_1982.zip"
- [5] "http://ceprdata.org/wp-content/cps/data/cepr_org_1983.zip"
- [6] "http://ceprdata.org/wp-content/cps/data/cepr_org_1984.zip"
- [7] "http://ceprdata.org/wp-content/cps/data/cepr_org_1985.zip"
- [8] "http://ceprdata.org/wp-content/cps/data/cepr_org_1986.zip"
- [9] "http://ceprdata.org/wp-content/cps/data/cepr_org_1987.zip"
-[10] "http://ceprdata.org/wp-content/cps/data/cepr_org_1988.zip"
-[11] "http://ceprdata.org/wp-content/cps/data/cepr_org_1989.zip"
-[12] "http://ceprdata.org/wp-content/cps/data/cepr_org_1990.zip"
-[13] "http://ceprdata.org/wp-content/cps/data/cepr_org_1991.zip"
-[14] "http://ceprdata.org/wp-content/cps/data/cepr_org_1992.zip"
-[15] "http://ceprdata.org/wp-content/cps/data/cepr_org_1993.zip"
-[16] "http://ceprdata.org/wp-content/cps/data/cepr_org_1994.zip"
-[17] "http://ceprdata.org/wp-content/cps/data/cepr_org_1995.zip"
-[18] "http://ceprdata.org/wp-content/cps/data/cepr_org_1996.zip"
-[19] "http://ceprdata.org/wp-content/cps/data/cepr_org_1997.zip"
-[20] "http://ceprdata.org/wp-content/cps/data/cepr_org_1998.zip"
-[21] "http://ceprdata.org/wp-content/cps/data/cepr_org_1999.zip"
-[22] "http://ceprdata.org/wp-content/cps/data/cepr_org_2000.zip"
-[23] "http://ceprdata.org/wp-content/cps/data/cepr_org_2001.zip"
-[24] "http://ceprdata.org/wp-content/cps/data/cepr_org_2002.zip"
-[25] "http://ceprdata.org/wp-content/cps/data/cepr_org_2003.zip"
-[26] "http://ceprdata.org/wp-content/cps/data/cepr_org_2004.zip"
-[27] "http://ceprdata.org/wp-content/cps/data/cepr_org_2005.zip"
-[28] "http://ceprdata.org/wp-content/cps/data/cepr_org_2006.zip"
-[29] "http://ceprdata.org/wp-content/cps/data/cepr_org_2007.zip"
-[30] "http://ceprdata.org/wp-content/cps/data/cepr_org_2008.zip"
-[31] "http://ceprdata.org/wp-content/cps/data/cepr_org_2009.zip"
-[32] "http://ceprdata.org/wp-content/cps/data/cepr_org_2010.zip"
-[33] "http://ceprdata.org/wp-content/cps/data/cepr_org_2011.zip"
-[34] "http://ceprdata.org/wp-content/cps/data/cepr_org_2012.zip"
-[35] "http://ceprdata.org/wp-content/cps/data/cepr_org_2013.zip"
-[36] "http://ceprdata.org/wp-content/cps/data/cepr_org_2014.zip"
+[1] "http://ceprdata.org/wp-content/cps/data/cepr_org_1979.zip"
+[2] "http://ceprdata.org/wp-content/cps/data/cepr_org_1980.zip"
+[3] "http://ceprdata.org/wp-content/cps/data/cepr_org_1981.zip"
+[4] "http://ceprdata.org/wp-content/cps/data/cepr_org_1982.zip"
+[5] "http://ceprdata.org/wp-content/cps/data/cepr_org_1983.zip"
+[6] "http://ceprdata.org/wp-content/cps/data/cepr_org_1984.zip"
 > 
 #+end_example
 
@@ -408,23 +283,13 @@ Wow, that was a _lot_ easier. Why oh why didn't we just do that in the first pla
 
 * Iteration and functions
 Now that we have a vector of URLs pointing to the data files we want to download, we want to iterate over the elements and download each file. We could do this verbosely by writing one line for each file:
-#+BEGIN_SRC R
+#+BEGIN_SRC R :results silent
   dir.create("dataSets")
   download.file(dataLinks[1], "dataSets/cepr_org_1979.zip")
   download.file(dataLinks[2], "dataSets/cepr_org_1980.zip")
   ## ...
   ## download.file(dataLinks[n], "dataSets/cepr_org_n.zip")
 #+END_SRC
-
-#+RESULTS:
-#+begin_example
-> dir.create("dataSets")
-> download.file(dataLinks[1], "dataSets/cepr_org_1979.zip")
-> download.file(dataLinks[2], "dataSets/cepr_org_1980.zip")
-> ## ...
-> ## download.file(dataLinks[n], "dataSets/cepr_org_n.zip")
-> 
-#+end_example
 but that is too much typing. Much easier to let R do that for us. We can iterate over the elements of a vector in R using a loop, or using one of the =apply= family of functions.
 
 =for= and =while= loops in R work much the same as they do in other programming languages. The =apply= family of functions apply a function to each element of an object.
@@ -434,27 +299,16 @@ One way to download the data files is to use a for-loop to iterate over the cont
 
 For now, lets start by downloading just the data files for years since 2010.
 
-#+BEGIN_SRC R
+#+BEGIN_SRC R :results silent
   for(link in grep("org_201", dataLinks, value = TRUE)) {
       download.file(link, 
                     destfile = basename(link))
   }
 #+END_SRC
 
-#+RESULTS:
-#+begin_example
-> for(link in grep("org_201", dataLinks, value = TRUE)) {
-+     download.file(link, 
-+                   destfile = gsub("^.*(cepr_org.*zip).*$",
-+                                   "dataSets/\\1",
-+                                   link))
-+ }
-> 
-#+end_example
-
 ** Writing functions
 Our for loop works well for downloading the data files form ceprdata.org. But what if we need to download data from other URLs as well? It might be nice to have a re-usable function that takes a url and downloads it, saving the result as the =basename= of the url. We can define such a function using the =function= function (say that three times fast!).
-#+BEGIN_SRC R
+#+BEGIN_SRC R :results silent
   downloadFiles <- function(urls) {
     for(link in urls) {
         download.file(link, 
@@ -463,46 +317,37 @@ Our for loop works well for downloading the data files form ceprdata.org. But wh
   }
 #+END_SRC
 
-#+RESULTS:
-#+begin_example
-> downloadFiles <- function(urls) {
-+   for(link in urls) {
-+       download.file(link, 
-+                     destfile = basename(link))
-+   }
-+ }
-> 
-#+end_example
-
 Now we can download files more simply with
-#+BEGIN_SRC R
+#+BEGIN_SRC R :results silent
   downloadFiles(grep("org_201", dataLinks, value = TRUE))
 #+END_SRC
-
-#+RESULTS:
-#+begin_example
-> downloadFiles(grep("org_201", dataLinks, value = TRUE))
-> 
-#+end_example
 and in fact we can use this function to download files from any urls we might have. As a silly example, let's download all the profile pictures from the [[http://projects.iq.harvard.edu/rtc][Research Technology Consulting]] team at [[http://iq.harvard.edu][The Institute for Quantitative Social Science]]: 
 #+BEGIN_SRC R 
   library(readbitmap)
+  ## parse the webpage and extract image URLs
   profilePicLinks <- html_attr(html_nodes(html("http://projects.iq.harvard.edu/rtc/people"),
                                           ".image-style-profile-thumbnail"),
                                "src")
+  ## clean up the links
   profilePicLinks <- gsub("\\.png\\?.*$", ".png", profilePicLinks)
+  ## download
   downloadFiles(paste("http:", profilePicLinks, sep=""))
+  ## list downloaded image files
   list.files(pattern = "\\.png$")
 #+END_SRC
 
 #+RESULTS:
 #+begin_example
 > library(readbitmap)
+> ## parse the webpage and extract image URLs
 > profilePicLinks <- html_attr(html_nodes(html("http://projects.iq.harvard.edu/rtc/people"),
 +                                         ".image-style-profile-thumbnail"),
 +                              "src")
+> ## clean up the links
 > profilePicLinks <- gsub("\\.png\\?.*$", ".png", profilePicLinks)
+> ## download
 > downloadFiles(paste("http:", profilePicLinks, sep=""))
+> ## list downloaded image files
 > list.files(pattern = "\\.png$")
 [1] "default-profile.png"      "ista_zahn-5.png"         
 [3] "simo_goshev.png"          "steven_worthington-2.png"
@@ -511,7 +356,6 @@ and in fact we can use this function to download files from any urls we might ha
 
 The code above downloaded all the profile pics from http://projects.iq.harvard.edu/rtc/people. Although this doesn't have anything to do with our main goal of downloading and analyzing the data from ceprdata.org, we'll go ahead and plot these images, just for fun.
 #+BEGIN_SRC R :results output graphics :file images/rtc_people.png
- 
   ## install.packages("readbitmap")
   library(readbitmap); library(grid); library(gridExtra)
 
@@ -525,68 +369,109 @@ The code above downloaded all the profile pics from http://projects.iq.harvard.e
 [[file:images/rtc_people.png]]
 
 ** The applying functions
-The apply family of functions includes:
+You might have noticed that I slipped an example of =sapply= into the previous example. =sapply= is one of the apply family of functions in R that are useful for iteration. The apply family of functions includes:
 - apply :: apply a function to each dimension (e.g., row or column), of a matrix or array
 - lapply :: apply a function to each element of a vector or list
 - sapply :: like lapply, but simplifies the result
 - mapply :: apply a function to each element of multiple vectors or lists
 
-Confused yet? The bad news is, there are more of these; see =?lapply=, =?Map= and [[http://stackoverflow.com/questions/3505701/r-grouping-functions-sapply-vs-lapply-vs-apply-vs-tapply-vs-by-vs-aggrega][this StackOverflow answer]] for details. The good news is you can do quite a lot with just =apply= and =sapply=. To start, let's use =sapply= do download all the data files for years since 2010:
-#+BEGIN_SRC R
+Confused yet? The bad news is, there are more of these; see =?lapply=, =?Map= and [[http://stackoverflow.com/questions/3505701/r-grouping-functions-sapply-vs-lapply-vs-apply-vs-tapply-vs-by-vs-aggrega][this StackOverflow answer]] for details. The good news is you can do quite a lot with just =apply= and =sapply=. 
+
+*** Iterating over vectors and lists with the =sapply= function
+The =sapply= function iterates over a vector or list and applys a function to each element. To start, let's use =sapply= do download all the data files for years since 2010:
+#+BEGIN_SRC R :results silent
   sapply(grep("org_201", dataLinks, value = TRUE),
-         download.file,
-         destfile = basename(url)
+         function(x) download.file(x, destfile = basename(x))
          )
 #+END_SRC
 
 #+RESULTS:
-
-#+name: applyFunctionExample
-#+begin_src R
-  M <- matrix(1:20,
-              ncol=4,
-              dimnames = list(paste("row", 1:5),
-                              paste("col", 1:4)))
-  apply(M, 1, mean) ## average across the rows
-  apply(M, 2, sum) ## sum down the columns
-#+end_src
-
-#+RESULTS: applyFunctionExample
 #+begin_example
-> M <- matrix(1:20, ncol=4)
-> apply(M, 2, mean) ## average across the rows
-[1]  3  8 13 18
-> apply(M, 2, sum) ## sum the columns
-[1] 15 40 65 90
+> sapply(grep("org_201", dataLinks, value = TRUE),
++        function(x) download.file(x, destfile = basename(x))
++        )
+http://ceprdata.org/wp-content/cps/data/cepr_org_2010.zip 
+                                                        0 
+http://ceprdata.org/wp-content/cps/data/cepr_org_2011.zip 
+                                                        0 
+http://ceprdata.org/wp-content/cps/data/cepr_org_2012.zip 
+                                                        0 
+http://ceprdata.org/wp-content/cps/data/cepr_org_2013.zip 
+                                                        0 
+http://ceprdata.org/wp-content/cps/data/cepr_org_2014.zip 
+                                                        0 
 > 
 #+end_example
 
-** for loops
-We can alternatively calculate row and column means, but in this case =apply= is easier.
-#+name: forLoopExample
-#+begin_src R
-  M.means <- c() ## empty vector to hold the result
-  for (row in rownames(M)) {
-      M.means[row] <- mean(M[row, ])
+For this task (downloading files) there is not much advantage to using =sapply= instead of =for=. The main advantage is the simpler handling of return values. To see this, let's revisit the profile picture example. Our goal is to read all the .png files in our working directory. We've already seen how to do this with =sapply=;
+#+BEGIN_SRC R :results silent
+  imgs <- sapply(list.files(pattern = "\\.png$"),
+                 read.bitmap)
+#+END_SRC
+How can we do that with a for loop? First we need to create a list to store the restults, then as we loop through we need to assign the image data to an element of the list. It's not terrible:
+#+BEGIN_SRC R :results silent
+  imgs <- list()
+  for (file in list.files(pattern = "\\.png$")) {
+    imgs[[file]] <- read.bitmap(file)
   }
+#+END_SRC
+As I said, not terrible, but definitely more complicated than the sapply version. 
 
-  M.sums <- c() ## empty vector to hold the result
-  for (col in colnames(M)) {
-      M.sums[col] <- mean(M[, col])
-  }
+**** Iterating over arrays with the =apply= function
+Now that we've downloaded some of the ceprdata.org data we might want to get some information about these files. We can do that using the =file.info= function:
+#+BEGIN_SRC R
+  ceprFiles <- list.files(pattern = "\\.zip")
+  ceprFileInfo <- cbind(size = file.size(ceprFiles), mode = file.mode(ceprFiles))
+  rownames(ceprFileInfo) <- ceprFiles
+  ceprFileInfo
+#+END_SRC
+
+#+RESULTS:
+#+begin_example
+> ceprFiles <- list.files(pattern = "\\.zip")
+> ceprFileInfo <- cbind(size = file.size(ceprFiles), mode = file.mode(ceprFiles))
+> rownames(ceprFileInfo) <- ceprFiles
+> ceprFileInfo
+                      size mode
+cepr_org_2010.zip 14969769  420
+cepr_org_2011.zip 14811229  420
+cepr_org_2012.zip 14774713  420
+cepr_org_2013.zip 14627250  420
+cepr_org_2014.zip 14477818  420
+> 
+#+end_example
+ceprFileInfo is a _matrix_, with each row containing information about one of the files we downloaded. We can calculate the means for each column in this mattrix using the =apply= fuction:
+
+#+begin_src R
+  ## average file size and permissions
+  (fileInfoAverage <- apply(ceprFileInfo, MARGIN = 2, mean))
+  ## standard deviation of file size and permissions
+  apply(ceprFileInfo, MARGIN = 2, sd)
+  ## deviation from the average
+  apply(ceprFileInfo, MARGIN = 1, function(x) x - fileInfoAverage) # 
+
 #+end_src
 
-
-** The sapply function
-It is often useful to apply a function to each element of a vector, list, or data.frame; you can use the =sapply= function for this
-
-#+name: sapplyExample
-#+begin_src R
-  sapply(DF, class) # get the class of each column in the DF data.frame
-  sapply(L, length) # get the length of each element in the L list
-  sapply(DF, is.numeric) # check each column of DF to see if it is numeric
-#+end_src
-
+#+RESULTS:
+#+begin_example
+> ## average file size and permissions
+> (fileInfoAverage <- apply(ceprFileInfo, MARGIN = 2, mean))
+    size     mode 
+14732156      420 
+> ## standard deviation of file size and permissions
+> apply(ceprFileInfo, MARGIN = 2, sd)
+    size     mode 
+187227.6      0.0 
+> ## deviation from the average
+> apply(ceprFileInfo, MARGIN = 1, function(x) x - fileInfoAverage) # 
+     cepr_org_2010.zip cepr_org_2011.zip cepr_org_2012.zip
+size          237613.2           79073.2           42557.2
+mode               0.0               0.0               0.0
+     cepr_org_2013.zip cepr_org_2014.zip
+size         -104905.8         -254337.8
+mode               0.0               0.0
+> 
+#+end_example
 #+RESULTS: sapplyExample
 #+begin_example
 > sapply(DF, class) # get the class of each column in the DF data.frame

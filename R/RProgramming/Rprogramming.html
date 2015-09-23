@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2015-09-23 Wed 13:53 -->
+<!-- 2015-09-23 Wed 16:12 -->
 <meta  http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta  name="viewport" content="width=device-width, initial-scale=1" />
 <title>Introduction To Programming In R</title>
@@ -84,9 +84,11 @@ for the JavaScript code in this tag.
 <ul>
 <li><a href="#orgheadline10">Iterating using for-loop</a></li>
 <li><a href="#orgheadline11">Writing functions</a></li>
-<li><a href="#orgheadline12">The applying functions</a></li>
-<li><a href="#orgheadline13">for loops</a></li>
-<li><a href="#orgheadline14">The sapply function</a></li>
+<li><a href="#orgheadline12">The applying functions</a>
+<ul>
+<li><a href="#orgheadline13">Iterating over vectors and lists with the <code>sapply</code> function</a></li>
+</ul>
+</li>
 <li><a href="#orgheadline15">Combining sapply and indexing</a></li>
 <li><a href="#orgheadline16">Applying functions summary</a></li>
 </ul>
@@ -270,13 +272,6 @@ ceprHtmlIndex <span style="color: #a45bad;">&lt;-</span> readLines<span style="c
 </pre>
 </div>
 
-<pre class="example">
-&gt; ceprHtmlIndex &lt;- readLines(
-+ "http://ceprdata.org/cps-uniform-data-extracts/cps-outgoing-rotation-group/cps-org-data/"
-+ )
-&gt;
-</pre>
-
 <p>
 OK, what are we working with?
 </p>
@@ -294,7 +289,7 @@ head<span style="color: #2f96dc;">(</span>ceprHtmlIndex, 10<span style="color: #
 &gt; length(ceprHtmlIndex)
 [1] 295
 &gt; ## what do the first few lines look like?
-&gt; head(ceprHtmlIndex, 10) ## look at the first 15 lines of html
+&gt; head(ceprHtmlIndex, 10) ## look at the first few lines of html
  [1] "&lt;!doctype html&gt;"                                                               
  [2] "&lt;!--[if lt IE 7]&gt; &lt;html class=\"no-js ie6 oldie\" lang=\"en-US\"&gt; &lt;![endif]--&gt;"
  [3] "&lt;!--[if IE 7]&gt;    &lt;html class=\"no-js ie7 oldie\" lang=\"en-US\"&gt; &lt;![endif]--&gt;"
@@ -307,6 +302,7 @@ head<span style="color: #2f96dc;">(</span>ceprHtmlIndex, 10<span style="color: #
 [10] ""                                                                              
 &gt;
 </pre>
+
 <p>
 In html links are specified using the <code>&lt;a&gt;</code> (for <i>anchor</i>) tag. So now we want to search through our html and find lines that include an <code>a</code> tag. In R we can search for strings using the <code>grep</code> function.
 </p>
@@ -352,98 +348,39 @@ This tells us that we want to match lines containing an "&lt;a" followed (eventu
 <div class="org-src-container">
 
 <pre class="src src-R"><span style="color: #2aa198;">## </span><span style="color: #2aa198;">find lines with &lt;a&gt; tags refering to zip files</span>
-<span style="color: #2f96dc;">(</span>dataLines <span style="color: #a45bad;">&lt;-</span> grep<span style="color: #bc6ec5;">(</span><span style="color: #2d9574;">"&lt;a.*\\.zip"</span>, ceprHtmlIndex, value = <span style="color: #38a882; font-weight: bold;">TRUE</span><span style="color: #bc6ec5;">)</span><span style="color: #2f96dc;">)</span>
+head<span style="color: #2f96dc;">(</span>dataLines <span style="color: #a45bad;">&lt;-</span> grep<span style="color: #bc6ec5;">(</span><span style="color: #2d9574;">"&lt;a.*\\.zip"</span>, ceprHtmlIndex, value = <span style="color: #38a882; font-weight: bold;">TRUE</span><span style="color: #bc6ec5;">)</span><span style="color: #2f96dc;">)</span>
 </pre>
 </div>
 
 <pre class="example">
 &gt; ## find lines with &lt;a&gt; tags refering to zip files
-&gt; (dataLines &lt;- grep("&lt;a.*\\.zip", ceprHtmlIndex, value = TRUE))
- [1] "&lt;li&gt;&lt;a onclick=\"_gaq.push(['_trackEvent', 'File','Download', 'cepr_org_2011']);\" href=\"/wp-content/cps/data/cepr_org_2014.zip\"&gt;cepr_org_2014.zip&lt;/a&gt;&lt;/li&gt;"
- [2] "&lt;li&gt;&lt;a href=\"/wp-content/cps/data/cepr_org_2013.zip\"&gt;cepr_org_2013.zip&lt;/a&gt;&lt;/li&gt;"                                                                            
- [3] "&lt;li&gt;&lt;a href=\"/wp-content/cps/data/cepr_org_2012.zip\"&gt;cepr_org_2012.zip&lt;/a&gt;&lt;/li&gt;"                                                                            
- [4] "&lt;li&gt;&lt;a href=\"/wp-content/cps/data/cepr_org_2011.zip\"&gt;cepr_org_2011.zip&lt;/a&gt;&lt;/li&gt;"                                                                            
- [5] "&lt;li&gt;&lt;a onclick=\"_gaq.push(['_trackEvent', 'File','Download', 'cepr_org_2010']);\" href=\"/wp-content/cps/data/cepr_org_2010.zip\"&gt;cepr_org_2010.zip&lt;/a&gt;&lt;/li&gt;"
- [6] "&lt;li&gt;&lt;a onclick=\"_gaq.push(['_trackEvent', 'File','Download', 'cepr_org_2009']);\" href=\"/wp-content/cps/data/cepr_org_2009.zip\"&gt;cepr_org_2009.zip&lt;/a&gt;&lt;/li&gt;"
- [7] "&lt;li&gt;&lt;a onclick=\"_gaq.push(['_trackEvent', 'File','Download', 'cepr_org_2008']);\" href=\"/wp-content/cps/data/cepr_org_2008.zip\"&gt;cepr_org_2008.zip&lt;/a&gt;&lt;/li&gt;"
- [8] "&lt;li&gt;&lt;a onclick=\"_gaq.push(['_trackEvent', 'File','Download', 'cepr_org_2007']);\" href=\"/wp-content/cps/data/cepr_org_2007.zip\"&gt;cepr_org_2007.zip&lt;/a&gt;&lt;/li&gt;"
- [9] "&lt;li&gt;&lt;a onclick=\"_gaq.push(['_trackEvent', 'File','Download', 'cepr_org_2006']);\" href=\"/wp-content/cps/data/cepr_org_2006.zip\"&gt;cepr_org_2006.zip&lt;/a&gt;&lt;/li&gt;"
-[10] "&lt;li&gt;&lt;a onclick=\"_gaq.push(['_trackEvent', 'File','Download', 'cepr_org_2005']);\" href=\"/wp-content/cps/data/cepr_org_2005.zip\"&gt;cepr_org_2005.zip&lt;/a&gt;&lt;/li&gt;"
-[11] "&lt;li&gt;&lt;a onclick=\"_gaq.push(['_trackEvent', 'File','Download', 'cepr_org_2004']);\" href=\"/wp-content/cps/data/cepr_org_2004.zip\"&gt;cepr_org_2004.zip&lt;/a&gt;&lt;/li&gt;"
-[12] "&lt;li&gt;&lt;a onclick=\"_gaq.push(['_trackEvent', 'File','Download', 'cepr_org_2003']);\" href=\"/wp-content/cps/data/cepr_org_2003.zip\"&gt;cepr_org_2003.zip&lt;/a&gt;&lt;/li&gt;"
-[13] "&lt;li&gt;&lt;a onclick=\"_gaq.push(['_trackEvent', 'File','Download', 'cepr_org_2002']);\" href=\"/wp-content/cps/data/cepr_org_2002.zip\"&gt;cepr_org_2002.zip&lt;/a&gt;&lt;/li&gt;"
-[14] "&lt;li&gt;&lt;a onclick=\"_gaq.push(['_trackEvent', 'File','Download', 'cepr_org_2001']);\" href=\"/wp-content/cps/data/cepr_org_2001.zip\"&gt;cepr_org_2001.zip&lt;/a&gt;&lt;/li&gt;"
-[15] "&lt;li&gt;&lt;a onclick=\"_gaq.push(['_trackEvent', 'File','Download', 'cepr_org_2000']);\" href=\"/wp-content/cps/data/cepr_org_2000.zip\"&gt;cepr_org_2000.zip&lt;/a&gt;&lt;/li&gt;"
-[16] "&lt;li&gt;&lt;a onclick=\"_gaq.push(['_trackEvent', 'File','Download', 'cepr_org_1999']);\" href=\"/wp-content/cps/data/cepr_org_1999.zip\"&gt;cepr_org_1999.zip&lt;/a&gt;&lt;/li&gt;"
-[17] "&lt;li&gt;&lt;a onclick=\"_gaq.push(['_trackEvent', 'File','Download', 'cepr_org_1998']);\" href=\"/wp-content/cps/data/cepr_org_1998.zip\"&gt;cepr_org_1998.zip&lt;/a&gt;&lt;/li&gt;"
-[18] "&lt;li&gt;&lt;a onclick=\"_gaq.push(['_trackEvent', 'File','Download', 'cepr_org_1997']);\" href=\"/wp-content/cps/data/cepr_org_1997.zip\"&gt;cepr_org_1997.zip&lt;/a&gt;&lt;/li&gt;"
-[19] "&lt;li&gt;&lt;a onclick=\"_gaq.push(['_trackEvent', 'File','Download', 'cepr_org_1996']);\" href=\"/wp-content/cps/data/cepr_org_1996.zip\"&gt;cepr_org_1996.zip&lt;/a&gt;&lt;/li&gt;"
-[20] "&lt;li&gt;&lt;a onclick=\"_gaq.push(['_trackEvent', 'File','Download', 'cepr_org_1995']);\" href=\"/wp-content/cps/data/cepr_org_1995.zip\"&gt;cepr_org_1995.zip&lt;/a&gt;&lt;/li&gt;"
-[21] "&lt;li&gt;&lt;a onclick=\"_gaq.push(['_trackEvent', 'File','Download', 'cepr_org_1994']);\" href=\"/wp-content/cps/data/cepr_org_1994.zip\"&gt;cepr_org_1994.zip&lt;/a&gt;&lt;/li&gt;"
-[22] "&lt;li&gt;&lt;a onclick=\"_gaq.push(['_trackEvent', 'File','Download', 'cepr_org_1993']);\" href=\"/wp-content/cps/data/cepr_org_1993.zip\"&gt;cepr_org_1993.zip&lt;/a&gt;&lt;/li&gt;"
-[23] "&lt;li&gt;&lt;a onclick=\"_gaq.push(['_trackEvent', 'File','Download', 'cepr_org_1992']);\" href=\"/wp-content/cps/data/cepr_org_1992.zip\"&gt;cepr_org_1992.zip&lt;/a&gt;&lt;/li&gt;"
-[24] "&lt;li&gt;&lt;a onclick=\"_gaq.push(['_trackEvent', 'File','Download', 'cepr_org_1991']);\" href=\"/wp-content/cps/data/cepr_org_1991.zip\"&gt;cepr_org_1991.zip&lt;/a&gt;&lt;/li&gt;"
-[25] "&lt;li&gt;&lt;a onclick=\"_gaq.push(['_trackEvent', 'File','Download', 'cepr_org_1990']);\" href=\"/wp-content/cps/data/cepr_org_1990.zip\"&gt;cepr_org_1990.zip&lt;/a&gt;&lt;/li&gt;"
-[26] "&lt;li&gt;&lt;a onclick=\"_gaq.push(['_trackEvent', 'File','Download', 'cepr_org_1989']);\" href=\"/wp-content/cps/data/cepr_org_1989.zip\"&gt;cepr_org_1989.zip&lt;/a&gt;&lt;/li&gt;"
-[27] "&lt;li&gt;&lt;a onclick=\"_gaq.push(['_trackEvent', 'File','Download', 'cepr_org_1988']);\" href=\"/wp-content/cps/data/cepr_org_1988.zip\"&gt;cepr_org_1988.zip&lt;/a&gt;&lt;/li&gt;"
-[28] "&lt;li&gt;&lt;a onclick=\"_gaq.push(['_trackEvent', 'File','Download', 'cepr_org_1987']);\" href=\"/wp-content/cps/data/cepr_org_1987.zip\"&gt;cepr_org_1987.zip&lt;/a&gt;&lt;/li&gt;"
-[29] "&lt;li&gt;&lt;a onclick=\"_gaq.push(['_trackEvent', 'File','Download', 'cepr_org_1986']);\" href=\"/wp-content/cps/data/cepr_org_1986.zip\"&gt;cepr_org_1986.zip&lt;/a&gt;&lt;/li&gt;"
-[30] "&lt;li&gt;&lt;a onclick=\"_gaq.push(['_trackEvent', 'File','Download', 'cepr_org_1985']);\" href=\"/wp-content/cps/data/cepr_org_1985.zip\"&gt;cepr_org_1985.zip&lt;/a&gt;&lt;/li&gt;"
-[31] "&lt;li&gt;&lt;a onclick=\"_gaq.push(['_trackEvent', 'File','Download', 'cepr_org_1984']);\" href=\"/wp-content/cps/data/cepr_org_1984.zip\"&gt;cepr_org_1984.zip&lt;/a&gt;&lt;/li&gt;"
-[32] "&lt;li&gt;&lt;a onclick=\"_gaq.push(['_trackEvent', 'File','Download', 'cepr_org_1983']);\" href=\"/wp-content/cps/data/cepr_org_1983.zip\"&gt;cepr_org_1983.zip&lt;/a&gt;&lt;/li&gt;"
-[33] "&lt;li&gt;&lt;a onclick=\"_gaq.push(['_trackEvent', 'File','Download', 'cepr_org_1982']);\" href=\"/wp-content/cps/data/cepr_org_1982.zip\"&gt;cepr_org_1982.zip&lt;/a&gt;&lt;/li&gt;"
-[34] "&lt;li&gt;&lt;a onclick=\"_gaq.push(['_trackEvent', 'File','Download', 'cepr_org_1981']);\" href=\"/wp-content/cps/data/cepr_org_1981.zip\"&gt;cepr_org_1981.zip&lt;/a&gt;&lt;/li&gt;"
-[35] "&lt;li&gt;&lt;a onclick=\"_gaq.push(['_trackEvent', 'File','Download', 'cepr_org_1980']);\" href=\"/wp-content/cps/data/cepr_org_1980.zip\"&gt;cepr_org_1980.zip&lt;/a&gt;&lt;/li&gt;"
-[36] "&lt;li&gt;&lt;a onclick=\"_gaq.push(['_trackEvent', 'File','Download', 'cepr_org_1979']);\" href=\"/wp-content/cps/data/cepr_org_1979.zip\"&gt;cepr_org_1979.zip&lt;/a&gt;&lt;/li&gt;"
+&gt; head(dataLines &lt;- grep("&lt;a.*\\.zip", ceprHtmlIndex, value = TRUE))
+[1] "&lt;li&gt;&lt;a onclick=\"_gaq.push(['_trackEvent', 'File','Download', 'cepr_org_2011']);\" href=\"/wp-content/cps/data/cepr_org_2014.zip\"&gt;cepr_org_2014.zip&lt;/a&gt;&lt;/li&gt;"
+[2] "&lt;li&gt;&lt;a href=\"/wp-content/cps/data/cepr_org_2013.zip\"&gt;cepr_org_2013.zip&lt;/a&gt;&lt;/li&gt;"                                                                            
+[3] "&lt;li&gt;&lt;a href=\"/wp-content/cps/data/cepr_org_2012.zip\"&gt;cepr_org_2012.zip&lt;/a&gt;&lt;/li&gt;"                                                                            
+[4] "&lt;li&gt;&lt;a href=\"/wp-content/cps/data/cepr_org_2011.zip\"&gt;cepr_org_2011.zip&lt;/a&gt;&lt;/li&gt;"                                                                            
+[5] "&lt;li&gt;&lt;a onclick=\"_gaq.push(['_trackEvent', 'File','Download', 'cepr_org_2010']);\" href=\"/wp-content/cps/data/cepr_org_2010.zip\"&gt;cepr_org_2010.zip&lt;/a&gt;&lt;/li&gt;"
+[6] "&lt;li&gt;&lt;a onclick=\"_gaq.push(['_trackEvent', 'File','Download', 'cepr_org_2009']);\" href=\"/wp-content/cps/data/cepr_org_2009.zip\"&gt;cepr_org_2009.zip&lt;/a&gt;&lt;/li&gt;"
 &gt;
 </pre>
+
 <p>
 We're getting close! We have identified the lines containing the information we need. Now we just need to extract the text following the <code>href</code> argument. For that we need to use another feature of regular expressions called <i>capture groups</i> and <i>back references</i>. Here's how it works:
 </p>
 <div class="org-src-container">
 
-<pre class="src src-R"><span style="color: #2f96dc;">(</span>dataURLs <span style="color: #a45bad;">&lt;-</span> gsub<span style="color: #bc6ec5;">(</span><span style="color: #2d9574;">"^.*href=\"(.*\\.zip)\".*$"</span>, <span style="color: #2d9574;">"\\1"</span>, dataLines<span style="color: #bc6ec5;">)</span><span style="color: #2f96dc;">)</span>
+<pre class="src src-R">head<span style="color: #2f96dc;">(</span>dataURLs <span style="color: #a45bad;">&lt;-</span> gsub<span style="color: #bc6ec5;">(</span><span style="color: #2d9574;">"^.*href=\"(.*\\.zip)\".*$"</span>, <span style="color: #2d9574;">"\\1"</span>, dataLines<span style="color: #bc6ec5;">)</span><span style="color: #2f96dc;">)</span>
 </pre>
 </div>
 
 <pre class="example">
-&gt; (dataURLs &lt;- gsub("^.*href=\"(.*\\.zip)\".*$", "\\1", dataLines))
- [1] "/wp-content/cps/data/cepr_org_2014.zip"
- [2] "/wp-content/cps/data/cepr_org_2013.zip"
- [3] "/wp-content/cps/data/cepr_org_2012.zip"
- [4] "/wp-content/cps/data/cepr_org_2011.zip"
- [5] "/wp-content/cps/data/cepr_org_2010.zip"
- [6] "/wp-content/cps/data/cepr_org_2009.zip"
- [7] "/wp-content/cps/data/cepr_org_2008.zip"
- [8] "/wp-content/cps/data/cepr_org_2007.zip"
- [9] "/wp-content/cps/data/cepr_org_2006.zip"
-[10] "/wp-content/cps/data/cepr_org_2005.zip"
-[11] "/wp-content/cps/data/cepr_org_2004.zip"
-[12] "/wp-content/cps/data/cepr_org_2003.zip"
-[13] "/wp-content/cps/data/cepr_org_2002.zip"
-[14] "/wp-content/cps/data/cepr_org_2001.zip"
-[15] "/wp-content/cps/data/cepr_org_2000.zip"
-[16] "/wp-content/cps/data/cepr_org_1999.zip"
-[17] "/wp-content/cps/data/cepr_org_1998.zip"
-[18] "/wp-content/cps/data/cepr_org_1997.zip"
-[19] "/wp-content/cps/data/cepr_org_1996.zip"
-[20] "/wp-content/cps/data/cepr_org_1995.zip"
-[21] "/wp-content/cps/data/cepr_org_1994.zip"
-[22] "/wp-content/cps/data/cepr_org_1993.zip"
-[23] "/wp-content/cps/data/cepr_org_1992.zip"
-[24] "/wp-content/cps/data/cepr_org_1991.zip"
-[25] "/wp-content/cps/data/cepr_org_1990.zip"
-[26] "/wp-content/cps/data/cepr_org_1989.zip"
-[27] "/wp-content/cps/data/cepr_org_1988.zip"
-[28] "/wp-content/cps/data/cepr_org_1987.zip"
-[29] "/wp-content/cps/data/cepr_org_1986.zip"
-[30] "/wp-content/cps/data/cepr_org_1985.zip"
-[31] "/wp-content/cps/data/cepr_org_1984.zip"
-[32] "/wp-content/cps/data/cepr_org_1983.zip"
-[33] "/wp-content/cps/data/cepr_org_1982.zip"
-[34] "/wp-content/cps/data/cepr_org_1981.zip"
-[35] "/wp-content/cps/data/cepr_org_1980.zip"
-[36] "/wp-content/cps/data/cepr_org_1979.zip"
+&gt; head(dataURLs &lt;- gsub("^.*href=\"(.*\\.zip)\".*$", "\\1", dataLines))
+[1] "/wp-content/cps/data/cepr_org_2014.zip"
+[2] "/wp-content/cps/data/cepr_org_2013.zip"
+[3] "/wp-content/cps/data/cepr_org_2012.zip"
+[4] "/wp-content/cps/data/cepr_org_2011.zip"
+[5] "/wp-content/cps/data/cepr_org_2010.zip"
+[6] "/wp-content/cps/data/cepr_org_2009.zip"
 &gt;
 </pre>
 
@@ -482,7 +419,7 @@ For parsing html in R I recommend either the <code>httr</code> package or the <c
                           allLinks,
                           value = <span style="color: #38a882; font-weight: bold;">TRUE</span><span style="color: #bc6ec5;">)</span>,
                      sep = <span style="color: #2d9574;">""</span><span style="color: #2f96dc;">)</span>
-dataLinks
+head<span style="color: #2f96dc;">(</span>dataLinks<span style="color: #2f96dc;">)</span>
 </pre>
 </div>
 
@@ -498,43 +435,13 @@ dataLinks
 +                           allLinks,
 +                           value = TRUE),
 +                      sep = "")
-&gt; dataLinks
- [1] "http://ceprdata.org/wp-content/cps/data/cepr_org_2014.zip"
- [2] "http://ceprdata.org/wp-content/cps/data/cepr_org_2013.zip"
- [3] "http://ceprdata.org/wp-content/cps/data/cepr_org_2012.zip"
- [4] "http://ceprdata.org/wp-content/cps/data/cepr_org_2011.zip"
- [5] "http://ceprdata.org/wp-content/cps/data/cepr_org_2010.zip"
- [6] "http://ceprdata.org/wp-content/cps/data/cepr_org_2009.zip"
- [7] "http://ceprdata.org/wp-content/cps/data/cepr_org_2008.zip"
- [8] "http://ceprdata.org/wp-content/cps/data/cepr_org_2007.zip"
- [9] "http://ceprdata.org/wp-content/cps/data/cepr_org_2006.zip"
-[10] "http://ceprdata.org/wp-content/cps/data/cepr_org_2005.zip"
-[11] "http://ceprdata.org/wp-content/cps/data/cepr_org_2004.zip"
-[12] "http://ceprdata.org/wp-content/cps/data/cepr_org_2003.zip"
-[13] "http://ceprdata.org/wp-content/cps/data/cepr_org_2002.zip"
-[14] "http://ceprdata.org/wp-content/cps/data/cepr_org_2001.zip"
-[15] "http://ceprdata.org/wp-content/cps/data/cepr_org_2000.zip"
-[16] "http://ceprdata.org/wp-content/cps/data/cepr_org_1999.zip"
-[17] "http://ceprdata.org/wp-content/cps/data/cepr_org_1998.zip"
-[18] "http://ceprdata.org/wp-content/cps/data/cepr_org_1997.zip"
-[19] "http://ceprdata.org/wp-content/cps/data/cepr_org_1996.zip"
-[20] "http://ceprdata.org/wp-content/cps/data/cepr_org_1995.zip"
-[21] "http://ceprdata.org/wp-content/cps/data/cepr_org_1994.zip"
-[22] "http://ceprdata.org/wp-content/cps/data/cepr_org_1993.zip"
-[23] "http://ceprdata.org/wp-content/cps/data/cepr_org_1992.zip"
-[24] "http://ceprdata.org/wp-content/cps/data/cepr_org_1991.zip"
-[25] "http://ceprdata.org/wp-content/cps/data/cepr_org_1990.zip"
-[26] "http://ceprdata.org/wp-content/cps/data/cepr_org_1989.zip"
-[27] "http://ceprdata.org/wp-content/cps/data/cepr_org_1988.zip"
-[28] "http://ceprdata.org/wp-content/cps/data/cepr_org_1987.zip"
-[29] "http://ceprdata.org/wp-content/cps/data/cepr_org_1986.zip"
-[30] "http://ceprdata.org/wp-content/cps/data/cepr_org_1985.zip"
-[31] "http://ceprdata.org/wp-content/cps/data/cepr_org_1984.zip"
-[32] "http://ceprdata.org/wp-content/cps/data/cepr_org_1983.zip"
-[33] "http://ceprdata.org/wp-content/cps/data/cepr_org_1982.zip"
-[34] "http://ceprdata.org/wp-content/cps/data/cepr_org_1981.zip"
-[35] "http://ceprdata.org/wp-content/cps/data/cepr_org_1980.zip"
-[36] "http://ceprdata.org/wp-content/cps/data/cepr_org_1979.zip"
+&gt; head(dataLinks)
+[1] "http://ceprdata.org/wp-content/cps/data/cepr_org_2014.zip"
+[2] "http://ceprdata.org/wp-content/cps/data/cepr_org_2013.zip"
+[3] "http://ceprdata.org/wp-content/cps/data/cepr_org_2012.zip"
+[4] "http://ceprdata.org/wp-content/cps/data/cepr_org_2011.zip"
+[5] "http://ceprdata.org/wp-content/cps/data/cepr_org_2010.zip"
+[6] "http://ceprdata.org/wp-content/cps/data/cepr_org_2009.zip"
 &gt;
 </pre>
 
@@ -552,7 +459,7 @@ If you look at the result from the previous two methods you might notice that th
 </p>
 <div class="org-src-container">
 
-<pre class="src src-R"><span style="color: #2f96dc;">(</span>dataLinks <span style="color: #a45bad;">&lt;-</span> paste<span style="color: #bc6ec5;">(</span><span style="color: #2d9574;">"http://ceprdata.org/wp-content/cps/data/cepr_org_"</span>,
+<pre class="src src-R">head<span style="color: #2f96dc;">(</span>dataLinks <span style="color: #a45bad;">&lt;-</span> paste<span style="color: #bc6ec5;">(</span><span style="color: #2d9574;">"http://ceprdata.org/wp-content/cps/data/cepr_org_"</span>,
                     1979:2014,
                     <span style="color: #2d9574;">".zip"</span>,
                     sep = <span style="color: #2d9574;">""</span><span style="color: #bc6ec5;">)</span><span style="color: #2f96dc;">)</span>
@@ -560,46 +467,16 @@ If you look at the result from the previous two methods you might notice that th
 </div>
 
 <pre class="example">
-&gt; (dataLinks &lt;- paste("http://ceprdata.org/wp-content/cps/data/cepr_org_",
+&gt; head(dataLinks &lt;- paste("http://ceprdata.org/wp-content/cps/data/cepr_org_",
 +                     1979:2014,
 +                     ".zip",
 +                     sep = ""))
- [1] "http://ceprdata.org/wp-content/cps/data/cepr_org_1979.zip"
- [2] "http://ceprdata.org/wp-content/cps/data/cepr_org_1980.zip"
- [3] "http://ceprdata.org/wp-content/cps/data/cepr_org_1981.zip"
- [4] "http://ceprdata.org/wp-content/cps/data/cepr_org_1982.zip"
- [5] "http://ceprdata.org/wp-content/cps/data/cepr_org_1983.zip"
- [6] "http://ceprdata.org/wp-content/cps/data/cepr_org_1984.zip"
- [7] "http://ceprdata.org/wp-content/cps/data/cepr_org_1985.zip"
- [8] "http://ceprdata.org/wp-content/cps/data/cepr_org_1986.zip"
- [9] "http://ceprdata.org/wp-content/cps/data/cepr_org_1987.zip"
-[10] "http://ceprdata.org/wp-content/cps/data/cepr_org_1988.zip"
-[11] "http://ceprdata.org/wp-content/cps/data/cepr_org_1989.zip"
-[12] "http://ceprdata.org/wp-content/cps/data/cepr_org_1990.zip"
-[13] "http://ceprdata.org/wp-content/cps/data/cepr_org_1991.zip"
-[14] "http://ceprdata.org/wp-content/cps/data/cepr_org_1992.zip"
-[15] "http://ceprdata.org/wp-content/cps/data/cepr_org_1993.zip"
-[16] "http://ceprdata.org/wp-content/cps/data/cepr_org_1994.zip"
-[17] "http://ceprdata.org/wp-content/cps/data/cepr_org_1995.zip"
-[18] "http://ceprdata.org/wp-content/cps/data/cepr_org_1996.zip"
-[19] "http://ceprdata.org/wp-content/cps/data/cepr_org_1997.zip"
-[20] "http://ceprdata.org/wp-content/cps/data/cepr_org_1998.zip"
-[21] "http://ceprdata.org/wp-content/cps/data/cepr_org_1999.zip"
-[22] "http://ceprdata.org/wp-content/cps/data/cepr_org_2000.zip"
-[23] "http://ceprdata.org/wp-content/cps/data/cepr_org_2001.zip"
-[24] "http://ceprdata.org/wp-content/cps/data/cepr_org_2002.zip"
-[25] "http://ceprdata.org/wp-content/cps/data/cepr_org_2003.zip"
-[26] "http://ceprdata.org/wp-content/cps/data/cepr_org_2004.zip"
-[27] "http://ceprdata.org/wp-content/cps/data/cepr_org_2005.zip"
-[28] "http://ceprdata.org/wp-content/cps/data/cepr_org_2006.zip"
-[29] "http://ceprdata.org/wp-content/cps/data/cepr_org_2007.zip"
-[30] "http://ceprdata.org/wp-content/cps/data/cepr_org_2008.zip"
-[31] "http://ceprdata.org/wp-content/cps/data/cepr_org_2009.zip"
-[32] "http://ceprdata.org/wp-content/cps/data/cepr_org_2010.zip"
-[33] "http://ceprdata.org/wp-content/cps/data/cepr_org_2011.zip"
-[34] "http://ceprdata.org/wp-content/cps/data/cepr_org_2012.zip"
-[35] "http://ceprdata.org/wp-content/cps/data/cepr_org_2013.zip"
-[36] "http://ceprdata.org/wp-content/cps/data/cepr_org_2014.zip"
+[1] "http://ceprdata.org/wp-content/cps/data/cepr_org_1979.zip"
+[2] "http://ceprdata.org/wp-content/cps/data/cepr_org_1980.zip"
+[3] "http://ceprdata.org/wp-content/cps/data/cepr_org_1981.zip"
+[4] "http://ceprdata.org/wp-content/cps/data/cepr_org_1982.zip"
+[5] "http://ceprdata.org/wp-content/cps/data/cepr_org_1983.zip"
+[6] "http://ceprdata.org/wp-content/cps/data/cepr_org_1984.zip"
 &gt;
 </pre>
 
@@ -625,15 +502,6 @@ download.file<span style="color: #2f96dc;">(</span>dataLinks<span style="color: 
 <span style="color: #2aa198;">## </span><span style="color: #2aa198;">download.file(dataLinks[n], "dataSets/cepr_org_n.zip")</span>
 </pre>
 </div>
-
-<pre class="example">
-&gt; dir.create("dataSets")
-&gt; download.file(dataLinks[1], "dataSets/cepr_org_1979.zip")
-&gt; download.file(dataLinks[2], "dataSets/cepr_org_1980.zip")
-&gt; ## ...
-&gt; ## download.file(dataLinks[n], "dataSets/cepr_org_n.zip")
-&gt;
-</pre>
 <p>
 but that is too much typing. Much easier to let R do that for us. We can iterate over the elements of a vector in R using a loop, or using one of the <code>apply</code> family of functions.
 </p>
@@ -662,16 +530,6 @@ For now, lets start by downloading just the data files for years since 2010.
 <span style="color: #2f96dc;">}</span>
 </pre>
 </div>
-
-<pre class="example">
-&gt; for(link in grep("org_201", dataLinks, value = TRUE)) {
-+     download.file(link, 
-+                   destfile = gsub("^.*(cepr_org.*zip).*$",
-+                                   "dataSets/\\1",
-+                                   link))
-+ }
-&gt;
-</pre>
 </div>
 </div>
 
@@ -692,16 +550,6 @@ Our for loop works well for downloading the data files form ceprdata.org. But wh
 </pre>
 </div>
 
-<pre class="example">
-&gt; downloadFiles &lt;- function(urls) {
-+   for(link in urls) {
-+       download.file(link, 
-+                     destfile = basename(link))
-+   }
-+ }
-&gt;
-</pre>
-
 <p>
 Now we can download files more simply with
 </p>
@@ -710,33 +558,36 @@ Now we can download files more simply with
 <pre class="src src-R">downloadFiles<span style="color: #2f96dc;">(</span>grep<span style="color: #bc6ec5;">(</span><span style="color: #2d9574;">"org_201"</span>, dataLinks, value = <span style="color: #38a882; font-weight: bold;">TRUE</span><span style="color: #bc6ec5;">)</span><span style="color: #2f96dc;">)</span>
 </pre>
 </div>
-
-<pre class="example">
-&gt; downloadFiles(grep("org_201", dataLinks, value = TRUE))
-&gt;
-</pre>
 <p>
 and in fact we can use this function to download files from any urls we might have. As a silly example, let's download all the profile pictures from the <a href="http://projects.iq.harvard.edu/rtc">Research Technology Consulting</a> team at <a href="http://iq.harvard.edu/">The Institute for Quantitative Social Science</a>: 
 </p>
 <div class="org-src-container">
 
 <pre class="src src-R"><span style="color: #a45bad;">library</span><span style="color: #2f96dc;">(</span>readbitmap<span style="color: #2f96dc;">)</span>
+<span style="color: #2aa198;">## </span><span style="color: #2aa198;">parse the webpage and extract image URLs</span>
 profilePicLinks <span style="color: #a45bad;">&lt;-</span> html_attr<span style="color: #2f96dc;">(</span>html_nodes<span style="color: #bc6ec5;">(</span>html<span style="color: #2d9574;">(</span><span style="color: #2d9574;">"http://projects.iq.harvard.edu/rtc/people"</span><span style="color: #2d9574;">)</span>,
                                         <span style="color: #2d9574;">".image-style-profile-thumbnail"</span><span style="color: #bc6ec5;">)</span>,
                              <span style="color: #2d9574;">"src"</span><span style="color: #2f96dc;">)</span>
+<span style="color: #2aa198;">## </span><span style="color: #2aa198;">clean up the links</span>
 profilePicLinks <span style="color: #a45bad;">&lt;-</span> gsub<span style="color: #2f96dc;">(</span><span style="color: #2d9574;">"\\.png\\?.*$"</span>, <span style="color: #2d9574;">".png"</span>, profilePicLinks<span style="color: #2f96dc;">)</span>
+<span style="color: #2aa198;">## </span><span style="color: #2aa198;">download</span>
 downloadFiles<span style="color: #2f96dc;">(</span>paste<span style="color: #bc6ec5;">(</span><span style="color: #2d9574;">"http:"</span>, profilePicLinks, sep=<span style="color: #2d9574;">""</span><span style="color: #bc6ec5;">)</span><span style="color: #2f96dc;">)</span>
+<span style="color: #2aa198;">## </span><span style="color: #2aa198;">list downloaded image files</span>
 list.files<span style="color: #2f96dc;">(</span>pattern = <span style="color: #2d9574;">"\\.png$"</span><span style="color: #2f96dc;">)</span>
 </pre>
 </div>
 
 <pre class="example">
 &gt; library(readbitmap)
+&gt; ## parse the webpage and extract image URLs
 &gt; profilePicLinks &lt;- html_attr(html_nodes(html("http://projects.iq.harvard.edu/rtc/people"),
 +                                         ".image-style-profile-thumbnail"),
 +                              "src")
+&gt; ## clean up the links
 &gt; profilePicLinks &lt;- gsub("\\.png\\?.*$", ".png", profilePicLinks)
+&gt; ## download
 &gt; downloadFiles(paste("http:", profilePicLinks, sep=""))
+&gt; ## list downloaded image files
 &gt; list.files(pattern = "\\.png$")
 [1] "default-profile.png"      "ista_zahn-5.png"         
 [3] "simo_goshev.png"          "steven_worthington-2.png"
@@ -770,7 +621,7 @@ do.call<span style="color: #2f96dc;">(</span>grid.arrange, sapply<span style="co
 <h3 id="orgheadline12">The applying functions</h3>
 <div class="outline-text-3" id="text-orgheadline12">
 <p>
-The apply family of functions includes:
+You might have noticed that I slipped an example of <code>sapply</code> into the previous example. <code>sapply</code> is one of the apply family of functions in R that are useful for iteration. The apply family of functions includes:
 </p>
 <dl class="org-dl">
 <dt>apply</dt><dd>apply a function to each dimension (e.g., row or column), of a matrix or array</dd>
@@ -780,77 +631,126 @@ The apply family of functions includes:
 </dl>
 
 <p>
-Confused yet? The bad news is, there are more of these; see <code>?lapply</code>, <code>?Map</code> and <a href="http://stackoverflow.com/questions/3505701/r-grouping-functions-sapply-vs-lapply-vs-apply-vs-tapply-vs-by-vs-aggrega">this StackOverflow answer</a> for details. The good news is you can do quite a lot with just <code>apply</code> and <code>sapply</code>. To start, let's use <code>sapply</code> do download all the data files for years since 2010:
+Confused yet? The bad news is, there are more of these; see <code>?lapply</code>, <code>?Map</code> and <a href="http://stackoverflow.com/questions/3505701/r-grouping-functions-sapply-vs-lapply-vs-apply-vs-tapply-vs-by-vs-aggrega">this StackOverflow answer</a> for details. The good news is you can do quite a lot with just <code>apply</code> and <code>sapply</code>. 
+</p>
+</div>
+
+<div id="outline-container-orgheadline13" class="outline-4">
+<h4 id="orgheadline13">Iterating over vectors and lists with the <code>sapply</code> function</h4>
+<div class="outline-text-4" id="text-orgheadline13">
+<p>
+The <code>sapply</code> function iterates over a vector or list and applys a function to each element. To start, let's use <code>sapply</code> do download all the data files for years since 2010:
 </p>
 <div class="org-src-container">
 
 <pre class="src src-R">sapply<span style="color: #2f96dc;">(</span>grep<span style="color: #bc6ec5;">(</span><span style="color: #2d9574;">"org_201"</span>, dataLinks, value = <span style="color: #38a882; font-weight: bold;">TRUE</span><span style="color: #bc6ec5;">)</span>,
-       download.file,
-       destfile = basename<span style="color: #bc6ec5;">(</span>url<span style="color: #bc6ec5;">)</span>
+       <span style="color: #237fbf; font-weight: bold;">function</span><span style="color: #bc6ec5;">(</span>x<span style="color: #bc6ec5;">)</span> download.file<span style="color: #bc6ec5;">(</span>x, destfile = basename<span style="color: #2d9574;">(</span>x<span style="color: #2d9574;">)</span><span style="color: #bc6ec5;">)</span>
        <span style="color: #2f96dc;">)</span>
 </pre>
 </div>
 
+<pre class="example">
+&gt; sapply(grep("org_201", dataLinks, value = TRUE),
++        function(x) download.file(x, destfile = basename(x))
++        )
+http://ceprdata.org/wp-content/cps/data/cepr_org_2010.zip 
+                                                        0 
+http://ceprdata.org/wp-content/cps/data/cepr_org_2011.zip 
+                                                        0 
+http://ceprdata.org/wp-content/cps/data/cepr_org_2012.zip 
+                                                        0 
+http://ceprdata.org/wp-content/cps/data/cepr_org_2013.zip 
+                                                        0 
+http://ceprdata.org/wp-content/cps/data/cepr_org_2014.zip 
+                                                        0 
+&gt;
+</pre>
+
+<p>
+For this task (downloading files) there is not much advantage to using <code>sapply</code> instead of <code>for</code>. The main advantage is the simpler handling of return values. To see this, let's revisit the profile picture example. Our goal is to read all the .png files in our working directory. We've already seen how to do this with <code>sapply</code>;
+</p>
 <div class="org-src-container">
 
-<pre class="src src-R" id="orgsrcblock1">M <span style="color: #a45bad;">&lt;-</span> matrix<span style="color: #2f96dc;">(</span>1:20,
-            ncol=4,
-            dimnames = list<span style="color: #bc6ec5;">(</span>paste<span style="color: #2d9574;">(</span><span style="color: #2d9574;">"row"</span>, 1:5<span style="color: #2d9574;">)</span>,
-                            paste<span style="color: #2d9574;">(</span><span style="color: #2d9574;">"col"</span>, 1:4<span style="color: #2d9574;">)</span><span style="color: #bc6ec5;">)</span><span style="color: #2f96dc;">)</span>
-apply<span style="color: #2f96dc;">(</span>M, 1, mean<span style="color: #2f96dc;">)</span> <span style="color: #2aa198;">## </span><span style="color: #2aa198;">average across the rows</span>
-apply<span style="color: #2f96dc;">(</span>M, 2, sum<span style="color: #2f96dc;">)</span> <span style="color: #2aa198;">## </span><span style="color: #2aa198;">sum down the columns</span>
+<pre class="src src-R">imgs <span style="color: #a45bad;">&lt;-</span> sapply<span style="color: #2f96dc;">(</span>list.files<span style="color: #bc6ec5;">(</span>pattern = <span style="color: #2d9574;">"\\.png$"</span><span style="color: #bc6ec5;">)</span>,
+               read.bitmap<span style="color: #2f96dc;">)</span>
+</pre>
+</div>
+<p>
+How can we do that with a for loop? First we need to create a list to store the restults, then as we loop through we need to assign the image data to an element of the list. It's not terrible:
+</p>
+<div class="org-src-container">
+
+<pre class="src src-R">imgs <span style="color: #a45bad;">&lt;-</span> list<span style="color: #2f96dc;">()</span>
+<span style="color: #237fbf; font-weight: bold;">for</span> <span style="color: #2f96dc;">(</span>file <span style="color: #237fbf; font-weight: bold;">in</span> list.files<span style="color: #bc6ec5;">(</span>pattern = <span style="color: #2d9574;">"\\.png$"</span><span style="color: #bc6ec5;">)</span><span style="color: #2f96dc;">)</span> <span style="color: #2f96dc;">{</span>
+  imgs<span style="color: #bc6ec5;">[</span><span style="color: #2d9574;">[</span>file<span style="color: #2d9574;">]</span><span style="color: #bc6ec5;">]</span> <span style="color: #a45bad;">&lt;-</span> read.bitmap<span style="color: #bc6ec5;">(</span>file<span style="color: #bc6ec5;">)</span>
+<span style="color: #2f96dc;">}</span>
+</pre>
+</div>
+<p>
+As I said, not terrible, but definitely more complicated than the sapply version. 
+</p>
+</div>
+
+<ul class="org-ul"><li><a id="orgheadline14"></a>Iterating over arrays with the <code>apply</code> function<br  /><div class="outline-text-5" id="text-orgheadline14">
+<p>
+Now that we've downloaded some of the ceprdata.org data we might want to get some information about these files. We can do that using the <code>file.info</code> function:
+</p>
+<div class="org-src-container">
+
+<pre class="src src-R">ceprFiles <span style="color: #a45bad;">&lt;-</span> list.files<span style="color: #2f96dc;">(</span>pattern = <span style="color: #2d9574;">"\\.zip"</span><span style="color: #2f96dc;">)</span>
+ceprFileInfo <span style="color: #a45bad;">&lt;-</span> cbind<span style="color: #2f96dc;">(</span>size = file.size<span style="color: #bc6ec5;">(</span>ceprFiles<span style="color: #bc6ec5;">)</span>, mode = file.mode<span style="color: #bc6ec5;">(</span>ceprFiles<span style="color: #bc6ec5;">)</span><span style="color: #2f96dc;">)</span>
+rownames<span style="color: #2f96dc;">(</span>ceprFileInfo<span style="color: #2f96dc;">)</span> <span style="color: #a45bad;">&lt;-</span> ceprFiles
+ceprFileInfo
 </pre>
 </div>
 
 <pre class="example">
-&gt; M &lt;- matrix(1:20, ncol=4)
-&gt; apply(M, 2, mean) ## average across the rows
-[1]  3  8 13 18
-&gt; apply(M, 2, sum) ## sum the columns
-[1] 15 40 65 90
+&gt; ceprFiles &lt;- list.files(pattern = "\\.zip")
+&gt; ceprFileInfo &lt;- cbind(size = file.size(ceprFiles), mode = file.mode(ceprFiles))
+&gt; rownames(ceprFileInfo) &lt;- ceprFiles
+&gt; ceprFileInfo
+                      size mode
+cepr_org_2010.zip 14969769  420
+cepr_org_2011.zip 14811229  420
+cepr_org_2012.zip 14774713  420
+cepr_org_2013.zip 14627250  420
+cepr_org_2014.zip 14477818  420
 &gt;
 </pre>
-</div>
-</div>
-
-<div id="outline-container-orgheadline13" class="outline-3">
-<h3 id="orgheadline13">for loops</h3>
-<div class="outline-text-3" id="text-orgheadline13">
 <p>
-We can alternatively calculate row and column means, but in this case <code>apply</code> is easier.
-</p>
-<div class="org-src-container">
-
-<pre class="src src-R" id="orgsrcblock2">M.means <span style="color: #a45bad;">&lt;-</span> c<span style="color: #2f96dc;">()</span> <span style="color: #2aa198;">## </span><span style="color: #2aa198;">empty vector to hold the result</span>
-<span style="color: #237fbf; font-weight: bold;">for</span> <span style="color: #2f96dc;">(</span>row <span style="color: #237fbf; font-weight: bold;">in</span> rownames<span style="color: #bc6ec5;">(</span>M<span style="color: #bc6ec5;">)</span><span style="color: #2f96dc;">)</span> <span style="color: #2f96dc;">{</span>
-    M.means<span style="color: #bc6ec5;">[</span>row<span style="color: #bc6ec5;">]</span> <span style="color: #a45bad;">&lt;-</span> mean<span style="color: #bc6ec5;">(</span>M<span style="color: #2d9574;">[</span>row, <span style="color: #2d9574;">]</span><span style="color: #bc6ec5;">)</span>
-<span style="color: #2f96dc;">}</span>
-
-M.sums <span style="color: #a45bad;">&lt;-</span> c<span style="color: #2f96dc;">()</span> <span style="color: #2aa198;">## </span><span style="color: #2aa198;">empty vector to hold the result</span>
-<span style="color: #237fbf; font-weight: bold;">for</span> <span style="color: #2f96dc;">(</span>col <span style="color: #237fbf; font-weight: bold;">in</span> colnames<span style="color: #bc6ec5;">(</span>M<span style="color: #bc6ec5;">)</span><span style="color: #2f96dc;">)</span> <span style="color: #2f96dc;">{</span>
-    M.sums<span style="color: #bc6ec5;">[</span>col<span style="color: #bc6ec5;">]</span> <span style="color: #a45bad;">&lt;-</span> mean<span style="color: #bc6ec5;">(</span>M<span style="color: #2d9574;">[</span>, col<span style="color: #2d9574;">]</span><span style="color: #bc6ec5;">)</span>
-<span style="color: #2f96dc;">}</span>
-</pre>
-</div>
-</div>
-</div>
-
-
-<div id="outline-container-orgheadline14" class="outline-3">
-<h3 id="orgheadline14">The sapply function</h3>
-<div class="outline-text-3" id="text-orgheadline14">
-<p>
-It is often useful to apply a function to each element of a vector, list, or data.frame; you can use the <code>sapply</code> function for this
+ceprFileInfo is a <span class="underline">matrix</span>, with each row containing information about one of the files we downloaded. We can calculate the means for each column in this mattrix using the <code>apply</code> fuction:
 </p>
 
 <div class="org-src-container">
 
-<pre class="src src-R" id="orgsrcblock3">sapply<span style="color: #2f96dc;">(</span>DF, class<span style="color: #2f96dc;">)</span> <span style="color: #2aa198;"># </span><span style="color: #2aa198;">get the class of each column in the DF data.frame</span>
-sapply<span style="color: #2f96dc;">(</span>L, length<span style="color: #2f96dc;">)</span> <span style="color: #2aa198;"># </span><span style="color: #2aa198;">get the length of each element in the L list</span>
-sapply<span style="color: #2f96dc;">(</span>DF, is.numeric<span style="color: #2f96dc;">)</span> <span style="color: #2aa198;"># </span><span style="color: #2aa198;">check each column of DF to see if it is numeric</span>
+<pre class="src src-R"><span style="color: #2aa198;">## </span><span style="color: #2aa198;">average file size and permissions</span>
+<span style="color: #2f96dc;">(</span>fileInfoAverage <span style="color: #a45bad;">&lt;-</span> apply<span style="color: #bc6ec5;">(</span>ceprFileInfo, MARGIN = 2, mean<span style="color: #bc6ec5;">)</span><span style="color: #2f96dc;">)</span>
+<span style="color: #2aa198;">## </span><span style="color: #2aa198;">standard deviation of file size and permissions</span>
+apply<span style="color: #2f96dc;">(</span>ceprFileInfo, MARGIN = 2, sd<span style="color: #2f96dc;">)</span>
+<span style="color: #2aa198;">## </span><span style="color: #2aa198;">deviation from the average</span>
+apply<span style="color: #2f96dc;">(</span>ceprFileInfo, MARGIN = 1, <span style="color: #237fbf; font-weight: bold;">function</span><span style="color: #bc6ec5;">(</span>x<span style="color: #bc6ec5;">)</span> x - fileInfoAverage<span style="color: #2f96dc;">)</span> <span style="color: #2aa198;">#</span>
 </pre>
 </div>
 
+<pre class="example">
+&gt; ## average file size and permissions
+&gt; (fileInfoAverage &lt;- apply(ceprFileInfo, MARGIN = 2, mean))
+    size     mode 
+14732156      420 
+&gt; ## standard deviation of file size and permissions
+&gt; apply(ceprFileInfo, MARGIN = 2, sd)
+    size     mode 
+187227.6      0.0 
+&gt; ## deviation from the average
+&gt; apply(ceprFileInfo, MARGIN = 1, function(x) x - fileInfoAverage) # 
+     cepr_org_2010.zip cepr_org_2011.zip cepr_org_2012.zip
+size          237613.2           79073.2           42557.2
+mode               0.0               0.0               0.0
+     cepr_org_2013.zip cepr_org_2014.zip
+size         -104905.8         -254337.8
+mode               0.0               0.0
+&gt;
+</pre>
 <pre class="example">
 &gt; sapply(DF, class) # get the class of each column in the DF data.frame
         x         y 
@@ -867,6 +767,7 @@ x y z
 <p>
 See also: <code>lapply</code>, <code>vapply</code>, and <code>mapply</code>.
 </p>
+</div></li></ul>
 </div>
 </div>
 <div id="outline-container-orgheadline15" class="outline-3">
@@ -880,7 +781,7 @@ The <code>sapply</code> function can be used in combination with indexing to ext
 </ul>
 <div class="org-src-container">
 
-<pre class="src src-R" id="orgsrcblock4">DF<span style="color: #2f96dc;">[</span>, c<span style="color: #bc6ec5;">(</span><span style="color: #38a882; font-weight: bold;">TRUE</span>, <span style="color: #38a882; font-weight: bold;">FALSE</span><span style="color: #bc6ec5;">)</span><span style="color: #2f96dc;">]</span> <span style="color: #2aa198;"># </span><span style="color: #2aa198;">select the first column of DF, but not the second</span>
+<pre class="src src-R" id="orgsrcblock1">DF<span style="color: #2f96dc;">[</span>, c<span style="color: #bc6ec5;">(</span><span style="color: #38a882; font-weight: bold;">TRUE</span>, <span style="color: #38a882; font-weight: bold;">FALSE</span><span style="color: #bc6ec5;">)</span><span style="color: #2f96dc;">]</span> <span style="color: #2aa198;"># </span><span style="color: #2aa198;">select the first column of DF, but not the second</span>
 </pre>
 </div>
 
@@ -902,7 +803,7 @@ The <code>sapply</code> function can be used in combination with indexing to ext
 </ul>
 <div class="org-src-container">
 
-<pre class="src src-R" id="orgsrcblock5"><span style="color: #2f96dc;">(</span>DF.which.num <span style="color: #a45bad;">&lt;-</span> sapply<span style="color: #bc6ec5;">(</span>DF, is.numeric<span style="color: #bc6ec5;">)</span><span style="color: #2f96dc;">)</span><span style="color: #2aa198;"># </span><span style="color: #2aa198;">check which columns of DF are numeric</span>
+<pre class="src src-R" id="orgsrcblock2"><span style="color: #2f96dc;">(</span>DF.which.num <span style="color: #a45bad;">&lt;-</span> sapply<span style="color: #bc6ec5;">(</span>DF, is.numeric<span style="color: #bc6ec5;">)</span><span style="color: #2f96dc;">)</span><span style="color: #2aa198;"># </span><span style="color: #2aa198;">check which columns of DF are numeric</span>
 DF<span style="color: #2f96dc;">[</span>DF.which.num<span style="color: #2f96dc;">]</span> <span style="color: #2aa198;"># </span><span style="color: #2aa198;">select the numeric columns</span>
 </pre>
 </div>
@@ -961,7 +862,7 @@ Parts of vectors, matricies, data.frames, and lists can be extracted or replaced
 </p>
 <div class="org-src-container">
 
-<pre class="src src-R" id="orgsrcblock6"><span style="color: #2aa198;">## </span><span style="color: #2aa198;">indexing vectors by position</span>
+<pre class="src src-R" id="orgsrcblock3"><span style="color: #2aa198;">## </span><span style="color: #2aa198;">indexing vectors by position</span>
 x <span style="color: #a45bad;">&lt;-</span> 101:110 <span style="color: #2aa198;"># </span><span style="color: #2aa198;">Creat a vector of integers from 101 to 110</span>
 x<span style="color: #2f96dc;">[</span>c<span style="color: #bc6ec5;">(</span>4, 5<span style="color: #bc6ec5;">)</span><span style="color: #2f96dc;">]</span> <span style="color: #2aa198;"># </span><span style="color: #2aa198;">extract the fourth and fifth values of x</span>
 x<span style="color: #2f96dc;">[</span>4<span style="color: #2f96dc;">]</span> <span style="color: #a45bad;">&lt;-</span> 1 <span style="color: #2aa198;"># </span><span style="color: #2aa198;">change the 4th value to 1</span>
@@ -1005,7 +906,7 @@ Elements can also be selected or replaced based on logical (TRUE/FALSE) vectors.
 
 <div class="org-src-container">
 
-<pre class="src src-R" id="orgsrcblock7">x &gt; 106 <span style="color: #2aa198;"># </span><span style="color: #2aa198;">shows which elements of x are &gt; 106</span>
+<pre class="src src-R" id="orgsrcblock4">x &gt; 106 <span style="color: #2aa198;"># </span><span style="color: #2aa198;">shows which elements of x are &gt; 106</span>
 x<span style="color: #2f96dc;">[</span>x &gt; 106<span style="color: #2f96dc;">]</span> <span style="color: #2aa198;"># </span><span style="color: #2aa198;">selects elements of x where x &gt; 106</span>
 </pre>
 </div>
@@ -1037,7 +938,7 @@ Additional operators useful for logical indexing:
 
 <div class="org-src-container">
 
-<pre class="src src-R" id="orgsrcblock8">x<span style="color: #2f96dc;">[</span>x &gt; 106 &amp; x &lt;= 108<span style="color: #2f96dc;">]</span>
+<pre class="src src-R" id="orgsrcblock5">x<span style="color: #2f96dc;">[</span>x &gt; 106 &amp; x &lt;= 108<span style="color: #2f96dc;">]</span>
 x<span style="color: #2f96dc;">[</span>x &gt; 106 | names<span style="color: #bc6ec5;">(</span>x<span style="color: #bc6ec5;">)</span> %<span style="color: #237fbf; font-weight: bold;">in</span>% c<span style="color: #bc6ec5;">(</span><span style="color: #2d9574;">"a"</span>, <span style="color: #2d9574;">"b"</span>, <span style="color: #2d9574;">"c"</span><span style="color: #bc6ec5;">)</span><span style="color: #2f96dc;">]</span>
 </pre>
 </div>
@@ -1064,7 +965,7 @@ Extraction on matrices operate in two dimensions: first dimension refers to rows
 
 <div class="org-src-container">
 
-<pre class="src src-R" id="orgsrcblock9"><span style="color: #2aa198;">## </span><span style="color: #2aa198;">indexing matricies</span>
+<pre class="src src-R" id="orgsrcblock6"><span style="color: #2aa198;">## </span><span style="color: #2aa198;">indexing matricies</span>
  <span style="color: #2aa198;"># </span><span style="color: #2aa198;">create a matrix</span>
 <span style="color: #2f96dc;">(</span>M <span style="color: #a45bad;">&lt;-</span> cbind<span style="color: #bc6ec5;">(</span>x = 1:5, y = -1:-5, z = c<span style="color: #2d9574;">(</span>6, 3, 4, 2, 8<span style="color: #2d9574;">)</span><span style="color: #bc6ec5;">)</span><span style="color: #2f96dc;">)</span>
 M<span style="color: #2f96dc;">[</span>1:3, <span style="color: #2f96dc;">]</span> <span style="color: #2aa198;">#</span><span style="color: #2aa198;">extract rows 1 through 3, all columns</span>
@@ -1113,7 +1014,7 @@ Lists can be indexed in the same way as vectors, with the following extension:
 </p>
 <div class="org-src-container">
 
-<pre class="src src-R" id="orgsrcblock10"><span style="color: #2aa198;"># </span><span style="color: #2aa198;">Lists can be indexed with single brackets, similar to vector indexing</span>
+<pre class="src src-R" id="orgsrcblock7"><span style="color: #2aa198;"># </span><span style="color: #2aa198;">Lists can be indexed with single brackets, similar to vector indexing</span>
 L<span style="color: #2f96dc;">[</span>c<span style="color: #bc6ec5;">(</span>1, 2<span style="color: #bc6ec5;">)</span><span style="color: #2f96dc;">]</span> <span style="color: #2aa198;"># </span><span style="color: #2aa198;">the first two elements of L</span>
 L<span style="color: #2f96dc;">[</span>1<span style="color: #2f96dc;">]</span> <span style="color: #2aa198;"># </span><span style="color: #2aa198;">a list with one element</span>
 <span style="color: #2aa198;">## </span><span style="color: #2aa198;">double brackets select the content of a single selected element</span>
@@ -1153,7 +1054,7 @@ A data.frame can be indexed in the same ways as a matrix, and also the same ways
 
 <div class="org-src-container">
 
-<pre class="src src-R" id="orgsrcblock11">DF<span style="color: #2f96dc;">[</span>c<span style="color: #bc6ec5;">(</span>3, 1, 2<span style="color: #bc6ec5;">)</span>, c<span style="color: #bc6ec5;">(</span>1, 2<span style="color: #bc6ec5;">)</span><span style="color: #2f96dc;">]</span> <span style="color: #2aa198;"># </span><span style="color: #2aa198;">rows 3, 1, and 2, columns 1 and 2</span>
+<pre class="src src-R" id="orgsrcblock8">DF<span style="color: #2f96dc;">[</span>c<span style="color: #bc6ec5;">(</span>3, 1, 2<span style="color: #bc6ec5;">)</span>, c<span style="color: #bc6ec5;">(</span>1, 2<span style="color: #bc6ec5;">)</span><span style="color: #2f96dc;">]</span> <span style="color: #2aa198;"># </span><span style="color: #2aa198;">rows 3, 1, and 2, columns 1 and 2</span>
 DF<span style="color: #2f96dc;">[</span><span style="color: #bc6ec5;">[</span>1<span style="color: #bc6ec5;">]</span><span style="color: #2f96dc;">]</span> <span style="color: #2aa198;"># </span><span style="color: #2aa198;">column 1 as a vector</span>
 </pre>
 </div>
@@ -1174,7 +1075,7 @@ There is a subtle but important difference between <code>[ , n]</code> and <code
 </p>
 <div class="org-src-container">
 
-<pre class="src src-R" id="orgsrcblock12">str<span style="color: #2f96dc;">(</span>DF<span style="color: #bc6ec5;">[</span>1<span style="color: #bc6ec5;">]</span><span style="color: #2f96dc;">)</span><span style="color: #2aa198;"># </span><span style="color: #2aa198;">a data.frame with one column</span>
+<pre class="src src-R" id="orgsrcblock9">str<span style="color: #2f96dc;">(</span>DF<span style="color: #bc6ec5;">[</span>1<span style="color: #bc6ec5;">]</span><span style="color: #2f96dc;">)</span><span style="color: #2aa198;"># </span><span style="color: #2aa198;">a data.frame with one column</span>
 str<span style="color: #2f96dc;">(</span>DF<span style="color: #bc6ec5;">[</span> ,1<span style="color: #bc6ec5;">]</span><span style="color: #2f96dc;">)</span><span style="color: #2aa198;"># </span><span style="color: #2aa198;">a vector</span>
 </pre>
 </div>
@@ -1251,7 +1152,7 @@ Goal: write a function that tells us if a number is positive or negative
 
 <div class="org-src-container">
 
-<pre class="src src-R" id="orgsrcblock13"><span style="color: #2aa198;">## </span><span style="color: #2aa198;">use branching to return different result depending on the sign of the input</span>
+<pre class="src src-R" id="orgsrcblock10"><span style="color: #2aa198;">## </span><span style="color: #2aa198;">use branching to return different result depending on the sign of the input</span>
 <span style="color: #bc6ec5; font-weight: bold;">isPositive</span> <span style="color: #a45bad;">&lt;-</span> <span style="color: #237fbf; font-weight: bold;">function</span><span style="color: #2f96dc;">(</span>x<span style="color: #2f96dc;">)</span> <span style="color: #2f96dc;">{</span> <span style="color: #2aa198;"># </span><span style="color: #2aa198;">define function "isPositive"</span>
   <span style="color: #237fbf; font-weight: bold;">if</span> <span style="color: #bc6ec5;">(</span>x &gt; 0<span style="color: #bc6ec5;">)</span> <span style="color: #bc6ec5;">{</span> <span style="color: #2aa198;"># </span><span style="color: #2aa198;">if x is greater than zero, then</span>
     <span style="color: #237fbf; font-weight: bold;">return</span><span style="color: #2d9574;">(</span>paste<span style="color: #67b11d;">(</span>x, <span style="color: #2d9574;">"is positive \n"</span><span style="color: #67b11d;">)</span><span style="color: #2d9574;">)</span> <span style="color: #bc6ec5;">}</span> <span style="color: #2aa198;"># </span><span style="color: #2aa198;">say so! </span>
@@ -1300,7 +1201,7 @@ Add a condition to handle <code>x = 0</code>
 
 <div class="org-src-container">
 
-<pre class="src src-R" id="orgsrcblock14"><span style="color: #2aa198;">## </span><span style="color: #2aa198;">add condition to handle the case that x is zero</span>
+<pre class="src src-R" id="orgsrcblock11"><span style="color: #2aa198;">## </span><span style="color: #2aa198;">add condition to handle the case that x is zero</span>
   <span style="color: #bc6ec5; font-weight: bold;">isPositive</span> <span style="color: #a45bad;">&lt;-</span> <span style="color: #237fbf; font-weight: bold;">function</span><span style="color: #2f96dc;">(</span>x<span style="color: #2f96dc;">)</span> <span style="color: #2f96dc;">{</span> <span style="color: #2aa198;"># </span><span style="color: #2aa198;">define function "isPositive"</span>
     <span style="color: #237fbf; font-weight: bold;">if</span> <span style="color: #bc6ec5;">(</span>x &gt; 0<span style="color: #bc6ec5;">)</span> <span style="color: #bc6ec5;">{</span> <span style="color: #2aa198;"># </span><span style="color: #2aa198;">if x is greater than zero, then</span>
       <span style="color: #237fbf; font-weight: bold;">return</span><span style="color: #2d9574;">(</span>paste<span style="color: #67b11d;">(</span>x, <span style="color: #2d9574;">"is positive \n"</span><span style="color: #67b11d;">)</span><span style="color: #2d9574;">)</span> <span style="color: #bc6ec5;">}</span> <span style="color: #2aa198;"># </span><span style="color: #2aa198;">say so! </span>
@@ -1331,7 +1232,7 @@ Test the new function
 
 <div class="org-src-container">
 
-<pre class="src src-R" id="orgsrcblock15">isPositive<span style="color: #2f96dc;">(</span>0<span style="color: #2f96dc;">)</span> <span style="color: #2aa198;"># </span><span style="color: #2aa198;">test the isPositive() function</span>
+<pre class="src src-R" id="orgsrcblock12">isPositive<span style="color: #2f96dc;">(</span>0<span style="color: #2f96dc;">)</span> <span style="color: #2aa198;"># </span><span style="color: #2aa198;">test the isPositive() function</span>
 isPositive<span style="color: #2f96dc;">(</span><span style="color: #2d9574;">"a"</span><span style="color: #2f96dc;">)</span> <span style="color: #2aa198;">#</span><span style="color: #2aa198;">oops, that will not work!</span>
 </pre>
 </div>
@@ -1359,7 +1260,7 @@ Do something reasonable if x is not numeric
 
 <div class="org-src-container">
 
-<pre class="src src-R" id="orgsrcblock16"><span style="color: #2aa198;">## </span><span style="color: #2aa198;">add condition to handle the case that x is zero</span>
+<pre class="src src-R" id="orgsrcblock13"><span style="color: #2aa198;">## </span><span style="color: #2aa198;">add condition to handle the case that x is zero</span>
   <span style="color: #bc6ec5; font-weight: bold;">isPositive</span> <span style="color: #a45bad;">&lt;-</span> <span style="color: #237fbf; font-weight: bold;">function</span><span style="color: #2f96dc;">(</span>x<span style="color: #2f96dc;">)</span> <span style="color: #2f96dc;">{</span> <span style="color: #2aa198;"># </span><span style="color: #2aa198;">define function "isPositive"</span>
     <span style="color: #237fbf; font-weight: bold;">if</span><span style="color: #bc6ec5;">(</span>!is.numeric<span style="color: #2d9574;">(</span>x<span style="color: #2d9574;">)</span> | length<span style="color: #2d9574;">(</span>x<span style="color: #2d9574;">)</span> &gt; 1<span style="color: #bc6ec5;">)</span> <span style="color: #bc6ec5;">{</span>
       <span style="color: #237fbf; font-weight: bold;">stop</span><span style="color: #2d9574;">(</span><span style="color: #2d9574;">"x must be a numeric vector of length one! \n"</span><span style="color: #2d9574;">)</span><span style="color: #bc6ec5;">}</span>
@@ -1448,7 +1349,7 @@ The class of an object can be retrieved and modified using the <code>class()</co
 
 <div class="org-src-container">
 
-<pre class="src src-R" id="orgsrcblock17">x <span style="color: #a45bad;">&lt;-</span> 1:10
+<pre class="src src-R" id="orgsrcblock14">x <span style="color: #a45bad;">&lt;-</span> 1:10
 class<span style="color: #2f96dc;">(</span>x<span style="color: #2f96dc;">)</span> 
 class<span style="color: #2f96dc;">(</span>x<span style="color: #2f96dc;">)</span> <span style="color: #a45bad;">&lt;-</span> <span style="color: #2d9574;">"foo"</span>
 class<span style="color: #2f96dc;">(</span>x<span style="color: #2f96dc;">)</span>
@@ -1471,7 +1372,7 @@ Objects are not limited to a single class, and can have many classes:
 
 <div class="org-src-container">
 
-<pre class="src src-R" id="orgsrcblock18">class<span style="color: #2f96dc;">(</span>x<span style="color: #2f96dc;">)</span> <span style="color: #a45bad;">&lt;-</span> c<span style="color: #2f96dc;">(</span><span style="color: #2d9574;">"A"</span>, <span style="color: #2d9574;">"B"</span><span style="color: #2f96dc;">)</span>
+<pre class="src src-R" id="orgsrcblock15">class<span style="color: #2f96dc;">(</span>x<span style="color: #2f96dc;">)</span> <span style="color: #a45bad;">&lt;-</span> c<span style="color: #2f96dc;">(</span><span style="color: #2d9574;">"A"</span>, <span style="color: #2d9574;">"B"</span><span style="color: #2f96dc;">)</span>
 class<span style="color: #2f96dc;">(</span>x<span style="color: #2f96dc;">)</span>
 </pre>
 </div>
@@ -1496,7 +1397,7 @@ class<span style="color: #2f96dc;">(</span>x<span style="color: #2f96dc;">)</spa
 
 <div class="org-src-container">
 
-<pre class="src src-R" id="orgsrcblock19"><span style="color: #2aa198;"># </span><span style="color: #2aa198;">see what methods have been defined for the mean function</span>
+<pre class="src src-R" id="orgsrcblock16"><span style="color: #2aa198;"># </span><span style="color: #2aa198;">see what methods have been defined for the mean function</span>
 methods<span style="color: #2f96dc;">(</span>mean<span style="color: #2f96dc;">)</span>
 <span style="color: #2aa198;"># </span><span style="color: #2aa198;">which functions have methods for data.frames?</span>
 methods<span style="color: #2f96dc;">(</span>class=<span style="color: #2d9574;">"data.frame"</span><span style="color: #2f96dc;">)[</span>1:9<span style="color: #2f96dc;">]</span>
@@ -1530,7 +1431,7 @@ To create a new method for a function that is already generic all you have to do
 
 <div class="org-src-container">
 
-<pre class="src src-R" id="orgsrcblock20"><span style="color: #2aa198;"># </span><span style="color: #2aa198;">create a mean() method for objects of class "foo":</span>
+<pre class="src src-R" id="orgsrcblock17"><span style="color: #2aa198;"># </span><span style="color: #2aa198;">create a mean() method for objects of class "foo":</span>
 <span style="color: #bc6ec5; font-weight: bold;">mean.foo</span> <span style="color: #a45bad;">&lt;-</span> <span style="color: #237fbf; font-weight: bold;">function</span><span style="color: #2f96dc;">(</span>x<span style="color: #2f96dc;">)</span> <span style="color: #2f96dc;">{</span> <span style="color: #2aa198;"># </span><span style="color: #2aa198;">mean method for "foo" class</span>
   <span style="color: #237fbf; font-weight: bold;">if</span><span style="color: #bc6ec5;">(</span>is.numeric<span style="color: #2d9574;">(</span>x<span style="color: #2d9574;">)</span><span style="color: #bc6ec5;">)</span> <span style="color: #bc6ec5;">{</span>
     cat<span style="color: #2d9574;">(</span><span style="color: #2d9574;">"The average is"</span>, mean.default<span style="color: #67b11d;">(</span>x<span style="color: #67b11d;">)</span><span style="color: #2d9574;">)</span>
@@ -1583,7 +1484,7 @@ S3 generics are most often used for print, summary, and plot methods, but someti
 
 <div class="org-src-container">
 
-<pre class="src src-R" id="orgsrcblock21"><span style="color: #2aa198;"># </span><span style="color: #2aa198;">create a generic disp() function</span>
+<pre class="src src-R" id="orgsrcblock18"><span style="color: #2aa198;"># </span><span style="color: #2aa198;">create a generic disp() function</span>
 <span style="color: #bc6ec5; font-weight: bold;">disp</span> <span style="color: #a45bad;">&lt;-</span> <span style="color: #237fbf; font-weight: bold;">function</span><span style="color: #2f96dc;">(</span>x, ...<span style="color: #2f96dc;">)</span> <span style="color: #2f96dc;">{</span>
   UseMethod<span style="color: #bc6ec5;">(</span><span style="color: #2d9574;">"disp"</span><span style="color: #bc6ec5;">)</span>
 <span style="color: #2f96dc;">}</span>
@@ -1688,7 +1589,7 @@ Floating point arithmetic is not exact:
 </p>
 <div class="org-src-container">
 
-<pre class="src src-R" id="orgsrcblock22">.1 == .3/3
+<pre class="src src-R" id="orgsrcblock19">.1 == .3/3
 </pre>
 </div>
 
@@ -1703,7 +1604,7 @@ Solution: <code>use all.equal()</code>:
 </p>
 <div class="org-src-container">
 
-<pre class="src src-R" id="orgsrcblock23">all.equal<span style="color: #2f96dc;">(</span>.1, .3/3<span style="color: #2f96dc;">)</span>
+<pre class="src src-R" id="orgsrcblock20">all.equal<span style="color: #2f96dc;">(</span>.1, .3/3<span style="color: #2f96dc;">)</span>
 </pre>
 </div>
 
@@ -1723,7 +1624,7 @@ R does not exclude missing values by default &#x2013; a single missing value in 
 </p>
 <div class="org-src-container">
 
-<pre class="src src-R" id="orgsrcblock24">x <span style="color: #a45bad;">&lt;-</span> c<span style="color: #2f96dc;">(</span>1:10, <span style="color: #38a882; font-weight: bold;">NA</span>, 12:20<span style="color: #2f96dc;">)</span>
+<pre class="src src-R" id="orgsrcblock21">x <span style="color: #a45bad;">&lt;-</span> c<span style="color: #2f96dc;">(</span>1:10, <span style="color: #38a882; font-weight: bold;">NA</span>, 12:20<span style="color: #2f96dc;">)</span>
 c<span style="color: #2f96dc;">(</span>mean<span style="color: #bc6ec5;">(</span>x<span style="color: #bc6ec5;">)</span>, sd<span style="color: #bc6ec5;">(</span>x<span style="color: #bc6ec5;">)</span>, median<span style="color: #bc6ec5;">(</span>x<span style="color: #bc6ec5;">)</span>, min<span style="color: #bc6ec5;">(</span>x<span style="color: #bc6ec5;">)</span>, sd<span style="color: #bc6ec5;">(</span>x<span style="color: #bc6ec5;">)</span><span style="color: #2f96dc;">)</span>
 </pre>
 </div>
@@ -1740,7 +1641,7 @@ NA is not equal to anything, not even NA
 </p>
 <div class="org-src-container">
 
-<pre class="src src-R" id="orgsrcblock25"><span style="color: #38a882; font-weight: bold;">NA</span> == <span style="color: #38a882; font-weight: bold;">NA</span>
+<pre class="src src-R" id="orgsrcblock22"><span style="color: #38a882; font-weight: bold;">NA</span> == <span style="color: #38a882; font-weight: bold;">NA</span>
 </pre>
 </div>
 
@@ -1765,7 +1666,7 @@ Automatic type conversion happens a lot which is often useful, but makes it easy
 
 <div class="org-src-container">
 
-<pre class="src src-R" id="orgsrcblock26"><span style="color: #2aa198;"># </span><span style="color: #2aa198;">combining values coereces them to the most general type</span>
+<pre class="src src-R" id="orgsrcblock23"><span style="color: #2aa198;"># </span><span style="color: #2aa198;">combining values coereces them to the most general type</span>
 <span style="color: #2f96dc;">(</span>x <span style="color: #a45bad;">&lt;-</span> c<span style="color: #bc6ec5;">(</span><span style="color: #38a882; font-weight: bold;">TRUE</span>, <span style="color: #38a882; font-weight: bold;">FALSE</span>, 1, 2, <span style="color: #2d9574;">"a"</span>, <span style="color: #2d9574;">"b"</span><span style="color: #bc6ec5;">)</span><span style="color: #2f96dc;">)</span>
 str<span style="color: #2f96dc;">(</span>x<span style="color: #2f96dc;">)</span>
 
@@ -1802,7 +1703,7 @@ Functions you might expect to work similarly don't always:
 
 <div class="org-src-container">
 
-<pre class="src src-R" id="orgsrcblock27">mean<span style="color: #2f96dc;">(</span>1, 2, 3, 4, 5<span style="color: #2f96dc;">)</span>*5
+<pre class="src src-R" id="orgsrcblock24">mean<span style="color: #2f96dc;">(</span>1, 2, 3, 4, 5<span style="color: #2f96dc;">)</span>*5
 sum<span style="color: #2f96dc;">(</span>1, 2, 3, 4, 5<span style="color: #2f96dc;">)</span>
 </pre>
 </div>
@@ -1820,7 +1721,7 @@ Why are these different?!?
 </p>
 <div class="org-src-container">
 
-<pre class="src src-R" id="orgsrcblock28">args<span style="color: #2f96dc;">(</span>mean<span style="color: #2f96dc;">)</span>
+<pre class="src src-R" id="orgsrcblock25">args<span style="color: #2f96dc;">(</span>mean<span style="color: #2f96dc;">)</span>
 args<span style="color: #2f96dc;">(</span>sum<span style="color: #2f96dc;">)</span>
 </pre>
 </div>
@@ -1850,7 +1751,7 @@ Factors sometimes behave as numbers, and sometimes as characters, which can be c
 
 <div class="org-src-container">
 
-<pre class="src src-R" id="orgsrcblock29"><span style="color: #2f96dc;">(</span>x <span style="color: #a45bad;">&lt;-</span> factor<span style="color: #bc6ec5;">(</span>c<span style="color: #2d9574;">(</span>5, 5, 6, 6<span style="color: #2d9574;">)</span>, levels = c<span style="color: #2d9574;">(</span>6, 5<span style="color: #2d9574;">)</span><span style="color: #bc6ec5;">)</span><span style="color: #2f96dc;">)</span>
+<pre class="src src-R" id="orgsrcblock26"><span style="color: #2f96dc;">(</span>x <span style="color: #a45bad;">&lt;-</span> factor<span style="color: #bc6ec5;">(</span>c<span style="color: #2d9574;">(</span>5, 5, 6, 6<span style="color: #2d9574;">)</span>, levels = c<span style="color: #2d9574;">(</span>6, 5<span style="color: #2d9574;">)</span><span style="color: #bc6ec5;">)</span><span style="color: #2f96dc;">)</span>
 
 str<span style="color: #2f96dc;">(</span>x<span style="color: #2f96dc;">)</span>
 
@@ -2010,7 +1911,7 @@ tail<span style="color: #2f96dc;">(</span>petals<span style="color: #2f96dc;">)<
 </ol>
 <div class="org-src-container">
 
-<pre class="src src-R" id="orgsrcblock30">data<span style="color: #2f96dc;">(</span>iris<span style="color: #2f96dc;">)</span>
+<pre class="src src-R" id="orgsrcblock27">data<span style="color: #2f96dc;">(</span>iris<span style="color: #2f96dc;">)</span>
 iris2 <span style="color: #a45bad;">&lt;-</span> iris<span style="color: #2f96dc;">[</span>c<span style="color: #bc6ec5;">(</span><span style="color: #2d9574;">"Sepal.Length"</span>, <span style="color: #2d9574;">"Species"</span><span style="color: #bc6ec5;">)</span><span style="color: #2f96dc;">]</span>
 str<span style="color: #2f96dc;">(</span>iris2<span style="color: #2f96dc;">)</span>
 </pre>
@@ -2022,7 +1923,7 @@ str<span style="color: #2f96dc;">(</span>iris2<span style="color: #2f96dc;">)</s
 
 <div class="org-src-container">
 
-<pre class="src src-R" id="orgsrcblock31">mean<span style="color: #2f96dc;">(</span>iris2<span style="color: #bc6ec5;">[</span> , <span style="color: #2d9574;">"Sepal.Length"</span><span style="color: #bc6ec5;">]</span><span style="color: #2f96dc;">)</span>
+<pre class="src src-R" id="orgsrcblock28">mean<span style="color: #2f96dc;">(</span>iris2<span style="color: #bc6ec5;">[</span> , <span style="color: #2d9574;">"Sepal.Length"</span><span style="color: #bc6ec5;">]</span><span style="color: #2f96dc;">)</span>
 </pre>
 </div>
 
@@ -2032,7 +1933,7 @@ str<span style="color: #2f96dc;">(</span>iris2<span style="color: #2f96dc;">)</s
 
 <div class="org-src-container">
 
-<pre class="src src-R" id="orgsrcblock32">mean<span style="color: #2f96dc;">(</span>iris2<span style="color: #bc6ec5;">[</span>iris2<span style="color: #2d9574;">[</span><span style="color: #67b11d;">[</span><span style="color: #2d9574;">"Species"</span><span style="color: #67b11d;">]</span><span style="color: #2d9574;">]</span> == <span style="color: #2d9574;">"setosa"</span>, <span style="color: #2d9574;">"Sepal.Length"</span><span style="color: #bc6ec5;">]</span><span style="color: #2f96dc;">)</span>
+<pre class="src src-R" id="orgsrcblock29">mean<span style="color: #2f96dc;">(</span>iris2<span style="color: #bc6ec5;">[</span>iris2<span style="color: #2d9574;">[</span><span style="color: #67b11d;">[</span><span style="color: #2d9574;">"Species"</span><span style="color: #67b11d;">]</span><span style="color: #2d9574;">]</span> == <span style="color: #2d9574;">"setosa"</span>, <span style="color: #2d9574;">"Sepal.Length"</span><span style="color: #bc6ec5;">]</span><span style="color: #2f96dc;">)</span>
 <span style="color: #2aa198;">## </span><span style="color: #2aa198;">shortcut:</span>
 with<span style="color: #2f96dc;">(</span>iris2, <span style="color: #bc6ec5;">{</span>
     print<span style="color: #2d9574;">(</span>mean<span style="color: #67b11d;">(</span>Sepal.Length<span style="color: #b1951d;">[</span>Species == <span style="color: #2d9574;">"setosa"</span><span style="color: #b1951d;">]</span><span style="color: #67b11d;">)</span><span style="color: #2d9574;">)</span>
@@ -2046,7 +1947,7 @@ with<span style="color: #2f96dc;">(</span>iris2, <span style="color: #bc6ec5;">{
 
 <div class="org-src-container">
 
-<pre class="src src-R" id="orgsrcblock33">m.minus.sd <span style="color: #a45bad;">&lt;-</span> mean<span style="color: #2f96dc;">(</span>iris2<span style="color: #bc6ec5;">[</span><span style="color: #2d9574;">[</span><span style="color: #2d9574;">"Sepal.Length"</span><span style="color: #2d9574;">]</span><span style="color: #bc6ec5;">]</span><span style="color: #2f96dc;">)</span> - sd<span style="color: #2f96dc;">(</span>iris2<span style="color: #bc6ec5;">[</span><span style="color: #2d9574;">[</span><span style="color: #2d9574;">"Sepal.Length"</span><span style="color: #2d9574;">]</span><span style="color: #bc6ec5;">]</span><span style="color: #2f96dc;">)</span>
+<pre class="src src-R" id="orgsrcblock30">m.minus.sd <span style="color: #a45bad;">&lt;-</span> mean<span style="color: #2f96dc;">(</span>iris2<span style="color: #bc6ec5;">[</span><span style="color: #2d9574;">[</span><span style="color: #2d9574;">"Sepal.Length"</span><span style="color: #2d9574;">]</span><span style="color: #bc6ec5;">]</span><span style="color: #2f96dc;">)</span> - sd<span style="color: #2f96dc;">(</span>iris2<span style="color: #bc6ec5;">[</span><span style="color: #2d9574;">[</span><span style="color: #2d9574;">"Sepal.Length"</span><span style="color: #2d9574;">]</span><span style="color: #bc6ec5;">]</span><span style="color: #2f96dc;">)</span>
 length<span style="color: #2f96dc;">(</span>iris2<span style="color: #bc6ec5;">[</span>iris2<span style="color: #2d9574;">[</span><span style="color: #67b11d;">[</span><span style="color: #2d9574;">"Sepal.Length"</span><span style="color: #67b11d;">]</span><span style="color: #2d9574;">]</span> &lt; m.minus.sd, <span style="color: #2d9574;">"Sepal.Length"</span><span style="color: #bc6ec5;">]</span><span style="color: #2f96dc;">)</span>
 </pre>
 </div>
@@ -2063,7 +1964,7 @@ length<span style="color: #2f96dc;">(</span>iris2<span style="color: #bc6ec5;">[
 
 <div class="org-src-container">
 
-<pre class="src src-R" id="orgsrcblock34"><span style="color: #bc6ec5; font-weight: bold;">statsum</span> <span style="color: #a45bad;">&lt;-</span> <span style="color: #237fbf; font-weight: bold;">function</span><span style="color: #2f96dc;">(</span>df<span style="color: #2f96dc;">)</span> <span style="color: #2f96dc;">{</span>
+<pre class="src src-R" id="orgsrcblock31"><span style="color: #bc6ec5; font-weight: bold;">statsum</span> <span style="color: #a45bad;">&lt;-</span> <span style="color: #237fbf; font-weight: bold;">function</span><span style="color: #2f96dc;">(</span>df<span style="color: #2f96dc;">)</span> <span style="color: #2f96dc;">{</span>
     classes <span style="color: #a45bad;">&lt;-</span> sapply<span style="color: #bc6ec5;">(</span>df, class<span style="color: #bc6ec5;">)</span>
     means <span style="color: #a45bad;">&lt;-</span> sapply<span style="color: #bc6ec5;">(</span>df<span style="color: #2d9574;">[</span>classes == <span style="color: #2d9574;">"numeric"</span><span style="color: #2d9574;">]</span>, mean<span style="color: #bc6ec5;">)</span>
     <span style="color: #237fbf; font-weight: bold;">return</span><span style="color: #bc6ec5;">(</span>means<span style="color: #bc6ec5;">)</span><span style="color: #2f96dc;">}</span>
@@ -2078,7 +1979,7 @@ statsum<span style="color: #2f96dc;">(</span>iris<span style="color: #2f96dc;">)
 </ol>
 <div class="org-src-container">
 
-<pre class="src src-R" id="orgsrcblock35"><span style="color: #bc6ec5; font-weight: bold;">statsum</span> <span style="color: #a45bad;">&lt;-</span> <span style="color: #237fbf; font-weight: bold;">function</span><span style="color: #2f96dc;">(</span>df<span style="color: #2f96dc;">)</span> <span style="color: #2f96dc;">{</span>
+<pre class="src src-R" id="orgsrcblock32"><span style="color: #bc6ec5; font-weight: bold;">statsum</span> <span style="color: #a45bad;">&lt;-</span> <span style="color: #237fbf; font-weight: bold;">function</span><span style="color: #2f96dc;">(</span>df<span style="color: #2f96dc;">)</span> <span style="color: #2f96dc;">{</span>
     classes <span style="color: #a45bad;">&lt;-</span> sapply<span style="color: #bc6ec5;">(</span>df, class<span style="color: #bc6ec5;">)</span>
     means <span style="color: #a45bad;">&lt;-</span> sapply<span style="color: #bc6ec5;">(</span>df<span style="color: #2d9574;">[</span>classes == <span style="color: #2d9574;">"numeric"</span><span style="color: #2d9574;">]</span>, mean<span style="color: #bc6ec5;">)</span>
     counts <span style="color: #a45bad;">&lt;-</span> sapply<span style="color: #bc6ec5;">(</span>df<span style="color: #2d9574;">[</span>classes == <span style="color: #2d9574;">"factor"</span><span style="color: #2d9574;">]</span>, table<span style="color: #bc6ec5;">)</span>
@@ -2099,7 +2000,7 @@ statsum<span style="color: #2f96dc;">(</span>iris<span style="color: #2f96dc;">)
 
 <div class="org-src-container">
 
-<pre class="src src-R" id="orgsrcblock36"><span style="color: #bc6ec5; font-weight: bold;">statsum</span> <span style="color: #a45bad;">&lt;-</span> <span style="color: #237fbf; font-weight: bold;">function</span><span style="color: #2f96dc;">(</span>df<span style="color: #2f96dc;">)</span> <span style="color: #2f96dc;">{</span>
+<pre class="src src-R" id="orgsrcblock33"><span style="color: #bc6ec5; font-weight: bold;">statsum</span> <span style="color: #a45bad;">&lt;-</span> <span style="color: #237fbf; font-weight: bold;">function</span><span style="color: #2f96dc;">(</span>df<span style="color: #2f96dc;">)</span> <span style="color: #2f96dc;">{</span>
     <span style="color: #237fbf; font-weight: bold;">if</span><span style="color: #bc6ec5;">(</span>class<span style="color: #2d9574;">(</span>df<span style="color: #2d9574;">)</span> != <span style="color: #2d9574;">"data.frame"</span><span style="color: #bc6ec5;">)</span> <span style="color: #237fbf; font-weight: bold;">stop</span><span style="color: #bc6ec5;">(</span><span style="color: #2d9574;">"df must be a data.frame!"</span><span style="color: #bc6ec5;">)</span>
     classes <span style="color: #a45bad;">&lt;-</span> sapply<span style="color: #bc6ec5;">(</span>df, class<span style="color: #bc6ec5;">)</span>
     means <span style="color: #a45bad;">&lt;-</span> sapply<span style="color: #bc6ec5;">(</span>df<span style="color: #2d9574;">[</span>classes == <span style="color: #2d9574;">"numeric"</span><span style="color: #2d9574;">]</span>, mean<span style="color: #bc6ec5;">)</span>
@@ -2117,7 +2018,7 @@ statsum<span style="color: #2f96dc;">(</span>iris<span style="color: #2f96dc;">)
 
 <div class="org-src-container">
 
-<pre class="src src-R" id="orgsrcblock37"><span style="color: #bc6ec5; font-weight: bold;">statsum</span> <span style="color: #a45bad;">&lt;-</span> <span style="color: #237fbf; font-weight: bold;">function</span><span style="color: #2f96dc;">(</span>df<span style="color: #2f96dc;">)</span> <span style="color: #2f96dc;">{</span>
+<pre class="src src-R" id="orgsrcblock34"><span style="color: #bc6ec5; font-weight: bold;">statsum</span> <span style="color: #a45bad;">&lt;-</span> <span style="color: #237fbf; font-weight: bold;">function</span><span style="color: #2f96dc;">(</span>df<span style="color: #2f96dc;">)</span> <span style="color: #2f96dc;">{</span>
     <span style="color: #237fbf; font-weight: bold;">if</span><span style="color: #bc6ec5;">(</span>class<span style="color: #2d9574;">(</span>df<span style="color: #2d9574;">)</span> != <span style="color: #2d9574;">"data.frame"</span><span style="color: #bc6ec5;">)</span> <span style="color: #237fbf; font-weight: bold;">stop</span><span style="color: #bc6ec5;">(</span><span style="color: #2d9574;">"df must be a data.frame!"</span><span style="color: #bc6ec5;">)</span>
 browser<span style="color: #bc6ec5;">()</span>
     classes <span style="color: #a45bad;">&lt;-</span> sapply<span style="color: #bc6ec5;">(</span>df, class<span style="color: #bc6ec5;">)</span>
@@ -2142,7 +2043,7 @@ statsum<span style="color: #2f96dc;">(</span>iris<span style="color: #2f96dc;">)
 
 <div class="org-src-container">
 
-<pre class="src src-R" id="orgsrcblock38"><span style="color: #bc6ec5; font-weight: bold;">statsum</span> <span style="color: #a45bad;">&lt;-</span> <span style="color: #237fbf; font-weight: bold;">function</span><span style="color: #2f96dc;">(</span>df<span style="color: #2f96dc;">)</span> <span style="color: #2f96dc;">{</span>
+<pre class="src src-R" id="orgsrcblock35"><span style="color: #bc6ec5; font-weight: bold;">statsum</span> <span style="color: #a45bad;">&lt;-</span> <span style="color: #237fbf; font-weight: bold;">function</span><span style="color: #2f96dc;">(</span>df<span style="color: #2f96dc;">)</span> <span style="color: #2f96dc;">{</span>
     <span style="color: #237fbf; font-weight: bold;">if</span><span style="color: #bc6ec5;">(</span>class<span style="color: #2d9574;">(</span>df<span style="color: #2d9574;">)</span> != <span style="color: #2d9574;">"data.frame"</span><span style="color: #bc6ec5;">)</span> <span style="color: #237fbf; font-weight: bold;">stop</span><span style="color: #bc6ec5;">(</span><span style="color: #2d9574;">"df must be a data.frame!"</span><span style="color: #bc6ec5;">)</span>
     classes <span style="color: #a45bad;">&lt;-</span> sapply<span style="color: #bc6ec5;">(</span>df, class<span style="color: #bc6ec5;">)</span>
     means <span style="color: #a45bad;">&lt;-</span> sapply<span style="color: #bc6ec5;">(</span>df<span style="color: #2d9574;">[</span>classes == <span style="color: #2d9574;">"numeric"</span><span style="color: #2d9574;">]</span>, mean<span style="color: #bc6ec5;">)</span>
@@ -2160,7 +2061,7 @@ statsum<span style="color: #2f96dc;">(</span>iris<span style="color: #2f96dc;">)
 
 <div class="org-src-container">
 
-<pre class="src src-R" id="orgsrcblock39"><span style="color: #bc6ec5; font-weight: bold;">statsum</span> <span style="color: #a45bad;">&lt;-</span> <span style="color: #237fbf; font-weight: bold;">function</span><span style="color: #2f96dc;">(</span>df<span style="color: #2f96dc;">)</span> <span style="color: #2f96dc;">{</span>
+<pre class="src src-R" id="orgsrcblock36"><span style="color: #bc6ec5; font-weight: bold;">statsum</span> <span style="color: #a45bad;">&lt;-</span> <span style="color: #237fbf; font-weight: bold;">function</span><span style="color: #2f96dc;">(</span>df<span style="color: #2f96dc;">)</span> <span style="color: #2f96dc;">{</span>
     <span style="color: #237fbf; font-weight: bold;">if</span><span style="color: #bc6ec5;">(</span>class<span style="color: #2d9574;">(</span>df<span style="color: #2d9574;">)</span> != <span style="color: #2d9574;">"data.frame"</span><span style="color: #bc6ec5;">)</span> <span style="color: #237fbf; font-weight: bold;">stop</span><span style="color: #bc6ec5;">(</span><span style="color: #2d9574;">"df must be a data.frame!"</span><span style="color: #bc6ec5;">)</span>
     classes <span style="color: #a45bad;">&lt;-</span> sapply<span style="color: #bc6ec5;">(</span>df, class<span style="color: #bc6ec5;">)</span>
     means <span style="color: #a45bad;">&lt;-</span> sapply<span style="color: #bc6ec5;">(</span>df<span style="color: #2d9574;">[</span>classes == <span style="color: #2d9574;">"numeric"</span><span style="color: #2d9574;">]</span>, mean<span style="color: #bc6ec5;">)</span>
@@ -2181,7 +2082,7 @@ str<span style="color: #2f96dc;">(</span>statsum<span style="color: #bc6ec5;">(<
 
 <div class="org-src-container">
 
-<pre class="src src-R" id="orgsrcblock40"><span style="color: #bc6ec5; font-weight: bold;">print.statsum</span> <span style="color: #a45bad;">&lt;-</span> <span style="color: #237fbf; font-weight: bold;">function</span><span style="color: #2f96dc;">(</span>x<span style="color: #2f96dc;">)</span> <span style="color: #2f96dc;">{</span>
+<pre class="src src-R" id="orgsrcblock37"><span style="color: #bc6ec5; font-weight: bold;">print.statsum</span> <span style="color: #a45bad;">&lt;-</span> <span style="color: #237fbf; font-weight: bold;">function</span><span style="color: #2f96dc;">(</span>x<span style="color: #2f96dc;">)</span> <span style="color: #2f96dc;">{</span>
     cat<span style="color: #bc6ec5;">(</span><span style="color: #2d9574;">"Numeric variable descriptive statistics:\n"</span><span style="color: #bc6ec5;">)</span>
     print<span style="color: #bc6ec5;">(</span>x<span style="color: #2d9574;">[</span><span style="color: #67b11d;">[</span>1<span style="color: #67b11d;">]</span><span style="color: #2d9574;">]</span>, digits=2<span style="color: #bc6ec5;">)</span> 
     cat<span style="color: #bc6ec5;">(</span><span style="color: #2d9574;">"Factor variable counts:\n"</span><span style="color: #bc6ec5;">)</span>
@@ -2260,7 +2161,7 @@ Vectors are the building blocks of data objects in R. There are a few basic type
 </p>
 <div class="org-src-container">
 
-<pre class="src src-R" id="orgsrcblock41">num.var <span style="color: #a45bad;">&lt;-</span> c<span style="color: #2f96dc;">(</span>1, 2, 3, 4<span style="color: #2f96dc;">)</span> <span style="color: #2aa198;"># </span><span style="color: #2aa198;">numeric vector</span>
+<pre class="src src-R" id="orgsrcblock38">num.var <span style="color: #a45bad;">&lt;-</span> c<span style="color: #2f96dc;">(</span>1, 2, 3, 4<span style="color: #2f96dc;">)</span> <span style="color: #2aa198;"># </span><span style="color: #2aa198;">numeric vector</span>
 char.var <span style="color: #a45bad;">&lt;-</span> c<span style="color: #2f96dc;">(</span><span style="color: #2d9574;">"1"</span>, <span style="color: #2d9574;">"2"</span>, <span style="color: #2d9574;">"3"</span>, <span style="color: #2d9574;">"4"</span><span style="color: #2f96dc;">)</span> <span style="color: #2aa198;"># </span><span style="color: #2aa198;">character vector</span>
 log.var <span style="color: #a45bad;">&lt;-</span> c<span style="color: #2f96dc;">(</span><span style="color: #38a882; font-weight: bold;">TRUE</span>, <span style="color: #38a882; font-weight: bold;">TRUE</span>, <span style="color: #38a882; font-weight: bold;">FALSE</span>, <span style="color: #38a882; font-weight: bold;">TRUE</span><span style="color: #2f96dc;">)</span> <span style="color: #2aa198;"># </span><span style="color: #2aa198;">logical vector</span>
 char.var2 <span style="color: #a45bad;">&lt;-</span> c<span style="color: #2f96dc;">(</span>num.var, char.var<span style="color: #2f96dc;">)</span> <span style="color: #2aa198;"># </span><span style="color: #2aa198;">numbers coverted to character</span>
@@ -2280,7 +2181,7 @@ Vectors can be converted from one class to another using one of the many functio
 </p>
 <div class="org-src-container">
 
-<pre class="src src-R" id="orgsrcblock42">class<span style="color: #2f96dc;">(</span>char.var2<span style="color: #2f96dc;">)</span>
+<pre class="src src-R" id="orgsrcblock39">class<span style="color: #2f96dc;">(</span>char.var2<span style="color: #2f96dc;">)</span>
 num.var2 <span style="color: #a45bad;">&lt;-</span> as.numeric<span style="color: #2f96dc;">(</span>char.var2<span style="color: #2f96dc;">)</span> <span style="color: #2aa198;"># </span><span style="color: #2aa198;">convert to numeric</span>
 class<span style="color: #2f96dc;">(</span>num.var2<span style="color: #2f96dc;">)</span>
 mean<span style="color: #2f96dc;">(</span>as.numeric<span style="color: #bc6ec5;">(</span>char.var2<span style="color: #bc6ec5;">)</span><span style="color: #2f96dc;">)</span> <span style="color: #2aa198;"># </span><span style="color: #2aa198;">now we can calculate the mean</span>
@@ -2374,7 +2275,7 @@ Most of the time we can treat factors as though they were character vectors
 
 <div class="org-src-container">
 
-<pre class="src src-R" id="orgsrcblock43">DF <span style="color: #a45bad;">&lt;-</span> data.frame<span style="color: #2f96dc;">(</span>x=1:5, y=letters<span style="color: #bc6ec5;">[</span>1:5<span style="color: #bc6ec5;">]</span><span style="color: #2f96dc;">)</span>
+<pre class="src src-R" id="orgsrcblock40">DF <span style="color: #a45bad;">&lt;-</span> data.frame<span style="color: #2f96dc;">(</span>x=1:5, y=letters<span style="color: #bc6ec5;">[</span>1:5<span style="color: #bc6ec5;">]</span><span style="color: #2f96dc;">)</span>
 DF <span style="color: #2aa198;"># </span><span style="color: #2aa198;">data.frame with two columns and 5 rows</span>
 DF$x <span style="color: #2aa198;"># </span><span style="color: #2aa198;">select just the x column.</span>
 
