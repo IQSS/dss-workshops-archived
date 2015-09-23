@@ -26,6 +26,7 @@
     options(width=70)
     options(useFancyQuotes=FALSE)
     options(show.signif.stars=FALSE)
+    require(rvest)
   }
 #+end_src
 
@@ -270,7 +271,7 @@ We're getting close! We have identified the lines containing the information we 
 
 Great, we've matched all the data file links. The next step is to iterate over these links and download the data. But before we get there, let's look at a couple of alternative methods we could use to get the list of data file links.
 
-** Packages for reading and manipulating html
+** Packages for parsing html
 In the previous section we extracted data file links from an html page using regular expressions. An alternative is to use a package dedicated to parsing XML and HTML. How do we find such a package?
 - Task views :: https://cran.r-project.org/web/views/WebTechnologies.html
 - R package search :: http://www.r-pkg.org/search.html?q=html+xml
@@ -285,10 +286,11 @@ For parsing html in R I recommend either the =httr= package or the =rvest= packa
 
   ## find the link ("a") elemets extract the link ("href") attributes
   allLinks <- html_attr(html_nodes(dataPage, "a"), "href")
-  dataLinks <- paste0("http://ceprdata.org",
-                      grep("^/wp-content/cps/data/.*\\.zip$",
-                           allLinks,
-                           value = TRUE))
+  dataLinks <- paste("http://ceprdata.org",
+                     grep("^/wp-content/cps/data/.*\\.zip$",
+                          allLinks,
+                          value = TRUE),
+                     sep = "")
 dataLinks
 #+END_SRC
 
@@ -300,10 +302,11 @@ dataLinks
 > 
 >   ## find the link ("a") elemets extract the link ("href") attributes
 >   allLinks <- html_attr(html_nodes(dataPage, "a"), "href")
->   dataLinks <- paste0("http://ceprdata.org",
-+                       grep("^/wp-content/cps/data/.*\\.zip$",
-+                            allLinks,
-+                            value = TRUE))
+>   dataLinks <- paste("http://ceprdata.org",
++                      grep("^/wp-content/cps/data/.*\\.zip$",
++                           allLinks,
++                           value = TRUE),
++                      sep = "")
 > dataLinks
  [1] "http://ceprdata.org/wp-content/cps/data/cepr_org_2014.zip"
  [2] "http://ceprdata.org/wp-content/cps/data/cepr_org_2013.zip"
@@ -344,169 +347,317 @@ dataLinks
 > 
 #+end_example
 
-Wow, that that was a lot easier. Why didn't we do that in the first place?!? Well, if we had done it the easy way I wouldn't have had an excuse to teach you about regular expressions!
+Wow, that that was a lot easier. Why didn't we do that in the first place?!? Well, if we had done it the easy way I wouldn't have had an excuse to teach you about regular expressions! And trust me, you need to know about regular expressions. 
 
 ** Getting the list of data links the easy way
-If you look at the result from 
+If you look at the result from the previous two methods you might notice that the URLs are all the same save for the year number. This suggests an even easier way to construct the list of URLs:
+#+BEGIN_SRC R
+  (dataLinks <- paste("http://ceprdata.org/wp-content/cps/data/cepr_org_",
+                      1979:2014,
+                      ".zip",
+                      sep = ""))
 
-** Vector types
-
-Vectors are the building blocks of data objects in R. There are a few basic types, including =logical=, =integer= , =double=, =complex=, and =character=. Values can be combined into vectors using the ~c()~ function.
-#+name: VectorsExample
-#+begin_src R
-  num.var <- c(1, 2, 3, 4) # numeric vector
-  char.var <- c("1", "2", "3", "4") # character vector
-  log.var <- c(TRUE, TRUE, FALSE, TRUE) # logical vector
-  char.var2 <- c(num.var, char.var) # numbers coverted to character
-#+end_src
-
-#+RESULTS: VectorsExample
-#+begin_example
-> num.var <- c(1, 2, 3, 4) # numeric vector
-> char.var <- c("1", "2", "3", "4") # character vector
-> log.var <- c(TRUE, TRUE, FALSE, TRUE) # logical vector
-> char.var2 <- c(num.var, char.var) # numbers coverted to character
-> 
-#+end_example
-
-Vectors can be converted from one class to another using one of the many functions beginning with =as.=, e.g., =as.numeric= and =as.character=.
-#+name: VectorClassConversion
-#+begin_src R
-  class(char.var2)
-  num.var2 <- as.numeric(char.var2) # convert to numeric
-  class(num.var2)
-  mean(as.numeric(char.var2)) # now we can calculate the mean
-  as.numeric(c("a", "b", "c")) # cannot convert letters to numeric
-#+end_src
-
-#+RESULTS: VectorClassConversion
-#+begin_example
-> class(char.var2)
-[1] "character"
-> num.var2 <- as.numeric(char.var2) # convert to numeric
-> class(num.var2)
-[1] "numeric"
-> mean(as.numeric(char.var2)) # now we can calculate the mean
-[1] 2.5
-> as.numeric(c("a", "b", "c")) # cannot convert letters to numeric
-[1] NA NA NA
-> 
-#+end_example
-
-** Vector attributes
-Vectors (and other R objects for that matter) will always have =mode= and =length= attributes. They may optionally have other attributes such as names or comments. 
-#+begin_src R
-  ls() # list objects in our workspace
-  length(char.var) # how many elements in char.var?
-  str(num.var2) # what is the structure of num.var2?
-  names(num.var2) <- paste("element", seq_along(num.var2))
-  str(num.var2)
-#+end_src
+#+END_SRC
 
 #+RESULTS:
 #+begin_example
-> ls() # list objects in our workspace
-[1] "char.var"   "char.var2"  "isPositive" "log.var"    "num.var"   
-[6] "num.var2"   "petal"      "petals"     "updateIR"  
-> length(char.var) # how many elements in char.var?
-[1] 4
-> str(num.var2) # what is the structure of num.var2?
- num [1:8] 1 2 3 4 1 2 3 4
-> names(num.var2) <- paste("element", seq_along(num.var2))
-> str(num.var2)
- Named num [1:8] 1 2 3 4 1 2 3 4
- - attr(*, "names")= chr [1:8] "element 1" "element 2" "element 3" "element 4" ...
+> (dataLinks <- paste("http://ceprdata.org/wp-content/cps/data/cepr_org_",
++                     1979:2014,
++                     ".zip",
++                     sep = ""))
+ [1] "http://ceprdata.org/wp-content/cps/data/cepr_org_1979.zip"
+ [2] "http://ceprdata.org/wp-content/cps/data/cepr_org_1980.zip"
+ [3] "http://ceprdata.org/wp-content/cps/data/cepr_org_1981.zip"
+ [4] "http://ceprdata.org/wp-content/cps/data/cepr_org_1982.zip"
+ [5] "http://ceprdata.org/wp-content/cps/data/cepr_org_1983.zip"
+ [6] "http://ceprdata.org/wp-content/cps/data/cepr_org_1984.zip"
+ [7] "http://ceprdata.org/wp-content/cps/data/cepr_org_1985.zip"
+ [8] "http://ceprdata.org/wp-content/cps/data/cepr_org_1986.zip"
+ [9] "http://ceprdata.org/wp-content/cps/data/cepr_org_1987.zip"
+[10] "http://ceprdata.org/wp-content/cps/data/cepr_org_1988.zip"
+[11] "http://ceprdata.org/wp-content/cps/data/cepr_org_1989.zip"
+[12] "http://ceprdata.org/wp-content/cps/data/cepr_org_1990.zip"
+[13] "http://ceprdata.org/wp-content/cps/data/cepr_org_1991.zip"
+[14] "http://ceprdata.org/wp-content/cps/data/cepr_org_1992.zip"
+[15] "http://ceprdata.org/wp-content/cps/data/cepr_org_1993.zip"
+[16] "http://ceprdata.org/wp-content/cps/data/cepr_org_1994.zip"
+[17] "http://ceprdata.org/wp-content/cps/data/cepr_org_1995.zip"
+[18] "http://ceprdata.org/wp-content/cps/data/cepr_org_1996.zip"
+[19] "http://ceprdata.org/wp-content/cps/data/cepr_org_1997.zip"
+[20] "http://ceprdata.org/wp-content/cps/data/cepr_org_1998.zip"
+[21] "http://ceprdata.org/wp-content/cps/data/cepr_org_1999.zip"
+[22] "http://ceprdata.org/wp-content/cps/data/cepr_org_2000.zip"
+[23] "http://ceprdata.org/wp-content/cps/data/cepr_org_2001.zip"
+[24] "http://ceprdata.org/wp-content/cps/data/cepr_org_2002.zip"
+[25] "http://ceprdata.org/wp-content/cps/data/cepr_org_2003.zip"
+[26] "http://ceprdata.org/wp-content/cps/data/cepr_org_2004.zip"
+[27] "http://ceprdata.org/wp-content/cps/data/cepr_org_2005.zip"
+[28] "http://ceprdata.org/wp-content/cps/data/cepr_org_2006.zip"
+[29] "http://ceprdata.org/wp-content/cps/data/cepr_org_2007.zip"
+[30] "http://ceprdata.org/wp-content/cps/data/cepr_org_2008.zip"
+[31] "http://ceprdata.org/wp-content/cps/data/cepr_org_2009.zip"
+[32] "http://ceprdata.org/wp-content/cps/data/cepr_org_2010.zip"
+[33] "http://ceprdata.org/wp-content/cps/data/cepr_org_2011.zip"
+[34] "http://ceprdata.org/wp-content/cps/data/cepr_org_2012.zip"
+[35] "http://ceprdata.org/wp-content/cps/data/cepr_org_2013.zip"
+[36] "http://ceprdata.org/wp-content/cps/data/cepr_org_2014.zip"
 > 
 #+end_example
 
-#+RESULTS: VectorLengthStructure
+Wow, that was a _lot_ easier. Why oh why didn't we just do that in the first place? Well, it works for this specific case, but it is much less general than the regular expression method or the html parsing method we discussed previously. Those methods will work in the general case, while pasting the year number into the URLs only works because the URLs we want have a very regular and consistent form.
+
+* Iteration and functions
+Now that we have a vector of URLs pointing to the data files we want to download, we want to iterate over the elements and download each file. We could do this verbosely by writing one line for each file:
+#+BEGIN_SRC R
+  dir.create("dataSets")
+  download.file(dataLinks[1], "dataSets/cepr_org_1979.zip")
+  download.file(dataLinks[2], "dataSets/cepr_org_1980.zip")
+  ## ...
+  ## download.file(dataLinks[n], "dataSets/cepr_org_n.zip")
+#+END_SRC
+
+#+RESULTS:
 #+begin_example
-> ls() # list objects in our workspace
-[1] "char.var"  "char.var2" "log.var"   "num.var"   "num.var2" 
-[6] "tmp"      
-> length(char.var) # how many elements in char.var?
-[1] 4
-> str(num.var2) # what is the structure of num.var2?
- num [1:8] 1 2 3 4 1 2 3 4
+> dir.create("dataSets")
+> download.file(dataLinks[1], "dataSets/cepr_org_1979.zip")
+> download.file(dataLinks[2], "dataSets/cepr_org_1980.zip")
+> ## ...
+> ## download.file(dataLinks[n], "dataSets/cepr_org_n.zip")
+> 
+#+end_example
+but that is too much typing. Much easier to let R do that for us. We can iterate over the elements of a vector in R using a loop, or using one of the =apply= family of functions.
+
+=for= and =while= loops in R work much the same as they do in other programming languages. The =apply= family of functions apply a function to each element of an object.
+
+** Iterating using for-loop
+One way to download the data files is to use a for-loop to iterate over the contents of our vector of URLs. Some people will tell you to avoid for-loops in R but this is nonsense. Loops are convenient and useful, and while they are not the best tool for all situations calling for iteration they are perfectly appropriate for downloading a series of files. If you've used a for loop in any other language you will probably find the R implementation to be very similar. 
+
+For now, lets start by downloading just the data files for years since 2010.
+
+#+BEGIN_SRC R
+  for(link in grep("org_201", dataLinks, value = TRUE)) {
+      download.file(link, 
+                    destfile = basename(link))
+  }
+#+END_SRC
+
+#+RESULTS:
+#+begin_example
+> for(link in grep("org_201", dataLinks, value = TRUE)) {
++     download.file(link, 
++                   destfile = gsub("^.*(cepr_org.*zip).*$",
++                                   "dataSets/\\1",
++                                   link))
++ }
 > 
 #+end_example
 
-** Factor vectors
- Factors are stored as numbers, but have character labels. Factors are useful for
-  - Modeling (automatically contrast coded)
-  - Sorting/presenting values in arbitrary order
+** Writing functions
+Our for loop works well for downloading the data files form ceprdata.org. But what if we need to download data from other URLs as well? It might be nice to have a re-usable function that takes a url and downloads it, saving the result as the =basename= of the url. We can define such a function using the =function= function (say that three times fast!).
+#+BEGIN_SRC R
+  downloadFiles <- function(urls) {
+    for(link in urls) {
+        download.file(link, 
+                      destfile = basename(link))
+    }
+  }
+#+END_SRC
 
-Most of the time we can treat factors as though they were character vectors
+#+RESULTS:
+#+begin_example
+> downloadFiles <- function(urls) {
++   for(link in urls) {
++       download.file(link, 
++                     destfile = basename(link))
++   }
++ }
+> 
+#+end_example
 
-** Lists and data.frames
-- A /data.frame/ is a list of vectors, each of the same length
-- A /list/ is a collection of objects each of which can be almost anything
+Now we can download files more simply with
+#+BEGIN_SRC R
+  downloadFiles(grep("org_201", dataLinks, value = TRUE))
+#+END_SRC
 
-#+name: ListsAndDataframeExample
+#+RESULTS:
+#+begin_example
+> downloadFiles(grep("org_201", dataLinks, value = TRUE))
+> 
+#+end_example
+and in fact we can use this function to download files from any urls we might have. As a silly example, let's download all the profile pictures from the [[http://projects.iq.harvard.edu/rtc][Research Technology Consulting]] team at [[http://iq.harvard.edu][The Institute for Quantitative Social Science]]: 
+#+BEGIN_SRC R 
+  library(readbitmap)
+  profilePicLinks <- html_attr(html_nodes(html("http://projects.iq.harvard.edu/rtc/people"),
+                                          ".image-style-profile-thumbnail"),
+                               "src")
+  profilePicLinks <- gsub("\\.png\\?.*$", ".png", profilePicLinks)
+  downloadFiles(paste("http:", profilePicLinks, sep=""))
+  list.files(pattern = "\\.png$")
+#+END_SRC
+
+#+RESULTS:
+#+begin_example
+> library(readbitmap)
+> profilePicLinks <- html_attr(html_nodes(html("http://projects.iq.harvard.edu/rtc/people"),
++                                         ".image-style-profile-thumbnail"),
++                              "src")
+> profilePicLinks <- gsub("\\.png\\?.*$", ".png", profilePicLinks)
+> downloadFiles(paste("http:", profilePicLinks, sep=""))
+> list.files(pattern = "\\.png$")
+[1] "default-profile.png"      "ista_zahn-5.png"         
+[3] "simo_goshev.png"          "steven_worthington-2.png"
+> 
+#+end_example
+
+The code above downloaded all the profile pics from http://projects.iq.harvard.edu/rtc/people. Although this doesn't have anything to do with our main goal of downloading and analyzing the data from ceprdata.org, we'll go ahead and plot these images, just for fun.
+#+BEGIN_SRC R :results output graphics :file images/rtc_people.png
+ 
+  ## install.packages("readbitmap")
+  library(readbitmap); library(grid); library(gridExtra)
+
+  imgs <- sapply(list.files(pattern = "\\.png$"),
+                 read.bitmap,
+                 simplify = FALSE)
+  do.call(grid.arrange, sapply(imgs, rasterGrob, simplify = FALSE))
+#+END_SRC
+
+#+RESULTS:
+[[file:images/rtc_people.png]]
+
+** The applying functions
+The apply family of functions includes:
+- apply :: apply a function to each dimension (e.g., row or column), of a matrix or array
+- lapply :: apply a function to each element of a vector or list
+- sapply :: like lapply, but simplifies the result
+- mapply :: apply a function to each element of multiple vectors or lists
+
+Confused yet? The bad news is, there are more of these; see =?lapply=, =?Map= and [[http://stackoverflow.com/questions/3505701/r-grouping-functions-sapply-vs-lapply-vs-apply-vs-tapply-vs-by-vs-aggrega][this StackOverflow answer]] for details. The good news is you can do quite a lot with just =apply= and =sapply=. To start, let's use =sapply= do download all the data files for years since 2010:
+#+BEGIN_SRC R
+  sapply(grep("org_201", dataLinks, value = TRUE),
+         download.file,
+         destfile = basename(url)
+         )
+#+END_SRC
+
+#+RESULTS:
+
+#+name: applyFunctionExample
 #+begin_src R
-  DF <- data.frame(x=1:5, y=letters[1:5])
-  DF # data.frame with two columns and 5 rows
-  DF$x # select just the x column.
-
-  # DF <- data.frame(x=1:10, y=1:7) # illegal becase lengths differ
-  L <- list(x=1:5, y=1:3, z = DF)
-  L # lists are much more flexible!
+  M <- matrix(1:20,
+              ncol=4,
+              dimnames = list(paste("row", 1:5),
+                              paste("col", 1:4)))
+  apply(M, 1, mean) ## average across the rows
+  apply(M, 2, sum) ## sum down the columns
 #+end_src
 
-#+RESULTS: ListsAndDataframeExample
+#+RESULTS: applyFunctionExample
 #+begin_example
-> DF <- data.frame(x=1:5, y=letters[1:5])
-> DF # data.frame with two columns and 5 rows
-  x y
-1 1 a
-2 2 b
-3 3 c
-4 4 d
-5 5 e
-> 
-> # DF <- data.frame(x=1:10, y=1:7) # illegal becase lengths differ
-> L <- list(x=1:5, y=1:3, z = DF)
-> L # lists are much more flexible!
-$x
-[1] 1 2 3 4 5
-
-$y
-[1] 1 2 3
-
-$z
-  x y
-1 1 a
-2 2 b
-3 3 c
-4 4 d
-5 5 e
-
+> M <- matrix(1:20, ncol=4)
+> apply(M, 2, mean) ## average across the rows
+[1]  3  8 13 18
+> apply(M, 2, sum) ## sum the columns
+[1] 15 40 65 90
 > 
 #+end_example
 
-** Data types summary
-Key points:
-- vector classes include numeric, logical, character, and factors
-- vectors can be combined into lists or  data.frames
-- a data.frame can almost always be thought of as a list of vectors of equal length
-- a list is a collection of objects, each of which can by of almost any type
-Functions introduced in this section: 
-- c :: combine elements
-- as.numeric :: convert an object (e.g., a character verctor) to numeric
-- data.frame :: combine oject into a data.frame
-- ls :: list the objects in the workspace
-- class :: get the class of an object
-- str :: get the structure of an object
-- length :: get the number of elements in an object
-- mean :: calculate the mean of a vector
-- $ :: extraction operator, selects a single element from a list or data.frame 
+** for loops
+We can alternatively calculate row and column means, but in this case =apply= is easier.
+#+name: forLoopExample
+#+begin_src R
+  M.means <- c() ## empty vector to hold the result
+  for (row in rownames(M)) {
+      M.means[row] <- mean(M[row, ])
+  }
 
-** Exercise 0 
-Use the built-in /iris/ data set (comes with R, will be available in your workspace automatically).
-1. Determine the =class= and =str= ucture of the /iris/ data set.
-2. Determine the class of each column in the iris data set
-3. BONUS (OPTIONAL): Create a new variable by =c= ombining the Petal.Length and Petal.Width columns
-4. BONUS (OPTIONAL): Create a new data.frame with two columns; the first should be named /value/, and should be equal to the variable you created in step 3. The second should be named /variable/ and should be either /Petal.Length/ or /Petal.Width/ as appropriate.
+  M.sums <- c() ## empty vector to hold the result
+  for (col in colnames(M)) {
+      M.sums[col] <- mean(M[, col])
+  }
+#+end_src
+
+
+** The sapply function
+It is often useful to apply a function to each element of a vector, list, or data.frame; you can use the =sapply= function for this
+
+#+name: sapplyExample
+#+begin_src R
+  sapply(DF, class) # get the class of each column in the DF data.frame
+  sapply(L, length) # get the length of each element in the L list
+  sapply(DF, is.numeric) # check each column of DF to see if it is numeric
+#+end_src
+
+#+RESULTS: sapplyExample
+#+begin_example
+> sapply(DF, class) # get the class of each column in the DF data.frame
+        x         y 
+"integer"  "factor" 
+> sapply(L, length) # get the length of each element in the L list
+x y z 
+5 3 2 
+> sapply(DF, is.numeric) # check each column of DF to see if it is numeric
+    x     y 
+ TRUE FALSE 
+> 
+#+end_example
+
+See also: =lapply=, =vapply=, and =mapply=.
+** Combining sapply and indexing
+The =sapply= function can be used in combination with indexing to extract elements that meet certain criteria
+- Recall that we can index using logical vectors:
+#+name: sapplyAndIndexing1
+#+begin_src R
+  DF[, c(TRUE, FALSE)] # select the first column of DF, but not the second
+#+end_src
+
+#+RESULTS: sapplyAndIndexing1
+#+begin_example
+> DF[, c(TRUE, FALSE)] # select the first column of DF, but not the second
+[1] 1 2 3 4 5
+> 
+#+end_example
+
+#+RESULTS: sapplyAndIndexing
+#+begin_example
+> ## recall that we can index using logical vectors:
+> DF[, c(TRUE, FALSE)] # select the first column of DF, but not the second
+[1] 1 2 3 4 5
+> 
+#+end_example
+
+- =sapply()= can be used to generate the logical vector
+#+name: sapplyAndIndexing2
+#+begin_src R
+  (DF.which.num <- sapply(DF, is.numeric))# check which columns of DF are numeric
+  DF[DF.which.num] # select the numeric columns
+#+end_src
+
+#+RESULTS: sapplyAndIndexing2
+#+begin_example
+> (DF.which.num <- sapply(DF, is.numeric))# check which columns of DF are numeric
+    x     y 
+ TRUE FALSE 
+> DF[DF.which.num] # select the numeric columns
+  x
+1 1
+2 2
+3 3
+4 4
+5 5
+> 
+#+end_example
+
+Note the difference between =DF[, 1]= and =DF[1]=! The first form returns a vector, the second a data.frame with one column. 
+
+** Applying functions summary
+Key points:
+- R has convenient methods for applying functions to matricies, lists, and data.frames
+- other apply-style functions exist, e.g., lapply, tapply, and mapply (see documentation of these functions for details
+Functions introduced in this section: 
+- matrix :: create a matrix (vector with two dimensions)
+- apply :: apply a function to the rows or columns of a matrix
+- sapply :: apply a function to the elements of a list
+- is.numeric :: returns TRUE or FALSE, depending on the type of object 
 
 * Extracting and replacing object elements
 
@@ -729,282 +880,6 @@ Functions introduced in this section:
 2) Calculate the mean of the Sepal.Length column in /iris.2/ 
 3) BONUS (optional): Calculate the mean of Sepal.Length, but only for the setosa species
 4) BONUS (optional): Calculate the number of sepal lengths that are more than one standard deviation below the average sepal length
-
-* Looping and applying
-=for= and =while= loops in R work much the same as they do in other programming languages. R also has an =apply= family of functions that are sometimes more convenient.
-** The apply function
-The apply function is used to apply a function to the rows or columns of a matrix
-#+name: applyFunctionExample
-#+begin_src R
-  M <- matrix(1:20,
-              ncol=4,
-              dimnames = list(paste("row", 1:5),
-                              paste("col", 1:4)))
-  apply(M, 1, mean) ## average across the rows
-  apply(M, 2, sum) ## sum down the columns
-#+end_src
-
-#+RESULTS: applyFunctionExample
-#+begin_example
-> M <- matrix(1:20, ncol=4)
-> apply(M, 2, mean) ## average across the rows
-[1]  3  8 13 18
-> apply(M, 2, sum) ## sum the columns
-[1] 15 40 65 90
-> 
-#+end_example
-
-** for loops
-We can alternatively calculate row and column means, but in this case =apply= is easier.
-#+name: forLoopExample
-#+begin_src R
-  M.means <- c() ## empty vector to hold the result
-  for (row in rownames(M)) {
-      M.means[row] <- mean(M[row, ])
-  }
-
-  M.sums <- c() ## empty vector to hold the result
-  for (col in colnames(M)) {
-      M.sums[col] <- mean(M[, col])
-  }
-#+end_src
-
-
-** The sapply function
-It is often useful to apply a function to each element of a vector, list, or data.frame; you can use the =sapply= function for this
-
-#+name: sapplyExample
-#+begin_src R
-  sapply(DF, class) # get the class of each column in the DF data.frame
-  sapply(L, length) # get the length of each element in the L list
-  sapply(DF, is.numeric) # check each column of DF to see if it is numeric
-#+end_src
-
-#+RESULTS: sapplyExample
-#+begin_example
-> sapply(DF, class) # get the class of each column in the DF data.frame
-        x         y 
-"integer"  "factor" 
-> sapply(L, length) # get the length of each element in the L list
-x y z 
-5 3 2 
-> sapply(DF, is.numeric) # check each column of DF to see if it is numeric
-    x     y 
- TRUE FALSE 
-> 
-#+end_example
-
-See also: =lapply=, =vapply=, and =mapply=.
-** Combining sapply and indexing
-The =sapply= function can be used in combination with indexing to extract elements that meet certain criteria
-- Recall that we can index using logical vectors:
-#+name: sapplyAndIndexing1
-#+begin_src R
-  DF[, c(TRUE, FALSE)] # select the first column of DF, but not the second
-#+end_src
-
-#+RESULTS: sapplyAndIndexing1
-#+begin_example
-> DF[, c(TRUE, FALSE)] # select the first column of DF, but not the second
-[1] 1 2 3 4 5
-> 
-#+end_example
-
-#+RESULTS: sapplyAndIndexing
-#+begin_example
-> ## recall that we can index using logical vectors:
-> DF[, c(TRUE, FALSE)] # select the first column of DF, but not the second
-[1] 1 2 3 4 5
-> 
-#+end_example
-
-- =sapply()= can be used to generate the logical vector
-#+name: sapplyAndIndexing2
-#+begin_src R
-  (DF.which.num <- sapply(DF, is.numeric))# check which columns of DF are numeric
-  DF[DF.which.num] # select the numeric columns
-#+end_src
-
-#+RESULTS: sapplyAndIndexing2
-#+begin_example
-> (DF.which.num <- sapply(DF, is.numeric))# check which columns of DF are numeric
-    x     y 
- TRUE FALSE 
-> DF[DF.which.num] # select the numeric columns
-  x
-1 1
-2 2
-3 3
-4 4
-5 5
-> 
-#+end_example
-
-Note the difference between =DF[, 1]= and =DF[1]=! The first form returns a vector, the second a data.frame with one column. 
-
-** Applying functions summary
-Key points:
-- R has convenient methods for applying functions to matricies, lists, and data.frames
-- other apply-style functions exist, e.g., lapply, tapply, and mapply (see documentation of these functions for details
-Functions introduced in this section: 
-- matrix :: create a matrix (vector with two dimensions)
-- apply :: apply a function to the rows or columns of a matrix
-- sapply :: apply a function to the elements of a list
-- is.numeric :: returns TRUE or FALSE, depending on the type of object 
-
-* Writing functions
-
-** Functions
-- A function is a collection of commands that takes input(s) and returns output.
-- If you have a specific analysis or transformation you want to do on different data, use a function
-- Functions are defined using the ~function()~ function
-- Functions can be defined with any number of named arguments
-- Arguments can be of any type (e.g., vectors, data.frames, lists ...)
-
-** Function return value
-- The return value of a function can be:
-  - The last object stored in the body of the function
-  - Objects explicitly returned with the ~return()~ function
-- Other function output can come from:
-  - Calls to ~print()~, ~message()~ or ~cat()~ in function body
-  - Error messages
-- Assignment inside the body of a function takes place in a local environment
-- Example:
-
-#+name: functionReturn
-#+begin_src R
-  f <- function() { # define function f
-  print("setting x to 1") # print a text string
-  x <- 1} # set x to 1
-  
-  y <- f() # assign y the value returned by f
-  
-  y # print y
-  x # x in the global is not 1!
-#+end_src
-
-#+results: functionReturn
-#+begin_example
-> f <- function() { # define function f
-+ print("setting x to 1") # print a text string
-+ x <- 1} # set x to 1
-> 
-> y <- f() # assign y the value returned by f
-[1] "setting x to 1"
-> 
-> y # print y
-[1] 1
-> x # x in the global is not 1!
-  a   b   c   d   e   f   g   h   i   j 
-101 102 103   1 105 106 107 108 109 110 
-> 
-#+end_example
-
-
-** Writing functions example
-Goal: write a function that returns the square of it's argument
-
-#+name: firstFunctionExample
-#+begin_src R
-  square <- function (x) { # define function named "square" with argument x
-    return(x*x) # multiple the x argument by itself
-  } # end the function definition
-
-  # check to see that the function works
-  square(x = 2) # square the value 2
-  square(10) # square the value 10
-  square(1:5) # square integers 1 through 5
-#+end_src
-
-#+RESULTS: firstFunctionExample
-#+begin_example
-> square <- function (x) { # define function named "square" with argument x
-+   return(x*x) # multiple the x argument by itself
-+ } # end the function definition
-> 
-> # check to see that the function works
-> square(x = 2) # square the value 2
-[1] 4
-> square(10) # square the value 10
-[1] 100
-> square(1:5) # square integers 1 through 5
-[1]  1  4  9 16 25
-> 
-#+end_example
-
-
-** Debugging basics
-
-Stepping througth functions and setting breakpoints
-
-#+name: debug1
-#+begin_src R
-  ## Debugging
-  # write my.mean function
-  my.mean <- function (x, ...) {
-    S <- sum(x, ...)
-    L <- length(na.omit(x))
-    return(S / L)}
-  debug(my.mean) # turn debugger on for my.mean function
-  # mymean() # step through the function
-  undebug(my.mean) # to turn the debugger off
-  # insert breakpoints
-  my.mean <- function (x, ...) {
-    S <- sum(x, ...)
-    L <- length(na.omit(x))
-    browser() # function will stop here so you can inspect S and L
-    return(S / L)}
-#+end_src
-
-#+RESULTS: debug1
-#+begin_example
-> ## Debugging
-> # write my.mean function
-> my.mean <- function (x, ...) {
-+   S <- sum(x, ...)
-+   L <- length(na.omit(x))
-+   return(S / L)}
-> debug(my.mean) # turn debugger on for my.mean function
-> # mymean() # step through the function
-> undebug(my.mean) # to turn the debugger off
-> # insert breakpoints
-> my.mean <- function (x, ...) {
-+   S <- sum(x, ...)
-+   L <- length(na.omit(x))
-+   browser() # function will stop here so you can inspect S and L
-+   return(S / L)}
-> 
-#+end_example
-
-Use =traceback()= to see what went wrong after the fact
-
-#+name: debugTraceback
-#+begin_src R :eval no :exports code
-  myModel <- lm(NA~NA)
-  traceback()
-#+end_src
-
-
-** Writing functions summary
-Key points:
-- writing new functions is easy!
-- most functions will have a return value, but functions can also print things, write things to file etc.
-- functions can be stepped through to facilitate debugging
-Functions introduced in this section  
-- function :: defines a new function
-- return :: used inside a function definition to set the return value
-- browser :: sets a break point
-- debug :: turns on the debugging flag of a function so you can step through it
-- undebug :: turns off the debugging flag 
-- traceback :: shows the error stack (call after an error to see what went wrong)
-  
-
-
-** Exercise 2
-
-1) Write a function that takes a data.frame as an argument and returns the mean of each numeric column in the data frame. Test your function using the iris data.
-
-2) Modify your function so that it returns a list, the first element if which is the means of the numeric variables, the second of which is the counts of the levels of each categorical variable.
 
 * Control flow
 
@@ -1340,8 +1215,6 @@ Functions introduced in this section
 2) Modify your function so that it returns a list of class "statsum"
 
 3) Write a print method for the statsum class
-
-
 
 * Things that may surprise you
 
@@ -1935,6 +1808,7 @@ virginica       50
 > 
 #+end_example
 
+
 * Additional resources
 
 ** Additional reading and resources
@@ -1961,8 +1835,169 @@ http://www.jstatso|.org/v31/i01/paper
 - These workshops exist for you -- tell us what you need! 
 - http://tinyurl.com/RprogrammingFeedback 
 
+
+* OLD STUFF
+** Vector types
+
+Vectors are the building blocks of data objects in R. There are a few basic types, including =logical=, =integer= , =double=, =complex=, and =character=. Values can be combined into vectors using the ~c()~ function.
+#+name: VectorsExample
+#+begin_src R
+  num.var <- c(1, 2, 3, 4) # numeric vector
+  char.var <- c("1", "2", "3", "4") # character vector
+  log.var <- c(TRUE, TRUE, FALSE, TRUE) # logical vector
+  char.var2 <- c(num.var, char.var) # numbers coverted to character
+#+end_src
+
+#+RESULTS: VectorsExample
+#+begin_example
+> num.var <- c(1, 2, 3, 4) # numeric vector
+> char.var <- c("1", "2", "3", "4") # character vector
+> log.var <- c(TRUE, TRUE, FALSE, TRUE) # logical vector
+> char.var2 <- c(num.var, char.var) # numbers coverted to character
+> 
+#+end_example
+
+Vectors can be converted from one class to another using one of the many functions beginning with =as.=, e.g., =as.numeric= and =as.character=.
+#+name: VectorClassConversion
+#+begin_src R
+  class(char.var2)
+  num.var2 <- as.numeric(char.var2) # convert to numeric
+  class(num.var2)
+  mean(as.numeric(char.var2)) # now we can calculate the mean
+  as.numeric(c("a", "b", "c")) # cannot convert letters to numeric
+#+end_src
+
+#+RESULTS: VectorClassConversion
+#+begin_example
+> class(char.var2)
+[1] "character"
+> num.var2 <- as.numeric(char.var2) # convert to numeric
+> class(num.var2)
+[1] "numeric"
+> mean(as.numeric(char.var2)) # now we can calculate the mean
+[1] 2.5
+> as.numeric(c("a", "b", "c")) # cannot convert letters to numeric
+[1] NA NA NA
+> 
+#+end_example
+
+** Vector attributes
+Vectors (and other R objects for that matter) will always have =mode= and =length= attributes. They may optionally have other attributes such as names or comments. 
+#+begin_src R
+  ls() # list objects in our workspace
+  length(char.var) # how many elements in char.var?
+  str(num.var2) # what is the structure of num.var2?
+  names(num.var2) <- paste("element", seq_along(num.var2))
+  str(num.var2)
+#+end_src
+
+#+RESULTS:
+#+begin_example
+> ls() # list objects in our workspace
+[1] "char.var"   "char.var2"  "isPositive" "log.var"    "num.var"   
+[6] "num.var2"   "petal"      "petals"     "updateIR"  
+> length(char.var) # how many elements in char.var?
+[1] 4
+> str(num.var2) # what is the structure of num.var2?
+ num [1:8] 1 2 3 4 1 2 3 4
+> names(num.var2) <- paste("element", seq_along(num.var2))
+> str(num.var2)
+ Named num [1:8] 1 2 3 4 1 2 3 4
+ - attr(*, "names")= chr [1:8] "element 1" "element 2" "element 3" "element 4" ...
+> 
+#+end_example
+
+#+RESULTS: VectorLengthStructure
+#+begin_example
+> ls() # list objects in our workspace
+[1] "char.var"  "char.var2" "log.var"   "num.var"   "num.var2" 
+[6] "tmp"      
+> length(char.var) # how many elements in char.var?
+[1] 4
+> str(num.var2) # what is the structure of num.var2?
+ num [1:8] 1 2 3 4 1 2 3 4
+> 
+#+end_example
+
+** Factor vectors
+ Factors are stored as numbers, but have character labels. Factors are useful for
+  - Modeling (automatically contrast coded)
+  - Sorting/presenting values in arbitrary order
+
+Most of the time we can treat factors as though they were character vectors
+
+** Lists and data.frames
+- A /data.frame/ is a list of vectors, each of the same length
+- A /list/ is a collection of objects each of which can be almost anything
+
+#+name: ListsAndDataframeExample
+#+begin_src R
+  DF <- data.frame(x=1:5, y=letters[1:5])
+  DF # data.frame with two columns and 5 rows
+  DF$x # select just the x column.
+
+  # DF <- data.frame(x=1:10, y=1:7) # illegal becase lengths differ
+  L <- list(x=1:5, y=1:3, z = DF)
+  L # lists are much more flexible!
+#+end_src
+
+#+RESULTS: ListsAndDataframeExample
+#+begin_example
+> DF <- data.frame(x=1:5, y=letters[1:5])
+> DF # data.frame with two columns and 5 rows
+  x y
+1 1 a
+2 2 b
+3 3 c
+4 4 d
+5 5 e
+> 
+> # DF <- data.frame(x=1:10, y=1:7) # illegal becase lengths differ
+> L <- list(x=1:5, y=1:3, z = DF)
+> L # lists are much more flexible!
+$x
+[1] 1 2 3 4 5
+
+$y
+[1] 1 2 3
+
+$z
+  x y
+1 1 a
+2 2 b
+3 3 c
+4 4 d
+5 5 e
+
+> 
+#+end_example
+
+** Data types summary
+Key points:
+- vector classes include numeric, logical, character, and factors
+- vectors can be combined into lists or  data.frames
+- a data.frame can almost always be thought of as a list of vectors of equal length
+- a list is a collection of objects, each of which can by of almost any type
+Functions introduced in this section: 
+- c :: combine elements
+- as.numeric :: convert an object (e.g., a character verctor) to numeric
+- data.frame :: combine oject into a data.frame
+- ls :: list the objects in the workspace
+- class :: get the class of an object
+- str :: get the structure of an object
+- length :: get the number of elements in an object
+- mean :: calculate the mean of a vector
+- $ :: extraction operator, selects a single element from a list or data.frame 
+
+** Exercise 0 
+Use the built-in /iris/ data set (comes with R, will be available in your workspace automatically).
+1. Determine the =class= and =str= ucture of the /iris/ data set.
+2. Determine the class of each column in the iris data set
+3. BONUS (OPTIONAL): Create a new variable by =c= ombining the Petal.Length and Petal.Width columns
+4. BONUS (OPTIONAL): Create a new data.frame with two columns; the first should be named /value/, and should be equal to the variable you created in step 3. The second should be named /variable/ and should be either /Petal.Length/ or /Petal.Width/ as appropriate.
+
 * Footnotes
 
-[fn:2] http://stackoverflow.com/questions/4683046/regular-expression-for-extracting-script-tags 
+[fn:2] [[http://stackoverflow.com/questions/1732348/regex-match-open-tags-except-xhtml-self-contained-tags]]
 
 [fn:1] Center for Economic and Policy Research. 2015. CPS ORG Uniform Extracts, Version 2.0.1. Washington, DC.
