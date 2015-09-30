@@ -387,6 +387,12 @@ The data for the exercises is available in the ~dataSets/EconomistData.csv~ file
   dat <- read.csv("dataSets/EconomistData.csv")
 #+END_SRC
 
+#+RESULTS:
+#+begin_example
+> dat <- read.csv("dataSets/EconomistData.csv")
+> 
+#+end_example
+
 Original sources for these data are
   http://www.transparency.org/content/download/64476/1031428
   http://hdrstats.undp.org/en/indicators/display_cf_xls_indicator.cfm?indicator_id=103106&lang=en
@@ -801,7 +807,7 @@ Building off of the graphics you created in the previous exercises, put the fini
 
 [[file:images/Economist1.png]]
 
-* Exercise solutions                                               :noexport:
+* COMMENT Exercise solutions                                       :noexport:
 ** Exercise I prototype 					   :prototype:
 
 #+name: ex1Prototype
@@ -846,80 +852,276 @@ Building off of the graphics you created in the previous exercises, put the fini
 
 
 
-* Challenge Solution                                              :prototype:
+* Challenge Solution
 
-Create basic scatter plot
+Lets start by creating the basic scatter plot, then we can make a list of things that need to be added or changed. The basic plot loogs like this:
 
 #+name: econDatScatter
 #+begin_src R :results output graphics :file images/econScatter1.png 
-    pc1 <- ggplot(dat, aes(x = CPI, y = HDI, color = Region))
-    (pc1 <- pc1 + geom_point(shape = 1))
-    
-    
-   
-  
-  #
+  dat <- read.csv("dataSets/EconomistData.csv")
+
+  pc1 <- ggplot(dat, aes(x = CPI, y = HDI, color = Region))
+  pc1 + geom_point()
 #+end_src
 
 
 #+RESULTS: econDatScatter
 [[file:images/econScatter1.png]]
 
-** Challenge Solution						  :prototype:
+To complete this graph we need to:
+- [ ] add a trend line
+- [ ] change the point shape to open circle
+- [ ] change the order and labels of Region
+- [ ] label select points
+- [ ] fix up the tick marks and labels
+- [ ] move color legend to the top
+- [ ] title, label axes, remove legend title
+- [ ] theme the graph with no vertical guides
+- [ ] add model R^2 (hard)
+- [ ] add sources note (hard)
+- [ ] final touches to make it perfect (use image editor for this)
 
-Add labels
+** Adding the trend line
 
+Adding the trend line is not too difficult, though we need to guess at the model being displyed on the graph. A little bit of trial and error leds to 
 #+name: econDatScatter2
 #+begin_src R :results output graphics :file images/econScatter2.png 
-  label.these <- c("Congo", "Sudan", "Afghanistan", "Greece", "China",
-                   "India", "Rwanda", "Spain", "France", "United States",
-                   "Japan", "Norway", "Singapore")
   (pc2 <- pc1 +
-   geom_text(aes(label = Country),
-             color = "black", size = 3, hjust = 1.1,
-             data = dat[dat$Country %in% label.these, ]))
+     geom_smooth(aes(group = 1),
+                 method = "lm",
+                 formula = y ~ log(x),
+                 se = FALSE,
+                 color = "red")) +
+     geom_point()
 #+end_src
 
 
 #+RESULTS: econDatScatter2
 [[file:images/econScatter2.png]]
 
-** Challenge Solution						  :prototype:
+Notice that we put the =geom_line= layer first so that it will be plotted underneath the points, as was done on the original graph.
 
- Add smoothing line
+** Use open points
+This one is a little tricky. We know that we can change the shape with the =shape= argument, what what value do we set shape to? The example shown in =?shape= can help us:
+#+BEGIN_SRC R :results output graphics :file images/shapes.png
+  ## A look at all 25 symbols
+  df2 <- data.frame(x = 1:5 , y = 1:25, z = 1:25)
+  s <- ggplot(df2, aes(x = x, y = y))
+  s + geom_point(aes(shape = z), size = 4) + scale_shape_identity()
+  ## While all symbols have a foreground colour, symbols 19-25 also take a
+  ## background colour (fill)
+  s + geom_point(aes(shape = z), size = 4, colour = "Red") +
+    scale_shape_identity()
+  s + geom_point(aes(shape = z), size = 4, colour = "Red", fill = "Black") +
+    scale_shape_identity()
 
+#+END_SRC
+
+#+RESULTS:
+[[file:images/shapes.png]]
+
+This shows us that /shape 1/ is an open circle, so
 #+name: econDatScatter3
 #+begin_src R :results output graphics :file images/econScatter3.png 
-  (pc3 <- pc2 +
-   geom_smooth(aes(group = 1),
-               method = "lm",
-               color = "black",
-               formula = y~ poly(x, 2),
-               se = FALSE))
-#
+  pc2 +
+    geom_point(shape = 1, size = 4)
 #+end_src
 
 
 #+RESULTS: econDatScatter3
 [[file:images/econScatter3.png]]
 
-** Challenge Solution						  :prototype:
+That is better, but unfortunately the size of the line around the points is much narrower than on the original. This is a frustrating aspect of ggplot2, and we will have to hack around it. One way to do that is to multiple point layers of slightly different sizes.
 
-Finishing touches
+#+begin_src R :results output graphics :file images/econScatter3b.png 
+  (pc3 <- pc2 +
+     geom_point(size = 4.5, shape = 1) +
+     geom_point(size = 4, shape = 1) +
+     geom_point(size = 3.5, shape = 1))
+#+end_src
 
+#+RESULTS:
+[[file:images/econScatter3b.png]]
+
+** Labelling points
+This one is tricky in a couple of ways. First, there is no attribute in the data that separates points that should be labelled from points that should not be. So the first step is to identify those points. 
+#+BEGIN_SRC R :results silent
+  pointsToLabel <- c("Russia", "Venezuela", "Iraq", "Myanmar", "Sudan",
+                     "Afghanistan", "Congo", "Greece", "Argentina", "Brazil",
+                     "India", "Italy", "China", "South Africa", "Spane",
+                     "Botswana", "Cape Verde", "Bhutan", "Rwanda", "France",
+                     "United States", "Germany", "Britain", "Barbados", "Norway", "Japan",
+                     "New Zealand", "Singapore")
+#+END_SRC
+
+Now we can label these points using =geom_text=, like this:
+
+#+END_SRC
 #+name: econDatScatter4
-#+begin_src R :results output graphics :file images/econScatter4.png :width 800 :height 400
-  (pc4 <- pc3 + theme_bw() +
-    scale_x_continuous("Corruption Perceptions Index, 2011\n(10 = least corrupt)") +
-    scale_y_continuous("Human Development Index, 2011\n(1 = best)") +
-    theme(legend.position = "top", legend.direction = "horizontal"))
+#+begin_src R :results output graphics :file images/econScatter4.png :width 800 :height 600
+  pc3 +
+    geom_text(aes(label = Country),
+              color = "gray20",
+              data = subset(dat, Country %in% pointsToLabel))
 #+end_src
 
 #+RESULTS: econDatScatter4
 [[file:images/econScatter4.png]]
 
+This more or less gets the information across, but the labels overlap in a most unpleasing fashion. This part is tricky. Unfortunately there is no simple way to automatically adjust the labels so they dont't overlap. We can use some heristics to improve things a bit, but We'll have to do some final positioning more or less manually.
+
+#+BEGIN_SRC R :results output graphics :file images/econScatter5.png :width 800 :height 600
+  dat$hdi.l <- dat$HDI
+  dat[dat$Country == "Sudan", "hdi.l"] <- dat[dat$Country == "Sudan", "hdi.l"] + 0.01
+  dat[dat$Country == "United States", "hdi.l"] <- dat[dat$Country == "United States", "hdi.l"] + 0.02
+  dat[dat$Country == "Japan", "hdi.l"] <- dat[dat$Country == "Japan", "hdi.l"] - 0.02
 
 
+  (pc4 <- pc3 + geom_text(aes(y = hdi.l,
+                              label = Country,
+                              hjust = (1 - CPI/max(CPI)),
+                              vjust = HDI/max(HDI)),
+                          color = "gray10",
+                          data = subset(dat, Country %in% pointsToLabel),
+                          size = 4))
+#+END_SRC
+
+#+RESULTS:
+[[file:images/econScatter5.png]]
+
+We could use this method to adjust more points, or we could do some post-processing of the image in something like [[http://inkscape/org][Inkscape]], but for now I'll call it good enough. Some of the points are obscured by the labels (unlike in the original), but the tradoff is that our labels are actually closer to the point in space that they correspond to. In my opinion moving the labels farther away from the points (as was done in the original) makes it harder to grasp the information being conveyed, so I'll leave it there.
+
+** Change the region labels and order
+Thinkgs are starting to come together. There are just a couple more things we need to add, and then all that will be left are themeing changes. 
+
+Comparing our graph to the original we notice that the labels and order of the Regions in the color legend differ. To correct this we need to change both the labels and order of the Region variable. We can do this with the =factor= function.
+#+BEGIN_SRC R :results silent
+  dat$Region <- factor(dat$Region,
+                       levels = c("EU W. Europe",
+                                  "Americas",
+                                  "Asia Pacific",
+                                  "East EU Cemt Asia",
+                                  "MENA",
+                                  "SSA"),
+                       labels = c("OECD",
+                                  "Americas",
+                                  "Asia &\nOceania",
+                                  "Central &\nEastern Europe",
+                                  "Middle East &\nnorth Africa",
+                                  "Sub-Saharan\nAfrica"))
+                                
+#+END_SRC 
+
+Now when we construct the plot using these data the order should appear as it does in the original.
+#+BEGIN_SRC R :results output graphics :file images/econScatter6.png :width 800 :height 600
+  pc4$data <- dat
+  pc4
+#+END_SRC
+
+#+RESULTS:
+[[file:images/econScatter6.png]]
+
+
+** Add title and format axes
+
+The next step is to add the title and format the axes. We do that using the =scales= system in ggplot2.
+
+#+BEGIN_SRC R :results output graphics :file images/econScatter7.png :width 800 :height 500
+  library(grid)
+  (pc5 <- pc4 +
+    scale_x_continuous(name = "Corruption Perceptions Index, 2011 (10=least corrupt)",
+                       limits = c(.9, 10.5),
+                       breaks = 1:10) +
+    scale_y_continuous(name = "Human Development Index, 2011 (1=Best)",
+                       limits = c(0.2, 1.0),
+                       breaks = seq(0.2, 1.0, by = 0.1)) +
+    scale_color_manual(name = "",
+                       values = c("#24576D",
+                                  "#099DD7",
+                                  "#28AADC",
+                                  "#248E84",
+                                  "#F2583F",
+                                  "#96503F")) +
+    ggtitle("Corruption and Human development"))
+
+#+END_SRC
+
+#+RESULTS:
+[[file:images/econScatter7.png]]
+
+** Theme tweaks
+Our graph is almost there. To finish up, we need to adjust some of the theme elements, and label the axes and legends. This part usually involves some trial and error as you figure out where things need to be positioned. To see what these various theme settings do you can change them and observe the results.
+
+#+BEGIN_SRC R :results output graphics :file images/econScatter8.png :width 800 :height 600
+  library(grid) # for the 'unit' function
+  (pc6 <- pc5 +
+    theme_minimal() + # start with a minimal theme and add what we need
+    theme(text = element_text(color = "gray20"),
+          legend.position = c(0.0, 1.05), # position the legend in the upper left 
+          legend.direction = "horizontal",
+          legend.justification = 0.1, # anchor point for legend.position.
+          legend.text = element_text(size = 11, color = "gray10"),
+          axis.text = element_text(face = "italic"),
+          axis.title.x = element_text(vjust = -1), # move title away from axis
+          axis.title.y = element_text(vjust = 2), # move away for axis
+          axis.ticks.y = element_blank(), # element_blank() is how we remove elements
+          axis.line = element_line(color = "gray40", size = 0.5),
+          axis.line.y = element_blank(),
+          panel.grid.major = element_line(color = "gray50", size = 0.5),
+          panel.grid.major.x = element_blank(),
+          plot.margin = unit(c(15, 2, 15, 4), "mm"), # make some space at top and bottom
+          plot.title = element_text(face = "bold", hjust = -.07, vjust = 5) # bad hack to get the title in the right spot.
+          ))
+
+#+END_SRC
+
+#+RESULTS:
+[[file:images/econScatter8.png]]
+
+** Add model R^2 and source note
+The last bit of information that we want to have on the graph is the variance explained by the model represented by the trend line. Lets fit that model and pull out the R^2 first, then think about how to get it onto the graph.
+#+BEGIN_SRC R
+  (mR2 <- summary(lm(HDI ~ log(CPI), data = dat))$r.squared)
+#+END_SRC
+
+#+RESULTS:
+#+begin_example
+> (mR2 <- summary(lm(HDI ~ log(CPI), data = dat))$r.squared)
+[1] 0.521
+> 
+#+end_example
+
+OK, now that we've calculated the values, let's think about how to get them on the graph. ggplot2 has an =annotate= function, but this is not convenient for adding elements outside the plot area. The =grid= package has nice functions for doing this, so we'll use those.
+
+And here it is, our final version!
+
+#+BEGIN_SRC R :results silent
+  library(grid)
+  png(file = "images/econScatter10.png", width = 800, height = 600)
+  pc6 
+  grid.text("Sources: Transparency International; UN Human Development Report",
+           x = .02, y = .03,
+           just = "left",
+           draw = TRUE)
+  grid.segments(x0 = 0.81, x1 = 0.825,
+                y0 = 0.90, y1 = 0.90,
+                gp = gpar(col = "red"),
+                draw = TRUE)
+  grid.text(paste0("R² = ",
+                   as.integer(mR2*100),
+                   "%"),
+            x = 0.835, y = 0.90,
+            gp = gpar(col = "gray20"),
+            draw = TRUE,
+            just = "left")
+
+  dev.off()
+#+END_SRC
+
+[[file:images/econScatter10.png]]
+
+Comparing it to the original suggests that we've got most of the important elements, though of course the two graphs are not identical.
+[[file:images/Economist1.png]]
 * Wrap-up
 
 ** Help Us Make This Workshop Even Better!
