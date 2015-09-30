@@ -6,99 +6,100 @@
 Table of Contents
 ─────────────────
 
-1 Introduction
-.. 1.1 Materials and setup
-..... 1.1.1 Laptop users: You should have R installed –if not:
-..... 1.1.2 Everyone: Download workshop materials:
-.. 1.2 Workshop Overview
-.. 1.3 Starting A The End
-.. 1.4 Why `ggplot2'?
-.. 1.5 What Is The Grammar Of Graphics?
-.. 1.6 The structure of a `ggplot'
-.. 1.7 Example Data: `Housing prices'
-.. 1.8 `ggplot2' VS Base Graphics
-.. 1.9 `ggplot2' VS Base for simple graphs
-.. 1.10 `ggplot2' Base graphics VS `ggplot' for more complex graphs:
-2 Geometric Objects And Aesthetics
-.. 2.1 Aesthetic Mapping
-.. 2.2 Geometic Objects (`geom')
-.. 2.3 Points (Scatterplot)
-.. 2.4 Lines (Prediction Line)
-.. 2.5 Smoothers
-.. 2.6 Text (Label Points)
-.. 2.7 Aesthetic Mapping VS Assignment
-.. 2.8 Mapping Variables To Other Aesthetics
-.. 2.9 Exercise I
-3 Statistical Transformations
-.. 3.1 Statistical Transformations
-.. 3.2 Setting Statistical Transformation Arguments
-.. 3.3 Changing The Statistical Transformation
-.. 3.4 Exercise II
-4 Scales
-.. 4.1 Scales: Controlling Aesthetic Mapping
-.. 4.2 Common Scale Arguments
-.. 4.3 Scale Modification Examples
-.. 4.4 Using different color scales
-.. 4.5 Available Scales
-.. 4.6 Exercise II
-5 Faceting
-.. 5.1 Faceting
-.. 5.2 What is the trend in housing prices in each state?
-.. 5.3 Faceting to the rescue
-6 Themes
-.. 6.1 Themes
-.. 6.2 Overriding theme defaults
-.. 6.3 Creating and saving new themes
-7 The #1 FAQ
-.. 7.1 Map Aesthetic To Different Columns
-..... 7.1.1 Wrong
-..... 7.1.2 Right
-8 Putting It All Together
-.. 8.1 Challenge: Recreate This `Economist' Graph
-9 Challenge Solution                                         :prototype:
-.. 9.1 Challenge Solution                                    :prototype:
-.. 9.2 Challenge Solution                                    :prototype:
-.. 9.3 Challenge Solution                                    :prototype:
-10 Wrap-up
-.. 10.1 Help Us Make This Workshop Even Better!
-.. 10.2 Additional resources
+Introduction
+.. Materials and setup
+..... Lab computer users: Log in using the user name and password on the board to your left. :labsetup:
+..... Laptop users: You should have R installed –if not:
+..... Everyone: Download workshop materials:
+.. Workshop Overview
+.. Starting A The End
+.. Why `ggplot2'?
+.. What Is The Grammar Of Graphics?
+.. The structure of a `ggplot'
+.. Example Data: `Housing prices'
+.. `ggplot2' VS Base Graphics
+.. `ggplot2' VS Base for simple graphs
+.. `ggplot2' Base graphics VS `ggplot' for more complex graphs:
+Geometric Objects And Aesthetics
+.. Aesthetic Mapping
+.. Geometic Objects (`geom')
+.. Points (Scatterplot)
+.. Lines (Prediction Line)
+.. Smoothers
+.. Text (Label Points)
+.. Aesthetic Mapping VS Assignment
+.. Mapping Variables To Other Aesthetics
+.. Exercise I
+Statistical Transformations
+.. Statistical Transformations
+.. Setting Statistical Transformation Arguments
+.. Changing The Statistical Transformation
+.. Exercise II
+Scales
+.. Scales: Controlling Aesthetic Mapping
+.. Common Scale Arguments
+.. Scale Modification Examples
+.. Using different color scales
+.. Available Scales
+.. Exercise III
+Faceting
+.. Faceting
+.. What is the trend in housing prices in each state?
+.. Faceting to the rescue
+Themes
+.. Themes
+.. Overriding theme defaults
+.. Creating and saving new themes
+The #1 FAQ
+.. Map Aesthetic To Different Columns
+..... Wrong
+..... Right
+Putting It All Together
+.. Challenge: Recreate This `Economist' Graph
+Wrap-up
+.. Help Us Make This Workshop Even Better!
+.. Additional resources
 
 
 
 
 
-1 Introduction
-══════════════
+Introduction
+════════════
 
-1.1 Materials and setup
-───────────────────────
+Materials and setup
+───────────────────
 
-1.1.1 Laptop users: You should have R installed –if not:
-╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌
-
-◊ 1.1.1.1 Open a web browser and go to [http://cran.r-project.org] and download and install it
+Lab computer users: Log in using the user name and password on the board to your left. :labsetup:
+╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌
 
 
-◊ 1.1.1.2 Also helpful to install RStudio (download from [http://rstudio.com])
+Laptop users: You should have R installed –if not:
+╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌
+
+◊ Open a web browser and go to [http://cran.r-project.org] and download and install it
 
 
-◊ 1.1.1.3 In R, type `install.packages("ggplot2")' to install the ggplot2 package.
+◊ Also helpful to install RStudio (download from [http://rstudio.com])
 
 
-1.1.2 Everyone: Download workshop materials:
-╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌
-
-◊ 1.1.2.1 Download materials from [http://tutorials.iq.harvard.edu/R/Rgraphics.zip]
+◊ In R, type `install.packages("ggplot2")' to install the ggplot2 package.
 
 
-◊ 1.1.2.2 Extract the zip file containing the materials to your desktop
+Everyone: Download workshop materials:
+╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌
+
+◊ Download materials from [http://tutorials.iq.harvard.edu/R/Rgraphics.zip]
+
+
+◊ Extract the zip file containing the materials to your desktop
 
   Workshop notes are available in .hmtl format. Open a file browser,
   navigate to your desktop and open Rgraphics.html
 
 
-1.2 Workshop Overview
-─────────────────────
+Workshop Overview
+─────────────────
 
   Class Structure and Organization:
   • Ask questions at any time. Really!
@@ -111,8 +112,8 @@ Table of Contents
   • Focus is on `ggplot2' graphics–other packages will not be covered
 
 
-1.3 Starting A The End
-──────────────────────
+Starting A The End
+──────────────────
 
   My goal: by the end of the workshop you will be able to reproduce this
   graphic from the Economist:
@@ -120,8 +121,8 @@ Table of Contents
   [file:images/Economist1.png]
 
 
-1.4 Why `ggplot2'?
-──────────────────
+Why `ggplot2'?
+──────────────
 
   Advantages of ggplot2
   • consistent underlying `grammar of graphics' (Wilkinson, 2005)
@@ -139,8 +140,8 @@ Table of Contents
   • Interactive graphics (see the ggvis package)
 
 
-1.5 What Is The Grammar Of Graphics?
-────────────────────────────────────
+What Is The Grammar Of Graphics?
+────────────────────────────────
 
   The basic idea: independently specify plot building blocks and combine
   them to create just about any kind of graphical display you want.
@@ -155,8 +156,8 @@ Table of Contents
   • faceting
 
 
-1.6 The structure of a `ggplot'
-───────────────────────────────
+The structure of a `ggplot'
+───────────────────────────
 
   The `ggplot()' function is used to initialize the basic graph
   structure, then we add to it. The structure of a ggplot looks like
@@ -191,8 +192,8 @@ Table of Contents
   add them together using the `+' operator.
 
 
-1.7 Example Data: `Housing prices'
-──────────────────────────────────
+Example Data: `Housing prices'
+──────────────────────────────
 
   Let's look at housing prices.
   ┌────
@@ -204,8 +205,8 @@ Table of Contents
   [https://www.lincolninst.edu/subcenters/land-values/land-prices-by-state.asp])
 
 
-1.8 `ggplot2' VS Base Graphics
-──────────────────────────────
+`ggplot2' VS Base Graphics
+──────────────────────────
 
   Compared to base graphics, `ggplot2'
   • is more verbose for simple / canned graphics
@@ -214,8 +215,8 @@ Table of Contents
   • uses a different system for adding plot elements
 
 
-1.9 `ggplot2' VS Base for simple graphs
-───────────────────────────────────────
+`ggplot2' VS Base for simple graphs
+───────────────────────────────────
 
   Base graphics histogram example:
 
@@ -234,8 +235,8 @@ Table of Contents
   Base wins!
 
 
-1.10 `ggplot2' Base graphics VS `ggplot' for more complex graphs:
-─────────────────────────────────────────────────────────────────
+`ggplot2' Base graphics VS `ggplot' for more complex graphs:
+────────────────────────────────────────────────────────────
 
   Base colored scatter plot example:
 
@@ -266,11 +267,11 @@ Table of Contents
   `ggplot2' wins!
 
 
-2 Geometric Objects And Aesthetics
-══════════════════════════════════
+Geometric Objects And Aesthetics
+════════════════════════════════
 
-2.1 Aesthetic Mapping
-─────────────────────
+Aesthetic Mapping
+─────────────────
 
   In ggplot land /aesthetic/ means "something you can see". Examples
   include:
@@ -286,8 +287,8 @@ Table of Contents
   mappings are set with the `aes()' function.
 
 
-2.2 Geometic Objects (`geom')
-─────────────────────────────
+Geometic Objects (`geom')
+─────────────────────────
 
   Geometric objects are the actual marks we put on a plot. Examples
   include:
@@ -306,8 +307,8 @@ Table of Contents
   to see a list of functions starting with `geom_'.
 
 
-2.3 Points (Scatterplot)
-────────────────────────
+Points (Scatterplot)
+────────────────────
 
   Now that we know about geometric objects and aesthetic mapping, we can
   make a ggplot. `geom_point' requires mappings for x and y, all others
@@ -321,8 +322,8 @@ Table of Contents
   └────
 
 
-2.4 Lines (Prediction Line)
-───────────────────────────
+Lines (Prediction Line)
+───────────────────────
 
   A plot constructed with `ggplot' can have more than one geom. In that
   case the mappings established in the `ggplot()' call are plot defaults
@@ -339,8 +340,8 @@ Table of Contents
   └────
 
 
-2.5 Smoothers
-─────────────
+Smoothers
+─────────
 
   Not all geometric objects are simple shapes–the smooth geom includes a
   line and a ribbon.
@@ -352,8 +353,8 @@ Table of Contents
   └────
 
 
-2.6 Text (Label Points)
-───────────────────────
+Text (Label Points)
+───────────────────
 
   Each `geom' accepts a particualar set of mappings–for example
   `geom_text()' accepts a `labels' mapping.
@@ -364,8 +365,8 @@ Table of Contents
   └────
 
 
-2.7 Aesthetic Mapping VS Assignment
-───────────────────────────────────
+Aesthetic Mapping VS Assignment
+───────────────────────────────
 
   Note that variables are mapped to aesthetics with the `aes()'
   function, while fixed aesthetics are set outside the `aes()' call.
@@ -378,8 +379,8 @@ Table of Contents
   └────
 
 
-2.8 Mapping Variables To Other Aesthetics
-─────────────────────────────────────────
+Mapping Variables To Other Aesthetics
+─────────────────────────────────────
 
   Other aesthetics are mapped in the same way as x and y in the previous
   example.
@@ -390,14 +391,18 @@ Table of Contents
   └────
 
 
-2.9 Exercise I
-──────────────
+Exercise I
+──────────
 
   The data for the exercises is available in the
-  `dataSets/EconomistData.csv' file. Read it in with `dat <-
-  read.csv("dataSets/EconomistData.csv")' Original sources for these
-  data are [http://www.transparency.org/content/download/64476/1031428]
-  [http://hdrstats.undp.org/en/indicators/display_cf_xls_indicator.cfm?indicator_id=103106&lang=en]
+  `dataSets/EconomistData.csv' file. Read it in with
+  ┌────
+  │ dat <- read.csv("dataSets/EconomistData.csv")
+  └────
+
+  Original sources for these data are
+    [http://www.transparency.org/content/download/64476/1031428]
+    [http://hdrstats.undp.org/en/indicators/display_cf_xls_indicator.cfm?indicator_id=103106&lang=en]
 
   These data consist of /Human Development Index/ and /Corruption
   Perception Index/ scores for several countries.
@@ -409,11 +414,11 @@ Table of Contents
   5. Overlay points on top of the box plots
 
 
-3 Statistical Transformations
-═════════════════════════════
+Statistical Transformations
+═══════════════════════════
 
-3.1 Statistical Transformations
-───────────────────────────────
+Statistical Transformations
+───────────────────────────
 
   Some plot types (such as scatterplots) do not require
   transformations–each point is plotted at x and y coordinates equal to
@@ -432,8 +437,8 @@ Table of Contents
   └────
 
 
-3.2 Setting Statistical Transformation Arguments
-────────────────────────────────────────────────
+Setting Statistical Transformation Arguments
+────────────────────────────────────────────
 
   Arguments to `stat_' functions can be passed through `geom_'
   functions. This can be slightly annoying because in order to change it
@@ -463,8 +468,8 @@ Table of Contents
   `stat_' calls.
 
 
-3.3 Changing The Statistical Transformation
-───────────────────────────────────────────
+Changing The Statistical Transformation
+───────────────────────────────────────
 
   Sometimes the default statistical transformation is not what you need.
   This is often the case with pre-summarized data:
@@ -500,25 +505,25 @@ Table of Contents
   └────
 
 
-3.4 Exercise II
-───────────────
+Exercise II
+───────────
 
   1. Re-create a scatter plot with CPI on the x axis and HDI on the y
      axis (as you did in the previous exercise).
   2. Overlay a smoothing line on top of the scatter plot using the /lm/
      method. Hint: see `?stat_smooth'.
   3. Overlay a smoothing line on top of the scatter plot using the
-     default /loess/ method.
+     default method.
   4. BONUS (optional): Overlay a smoothing line on top of the scatter
      plot using the default /loess/ method, but make it less smooth.
      Hint: see `?loess'.
 
 
-4 Scales
-════════
+Scales
+══════
 
-4.1 Scales: Controlling Aesthetic Mapping
-─────────────────────────────────────────
+Scales: Controlling Aesthetic Mapping
+─────────────────────────────────────
 
   Aesthetic mapping (i.e., with `aes()') only says that a variable
   should be mapped to an aesthetic. It doesn't say /how/ that should
@@ -537,8 +542,8 @@ Table of Contents
   see a list of scale modification functions.
 
 
-4.2 Common Scale Arguments
-──────────────────────────
+Common Scale Arguments
+──────────────────────
 
   The following arguments are common to most scales in ggplot2:
   name: the first argument gives the axis or legend title
@@ -551,8 +556,8 @@ Table of Contents
   for setting the colors at the low and high end of the scale.
 
 
-4.3 Scale Modification Examples
-───────────────────────────────
+Scale Modification Examples
+───────────────────────────
 
   Start by constructing a dotplot showing the distribution of home
   values by Date and State.
@@ -600,8 +605,8 @@ Table of Contents
   └────
 
 
-4.4 Using different color scales
-────────────────────────────────
+Using different color scales
+────────────────────────────
 
   ggplot2 has a wide variety of color scales; here is an example using
   `scale_color_gradient2' to interpolate between three different colors.
@@ -617,8 +622,8 @@ Table of Contents
   └────
 
 
-4.5 Available Scales
-────────────────────
+Available Scales
+────────────────
 
   • Partial combination matrix of available scales
   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -641,9 +646,12 @@ Table of Contents
                     datetime    scale_y_datetime        
   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  Note that in RStudio you can type `scale_' followed by TAB to get the
+  whole list of available scales.
 
-4.6 Exercise II
-───────────────
+
+Exercise III
+────────────
 
   1. Create a scatter plot with CPI on the x axis and HDI on the y axis.
      Color the points to indicate region.
@@ -654,11 +662,11 @@ Table of Contents
      Hint: see `?scale_color_manual'.
 
 
-5 Faceting
-══════════
+Faceting
+════════
 
-5.1 Faceting
-────────────
+Faceting
+────────
 
   • Faceting is `ggplot2' parlance for *small multiples*
   • The idea is to create separate graphs for subsets of data
@@ -670,8 +678,8 @@ Table of Contents
   • Facilitates comparison among plots, not just of geoms within a plot
 
 
-5.2 What is the trend in housing prices in each state?
-──────────────────────────────────────────────────────
+What is the trend in housing prices in each state?
+──────────────────────────────────────────────────
 
   • Start by using a technique we already know–map State to color:
   ┌────
@@ -684,8 +692,8 @@ Table of Contents
   each one by color, and the lines obscure one another.
 
 
-5.3 Faceting to the rescue
-──────────────────────────
+Faceting to the rescue
+──────────────────────
 
   We can remedy the deficiencies of the previous plot by faceting by
   state rather than mapping state to color.
@@ -700,11 +708,11 @@ Table of Contents
   dimensions.
 
 
-6 Themes
-════════
+Themes
+══════
 
-6.1 Themes
-──────────
+Themes
+──────
 
   The `ggplot2' theme system handles non-data plot elements such as
   • Axis labels
@@ -721,31 +729,33 @@ Table of Contents
 
 
   ┌────
-  │ p5 + theme_linedraw()
+  │ p5 + theme_light()
   └────
 
 
-6.2 Overriding theme defaults
-─────────────────────────────
+Overriding theme defaults
+─────────────────────────
 
   Specific theme elements can be overridden using `theme()'. For
   example:
   ┌────
-  │ p5 + theme_minimal()
+  │ p5 + theme_minimal() +
+  │   theme(text = element_text(color = "turquoise"))
   └────
 
 
   All theme options are documented in `?theme'.
 
 
-6.3 Creating and saving new themes
-──────────────────────────────────
+Creating and saving new themes
+──────────────────────────────
 
   You can create new themes, as in the following example:
 
   ┌────
   │ theme_new <- theme_bw() +
-  │   theme(text=element_text(size = 12, family = ""),
+  │   theme(plot.background = element_rect(size = 1, color = "blue", fill = "black"),
+  │         text=element_text(size = 12, family = "Serif", color = "ivory"),
   │         axis.text.y = element_text(colour = "purple"),
   │         axis.text.x = element_text(colour = "red"),
   │         panel.background = element_rect(fill = "pink"),
@@ -755,11 +765,11 @@ Table of Contents
   └────
 
 
-7 The #1 FAQ
-════════════
+The #1 FAQ
+══════════
 
-7.1 Map Aesthetic To Different Columns
-──────────────────────────────────────
+Map Aesthetic To Different Columns
+──────────────────────────────────
 
   The most frequently asked question goes something like this: /I have
   two variables in my data.frame, and I'd like to plot them as separate
@@ -767,8 +777,8 @@ Table of Contents
   I do that?/
 
 
-7.1.1 Wrong
-╌╌╌╌╌╌╌╌╌╌╌
+Wrong
+╌╌╌╌╌
 
   ┌────
   │ housing.byyear <- aggregate(cbind(Home.Value, Land.Value) ~ Date, data = housing, mean)
@@ -782,8 +792,8 @@ Table of Contents
   └────
 
 
-7.1.2 Right
-╌╌╌╌╌╌╌╌╌╌╌
+Right
+╌╌╌╌╌
 
   ┌────
   │ library(tidyr)
@@ -799,11 +809,11 @@ Table of Contents
   └────
 
 
-8 Putting It All Together
-═════════════════════════
+Putting It All Together
+═══════════════════════
 
-8.1 Challenge: Recreate This `Economist' Graph
-──────────────────────────────────────────────
+Challenge: Recreate This `Economist' Graph
+──────────────────────────────────────────
 
   [file:images/Economist1.pdf]
 
@@ -816,80 +826,19 @@ Table of Contents
   [file:images/Economist1.png]
 
 
-9 Challenge Solution                                         :prototype:
-════════════════════
+Wrap-up
+═══════
 
-  Create basic scatter plot
-
-  ┌────
-  │   pc1 <- ggplot(dat, aes(x = CPI, y = HDI, color = Region))
-  │   (pc1 <- pc1 + geom_point(shape = 1))
-  │ 
-  │ 
-  │ 
-  │ 
-  │ #
-  └────
-
-
-9.1 Challenge Solution                                       :prototype:
-──────────────────────
-
-  Add labels
-
-  ┌────
-  │ label.these <- c("Congo", "Sudan", "Afghanistan", "Greece", "China",
-  │                  "India", "Rwanda", "Spain", "France", "United States",
-  │                  "Japan", "Norway", "Singapore")
-  │ (pc2 <- pc1 +
-  │  geom_text(aes(label = Country),
-  │            color = "black", size = 3, hjust = 1.1,
-  │            data = dat[dat$Country %in% label.these, ]))
-  └────
-
-
-9.2 Challenge Solution                                       :prototype:
-──────────────────────
-
-  Add smoothing line
-
-  ┌────
-  │   (pc3 <- pc2 +
-  │    geom_smooth(aes(group = 1),
-  │                method = "lm",
-  │                color = "black",
-  │                formula = y~ poly(x, 2),
-  │                se = FALSE))
-  │ #
-  └────
-
-
-9.3 Challenge Solution                                       :prototype:
-──────────────────────
-
-  Finishing touches
-
-  ┌────
-  │ (pc4 <- pc3 + theme_bw() +
-  │   scale_x_continuous("Corruption Perceptions Index, 2011\n(10 = least corrupt)") +
-  │   scale_y_continuous("Human Development Index, 2011\n(1 = best)") +
-  │   theme(legend.position = "top", legend.direction = "horizontal"))
-  └────
-
-
-10 Wrap-up
-══════════
-
-10.1 Help Us Make This Workshop Even Better!
-────────────────────────────────────────────
+Help Us Make This Workshop Even Better!
+───────────────────────────────────────
 
   • Please take a moment to fill out a very short feedback form
   • These workshops exist for you – tell us what you need!
   • [http://tinyurl.com/R-graphics-feedback]
 
 
-10.2 Additional resources
-─────────────────────────
+Additional resources
+────────────────────
 
   • ggplot2 resources
     • Mailing list: [http://groups.google.com/group/ggplot2]

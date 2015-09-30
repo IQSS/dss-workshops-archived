@@ -11,8 +11,8 @@
 # property and/or the EXCLUDE_TAGS, place the curser on the poperty line 
 # and press C-c C-c
 
-#+PROPERTY: exports both
-#+EXCLUDE_TAGS: noexport mitsetup
+#+PROPERTY: exports code
+#+EXCLUDE_TAGS: noexport mitsetup prototype
 
 
 
@@ -405,6 +405,33 @@ These data consist of /Human Development Index/ and /Corruption Perception Index
 4. Create boxplots of CPI by Region
 5. Overlay points on top of the box plots
 
+** Exercise I prototype                                          :prototype:
+1. [@1] Create a scatter plot with CPI on the x axis and HDI on the y axis.
+#+BEGIN_SRC R :results silent
+  ggplot(dat, aes(x = CPI, y = HDI)) +
+    geom_point()
+#+END_SRC
+2. [@2] Color the points in the previous plot blue.
+#+BEGIN_SRC R :results silent
+  ggplot(dat, aes(x = CPI, y = HDI)) +
+    geom_point(color = "blue")
+#+END_SRC
+3. [@3] Color the points in the previous plot according to /Region/.
+#+BEGIN_SRC R :results silent
+  ggplot(dat, aes(x = CPI, y = HDI)) +
+    geom_point(aes(color = Region))
+#+END_SRC
+4. [@4] Create boxplots of CPI by Region
+#+BEGIN_SRC R :results silent
+  ggplot(dat, aes(x = Region, y = CPI)) +
+    geom_boxplot()
+#+END_SRC
+5. [@5] Overlay points on top of the box plots
+#+BEGIN_SRC R :results silent
+  ggplot(dat, aes(x = Region, y = CPI)) +
+    geom_boxplot() +
+    geom_point() 
+#+END_SRC
 * Statistical Transformations
 
 ** Statistical Transformations
@@ -521,8 +548,34 @@ What is the problem with the previous plot? Basically we take binned and summari
 
 1. Re-create a scatter plot with CPI on the x axis and HDI on the y axis (as you did in the previous exercise).
 2. Overlay a smoothing line on top of the scatter plot using the /lm/ method. Hint: see =?stat_smooth=.
-3. Overlay a smoothing line on top of the scatter plot using the default /loess/ method.
+3. Overlay a smoothing line on top of the scatter plot using the default method.
 4. BONUS (optional): Overlay a smoothing line on top of the scatter plot using the default /loess/ method, but make it less smooth. Hint: see =?loess=.
+
+** Exercise II prototype                                         :prototype:
+
+1. [@1] Re-create a scatter plot with CPI on the x axis and HDI on the y axis (as you did in the previous exercise).
+#+BEGIN_SRC R :results silent
+  ggplot(dat, aes(x = CPI, y = HDI)) +
+    geom_point()
+#+END_SRC
+2. [@2] Overlay a smoothing line on top of the scatter plot using the /lm/ method. Hint: see =?stat_smooth=.
+#+BEGIN_SRC R :results silent
+  ggplot(dat, aes(x = CPI, y = HDI)) +
+    geom_point() +
+    geom_smooth(method = "lm")
+#+END_SRC
+3. [@3] Overlay a smoothing line on top of the scatter plot using the default method.
+#+BEGIN_SRC R :results silent
+  ggplot(dat, aes(x = CPI, y = HDI)) +
+    geom_point() +
+    geom_smooth()
+#+END_SRC
+4. [@4] BONUS (optional): Overlay a smoothing line on top of the scatter plot using the default /loess/ method, but make it less smooth. Hint: see =?loess=.
+#+BEGIN_SRC R :results silent
+  ggplot(dat, aes(x = CPI, y = HDI)) +
+    geom_point() +
+    geom_smooth(span = .4)
+#+END_SRC
 
 * Scales
 
@@ -646,11 +699,42 @@ ggplot2 has a wide variety of color scales; here is an example using =scale_colo
 |                 | date       | scale_x_date             |
 |                 | datetime   | scale_y_datetime         |
 
-** Exercise II
+Note that in RStudio you can type =scale_= followed by TAB to get the whole list of available scales.
+
+** Exercise III
 1. Create a scatter plot with CPI on the x axis and HDI on the y axis. Color the points to indicate region.
 2. Modify the x, y, and color scales so that they have more easily-understood names (e.g., spell out "Human development Index" instead of "HDI").
 3. Modify the color scale to use specific values of your choosing. Hint: see =?scale_color_manual=.
 
+
+** Exercise III prototype                                        :prototype:
+1. [@1] Create a scatter plot with CPI on the x axis and HDI on the y axis. Color the points to indicate region.
+#+BEGIN_SRC R :results silent
+  ggplot(dat, aes(x = CPI, y = HDI, color = "Region")) +
+    geom_point()
+#+END_SRC
+2. [@2] Modify the x, y, and color scales so that they have more easily-understood names (e.g., spell out "Human development Index" instead of "HDI").
+#+BEGIN_SRC R :results silent
+    ggplot(dat, aes(x = CPI, y = HDI, color = "Region")) +
+    geom_point() +
+    scale_x_continuous(name = "Corruption Perception Index") +
+    scale_y_continuous(name = "Human Development Index") +
+    scale_color_discrete(name = "Region of the world")
+#+END_SRC
+3. [@3] Modify the color scale to use specific values of your choosing. Hint: see =?scale_color_manual=.
+#+BEGIN_SRC R :results silent
+  ggplot(dat, aes(x = CPI, y = HDI, color = "Region")) +
+  geom_point() +
+  scale_x_continuous(name = "Corruption Perception Index") +
+  scale_y_continuous(name = "Human Development Index") +
+    scale_color_manual(name = "Region of the world",
+                       values = c("#24576D",
+                                  "#099DD7",
+                                  "#28AADC",
+                                  "#248E84",
+                                  "#F2583F",
+                                  "#96503F"))
+#+END_SRC
 
 * Faceting
 
@@ -809,52 +893,10 @@ Building off of the graphics you created in the previous exercises, put the fini
 
 [[file:images/Economist1.png]]
 
-* COMMENT Exercise solutions                                       :noexport:
-** Exercise I prototype 					   :prototype:
-
-#+name: ex1Prototype
-#+begin_src R :exports code
-  # 1. Create a scatter plot with displacement on the =x= axis and horse power on the y axis.
-  (p.ex1 <- ggplot(housing, aes(x = disp, y = hp)) + geom_point())
-  # 2. Color the points in the previous plot blue.
-  p.ex1 + geom_point(color = "blue")
-  # 3. Color the points in the previous plot according to miles per gallon.
-  p.ex1 + geom_point(aes(color = mpg))
-#+end_src
-
-#+RESULTS: ex1Prototype
-
-
-** Exercise II Prototype					  :prototype:
-#+name: Exercise2Prototype
-#+begin_src R :exports code
-                                          #Ex2.1
-  (p <- ggplot(housing, aes(x = factor(gear), y = mpg)) + geom_boxplot())
-                                          #Ex2.2
-  p + geom_point()
-                                          #Ex2.3
-  (p <- ggplot(housing, aes(x = wt, y = hp)) + geom_point())
-                                          #Ex2.4
-  p + geom_smooth(method = "lm")
-#+end_src
-
-#+RESULTS: Exercise2Prototype
-
-
-** Exercise III Prototype                                         :prototype:
-#+name: Exercise3Prototype
-#+begin_src R :exports code
-                                          #Ex3.1
-  (myplot <- p6 + geom_point(aes(alpha = qsec)))
-                                          #Ex3.2
-  myplot + scale_alpha_continuous(range = c(.5, 1))
-#+end_src
-
-#+RESULTS: Exercise3Prototype
 
 
 
-* Challenge Solution
+* Challenge Solution                                              :prototype:
 
 Lets start by creating the basic scatter plot, then we can make a list of things that need to be added or changed. The basic plot loogs like this:
 
