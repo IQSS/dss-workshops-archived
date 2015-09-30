@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2015-09-30 Wed 13:16 -->
+<!-- 2015-09-30 Wed 13:39 -->
 <meta  http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta  name="viewport" content="width=device-width, initial-scale=1" />
 <title>Introduction to R Graphics with <code>ggplot2</code></title>
@@ -1272,7 +1272,7 @@ Built-in themes include:
 
 <div class="org-src-container">
 
-<pre class="src src-R" id="orgsrcblock28">p5 + theme_linedraw<span style="color: #2f96dc;">()</span>
+<pre class="src src-R" id="orgsrcblock28">p5 + theme_light<span style="color: #2f96dc;">()</span>
 </pre>
 </div>
 
@@ -1292,7 +1292,8 @@ Specific theme elements can be overridden using <code>theme()</code>. For exampl
 </p>
 <div class="org-src-container">
 
-<pre class="src src-R" id="orgsrcblock29">p5 + theme_minimal<span style="color: #2f96dc;">()</span>
+<pre class="src src-R" id="orgsrcblock29">p5 + theme_minimal<span style="color: #2f96dc;">()</span> +
+  theme<span style="color: #2f96dc;">(</span>text = element_text<span style="color: #bc6ec5;">(</span>color = <span style="color: #2d9574;">"turquoise"</span><span style="color: #bc6ec5;">)</span><span style="color: #2f96dc;">)</span>
 </pre>
 </div>
 
@@ -1319,7 +1320,8 @@ You can create new themes, as in the following example:
 <div class="org-src-container">
 
 <pre class="src src-R" id="orgsrcblock30">theme_new <span style="color: #a45bad;">&lt;-</span> theme_bw<span style="color: #2f96dc;">()</span> +
-  theme<span style="color: #2f96dc;">(</span>text=element_text<span style="color: #bc6ec5;">(</span>size = 12, family = <span style="color: #2d9574;">""</span><span style="color: #bc6ec5;">)</span>,
+  theme<span style="color: #2f96dc;">(</span>plot.background = element_rect<span style="color: #bc6ec5;">(</span>size = 1, color = <span style="color: #2d9574;">"blue"</span>, fill = <span style="color: #2d9574;">"black"</span><span style="color: #bc6ec5;">)</span>,
+        text=element_text<span style="color: #bc6ec5;">(</span>size = 12, family = <span style="color: #2d9574;">"Serif"</span>, color = <span style="color: #2d9574;">"ivory"</span><span style="color: #bc6ec5;">)</span>,
         axis.text.y = element_text<span style="color: #bc6ec5;">(</span>colour = <span style="color: #2d9574;">"purple"</span><span style="color: #bc6ec5;">)</span>,
         axis.text.x = element_text<span style="color: #bc6ec5;">(</span>colour = <span style="color: #2d9574;">"red"</span><span style="color: #bc6ec5;">)</span>,
         panel.background = element_rect<span style="color: #bc6ec5;">(</span>fill = <span style="color: #2d9574;">"pink"</span><span style="color: #bc6ec5;">)</span>,

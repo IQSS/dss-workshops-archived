@@ -715,7 +715,7 @@ Built-in themes include:
 
 #+name: themex2
 #+begin_src R :results output graphics :file images/themeex2.png :width 800 :height 650
-  p5 + theme_linedraw()
+  p5 + theme_light()
 #+end_src
 
 #+RESULTS: themex2
@@ -725,7 +725,8 @@ Built-in themes include:
 Specific theme elements can be overridden using ~theme()~. For example:
 #+name: opts
 #+begin_src R :results output graphics :file images/opts.png :width 800 :height 650
-    p5 + theme_minimal()
+    p5 + theme_minimal() +
+      theme(text = element_text(color = "turquoise"))
 #+end_src
 
 
@@ -740,7 +741,8 @@ You can create new themes, as in the following example:
 #+name: themes
 #+begin_src R :results output graphics :file images/themes.png :width 800 :height 650
   theme_new <- theme_bw() +
-    theme(text=element_text(size = 12, family = ""),
+    theme(plot.background = element_rect(size = 1, color = "blue", fill = "black"),
+          text=element_text(size = 12, family = "Serif", color = "ivory"),
           axis.text.y = element_text(colour = "purple"),
           axis.text.x = element_text(colour = "red"),
           panel.background = element_rect(fill = "pink"),
