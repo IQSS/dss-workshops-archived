@@ -12,10 +12,8 @@
 # property and/or the EXCLUDE_TAGS, place the curser on the poperty line 
 # and press C-c C-c
 
-#+PROPERTY: exports both
-#+EXCLUDE_TAGS: noexport mitsetup
-
-
+#+PROPERTY: exports code
+#+EXCLUDE_TAGS: noexport mitsetup prototype
 
 #+SETUPFILE: ../workshopPreamble.org
 
@@ -35,7 +33,6 @@
 #+begin_src emacs-lisp :exports none :results silent :tangle no
   (load-file "../setupEnvironment.el")
 #+end_src
-
 
 * Workshop overview and materials
 
@@ -120,7 +117,7 @@ OK, what are we working with?
 #+begin_example
 > ## how many lines do we have?
 > length(ceprHtmlIndex)
-[1] 295
+[1] 296
 > ## what do the first few lines look like?
 > head(ceprHtmlIndex, 10) ## look at the first few lines of html
  [1] "<!doctype html>"                                                               
@@ -147,12 +144,12 @@ In html links are specified using the =<a>= (for /anchor/) tag. So now we want t
 #+begin_example
 > ## find lines with links (a tags)
 > (aLineNumbers <- grep("<a", ceprHtmlIndex)) # line numbers containing <a> tags
- [1] 141 143 149 150 151 152 153 154 155 156 167 169 173 175 176 177
-[17] 178 179 180 181 182 183 184 185 186 187 188 189 190 191 192 193
-[33] 194 195 196 197 198 199 200 201 202 203 204 205 206 207 208 209
-[49] 210 212 219 223 225 226 227 228 231 233 234 235 236 239 241 242
-[65] 243 244 247 249 250 251 252 255 257 258 259 260 263 264 265 267
-[81] 269 271 273 282 285 289
+ [1] 142 144 150 151 152 153 154 155 156 157 168 170 174 176 177 178
+[17] 179 180 181 182 183 184 185 186 187 188 189 190 191 192 193 194
+[33] 195 196 197 198 199 200 201 202 203 204 205 206 207 208 209 210
+[49] 211 213 220 224 226 227 228 229 232 234 235 236 237 240 242 243
+[65] 244 245 248 250 251 252 253 256 258 259 260 261 264 265 266 268
+[81] 270 272 274 283 286 290
 > head(aLines <- grep("<a", ceprHtmlIndex, value = TRUE)) # lines containing <a> tags
 [1] "\t\t\t\t\t\t\t\t\t<h1 id=\"site-name\"><a href=\"http://ceprdata.org/\" title=\"Home\" rel=\"home\"><img src=\"http://s403740266.onlinehome.us/wp-content/uploads/2012/03/ceprdata_logo.png\"></a></h1>"
 [2] "\t\t\t\t<ul class=\"nav\"><li class=\"menu-item menu-item-type-taxonomy menu-item-object-category\"><a href=\"http://ceprdata.org/wp-login.php\">Log in</a></li></ul>\t\t\t\t</nav>"                    
@@ -165,7 +162,7 @@ In html links are specified using the =<a>= (for /anchor/) tag. So now we want t
 
 So far we've successfully matched all lines containing the string "<a". Our actual target is a bit more specific. If we inspect the elements we want to match using our web browser we'll see something like this:[[file:images/inspectHtml.png]] 
 
-#+BEGIN_SRC HTML :exports code
+#+BEGIN_SRC HTML :exports code :eval no
   <a onclick="_gaq.push(['_trackEvent', 'File','Download', 'cepr_org_2011']);" href="/wp-content/cps/data/cepr_org_2014.zip">cepr_org_2014.zip</a>
 #+END_SRC
 This tells us that we want to match lines containing an "<a" followed (eventually) by ".zip". In order to perform this more sophisticated search we need to use /regular expressions/. In regular expressions the =.= matches any character (except new lines) and the =*= repeats the previous character zero or more times. So =<a.*\\.zip= means "find =<a= followed by any character repeated any number of times followed by =.zip=". Note that in =\\.= the backslashes escape the dot so that it is matched literally rather than matching any character. Let's try it out!
@@ -283,7 +280,7 @@ Wow, that was a _lot_ easier. Why oh why didn't we just do that in the first pla
 
 * Iterating and defining new functions
 Now that we have a vector of URLs pointing to the data files we want to download, we want to iterate over the elements and download each file. We could do this verbosely by writing one line for each file:
-#+BEGIN_SRC R :results silent
+#+BEGIN_SRC R :results silent :eval no
   dir.create("dataSets")
   download.file(dataLinks[1], "dataSets/cepr_org_1979.zip")
   download.file(dataLinks[2], "dataSets/cepr_org_1980.zip")
@@ -337,22 +334,6 @@ and in fact we can use this function to download files from any urls we might ha
 #+END_SRC
 
 #+RESULTS:
-#+begin_example
-> library(readbitmap)
-> ## parse the webpage and extract image URLs
-> profilePicLinks <- html_attr(html_nodes(html("http://projects.iq.harvard.edu/rtc/people"),
-+                                         ".image-style-profile-thumbnail"),
-+                              "src")
-> ## clean up the links
-> profilePicLinks <- gsub("\\.png\\?.*$", ".png", profilePicLinks)
-> ## download
-> downloadFiles(paste("http:", profilePicLinks, sep=""))
-> ## list downloaded image files
-> list.files(pattern = "\\.png$")
-[1] "default-profile.png"      "ista_zahn-5.png"         
-[3] "simo_goshev.png"          "steven_worthington-2.png"
-> 
-#+end_example
 
 The code above downloaded all the profile pics from http://projects.iq.harvard.edu/rtc/people. Although this doesn't have anything to do with our main goal of downloading and analyzing the data from ceprdata.org, we'll go ahead and plot these images, just for fun.
 #+BEGIN_SRC R :results output graphics :file images/rtc_people.png
@@ -472,19 +453,7 @@ size         -104905.8         -254337.8
 mode               0.0               0.0
 > 
 #+end_example
-#+RESULTS: sapplyExample
-#+begin_example
-> sapply(DF, class) # get the class of each column in the DF data.frame
-        x         y 
-"integer"  "factor" 
-> sapply(L, length) # get the length of each element in the L list
-x y z 
-5 3 2 
-> sapply(DF, is.numeric) # check each column of DF to see if it is numeric
-    x     y 
- TRUE FALSE 
-> 
-#+end_example
+
 
 **** Back to the business at hand
 OK OK, we got sidetracked with profile pics and apply functions. Eyes on the prize; we want to import and process the files we downloaded from ceprdata.org. First we need to unzip them and check the size of each file
@@ -507,566 +476,444 @@ OK OK, we got sidetracked with profile pics and apply functions. Eyes on the pri
 > 
 #+end_example
 
-Finally we can read our data into R and get some information about it
+Finally we can read our data into R, but I leave that to you!
+
+** Exersise 1
+
+Read in the cepr data for years 2010 and greater. 
+
+BONUS (optional): calculate the size of each of the data sets you read in.
+
+** Exercise 1 prototype                                          :prototype:
 #+BEGIN_SRC R
   library(foreign)
   ceprData <- sapply(ceprDataFiles, read.dta, simplify = FALSE)
-  t(sapply(ceprData,
-           function(x) {
-             c(size = object.size(x)/1024^2, # Mb
-                                   observations = nrow(x),
-                                   variables = ncol(x),
-               n.numeric = sum(sapply(x, is.numeric)))
-             }))
-  (ceprDataInfo <- data.frame(
-     attributes(ceprData[[1]])[
-                 c("names", "var.labels", "formats")]))
+  sapply(ceprData, object.size)
 #+END_SRC
 
 #+RESULTS:
 #+begin_example
 > library(foreign)
 > ceprData <- sapply(ceprDataFiles, read.dta, simplify = FALSE)
-> t(sapply(ceprData,
-+          function(x) {
-+            c(size = object.size(x)/1024^2, # Mb
-+                                  observations = nrow(x),
-+                                  variables = ncol(x),
-+              n.numeric = sum(sapply(x, is.numeric)))
-+            }))
-                      size observations variables n.numeric
-cepr_org_2010.dta 231.0827       321277       153       115
-cepr_org_2011.dta 229.0271       318334       153       115
-cepr_org_2012.dta 227.8060       316408       153       116
-cepr_org_2013.dta 227.2044       315717       153       118
-cepr_org_2014.dta 229.7241       317056       153       119
-> (ceprDataInfo <- data.frame(
-+    attributes(ceprData[[1]])[
-+                c("names", "var.labels", "formats")]))
-           names                                  var.labels formats
-1           year                                        Year   %8.0g
-2          month                                       Month   %8.0g
-3        minsamp                             Month in sample   %8.0g
-4           hhid                                Household ID    %15s
-5          hhid2                         Household ID Part 2     %9s
-6       hrsample                         Household sample ID     %9s
-7       hrsersuf                     Household serial suffix     %9s
-8          hhnum                           Household counter     %9s
-9       hrlonglk                           Longitudinal link  %33.0g
-10        lineno                               Person number   %9.0g
-11        fnlwgt                                Final weight   %9.0g
-12        orgwgt                             Earnings weight   %9.0g
-13        lonwgt                         Longitudinal weight   %9.0g
-14        famwgt                               Family weight   %9.0g
-15           age                                               %8.0g
-16        female                                      Female   %8.0g
-17          wbho                                        Race   %8.0g
-18         wbhao                  Race/ethnicity, inc. Asian   %8.0g
-19         wbhom                            Race, inc. mixed   %8.0g
-20        wbhaom                  Race, inc. Asian and Mixed  %15.0g
-21      racehpia                  Hawaiian/Pacific Islanders   %8.0g
-22       racehpi             Hawaiian/Pacific Islanders Only   %8.0g
-23          educ                             Education level  %12.0g
-24        educ92                  Education level, post-1991  %40.0g
-25           vet                                     Veteran   %8.0g
-26       married                                     Married   %8.0g
-27       marstat                              Marital status  %13.0g
-28      ownchild                          Number of children   %8.0g
-29          ch02                                   Child 0-2   %8.0g
-30          ch05                                   Child 0-5   %8.0g
-31          ch35                                   Child 3-5   %8.0g
-32         ch613                                  Child 6-13   %8.0g
-33        ch1417                                 Child 14-17   %8.0g
-34        relahh                                               %8.0g
-35         hoh79                                               %9.0g
-36      famrel84                             Family relation  %26.0g
-37      famrel94                             Family relation  %21.0g
-38        famrel                             Family relation  %43.0g
-39       forborn                                Foreign born   %8.0g
-40       citizen                                  US citizen   %8.0g
-41      prcitshp                          Citizenship status  %54.0g
-42      penatvty                               Country birth  %30.0g
-43      pemntvty                       Country birth, mother  %30.0g
-44        refper                            Reference person   %8.0g
-45      pefntvty                       Country birth, father  %30.0g
-46       arrived                             Year entered US   %8.0g
-47      prinusyr                             Year entered US  %30.0g
-48         state                                       State   %8.0g
-49         metro                           Metropolitan area   %8.0g
-50      centcity                                Central city   %8.0g
-51        suburb                                     Suburbs   %8.0g
-52         rural                                       Rural   %8.0g
-53    fipscounty                            FIPS County Code   %9.0g
-54  principalcty                                               %9.0g
-55        cbsasz                                   CBSA Size  %33.0g
-56      cmsacode                                    CSA Code  %58.0g
-57    smsastat05                        Metro CBSA FIPS Code %149.0g
-58           nyc                   New York City, metro area   %8.0g
-59            la                     Los Angeles, metro area   %8.0g
-60        lfstat                          Labor-force status  %10.0g
-61          empl                                    Employed   %8.0g
-62          unem                                  Unemployed   %8.0g
-63        unempt                              Unemployed, PT   %8.0g
-64          nilf                          Not in labor force   %8.0g
-65       selfemp                               Self-employed   %8.0g
-66       selfinc                  Incorporated self-employed   %8.0g
-67       pubsect                               Public sector   %8.0g
-68        pubfed                            Federal employee   %8.0g
-69         pubst                              State employee   %8.0g
-70        publoc                              Local employee   %8.0g
-71       multjob                       Has more than one job   %8.0g
-72      multjobn                              Number of jobs   %8.0g
-73       unemdur               Unemployment duration (weeks)   %8.0g
-74      jobloser                                   Job loser   %8.0g
-75     jobleaver                                  Job leaver   %8.0g
-76       entrant                                     Entrant   %8.0g
-77      hourslwa                   Hours last week, all jobs   %9.0g
-78       hourslw                   Hours last week, all jobs   %9.0g
-79      reason79                     Why <35 hours last week   %9.0g
-80      reason94                     Why <35 hours last week  %33.0g
-81      absent79                        Why absent last week   %9.0g
-82      absent94                        Why absent last week  %30.0g
-83        abpaid                 Paid for time off last week   %9.0g
-84        uhours                       Usual hours, main job   %9.0g
-85       uhourse                       Usual hours, main job   %9.0g
-86       why3579                       Why usually <35 hours   %8.0g
-87       why3594                       Why usually <35 hours  %33.0g
-88        ptecon                        PT, economic reasons   %8.0g
-89       hrsvary                        Hours vary, main job   %8.0g
-90       prhrusl                      Usual hours, Basic CPS  %16.0g
-91      pehrusl1                     Usual hours, main (BLS)  %10.0g
-92      pehrusl2                      Usual hours, 2nd (BLS)  %10.0g
-93      pehruslt                      Usual hours, all (BLS)   %8.0g
-94      peernhro                      Usual hours, ORG (BLS)   %8.0g
-95        imphrs                   Hours, main job (imputed)   %9.0g
-96      hrsimptd                               Hours imputed   %9.0g
-97       uhoursi                        Hours, w/ imputation   %9.0g
-98         union                                       Union   %8.0g
-99         unmem                                Union member   %8.0g
-100        uncov                              Union coverage   %8.0g
-101     ind_nber                            2-digit industry  %56.0g
-102       ind_2d                            2-digit industry  %65.0g
-103        ind70                        3-digit industry SIC   %9.0g
-104        ind80                   3-digit industry SIC 1987   %9.0g
-105        ind03                 3-digit industry NAICS 2002   %9.0g
-106        ind09                            3-digit industry  %75.0g
-107        ind12                            3-digit industry   %9.0g
-108        ind14                 3-digit industry NAICS 2012   %9.0g
-109      ind_m03                       Major Industry Recode  %43.0g
-110        agric                                 Agriculture   %8.0g
-111        manuf                               Manufacturing   %8.0g
-112        servs                                    Services   %8.0g
-113       docc70                          2-digit occupation   %8.0g
-114       docc80                          2-digit occupation   %8.0g
-115       docc03                          2-digit occupation  %68.0g
-116        occ70                          3-digit occupation   %9.0g
-117        occ80                          3-digit occupation   %9.0g
-118        occ03                          3-digit occupation  %72.0g
-119        occ11                          3-digit occupation   %9.0g
-120        occ12                          3-digit occupation   %9.0g
-121      occ_m03                     Major Occupation Recode  %49.0g
-122      manag83                                     Manager   %8.0g
-123      manag03                                     Manager   %8.0g
-124      paidhre                                Paid by hour   %9.0g
-125     peernuot        DO YOU USUALLY RECEIVE OVERTIME PAY,   %8.0g
-126      uearnwk                                  Weekly pay   %8.0g
-127     uearnwke                                  Weekly pay   %9.0g
-128      earnwke                                  Weekly pay   %9.0g
-129           tc                    Weekly earnings topcoded   %8.0g
-130        wage1                                 Hourly wage   %9.0g
-131        wage2                                 Hourly wage   %9.0g
-132        wage3                                 Hourly wage   %9.0g
-133        wage4                                 Hourly wage   %9.0g
-134      weekpay                                  Weekly pay   %9.0g
-135       otcrec Usually receive overtime, tips, commissions   %8.0g
-136       otcamt Weekly earnings overtime, tips, commissions   %5.0f
-137           rw                            Real wage, 2014$   %5.2f
-138        rw_ot                            Real wage, 2014$   %5.2f
-139      blsimpt                  BLS allocated weekly hours   %8.0g
-140      blsimph               BLS allocated hourly earnings   %8.0g
-141      blsimpw               BLS allocated weekly earnings   %8.0g
-142        proxy                      Self or proxy response  %14.0g
-143      wholine                   Line number of respondent   %8.0g
-144     reltoref            Relationship to reference person  %31.0g
-145      schenrl         Enrolled in HS or College last week   %8.0g
-146        schhs                              Enrolled in HS   %8.0g
-147       schcol                         Enrolled in College   %8.0g
-148        schft                           Full-time Student   %8.0g
-149        schpt                           Part-time Student   %8.0g
-150       pdemp1                  Usually has paid employees   %8.0g
-151       pdemp2                  Usually has paid employees   %8.0g
-152       nmemp1                    Number of paid employees   %8.0g
-153       nmemp2                    Number of paid employees   %8.0g
+> sapply(ceprData, object.size)
+cepr_org_2010.dta cepr_org_2011.dta cepr_org_2012.dta 
+        242307824         240152304         238871904 
+cepr_org_2013.dta cepr_org_2014.dta 
+        238241040         240883136 
 > 
 #+end_example
 
 
+* Objects, attributes, and indexing
+Now that we've read in the cepr.org data we want to get some more information about it. 
 
-* Extracting and replacing object elements
+** Mode and length
+Information about objects in R are stored as /attributes/ of the object. All R objects have a storage /mode/ and a /length/. Since all objects in R have the attributes we refer to them as /intrinsic attributes/. We can get the value of these intrinsic attributes using the =mode= and =length= functions respecively. For example, what is the mode and length of our =ceprData= object?
+#+BEGIN_SRC R
+  mode(ceprData)
+  length(ceprData)
+#+END_SRC  
 
-** Indexing by position or name
-Parts of vectors, matricies, data.frames, and lists can be extracted or replaced based on position or name
-#+name: indexingVectors
-#+begin_src R 
-  ## indexing vectors by position
-  x <- 101:110 # Creat a vector of integers from 101 to 110
-  x[c(4, 5)] # extract the fourth and fifth values of x
-  x[4] <- 1 # change the 4th value to 1
-  x # print x
-  
-  ## indexing vectors by name
-  names(x) <- letters[1:10] # give x names
-  print(x) #print x
-  x[c("a", "f")] # extract the values of a  and f from x
-#+end_src
-
-#+RESULTS: indexingVectors
+#+RESULTS:
 #+begin_example
-> ## indexing vectors by position
-> x <- 101:110 # Creat a vector of integers from 101 to 110
-> x[c(4, 5)] # extract the fourth and fifth values of x
-[1] 104 105
-> x[4] <- 1 # change the 4th value to 1
-> x # print x
- [1] 101 102 103   1 105 106 107 108 109 110
-> 
-> ## indexing vectors by name
-> names(x) <- letters[1:10] # give x names
-> print(x) #print x
-  a   b   c   d   e   f   g   h   i   j 
-101 102 103   1 105 106 107 108 109 110 
-> x[c("a", "f")] # extract the values of a  and f from x
-  a   f 
-101 106 
+> mode(ceprData)
+[1] "list"
+> length(ceprData)
+[1] 5
 > 
 #+end_example
 
-** Logical indexing
-Elements can also be selected or replaced based on logical (TRUE/FALSE) vectors.
+Additional attributes and be accessed vie the =attributes= function. Let's see what other attributes our =ceprData= object has.
+#+BEGIN_SRC R
+  attributes(ceprData)
+#+END_SRC
 
-#+name: logicalIndexingVectors
-#+begin_src R
-  x > 106 # shows which elements of x are > 106
-  x[x > 106] # selects elements of x where x > 106 
-#+end_src
-
-#+RESULTS: logicalIndexingVectors
+#+RESULTS:
 #+begin_example
-> x > 106 # shows which elements of x are > 106
-    a     b     c     d     e     f     g     h     i     j 
-FALSE FALSE FALSE FALSE FALSE FALSE  TRUE  TRUE  TRUE  TRUE 
-> x[x > 106] # selects elements of x where x > 106 
-  g   h   i   j 
-107 108 109 110 
+> attributes(ceprData)
+$names
+[1] "cepr_org_2010.dta" "cepr_org_2011.dta" "cepr_org_2012.dta"
+[4] "cepr_org_2013.dta" "cepr_org_2014.dta"
+
 > 
 #+end_example
 
-Additional operators useful for logical indexing:
-- == :: equal to 
-- != :: not equal to
-- > :: greater than
-- < :: less than
-- >= :: greater than or equal to
-- <= :: less than or equal to
-- %in% :: is included in
-- & :: and
-- | :: or
+OK, so far we know that ceprData is a list of length 4 and that it has a names attribute. How can we find out what is inside the list?
 
-#+name: logicalIndexingVectors2
-#+begin_src R
-  x[x > 106 & x <= 108]
-  x[x > 106 | names(x) %in% c("a", "b", "c")]
-#+end_src
+** Indexing
+We can extract or replace elements of R objects using bracket indexing. Exactly how indexing works differs slightly depending on what kind of object we are working with.
 
-#+RESULTS: logicalIndexingVectors2
+*** Indexing lists
+
+ For lists we can index using a single bracket to extract one or more elements of the list, or we can index using double brackets to extract a single element.
+
+#+BEGIN_SRC R
+  ## what do we get when we extract one element with single brackets?
+  length(ceprData[1]); mode(ceprData[1]); class(ceprData[1]); attributes(ceprData[1])
+  ## what do we get when we extract the middle two elements with single brackets?
+  length(ceprData[2:3]); mode(ceprData[2:3]); class(ceprData[2:3]); attributes(ceprData[2:3])
+  ## what do we get when we extract the first element with a double bracket
+  length(ceprData[[1]]); mode(ceprData[[1]]); class(ceprData[[1]])#
+#+END_SRC
+
+#+RESULTS:
 #+begin_example
-> x[x > 106 & x <= 108]
-  g   h 
-107 108 
-> x[x > 106 | names(x) %in% c("a", "b", "c")]
-  a   b   c   g   h   i   j 
-101 102 103 107 108 109 110 
+> ## what do we get when we extract one element with single brackets?
+> length(ceprData[1]); mode(ceprData[1]); class(ceprData[1]); attributes(ceprData[1])
+[1] 1
+[1] "list"
+[1] "list"
+$names
+[1] "cepr_org_2010.dta"
+
+> ## what do we get when we extract the middle two elements with single brackets?
+> length(ceprData[2:3]); mode(ceprData[2:3]); class(ceprData[2:3]); attributes(ceprData[2:3])
+[1] 2
+[1] "list"
+[1] "list"
+$names
+[1] "cepr_org_2011.dta" "cepr_org_2012.dta"
+
+> ## what do we get when we extract the first element with a double bracket
+> length(ceprData[[1]]); mode(ceprData[[1]]); class(ceprData[[1]])#
+[1] 153
+[1] "list"
+[1] "data.frame"
 > 
 #+end_example
 
+Right. So what have we learned? We've learned that indexing lists works like this:
+[[file:images/HadleyWickham_index_list.png]][fn:3]
 
-** Indexing matrices
-Extraction on matrices operate in two dimensions: first dimension refers to rows, second dimension refers to columns
+We've also learned that =ceprData[[1]]= has mode =list= but /class/ =data.frame=. We can find out more about these data structures by reading their help pages (=?list= and =?data.frame=), but briefly a data.frame is a special kind of list that is constrained such that all elements have the same length. A data.frame is a rectangular structure that can be indexed by rows and columns (more on this in a moment).
 
-#+name: indexingMatricies
-#+begin_src R 
-  ## indexing matricies
-   # create a matrix
-  (M <- cbind(x = 1:5, y = -1:-5, z = c(6, 3, 4, 2, 8)))
-  M[1:3, ] #extract rows 1 through 3, all columns
-  M[c(5, 3, 1), 2:3] # rows 5, 3 and 1, columns 2 and 3
-  M[M[, 1] %in% 4:2, 2] # second column where first column <=4 & >= 2
-#+end_src
+*** Indexing vectors
+You may have noticed in the previous code example that I did _not_ ask for =attributes(ceprData[[1]])=. The reason for that is that each element of =ceprDATA= is a =data.frame= with a large number of attributes. Let's look at those attributes in a bit more detail.
 
-#+results: indexingMatricies
+#+BEGIN_SRC R
+  ceprDataInfo <- attributes(ceprData[[1]])
+  mode(ceprDataInfo)
+  class(ceprDataInfo)
+  length(ceprDataInfo)
+  names(ceprDataInfo)
+  (ceprInfoLength <- sapply(ceprDataInfo, length))
+#+END_SRC
+
+#+RESULTS:
 #+begin_example
-> ## indexing matricies
->  # create a matrix
-> (M <- cbind(x = 1:5, y = -1:-5, z = c(6, 3, 4, 2, 8)))
-     x  y z
-[1,] 1 -1 6
-[2,] 2 -2 3
-[3,] 3 -3 4
-[4,] 4 -4 2
-[5,] 5 -5 8
-> M[1:3, ] #extract rows 1 through 3, all columns
-     x  y z
-[1,] 1 -1 6
-[2,] 2 -2 3
-[3,] 3 -3 4
-> M[c(5, 3, 1), 2:3] # rows 5, 3 and 1, columns 2 and 3
-      y z
-[1,] -5 8
-[2,] -3 4
-[3,] -1 6
-> M[M[, 1] %in% 4:2, 2] # second column where first column <=4 & >= 2
-[1] -2 -3 -4
+> ceprDataInfo <- attributes(ceprData[[1]])
+> mode(ceprDataInfo)
+[1] "list"
+> class(ceprDataInfo)
+[1] "list"
+> length(ceprDataInfo)
+[1] 12
+> names(ceprDataInfo)
+ [1] "datalabel"        "time.stamp"       "names"           
+ [4] "formats"          "types"            "val.labels"      
+ [7] "var.labels"       "expansion.fields" "row.names"       
+[10] "version"          "label.table"      "class"           
+> (ceprInfoLength <- sapply(ceprDataInfo, length))
+       datalabel       time.stamp            names          formats 
+               1                1              153              153 
+           types       val.labels       var.labels expansion.fields 
+             153              153              153              616 
+       row.names          version      label.table            class 
+          321277                1               37                1 
 > 
 #+end_example
 
-Note that unspecified index's (as in the column index in the example above ) return all values.
+=ceprInfoLength= is an /atomic vector/, i.e., a vector with all elements of the same mode. We can index a vector with =[= and =[[=, just as we do for lists.
 
+#+BEGIN_SRC R
+  mode(ceprInfoLength); class(ceprInfoLength); length(ceprInfoLength)
+  ceprInfoLength[1]
+  ceprInfoLength[[1]]
+  ceprInfoLength[1:10]
+#+END_SRC
 
-** Indexing lists
-Lists can be indexed in the same way as vectors, with the following extension:
-#+name: ListIndexing
-#+begin_src R
-  # Lists can be indexed with single brackets, similar to vector indexing
-  L[c(1, 2)] # the first two elements of L
-  L[1] # a list with one element
-  ## double brackets select the content of a single selected element
-  ## effectively taking it out of the list.
-  L[[1]] # a vector
-#+end_src
-
-#+RESULTS: ListIndexing
+#+RESULTS:
 #+begin_example
-> # Lists can be indexed with single brackets, similar to vector indexing
-> L[c(1, 2)] # the first two elements of L
-$x
-[1] 1 2 3 4 5
-
-$y
-[1] 1 2 3
-
-> L[1] # a list with one element
-$x
-[1] 1 2 3 4 5
-
-> ## double brackets select the content of a single selected element
-> ## effectively taking it out of the list.
-> L[[1]] # a vector
-[1] 1 2 3 4 5
+> mode(ceprInfoLength); class(ceprInfoLength); length(ceprInfoLength)
+[1] "numeric"
+[1] "integer"
+[1] 12
+> ceprInfoLength[1]
+datalabel 
+        1 
+> ceprInfoLength[[1]]
+[1] 1
+> ceprInfoLength[1:10]
+       datalabel       time.stamp            names          formats 
+               1                1              153              153 
+           types       val.labels       var.labels expansion.fields 
+             153              153              153              616 
+       row.names          version 
+          321277                1 
 > 
 #+end_example
 
-** Indexing data.frames
 
-A data.frame can be indexed in the same ways as a matrix, and also the same ways as a list:
+The code above is an example of /indexing by position/. We can also index by /name/ or using /logical indexing/ as shown below.
+#+BEGIN_SRC R
+  ceprInfoLength[c("names", "formats", "types")]
+  ceprInfoLength[grepl("lab", names(ceprInfoLength))]
+  ceprInfoLength[ceprInfoLength == 1]
+  names(ceprInfoLength)[ceprInfoLength == 1]
+#+END_SRC
 
-#+name: DataFrameIndexing
-#+begin_src R
-  DF[c(3, 1, 2), c(1, 2)] # rows 3, 1, and 2, columns 1 and 2
-  DF[[1]] # column 1 as a vector
-#+end_src
-
-#+RESULTS: DataFrameIndexing
+#+RESULTS:
 #+begin_example
-> DF[c(3, 1, 2), c(1, 2)] # rows 3, 1, and 2, columns 1 and 2
-  x y
-3 3 c
-1 1 a
-2 2 b
-> DF[[1]] # column 1 as a vector
-[1] 1 2 3 4 5
+> ceprInfoLength[c("names", "formats", "types")]
+  names formats   types 
+    153     153     153 
+> ceprInfoLength[grepl("lab", names(ceprInfoLength))]
+  datalabel  val.labels  var.labels label.table 
+          1         153         153          37 
+> ceprInfoLength[ceprInfoLength == 1]
+ datalabel time.stamp    version      class 
+         1          1          1          1 
+> names(ceprInfoLength)[ceprInfoLength == 1]
+[1] "datalabel"  "time.stamp" "version"    "class"     
 > 
 #+end_example
 
-There is a subtle but important difference between =[ , n]= and =[n]= when indexing data.frames: the first form returns a vector, the second returns a data.frame with one column.
-#+name: dataFrameIndexingComplicated
-#+begin_src R
-  str(DF[1])# a data.frame with one column
-  str(DF[ ,1])# a vector
-#+end_src
+Finally, we can use negation and negative indices to reverse the usual meanings.
+#+BEGIN_SRC R
+  ceprInfoLength[- c(3, 7, 9)]
+  ceprInfoLength[setdiff(names(ceprInfoLength), c("names", "formats", "types"))]
+  ceprInfoLength[!grepl("lab", names(ceprInfoLength))]
+#+END_SRC
 
-#+RESULTS: dataFrameIndexingComplicated
+#+RESULTS:
 #+begin_example
-> str(DF[1])# a data.frame with one column
-'data.frame':	5 obs. of  1 variable:
- $ x: int  1 2 3 4 5
-> str(DF[ ,1])# a vector
- int [1:5] 1 2 3 4 5
+> ceprInfoLength[- c(3, 7, 9)]
+       datalabel       time.stamp          formats            types 
+               1                1              153              153 
+      val.labels expansion.fields          version      label.table 
+             153              616                1               37 
+           class 
+               1 
+> ceprInfoLength[setdiff(names(ceprInfoLength), c("names", "formats", "types"))]
+       datalabel       time.stamp       val.labels       var.labels 
+               1                1              153              153 
+expansion.fields        row.names          version      label.table 
+             616           321277                1               37 
+           class 
+               1 
+> ceprInfoLength[!grepl("lab", names(ceprInfoLength))]
+      time.stamp            names          formats            types 
+               1              153              153              153 
+expansion.fields        row.names          version            class 
+             616           321277                1                1 
 > 
 #+end_example
 
-** Extraction/replacement summary
-Key points:
+*** Indexing matrices
+Now that we know a little more about indexing, let's get back to investigating the ceprData metadata. 
 
-- elements of objects can be extracted or replaced using the =[= operator
-- objects can be indexed by position, name, or logical (TRUE/FALSE) vectors
-- vectors and lists have only one dimension, and hence only one index is used 
-- matricies and data.frames have two dimensions, and extraction methods for these objects use two indices 
-Functions introduced in this section: 
-- [ :: extraction operator, used to extract/replace object elements
-- names :: get the names of an object, usually a vector, list, or data.frame
-- print :: print an object 
+#+BEGIN_SRC R
+  (infoInfo <- sapply(ceprDataInfo, function(x) {
+    return(c(mode = mode(x), class = class(x), length = length(x)))
+    }))
+#+END_SRC
 
-
-** Exercise 1
-
-1) Select just the Sepal.Length and Species columns from the /iris/ data set (built-in, will be available in your workspace automatically) and save the result to a new data.frame named /iris.2/
-2) Calculate the mean of the Sepal.Length column in /iris.2/ 
-3) BONUS (optional): Calculate the mean of Sepal.Length, but only for the setosa species
-4) BONUS (optional): Calculate the number of sepal lengths that are more than one standard deviation below the average sepal length
-
-* Control flow
-
-** Control flow 
-- Basic idea: if some condition is true, do one thing. If false, do something else
-- Carried out in R using ~if()~ and ~else()~ statements, which can be nested if necessary
-- Especially useful for checking function arguments and performing different operations depending on function input
-
-** Control flow examples
-Goal: write a function that tells us if a number is positive or negative
-
-#+name: brachingExample1
-#+begin_src R
-  ## use branching to return different result depending on the sign of the input
-  isPositive <- function(x) { # define function "isPositive"
-    if (x > 0) { # if x is greater than zero, then
-      return(paste(x, "is positive \n")) } # say so! 
-    else { # otherwise
-        return(paste(x, "is negative \n"))} # say x is negative
-  } # end function definition 
-
-  ## test the isPositive() function
-  isPositive(10)
-  isPositive(-1)
-  isPositive(0)
-#+end_src
-
-#+RESULTS: brachingExample1
+#+RESULTS:
 #+begin_example
-> ## use branching to return different result depending on the sign of the input
-> isPositive <- function(x) { # define function "isPositive"
-+   if (x > 0) { # if x is greater than zero, then
-+     return(paste(x, "is positive \n")) } # say so! 
-+   else { # otherwise
-+       return(paste(x, "is negative \n"))} # say x is negative
-+ } # end function definition 
-> 
-> ## test the isPositive() function
-> isPositive(10)
-[1] "10 is positive \n"
-> isPositive(-1)
-[1] "-1 is negative \n"
-> isPositive(0)
-[1] "0 is negative \n"
+> (infoInfo <- sapply(ceprDataInfo, function(x) {
++   return(c(mode = mode(x), class = class(x), length = length(x)))
++   }))
+       datalabel   time.stamp  names       formats     types    
+mode   "character" "character" "character" "character" "numeric"
+class  "character" "character" "character" "character" "integer"
+length "1"         "1"         "153"       "153"       "153"    
+       val.labels  var.labels  expansion.fields row.names   version  
+mode   "character" "character" "list"           "character" "numeric"
+class  "character" "character" "list"           "character" "integer"
+length "153"       "153"       "616"            "321277"    "1"      
+       label.table class      
+mode   "list"      "character"
+class  "list"      "character"
+length "37"        "1"        
 > 
 #+end_example
 
-Need to do something different if x equals zero!
+=infoInfo= contains information about the contents of =ceprDataInfo=. =infoInfo= is a /matrix/. A matrix in R is simply a vector with two dimensions. We can index a matrix exactly as we do a vector:
+#+BEGIN_SRC R
+  infoInfo
+  infoInfo[c(1, 3, 9)]
+#+END_SRC
 
-** Control flow examples
-
-Add a condition to handle =x = 0=
-
-#+name: brachingExample3
-#+begin_src R
-  ## add condition to handle the case that x is zero
-    isPositive <- function(x) { # define function "isPositive"
-      if (x > 0) { # if x is greater than zero, then
-        return(paste(x, "is positive \n")) } # say so! 
-      else if (x == 0) { # otherwise if x is zero
-        return(paste(x, "is zero \n"))} # say so!
-      else { #otherwise
-          return(paste(x, "is negative \n"))} # say x is negative
-    } # end function definition
-#+end_src
-
-#+RESULTS: brachingExample3
+#+RESULTS:
 #+begin_example
-> ## add condition to handle the case that x is zero
->   isPositive <- function(x) { # define function "isPositive"
-+     if (x > 0) { # if x is greater than zero, then
-+       return(paste(x, "is positive \n")) } # say so! 
-+     else if (x == 0) { # otherwise if x is zero
-+       return(paste(x, "is zero \n"))} # say so!
-+     else { #otherwise
-+         return(paste(x, "is negative \n"))} # say x is negative
-+   } # end function definition
+> infoInfo
+       datalabel   time.stamp  names       formats     types    
+mode   "character" "character" "character" "character" "numeric"
+class  "character" "character" "character" "character" "integer"
+length "1"         "1"         "153"       "153"       "153"    
+       val.labels  var.labels  expansion.fields row.names   version  
+mode   "character" "character" "list"           "character" "numeric"
+class  "character" "character" "list"           "character" "integer"
+length "153"       "153"       "616"            "321277"    "1"      
+       label.table class      
+mode   "list"      "character"
+class  "list"      "character"
+length "37"        "1"        
+> infoInfo[c(1, 3, 9)]
+[1] "character" "1"         "153"      
 > 
 #+end_example
 
-Test the new function
+but more commonly we will index a matrix by referring to both dimensions, like this:
+#+BEGIN_SRC R
+  infoInfo[1:2, c(7, 3, 1)]
+  infoInfo[ , 1:2]
+  infoInfo[3:2, ]
+#+END_SRC
 
-#+name: brachingExample3.1
-#+begin_src R
-  isPositive(0) # test the isPositive() function
-  isPositive("a") #oops, that will not work!
-#+end_src
-
-#+RESULTS: brachingExample3.1
+#+RESULTS:
 #+begin_example
-> isPositive(0) # test the isPositive() function
-[1] "0 is zero \n"
-> isPositive("a") #oops, that will not work!
-[1] "a is positive \n"
+> infoInfo[1:2, c(7, 3, 1)]
+      var.labels  names       datalabel  
+mode  "character" "character" "character"
+class "character" "character" "character"
+> infoInfo[ , 1:2]
+       datalabel   time.stamp 
+mode   "character" "character"
+class  "character" "character"
+length "1"         "1"        
+> infoInfo[3:2, ]
+       datalabel   time.stamp  names       formats     types    
+length "1"         "1"         "153"       "153"       "153"    
+class  "character" "character" "character" "character" "integer"
+       val.labels  var.labels  expansion.fields row.names   version  
+length "153"       "153"       "616"            "321277"    "1"      
+class  "character" "character" "list"           "character" "integer"
+       label.table class      
+length "37"        "1"        
+class  "list"      "character"
 > 
 #+end_example
 
-We fixed the problem when =x = 0=, but now we need to make sure x is numeric of length one (unless we agree with R that =a= is positive!)
+All the techniques we learned for indexing vectors apply. For example:
+#+BEGIN_SRC R
+  attributes(infoInfo)
+  infoInfo[c("length", "mode"), grepl("name", colnames(infoInfo))]
+#+END_SRC
 
-** Control flow examples
-
-Do something reasonable if x is not numeric
-
-#+name: brachingExample5
-#+begin_src R :eval no
-  ## add condition to handle the case that x is zero
-    isPositive <- function(x) { # define function "isPositive"
-      if(!is.numeric(x) | length(x) > 1) {
-        stop("x must be a numeric vector of length one! \n")}
-      else if (x > 0) { # if x is greater than zero, then
-        return(paste(x," is positive \n")) } # say so! 
-      else if (x == 0) { # otherwise if x is zero
-        return(paste(x," is zero \n"))} # say so!
-      else { #otherwise
-        return(paste(x," is negative \n"))} # say x is negative
-    } # end function definition
-
-  isPositive("a") # test the isPositive() function on character
-#+end_src
-
-#+RESULTS: brachingExample5
+#+RESULTS:
 #+begin_example
-> isPositive("a")
-Error in isPositive("a") : x must be a numeric vector of length one! 
+> attributes(infoInfo)
+$dim
+[1]  3 12
+
+$dimnames
+$dimnames[[1]]
+[1] "mode"   "class"  "length"
+
+$dimnames[[2]]
+ [1] "datalabel"        "time.stamp"       "names"           
+ [4] "formats"          "types"            "val.labels"      
+ [7] "var.labels"       "expansion.fields" "row.names"       
+[10] "version"          "label.table"      "class"           
+
+
+> infoInfo[c("length", "mode"), grepl("name", colnames(infoInfo))]
+       names       row.names  
+length "153"       "321277"   
+mode   "character" "character"
+> 
 #+end_example
 
-
-** Control flow summary 
-Key points:
-- code can be conditionally executed
-- conditions can be nested 
-- conditional execution is often used for argument checking, among other things
-
-Functions introduced in this section  
-- paste :: concatenates (character) vectors
-- if :: execute code only if condition is met
-- else :: used with *if*; code to execute if condition is not met
+*** Indexing data.frames
+As we noted earlier data.frames are a special kind of list. Therefore both =[= and =[[= indexing will work exactly as they do for lists. Unlike other lists, data.frames have two dimensions (like a matrix), so two-dimensional indexing works on data.frames just as it does for matrices.
 
 
-** Exercise 3
+*** Exercise 2
 
-1) Add argument checking code to return an error if the argument to your function is not a data.frame
+Extract elements from =ceprDataInfo= that will help you understand what each column contains. Include at least the variable =names= and =var.labels= as well as any other information that you think will be useful.
 
-2) Insert a break point with =browser()= and step through your function
+*** Exercise 1 prototype                                        :prototype:
+#+BEGIN_SRC R
+  ceprCodebook <- data.frame(ceprDataInfo[ sapply(ceprDataInfo, length) == ncol(ceprData[[1]]) ])
+  rbind(head(ceprCodebook), tail(ceprCodebook))
+#+END_SRC
+
+#+RESULTS:
+#+begin_example
+> ceprCodebook <- data.frame(ceprDataInfo[ sapply(ceprDataInfo, length) == ncol(ceprData[[1]]) ])
+> rbind(head(ceprCodebook), tail(ceprCodebook))
+       names formats types val.labels                 var.labels
+1       year   %8.0g   252                                  Year
+2      month   %8.0g   251                                 Month
+3    minsamp   %8.0g   251                       Month in sample
+4       hhid    %15s    15                          Household ID
+5      hhid2     %9s     5                   Household ID Part 2
+6   hrsample     %9s     2                   Household sample ID
+148    schft   %8.0g   251                     Full-time Student
+149    schpt   %8.0g   251                     Part-time Student
+150   pdemp1   %8.0g   251            Usually has paid employees
+151   pdemp2   %8.0g   251            Usually has paid employees
+152   nmemp1   %8.0g   251              Number of paid employees
+153   nmemp2   %8.0g   251              Number of paid employees
+> 
+#+end_example
+
+* Aggregating and combining data
+Now that we have all the data read in, and we know what is in each column, I want to aggregate the data to down to a managable size. Specifically I want to calculate the average income by state/year/rural/gender. I can do that using the =aggregate= function (the =data.table= and =dplyr= packages provide advanced aggregation capabilities, but =aggregate= is available in base R and works well for many things).
+
+#+BEGIN_SRC R
+  ceprData <- sapply(ceprData, function(x) {
+    aggregate(x["rw"],
+              by = x[c("year", "state", "rural", "female")],
+              FUN = mean, na.rm = TRUE)},
+    simplify = FALSE)
+#+END_SRC
+
+#+RESULTS:
+#+begin_example
+> ceprData <- sapply(ceprData, function(x) {
++   aggregate(x["rw"],
++             by = x[c("year", "state", "rural", "female")],
++             FUN = mean, na.rm = TRUE)},
++   simplify = FALSE)
+> 
+#+end_example
+
+In particular combine all the data together into a single data.frame. Right now we have a list of data.frames, and we simply want to stack this one on top of the other. We can do that with the =rbind= function. (Other ways you might want to combine data are described in =?cbind= and =?merge=).
+
+A straightforward way to combine the data looks like this
+#+BEGIN_SRC R
+  #ceprData <- rbind(ceprData[[1]], ceprData[[2]], ceprData[[3]], ceprData[[4]]) 
+#+END_SRC
+
+#+RESULTS:
+#+begin_example
+> #ceprData <- rbind(ceprData[[1]], ceprData[[2]], ceprData[[3]], ceprData[[4]]) 
+> 
+#+end_example
+
+and that's not too bad for four elements. But what if we had 100 or 1000000? You certainly don't want to type that many elements out yourself. Instead you can use =Reduce= to flatten the list, like this:
+#+BEGIN_SRC R
+  ceprData <- Reduce("rbind", ceprData)
+#+END_SRC
+
+#+RESULTS:
+#+begin_example
+> ceprData <- Reduce("rbind", ceprData)
+> 
+#+end_example
+
+Now we can take a look at the trends in wages over the last few years.
+#+BEGIN_SRC R :results output graphics :file images/out.png :width 900 :heigth 900
+  library(ggplot2)
+  ggplot(ceprData, aes(x = year, y = rw, color = factor(female), linetype = factor(rural))) +
+    geom_line() +
+    facet_wrap(~state, ncol = 9)
+#+END_SRC
+
+#+RESULTS:
+[[file:images/out.png]]
 
 * The S3 object class system
 
@@ -1134,13 +981,14 @@ The class of an object can be retrieved and modified using the ~class()~ functio
 > methods(mean)
 [1] mean.Date     mean.default  mean.difftime mean.POSIXct 
 [5] mean.POSIXlt 
+see '?methods' for accessing help and source code
 > # which functions have methods for data.frames?
 > methods(class="data.frame")[1:9]
-[1] "[.data.frame"             "[[.data.frame"           
-[3] "[[<-.data.frame"          "[<-.data.frame"          
-[5] "$<-.data.frame"           "aggregate.data.frame"    
-[7] "anyDuplicated.data.frame" "as.data.frame.data.frame"
-[9] "as.list.data.frame"      
+[1] "aggregate.data.frame"      "anyDuplicated.data.frame" 
+[3] "as.data.frame.data.frame"  "as.list.data.frame"       
+[5] "as.matrix.data.frame"      "by.data.frame"            
+[7] "cbind.data.frame"          "coerce,ANY,list-method"   
+[9] "coerce,oldClass,S3-method"
 > 
 #+end_example
 
@@ -1227,37 +1075,14 @@ S3 generics are most often used for print, summary, and plot methods, but someti
 > # test it out
 > disp(matrix(runif(10), ncol=2))  
      [,1] [,2]
-[1,] 0.45 0.79
-[2,] 0.96 0.36
-[3,] 0.14 0.06
-[4,] 0.78 0.57
-[5,] 0.80 0.66
+[1,] 0.92 0.92
+[2,] 0.04 0.44
+[3,] 0.16 0.87
+[4,] 0.99 0.89
+[5,] 0.43 0.08
 > 
 #+end_example
 
-
-** S3 classes summary 
-Key points:
-- there are several class systems in R, of which S3 is the oldest and simplest
-- objects have /class/ and functions have corresponding /methods/
-- the class of an object can be set by simple assignment
-- S3 generic functions all contain ~UseMethod("x")~ in the body, where ~x~ is the name of the function
-- new methods for existing generic functions can be written simply by defining a new function with a special naming scheme: the name of the function followed by dot followed by the name of the class
-
-Functions introduced in this section  
-- plot :: creates a graphical display, the type of which depends on the class of the object being plotted
-- methods :: lists the methods defined for a function or class
-- UseMethod :: the body of a generic function
-- invisible :: returns an object but does not print it
-
-
-
-** Exercise 4 
-1) Modify your function so that it also returns the standard deviations of the numeric variables 
-
-2) Modify your function so that it returns a list of class "statsum"
-
-3) Write a print method for the statsum class
 
 * Things that may surprise you
 
@@ -1432,425 +1257,9 @@ Levels: 6 5
 > 
 #+end_example
 
-* Exercise solutions
+* What else?
 
-** Exercise 0 prototype						  :prototype:
-
-** Exercise 0 
-Use the built-in /iris/ data set (comes with R, will be available in your workspace automatically).
-1) [@1] Determine the =class= and =str= ucture of the /iris/ data set.
-#+BEGIN_SRC R
-  class(iris)
-  str(iris)
-#+END_SRC
-
-#+RESULTS:
-#+begin_example
-> class(iris)
-[1] "data.frame"
-> str(iris)
-'data.frame':	150 obs. of  5 variables:
- $ Sepal.Length: num  5.1 4.9 4.7 4.6 5 5.4 4.6 5 4.4 4.9 ...
- $ Sepal.Width : num  3.5 3 3.2 3.1 3.6 3.9 3.4 3.4 2.9 3.1 ...
- $ Petal.Length: num  1.4 1.4 1.3 1.5 1.4 1.7 1.4 1.5 1.4 1.5 ...
- $ Petal.Width : num  0.2 0.2 0.2 0.2 0.2 0.4 0.3 0.2 0.2 0.1 ...
- $ Species     : Factor w/ 3 levels "setosa","versicolor",..: 1 1 1 1 1 1 1 1 1 1 ...
-> 
-#+end_example
-
-2) [@2] Determine the class of each column in the iris data set
-#+BEGIN_SRC R
-  class(iris$Species)
-  class(iris$Sepal.Length)
-  class(iris$Sepal.Width)
-  class(iris$Petal.Length)
-  class(iris$Petal.Width)
-#+END_SRC
-
-#+RESULTS:
-#+begin_example
-> class(iris$Species)
-[1] "factor"
-> class(iris$Sepal.Length)
-[1] "numeric"
-> class(iris$Sepal.Width)
-[1] "numeric"
-> class(iris$Petal.Length)
-[1] "numeric"
-> class(iris$Petal.Width)
-[1] "numeric"
-> 
-#+end_example
-
-3) [@3] BONUS (OPTIONAL): Create a new variable by =c= ombining the Petal.Length and Petal.Width columns
-#+BEGIN_SRC R
-  petal <- c(iris$Petal.Length, iris$Petal.Width)
-#+END_SRC
-
-#+RESULTS:
-#+begin_example
-> petal <- c(iris$Petal.Length, iris$Petal.Width)
-> 
-#+end_example
-
-4) [@4] BONUS (OPTIONAL): Create a new data.frame with two columns; the first should be named /value/, and should be equal to the variable you created in step 3. The second should be named /variable/ and should be either /Petal.Length/ or /Petal.Width/ as appropriate.
-#+BEGIN_SRC R
-  petals <- data.frame(value = petal,
-                       variable = rep(c("Petal.Length", "Petal.Width"),
-                                      each = nrow(iris)))
-
-  head(petals)
-  tail(petals)
-#+END_SRC
-
-#+RESULTS:
-#+begin_example
-> petals <- data.frame(value = petal,
-+                      variable = rep(c("Petal.Length", "Petal.Width"),
-+                                     each = nrow(iris)))
-> 
-> head(petals)
-  value     variable
-1   1.4 Petal.Length
-2   1.4 Petal.Length
-3   1.3 Petal.Length
-4   1.5 Petal.Length
-5   1.4 Petal.Length
-6   1.7 Petal.Length
-> tail(petals)
-    value    variable
-295   2.5 Petal.Width
-296   2.3 Petal.Width
-297   1.9 Petal.Width
-298   2.0 Petal.Width
-299   2.3 Petal.Width
-300   1.8 Petal.Width
-> 
-#+end_example
-
-
-** Exercise 1 prototype						  :prototype:
-
-1) [@1] Select just the Sepal.Length and Species columns from the /iris/ data set (built-in, will be available in your workspace automatically) and save the result to a new data.frame named /iris.2/
-#+name: ex1.1
-#+begin_src R :exports code
-  data(iris)
-  iris2 <- iris[c("Sepal.Length", "Species")]
-  str(iris2)
-#+end_src
-
-#+RESULTS: ex1.1
-#+begin_example
-> data(iris)
-> iris2 <- iris[c("Sepal.Length", "Species")]
-> str(iris2)
-'data.frame':	150 obs. of  2 variables:
- $ Sepal.Length: num  5.1 4.9 4.7 4.6 5 5.4 4.6 5 4.4 4.9 ...
- $ Species     : Factor w/ 3 levels "setosa","versicolor",..: 1 1 1 1 1 1 1 1 1 1 ...
-> 
-#+end_example
-
-2) [@2] Calculate the mean of the Sepal.Length column in /iris.2/ 
-
-#+name: ex.2
-#+begin_src R :exports code
-  mean(iris2[ , "Sepal.Length"])
-#+end_src
-
-#+RESULTS: ex.2
-#+begin_example
-> mean(iris2[ , "Sepal.Length"])
-[1] 5.843333
-> 
-#+end_example
-
-3) [@3] BONUS (optional): Calculate the mean of Sepal.Length, but only for the setosa species
-
-#+name: ex1.3
-#+begin_src R :exports code
-  mean(iris2[iris2[["Species"]] == "setosa", "Sepal.Length"])
-  ## shortcut:
-  with(iris2, {
-      print(mean(Sepal.Length[Species == "setosa"]))
-  })
-#+end_src
-
-#+RESULTS: ex1.3
-#+begin_example
-> mean(iris2[iris2[["Species"]] == "setosa", "Sepal.Length"])
-[1] 5.006
-> ## shortcut:
-> with(iris2, {
-+     print(mean(Sepal.Length[Species == "setosa"]))
-+ })
-[1] 5.006
-> 
-#+end_example
-
-4) [@4] BONUS (optional): Calculate the number of sepal lengths that are more than one standard deviation below the average sepal length
-
-#+name: ex1.4
-#+begin_src R :exports code
-  m.minus.sd <- mean(iris2[["Sepal.Length"]]) - sd(iris2[["Sepal.Length"]])
-  length(iris2[iris2[["Sepal.Length"]] < m.minus.sd, "Sepal.Length"])
-#+end_src
-
-#+RESULTS: ex1.4
-#+begin_example
-> m.minus.sd <- mean(iris2[["Sepal.Length"]]) - sd(iris2[["Sepal.Length"]])
-> length(iris2[iris2[["Sepal.Length"]] < m.minus.sd, "Sepal.Length"])
-[1] 32
-> 
-#+end_example
- 
-
-** Exercise 2 prototype						  :prototype:
-
-1) [@1] Write a function that takes a data.frame as an argument and returns the mean of each numeric column in the data frame. Test your function using the iris data.
-
-#+name: ex3.1
-#+begin_src R :exports code
-  statsum <- function(df) {
-      classes <- sapply(df, class)
-      means <- sapply(df[classes == "numeric"], mean)
-      return(means)}
-  
-  statsum(iris) 
-#+end_src
-
-#+RESULTS: ex3.1
-#+begin_example
-> statsum <- function(df) {
-+     classes <- sapply(df, class)
-+     means <- sapply(df[classes == "numeric"], mean)
-+     return(means)}
-> 
-> statsum(iris) 
-Sepal.Length  Sepal.Width Petal.Length  Petal.Width 
-    5.843333     3.057333     3.758000     1.199333 
-> 
-#+end_example
-
-
-2) [@2] Modify your function so that it returns a list, the first element if which is the means of the numeric variables, the second of which is the counts of the levels of each categorical variable.
-#+name: ex3.2
-#+begin_src R :exports code
-  statsum <- function(df) {
-      classes <- sapply(df, class)
-      means <- sapply(df[classes == "numeric"], mean)
-      counts <- sapply(df[classes == "factor"], table)
-      return(list(means, counts))}
-    
-  statsum(iris) 
-#+end_src
-
-#+RESULTS: ex3.2
-#+begin_example
-> statsum <- function(df) {
-+     classes <- sapply(df, class)
-+     means <- sapply(df[classes == "numeric"], mean)
-+     counts <- sapply(df[classes == "factor"], table)
-+     return(list(means, counts))}
->   
-> statsum(iris) 
-[[1]]
-Sepal.Length  Sepal.Width Petal.Length  Petal.Width 
-    5.843333     3.057333     3.758000     1.199333 
-
-[[2]]
-           Species
-setosa          50
-versicolor      50
-virginica       50
-
-> 
-#+end_example
-
-** Exercise 3 prototype						  :prototype:
-
-1) [@1] Add argument checking code to return an error if the argument to your function is not a data.frame
-
-#+name: ex4.1
-#+begin_src R :eval no :exports code
-  statsum <- function(df) {
-      if(class(df) != "data.frame") stop("df must be a data.frame!")
-      classes <- sapply(df, class)
-      means <- sapply(df[classes == "numeric"], mean)
-      counts <- sapply(df[classes == "factor"], table)
-      return(list(means, counts))}
-    
-  statsum(1:10)
-  statsum(iris)
-#+end_src
-
-2) [@2] Insert a break point with =browser()= and step through your function
-
-#+name: ex4.2
-#+begin_src R :exports code
-  statsum <- function(df) {
-      if(class(df) != "data.frame") stop("df must be a data.frame!")
-  browser()
-      classes <- sapply(df, class)
-      means <- sapply(df[classes == "numeric"], mean)
-      counts <- sapply(df[classes == "factor"], table)
-      return(list(means, counts))
-  }
-  
-  statsum(iris)    
-#+end_src
-
-#+RESULTS: ex4.2
-#+begin_example
-> statsum <- function(df) {
-+     if(class(df) != "data.frame") stop("df must be a data.frame!")
-+ browser()
-+     classes <- sapply(df, class)
-+     means <- sapply(df[classes == "numeric"], mean)
-+     counts <- sapply(df[classes == "factor"], table)
-+     return(list(means, counts))
-+ }
-> 
-> statsum(iris)    
-Called from: statsum(iris)
-Browse[1]> [[1]]
-Sepal.Length  Sepal.Width Petal.Length  Petal.Width 
-    5.843333     3.057333     3.758000     1.199333 
-
-[[2]]
-           Species
-setosa          50
-versicolor      50
-virginica       50
-
-> 
-#+end_example
-
-
-** Exercise 4 prototype						  :prototype:
-1) [@1] Modify your function so that it also returns the standard deviations of the numeric variables 
-
-#+name: ex5.1
-#+begin_src R :exports code
-  statsum <- function(df) {
-      if(class(df) != "data.frame") stop("df must be a data.frame!")
-      classes <- sapply(df, class)
-      means <- sapply(df[classes == "numeric"], mean)
-      sds <- sapply(df[classes == "numeric"], mean)
-      counts <- sapply(df[classes == "factor"], table)
-      return(list(cbind(means, sds), counts))}
-  
-  statsum(iris)
-#+end_src
-
-#+RESULTS: ex5.1
-#+begin_example
-> statsum <- function(df) {
-+     if(class(df) != "data.frame") stop("df must be a data.frame!")
-+     classes <- sapply(df, class)
-+     means <- sapply(df[classes == "numeric"], mean)
-+     sds <- sapply(df[classes == "numeric"], mean)
-+     counts <- sapply(df[classes == "factor"], table)
-+     return(list(cbind(means, sds), counts))}
-> 
-> statsum(iris)
-[[1]]
-                means      sds
-Sepal.Length 5.843333 5.843333
-Sepal.Width  3.057333 3.057333
-Petal.Length 3.758000 3.758000
-Petal.Width  1.199333 1.199333
-
-[[2]]
-           Species
-setosa          50
-versicolor      50
-virginica       50
-
-> 
-#+end_example
-
-2) [@2] Modify your function so that it returns a list of class "statsum"
-
-#+name: ex5.2
-#+begin_src R :exports code
-  statsum <- function(df) {
-      if(class(df) != "data.frame") stop("df must be a data.frame!")
-      classes <- sapply(df, class)
-      means <- sapply(df[classes == "numeric"], mean)
-      sds <- sapply(df[classes == "numeric"], mean)
-      counts <- sapply(df[classes == "factor"], table)
-      R <- list(cbind(means, sds), counts)
-      class(R) <- c("statsum", class(R))
-      return(R)}
-
-  str(statsum(iris))
-#+end_src
-
-#+RESULTS: ex5.2
-#+begin_example
-> statsum <- function(df) {
-+     if(class(df) != "data.frame") stop("df must be a data.frame!")
-+     classes <- sapply(df, class)
-+     means <- sapply(df[classes == "numeric"], mean)
-+     sds <- sapply(df[classes == "numeric"], mean)
-+     counts <- sapply(df[classes == "factor"], table)
-+     R <- list(cbind(means, sds), counts)
-+     class(R) <- c("statsum", class(R))
-+     return(R)}
-> 
-> str(statsum(iris))
-List of 2
- $ : num [1:4, 1:2] 5.84 3.06 3.76 1.2 5.84 ...
-  ..- attr(*, "dimnames")=List of 2
-  .. ..$ : chr [1:4] "Sepal.Length" "Sepal.Width" "Petal.Length" "Petal.Width"
-  .. ..$ : chr [1:2] "means" "sds"
- $ : int [1:3, 1] 50 50 50
-  ..- attr(*, "dimnames")=List of 2
-  .. ..$ : chr [1:3] "setosa" "versicolor" "virginica"
-  .. ..$ : chr "Species"
- - attr(*, "class")= chr [1:2] "statsum" "list"
-> 
-#+end_example
-
-
-3 [@3] Write a print method for the statsum class
-
-#+name: ex5.3
-#+begin_src R :exports code
-  print.statsum <- function(x) {
-      cat("Numeric variable descriptive statistics:\n")
-      print(x[[1]], digits=2) 
-      cat("Factor variable counts:\n")
-      print(x[[2]])
-  }
-  
-  statsum(iris)
-#+end_src
-
-#+RESULTS: ex5.3
-#+begin_example
-> print.statsum <- function(x) {
-+     cat("Numeric variable descriptive statistics:\n")
-+     print(x[[1]], digits=2) 
-+     cat("Factor variable counts:\n")
-+     print(x[[2]])
-+ }
-> 
-> statsum(iris)
-Numeric variable descriptive statistics:
-             means sds
-Sepal.Length   5.8 5.8
-Sepal.Width    3.1 3.1
-Petal.Length   3.8 3.8
-Petal.Width    1.2 1.2
-Factor variable counts:
-           Species
-setosa          50
-versicolor      50
-virginica       50
-> 
-#+end_example
-
+If there is anything else you want to learn how to do, now is the time to ask!
 
 * Additional resources
 
@@ -1937,8 +1346,16 @@ Vectors (and other R objects for that matter) will always have =mode= and =lengt
 #+RESULTS:
 #+begin_example
 > ls() # list objects in our workspace
-[1] "char.var"   "char.var2"  "isPositive" "log.var"    "num.var"   
-[6] "num.var2"   "petal"      "petals"     "updateIR"  
+ [1] "aLineNumbers"    "aLines"          "allLinks"       
+ [4] "ceprCodebook"    "ceprData"        "ceprDataFiles"  
+ [7] "ceprDataInfo"    "ceprFileInfo"    "ceprFiles"      
+[10] "ceprHtmlIndex"   "ceprInfoLength"  "char.var"       
+[13] "char.var2"       "dataLines"       "dataLinks"      
+[16] "dataPage"        "dataURLs"        "disp"           
+[19] "disp.matrix"     "downloadFiles"   "fileInfoAverage"
+[22] "infoInfo"        "link"            "log.var"        
+[25] "mean.foo"        "num.var"         "num.var2"       
+[28] "x"              
 > length(char.var) # how many elements in char.var?
 [1] 4
 > str(num.var2) # what is the structure of num.var2?
@@ -1994,6 +1411,8 @@ Most of the time we can treat factors as though they were character vectors
 3 3 c
 4 4 d
 5 5 e
+> DF$x # select just the x column.
+[1] 1 2 3 4 5
 > 
 > # DF <- data.frame(x=1:10, y=1:7) # illegal becase lengths differ
 > L <- list(x=1:5, y=1:3, z = DF)
@@ -2040,6 +1459,8 @@ Use the built-in /iris/ data set (comes with R, will be available in your worksp
 4. BONUS (OPTIONAL): Create a new data.frame with two columns; the first should be named /value/, and should be equal to the variable you created in step 3. The second should be named /variable/ and should be either /Petal.Length/ or /Petal.Width/ as appropriate.
 
 * Footnotes
+
+[fn:3] Photo by Hadley Wickham via https://twitter.com/hadleywickham/status/643381054758363136/photo/1. Used by permission.
 
 [fn:2] [[http://stackoverflow.com/questions/1732348/regex-match-open-tags-except-xhtml-self-contained-tags]]
 
