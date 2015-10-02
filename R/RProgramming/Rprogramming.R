@@ -123,7 +123,13 @@
 
 ##   Although some will say you should never ever attempt to extract
 ##   information from html using regular expressions[2], it does work OK
-##   for simple tasks. The fist step is to read the html into R. We can do
+##   for simple tasks.  More generally regular expressions are useful in
+##   general (not just in R!) and it is a good idea to be familiar with at
+##   least the basics. If you have not been introduced to regular expressions
+##   yet a nice interactive regex tester is available at [http://www.regexr.com/]
+##   and an interactive tutorial is available at [[http://www.regexone.com/]]
+
+The fist step is to read the html into R. We can do
 ##   that using the `readLines' function, like this:
 
 ## Read html page from ceprdata.org into R. Each line will be stored as 
@@ -330,10 +336,8 @@ do.call(grid.arrange, sapply(imgs, rasterGrob, simplify = FALSE))
 ## The apply family of functions
 ## ─────────────────────────────
 
-##   You might have noticed that I slipped an example of `sapply' into the
-##   previous example. `sapply' is one of the apply family of functions in
-##   R that are useful for iteration. The apply family of functions
-##   includes:
+##   The apply family of functions in R  are useful for iteration. The apply
+##   family of functions includes:
 ##   apply: apply a function to each dimension (e.g., row or column), of a
 ##          matrix or array
 ##   lapply: apply a function to each element of a vector or list

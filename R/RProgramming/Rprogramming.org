@@ -94,7 +94,9 @@ Our goal is to download all the Stata data sets from http://ceprdata.org/cps-uni
 
 
 ** Searching text with regular expressions
-Although some will say you should never ever attempt to extract information from html using regular expressions[fn:2], it does work OK for simple tasks. The fist step is to read the html into R. We can do that using the =readLines= function, like this:
+Although some will say you should never ever attempt to extract information from html using regular expressions[fn:2], it does work OK for simple tasks. More generally regular expressions are useful in general (not just in R!) and it is a good idea to be familiar with at least the basics. If you have not been introduced to regular expressions yet a nice interactive regex tester is available at [[http://www.regexr.com/]] and an interactive tutorial is available at [[http://www.regexone.com/]].
+
+ The fist step is to read the html into R. We can do that using the =readLines= function, like this:
 
 #+BEGIN_SRC R :results silent
   ## Read html page from ceprdata.org into R. Each line will be stored as 
@@ -318,39 +320,10 @@ Now we can download files more simply with
 #+BEGIN_SRC R :results silent
   downloadFiles(grep("org_201", dataLinks, value = TRUE))
 #+END_SRC
-and in fact we can use this function to download files from any urls we might have. As a silly example, let's download all the profile pictures from the [[http://projects.iq.harvard.edu/rtc][Research Technology Consulting]] team at [[http://iq.harvard.edu][The Institute for Quantitative Social Science]]: 
-#+BEGIN_SRC R 
-  library(readbitmap)
-  ## parse the webpage and extract image URLs
-  profilePicLinks <- html_attr(html_nodes(html("http://projects.iq.harvard.edu/rtc/people"),
-                                          ".image-style-profile-thumbnail"),
-                               "src")
-  ## clean up the links
-  profilePicLinks <- gsub("\\.png\\?.*$", ".png", profilePicLinks)
-  ## download
-  downloadFiles(paste("http:", profilePicLinks, sep=""))
-  ## list downloaded image files
-  list.files(pattern = "\\.png$")
-#+END_SRC
-
-#+RESULTS:
-
-The code above downloaded all the profile pics from http://projects.iq.harvard.edu/rtc/people. Although this doesn't have anything to do with our main goal of downloading and analyzing the data from ceprdata.org, we'll go ahead and plot these images, just for fun.
-#+BEGIN_SRC R :results output graphics :file images/rtc_people.png
-  ## install.packages("readbitmap")
-  library(readbitmap); library(grid); library(gridExtra)
-
-  imgs <- sapply(list.files(pattern = "\\.png$"),
-                 read.bitmap,
-                 simplify = FALSE)
-  do.call(grid.arrange, sapply(imgs, rasterGrob, simplify = FALSE))
-#+END_SRC
-
-#+RESULTS:
-[[file:images/rtc_people.png]]
+and in fact we can use this function to download files from any urls we might have.
 
 ** The apply family of functions
-You might have noticed that I slipped an example of =sapply= into the previous example. =sapply= is one of the apply family of functions in R that are useful for iteration. The apply family of functions includes:
+The /apply family/ of functions in R that are useful for iteration. The apply family of functions includes:
 - apply :: apply a function to each dimension (e.g., row or column), of a matrix or array
 - lapply :: apply a function to each element of a vector or list
 - sapply :: like lapply, but simplifies the result
