@@ -16,6 +16,14 @@
 ## Things that may surprise you
 ## What else?
 ## Additional resources
+## OLD STUFF
+## .. Vector types
+## .. Vector attributes
+## .. Factor vectors
+## .. Lists and data.frames
+## .. Data types summary
+## .. Exercise 0
+
 
 ## Workshop overview and materials
 ## ═══════════════════════════════
@@ -39,6 +47,23 @@
 ##     • Write your own simple functions
 ##     • Debug functions
 ##     • Understand and use the S3 object system
+
+##   This workshop is free for Harvard and MIT affiliates. [Click here to
+##   sign up!]
+
+##   • Instructor - [Ista Zahn]
+##   • Location - Rm K018, 1737 Cambridge St (CGIS Knafel Building)
+
+##   For further details and registration information, please contact us at
+##   [dataclass@help.hmdc.harvard.edu]
+
+##   [Click here to sign up!]
+##   http://projects.iq.harvard.edu/rtc/workshop-registration
+
+##   [Ista Zahn] http://projects.iq.harvard.edu/rtc/people/ista-zahn
+
+##   [dataclass@help.hmdc.harvard.edu]
+##   mailto:dataclass@help.hmdc.harvard.edu
 
 ## Materials and setup
 ## ───────────────────
@@ -127,7 +152,7 @@ head(aLines <- grep("<a", ceprHtmlIndex, value = TRUE)) # lines containing <a> t
 ##   elements we want to match using our web browser we'll see something
 ##   like this:[file:images/inspectHtml.png]
 
-# <a onclick="_gaq.push(['_trackEvent', 'File','Download', 'cepr_org_2011']);" href="/wp-content/cps/data/cepr_org_2014.zip">cepr_org_2014.zip</a>
+<a onclick="_gaq.push(['_trackEvent', 'File','Download', 'cepr_org_2011']);" href="/wp-content/cps/data/cepr_org_2014.zip">cepr_org_2014.zip</a>
 
 ##   This tells us that we want to match lines containing an "<a" followed
 ##   (eventually) by ".zip". In order to perform this more sophisticated
@@ -827,6 +852,14 @@ str(num.var2) # what is the structure of num.var2?
 names(num.var2) <- paste("element", seq_along(num.var2))
 str(num.var2)
 
+> ls() # list objects in our workspace
+[1] "char.var"  "char.var2" "log.var"   "num.var"   "num.var2" 
+[6] "tmp"      
+> length(char.var) # how many elements in char.var?
+[1] 4
+> str(num.var2) # what is the structure of num.var2?
+ num [1:8] 1 2 3 4 1 2 3 4
+>
 
 ## Factor vectors
 ## ──────────────
