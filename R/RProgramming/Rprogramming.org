@@ -12,8 +12,8 @@
 # property and/or the EXCLUDE_TAGS, place the curser on the poperty line 
 # and press C-c C-c
 
-#+PROPERTY: exports code
-#+EXCLUDE_TAGS: noexport mitsetup prototype
+#+PROPERTY: exports both
+#+EXCLUDE_TAGS: noexport mitsetup
 
 #+SETUPFILE: ../workshopPreamble.org
 
@@ -22,10 +22,7 @@
   rm(list=ls())
   .First <- function() {
     options(width=70)
-    options(useFancyQuotes=FALSE)
-    options(show.signif.stars=FALSE)
     require(rvest)
-    require(readbitmap)
   }
 #+end_src
 
@@ -85,115 +82,109 @@ Materials for this workshop include slides, example data sets, and example code.
 ** Example project overview
 Throughout this workshop we will return to a running example that involves acquiring, processing, and analyzing data from the [[http://www.census.gov/cps/][Current Population Survey]] (CPS). In this context we will learn about finding and using R packages, importing and manipulating data, writing functions, and more.
 
-* Regular expressions, html parsing
+* Extracting elements from html
 It is common for data to be made available on a website somewhere, either by a government agency, research group, or other organizations and entities. Often the data you want is spread over many files, and retrieving it all one file at a time is tedious and time consuming. Such is the case with the CPS data we will be using today.
 
 The Center for Economic and Policy Research has helpfully [[http://ceprdata.org/cps-uniform-data-extracts/cps-outgoing-rotation-group/cps-org-data/][compiled CPS data going back to 1979]][fn:1], one file per year. Although we could open a web browser and download these files one at a time, it will be faster and easier to instruct R to do that for us. Doing it this way will also give us an excuse to talk about regular expressions, package management, and other useful techniques.
 
 Our goal is to download all the Stata data sets from http://ceprdata.org/cps-uniform-data-extracts/cps-outgoing-rotation-group/cps-org-data/. In order to do that we need a list of the Uniform Resource Locators (URLs) of those files. The URLs we need are right there as links in the ceprdata.org webpage. All we have to do is read that data in a way R can understand. 
 
+** Packages for parsing html
+In order extract the data URls from the ceprdata.org webset we need a package for parsing XML and HTML. How do we find such a package?
+- Task views :: https://cran.r-project.org/web/views/WebTechnologies.html
+- R package search :: http://www.r-pkg.org/search.html?q=html+xml
+- Web search :: https://www.google.com/search?q=R+parse+html+xml&ie=utf-8&oe=utf-8
 
-** Searching text with regular expressions
-Although some will say you should never ever attempt to extract information from html using regular expressions[fn:2], it does work OK for simple tasks. More generally regular expressions are useful in general (not just in R!) and it is a good idea to be familiar with at least the basics. If you have not been introduced to regular expressions yet a nice interactive regex tester is available at [[http://www.regexr.com/]] and an interactive tutorial is available at [[http://www.regexone.com/]].
+For parsing html in R I recommend either the =xml2= package or the =rvest= package, with the former being more flexible and the later being more user friendly. Let's use the friendlier one.
 
- The fist step is to read the html into R. We can do that using the =readLines= function, like this:
+** Extracting information from web pages with the =rvest= package
 
-#+BEGIN_SRC R :results silent
-  ## Read html page from ceprdata.org into R. Each line will be stored as 
-  ## an element in a vector of lines.
-  ceprHtmlIndex <- readLines(
-  "http://ceprdata.org/cps-uniform-data-extracts/cps-outgoing-rotation-group/cps-org-data/"
-  )
-#+END_SRC
+Our first task is to read the web page into R. We can do that using the =read_html= function. Next we want to find all the links (the =<a>= tags) and extract their =href= attributes. To give a better sense of this here is what the html for the 2014 data file link looks like:
+#+BEGIN_SRC HTML
+  <a onclick="_gaq.push(['_trackEvent', 'File','Download', 'cepr_org_2011']);"
+     href="/wp-content/cps/data/cepr_org_2014.zip">cepr_org_2014.zip</a>
+#+END_SRC 
+We want the =href= part, i.e., "/wp-content/cps/data/cepr_org_2014.zip".
 
-OK, what are we working with?
+We can get all the =<a>= elements using the =html_nodes= function, and then extract the =href= attributes usig the =html_attr= function, like this:
 #+BEGIN_SRC R
-  ## how many lines do we have?
-  length(ceprHtmlIndex)
-  ## what do the first few lines look like?
-  head(ceprHtmlIndex, 10) ## look at the first few lines of html
+  ## install.packages("rvest")
+  library(rvest)
+  
+  ## read the web page into R
+  dataPage <- read_html("http://ceprdata.org/cps-uniform-data-extracts/cps-outgoing-rotation-group/cps-org-data/")
 
+  ## find the link ("a") elements.
+  allAnchors <- html_nodes(dataPage, "a")
+  head(allAnchors, 15)
+
+  ## extract the link ("href") attributes
+  allLinks <- html_attr(allAnchors, "href")
+  head(allLinks, 15)
 #+END_SRC
 
 #+RESULTS:
 #+begin_example
-> ## how many lines do we have?
-> length(ceprHtmlIndex)
-[1] 296
-> ## what do the first few lines look like?
-> head(ceprHtmlIndex, 10) ## look at the first few lines of html
- [1] "<!doctype html>"                                                               
- [2] "<!--[if lt IE 7]> <html class=\"no-js ie6 oldie\" lang=\"en-US\"> <![endif]-->"
- [3] "<!--[if IE 7]>    <html class=\"no-js ie7 oldie\" lang=\"en-US\"> <![endif]-->"
- [4] "<!--[if IE 8]>    <html class=\"no-js ie8 oldie\" lang=\"en-US\"> <![endif]-->"
- [5] "<!--[if gt IE 8]><!--> <html class=\"no-js\" lang=\"en-US\"> <!--<![endif]-->" 
- [6] "<head>"                                                                        
- [7] "\t<meta charset=\"UTF-8\" />"                                                  
- [8] ""                                                                              
- [9] "\t<title>CPS ORG Data &#8211; ceprDATA</title>"                                
-[10] ""                                                                              
+> ## install.packages("rvest")
+> library(rvest)
+> 
+> ## read the web page into R
+> dataPage <- read_html("http://ceprdata.org/cps-uniform-data-extracts/cps-outgoing-rotation-group/cps-org-data/")
+> 
+> ## find the link ("a") elements.
+> allAnchors <- html_nodes(dataPage, "a")
+> head(allAnchors, 15)
+{xml_nodeset (15)}
+ [1] <a href="http://ceprdata.org/" title="Home" rel="home">\n  <im ...
+ [2] <a href="http://ceprdata.org/wp-login.php">Log in</a>
+ [3] <a href="http://www.ceprdata.org">Home</a>
+ [4] <a href="http://ceprdata.org/cps-uniform-data-extracts/">CPS</a>
+ [5] <a href="http://ceprdata.org/sipp-uniform-data-extracts/">SIPP ...
+ [6] <a href="http://ceprdata.org/acs-uniform-data-extracts/">ACS</a>
+ [7] <a href="http://ceprdata.org/other-data/">Other Data</a>
+ [8] <a href="http://ceprdata.org/publications/">Publications</a>
+ [9] <a href="http://ceprdata.org/contact/">Contact</a>
+[10] <a href="https://org.salsalabs.com/o/967/p/salsa/donation/comm ...
+[11] <a rel="bookmark" href="http://ceprdata.org/cps-uniform-data-e ...
+[12] <a title="CPS ORG Programs" href="http://ceprdata.org/wp-conte ...
+[13] <a onclick="_gaq.push(['_trackEvent', 'File','Download', 'cepr ...
+[14] <a href="/wp-content/cps/data/cepr_org_2013.zip">cepr_org_2013 ...
+[15] <a href="/wp-content/cps/data/cepr_org_2012.zip">cepr_org_2012 ...
+> 
+> ## extract the link ("href") attributes
+> allLinks <- html_attr(allAnchors, "href")
+> head(allLinks, 15)
+ [1] "http://ceprdata.org/"                                                                   
+ [2] "http://ceprdata.org/wp-login.php"                                                       
+ [3] "http://www.ceprdata.org"                                                                
+ [4] "http://ceprdata.org/cps-uniform-data-extracts/"                                         
+ [5] "http://ceprdata.org/sipp-uniform-data-extracts/"                                        
+ [6] "http://ceprdata.org/acs-uniform-data-extracts/"                                         
+ [7] "http://ceprdata.org/other-data/"                                                        
+ [8] "http://ceprdata.org/publications/"                                                      
+ [9] "http://ceprdata.org/contact/"                                                           
+[10] "https://org.salsalabs.com/o/967/p/salsa/donation/common/public/?donate_page_KEY=1809"   
+[11] "http://ceprdata.org/cps-uniform-data-extracts/cps-outgoing-rotation-group/cps-org-data/"
+[12] "http://ceprdata.org/wp-content/cps/programs/org/cepr_org_master.do"                     
+[13] "/wp-content/cps/data/cepr_org_2014.zip"                                                 
+[14] "/wp-content/cps/data/cepr_org_2013.zip"                                                 
+[15] "/wp-content/cps/data/cepr_org_2012.zip"                                                 
 > 
 #+end_example
 
-In html links are specified using the =<a>= (for /anchor/) tag. So now we want to search through our html and find lines that include an =a= tag. In R we can search for strings using the =grep= function.
+** Just the data please -- regular expressions to the rescue
+If the look at the output from the previous example you might notice a problem; we've matched _all_ the URLs on the web page. Some of those (the ones that end in .zip) are the ones we want, others are menu links that we don't want. How can we separate the data links from the other links on the page?
+
+One answer is to use regular expressions to idenfify the links we want. Regular expressions are useful in general (not just in R!) and it is a good idea to be familiar with at least the basics. If you have not been introduced to regular expressions yet a nice interactive regex tester is available at [[http://www.regexr.com/]] and an interactive tutorial is available at [[http://www.regexone.com/]]. For our present purpose it will be more than enough to use regular expression that matches strings starting with =/wp= and ending with =.zip=. We can use the =grep= function to match the URLs we want, and exclude those we don't want.
 #+BEGIN_SRC R
-  ## find lines with links (a tags)
-  (aLineNumbers <- grep("<a", ceprHtmlIndex)) # line numbers containing <a> tags
-  head(aLines <- grep("<a", ceprHtmlIndex, value = TRUE)) # lines containing <a> tags
+  dataLinks <- grep("^/wp.*\\.zip", allLinks, value = TRUE)
+  head(dataLinks)
 #+END_SRC
 
 #+RESULTS:
 #+begin_example
-> ## find lines with links (a tags)
-> (aLineNumbers <- grep("<a", ceprHtmlIndex)) # line numbers containing <a> tags
- [1] 142 144 150 151 152 153 154 155 156 157 168 170 174 176 177 178
-[17] 179 180 181 182 183 184 185 186 187 188 189 190 191 192 193 194
-[33] 195 196 197 198 199 200 201 202 203 204 205 206 207 208 209 210
-[49] 211 213 220 224 226 227 228 229 232 234 235 236 237 240 242 243
-[65] 244 245 248 250 251 252 253 256 258 259 260 261 264 265 266 268
-[81] 270 272 274 283 286 290
-> head(aLines <- grep("<a", ceprHtmlIndex, value = TRUE)) # lines containing <a> tags
-[1] "\t\t\t\t\t\t\t\t\t<h1 id=\"site-name\"><a href=\"http://ceprdata.org/\" title=\"Home\" rel=\"home\"><img src=\"http://s403740266.onlinehome.us/wp-content/uploads/2012/03/ceprdata_logo.png\"></a></h1>"
-[2] "\t\t\t\t<ul class=\"nav\"><li class=\"menu-item menu-item-type-taxonomy menu-item-object-category\"><a href=\"http://ceprdata.org/wp-login.php\">Log in</a></li></ul>\t\t\t\t</nav>"                    
-[3] "\t\t\t\t<ul id=\"menu-top-menu\" class=\"nav\"><li id=\"menu-item-9\" class=\"menu-item menu-item-type-custom menu-item-object-custom menu-item-9\"><a href=\"http://www.ceprdata.org\">Home</a></li>"  
-[4] "<li id=\"menu-item-8\" class=\"menu-item menu-item-type-post_type menu-item-object-page current-page-ancestor menu-item-8\"><a href=\"http://ceprdata.org/cps-uniform-data-extracts/\">CPS</a></li>"    
-[5] "<li id=\"menu-item-13\" class=\"menu-item menu-item-type-post_type menu-item-object-page menu-item-13\"><a href=\"http://ceprdata.org/sipp-uniform-data-extracts/\">SIPP</a></li>"                      
-[6] "<li id=\"menu-item-108\" class=\"menu-item menu-item-type-post_type menu-item-object-page menu-item-108\"><a href=\"http://ceprdata.org/acs-uniform-data-extracts/\">ACS</a></li>"                      
-> 
-#+end_example
-
-So far we've successfully matched all lines containing the string "<a". Our actual target is a bit more specific. If we inspect the elements we want to match using our web browser we'll see something like this:[[file:images/inspectHtml.png]] 
-
-#+BEGIN_SRC HTML :exports code :eval no
-  <a onclick="_gaq.push(['_trackEvent', 'File','Download', 'cepr_org_2011']);" href="/wp-content/cps/data/cepr_org_2014.zip">cepr_org_2014.zip</a>
-#+END_SRC
-This tells us that we want to match lines containing an "<a" followed (eventually) by ".zip". In order to perform this more sophisticated search we need to use /regular expressions/. In regular expressions the =.= matches any character (except new lines) and the =*= repeats the previous character zero or more times. So =<a.*\\.zip= means "find =<a= followed by any character repeated any number of times followed by =.zip=". Note that in =\\.= the backslashes escape the dot so that it is matched literally rather than matching any character. Let's try it out!
-#+BEGIN_SRC R
-  ## find lines with <a> tags refering to zip files
-  head(dataLines <- grep("<a.*\\.zip", ceprHtmlIndex, value = TRUE))
-#+END_SRC
-
-#+RESULTS:
-#+begin_example
-> ## find lines with <a> tags refering to zip files
-> head(dataLines <- grep("<a.*\\.zip", ceprHtmlIndex, value = TRUE))
-[1] "<li><a onclick=\"_gaq.push(['_trackEvent', 'File','Download', 'cepr_org_2011']);\" href=\"/wp-content/cps/data/cepr_org_2014.zip\">cepr_org_2014.zip</a></li>"
-[2] "<li><a href=\"/wp-content/cps/data/cepr_org_2013.zip\">cepr_org_2013.zip</a></li>"                                                                            
-[3] "<li><a href=\"/wp-content/cps/data/cepr_org_2012.zip\">cepr_org_2012.zip</a></li>"                                                                            
-[4] "<li><a href=\"/wp-content/cps/data/cepr_org_2011.zip\">cepr_org_2011.zip</a></li>"                                                                            
-[5] "<li><a onclick=\"_gaq.push(['_trackEvent', 'File','Download', 'cepr_org_2010']);\" href=\"/wp-content/cps/data/cepr_org_2010.zip\">cepr_org_2010.zip</a></li>"
-[6] "<li><a onclick=\"_gaq.push(['_trackEvent', 'File','Download', 'cepr_org_2009']);\" href=\"/wp-content/cps/data/cepr_org_2009.zip\">cepr_org_2009.zip</a></li>"
-> 
-#+end_example
-
-We're getting close! We have identified the lines containing the information we need. Now we just need to extract the text following the =href= argument. For that we need to use another feature of regular expressions called /capture groups/ and /back references/. Here's how it works:
-#+BEGIN_SRC R
-  head(dataURLs <- gsub("^.*href=\"(.*\\.zip)\".*$", "\\1", dataLines))
-#+END_SRC
-
-#+RESULTS:
-#+begin_example
-> head(dataURLs <- gsub("^.*href=\"(.*\\.zip)\".*$", "\\1", dataLines))
+> dataLinks <- grep("^/wp.*\\.zip", allLinks, value = TRUE)
+> head(dataLinks)
 [1] "/wp-content/cps/data/cepr_org_2014.zip"
 [2] "/wp-content/cps/data/cepr_org_2013.zip"
 [3] "/wp-content/cps/data/cepr_org_2012.zip"
@@ -203,44 +194,15 @@ We're getting close! We have identified the lines containing the information we 
 > 
 #+end_example
 
-Great, we've matched all the data file links. The next step is to iterate over these links and download the data. But before we get there, let's look at a couple of alternative methods we could use to get the list of data file links.
-
-** Packages for parsing html
-In the previous section we extracted data file links from an html page using regular expressions. An alternative is to use a package dedicated to parsing XML and HTML. How do we find such a package?
-- Task views :: https://cran.r-project.org/web/views/WebTechnologies.html
-- R package search :: http://www.r-pkg.org/search.html?q=html+xml
-- Web search :: https://www.google.com/search?q=R+parse+html+xml&ie=utf-8&oe=utf-8
-
-For parsing html in R I recommend either the =httr= package or the =rvest= package, with the former being more flexible and the later being more user friendly. Let's use the friendlier one.
-
+Finally, the data links we've extracted are relative to the ceprdata website. To make them valid we need to prepend =http://ceprdata.org/= to each one. We can do that using the =paste= funcion.
 #+BEGIN_SRC R
-  ## install.packages("rvest")
-  library(rvest)
-  dataPage <- html("http://ceprdata.org/cps-uniform-data-extracts/cps-outgoing-rotation-group/cps-org-data/")
-
-  ## find the link ("a") elemets extract the link ("href") attributes
-  allLinks <- html_attr(html_nodes(dataPage, "a"), "href")
-  dataLinks <- paste("http://ceprdata.org",
-                     grep("^/wp-content/cps/data/.*\\.zip$",
-                          allLinks,
-                          value = TRUE),
-                     sep = "")
-head(dataLinks)
+  dataLinks <- paste("http://ceprdata.org", dataLinks, sep = "")
+  head(dataLinks)
 #+END_SRC
 
 #+RESULTS:
 #+begin_example
->   ## install.packages("rvest")
->   library(rvest)
->   dataPage <- html("http://ceprdata.org/cps-uniform-data-extracts/cps-outgoing-rotation-group/cps-org-data/")
-> 
->   ## find the link ("a") elemets extract the link ("href") attributes
->   allLinks <- html_attr(html_nodes(dataPage, "a"), "href")
->   dataLinks <- paste("http://ceprdata.org",
-+                      grep("^/wp-content/cps/data/.*\\.zip$",
-+                           allLinks,
-+                           value = TRUE),
-+                      sep = "")
+> dataLinks <- paste("http://ceprdata.org", dataLinks, sep = "")
 > head(dataLinks)
 [1] "http://ceprdata.org/wp-content/cps/data/cepr_org_2014.zip"
 [2] "http://ceprdata.org/wp-content/cps/data/cepr_org_2013.zip"
@@ -250,8 +212,6 @@ head(dataLinks)
 [6] "http://ceprdata.org/wp-content/cps/data/cepr_org_2009.zip"
 > 
 #+end_example
-
-Wow, that that was a lot easier. Why didn't we do that in the first place?!? Well, if we had done it the easy way I wouldn't have had an excuse to teach you about regular expressions! And trust me, you need to know about regular expressions. 
 
 ** Getting the list of data links the easy way
 If you look at the result from the previous two methods you might notice that the URLs are all the same save for the year number. This suggests an even easier way to construct the list of URLs:
@@ -278,7 +238,7 @@ If you look at the result from the previous two methods you might notice that th
 > 
 #+end_example
 
-Wow, that was a _lot_ easier. Why oh why didn't we just do that in the first place? Well, it works for this specific case, but it is much less general than the regular expression method or the html parsing method we discussed previously. Those methods will work in the general case, while pasting the year number into the URLs only works because the URLs we want have a very regular and consistent form.
+Wow, that was a _lot_ easier. Why oh why didn't we just do that in the first place? Well, it works for this specific case, but it is much less general than the html parsing methods we discussed previously. Those methods will work in the general case, while pasting the year number into the URLs only works because the URLs we want have a very regular and consistent form.
 
 * Iterating and defining new functions
 Now that we have a vector of URLs pointing to the data files we want to download, we want to iterate over the elements and download each file. We could do this verbosely by writing one line for each file:
