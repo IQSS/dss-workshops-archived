@@ -2,13 +2,11 @@
 ##                     INTRODUCTION TO PROGRAMMING IN R
 ##                    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-##                                    ""
-
 ## Table of Contents
 ## ─────────────────
 
 ## Workshop overview and materials
-## Regular expressions, html parsing
+## Extracting elements from html
 ## Iterating and defining new functions
 ## Objects, attributes, and indexing
 ## Aggregating and combining data
@@ -17,13 +15,6 @@
 ## What else?
 ## Additional resources
 ## OLD STUFF
-## .. Vector types
-## .. Vector attributes
-## .. Factor vectors
-## .. Lists and data.frames
-## .. Data types summary
-## .. Exercise 0
-
 
 ## Workshop overview and materials
 ## ═══════════════════════════════
@@ -85,15 +76,16 @@
 ## ────────────────────────
 
 ##   Throughout this workshop we will return to a running example that
-##   involves acquiring, processing, and analyzing data from the [Current
-##   Population Survey] (CPS). In this context we will learn about finding
-##   and using R packages, importing and manipulating data, writing
-##   functions, and more.
+##   involves acquiring, processing, and analyzing data from the [Displaced
+##   Worker Survery] (DWS). In this context we will learn about finding and
+##   using R packages, importing and manipulating data, writing functions,
+##   and more.
 
-##   [Current Population Survey] http://www.census.gov/cps/
+##   [Displaced Worker Survery]
+##   http://ceprdata.org/cps-uniform-data-extracts/cps-displaced-worker-survey/cps-dws-data/
 
-## Regular expressions, html parsing
-## ═════════════════════════════════
+## Extracting elements from html
+## ═════════════════════════════
 
 ##   It is common for data to be made available on a website somewhere,
 ##   either by a government agency, research group, or other organizations
@@ -102,121 +94,110 @@
 ##   Such is the case with the CPS data we will be using today.
 
 ##   The Center for Economic and Policy Research has helpfully [compiled
-##   CPS data going back to 1979][1], one file per year. Although we could
-##   open a web browser and download these files one at a time, it will be
-##   faster and easier to instruct R to do that for us. Doing it this way
-##   will also give us an excuse to talk about regular expressions, package
+##   DWS data going back to 1994][1]. Although we could open a web browser
+##   and download these files one at a time, it will be faster and easier
+##   to instruct R to do that for us. Doing it this way will also give us
+##   an excuse to talk about html parsing, regular expressions, package
 ##   management, and other useful techniques.
 
 ##   Our goal is to download all the Stata data sets from
-##   [http://ceprdata.org/cps-uniform-data-extracts/cps-outgoing-rotation-group/cps-org-data/].
+##   [http://ceprdata.org/cps-uniform-data-extracts/cps-displaced-worker-survey/cps-dws-data/].
 ##   In order to do that we need a list of the Uniform Resource Locators
 ##   (URLs) of those files. The URLs we need are right there as links in
 ##   the ceprdata.org webpage. All we have to do is read that data in a way
 ##   R can understand.
 
-##   [compiled CPS data going back to 1979]
-##   http://ceprdata.org/cps-uniform-data-extracts/cps-outgoing-rotation-group/cps-org-data/
-
-## Searching text with regular expressions
-## ───────────────────────────────────────
-
-##   Although some will say you should never ever attempt to extract
-##   information from html using regular expressions[2], it does work OK
-##   for simple tasks.  More generally regular expressions are useful in
-##   general (not just in R!) and it is a good idea to be familiar with at
-##   least the basics. If you have not been introduced to regular expressions
-##   yet a nice interactive regex tester is available at [http://www.regexr.com/]
-##   and an interactive tutorial is available at [[http://www.regexone.com/]]
-
-The fist step is to read the html into R. We can do
-##   that using the `readLines' function, like this:
-
-## Read html page from ceprdata.org into R. Each line will be stored as 
-## an element in a vector of lines.
-ceprHtmlIndex <- readLines(
-"http://ceprdata.org/cps-uniform-data-extracts/cps-outgoing-rotation-group/cps-org-data/"
-)
-
-##   OK, what are we working with?
-
-## how many lines do we have?
-length(ceprHtmlIndex)
-## what do the first few lines look like?
-head(ceprHtmlIndex, 10) ## look at the first few lines of html
-
-##   In html links are specified using the `<a>' (for /anchor/) tag. So now
-##   we want to search through our html and find lines that include an `a'
-##   tag. In R we can search for strings using the `grep' function.
-
-## find lines with links (a tags)
-(aLineNumbers <- grep("<a", ceprHtmlIndex)) # line numbers containing <a> tags
-head(aLines <- grep("<a", ceprHtmlIndex, value = TRUE)) # lines containing <a> tags
-
-##   So far we've successfully matched all lines containing the string
-##   "<a". Our actual target is a bit more specific. If we inspect the
-##   elements we want to match using our web browser we'll see something
-##   like this:[file:images/inspectHtml.png]
-
-<a onclick="_gaq.push(['_trackEvent', 'File','Download', 'cepr_org_2011']);" href="/wp-content/cps/data/cepr_org_2014.zip">cepr_org_2014.zip</a>
-
-##   This tells us that we want to match lines containing an "<a" followed
-##   (eventually) by ".zip". In order to perform this more sophisticated
-##   search we need to use /regular expressions/. In regular expressions
-##   the `.' matches any character (except new lines) and the `*' repeats
-##   the previous character zero or more times. So `<a.*\\.zip' means "find
-##   `<a' followed by any character repeated any number of times followed
-##   by `.zip'". Note that in `\\.' the backslashes escape the dot so that
-##   it is matched literally rather than matching any character. Let's try
-##   it out!
-
-## find lines with <a> tags refering to zip files
-head(dataLines <- grep("<a.*\\.zip", ceprHtmlIndex, value = TRUE))
-
-##   We're getting close! We have identified the lines containing the
-##   information we need. Now we just need to extract the text following
-##   the `href' argument. For that we need to use another feature of
-##   regular expressions called /capture groups/ and /back references/.
-##   Here's how it works:
-
-head(dataURLs <- gsub("^.*href=\"(.*\\.zip)\".*$", "\\1", dataLines))
-
-##   Great, we've matched all the data file links. The next step is to
-##   iterate over these links and download the data. But before we get
-##   there, let's look at a couple of alternative methods we could use to
-##   get the list of data file links.
+##   [compiled DWS data going back to 1994]
+##   http://ceprdata.org/cps-uniform-data-extracts/cps-displaced-worker-survey/cps-dws-data/
 
 ## Packages for parsing html
 ## ─────────────────────────
 
-##   In the previous section we extracted data file links from an html page
-##   using regular expressions. An alternative is to use a package
-##   dedicated to parsing XML and HTML. How do we find such a package?
+##   In order extract the data URls from the ceprdata.org webset we need a
+##   package for parsing XML and HTML. How do we find such a package?
 ##   Task views: [https://cran.r-project.org/web/views/WebTechnologies.html]
 ##   R package search: [http://www.r-pkg.org/search.html?q=html+xml]
 ##   Web search: [https://www.google.com/search?q=R+parse+html+xml&ie=utf-8&oe=utf-8]
 
-##   For parsing html in R I recommend either the `httr' package or the
+##   For parsing html in R I recommend either the `xml2' package or the
 ##   `rvest' package, with the former being more flexible and the later
 ##   being more user friendly. Let's use the friendlier one.
 
-  ## install.packages("rvest")
-  library(rvest)
-  dataPage <- html("http://ceprdata.org/cps-uniform-data-extracts/cps-outgoing-rotation-group/cps-org-data/")
+## Extracting information from web pages with the `rvest' package
+## ──────────────────────────────────────────────────────────────
 
-  ## find the link ("a") elemets extract the link ("href") attributes
-  allLinks <- html_attr(html_nodes(dataPage, "a"), "href")
-  dataLinks <- paste("http://ceprdata.org",
-                     grep("^/wp-content/cps/data/.*\\.zip$",
-                          allLinks,
-                          value = TRUE),
-                     sep = "")
+##   Our first task is to read the web page into R. We can do that using
+##   the `read_html' function. Next we want to find all the links (the
+##   `<a>' tags) and extract their `href' attributes. To give a better
+##   sense of this here is what the html for the 2010 data file link looks
+##   like:
+##   ┌────
+##   │ <a onclick="_gaq.push(['_trackEvent', 'File','Download', 'cepr_dws_2010_dta']);"
+##   │    href="/wp-content/cps/data/cepr_dws_2010_dta.zip">cepr_dws_2010_dta.zip</a>
+##   └────
+##   We want the `href' part, i.e.,
+##   "/wp-content/cps/data/cepr_dws_2010_dta.zip".
+
+##   We can get all the `<a>' elements using the `html_nodes' function, and
+##   then extract the `href' attributes usig the `html_attr' function, like
+##   this:
+
+## install.packages("rvest")
+library(rvest)
+
+## read the web page into R
+dataPage <- read_html("http://ceprdata.org/cps-uniform-data-extracts/cps-displaced-worker-survey/cps-dws-data/")
+
+## find the link ("a") elements.
+allAnchors <- html_nodes(dataPage, "a")
+head(allAnchors, 15)
+
+## extract the link ("href") attributes
+allLinks <- html_attr(allAnchors, "href")
+head(allLinks, 15)
+
+## Just the data please – regular expressions to the rescue
+## ────────────────────────────────────────────────────────
+
+##   If the look at the output from the previous example you might notice a
+##   problem; we've matched _all_ the URLs on the web page. Some of those
+##   (the ones that end in .zip) are the ones we want, others are menu
+##   links that we don't want. How can we separate the data links from the
+##   other links on the page?
+
+##   One answer is to use regular expressions to idenfify the links we
+##   want. Regular expressions are useful in general (not just in R!) and
+##   it is a good idea to be familiar with at least the basics. For our
+##   present purpose it will be more than enough to use regular expression
+##   that matches strings starting with `/wp' and ending with `.zip'.
+
+##   In regulars expression `^', `.', `*', and `$' are special characters
+##   with the following meanings:
+##   ^: matches the beginning of the string
+##   .: matches any character
+##   *: repeates the last caracter zero or more times
+##   $: matches the end of the sring
+
+##   The backslashes in `\\.' are used to escape the `.' so that it is
+##   matched literally instead of matching any characters as it normallly
+##   would in a regular expression.
+
+##   If you have not been introduced to regular expressions yet a nice
+##   interactive regex tester is available at [http://www.regexr.com/] and
+##   an interactive tutorial is available at [http://www.regexone.com/].
+
+##   We can use the `grep' function to match the URLs we want using regular
+##   expressions.
+
+dataLinks <- grep("^/wp.*\\.zip$", allLinks, value = TRUE)
 head(dataLinks)
 
-##   Wow, that that was a lot easier. Why didn't we do that in the first
-##   place?!? Well, if we had done it the easy way I wouldn't have had an
-##   excuse to teach you about regular expressions! And trust me, you need
-##   to know about regular expressions.
+##   Finally, the data links we've extracted are relative to the ceprdata
+##   website. To make them valid we need to prepend `http://ceprdata.org/'
+##   to each one. We can do that using the `paste' funcion.
+
+dataLinks <- paste("http://ceprdata.org", dataLinks, sep = "")
+head(dataLinks)
 
 ## Getting the list of data links the easy way
 ## ───────────────────────────────────────────
@@ -225,17 +206,17 @@ head(dataLinks)
 ##   notice that the URLs are all the same save for the year number. This
 ##   suggests an even easier way to construct the list of URLs:
 
-head(dataLinks <- paste("http://ceprdata.org/wp-content/cps/data/cepr_org_",
-                    1979:2014,
-                    ".zip",
+head(dataLinks <- paste("http://ceprdata.org/wp-content/cps/data/cepr_dws_",
+                    seq(1994, 2010, by = 2),
+                    "_dta.zip",
                     sep = ""))
 
 ##   Wow, that was a _lot_ easier. Why oh why didn't we just do that in the
 ##   first place? Well, it works for this specific case, but it is much
-##   less general than the regular expression method or the html parsing
-##   method we discussed previously. Those methods will work in the general
-##   case, while pasting the year number into the URLs only works because
-##   the URLs we want have a very regular and consistent form.
+##   less general than the html parsing methods we discussed previously.
+##   Those methods will work in the general case, while pasting the year
+##   number into the URLs only works because the URLs we want have a very
+##   regular and consistent form.
 
 ## Iterating and defining new functions
 ## ════════════════════════════════════
@@ -244,11 +225,10 @@ head(dataLinks <- paste("http://ceprdata.org/wp-content/cps/data/cepr_org_",
 ##   to download, we want to iterate over the elements and download each
 ##   file. We could do this verbosely by writing one line for each file:
 
-dir.create("dataSets")
-download.file(dataLinks[1], "dataSets/cepr_org_1979.zip")
-download.file(dataLinks[2], "dataSets/cepr_org_1980.zip")
+## download.file(dataLinks[1], "cepr_dws_1979.zip")
+## download.file(dataLinks[2], "cepr_dws_1980.zip")
 ## ...
-## download.file(dataLinks[n], "dataSets/cepr_org_n.zip")
+## download.file(dataLinks[n], "dataSets/cepr_dws_n.zip")
 
 ##   but that is too much typing. Much easier to let R do that for us. We
 ##   can iterate over the elements of a vector in R using a loop, or using
@@ -270,9 +250,9 @@ download.file(dataLinks[2], "dataSets/cepr_org_1980.zip")
 ##   will probably find the R implementation to be very similar.
 
 ##   For now, lets start by downloading just the data files for years since
-##   2010.
+##   2000.
 
-for(link in grep("org_201", dataLinks, value = TRUE)) {
+for(link in grep("dws_20", dataLinks, value = TRUE)) {
     download.file(link, 
                   destfile = basename(link))
 }
@@ -296,48 +276,16 @@ downloadFiles <- function(urls) {
 
 ##   Now we can download files more simply with
 
-downloadFiles(grep("org_201", dataLinks, value = TRUE))
+downloadFiles(grep("dws_20", dataLinks, value = TRUE))
 
 ##   and in fact we can use this function to download files from any urls
-##   we might have. As a silly example, let's download all the profile
-##   pictures from the [Research Technology Consulting] team at [The
-##   Institute for Quantitative Social Science]:
-
-library(readbitmap)
-## parse the webpage and extract image URLs
-profilePicLinks <- html_attr(html_nodes(html("http://projects.iq.harvard.edu/rtc/people"),
-                                        ".image-style-profile-thumbnail"),
-                             "src")
-## clean up the links
-profilePicLinks <- gsub("\\.png\\?.*$", ".png", profilePicLinks)
-## download
-downloadFiles(paste("http:", profilePicLinks, sep=""))
-## list downloaded image files
-list.files(pattern = "\\.png$")
-
-##   The code above downloaded all the profile pics from
-##   [http://projects.iq.harvard.edu/rtc/people]. Although this doesn't
-##   have anything to do with our main goal of downloading and analyzing
-##   the data from ceprdata.org, we'll go ahead and plot these images, just
-##   for fun.
-
-## install.packages("readbitmap")
-library(readbitmap); library(grid); library(gridExtra)
-
-imgs <- sapply(list.files(pattern = "\\.png$"),
-               read.bitmap,
-               simplify = FALSE)
-do.call(grid.arrange, sapply(imgs, rasterGrob, simplify = FALSE))
-
-##   [Research Technology Consulting] http://projects.iq.harvard.edu/rtc
-
-##   [The Institute for Quantitative Social Science] http://iq.harvard.edu
+##   we might have.
 
 ## The apply family of functions
 ## ─────────────────────────────
 
-##   The apply family of functions in R  are useful for iteration. The apply
-##   family of functions includes:
+##   The /apply family/ of functions in R that are useful for iteration.
+##   The apply family of functions includes:
 ##   apply: apply a function to each dimension (e.g., row or column), of a
 ##          matrix or array
 ##   lapply: apply a function to each element of a vector or list
@@ -356,28 +304,28 @@ do.call(grid.arrange, sapply(imgs, rasterGrob, simplify = FALSE))
 
 ##   The `sapply' function iterates over a vector or list and applys a
 ##   function to each element. To start, let's use `sapply' do download all
-##   the data files for years since 2010:
+##   the data files for years since 2000:
 
-sapply(grep("org_201", dataLinks, value = TRUE),
+sapply(grep("dws_20", dataLinks, value = TRUE),
        function(x) download.file(x, destfile = basename(x))
        )
 
 ##   For this task (downloading files) there is not much advantage to using
 ##   `sapply' instead of `for'. The main advantage is the simpler handling
-##   of return values. To see this, let's revisit the profile picture
-##   example. Our goal is to read all the .png files in our working
-##   directory. We've already seen how to do this with `sapply';
+##   of return values. To see this, let's calculate the size of each of the
+##   files we downloaded earlier. We've already seen how to do this with
+##   `sapply';
 
-imgs <- sapply(list.files(pattern = "\\.png$"),
-               read.bitmap)
+fsizes <- sapply(list.files(pattern = "\\.zip$"),
+               file.size)
 
 ##   How can we do that with a for loop? First we need to create a list to
 ##   store the restults, then as we loop through we need to assign the
-##   image data to an element of the list. It's not terrible:
+##   result to an element of the list. It's not terrible:
 
-imgs <- list()
+fsizes <- list()
 for (file in list.files(pattern = "\\.png$")) {
-  imgs[[file]] <- read.bitmap(file)
+  fsises[[file]] <- file.size(file)
 }
 
 ##   As I said, not terrible, but definitely more complicated than the
@@ -405,23 +353,22 @@ apply(ceprFileInfo, MARGIN = 2, sd)
 ## deviation from the average
 apply(ceprFileInfo, MARGIN = 1, function(x) x - fileInfoAverage) #
 
-## ◊ Back to the business at hand
-
-##   OK OK, we got sidetracked with profile pics and apply functions. Eyes
-##   on the prize; we want to import and process the files we downloaded
-##   from ceprdata.org. First we need to unzip them and check the size of
-##   each file
+##   Now that we understand iteration in R we we want to import and process
+##   the files we downloaded from ceprdata.org. First we need to unzip
+##   theme.
 
 sapply(ceprFiles, unzip)
 ceprDataFiles <- list.files(pattern = "\\.dta$")
-file.size(ceprDataFiles)/1024^2 #give size in Mb
 
-##   Finally we can read our data into R, but I leave that to you!
+##   Finally we can read our data into R, but I leave that to you! Use a
+##   for loop or `sapply' (preferred) to read in each DWS data file. You
+##   can use the `read.dta' function from the foreign package to read these
+##   data files into R.
 
 ## Exersise 1
 ## ──────────
 
-##   Read in the cepr data for years 2010 and greater.
+##   Read in all the DWS data.
 
 ##   BONUS (optional): calculate the size of each of the data sets you read
 ##   in.
@@ -450,7 +397,7 @@ length(ceprData)
 
 attributes(ceprData)
 
-##   OK, so far we know that ceprData is a list of length 4 and that it has
+##   OK, so far we know that ceprData is a list of length 6 and that it has
 ##   a names attribute. How can we find out what is inside the list?
 
 ## Indexing
@@ -475,7 +422,7 @@ length(ceprData[2:3]); mode(ceprData[2:3]); class(ceprData[2:3]); attributes(cep
 length(ceprData[[1]]); mode(ceprData[[1]]); class(ceprData[[1]])#
 
 ##   Right. So what have we learned? We've learned that indexing lists
-##   works like this: [file:images/HadleyWickham_index_list.png][3]
+##   works like this: [file:images/HadleyWickham_index_list.png][2]
 
 ##   We've also learned that `ceprData[[1]]' has mode `list' but /class/
 ##   `data.frame'. We can find out more about these data structures by
@@ -930,12 +877,9 @@ L # lists are much more flexible!
 ## Footnotes
 ## ─────────
 
-## [1] Center for Economic and Policy Research. 2015. CPS ORG Uniform
-## Extracts, Version 2.0.1. Washington, DC.
+## [1] Center for Economic and Policy Research. 2012. CPS Displaced Worker
+## Uniform Extracts, Version 1.02. Washington, DC.
 
-## [2]
-## [http://stackoverflow.com/questions/1732348/regex-match-open-tags-except-xhtml-self-contained-tags]
-
-## [3] Photo by Hadley Wickham via
+## [2] Photo by Hadley Wickham via
 ## [https://twitter.com/hadleywickham/status/643381054758363136/photo/1].
 ## Used by permission.
