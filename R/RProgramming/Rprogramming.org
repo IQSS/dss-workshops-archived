@@ -160,7 +160,7 @@ We can get all the =<a>= elements using the =html_nodes= function, and then extr
 #+end_example
 
 ** Just the data please -- regular expressions to the rescue
-If the look at the output from the previous example you might notice a problem; we've matched _all_ the URLs on the web page. Some of those (the ones that end in .zip) are the ones we want, others are menu links that we don't want. How can we separate the data links from the other links on the page?
+Looking at the output from the previous example you might notice a problem; we've matched _all_ the URLs on the web page. Some of those (the ones that end in .zip) are the ones we want, others are menu links that we don't want. How can we separate the data links from the other links on the page?
 
 One answer is to use regular expressions to idenfify the links we want. Regular expressions are useful in general (not just in R!) and it is a good idea to be familiar with at least the basics. For our present purpose it will be more than enough to use regular expression that matches strings starting with =/wp= and ending with =.zip=.
 
