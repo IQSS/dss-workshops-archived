@@ -34,23 +34,10 @@
 * Workshop overview and materials
 
 ** Workshop description
-This is an intermediate/advanced R course appropriate for those with basic knowledge of R. It is intended for those already comfortable with using R for data analysis who wish to move on to writing their own functions. To the extent possible this workshop uses real-world examples. That is to say that concepts are introduced as they are needed for a realistic analysis task. 
+This is an intermediate/advanced R course appropriate for those with basic knowledge of R. It is intended for those already comfortable with using R for data analysis who wish to move on to writing their own functions. To the extent possible this workshop uses real-world examples. That is to say that concepts are introduced as they are needed for a realistic analysis task. In the course of working through a realistic project we will lean about interacting with web services, regular expressions, iteration, functions, control flow and more. 
 
  Prerequisite: basic familiarity with R, such as acquired from an introductory R workshop.
 
-- Learning objectives:
-  - Index data objects by position, name or logical condition
-  - Understand looping and branching
-  - Write your own simple functions
-  - Debug functions
-  - Understand and use the S3 object system
-
-This workshop is free for Harvard and MIT affiliates. [[http://projects.iq.harvard.edu/rtc/workshop-registration][Click here to sign up!]]
-
-- Instructor - [[http://projects.iq.harvard.edu/rtc/people/ista-zahn][Ista Zahn]]
-- Location - Rm K018, 1737 Cambridge St (CGIS Knafel Building)
-
-For further details and registration information, please contact us at [[mailto:dataclass@help.hmdc.harvard.edu][dataclass@help.hmdc.harvard.edu]]
 
 ** Materials and setup
 
@@ -862,16 +849,77 @@ Now we can take a look at the trends in wages over the last few years.
 #+RESULTS:
 [[file:images/out.png]]
 
-* The S3 object class system
+* Writing smarter functions: Control flow and the S3 system
+Earlier we wrote a simple function to download files from the internet. Our simple function looked like this:
+#+BEGIN_SRC R :results silent
+  downloadFiles <- function(urls) {
+    for(link in urls) {
+        download.file(link, 
+                      destfile = basename(link))
+    } 
+  }
+#+END_SRC
+This was fine for our purpose at the time, but if we want to make this function more generally useful there are a number of things that we might want to do:
+- make it more flexible by providing an option to specify names
+- make it more flexible by providing an option to download only a subset of the links
+- make it work with both strings and parsed html
+
+In order to accomplish these things we need to lean a little more about function arguments, control flow, and classes and methods. Lets start with function arguments.
+
+** Function arguments
+Functions (or /closures/ if we want to be technical) in R have three componants: an /arglist/, a /body/ and an /environment/. For the moment we are only concerned with the first two. At it's most basic, an arglist consists of key-value pairs (with the value being optional). The arglist of our function so far is the single key =urls=, with no default value. 
+
+One useful thing about R function arglists is that values can be functions of other keys. We can use this to set a reasonable default for the names of the files we are downloading, while still offering the user of our function the flexibility to specify alternative names, like this: =function(urls, names = basename(urls))=. Using this arglist form will set the default value for names, but the user can override this default value if they choose by specifying the =names= argument when they call the function. However, for this to work correctly we will also have to modify the body of our function to handle the additional argument. Rather than iterating over the =urls= argument directly, we will iterate over the length of urls, so that we can iterate over =names= at the same time. With these modifications our function looks like this:
+#+BEGIN_SRC R :results silent
+  downloadFiles <- function(urls, names = basename(urls)) {
+    for(i in seq_along(urls)) { #seq_along(x) is equal to 1:(length(x))
+        download.file(urls[i], 
+                      destfile = names[i])
+    } 
+  }
+#+END_SRC
+
+** Control flow
+We can use also add an argument to allow users of this function to easily specify a subset of urls to be downloaded. Since we cannot guess ahead of time what this subset might be, we will specify =NULL= as the default value. =NULL= is a special object that means "undefined". . A first pass at this might look something like this:
+#+BEGIN_SRC R :results silent
+  downloadFiles <- function(urls, names = basename(urls), pattern=NULL) {
+    which_urls <- grep(pattern, urls)
+    urls <- urls[which_urls] # use only those urls matching pattern
+    names <- names[which_urls] # use only those names matching pattern
+    for(i in seq_along(urls)) { #seq_along(x) is equal to 1:(length(x))
+        download.file(urls[i], 
+                      destfile = names[i])
+    } 
+  }
+  downloadFiles("http://google.com")
+#+END_SRC
+but there is a problem here. We always look for pattern, even when none is specified. What we need is a way to filter the =urls= and =names= arguments, but only if the =pattern= argument is specified. For this we need an =if= statement.
+#+BEGIN_SRC R :results silent
+  downloadFiles <- function(urls, names = basename(urls), pattern=NULL) {
+    if(!is.null(pattern)) {# only run this code if pattern is not NULL
+      which_urls <- grep(pattern, urls)
+      urls <- urls[which_urls] # use only those urls matching pattern
+      names <- names[which_urls] # use only those names matching pattern
+    }
+    for(i in seq_along(urls)) { #seq_along(x) is equal to 1:(length(x))
+      download.file(urls[i], 
+                    destfile = names[i])
+    } 
+  }
+#+END_SRC
+
+By wrapping a section of our code in an =if= statement we ensure that it is only evaluated when the condition is satisfied.
 
 ** The S3 object class system 
-R has two major object systems: 
-  - Relatively informal "S3" classes 
-  - Stricter, more formal "S4" classes 
-- We will cover only the S3 system, not the S4 system
-- Basic idea: functions have different methods for different types of objects
+Our next goal is to make our function work with both text strings and with parsed html objects created by the =rvest= package. To do that we need to undersdand S3 classes and methods in R.
 
-** Object class
+R has three major object systems: 
+  - Relatively informal "S3" classes 
+  - Stricter, more formal "S4" classes
+  - New and improved "Reference class" system
+We will cover only the S3 system, not the S4 system. Basic idea: functions have different methods for different types of objects.
+
+*** Object class
 The class of an object can be retrieved and modified using the ~class()~ function:
 
 #+name: classExample
@@ -910,7 +958,7 @@ The class of an object can be retrieved and modified using the ~class()~ functio
 #+end_example
 
 
-** Function methods
+*** Function methods
 - Functions can have many methods, allowing us to have (e.g.) one plot() function that does different things depending on what is being plotted()
 - Methods can only be defined for generic functions: plot, print, summary, mean, and several others are already generic
 
@@ -939,7 +987,7 @@ see '?methods' for accessing help and source code
 #+end_example
 
 
-** Creating new function methods
+*** Creating new function methods
 To create a new method for a function that is already generic all you have to do is name your function ~function.class~
 
 #+name: fooMean
@@ -986,57 +1034,74 @@ x is not numeric
 #+end_example
 
 
-** Creating generic functions
+*** Creating generic functions
 
-S3 generics are most often used for print, summary, and plot methods, but sometimes you may want to create a new generic function
-
-#+name: createGeneric
-#+begin_src R
-  # create a generic disp() function
-  disp <- function(x, ...) {
-    UseMethod("disp")
+S3 generics are most often used for print, summary, and plot methods, but sometimes you may want to create a new generic function. Such is the case with our =downloadFiles= function. To make this function generic we need to set the body of the function to =UseMethod("downloadFiles")=, like this:
+#+BEGIN_SRC R :results silent
+  downloadFiles <- function(urls, ...) {
+    UseMethod("downloadFiles") 
   }
-  
-  # create a disp method for class "matrix"
-  disp.matrix <- function(x) {
-    print(round(x, digits=2))
-  }
-  
-  # test it out
-  disp(matrix(runif(10), ncol=2))  
-#+end_src
+#+END_SRC
+Note that the =...= allows us to pass additional arguments to the methods used for specific classes.
 
-#+RESULTS: createGeneric
+Next we need to define methods for character strings and for parsed xml documents crated by the =rvest= package. 
+
+First we define a default method to be used when =urls= is a character vector.
+#+BEGIN_SRC R :results silent
+  downloadFiles.default <- function(urls, names = basename(urls), pattern=NULL) {
+    if(!is.null(pattern)) {# only run this code if pattern is not NULL
+      which_urls <- grep(pattern, urls)
+      urls <- urls[which_urls] # use only those urls matching pattern
+      names <- names[which_urls] # use only those names matching pattern
+    }
+    for(i in seq_along(urls)) { #seq_along(x) is equal to 1:(length(x))
+      download.file(urls[i], 
+                    destfile = names[i])
+    } 
+  }
+#+END_SRC
+
+Next we define a method to be used when "urls" is a xml document.
+#+BEGIN_SRC R :results silent
+  downloadFiles.xml_document <- function(urls,  base_url, pattern=NULL) {
+    anodes <- html_nodes(urls, css = "a")
+    urls <- html_attr(anodes, name = "href")
+    urls[!grepl("^http", urls)] <- paste(base_url, urls[!grepl("^http", urls)], sep = "/")
+    downloadFiles.default(urls)
+    }
+#+END_SRC
+
+Now we can call a single function that will do the right thing when we give it a vector of urls and when we give it a parsed html page containing links. Lets try it out!
+
+#+BEGIN_SRC R
+  downloadFiles("http://tutorials.iq.harvard.edu")
+  list.files(pattern = "html")
+  downloadFiles(read_html("http://tutorials.iq.harvard.edu"),
+                base_url = "http://tutorials.iq.harvard.edu",
+                pattern = "/R/")
+  list.files(pattern = "html")
+
+#+END_SRC
+
+#+RESULTS:
 #+begin_example
-> # create a generic disp() function
-> disp <- function(x, ...) {
-+   UseMethod("disp")
-+ }
-> 
-> # create a disp method for class "matrix"
-> disp.matrix <- function(x) {
-+   print(round(x, digits=2))
-+ }
-> 
-> # test it out
-> disp(matrix(runif(10), ncol=2))  
-     [,1] [,2]
-[1,] 0.16 0.93
-[2,] 0.17 0.53
-[3,] 0.07 0.74
-[4,] 0.32 0.31
-[5,] 0.25 0.94
+> downloadFiles("http://tutorials.iq.harvard.edu")
+> list.files(pattern = "html")
+character(0)
+> downloadFiles(read_html("http://tutorials.iq.harvard.edu"),
++               base_url = "http://tutorials.iq.harvard.edu",
++               pattern = "/R/")
+> list.files(pattern = "html")
+ [1] "RCEintro.html"        "Rgraphics.html"       "Rintro.html"         
+ [4] "Rprogramming.html"    "Rstatistics.html"     "SASintro.html"       
+ [7] "StataDatMan.html"     "StataGraphics.html"   "StataIntro.html"     
+[10] "StataStatistics.html"
 > 
 #+end_example
 
-
 * Things that may surprise you
 
-** Gotcha's
-
-- There are an unfortunately large number of surprises in R programming
-- Some of these "gotcha's" are common problems in other languages, many are unique to R
-- We will only cover a few -- for a more comprehensive discussion please see http://www.burns-stat.com/pages/Tutor/R_inferno.pdf
+ There are an unfortunately large number of surprises in R programming. Some of these "gotcha's" are common problems in other languages, many are unique to R. We will only cover a few -- for a more comprehensive discussion please see http://www.burns-stat.com/pages/Tutor/R_inferno.pdf
 
 
 ** Floating point comparison
@@ -1292,13 +1357,19 @@ Vectors (and other R objects for that matter) will always have =mode= and =lengt
 #+RESULTS:
 #+begin_example
 > ls() # list objects in our workspace
- [1] "allAnchors"      "allLinks"        "ceprCodebook"    "ceprData"       
- [5] "ceprDataFiles"   "ceprDataInfo"    "ceprFileInfo"    "ceprFiles"      
- [9] "ceprInfoLength"  "char.var"        "char.var2"       "dataLinks"      
-[13] "dataLinks_06_10" "dataPage"        "disp"            "disp.matrix"    
-[17] "downloadFiles"   "fileInfoAverage" "fsizes"          "infoInfo"       
-[21] "link"            "log.var"         "mean.foo"        "num.var"        
-[25] "num.var2"        "x"              
+ [1] "allAnchors"                 "allLinks"                  
+ [3] "ceprCodebook"               "ceprData"                  
+ [5] "ceprDataFiles"              "ceprDataInfo"              
+ [7] "ceprFileInfo"               "ceprFiles"                 
+ [9] "ceprInfoLength"             "char.var"                  
+[11] "char.var2"                  "dataLinks"                 
+[13] "dataLinks_06_10"            "dataPage"                  
+[15] "downloadFiles"              "downloadFiles.default"     
+[17] "downloadFiles.xml_document" "fileInfoAverage"           
+[19] "fsizes"                     "infoInfo"                  
+[21] "link"                       "log.var"                   
+[23] "mean.foo"                   "num.var"                   
+[25] "num.var2"                   "x"                         
 > length(char.var) # how many elements in char.var?
 [1] 4
 > str(num.var2) # what is the structure of num.var2?
