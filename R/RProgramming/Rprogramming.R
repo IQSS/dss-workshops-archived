@@ -29,34 +29,13 @@
 ##   with using R for data analysis who wish to move on to writing their
 ##   own functions. To the extent possible this workshop uses real-world
 ##   examples. That is to say that concepts are introduced as they are
-##   needed for a realistic analysis task.
+##   needed for a realistic analysis task. Along the way we will learn
+##   about accessing resources on the internet, iteration, functions,
+##   control flow, the S3 class system, and more.
 
 ##   Prerequisite: basic familiarity with R, such as acquired from an
 ##   introductory R workshop.
 
-##   • Learning objectives:
-##     • Index data objects by position, name or logical condition
-##     • Understand looping and branching
-##     • Write your own simple functions
-##     • Debug functions
-##     • Understand and use the S3 object system
-
-##   This workshop is free for Harvard and MIT affiliates. [Click here to
-##   sign up!]
-
-##   • Instructor - [Ista Zahn]
-##   • Location - Rm K018, 1737 Cambridge St (CGIS Knafel Building)
-
-##   For further details and registration information, please contact us at
-##   [dataclass@help.hmdc.harvard.edu]
-
-##   [Click here to sign up!]
-##   http://projects.iq.harvard.edu/rtc/workshop-registration
-
-##   [Ista Zahn] http://projects.iq.harvard.edu/rtc/people/ista-zahn
-
-##   [dataclass@help.hmdc.harvard.edu]
-##   mailto:dataclass@help.hmdc.harvard.edu
 
 ## Materials and setup
 ## ───────────────────
