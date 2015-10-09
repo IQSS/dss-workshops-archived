@@ -30,7 +30,7 @@
 * 
 *   Laptop users: you will need a copy of Stata installed on your machine
 *
-*   Lab computer users: log in using your Athena user name and password
+*   Lab computer users: log in using the user name and password on the board to your left
 *
 *   Everyone:
 *   - Open a web broswer and download class materials from

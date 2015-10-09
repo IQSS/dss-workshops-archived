@@ -4,8 +4,6 @@
 #+EMAIL:     support@help.hmdc.harvard.edu
 #+DATE:       
 
-
-
 # NOTE: refer to the README file if you are unfamiliar with emacs or orgmode.
 
 # Customize the PROPERTY and EXCLUDE_TAGS below depending on the type
@@ -13,7 +11,7 @@
 # property and/or the EXCLUDE_TAGS, place the curser on the poperty line 
 # and press C-c C-c
 
-#+PROPERTY: exports code
+#+PROPERTY: exports both
 #+EXCLUDE_TAGS: noexport mitsetup
 
 #+SETUPFILE: ../workshopPreamble.org
@@ -28,7 +26,6 @@
 #+begin_src stata :exports none :results silent :tangle no
   set more off
 #+end_src
-
 
 * Introduction
 
@@ -53,7 +50,6 @@ Lab computer users: log in using your Athena user name and password
 Everyone: 
 - Find class materials at [[http://tutorials.iq.harvard.edu/Stata/StataIntro.zip]]
 - Download and extract to your desktop!
-
 
 ** Organization
 - Please feel free to ask questions at any point if they are relevant to the current topic (or if you are lost!)
@@ -96,7 +92,6 @@ Everyone:
   - Allows easy replication
   - Allows you to go back and re-run commands,  analyses and make modifications
 
-
 ** Stata help
 - Easiest way to get help in Stata - just type *help* followed by topic or command, e.g., 
   *help regress*
@@ -114,7 +109,7 @@ Everyone:
 ** Commenting and formatting syntax
 - Start with comment describing your Do-file and use comments throughout
 - Single line and block comments
-{{{bstart}}}
+
 #+name: commentSyntax
 #+begin_src stata :exports code :eval no
     
@@ -125,25 +120,22 @@ Everyone:
    block comment block comment block 
   */
 #+end_src
-{{{bend}}}
 
 - Use /// to break varlists over multiple lines:
-{{{bstart}}}
+
 #+name: breakLines
 #+begin_src stata :exports code :eval no
   // break commands over multible lines
   describe var1 var2 var2 ///
   var4 var5 var6  
 #+end_src
-{{{bend}}}
-
 
 ** Let's get started
 - Launch the Stata program (MP or SE, does not matter unless doing computationally intensive work)
   - Open up a new Do-file
   - Run our first Stata code!
  
-{{{bstart}}}
+
 #+name: firstSteps
 #+begin_src stata :exports code :eval no
   // change directory
@@ -153,7 +145,6 @@ Everyone:
   // Pause / resume logging with "log on" / "log off"
   // Close lot with "log close"
 #+end_src
-{{{bend}}}
 
 ** How to start every do-file
 1. Describe what the file does
@@ -163,16 +154,12 @@ Everyone:
 5. Do stuff: Data manipulation, statistics etc.
 6. Save data under new name (if making changes to dataset)
 
-
-
 * Getting data into Stata
-
 
 ** Data file commands
 - Next, we want to open our data file
 - Open/save data sets with "use" and "save":
 
-{{{bstart}}}
 #+name: getData
 #+begin_src stata
   cd dataSets
@@ -197,8 +184,6 @@ file newgss.dta saved
 
 #+end_example
 
-{{{bend}}}
-
 ** A note about path names
 - If your path has no spaces in the name (that means all directories, folders, file names, etc. can have no spaces), you can write the path as is
 - If there are spaces, you need to put your pathname in quotes
@@ -213,7 +198,7 @@ file newgss.dta saved
 
 ** What if my data is not a Stata file?
 - Import delimited text files
-{{{bstart}}}
+
 #+name: insheet
 #+begin_src stata
   /* import data from a .csv file */
@@ -231,10 +216,8 @@ insheet using gss.csv, clear
 outsheet using gss_new.csv, replace comma
 #+end_example
 
-{{{bend}}}
-
 - Import data from SAS and Excel
-{{{bstart}}}
+
 #+name: loadSAStransport
 #+begin_src stata
     /* import/export SAS xport files */
@@ -258,13 +241,11 @@ warning:  internally recorded dataset name was shortened to newFileN in
 
 file newFileName.xpt saved
 
-
 import excel using gss.xlsx, firstrow clear
 export excel newFileName.xls, replace
 file newFileName.xls saved
 #+end_example
 
-{{{bend}}}
   
 ** What if my data is from another statistical software program?
 - SPSS/PASW will allow you to save your data as a Stata file
@@ -283,7 +264,6 @@ file newFileName.xls saved
    - A SPSS file: gss.sav
    - A SAS transport file: gss.xpt
 
-
 * Statistics and graphs 
 
 ** COMMENT Frequently used commands
@@ -296,7 +276,7 @@ file newFileName.xls saved
   - browse // view the data in a spreadsheet-like window
 
 - Examples
-{{{bstart}}}
+
 #+name: commonDescriptiveCommands
 #+begin_src stata
   use gss.dta, clear
@@ -312,7 +292,6 @@ file newFileName.xls saved
 #+RESULTS: commonDescriptiveCommands
 #+begin_example
 use gss.dta, clear
-
 
 sum educ
 
@@ -347,13 +326,11 @@ respondents |
       Total |        217      100.00
 #+end_example
 
-{{{bend}}}
-
 - Remember, if you run these commands without specifying variables, Stata will produce output for every variable
 
 ** Basic graphing commands
 - Univariate distribution(s) using *hist*
-{{{bstart}}}
+
 #+name: histograms
 #+begin_src stata
   /* Histograms */
@@ -372,10 +349,8 @@ hist age, normal
 (bin=14, start=18, width=4.2142857)
 #+end_example
 
-{{{bend}}}
-
 - View bivariate distributions with scatterplots
-{{{bstart}}}
+
 #+name: bivariateDisplay
 #+begin_src stata
    /* scatterplots */
@@ -390,13 +365,10 @@ twoway (scatter educ age)
 graph matrix educ age inc
 #+end_example
 
-{{{bend}}}
-
 ** The "by" command
 - Sometimes, you'd like to generate  output based on different categories of a grouping variable
 - The "by" command does just this
 
-{{{bstart}}}
 #+name: byprocess
 #+begin_src stata
   /* By Processing */
@@ -408,7 +380,6 @@ graph matrix educ age inc
 
 #+RESULTS: byprocess
 #+begin_example
-
 
 bysort sex: tab happy
 
@@ -474,9 +445,6 @@ bysort marital: sum educ
         educ |        60        13.7    3.004516          6         20
 #+end_example
 
-{{{bend}}}
-
-
 ** Exercise 2: Descriptive statistics
 1. Use the dataset, gss.dta 
 2. Examine a few selected variables using the describe, sum and codebook commands
@@ -486,7 +454,6 @@ bysort marital: sum educ
 6. Summarize the variable, "happy" for married individuals only
 7. Generate a histogram of income
 8. Generate a second histogram of income, but this time, split income based on participants sex and ask Stata to print the normal curve on your histograms
-
 
 * Basic data management
 
@@ -498,7 +465,7 @@ bysort marital: sum educ
 
 ** Variable and value labels
 - Variable labels
-{{{bstart}}}
+
 #+name: variableLabels
 #+begin_src stata
   /* Labelling and renaming */
@@ -515,12 +482,9 @@ bysort marital: sum educ
 #+RESULTS: variableLabels
 #+begin_example
 
-
 label var inc "household income"
 
-
 rename educ education
-
 
 lookfor household
 
@@ -530,11 +494,8 @@ variable name   type    format     label      variable label
 inc             byte    %8.0g      rincom06   household income
 #+end_example
 
-{{{bend}}}
-
 - Value labels are a two step process: define a value label, then assign defined label to variable(s) 
 
-{{{bstart}}}
 #+name: valueLabels
 #+begin_src stata 
   /*define a value label for sex */
@@ -550,8 +511,6 @@ label define mySexLabel 1 "Male" 2 "Female"
 
 label val sex  mySexLabel
 #+end_example
-
-{{{bend}}}
 
 ** Exercise 3: Variable labels and value labels
 1. Open the data set *gss.csv* 
@@ -596,7 +555,7 @@ label val sex  mySexLabel
 
 ** Generating and replacing variables
 - Create new variables using "gen"
-{{{bstart}}}
+
 #+name: genNewVars
 #+begin_src stata
   // create a new variable named mc_inc
@@ -607,15 +566,11 @@ label val sex  mySexLabel
 #+RESULTS: genNewVars
 #+begin_example
 
-
 gen mc_inc = inc - 15.37
 #+end_example
 
-{{{bend}}}
-
 - Sometimes useful to start with blank values and fill them in based on values of existing variables
 
-{{{bstart}}}
 #+name: replaceExample
 #+begin_src stata
   /* the 'generate and replace' strategy */ 
@@ -635,7 +590,6 @@ gen mc_inc = inc - 15.37
 #+RESULTS: replaceExample
 #+begin_example
 
-
 gen age_wealth = .
 (217 missing values generated)
 
@@ -648,20 +602,16 @@ replace age_wealth=3 if age>30 & inc < 10
 replace age_wealth=4 if age>30 & inc > 10
 (134 real changes made)
 
-
 gen young=0
 replace young=1 if age_wealth==1 | age_wealth==2
 (45 real changes made)
 #+end_example
-
-{{{bend}}}
 
 ** Exercise 4: Manipulating variables
 1. Use the dataset, gss.dta
 2. Generate a new variable, age2 equal to age squared
 3. Generate a new "high income" variable that will take on a value of "1" if a person has an income value greater than "15" and "0" otherwise
 4. Generate a new divorced/separated dummy variable that will take on a value of "1" if a person is either divorced or separated and "0" otherwise
-
 
 * Wrap-up
 
@@ -673,7 +623,6 @@ replace young=1 if age_wealth==1 | age_wealth==2
 
 - [[http://tinyurl.com/6h3cxnz]]
 
-
 ** Additional resources
 
 - IQSS workshops: http://projects.iq.harvard.edu/rtc/filter_by/workshops
@@ -682,7 +631,7 @@ replace young=1 if age_wealth==1 | age_wealth==2
 
 - The RCE
   - Research Computing Enviroment (RCE) service available to Harvard & MIT users
-  - [[www.iq.harvard.edu/research_computing]]
+  - [[http://www.iq.harvard.edu/research_computing]]
   - Wonderful resource for organizing data, running analyses efficiently
   - Creates a centralized place to store data and run analysis
   - Supplies persistent desktop environment accessible from any computer with an internet connection
