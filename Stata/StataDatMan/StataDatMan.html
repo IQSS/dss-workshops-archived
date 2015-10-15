@@ -3,22 +3,29 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<title>Data Management in Stata</title>
-<!-- 2015-04-30 Thu 09:37 -->
+<!-- 2015-10-15 Thu 16:27 -->
 <meta  http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta  name="viewport" content="width=device-width, initial-scale=1" />
+<title>Data Management in Stata</title>
 <meta  name="generator" content="Org-mode" />
 <style type="text/css">
  <!--/*--><![CDATA[/*><!--*/
-  .title  { text-align: center; }
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
   .todo   { font-family: monospace; color: red; }
-  .done   { color: green; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
   .tag    { background-color: #eee; font-family: monospace;
             padding: 2px; font-size: 80%; font-weight: normal; }
   .timestamp { color: #bebebe; }
   .timestamp-kwd { color: #5f9ea0; }
-  .right  { margin-left: auto; margin-right: 0px;  text-align: right; }
-  .left   { margin-left: 0px;  margin-right: auto; text-align: left; }
-  .center { margin-left: auto; margin-right: auto; text-align: center; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
   .underline { text-decoration: underline; }
   #postamble p, #preamble p { font-size: 90%; margin: .2em; }
   p.verse { margin-left: 3%; }
@@ -57,15 +64,14 @@
   caption.t-above { caption-side: top; }
   caption.t-bottom { caption-side: bottom; }
   td, th { vertical-align:top;  }
-  th.right  { text-align: center;  }
-  th.left   { text-align: center;   }
-  th.center { text-align: center; }
-  td.right  { text-align: right;  }
-  td.left   { text-align: left;   }
-  td.center { text-align: center; }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
   dt { font-weight: bold; }
-  .footpara:nth-child(2) { display: inline; }
-  .footpara { display: block; }
+  .footpara { display: inline; }
   .footdef  { margin-bottom: 1em; }
   .figure { padding: 1em; }
   .figure p { text-align: center; }
@@ -91,6 +97,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="http://tutorials.iq.harvard.edu/org-html-themes/styles/readtheorg/js/readtheorg.js"></script>
+<a href="https://github.com/izahn/workshops"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/652c5b9acfaddf3a9c326fa6bde407b87f7be0f4/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6f72616e67655f6666373630302e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_orange_ff7600.png"></a>
 <script type="text/javascript">
 /*
 @licstart  The following is the entire license notice for the
@@ -145,180 +152,190 @@ for the JavaScript code in this tag.
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#sec-1">Introduction</a>
+<li><a href="#orgheadline1">Introduction</a>
 <ul>
-<li><a href="#sec-1-1">Materials and Setup</a></li>
-<li><a href="#sec-1-2">Workshop Description</a></li>
-<li><a href="#sec-1-3">Organization</a></li>
-<li><a href="#sec-1-4">Opening Files in Stata</a></li>
+<li><a href="#orgheadline2">Materials and Setup</a></li>
+<li><a href="#orgheadline3">Workshop Description</a></li>
+<li><a href="#orgheadline4">Organization</a></li>
+<li><a href="#orgheadline5">Opening Files in Stata</a></li>
 </ul>
 </li>
-<li><a href="#sec-2">Generating and replacing variables</a>
+<li><a href="#orgheadline11">Generating and replacing variables</a>
 <ul>
-<li><a href="#sec-2-1">Basic Data Manipulation Commands</a></li>
-<li><a href="#sec-2-2">Generate and Replace</a></li>
-<li><a href="#sec-2-3">Recode</a></li>
-<li><a href="#sec-2-4">egen</a></li>
-<li><a href="#sec-2-5">Exercise 1: Generate, Replace, Recode &amp; Egen</a></li>
+<li><a href="#orgheadline6">Basic Data Manipulation Commands</a></li>
+<li><a href="#orgheadline7">Generate and Replace</a></li>
+<li><a href="#orgheadline8">Recode</a></li>
+<li><a href="#orgheadline9">egen</a></li>
+<li><a href="#orgheadline10">Exercise 1: Generate, Replace, Recode &amp; Egen</a></li>
 </ul>
 </li>
-<li><a href="#sec-3">By processing</a>
+<li><a href="#orgheadline14">By processing</a>
 <ul>
-<li><a href="#sec-3-1">The "bysort" Command</a></li>
-<li><a href="#sec-3-2">By prefix vs. by options</a></li>
+<li><a href="#orgheadline12">The "bysort" Command</a></li>
+<li><a href="#orgheadline13">By prefix vs. by options</a></li>
 </ul>
 </li>
-<li><a href="#sec-4">Missing values</a>
+<li><a href="#orgheadline17">Missing values</a>
 <ul>
-<li><a href="#sec-4-1">Missing Values</a></li>
-<li><a href="#sec-4-2">Bulk Conversion to Missing Values</a></li>
+<li><a href="#orgheadline15">Missing Values</a></li>
+<li><a href="#orgheadline16">Bulk Conversion to Missing Values</a></li>
 </ul>
 </li>
-<li><a href="#sec-5">Variable types</a>
+<li><a href="#orgheadline23">Variable types</a>
 <ul>
-<li><a href="#sec-5-1">Variable Types</a></li>
-<li><a href="#sec-5-2">Converting to and from Strings</a></li>
-<li><a href="#sec-5-3">Converting Strings to Date/Time</a></li>
-<li><a href="#sec-5-4">Formatting Numbers as Dates</a></li>
-<li><a href="#sec-5-5">Exercise 2: Missing Values, String Conversion, and by Processing</a></li>
+<li><a href="#orgheadline18">Variable Types</a></li>
+<li><a href="#orgheadline19">Converting to and from Strings</a></li>
+<li><a href="#orgheadline20">Converting Strings to Date/Time</a></li>
+<li><a href="#orgheadline21">Formatting Numbers as Dates</a></li>
+<li><a href="#orgheadline22">Exercise 2: Missing Values, String Conversion, and by Processing</a></li>
 </ul>
 </li>
-<li><a href="#sec-6">Merging, appending, and joining</a>
+<li><a href="#orgheadline28">Merging, appending, and joining</a>
 <ul>
-<li><a href="#sec-6-1">Merging Datasets</a></li>
-<li><a href="#sec-6-2">Merging Datasets</a></li>
-<li><a href="#sec-6-3">Merge Options</a></li>
-<li><a href="#sec-6-4">Appending Datasets</a></li>
+<li><a href="#orgheadline24">Appending Datasets</a></li>
+<li><a href="#orgheadline25">Merging Datasets</a></li>
+<li><a href="#orgheadline26">Merge Options</a></li>
+<li><a href="#orgheadline27">Many-to-many merges</a></li>
 </ul>
 </li>
-<li><a href="#sec-7">Creating summarized data sets</a>
+<li><a href="#orgheadline32">Creating summarized data sets</a>
 <ul>
-<li><a href="#sec-7-1">Collapse</a></li>
-<li><a href="#sec-7-2">Collapse Example</a></li>
-<li><a href="#sec-7-3">Exercise 3: Merge, Append, and Collapse</a></li>
+<li><a href="#orgheadline29">Collapse</a></li>
+<li><a href="#orgheadline30">Collapse Example</a></li>
+<li><a href="#orgheadline31">Exercise 3: Merge, Append, and Collapse</a></li>
 </ul>
 </li>
-<li><a href="#sec-8">Wrap-up</a>
+<li><a href="#orgheadline35">Wrap-up</a>
 <ul>
-<li><a href="#sec-8-1">Help Us Make This Workshop Better</a></li>
-<li><a href="#sec-8-2">Additional resources</a></li>
+<li><a href="#orgheadline33">Help Us Make This Workshop Better</a></li>
+<li><a href="#orgheadline34">Additional resources</a></li>
 </ul>
 </li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-sec-1" class="outline-2">
-<h2 id="sec-1">Introduction</h2>
-<div class="outline-text-2" id="text-1">
+<div id="outline-container-orgheadline1" class="outline-2">
+<h2 id="orgheadline1">Introduction</h2>
+<div class="outline-text-2" id="text-orgheadline1">
 </div>
 
-<div id="outline-container-sec-1-1" class="outline-3">
-<h3 id="sec-1-1">Materials and Setup</h3>
-<div class="outline-text-3" id="text-1-1">
+<div id="outline-container-orgheadline2" class="outline-3">
+<h3 id="orgheadline2">Materials and Setup</h3>
+<div class="outline-text-3" id="text-orgheadline2">
 <ul class="org-ul">
 <li>Lab computer log in:
 <ul class="org-ul">
-<li>USERNAME: dataclass
-</li>
-<li>PASSWORD: on the board to your left
-</li>
-</ul>
-</li>
+<li>USERNAME: dataclass</li>
+<li>PASSWORD: on the board to your left</li>
+</ul></li>
 <li>Workshop materials:
 <ul class="org-ul">
-<li>Download class materials from <a href="http://tutorials.iq.harvard.edu/Stata/StataDatMan.zip">http://tutorials.iq.harvard.edu/Stata/StataDatMan.zip</a>
-</li>
-<li>Open a file browser, right-click on <code>StataDatMan.zip</code>, select the <code>WinZip</code> menu and select <code>Extract to Here</code>.
-</li>
-</ul>
-</li>
+<li>Download class materials from <a href="http://tutorials.iq.harvard.edu/Stata/StataDatMan.zip">http://tutorials.iq.harvard.edu/Stata/StataDatMan.zip</a></li>
+<li>Open a file browser, right-click on <code>StataDatMan.zip</code>, select the <code>WinZip</code> menu and select <code>Extract to Here</code>.</li>
+</ul></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-sec-1-2" class="outline-3">
-<h3 id="sec-1-2">Workshop Description</h3>
-<div class="outline-text-3" id="text-1-2">
+<div id="outline-container-orgheadline3" class="outline-3">
+<h3 id="orgheadline3">Workshop Description</h3>
+<div class="outline-text-3" id="text-orgheadline3">
 <ul class="org-ul">
-<li>This is an Introduction to data management in Stata
-</li>
-<li>Assumes basic knowledge of Stata
-</li>
-<li>Not appropriate for people already well familiar with Stata
-</li>
-<li>If you are catching on before the rest of the class, experiment with command features described in help files
-</li>
+<li>This is an Introduction to data management in Stata</li>
+<li>Assumes basic knowledge of Stata</li>
+<li>Not appropriate for people already well familiar with Stata</li>
+<li>If you are catching on before the rest of the class, experiment with command features described in help files</li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-sec-1-3" class="outline-3">
-<h3 id="sec-1-3">Organization</h3>
-<div class="outline-text-3" id="text-1-3">
+<div id="outline-container-orgheadline4" class="outline-3">
+<h3 id="orgheadline4">Organization</h3>
+<div class="outline-text-3" id="text-orgheadline4">
 <ul class="org-ul">
-<li>Please feel free to ask questions at any point if they are relevant to the current topic (or if you are lost!)
-</li>
-<li>There will be a Q&amp;A after class for more specific, personalized questions
-</li>
-<li>Collaboration with your neighbors is encouraged
-</li>
-<li>If you are using a laptop, you will need to adjust paths accordingly
-</li>
+<li>Please feel free to ask questions at any point if they are relevant to the current topic (or if you are lost!)</li>
+<li>There will be a Q&amp;A after class for more specific, personalized questions</li>
+<li>Collaboration with your neighbors is encouraged</li>
+<li>If you are using a laptop, you will need to adjust paths accordingly</li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-sec-1-4" class="outline-3">
-<h3 id="sec-1-4">Opening Files in Stata</h3>
-<div class="outline-text-3" id="text-1-4">
+<div id="outline-container-orgheadline5" class="outline-3">
+<h3 id="orgheadline5">Opening Files in Stata</h3>
+<div class="outline-text-3" id="text-orgheadline5">
 <ul class="org-ul">
 <li>Look at bottom left hand corner of Stata screen
 <ul class="org-ul">
-<li>This is the directory Stata is currently reading from
-</li>
-</ul>
-</li>
-<li>Files are located in the StataDatMan folder in your home directory
-</li>
-<li>Start by telling Stata where to look for these
-</li>
+<li>This is the directory Stata is currently reading from</li>
+</ul></li>
+<li>Files are located in the StataDatMan folder in your home directory</li>
+<li>Start by telling Stata where to look for these</li>
 </ul>
 <div class="org-src-container">
 
-<pre class="src src-stata" id="changeDirCommand"><span style="color: #8D8D84; font-style: italic;">// change directory</span>
-<span style="color: #0000FF;">cd</span> <span style="color: #008000;">"C:/Users/dataclass/Desktop/StataDatMan"</span>
+<pre class="src src-stata" id="orgsrcblock1"><span style="color: #2aa1ae;">// change directory</span>
+<span style="color: #237fbf; font-weight: bold;">cd</span> <span style="color: #2d9574;">"~/tutorials/Stata/StataDatMan"</span>
 
-<span style="color: #8D8D84; font-style: italic;">// Use dir to see what is in the directory:</span>
+<span style="color: #2aa1ae;">// Use dir to see what is in the directory:</span>
 dir
 dir dataSets
 
-<span style="color: #8D8D84; font-style: italic;">// use the gss data set</span>
-<span style="color: #0000FF;">use</span> dataSets/gss.dta
+<span style="color: #2aa1ae;">// use the gss data set</span>
+<span style="color: #237fbf; font-weight: bold;">use</span> dataSets/gss.dta
+</pre>
+</div>
+
+<pre class="example">
+set more off
+
+cd "~/tutorials/Stata/StataDatMan"
+/nfs/www/edu-harvard-iq-tutorials/Stata/StataDatMan
+
+
+dir
+
+total 100
+drwxrwsr-x. 2 apache tutorwww  4096 Oct  9 08:44 dataSets/
+-rwxrwxr-x. 1 izahn  tutorwww  1302 Oct  9 08:44 Exercises.do*
+drwxrwsr-x. 2 apache tutorwww  4096 Oct  9 08:44 images/
+drwxrwsr-x. 4 apache tutorwww  4096 Oct  9 08:44 StataDatMan/
+-rwxrwxr-x. 1 izahn  tutorwww 17446 Oct  9 08:44 StataDatMan.do*
+-rwxrwxr-x. 1 izahn  tutorwww 38153 Oct  9 08:44 StataDatMan.html*
+-rwxrwxr-x. 1 izahn  tutorwww 20463 Oct  9 08:44 StataDatMan.org*
+dir dataSets
+
+total 2644
+-rwxrwxr-x. 1 izahn tutorwww 275705 Oct  9 08:44 gss1.dta*
+-rwxrwxr-x. 1 izahn tutorwww 263324 Oct  9 08:44 gss2.dta*
+-rwxrwxr-x. 1 izahn tutorwww 532880 Oct  9 08:44 gssAddObserve.dta*
+-rwxrwxr-x. 1 izahn tutorwww 527005 Oct  9 08:44 gssAppend.dta*
+-rwxrwxr-x. 1 izahn tutorwww 527005 Oct  9 08:44 gsscompare1.dta*
+-rwxrwxr-x. 1 izahn tutorwww 538755 Oct  9 08:44 gss.dta*
+-rwxrwxr-x. 1 izahn tutorwww   1139 Oct  9 08:44 marital.dta*
+
+
+use dataSets/gss.dta
 </pre>
 </div>
 </div>
 </div>
-</div>
 
-<div id="outline-container-sec-2" class="outline-2">
-<h2 id="sec-2">Generating and replacing variables</h2>
-<div class="outline-text-2" id="text-2">
-</div><div id="outline-container-sec-2-1" class="outline-3">
-<h3 id="sec-2-1">Basic Data Manipulation Commands</h3>
-<div class="outline-text-3" id="text-2-1">
+<div id="outline-container-orgheadline11" class="outline-2">
+<h2 id="orgheadline11">Generating and replacing variables</h2>
+<div class="outline-text-2" id="text-orgheadline11">
+</div><div id="outline-container-orgheadline6" class="outline-3">
+<h3 id="orgheadline6">Basic Data Manipulation Commands</h3>
+<div class="outline-text-3" id="text-orgheadline6">
 <p>
 Basic commands you'll use for generating new variables or recoding existing variables:
 </p>
 <ul class="org-ul">
-<li>gen 
-</li>
-<li>egen
-</li>
-<li>replace
-</li>
-<li>recode
-</li>
+<li>gen</li>
+<li>egen</li>
+<li>replace</li>
+<li>recode</li>
 </ul>
 <p>
 Many different means of accomplishing the same thing in Stata &#x2013; find what is comfortable (and easy) for you!
@@ -326,29 +343,21 @@ Many different means of accomplishing the same thing in Stata &#x2013; find what
 </div>
 </div>
 
-<div id="outline-container-sec-2-2" class="outline-3">
-<h3 id="sec-2-2">Generate and Replace</h3>
-<div class="outline-text-3" id="text-2-2">
+<div id="outline-container-orgheadline7" class="outline-3">
+<h3 id="orgheadline7">Generate and Replace</h3>
+<div class="outline-text-3" id="text-orgheadline7">
 <p>
 The <code>replace</code> command is often used with logic statements. Available logical operators include the following:
 </p>
 <dl class="org-dl">
-<dt> == </dt><dd>equal to (status quo)
-</dd>
-<dt> != </dt><dd>not equal to
-</dd>
-<dt> &gt; </dt><dd>greater than
-</dd>
-<dt> &lt; </dt><dd>less than
-</dd>
-<dt> &gt;= </dt><dd>greater than or equal to
-</dd>
-<dt> &lt;= </dt><dd>less than or equal to 
-</dd>
-<dt> &amp; </dt><dd>and
-</dd>
-<dt> | </dt><dd>or
-</dd>
+<dt>==</dt><dd>equal to (status quo)</dd>
+<dt>!=</dt><dd>not equal to</dd>
+<dt>&gt;</dt><dd>greater than</dd>
+<dt>&lt;</dt><dd>less than</dd>
+<dt>&gt;=</dt><dd>greater than or equal to</dd>
+<dt>&lt;=</dt><dd>less than or equal to</dd>
+<dt>&amp;</dt><dd>and</dd>
+<dt>|</dt><dd>or</dd>
 </dl>
 
 <p>
@@ -357,85 +366,130 @@ For example:
 
 <div class="org-src-container">
 
-<pre class="src src-stata" id="genAndreplaceCommands"><span style="color: #8D8D84; font-style: italic;">// create "hapnew" variable</span>
-<span style="color: #0000FF;">gen</span> hapnew = . <span style="color: #8D8D84; font-style: italic;">//set to missing</span>
-<span style="color: #8D8D84; font-style: italic;">//set to 0 if happy equals 1</span>
-<span style="color: #0000FF;">replace</span> hapnew=0 if happy==1 
-<span style="color: #8D8D84; font-style: italic;">//set to 1 if happy both and hapmar are greater than 3</span>
-<span style="color: #0000FF;">replace</span> hapnew=1 if happy&gt;3 &amp; hapmar&gt;3
-tab hapnew <span style="color: #8D8D84; font-style: italic;">// tabulate the new variable</span>
+<pre class="src src-stata" id="orgsrcblock2"><span style="color: #2aa1ae;">//create "hapnew" variable</span>
+<span style="color: #237fbf; font-weight: bold;">gen</span> hapnew = .
+<span style="color: #2aa1ae;">//set to 0 if happy equals 1</span>
+<span style="color: #237fbf; font-weight: bold;">replace</span> hapnew=0 if happy==1 
+<span style="color: #2aa1ae;">//set to 1 if happy both and hapmar are greater than 3</span>
+<span style="color: #237fbf; font-weight: bold;">replace</span> hapnew=1 if happy&gt;3 &amp; hapmar&gt;3 
+<span style="color: #2aa1ae;">// tabulate the new </span>
+tab hapnew
+</pre>
+</div>
+
+<pre class="example">
+gen hapnew = .
+(1,419 missing values generated)
+
+replace hapnew=0 if happy==1 
+(435 real changes made)
+
+replace hapnew=1 if happy&gt;3 &amp; hapmar&gt;3 
+(4 real changes made)
+
+tab hapnew
+
+     hapnew |      Freq.     Percent        Cum.
+------------+-----------------------------------
+          0 |        435       99.09       99.09
+          1 |          4        0.91      100.00
+------------+-----------------------------------
+      Total |        439      100.00
 </pre>
 </div>
 </div>
-</div>
 
-<div id="outline-container-sec-2-3" class="outline-3">
-<h3 id="sec-2-3">Recode</h3>
-<div class="outline-text-3" id="text-2-3">
+<div id="outline-container-orgheadline8" class="outline-3">
+<h3 id="orgheadline8">Recode</h3>
+<div class="outline-text-3" id="text-orgheadline8">
 <p>
 The <code>recode</code> command is basically generate and replace combined. You can recode an existing variable OR use recode to create a new variable (via the <code>gen</code> option).
 </p>
 
 <div class="org-src-container">
 
-<pre class="src src-stata" id="recodeCommand"><span style="color: #8D8D84; font-style: italic;">// recode the wrkstat variable </span>
-<span style="color: #0000FF;">recode</span> wrkstat (1=8) (2=7) (3=6) (4=5) (5=4) (6=3) (7=2) (8=1)
-<span style="color: #8D8D84; font-style: italic;">// recode wrkstat into a new variable named wrkstat2</span>
-<span style="color: #0000FF;">recode</span> wrkstat (1=8), <span style="color: #0000FF;">gen</span>(wrkstat2)
-<span style="color: #8D8D84; font-style: italic;">// tabulate workstat</span>
+<pre class="src src-stata" id="orgsrcblock3"><span style="color: #2aa1ae;">// recode the wrkstat variable </span>
+<span style="color: #237fbf; font-weight: bold;">recode</span> wrkstat <span style="color: #2f96dc;">(</span>1=8<span style="color: #2f96dc;">)</span> <span style="color: #2f96dc;">(</span>2=7<span style="color: #2f96dc;">)</span> <span style="color: #2f96dc;">(</span>3=6<span style="color: #2f96dc;">)</span> <span style="color: #2f96dc;">(</span>4=5<span style="color: #2f96dc;">)</span> <span style="color: #2f96dc;">(</span>5=4<span style="color: #2f96dc;">)</span> <span style="color: #2f96dc;">(</span>6=3<span style="color: #2f96dc;">)</span> <span style="color: #2f96dc;">(</span>7=2<span style="color: #2f96dc;">)</span> <span style="color: #2f96dc;">(</span>8=1<span style="color: #2f96dc;">)</span>
+<span style="color: #2aa1ae;">// recode wrkstat into a new variable named wrkstat2</span>
+<span style="color: #237fbf; font-weight: bold;">recode</span> wrkstat <span style="color: #2f96dc;">(</span>1=8<span style="color: #2f96dc;">)</span>, <span style="color: #237fbf; font-weight: bold;">gen</span><span style="color: #2f96dc;">(</span>wrkstat2<span style="color: #2f96dc;">)</span>
+<span style="color: #2aa1ae;">// tabulate workstat</span>
 tab wrkstat
 </pre>
 </div>
-<ul class="org-ul">
-<li>The table below illustrates common forms of recoding
-</li>
-</ul>
+
+<pre class="example">
+recode wrkstat (1=8) (2=7) (3=6) (4=5) (5=4) (6=3) (7=2) (8=1)
+(wrkstat: 1419 changes made)
+
+recode wrkstat (1=8), gen(wrkstat2)
+(32 differences between wrkstat and wrkstat2)
+
+tab wrkstat
+
+      LABOR FRCE |
+          STATUS |      Freq.     Percent        Cum.
+-----------------+-----------------------------------
+WORKING FULLTIME |         32        2.26        2.26
+WORKING PARTTIME |        155       10.92       13.18
+TEMP NOT WORKING |         34        2.40       15.57
+UNEMPL, LAID OFF |        214       15.08       30.66
+         RETIRED |         29        2.04       32.70
+          SCHOOL |         35        2.47       35.17
+   KEEPING HOUSE |        146       10.29       45.45
+           OTHER |        774       54.55      100.00
+-----------------+-----------------------------------
+           Total |      1,419      100.00
+</pre>
+
+<p>
+The table below illustrates common forms of recoding
+</p>
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
 
 <colgroup>
-<col  class="left" />
+<col  class="org-left" />
 
-<col  class="left" />
+<col  class="org-left" />
 
-<col  class="left" />
+<col  class="org-left" />
 </colgroup>
 <thead>
 <tr>
-<th scope="col" class="left">Rule</th>
-<th scope="col" class="left">Example</th>
-<th scope="col" class="left">Meaning</th>
+<th scope="col" class="org-left">Rule</th>
+<th scope="col" class="org-left">Example</th>
+<th scope="col" class="org-left">Meaning</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td class="left">#=#</td>
-<td class="left">3=1</td>
-<td class="left">3 recoded to 1</td>
+<td class="org-left">#=#</td>
+<td class="org-left">3=1</td>
+<td class="org-left">3 recoded to 1</td>
 </tr>
 
 <tr>
-<td class="left">##=#</td>
-<td class="left">2. =9</td>
-<td class="left">2 and . recoded to 9</td>
+<td class="org-left">##=#</td>
+<td class="org-left">2. =9</td>
+<td class="org-left">2 and . recoded to 9</td>
 </tr>
 
 <tr>
-<td class="left">#/# = #</td>
-<td class="left">1/5=4</td>
-<td class="left">1 through 5 recoded to 4</td>
+<td class="org-left">#/# = #</td>
+<td class="org-left">1/5=4</td>
+<td class="org-left">1 through 5 recoded to 4</td>
 </tr>
 
 <tr>
-<td class="left">nonmissing=#</td>
-<td class="left">nonmiss=8</td>
-<td class="left">nonmissing recoded to 8</td>
+<td class="org-left">nonmissing=#</td>
+<td class="org-left">nonmiss=8</td>
+<td class="org-left">nonmissing recoded to 8</td>
 </tr>
 
 <tr>
-<td class="left">missing=#</td>
-<td class="left">miss=9</td>
-<td class="left">missing recoded to 9</td>
+<td class="org-left">missing=#</td>
+<td class="org-left">miss=9</td>
+<td class="org-left">missing recoded to 9</td>
 </tr>
 </tbody>
 </table>
@@ -443,9 +497,9 @@ tab wrkstat
 </div>
 
 
-<div id="outline-container-sec-2-4" class="outline-3">
-<h3 id="sec-2-4">egen</h3>
-<div class="outline-text-3" id="text-2-4">
+<div id="outline-container-orgheadline9" class="outline-3">
+<h3 id="orgheadline9">egen</h3>
+<div class="outline-text-3" id="text-orgheadline9">
 <p>
 The <code>egen</code> command ("extensions" to the <code>gen</code> command) provides convenient methods for performing many common data manipulation tasks.
 </p>
@@ -455,85 +509,177 @@ For example, we can use <code>egen</code> to create a new variable that counts t
 </p>
 <div class="org-src-container">
 
-<pre class="src src-stata" id="egeCommand"><span style="color: #8D8D84; font-style: italic;">// count number of yes on use comp email and net </span>
-<span style="color: #0000FF;">egen</span> compuser= anycount(usecomp usemail usenet), values(1)
+<pre class="src src-stata" id="orgsrcblock4"><span style="color: #2aa1ae;">// count number of yes on use comp email and net </span>
+<span style="color: #237fbf; font-weight: bold;">egen</span> compuser= anycount<span style="color: #2f96dc;">(</span>usecomp usemail usenet<span style="color: #2f96dc;">)</span>, values<span style="color: #2f96dc;">(</span>1<span style="color: #2f96dc;">)</span>
 tab compuser
 </pre>
 </div>
+
+<pre class="example">
+egen compuser= anycount(usecomp usemail usenet), values(1)
+tab compuser
+
+    usecomp |
+    usemail |
+usenet == 1 |      Freq.     Percent        Cum.
+------------+-----------------------------------
+          0 |        623       43.90       43.90
+          1 |        142       10.01       53.91
+          2 |         78        5.50       59.41
+          3 |        576       40.59      100.00
+------------+-----------------------------------
+      Total |      1,419      100.00
+</pre>
+
 <p>
 Here are some additional examples of <code>egen</code> in action:
 </p>
 <div class="org-src-container">
 
-<pre class="src src-stata" id="egeCommand2"><span style="color: #8D8D84; font-style: italic;">// assess how much missing data each participant has:</span>
-<span style="color: #0000FF;">egen</span> countmiss = rowmiss(age-wifeft)
-<span style="color: #D0372D;">codebook</span> countmiss
-<span style="color: #8D8D84; font-style: italic;">// compare values on multiple variables</span>
-<span style="color: #0000FF;">egen</span> ftdiff=<span style="color: #D0372D;">diff</span>(wkftwife wkfthusb)
-<span style="color: #D0372D;">codebook</span> ftdiff
+<pre class="src src-stata" id="orgsrcblock5"><span style="color: #2aa1ae;">// assess how much missing data each participant has:</span>
+<span style="color: #237fbf; font-weight: bold;">egen</span> countmiss = rowmiss<span style="color: #2f96dc;">(</span>age-wifeft<span style="color: #2f96dc;">)</span>
+<span style="color: #a45bad;">codebook</span> countmiss
+<span style="color: #2aa1ae;">// compare values on multiple variables</span>
+<span style="color: #237fbf; font-weight: bold;">egen</span> ftdiff=<span style="color: #a45bad;">diff</span><span style="color: #2f96dc;">(</span>wkftwife wkfthusb<span style="color: #2f96dc;">)</span>
+<span style="color: #a45bad;">codebook</span> ftdiff
 </pre>
 </div>
+
+<pre class="example">
+egen countmiss = rowmiss(age-wifeft)
+codebook countmiss
+
+-------------------------------------------------------------------------------
+countmiss                                                           (unlabeled)
+-------------------------------------------------------------------------------
+
+                  type:  numeric (float)
+
+                 range:  [0,7]                        units:  1
+         unique values:  6                        missing .:  0/1,419
+
+            tabulation:  Freq.  Value
+                           296  0
+                           215  1
+                           113  2
+                             7  3
+                           782  6
+                             6  7
+
+egen ftdiff=diff(wkftwife wkfthusb)
+codebook ftdiff
+
+-------------------------------------------------------------------------------
+ftdiff                                                   diff wkftwife wkfthusb
+-------------------------------------------------------------------------------
+
+                  type:  numeric (float)
+
+                 range:  [0,1]                        units:  1
+         unique values:  2                        missing .:  0/1,419
+
+            tabulation:  Freq.  Value
+                         1,169  0
+                           250  1
+</pre>
+
+
 <p>
 You will need to refer to the documentation to discover what else <code>egen</code> can do: type "help egen" in Stata to get a complete list of functions.
 </p>
 </div>
 </div>
 
-<div id="outline-container-sec-2-5" class="outline-3">
-<h3 id="sec-2-5">Exercise 1: Generate, Replace, Recode &amp; Egen</h3>
-<div class="outline-text-3" id="text-2-5">
+<div id="outline-container-orgheadline10" class="outline-3">
+<h3 id="orgheadline10">Exercise 1: Generate, Replace, Recode &amp; Egen</h3>
+<div class="outline-text-3" id="text-orgheadline10">
 <p>
 Open the gss.dta data.
 </p>
 <ol class="org-ol">
-<li>Generate a new variable that represents the squared value of age.
-</li>
-<li>Generate a new variable equal to "1" if income is greater than "19".
-</li>
-<li>Create a new variable that counts the number of missing responses for each respondent.
-</li>
+<li>Generate a new variable that represents the squared value of age.</li>
+<li>Generate a new variable equal to "1" if income is greater than "19".</li>
+<li>Create a new variable that counts the number of missing responses for each respondent.</li>
 </ol>
 </div>
 </div>
 </div>
 
 
-<div id="outline-container-sec-3" class="outline-2">
-<h2 id="sec-3">By processing</h2>
-<div class="outline-text-2" id="text-3">
-</div><div id="outline-container-sec-3-1" class="outline-3">
-<h3 id="sec-3-1">The "bysort" Command</h3>
-<div class="outline-text-3" id="text-3-1">
+<div id="outline-container-orgheadline14" class="outline-2">
+<h2 id="orgheadline14">By processing</h2>
+<div class="outline-text-2" id="text-orgheadline14">
+</div><div id="outline-container-orgheadline12" class="outline-3">
+<h3 id="orgheadline12">The "bysort" Command</h3>
+<div class="outline-text-3" id="text-orgheadline12">
 <p>
 Sometimes, you'd like to create variables based on different categories of a single variable. For example, say you want to look at happiness based on whether an individual is male or female. The "bysort" prefix does just this:
 </p>
 
 <div class="org-src-container">
 
-<pre class="src src-stata" id="bycommand"><span style="color: #8D8D84; font-style: italic;">// tabulate happy separately for male and female </span>
-bysort sex: <span style="color: #D0372D;">tab</span> happy
-<span style="color: #8D8D84; font-style: italic;">// generate summary statistics using bysort </span>
-bysort state: <span style="color: #0000FF;">egen</span> stateincome = <span style="color: #D0372D;">mean</span>(income)
-bysort degree: <span style="color: #0000FF;">egen</span> degreeincome = <span style="color: #D0372D;">mean</span>(income)
-bysort marital: <span style="color: #0000FF;">egen</span> marincomesd = <span style="color: #D0372D;">sd</span>(income)
+<pre class="src src-stata" id="orgsrcblock6"><span style="color: #2aa1ae;">// tabulate happy separately for male and female </span>
+bysort sex: <span style="color: #a45bad;">tab</span> happy
+<span style="color: #2aa1ae;">// generate summary statistics using bysort </span>
+bysort state: <span style="color: #237fbf; font-weight: bold;">egen</span> stateincome = <span style="color: #a45bad;">mean</span><span style="color: #2f96dc;">(</span>income<span style="color: #2f96dc;">)</span>
+bysort degree: <span style="color: #237fbf; font-weight: bold;">egen</span> degreeincome = <span style="color: #a45bad;">mean</span><span style="color: #2f96dc;">(</span>income<span style="color: #2f96dc;">)</span>
+bysort marital: <span style="color: #237fbf; font-weight: bold;">egen</span> marincomesd = <span style="color: #a45bad;">sd</span><span style="color: #2f96dc;">(</span>income<span style="color: #2f96dc;">)</span>
+</pre>
+</div>
+
+<pre class="example">
+bysort sex: tab happy
+
+-------------------------------------------------------------------------------
+-&gt; sex = Male
+
+      GENERAL |
+    HAPPINESS |      Freq.     Percent        Cum.
+--------------+-----------------------------------
+   VERY HAPPY |        189       30.39       30.39
+ PRETTY HAPPY |        350       56.27       86.66
+NOT TOO HAPPY |         73       11.74       98.39
+           NA |         10        1.61      100.00
+--------------+-----------------------------------
+        Total |        622      100.00
+
+-------------------------------------------------------------------------------
+-&gt; sex = Female
+
+      GENERAL |
+    HAPPINESS |      Freq.     Percent        Cum.
+--------------+-----------------------------------
+   VERY HAPPY |        246       30.87       30.87
+ PRETTY HAPPY |        447       56.09       86.95
+NOT TOO HAPPY |         84       10.54       97.49
+           DK |          1        0.13       97.62
+           NA |         19        2.38      100.00
+--------------+-----------------------------------
+        Total |        797      100.00
+
+bysort state: egen stateincome = mean(income)
+variable state not found
+r(111);
+bysort degree: egen degreeincome = mean(income)
+bysort marital: egen marincomesd = sd(income)
 </pre>
 </div>
 </div>
-</div>
 
-<div id="outline-container-sec-3-2" class="outline-3">
-<h3 id="sec-3-2">By prefix vs. by options</h3>
-<div class="outline-text-3" id="text-3-2">
+<div id="outline-container-orgheadline13" class="outline-3">
+<h3 id="orgheadline13">By prefix vs. by options</h3>
+<div class="outline-text-3" id="text-orgheadline13">
 <p>
 Some commands won't work with by prefix, but instead have a <code>by</code> option:
 </p>
 
 <div class="org-src-container">
 
-<pre class="src src-stata" id="byhistoption"><span style="color: #8D8D84; font-style: italic;">// generate separate histograms for female and male </span>
-hist nethrs, <span style="color: #6434A3;">by</span>(sex)
+<pre class="src src-stata" id="orgsrcblock7"><span style="color: #2aa1ae;">// generate separate histograms for female and male </span>
+hist nethrs, <span style="color: #ce537a; font-weight: bold;">by</span><span style="color: #2f96dc;">(</span>sex<span style="color: #2f96dc;">)</span>
 </pre>
 </div>
+
 
 <div class="figure">
 <p><img src="images/histBysex.png" alt="histBysex.png" />
@@ -544,23 +690,20 @@ hist nethrs, <span style="color: #6434A3;">by</span>(sex)
 </div>
 
 
-<div id="outline-container-sec-4" class="outline-2">
-<h2 id="sec-4">Missing values</h2>
-<div class="outline-text-2" id="text-4">
-</div><div id="outline-container-sec-4-1" class="outline-3">
-<h3 id="sec-4-1">Missing Values</h3>
-<div class="outline-text-3" id="text-4-1">
+<div id="outline-container-orgheadline17" class="outline-2">
+<h2 id="orgheadline17">Missing values</h2>
+<div class="outline-text-2" id="text-orgheadline17">
+</div><div id="outline-container-orgheadline15" class="outline-3">
+<h3 id="orgheadline15">Missing Values</h3>
+<div class="outline-text-3" id="text-orgheadline15">
 <p>
 You always need to consider how missing values are coded when recoding variables.
 </p>
 
 <ul class="org-ul">
-<li>Stata's symbol for a missing value is "."
-</li>
-<li>Stata interprets "." as a large value
-</li>
-<li>Easy to make mistakes!
-</li>
+<li>Stata's symbol for a missing value is "."</li>
+<li>Stata interprets "." as a large value</li>
+<li>Easy to make mistakes!</li>
 </ul>
 <p>
 To identify highly educated women, we might use the command:
@@ -568,68 +711,99 @@ To identify highly educated women, we might use the command:
 
 <div class="org-src-container">
 
-<pre class="src src-stata" id="genrepMissing"><span style="color: #8D8D84; font-style: italic;">// generate and replace without considering missing values</span>
-<span style="color: #0000FF;">gen</span> hi_<span style="color: #0000FF;">ed</span>=0
-<span style="color: #0000FF;">replace</span> hi_<span style="color: #0000FF;">ed</span>=1 if wifeduc&gt;15
-<span style="color: #8D8D84; font-style: italic;">// What happens to our missing values?</span>
-tab hi_<span style="color: #0000FF;">ed</span>, mi nola
+<pre class="src src-stata" id="orgsrcblock8"><span style="color: #2aa1ae;">// generate and replace without considering missing values</span>
+<span style="color: #237fbf; font-weight: bold;">gen</span> hi_<span style="color: #237fbf; font-weight: bold;">ed</span>=0
+<span style="color: #237fbf; font-weight: bold;">replace</span> hi_<span style="color: #237fbf; font-weight: bold;">ed</span>=1 if wifeduc&gt;15
+<span style="color: #2aa1ae;">// What happens to our missing values?</span>
+tab hi_<span style="color: #237fbf; font-weight: bold;">ed</span>, mi nola
 </pre>
 </div>
+
+<pre class="example">
+gen hi_ed=0
+replace hi_ed=1 if wifeduc&gt;15
+(944 real changes made)
+
+tab hi_ed, mi nola
+
+      hi_ed |      Freq.     Percent        Cum.
+------------+-----------------------------------
+          0 |        475       33.47       33.47
+          1 |        944       66.53      100.00
+------------+-----------------------------------
+      Total |      1,419      100.00
+</pre>
+
 <p>
 It looks like around 66% have higher education, but look closer:
 </p>
 
 <div class="org-src-container">
 
-<pre class="src src-stata" id="genrepMissing2"><span style="color: #8D8D84; font-style: italic;">// gen hi_ed2, but don't set a value if wifeduc is missing</span>
-<span style="color: #0000FF;">gen</span> hi_ed2 = 0 if wifeduc != . 
-<span style="color: #8D8D84; font-style: italic;">// only replace non-missing</span>
-<span style="color: #0000FF;">replace</span> hi_ed2=1 if wifeduc &gt;15 &amp; wifeduc !=. 
-tab hi_ed2, mi <span style="color: #8D8D84; font-style: italic;">//check to see that missingness is preserved</span>
+<pre class="src src-stata" id="orgsrcblock9"><span style="color: #2aa1ae;">// gen hi_ed2, but don't set a value if wifeduc is missing</span>
+<span style="color: #237fbf; font-weight: bold;">gen</span> hi_ed2 = 0 if wifeduc != . 
+<span style="color: #2aa1ae;">// only replace non-missing</span>
+<span style="color: #237fbf; font-weight: bold;">replace</span> hi_ed2=1 if wifeduc &gt;15 &amp; wifeduc !=. 
+<span style="color: #2aa1ae;">//check to see that missingness is preserved</span>
+tab hi_ed2, mi
 </pre>
 </div>
+
+<pre class="example">
+gen hi_ed2 = 0 if wifeduc != . 
+(797 missing values generated)
+
+replace hi_ed2=1 if wifeduc &gt;15 &amp; wifeduc !=. 
+(147 real changes made)
+
+ |        797       56.17      100.00
+------------+-----------------------------------
+      Total |      1,419      100.00
+</pre>
+
 <p>
 The correct value is 10%. Moral of the story? Be careful with missing values and remember that Stata considers missing values to be large!
 </p>
 </div>
 </div>
 
-<div id="outline-container-sec-4-2" class="outline-3">
-<h3 id="sec-4-2">Bulk Conversion to Missing Values</h3>
-<div class="outline-text-3" id="text-4-2">
+<div id="outline-container-orgheadline16" class="outline-3">
+<h3 id="orgheadline16">Bulk Conversion to Missing Values</h3>
+<div class="outline-text-3" id="text-orgheadline16">
 <p>
 Often the data collection/generating procedure will have used some other value besides "." to represent missing values. The <code>mvdecode</code> command will convert all these values to missing. For example:
 </p>
 
 <div class="org-src-container">
 
-<pre class="src src-stata" id="mvdecodeCommande"><span style="color: #0000FF;">mvdecode</span> _all, mv(999)
+<pre class="src src-stata" id="orgsrcblock10"><span style="color: #237fbf; font-weight: bold;">mvdecode</span> _all, mv<span style="color: #2f96dc;">(</span>999<span style="color: #2f96dc;">)</span>
 </pre>
 </div>
+
+<pre class="example">
+mvdecode _all, mv(999)
+</pre>
+
 <ul class="org-ul">
-<li>The "\<sub>all</sub>" command tells Stata to do this to all variables
-</li>
+<li>The "\<sub>all</sub>" command tells Stata to do this to all variables</li>
 <li>Use this command carefully!
 <ul class="org-ul">
 <li>If you have any variables where "999" is a legitimate value,
-Stata is going to recode it to missing
-</li>
+Stata is going to recode it to missing</li>
 <li>As an alternative, you could list var names separately rather
-than using "\<sub>all</sub>"
-</li>
-</ul>
-</li>
+than using "\<sub>all</sub>"</li>
+</ul></li>
 </ul>
 </div>
 </div>
 </div>
 
-<div id="outline-container-sec-5" class="outline-2">
-<h2 id="sec-5">Variable types</h2>
-<div class="outline-text-2" id="text-5">
-</div><div id="outline-container-sec-5-1" class="outline-3">
-<h3 id="sec-5-1">Variable Types</h3>
-<div class="outline-text-3" id="text-5-1">
+<div id="outline-container-orgheadline23" class="outline-2">
+<h2 id="orgheadline23">Variable types</h2>
+<div class="outline-text-2" id="text-orgheadline23">
+</div><div id="outline-container-orgheadline18" class="outline-3">
+<h3 id="orgheadline18">Variable Types</h3>
+<div class="outline-text-3" id="text-orgheadline18">
 <p>
 Stata uses two main types of variables: String and Numeric. To be able to perform any mathematical operations, your variables need to be in a numeric format. Stata can store numbers with differing levels of precision, as described in the table below.
 </p>
@@ -638,109 +812,122 @@ Stata uses two main types of variables: String and Numeric. To be able to perfor
 
 
 <colgroup>
-<col  class="left" />
+<col  class="org-left" />
 
-<col  class="left" />
+<col  class="org-left" />
 
-<col  class="left" />
+<col  class="org-left" />
 
-<col  class="left" />
+<col  class="org-left" />
 
-<col  class="right" />
+<col  class="org-right" />
 </colgroup>
 <thead>
 <tr>
-<th scope="col" class="left">type</th>
-<th scope="col" class="left">Minimum</th>
-<th scope="col" class="left">Maximum</th>
-<th scope="col" class="left">being 0</th>
-<th scope="col" class="right">bytes</th>
+<th scope="col" class="org-left">type</th>
+<th scope="col" class="org-left">Minimum</th>
+<th scope="col" class="org-left">Maximum</th>
+<th scope="col" class="org-left">being 0</th>
+<th scope="col" class="org-right">bytes</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td class="left">byte</td>
-<td class="left">-127</td>
-<td class="left">100</td>
-<td class="left">+/-1</td>
-<td class="right">1</td>
+<td class="org-left">byte</td>
+<td class="org-left">-127</td>
+<td class="org-left">100</td>
+<td class="org-left">+/-1</td>
+<td class="org-right">1</td>
 </tr>
 
 <tr>
-<td class="left">int</td>
-<td class="left">-32,767</td>
-<td class="left">32,740</td>
-<td class="left">+/-1</td>
-<td class="right">2</td>
+<td class="org-left">int</td>
+<td class="org-left">-32,767</td>
+<td class="org-left">32,740</td>
+<td class="org-left">+/-1</td>
+<td class="org-right">2</td>
 </tr>
 
 <tr>
-<td class="left">long</td>
-<td class="left">-2,147,483,647</td>
-<td class="left">2,147,483,620</td>
-<td class="left">+/-1</td>
-<td class="right">4</td>
+<td class="org-left">long</td>
+<td class="org-left">-2,147,483,647</td>
+<td class="org-left">2,147,483,620</td>
+<td class="org-left">+/-1</td>
+<td class="org-right">4</td>
 </tr>
 
 <tr>
-<td class="left">float</td>
-<td class="left">-1.70141173319*10<sup>38</sup></td>
-<td class="left">1.70141173319*10<sup>38</sup></td>
-<td class="left">+/-10<sup>-38</sup></td>
-<td class="right">4</td>
+<td class="org-left">float</td>
+<td class="org-left">-1.70141173319*10<sup>38</sup></td>
+<td class="org-left">1.70141173319*10<sup>38</sup></td>
+<td class="org-left">+/-10<sup>-38</sup></td>
+<td class="org-right">4</td>
 </tr>
 
 <tr>
-<td class="left">double</td>
-<td class="left">-8.9884656743*10<sup>307</sup></td>
-<td class="left">8.9884656743*10<sup>307</sup></td>
-<td class="left">+/-10<sup>-323</sup></td>
-<td class="right">8</td>
+<td class="org-left">double</td>
+<td class="org-left">-8.9884656743*10<sup>307</sup></td>
+<td class="org-left">8.9884656743*10<sup>307</sup></td>
+<td class="org-left">+/-10<sup>-323</sup></td>
+<td class="org-right">8</td>
 </tr>
 </tbody>
 </table>
 <ul class="org-ul">
-<li>Precision for float is 3.795x10<sup>-8</sup>.
-</li>
-<li>Precision for double is 1.414x10<sup>-16</sup>.
-</li>
+<li>Precision for float is 3.795x10<sup>-8</sup>.</li>
+<li>Precision for double is 1.414x10<sup>-16</sup>.</li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-sec-5-2" class="outline-3">
-<h3 id="sec-5-2">Converting to and from Strings</h3>
-<div class="outline-text-3" id="text-5-2">
+<div id="outline-container-orgheadline19" class="outline-3">
+<h3 id="orgheadline19">Converting to and from Strings</h3>
+<div class="outline-text-3" id="text-orgheadline19">
 <p>
 Stata provides several ways to convert to and from strings. You can use <code>tostring</code> and <code>destring</code> to convert from one type to the other:
 </p>
 
 <div class="org-src-container">
 
-<pre class="src src-stata" id="destringCommand"><span style="color: #8D8D84; font-style: italic;">// convert degree to a string</span>
-tostring degree, <span style="color: #0000FF;">gen</span>(degree_s)
-<span style="color: #8D8D84; font-style: italic;">// and back to a number</span>
-destring degree_s, <span style="color: #0000FF;">gen</span>(degree_n)
+<pre class="src src-stata" id="orgsrcblock11"><span style="color: #2aa1ae;">// convert degree to a string</span>
+tostring degree, <span style="color: #237fbf; font-weight: bold;">gen</span><span style="color: #2f96dc;">(</span>degree_s<span style="color: #2f96dc;">)</span>
+<span style="color: #2aa1ae;">// and back to a number</span>
+destring degree_s, <span style="color: #237fbf; font-weight: bold;">gen</span><span style="color: #2f96dc;">(</span>degree_n<span style="color: #2f96dc;">)</span>
 </pre>
 </div>
+
+<pre class="example">
+tostring degree, gen(degree_s)
+degree_s generated as str1
+
+destring degree_s, gen(degree_n)
+degree_s has all characters numeric; degree_n generated as byte
+</pre>
+
 <p>
 Use <code>decode</code> and <code>encode</code> to convert to/from variable labels:
 </p>
 
 <div class="org-src-container">
 
-<pre class="src src-stata" id="destringCommand2"><span style="color: #8D8D84; font-style: italic;">// convert degree to a descriptive string</span>
-<span style="color: #0000FF;">decode</span> degree, <span style="color: #0000FF;">gen</span>(degree_s2)
-<span style="color: #8D8D84; font-style: italic;">// and back to a number with labels</span>
-<span style="color: #0000FF;">encode</span> degree_s2, <span style="color: #0000FF;">gen</span>(degree_n2)
+<pre class="src src-stata" id="orgsrcblock12"><span style="color: #2aa1ae;">// convert degree to a descriptive string</span>
+<span style="color: #237fbf; font-weight: bold;">decode</span> degree, <span style="color: #237fbf; font-weight: bold;">gen</span><span style="color: #2f96dc;">(</span>degree_s2<span style="color: #2f96dc;">)</span>
+<span style="color: #2aa1ae;">// and back to a number with labels</span>
+<span style="color: #237fbf; font-weight: bold;">encode</span> degree_s2, <span style="color: #237fbf; font-weight: bold;">gen</span><span style="color: #2f96dc;">(</span>degree_n2<span style="color: #2f96dc;">)</span>
+</pre>
+</div>
+
+<pre class="example">
+decode degree, gen(degree_s2)
+
+encode degree_s2, gen(degree_n2)
 </pre>
 </div>
 </div>
-</div>
 
-<div id="outline-container-sec-5-3" class="outline-3">
-<h3 id="sec-5-3">Converting Strings to Date/Time</h3>
-<div class="outline-text-3" id="text-5-3">
+<div id="outline-container-orgheadline20" class="outline-3">
+<h3 id="orgheadline20">Converting Strings to Date/Time</h3>
+<div class="outline-text-3" id="text-orgheadline20">
 <p>
 Often date/time variables start out as strings &#x2013; You'll need to convert them to numbers using one of the conversion functions listed below.
 </p>
@@ -749,54 +936,54 @@ Often date/time variables start out as strings &#x2013; You'll need to convert t
 
 
 <colgroup>
-<col  class="left" />
+<col  class="org-left" />
 
-<col  class="left" />
+<col  class="org-left" />
 
-<col  class="left" />
+<col  class="org-left" />
 </colgroup>
 <thead>
 <tr>
-<th scope="col" class="left">Format</th>
-<th scope="col" class="left">Meaning</th>
-<th scope="col" class="left">String-to-numeric conversion function</th>
+<th scope="col" class="org-left">Format</th>
+<th scope="col" class="org-left">Meaning</th>
+<th scope="col" class="org-left">String-to-numeric conversion function</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td class="left">%tc</td>
-<td class="left">milliseconds</td>
-<td class="left">clock(string, mask)</td>
+<td class="org-left">%tc</td>
+<td class="org-left">milliseconds</td>
+<td class="org-left">clock(string, mask)</td>
 </tr>
 
 <tr>
-<td class="left">%td</td>
-<td class="left">days</td>
-<td class="left">date(string, mask)</td>
+<td class="org-left">%td</td>
+<td class="org-left">days</td>
+<td class="org-left">date(string, mask)</td>
 </tr>
 
 <tr>
-<td class="left">%tw</td>
-<td class="left">weeks</td>
-<td class="left">weekly(string, mask)</td>
+<td class="org-left">%tw</td>
+<td class="org-left">weeks</td>
+<td class="org-left">weekly(string, mask)</td>
 </tr>
 
 <tr>
-<td class="left">%tm</td>
-<td class="left">months</td>
-<td class="left">monthly(string, mask)</td>
+<td class="org-left">%tm</td>
+<td class="org-left">months</td>
+<td class="org-left">monthly(string, mask)</td>
 </tr>
 
 <tr>
-<td class="left">%tq</td>
-<td class="left">quarters</td>
-<td class="left">quarterly(string, mask)</td>
+<td class="org-left">%tq</td>
+<td class="org-left">quarters</td>
+<td class="org-left">quarterly(string, mask)</td>
 </tr>
 
 <tr>
-<td class="left">%ty</td>
-<td class="left">years</td>
-<td class="left">yearly(string, mask)</td>
+<td class="org-left">%ty</td>
+<td class="org-left">years</td>
+<td class="org-left">yearly(string, mask)</td>
 </tr>
 </tbody>
 </table>
@@ -807,291 +994,604 @@ Date/time variables are stored as the number of units elapsed since 01jan1960 00
 
 <div class="org-src-container">
 
-<pre class="src src-stata" id="dateFormateCommand"><span style="color: #8D8D84; font-style: italic;">// create string variable and convert to date</span>
-<span style="color: #0000FF;">gen</span> date = <span style="color: #008000;">"November 9 2020"</span>
-<span style="color: #0000FF;">gen</span> date1 = <span style="color: #D0372D;">date</span>(date, <span style="color: #008000;">"MDY"</span>)
+<pre class="src src-stata" id="orgsrcblock13"><span style="color: #2aa1ae;">// create string variable and convert to date</span>
+<span style="color: #237fbf; font-weight: bold;">gen</span> date = <span style="color: #2d9574;">"November 9 2020"</span>
+<span style="color: #237fbf; font-weight: bold;">gen</span> date1 = <span style="color: #a45bad;">date</span><span style="color: #2f96dc;">(</span>date, <span style="color: #2d9574;">"MDY"</span><span style="color: #2f96dc;">)</span>
 list date1 in 1/5
 </pre>
 </div>
+
+<pre class="example">
+gen date = "November 9 2020"
+gen date1 = date(date, "MDY")
+list date1 in 1/5
+
+     +-------+
+     | date1 |
+     |-------|
+  1. | 22228 |
+  2. | 22228 |
+  3. | 22228 |
+  4. | 22228 |
+  5. | 22228 |
+     +-------+
+</pre>
 </div>
 </div>
 
-<div id="outline-container-sec-5-4" class="outline-3">
-<h3 id="sec-5-4">Formatting Numbers as Dates</h3>
-<div class="outline-text-3" id="text-5-4">
+<div id="outline-container-orgheadline21" class="outline-3">
+<h3 id="orgheadline21">Formatting Numbers as Dates</h3>
+<div class="outline-text-3" id="text-orgheadline21">
 <p>
 Once you have converted the string to a number you can format it for display. You can simply accept the defaults used by your formatting string or provide details to customize it.
 </p>
 
 <div class="org-src-container">
 
-<pre class="src src-stata" id="dateFormateCommand2"><span style="color: #8D8D84; font-style: italic;">// format so humans can read the date</span>
-<span style="color: #0000FF;">format</span> date1 %d
+<pre class="src src-stata" id="orgsrcblock14"><span style="color: #2aa1ae;">// format so humans can read the date</span>
+<span style="color: #237fbf; font-weight: bold;">format</span> date1 %d
 list date1 in 1/5
-<span style="color: #8D8D84; font-style: italic;">// format with detail</span>
-<span style="color: #0000FF;">format</span> date1 %tdMonth_dd,_CCYY
+<span style="color: #2aa1ae;">// format with detail</span>
+<span style="color: #237fbf; font-weight: bold;">format</span> date1 %tdMonth_dd,_CCYY
 list date1 in 1/5
 </pre>
 </div>
+
+<pre class="example">
+format date1 %d
+list date1 in 1/5
+
+     +-----------+
+     |     date1 |
+     |-----------|
+  1. | 09nov2020 |
+  2. | 09nov2020 |
+  3. | 09nov2020 |
+  4. | 09nov2020 |
+  5. | 09nov2020 |
+     +-----------+
+
+format date1 %tdMonth_dd,_CCYY
+list date1 in 1/5
+
+     +------------------+
+     |            date1 |
+     |------------------|
+  1. | November 9, 2020 |
+  2. | November 9, 2020 |
+  3. | November 9, 2020 |
+  4. | November 9, 2020 |
+  5. | November 9, 2020 |
+     +------------------+
+</pre>
 </div>
 </div>
 
-<div id="outline-container-sec-5-5" class="outline-3">
-<h3 id="sec-5-5">Exercise 2: Missing Values, String Conversion, and by Processing</h3>
-<div class="outline-text-3" id="text-5-5">
+<div id="outline-container-orgheadline22" class="outline-3">
+<h3 id="orgheadline22">Exercise 2: Missing Values, String Conversion, and by Processing</h3>
+<div class="outline-text-3" id="text-orgheadline22">
 <ol class="org-ol">
-<li>Recode values "99" and "98" on the variable, "hrs1"  as "missing."
-</li>
-<li>Recode the marital variable into a "string" variable and then back into a numeric variable.
-</li>
-<li>Create a new variable that associates each individual with the average number of hours worked among individuals with matching educational degrees (see the last "by" example for inspiration).
-</li>
+<li>Recode values "99" and "98" on the variable, "hrs1"  as "missing."</li>
+<li>Recode the marital variable into a "string" variable and then back into a numeric variable.</li>
+<li>Create a new variable that associates each individual with the average number of hours worked among individuals with matching educational degrees (see the last "by" example for inspiration).</li>
 </ol>
 </div>
 </div>
 </div>
 
-<div id="outline-container-sec-6" class="outline-2">
-<h2 id="sec-6">Merging, appending, and joining</h2>
-<div class="outline-text-2" id="text-6">
-</div><div id="outline-container-sec-6-1" class="outline-3">
-<h3 id="sec-6-1">Merging Datasets</h3>
-<div class="outline-text-3" id="text-6-1">
-<p>
-You can <code>merge</code> variables from a second dataset to the dataset you're currently working with.
-</p>
-<ul class="org-ul">
-<li>Current active dataset = master dataset
-</li>
-<li>Dataset you'd like to merge with master = using dataset
-</li>
-</ul>
-
-<p>
-There are different ways that you might be interested in merging data:
-</p>
-<ul class="org-ul">
-<li>Two datasets with same participant pool, one row per participant (1:1)
-</li>
-<li>A dataset with one participant per row with a dataset with multiple rows per participant (1:many or many:1)
-</li>
-</ul>
-</div>
-</div>
-
-<div id="outline-container-sec-6-2" class="outline-3">
-<h3 id="sec-6-2">Merging Datasets</h3>
-<div class="outline-text-3" id="text-6-2">
-<p>
-Before you begin:
-</p>
-<ul class="org-ul">
-<li>Identify the "ID" that you will use to merge your two datasets
-</li>
-<li>Determine which variables you'd like to merge
-</li>
-<li>In Stata &gt;= 11, data does NOT have to be sorted
-</li>
-<li>Variable types must match across datasets (there is a "force" option to get around this, but not recommended)
-</li>
-</ul>
-
-<p>
-Example: Let's say that we had one dataset with individual students (master) and another  dataset with information about the students' schools called "school.dta". We would merge these as follows:
-</p>
-
-<div class="org-src-container">
-
-<pre class="src src-stata" id="mergeCommand"><span style="color: #8D8D84; font-style: italic;">// Not run: conceptual example only. Merge school and student data</span>
-<span style="color: #0000FF;">merge</span> m:1 schoolID <span style="color: #D0372D;">using</span> school.dta
-</pre>
-</div>
-</div>
-</div>
-
-<div id="outline-container-sec-6-3" class="outline-3">
-<h3 id="sec-6-3">Merge Options</h3>
-<div class="outline-text-3" id="text-6-3">
-<p>
-There are several options that provide more fine-grain control over how the merge is carried out:
-</p>
-<ul class="org-ul">
-<li>In standard merge, the master dataset is the authority and WON'T CHANGE
-</li>
-<li>If your master dataset has missing data and some of those values are not missing in your using dataset, specify "update" &#x2013; this will fill in missing data in master
-</li>
-<li>If you want data from your using dataset to overwrite that in your master, specify "replace update" &#x2013; this will replace master data with using data UNLESS the value is missing in the using dataset
-</li>
-</ul>
-</div>
-</div>
-
-
-<div id="outline-container-sec-6-4" class="outline-3">
-<h3 id="sec-6-4">Appending Datasets</h3>
-<div class="outline-text-3" id="text-6-4">
+<div id="outline-container-orgheadline28" class="outline-2">
+<h2 id="orgheadline28">Merging, appending, and joining</h2>
+<div class="outline-text-2" id="text-orgheadline28">
+</div><div id="outline-container-orgheadline24" class="outline-3">
+<h3 id="orgheadline24">Appending Datasets</h3>
+<div class="outline-text-3" id="text-orgheadline24">
 <p>
 Sometimes you have observations in two  different datasets, or you'd like to add  observations to an existing dataset. In this case you can use the <code>append</code> command to add observations to the end of the observations in the master dataset. For example:
 </p>
 
 <div class="org-src-container">
 
-<pre class="src src-stata" id="appendCommand"><span style="color: #8D8D84; font-style: italic;">// Not run: conceptual example. add rows of data from dataset2 </span>
-<span style="color: #0000FF;">append</span> <span style="color: #D0372D;">using</span> dataset2
+<pre class="src src-stata" id="orgsrcblock15"><span style="color: #237fbf; font-weight: bold;">clear</span>
+<span style="color: #2aa1ae;">// from the append help file</span>
+webuse even
+list
+webuse odd
+list
+<span style="color: #2aa1ae;">// Append even data to the end of the odd data</span>
+<span style="color: #237fbf; font-weight: bold;">append</span> <span style="color: #a45bad;">using</span> <span style="color: #2d9574;">"http://www.stata-press.com/data/r14/even"</span>
+list
+<span style="color: #237fbf; font-weight: bold;">clear</span>
 </pre>
 </div>
+
+<pre class="example">
+clear
+
+webuse even
+(6th through 8th even numbers)
+list
+
+     +---------------+
+     | number   even |
+     |---------------|
+  1. |      6     12 |
+  2. |      7     14 |
+  3. |      8     16 |
+     +---------------+
+webuse odd
+(First five odd numbers)
+list
+
+     +--------------+
+     | number   odd |
+     |--------------|
+  1. |      1     1 |
+  2. |      2     3 |
+  3. |      3     5 |
+  4. |      4     7 |
+  5. |      5     9 |
+     +--------------+
+
+append using "http://www.stata-press.com/data/r14/even"
+list
+
+     +---------------------+
+     | number   odd   even |
+     |---------------------|
+  1. |      1     1      . |
+  2. |      2     3      . |
+  3. |      3     5      . |
+  4. |      4     7      . |
+  5. |      5     9      . |
+     |---------------------|
+  6. |      6     .     12 |
+  7. |      7     .     14 |
+  8. |      8     .     16 |
+     +---------------------+
+clear
+</pre>
+
 <p>
 To keep track of where observations came from, use the <code>generate</code> option as shown below:
 </p>
 
 <div class="org-src-container">
 
-<pre class="src src-stata" id="appendOptions"><span style="color: #8D8D84; font-style: italic;">// Not run: conceptual example.</span>
-<span style="color: #0000FF;">append</span> <span style="color: #D0372D;">using</span> dataset1, <span style="color: #0000FF;">generate</span>(observesource)
+<pre class="src src-stata" id="orgsrcblock16">webuse odd
+<span style="color: #237fbf; font-weight: bold;">append</span> <span style="color: #a45bad;">using</span> <span style="color: #2d9574;">"http://www.stata-press.com/data/r14/even"</span>, <span style="color: #237fbf; font-weight: bold;">generate</span><span style="color: #2f96dc;">(</span>observesource<span style="color: #2f96dc;">)</span>
+list
+<span style="color: #237fbf; font-weight: bold;">clear</span>
 </pre>
 </div>
+
+<pre class="example">
+webuse odd
+(First five odd numbers)
+ ce)
+list
+
+     +--------------------------------+
+     | number   odd   observ~e   even |
+     |--------------------------------|
+  1. |      1     1          0      . |
+  2. |      2     3          0      . |
+  3. |      3     5          0      . |
+  4. |      4     7          0      . |
+  5. |      5     9          0      . |
+     |--------------------------------|
+  6. |      6     .          1     12 |
+  7. |      7     .          1     14 |
+  8. |      8     .          1     16 |
+     +--------------------------------+
+clear
+</pre>
+
+
 <p>
 There is a "force" option will allow for data type mismatches, but again this is not recommended.
+</p>
+
+<p>
+Remember, <code>append</code> is for adding observations (i.e., rows) from a second data set.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline25" class="outline-3">
+<h3 id="orgheadline25">Merging Datasets</h3>
+<div class="outline-text-3" id="text-orgheadline25">
+<p>
+You can <code>merge</code> variables from a second dataset to the dataset you're currently working with.
+</p>
+<ul class="org-ul">
+<li>Current active dataset = master dataset</li>
+<li>Dataset you'd like to merge with master = using dataset</li>
+</ul>
+
+<p>
+There are different ways that you might be interested in merging data:
+</p>
+<ul class="org-ul">
+<li>Two datasets with same participant pool, one row per participant (1:1)</li>
+<li>A dataset with one participant per row with a dataset with multiple rows per participant (1:many or many:1)</li>
+</ul>
+
+<p>
+Before you begin:
+</p>
+<ul class="org-ul">
+<li>Identify the "ID" that you will use to merge your two datasets</li>
+<li>Determine which variables you'd like to merge</li>
+<li>In Stata &gt;= 11, data does NOT have to be sorted</li>
+<li>Variable types must match across datasets (there is a "force" option to get around this, but not recommended)</li>
+</ul>
+
+<div class="org-src-container">
+
+<pre class="src src-stata" id="orgsrcblock17"><span style="color: #2aa1ae;">// Adapted from the merge help page</span>
+webuse autosize 
+list
+webuse autoexpense
+list
+
+webuse autosize
+<span style="color: #237fbf; font-weight: bold;">merge</span> 1:1 make <span style="color: #a45bad;">using</span> <span style="color: #2d9574;">"http://www.stata-press.com/data/r14/autoexpense"</span>
+list
+<span style="color: #237fbf; font-weight: bold;">clear</span>
+
+<span style="color: #2aa1ae;">// keep only the matches (AKA "inner join")</span>
+webuse autosize, <span style="color: #237fbf; font-weight: bold;">clear</span>
+<span style="color: #237fbf; font-weight: bold;">merge</span> 1:1 make <span style="color: #a45bad;">using</span> <span style="color: #2d9574;">"http://www.stata-press.com/data/r14/autoexpense"</span>, <span style="color: #237fbf; font-weight: bold;">keep</span><span style="color: #2f96dc;">(</span>match<span style="color: #2f96dc;">)</span> nogen
+list
+<span style="color: #237fbf; font-weight: bold;">clear</span>
+</pre>
+</div>
+
+<pre class="example">
+webuse autosize 
+(1978 Automobile Data)
+list
+
+     +------------------------------------+
+     | make               weight   length |
+     |------------------------------------|
+  1. | Toyota Celica       2,410      174 |
+  2. | BMW 320i            2,650      177 |
+  3. | Cad. Seville        4,290      204 |
+  4. | Pont. Grand Prix    3,210      201 |
+  5. | Datsun 210          2,020      165 |
+     |------------------------------------|
+  6. | Plym. Arrow         3,260      170 |
+     +------------------------------------+
+webuse autoexpense
+(1978 Automobile Data)
+list
+
+     +---------------------------------+
+     | make                price   mpg |
+     |---------------------------------|
+  1. | Toyota Celica       5,899    18 |
+  2. | BMW 320i            9,735    25 |
+  3. | Cad. Seville       15,906    21 |
+  4. | Pont. Grand Prix    5,222    19 |
+  5. | Datsun 210          4,589    35 |
+     +---------------------------------+
+
+webuse autosize
+(1978 Automobile Data)
+merge 1:1 make using "http://www.stata-press.com/data/r14/autoexpense"
+
+    Result                           # of obs.
+    -----------------------------------------
+    not matched                             1
+        from master                         1  (_merge==1)
+        from using                          0  (_merge==2)
+
+    matched                                 5  (_merge==3)
+    -----------------------------------------
+list
+
+     +---------------------------------------------------------------------+
+     | make               weight   length    price   mpg            _merge |
+     |---------------------------------------------------------------------|
+  1. | BMW 320i            2,650      177    9,735    25       matched (3) |
+  2. | Cad. Seville        4,290      204   15,906    21       matched (3) |
+  3. | Datsun 210          2,020      165    4,589    35       matched (3) |
+  4. | Plym. Arrow         3,260      170        .     .   master only (1) |
+  5. | Pont. Grand Prix    3,210      201    5,222    19       matched (3) |
+     |---------------------------------------------------------------------|
+  6. | Toyota Celica       2,410      174    5,899    18       matched (3) |
+     +---------------------------------------------------------------------+
+clear
+
+
+webuse autosize, clear
+(1978 Automobile Data)
+ match) nogen
+
+    Result                           # of obs.
+    -----------------------------------------
+    not matched                             0
+    matched                                 5  
+    -----------------------------------------
+list
+
+     +---------------------------------------------------+
+     | make               weight   length    price   mpg |
+     |---------------------------------------------------|
+  1. | BMW 320i            2,650      177    9,735    25 |
+  2. | Cad. Seville        4,290      204   15,906    21 |
+  3. | Datsun 210          2,020      165    4,589    35 |
+  4. | Pont. Grand Prix    3,210      201    5,222    19 |
+  5. | Toyota Celica       2,410      174    5,899    18 |
+     +---------------------------------------------------+
+clear
+</pre>
+
+<p>
+Remember, <code>merge</code> is for adding variables (i.e., columns) from a second data set.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline26" class="outline-3">
+<h3 id="orgheadline26">Merge Options</h3>
+<div class="outline-text-3" id="text-orgheadline26">
+<p>
+There are several options that provide more fine-grain control over what happens to non-id columns contained in both data sets. If you've carefully cleaned and prepared the data prior to merging this shouldn't be an issue, but here are some details about how stata handles this situation.
+</p>
+<ul class="org-ul">
+<li>In standard merge, the master dataset is the authority and WON'T CHANGE</li>
+<li>If your master dataset has missing data and some of those values are not missing in your using dataset, specify "update" &#x2013; this will fill in missing data in master</li>
+<li>If you want data from your using dataset to overwrite that in your master, specify "replace update" &#x2013; this will replace master data with using data UNLESS the value is missing in the using dataset</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orgheadline27" class="outline-3">
+<h3 id="orgheadline27">Many-to-many merges</h3>
+<div class="outline-text-3" id="text-orgheadline27">
+<p>
+Stata allows you to specify merges like <code>merge m:m id using newdata.dta</code>, but I have never seen this do anything useful. To quote the official <a href="https://www.stata.com/manuals13/dmerge.pdf">Stata manual</a>:
+</p>
+<blockquote>
+<p>
+
+</p>
+
+<p>
+<code>m:m</code> specifies a many-to-many merge and is a <b>bad idea</b>. In an <code>m:m</code> merge,
+observations are matched within equal values of the key variable(s), with the
+first observation being matched to the first; the second, to the second; and
+so on. If the master and using have an unequal number of observations within
+the group, then the last observation of the shorter group is used repeatedly
+to match with subsequent observations of the longer group. Thus <b>m:m merges are
+dependent on the current sort order—something which should never happen</b>.
+<b>Because m:m merges are such a bad idea, we are not going to show you an
+example</b>. If you think that you need an m:m merge, then you probably need to
+work with your data so that you can use a 1:m or m:1 merge. Tips for this are
+given in Troubleshooting m:m merges below
+</p>
+</blockquote>
+<p>
+(emphasis added). 
+</p>
+
+<p>
+If you are thinking about using <code>merge m:m</code> chances are good that you actually need <code>joinby</code>. Here is a quick example, modified from the <code>joinby</code> help page.
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-stata"><span style="color: #237fbf; font-weight: bold;">clear</span>
+webuse parent
+list
+webuse children
+list
+<span style="color: #2aa1ae;">// Complete and utter nonsense!</span>
+<span style="color: #237fbf; font-weight: bold;">merge</span> m:m family_id <span style="color: #a45bad;">using</span> http:<span style="color: #2aa1ae;">//www.stata-press.com/data/r14/parent </span>
+<span style="color: #2aa1ae;">// You want joinby instead</span>
+<span style="color: #237fbf; font-weight: bold;">clear</span>
+webuse children
+<span style="color: #237fbf; font-weight: bold;">joinby</span> family_id <span style="color: #a45bad;">using</span> http:<span style="color: #2aa1ae;">//www.stata-press.com/data/r14/parent</span>
+</pre>
+</div>
+
+<pre class="example">
+clear
+webuse parent
+(Data on Parents)
+list
+
+     +--------------------------------+
+     | family~d   parent~d   x1    x3 |
+     |--------------------------------|
+  1. |     1030         10   39   600 |
+  2. |     1025         11   20   643 |
+  3. |     1025         12   27   721 |
+  4. |     1026         13   30   760 |
+  5. |     1026         14   26   668 |
+     |--------------------------------|
+  6. |     1030         15   32   684 |
+     +--------------------------------+
+webuse children
+file http://www.stata-press.com/data/r14/children.dta not found
+r(601);
+list
+
+     +--------------------------------+
+     | family~d   parent~d   x1    x3 |
+     |--------------------------------|
+  1. |     1030         10   39   600 |
+  2. |     1025         11   20   643 |
+  3. |     1025         12   27   721 |
+  4. |     1026         13   30   760 |
+  5. |     1026         14   26   668 |
+     |--------------------------------|
+  6. |     1030         15   32   684 |
+     +--------------------------------+
+
+merge m:m family_id using http://www.stata-press.com/data/r14/parent 
+
+    Result                           # of obs.
+    -----------------------------------------
+    not matched                             0
+    matched                                 6  (_merge==3)
+    -----------------------------------------
+
+clear
+webuse children
+file http://www.stata-press.com/data/r14/children.dta not found
+r(601);
+joinby family_id using http://www.stata-press.com/data/r14/parent
+variable family_id not found
+r(111);
+</pre>
+
+<p>
+Remeber, <code>merge m:m</code> is old and broken; <b>do not use</b>. Anytime you think you might want <code>m:m</code> you should use <code>joinby</code> instead.
 </p>
 </div>
 </div>
 </div>
 
-<div id="outline-container-sec-7" class="outline-2">
-<h2 id="sec-7">Creating summarized data sets</h2>
-<div class="outline-text-2" id="text-7">
-</div><div id="outline-container-sec-7-1" class="outline-3">
-<h3 id="sec-7-1">Collapse</h3>
-<div class="outline-text-3" id="text-7-1">
+<div id="outline-container-orgheadline32" class="outline-2">
+<h2 id="orgheadline32">Creating summarized data sets</h2>
+<div class="outline-text-2" id="text-orgheadline32">
+</div><div id="outline-container-orgheadline29" class="outline-3">
+<h3 id="orgheadline29">Collapse</h3>
+<div class="outline-text-3" id="text-orgheadline29">
 <p>
 Collapse will take master data and create a new dataset of summary statistics
 </p>
 <ul class="org-ul">
-<li>Useful in hierarchical linear modeling if you'd like to create aggregate, summary statistics
-</li>
-<li>Can generate group summary data for many  descriptive stats
-</li>
-<li>Can also attach weights
-</li>
+<li>Useful in hierarchical linear modeling if you'd like to create aggregate, summary statistics</li>
+<li>Can generate group summary data for many  descriptive stats</li>
+<li>Can also attach weights</li>
 </ul>
 
 <p>
 Before you collapse:
 </p>
 <ul class="org-ul">
-<li>Save your master dataset and then save it again under a new name (this will prevent collapse from writing over your original data_
-</li>
-<li>Consider issues of missing data. Do you want Stata to use all possible observations? If not, the <code>cw</code> (casewise) option will make casewise deletions
-</li>
+<li>Save your master dataset and then save it again under a new name (this will prevent collapse from writing over your original data_</li>
+<li>Consider issues of missing data. Do you want Stata to use all possible observations? If not, the <code>cw</code> (casewise) option will make casewise deletions</li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-sec-7-2" class="outline-3">
-<h3 id="sec-7-2">Collapse Example</h3>
-<div class="outline-text-3" id="text-7-2">
+<div id="outline-container-orgheadline30" class="outline-3">
+<h3 id="orgheadline30">Collapse Example</h3>
+<div class="outline-text-3" id="text-orgheadline30">
 <p>
-Suppose you have a dataset with patient  information from multiple hospitals and you want to generate mean levels of patient satisfaction for hospital: 
+Suppose you have a dataset with patient information from multiple hospitals and you want to generate mean levels of patient satisfaction for hospital: 
 </p>
 
 <div class="org-src-container">
 
-<pre class="src src-stata" id="collapseCommand"><span style="color: #8D8D84; font-style: italic;">// Not run: conceptual example. calculate average ptsatisfaction by hospital</span>
-<span style="color: #0000FF;">save</span> originaldata
-collapse (mean) ptsatisfaction, <span style="color: #6434A3;">by</span>(hospital)
-<span style="color: #0000FF;">save</span> hospitalcollapse
+<pre class="src src-stata" id="orgsrcblock18"><span style="color: #2aa1ae;">// Adapted from the collapse help page</span>
+<span style="color: #237fbf; font-weight: bold;">clear</span>
+webuse college
+list
+<span style="color: #2aa1ae;">// mean and sd by hospital</span>
+collapse <span style="color: #2f96dc;">(</span>mean<span style="color: #2f96dc;">)</span> mean_gpa = gpa mean_hour = hour <span style="color: #2f96dc;">(</span>sd<span style="color: #2f96dc;">)</span> sd_gpa = gpa sd_hour = hour, <span style="color: #ce537a; font-weight: bold;">by</span><span style="color: #2f96dc;">(</span>year<span style="color: #2f96dc;">)</span>
+list
+<span style="color: #237fbf; font-weight: bold;">clear</span>
 </pre>
 </div>
+
+<pre class="example">
+clear
+webuse college
+list
+
+     +----------------------------+
+     | gpa   hour   year   number |
+     |----------------------------|
+  1. | 3.2     30      1        3 |
+  2. | 3.5     34      1        2 |
+  3. | 2.8     28      1        9 |
+  4. | 2.1     30      1        4 |
+  5. | 3.8     29      2        3 |
+     |----------------------------|
+  6. | 2.5     30      2        4 |
+  7. | 2.9     35      2        5 |
+  8. | 3.7     30      3        4 |
+  9. | 2.2     35      3        2 |
+ 10. | 3.3     33      3        3 |
+     |----------------------------|
+ 11. | 3.4     32      4        5 |
+ 12. | 2.9     31      4        2 |
+     +----------------------------+
+
+ our, by(year)
+list
+
+     +--------------------------------------------------+
+     | year   mean_gpa   mean_h~r     sd_gpa    sd_hour |
+     |--------------------------------------------------|
+  1. |    1        2.9       30.5   .6055301   2.516612 |
+  2. |    2   3.066667   31.33333   .6658328    3.21455 |
+  3. |    3   3.066667   32.66667   .7767453   2.516612 |
+  4. |    4       3.15       31.5   .3535534   .7071068 |
+     +--------------------------------------------------+
+clear
+</pre>
+
 <p>
 You could also generate different statistics for multiple variables
 </p>
-
-<div class="org-src-container">
-
-<pre class="src src-stata" id="collapseExample2"><span style="color: #8D8D84; font-style: italic;">// create mean ptsatisfaction, median ptincome, sd ptsatisfaction for each hospital</span>
-collapse (mean) ptsatisfaction (median) ptincome (sd) ptsatisfaction, <span style="color: #6434A3;">by</span>(hosptial)
-</pre>
-</div>
-<ul class="org-ul">
-<li>What if you want to rename your new variables in
-this process?
-</li>
-</ul>
-
-<div class="org-src-container">
-
-<pre class="src src-stata" id="collapseExample3"><span style="color: #8D8D84; font-style: italic;">// Same as previous example, but rename variables</span>
-collapse (mean) ptsatmean=ptsatisfaction (median) ptincmed=ptincome
- (sd) sdptsat=ptsatisfaction, <span style="color: #6434A3;">by</span>(hospital)
-</pre>
-</div>
 </div>
 </div>
 
-<div id="outline-container-sec-7-3" class="outline-3">
-<h3 id="sec-7-3">Exercise 3: Merge, Append, and Collapse</h3>
-<div class="outline-text-3" id="text-7-3">
+<div id="outline-container-orgheadline31" class="outline-3">
+<h3 id="orgheadline31">Exercise 3: Merge, Append, and Collapse</h3>
+<div class="outline-text-3" id="text-orgheadline31">
 <p>
 Open the gss2.dta dataset. This dataset contains only half of the variables that are in the complete gss dataset. 
 </p>
 <ol class="org-ol">
-<li>Merge dataset gss1.dta with dataset gss2.dta.  The identification variable is "id."
-</li>
-<li>Open the gss.dta dataset and merge in data from the "marital.dta" dataset, which includes income information grouped by individuals' marital status.  The marital dataset contains collapsed data regarding average statistics of individuals based on their marital status.
-</li>
-<li>Open the gssAppend.dta dataset and Create a new dataset that combines the observations in gssAppend.dta with those in gssAddObserve.dta.
-</li>
-<li>Open the gss.dta dataset. Create a new dataset that summarizes mean and standard deviation of income based on individuals' degree status ("degree").  In the process of creating this new dataset, rename your three new variables.
-</li>
+<li>Merge dataset gss1.dta with dataset gss2.dta.  The identification variable is "id."</li>
+<li>Open the gss.dta dataset and merge in data from the "marital.dta" dataset, which includes income information grouped by individuals' marital status.  The marital dataset contains collapsed data regarding average statistics of individuals based on their marital status.</li>
+<li>Open the gssAppend.dta dataset and Create a new dataset that combines the observations in gssAppend.dta with those in gssAddObserve.dta.</li>
+<li>Open the gss.dta dataset. Create a new dataset that summarizes mean and standard deviation of income based on individuals' degree status ("degree").  In the process of creating this new dataset, rename your three new variables.</li>
 </ol>
 </div>
 </div>
 </div>
 
-<div id="outline-container-sec-8" class="outline-2">
-<h2 id="sec-8">Wrap-up</h2>
-<div class="outline-text-2" id="text-8">
-</div><div id="outline-container-sec-8-1" class="outline-3">
-<h3 id="sec-8-1">Help Us Make This Workshop Better</h3>
-<div class="outline-text-3" id="text-8-1">
+<div id="outline-container-orgheadline35" class="outline-2">
+<h2 id="orgheadline35">Wrap-up</h2>
+<div class="outline-text-2" id="text-orgheadline35">
+</div><div id="outline-container-orgheadline33" class="outline-3">
+<h3 id="orgheadline33">Help Us Make This Workshop Better</h3>
+<div class="outline-text-3" id="text-orgheadline33">
 <ul class="org-ul">
-<li>Please take a moment to fill out a very short feedback form
-</li>
-<li>These workshops exist for you&#x2013;tell us what you need!
-</li>
-<li><a href="http://tinyurl.com/StataDatManFeedback">http://tinyurl.com/StataDatManFeedback</a>
-</li>
+<li>Please take a moment to fill out a very short feedback form</li>
+<li>These workshops exist for you&#x2013;tell us what you need!</li>
+<li><a href="http://tinyurl.com/StataDatManFeedback">http://tinyurl.com/StataDatManFeedback</a></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-sec-8-2" class="outline-3">
-<h3 id="sec-8-2">Additional resources</h3>
-<div class="outline-text-3" id="text-8-2">
+<div id="outline-container-orgheadline34" class="outline-3">
+<h3 id="orgheadline34">Additional resources</h3>
+<div class="outline-text-3" id="text-orgheadline34">
 <ul class="org-ul">
 <li>training and consulting
 <ul class="org-ul">
-<li>IQSS workshops: <a href="http://projects.iq.harvard.edu/rtc/filter_by/workshops">http://projects.iq.harvard.edu/rtc/filter_by/workshops</a>
-</li>
-<li>IQSS statistical consulting: <a href="http://rtc.iq.harvard.edu">http://rtc.iq.harvard.edu</a>
-</li>
-</ul>
-</li>
+<li>IQSS workshops: <a href="http://projects.iq.harvard.edu/rtc/filter_by/workshops">http://projects.iq.harvard.edu/rtc/filter_by/workshops</a></li>
+<li>IQSS statistical consulting: <a href="http://rtc.iq.harvard.edu/">http://rtc.iq.harvard.edu/</a></li>
+</ul></li>
 
 <li>Stata resources
 <ul class="org-ul">
-<li>UCLA website: <a href="http://www.ats.ucla.edu/stat/Stata/">http://www.ats.ucla.edu/stat/Stata/</a>
-</li>
-<li>Great for self-study
-</li>
-<li>Links to resources
-</li>
-</ul>
-</li>
-<li>Stata website: <a href="http://www.stata.com/help.cgi?contents">http://www.stata.com/help.cgi?contents</a>
-</li>
-<li>Email list: <a href="http://www.stata.com/statalist/">http://www.stata.com/statalist/</a>
-</li>
+<li>UCLA website: <a href="http://www.ats.ucla.edu/stat/Stata/">http://www.ats.ucla.edu/stat/Stata/</a></li>
+<li>Great for self-study</li>
+<li>Links to resources</li>
+</ul></li>
+<li>Stata website: <a href="http://www.stata.com/help.cgi?contents">http://www.stata.com/help.cgi?contents</a></li>
+<li>Email list: <a href="http://www.stata.com/statalist/">http://www.stata.com/statalist/</a></li>
 </ul>
 </div>
 </div>

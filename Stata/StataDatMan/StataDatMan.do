@@ -1,39 +1,39 @@
-*		       __________________________
+*                        __________________________
 * 
-* 			DATA MANAGEMENT IN STATA
-* 		       __________________________
+*                         DATA MANAGEMENT IN STATA
+*                        __________________________
 * 
 * 
 * Table of Contents
 * _________________
 * 
-* 1 Introduction
-* 2 Generating and replacing variables
-* 3 By processing
-* 4 Missing values
-* 5 Variable types
-* 6 Merging, appending, and joining
-* 7 Creating summarized data sets
-* 8 Wrap-up
+* Introduction
+* Generating and replacing variables
+* By processing
+* Missing values
+* Variable types
+* Merging, appending, and joining
+* Creating summarized data sets
+* Wrap-up
 * 
-* 
-* 
-* 
-* 
-* 1 Introduction
-* ==============
+* Introduction
+* ============
 * 
 * Materials and Setup
-* - Lab computer log in:
-*   - USERNAME: dataclass
-*   - PASSWORD: on the board to your left
-* - Workshop materials:
-*   - Download class materials from [[http://tutorials.iq.harvard.edu/Stata/StataDatMan.zip]]
-*   - Open a file browser, right-click on =StataDatMan.zip=, select the =WinZip= menu and select =Extract to Here=.
+* ~~~~~~~~~~~~~~~~~~~
+* 
+*   - Lab computer log in:
+*     - USERNAME: dataclass
+*     - PASSWORD: on the board to your left
+*   - Workshop materials:
+*     - Download class materials from
+*       [http://tutorials.iq.harvard.edu/Stata/StataDatMan.zip]
+*     - Open a file browser, right-click on `StataDatMan.zip', select the
+*       `WinZip' menu and select `Extract to Here'.
 * 
 * 
-* 1.3 Workshop Description
-* ~~~~~~~~~~~~~~~~~~~~~~~~
+* Workshop Description
+* ~~~~~~~~~~~~~~~~~~~~
 * 
 *   - This is an Introduction to data management in Stata
 *   - Assumes basic knowledge of Stata
@@ -42,8 +42,8 @@
 *     command features described in help files
 * 
 * 
-* 1.4 Organization
-* ~~~~~~~~~~~~~~~~
+* Organization
+* ~~~~~~~~~~~~
 * 
 *   - Please feel free to ask questions at any point if they are relevant
 *     to the current topic (or if you are lost!)
@@ -53,31 +53,30 @@
 *   - If you are using a laptop, you will need to adjust paths accordingly
 * 
 * 
-* 1.5 Opening Files in Stata
-* ~~~~~~~~~~~~~~~~~~~~~~~~~~
+* Opening Files in Stata
+* ~~~~~~~~~~~~~~~~~~~~~~
 * 
 *   - Look at bottom left hand corner of Stata screen
 *     - This is the directory Stata is currently reading from
 *   - Files are located in the StataDatMan folder in your home directory
 *   - Start by telling Stata where to look for these
 
-*  change directory
-cd "~/StataDatMan"
+// change directory
+cd "~/tutorials/Stata/StataDatMan"
 
-*  Use dir to see what is in the directory:
+// Use dir to see what is in the directory:
 dir
 dir dataSets
 
-*  use the gss data set
+// use the gss data set
 use dataSets/gss.dta
-
+ 
 * 
+* Generating and replacing variables
+* ==================================
 * 
-* 2 Generating and replacing variables
-* ====================================
-* 
-* 2.1 Basic Data Manipulation Commands
-* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+* Basic Data Manipulation Commands
+* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 * 
 *   Basic commands you'll use for generating new variables or recoding
 *   existing variables:
@@ -89,8 +88,8 @@ use dataSets/gss.dta
 *   what is comfortable (and easy) for you!
 * 
 * 
-* 2.2 Generate and Replace
-* ~~~~~~~~~~~~~~~~~~~~~~~~
+* Generate and Replace
+* ~~~~~~~~~~~~~~~~~~~~
 * 
 *   The `replace' command is often used with logic statements. Available
 *   logical operators include the following:
@@ -106,32 +105,32 @@ use dataSets/gss.dta
 *   For example:
 * 
 
-*  create "hapnew" variable
-gen hapnew = . //set to missing
-* set to 0 if happy equals 1
+//create "hapnew" variable
+gen hapnew = .
+//set to 0 if happy equals 1
 replace hapnew=0 if happy==1 
-* set to 1 if happy both and hapmar are greater than 3
-replace hapnew=1 if happy>3 & hapmar>3
-tab hapnew // tabulate the new variable
-
+//set to 1 if happy both and hapmar are greater than 3
+replace hapnew=1 if happy>3 & hapmar>3 
+// tabulate the new 
+tab hapnew
+ 
 * 
-* 
-* 2.3 Recode
-* ~~~~~~~~~~
+* Recode
+* ~~~~~~
 * 
 *   The `recode' command is basically generate and replace combined. You
 *   can recode an existing variable OR use recode to create a new variable
 *   (via the `gen' option).
 * 
 
-*  recode the wrkstat variable 
+// recode the wrkstat variable 
 recode wrkstat (1=8) (2=7) (3=6) (4=5) (5=4) (6=3) (7=2) (8=1)
-*  recode wrkstat into a new variable named wrkstat2
+// recode wrkstat into a new variable named wrkstat2
 recode wrkstat (1=8), gen(wrkstat2)
-*  tabulate workstat
+// tabulate workstat
 tab wrkstat
-
-*   - The table below illustrates common forms of recoding
+ 
+*   The table below illustrates common forms of recoding
 *    Rule          Example    Meaning                  
 *   ---------------------------------------------------
 *    #=#           3=1        3 recoded to 1           
@@ -141,8 +140,8 @@ tab wrkstat
 *    missing=#     miss=9     missing recoded to 9     
 * 
 * 
-* 2.4 egen
-* ~~~~~~~~
+* egen
+* ~~~~
 * 
 *   The `egen' command ("extensions" to the `gen' command) provides
 *   convenient methods for performing many common data manipulation tasks.
@@ -150,26 +149,27 @@ tab wrkstat
 *   For example, we can use `egen' to create a new variable that counts
 *   the number of "yes" responses on computer, email and internet use:
 
-*  count number of yes on use comp email and net 
+// count number of yes on use comp email and net 
 egen compuser= anycount(usecomp usemail usenet), values(1)
 tab compuser
-
+ 
 *   Here are some additional examples of `egen' in action:
 
-*  assess how much missing data each participant has:
+// assess how much missing data each participant has:
 egen countmiss = rowmiss(age-wifeft)
 codebook countmiss
-*  compare values on multiple variables
+// compare values on multiple variables
 egen ftdiff=diff(wkftwife wkfthusb)
 codebook ftdiff
-
+ 
+* 
 *   You will need to refer to the documentation to discover what else
 *   `egen' can do: type "help egen" in Stata to get a complete list of
 *   functions.
 * 
 * 
-* 2.5 Exercise 1: Generate, Replace, Recode & Egen
-* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+* Exercise 1: Generate, Replace, Recode & Egen
+* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 * 
 *   Open the gss.dta data.
 *   1. Generate a new variable that represents the squared value of age.
@@ -179,11 +179,11 @@ codebook ftdiff
 *      for each respondent.
 * 
 * 
-* 3 By processing
-* ===============
+* By processing
+* =============
 * 
-* 3.1 The "bysort" Command
-* ~~~~~~~~~~~~~~~~~~~~~~~~
+* The "bysort" Command
+* ~~~~~~~~~~~~~~~~~~~~
 * 
 *   Sometimes, you'd like to create variables based on different
 *   categories of a single variable. For example, say you want to look at
@@ -191,33 +191,32 @@ codebook ftdiff
 *   "bysort" prefix does just this:
 * 
 
-*  tabulate happy separately for male and female 
+// tabulate happy separately for male and female 
 bysort sex: tab happy
-*  generate summary statistics using bysort 
+// generate summary statistics using bysort 
 bysort state: egen stateincome = mean(income)
 bysort degree: egen degreeincome = mean(income)
 bysort marital: egen marincomesd = sd(income)
-
+ 
 * 
-* 
-* 3.2 By prefix vs. by options
-* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+* By prefix vs. by options
+* ~~~~~~~~~~~~~~~~~~~~~~~~
 * 
 *   Some commands won't work with by prefix, but instead have a `by'
 *   option:
 * 
 
-*  generate separate histograms for female and male 
+// generate separate histograms for female and male 
 hist nethrs, by(sex)
-
+ 
 *   [file:images/histBysex.png]
 * 
 * 
-* 4 Missing values
-* ================
+* Missing values
+* ==============
 * 
-* 4.1 Missing Values
-* ~~~~~~~~~~~~~~~~~~
+* Missing Values
+* ~~~~~~~~~~~~~~
 * 
 *   You always need to consider how missing values are coded when recoding
 *   variables.
@@ -228,27 +227,28 @@ hist nethrs, by(sex)
 *   To identify highly educated women, we might use the command:
 * 
 
-*  generate and replace without considering missing values
+// generate and replace without considering missing values
 gen hi_ed=0
 replace hi_ed=1 if wifeduc>15
-*  What happens to our missing values?
+// What happens to our missing values?
 tab hi_ed, mi nola
-
+ 
 *   It looks like around 66% have higher education, but look closer:
 * 
 
-*  gen hi_ed2, but don't set a value if wifeduc is missing
+// gen hi_ed2, but don't set a value if wifeduc is missing
 gen hi_ed2 = 0 if wifeduc != . 
-*  only replace non-missing
+// only replace non-missing
 replace hi_ed2=1 if wifeduc >15 & wifeduc !=. 
-tab hi_ed2, mi //check to see that missingness is preserved
-
+//check to see that missingness is preserved
+tab hi_ed2, mi
+ 
 *   The correct value is 10%. Moral of the story? Be careful with missing
 *   values and remember that Stata considers missing values to be large!
 * 
 * 
-* 4.2 Bulk Conversion to Missing Values
-* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+* Bulk Conversion to Missing Values
+* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 * 
 *   Often the data collection/generating procedure will have used some
 *   other value besides "." to represent missing values. The `mvdecode'
@@ -256,7 +256,7 @@ tab hi_ed2, mi //check to see that missingness is preserved
 * 
 
 mvdecode _all, mv(999)
-
+ 
 *   - The "\_all" command tells Stata to do this to all variables
 *   - Use this command carefully!
 *     - If you have any variables where "999" is a legitimate value, Stata
@@ -265,11 +265,11 @@ mvdecode _all, mv(999)
 *       using "\_all"
 * 
 * 
-* 5 Variable types
-* ================
+* Variable types
+* ==============
 * 
-* 5.1 Variable Types
-* ~~~~~~~~~~~~~~~~~~
+* Variable Types
+* ~~~~~~~~~~~~~~
 * 
 *   Stata uses two main types of variables: String and Numeric. To be able
 *   to perform any mathematical operations, your variables need to be in a
@@ -281,36 +281,35 @@ mvdecode _all, mv(999)
 *    byte    -127                  100                  +/-1            1 
 *    int     -32,767               32,740               +/-1            2 
 *    long    -2,147,483,647        2,147,483,620        +/-1            4 
-*    float   -1.70141173319*10_38  1.70141173319*10_38  +/-10_-38       4 
-*    double  -8.9884656743*10_307  8.9884656743*10_307  +/-10_-323      8 
-*   - Precision for float is 3.795x10_-8.
-*   - Precision for double is 1.414x10_-16.
+*    float   -1.70141173319*10^38  1.70141173319*10^38  +/-10^-38       4 
+*    double  -8.9884656743*10^307  8.9884656743*10^307  +/-10^-323      8 
+*   - Precision for float is 3.795x10^-8.
+*   - Precision for double is 1.414x10^-16.
 * 
 * 
-* 5.2 Converting to and from Strings
-* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+* Converting to and from Strings
+* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 * 
 *   Stata provides several ways to convert to and from strings. You can
 *   use `tostring' and `destring' to convert from one type to the other:
 * 
 
-*  convert degree to a string
+// convert degree to a string
 tostring degree, gen(degree_s)
-*  and back to a number
+// and back to a number
 destring degree_s, gen(degree_n)
-
+ 
 *   Use `decode' and `encode' to convert to/from variable labels:
 * 
 
-*  convert degree to a descriptive string
+// convert degree to a descriptive string
 decode degree, gen(degree_s2)
-*  and back to a number with labels
+// and back to a number with labels
 encode degree_s2, gen(degree_n2)
-
+ 
 * 
-* 
-* 5.3 Converting Strings to Date/Time
-* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+* Converting Strings to Date/Time
+* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 * 
 *   Often date/time variables start out as strings -- You'll need to
 *   convert them to numbers using one of the conversion functions listed
@@ -332,32 +331,30 @@ encode degree_s2, gen(degree_n2)
 *   number of milliseconds since that time.
 * 
 
-*  create string variable and convert to date
+// create string variable and convert to date
 gen date = "November 9 2020"
 gen date1 = date(date, "MDY")
 list date1 in 1/5
-
+ 
 * 
-* 
-* 5.4 Formatting Numbers as Dates
-* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+* Formatting Numbers as Dates
+* ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 * 
 *   Once you have converted the string to a number you can format it for
 *   display. You can simply accept the defaults used by your formatting
 *   string or provide details to customize it.
 * 
 
-*  format so humans can read the date
+// format so humans can read the date
 format date1 %d
 list date1 in 1/5
-*  format with detail
+// format with detail
 format date1 %tdMonth_dd,_CCYY
 list date1 in 1/5
-
+ 
 * 
-* 
-* 5.5 Exercise 2: Missing Values, String Conversion, and by Processing
-* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+* Exercise 2: Missing Values, String Conversion, and by Processing
+* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 * 
 *   1. Recode values "99" and "98" on the variable, "hrs1" as "missing."
 *   2. Recode the marital variable into a "string" variable and then back
@@ -367,11 +364,48 @@ list date1 in 1/5
 *      educational degrees (see the last "by" example for inspiration).
 * 
 * 
-* 6 Merging, appending, and joining
-* =================================
+* Merging, appending, and joining
+* ===============================
 * 
-* 6.1 Merging Datasets
-* ~~~~~~~~~~~~~~~~~~~~
+* Appending Datasets
+* ~~~~~~~~~~~~~~~~~~
+* 
+*   Sometimes you have observations in two different datasets, or you'd
+*   like to add observations to an existing dataset. In this case you can
+*   use the `append' command to add observations to the end of the
+*   observations in the master dataset. For example:
+* 
+
+clear
+// from the append help file
+webuse even
+list
+webuse odd
+list
+// Append even data to the end of the odd data
+append using "http://www.stata-press.com/data/r14/even"
+list
+clear
+ 
+*   To keep track of where observations came from, use the `generate'
+*   option as shown below:
+* 
+
+webuse odd
+append using "http://www.stata-press.com/data/r14/even", generate(observesource)
+list
+clear
+ 
+* 
+*   There is a "force" option will allow for data type mismatches, but
+*   again this is not recommended.
+* 
+*   Remember, `append' is for adding observations (i.e., rows) from a
+*   second data set.
+* 
+* 
+* Merging Datasets
+* ~~~~~~~~~~~~~~~~
 * 
 *   You can `merge' variables from a second dataset to the dataset you're
 *   currently working with.
@@ -384,10 +418,6 @@ list date1 in 1/5
 *   - A dataset with one participant per row with a dataset with multiple
 *     rows per participant (1:many or many:1)
 * 
-* 
-* 6.2 Merging Datasets
-* ~~~~~~~~~~~~~~~~~~~~
-* 
 *   Before you begin:
 *   - Identify the "ID" that you will use to merge your two datasets
 *   - Determine which variables you'd like to merge
@@ -395,21 +425,36 @@ list date1 in 1/5
 *   - Variable types must match across datasets (there is a "force" option
 *     to get around this, but not recommended)
 * 
-*   Example: Let's say that we had one dataset with individual students
-*   (master) and another dataset with information about the students'
-*   schools called "school.dta". We would merge these as follows:
-* 
 
-*  Not run: conceptual example only. Merge school and student data
-merge m:1 schoolID using school.dta
+// Adapted from the merge help page
+webuse autosize 
+list
+webuse autoexpense
+list
 
+webuse autosize
+merge 1:1 make using "http://www.stata-press.com/data/r14/autoexpense"
+list
+clear
+
+// keep only the matches (AKA "inner join")
+webuse autosize, clear
+merge 1:1 make using "http://www.stata-press.com/data/r14/autoexpense", keep(match) nogen
+list
+clear
+ 
+*   Remember, `merge' is for adding variables (i.e., columns) from a
+*   second data set.
 * 
 * 
-* 6.3 Merge Options
-* ~~~~~~~~~~~~~~~~~
+* Merge Options
+* ~~~~~~~~~~~~~
 * 
 *   There are several options that provide more fine-grain control over
-*   how the merge is carried out:
+*   what happens to non-id columns contained in both data sets. If you've
+*   carefully cleaned and prepared the data prior to merging this
+*   shouldn't be an issue, but here are some details about how stata
+*   handles this situation.
 *   - In standard merge, the master dataset is the authority and WON'T
 *     CHANGE
 *   - If your master dataset has missing data and some of those values are
@@ -420,34 +465,60 @@ merge m:1 schoolID using school.dta
 *     with using data UNLESS the value is missing in the using dataset
 * 
 * 
-* 6.4 Appending Datasets
-* ~~~~~~~~~~~~~~~~~~~~~~
+* Many-to-many merges
+* ~~~~~~~~~~~~~~~~~~~
 * 
-*   Sometimes you have observations in two different datasets, or you'd
-*   like to add observations to an existing dataset. In this case you can
-*   use the `append' command to add observations to the end of the
-*   observations in the master dataset. For example:
+*   Stata allows you to specify merges like `merge m:m id using
+*   newdata.dta', but I have never seen this do anything useful. To quote
+*   the official [Stata manual]:
+* 
+* 
+*         `m:m' specifies a many-to-many merge and is a *bad idea*.
+*         In an `m:m' merge, observations are matched within equal
+*         values of the key variable(s), with the first observation
+*         being matched to the first; the second, to the second; and
+*         so on. If the master and using have an unequal number of
+*         observations within the group, then the last observation
+*         of the shorter group is used repeatedly to match with
+*         subsequent observations of the longer group. Thus *m:m
+*         merges are dependent on the current sort order—something
+*         which should never happen*. *Because m:m merges are such a
+*         bad idea, we are not going to show you an example*. If you
+*         think that you need an m:m merge, then you probably need
+*         to work with your data so that you can use a 1:m or m:1
+*         merge. Tips for this are given in Troubleshooting m:m
+*         merges below
+*   (emphasis added).
+* 
+*   If you are thinking about using `merge m:m' chances are good that you
+*   actually need `joinby'. Here is a quick example, modified from the
+*   `joinby' help page.
 * 
 
-*  Not run: conceptual example. add rows of data from dataset2 
-append using dataset2
-
-*   To keep track of where observations came from, use the `generate'
-*   option as shown below:
+clear
+webuse parent
+list
+webuse children
+list
+// Complete and utter nonsense!
+merge m:m family_id using http://www.stata-press.com/data/r14/parent 
+// You want joinby instead
+clear
+webuse children
+joinby family_id using http://www.stata-press.com/data/r14/parent
+ 
+*   Remeber, `merge m:m' is old and broken; *do not use*. Anytime you
+*   think you might want `m:m' you should use `joinby' instead.
 * 
-
-*  Not run: conceptual example.
-append using dataset1, generate(observesource)
-
-*   There is a "force" option will allow for data type mismatches, but
-*   again this is not recommended.
+* 
+*   [Stata manual] https://www.stata.com/manuals13/dmerge.pdf
 * 
 * 
-* 7 Creating summarized data sets
-* ===============================
+* Creating summarized data sets
+* =============================
 * 
-* 7.1 Collapse
-* ~~~~~~~~~~~~
+* Collapse
+* ~~~~~~~~
 * 
 *   Collapse will take master data and create a new dataset of summary
 *   statistics
@@ -464,44 +535,36 @@ append using dataset1, generate(observesource)
 *     casewise deletions
 * 
 * 
-* 7.2 Collapse Example
-* ~~~~~~~~~~~~~~~~~~~~
+* Collapse Example
+* ~~~~~~~~~~~~~~~~
 * 
 *   Suppose you have a dataset with patient information from multiple
 *   hospitals and you want to generate mean levels of patient satisfaction
 *   for hospital:
 * 
 
-*  Not run: conceptual example. calculate average ptsatisfaction by hospital
-save originaldata
-collapse (mean) ptsatisfaction, by(hospital)
-save hospitalcollapse
-
+// Adapted from the collapse help page
+clear
+webuse college
+list
+// mean and sd by hospital
+collapse (mean) mean_gpa = gpa mean_hour = hour (sd) sd_gpa = gpa sd_hour = hour, by(year)
+list
+clear
+ 
 *   You could also generate different statistics for multiple variables
 * 
-
-*  create mean ptsatisfaction, median ptincome, sd ptsatisfaction for each hospital
-collapse (mean) ptsatisfaction (median) ptincome (sd) ptsatisfaction, by(hosptial)
-
-*   - What if you want to rename your new variables in this process?
 * 
-
-*  Same as previous example, but rename variables
-collapse (mean) ptsatmean=ptsatisfaction (median) ptincmed=ptincome
- (sd) sdptsat=ptsatisfaction, by(hospital)
-
-* 
-* 
-* 7.3 Exercise 3: Merge, Append, and Collapse
-* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+* Exercise 3: Merge, Append, and Collapse
+* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 * 
 *   Open the gss2.dta dataset. This dataset contains only half of the
 *   variables that are in the complete gss dataset.
-*   1. Merge dataset gss1.dta with dataset gss2.dta.  The identification
+*   1. Merge dataset gss1.dta with dataset gss2.dta. The identification
 *      variable is "id."
 *   2. Open the gss.dta dataset and merge in data from the "marital.dta"
 *      dataset, which includes income information grouped by individuals'
-*      marital status.  The marital dataset contains collapsed data
+*      marital status. The marital dataset contains collapsed data
 *      regarding average statistics of individuals based on their marital
 *      status.
 *   3. Open the gssAppend.dta dataset and Create a new dataset that
@@ -509,23 +572,23 @@ collapse (mean) ptsatmean=ptsatisfaction (median) ptincmed=ptincome
 *      gssAddObserve.dta.
 *   4. Open the gss.dta dataset. Create a new dataset that summarizes mean
 *      and standard deviation of income based on individuals' degree
-*      status ("degree").  In the process of creating this new dataset,
+*      status ("degree"). In the process of creating this new dataset,
 *      rename your three new variables.
 * 
 * 
-* 8 Wrap-up
-* =========
+* Wrap-up
+* =======
 * 
-* 8.1 Help Us Make This Workshop Better
-* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+* Help Us Make This Workshop Better
+* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 * 
 *   - Please take a moment to fill out a very short feedback form
 *   - These workshops exist for you--tell us what you need!
 *   - [http://tinyurl.com/StataDatManFeedback]
 * 
 * 
-* 8.2 Additional resources
-* ~~~~~~~~~~~~~~~~~~~~~~~~
+* Additional resources
+* ~~~~~~~~~~~~~~~~~~~~
 * 
 *   - training and consulting
 *     - IQSS workshops:

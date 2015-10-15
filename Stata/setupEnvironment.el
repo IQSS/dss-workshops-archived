@@ -1,3 +1,4 @@
+(require 'ess-site)
   (set (make-local-variable 'org-babel-stata-command) "stata -q")
   ;; enable source code support in orgmode
   (org-babel-do-load-languages
