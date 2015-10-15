@@ -12,8 +12,7 @@ use dataSets/gss.dta
 gen age2 = age^2
 
 *2.
-codebook income
-tab income, nola
+label list income
 recode income (99=.) (98=.)
 gen highincome =0 if income != .
 replace highincome=1 if income>19
