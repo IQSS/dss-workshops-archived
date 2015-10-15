@@ -537,11 +537,7 @@ joinby family_id using http://www.stata-press.com/data/r14/parent
 * 
 * Collapse Example
 * ~~~~~~~~~~~~~~~~
-* 
-*   Suppose you have a dataset with patient information from multiple
-*   hospitals and you want to generate mean levels of patient satisfaction
-*   for hospital:
-* 
+*
 
 // Adapted from the collapse help page
 clear
