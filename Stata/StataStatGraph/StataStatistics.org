@@ -1,0 +1,697 @@
+# -*- eval: (save-excursion (org-babel-goto-named-src-block "workshopPreamble") (org-babel-execute-src-block)) -*-
+#+TITLE:     Regression in Stata
+#+AUTHOR:    
+#+EMAIL:     support@help.hmdc.harvard.edu
+#+DATE:      
+
+# NOTE: refer to the README file if you are unfamiliar with emacs or orgmode.
+
+# Customize the PROPERTY and EXCLUDE_TAGS below depending on the type
+# of export (see the README file for details). After setting the exports 
+# property and/or the EXCLUDE_TAGS, place the curser on the poperty line 
+# and press C-c C-c
+
+#+PROPERTY: exports both
+#+EXCLUDE_TAGS: noexport setup
+
+
+
+
+
+
+
+#+SETUPFILE: ../workshopPreamble.org
+
+#+name: workshopPreamble
+#+begin_src emacs-lisp :exports none :results silent :tangle no
+  (set (make-local-variable 'org-confirm-babel-evaluate) nil)
+  (load-file "../setupEnvironment.el")
+#+end_src
+
+#+name: stataPreamble
+#+begin_src stata :exports none :results silent :tangle no
+  set more off
+#+end_src
+
+* Introduction
+
+** Download workshop materials					      :setup:
+- Lab computer log in:
+  - USERNAME: dataclass
+  - PASSWORD: on the board to your left
+- Download materials from [[http://tutorials.iq.harvard.edu/Stata/StataStatistics.zip]]
+- Extract materials from the =StataStatistics.zip= file
+- Launch Stata and open the =StataStatistics.do= file
+
+** Materials and setup                                             :mitsetup:
+Laptop users: you will need a copy of Stata installed on your machine
+
+Lab computer users: log in using your Athena user name and password
+
+Everyone: 
+- Open a web browser and download class materials from [[http://tutorials.iq.harvard.edu/Stata/StataStatistics.zip]].
+- Extract the downloaded zip file and move the =StataStatistics= folder to your Desktop.
+- Start the Stata program and open the =StataStatistics.do= file.
+
+
+** Organization
+- Please feel free to ask questions at any point if they are relevant to the current topic (or if you are lost!)
+- There will be a Q&A after class for more specific, personalized questions
+- Collaboration with your neighbors is encouraged
+- If you are using a laptop, you will need to adjust paths accordingly
+- Make comments in your Do-file rather than on hand-outs
+- Save on flash drive or email to yourself
+
+** Today's Dataset
+- We have data on a variety of variables for all 50 states
+- Population, density, energy use, voting tendencies, graduation rates, income, etc.
+- We're going to be predicting SAT scores
+- Univariate Regression: SAT scores and Education Expenditures
+- Does the amount of money spent on education affect the mean SAT score in a state?
+- Dependent variable: csat
+- Independent variable: expense
+
+** Opening Files in Stata
+- Look at bottom left hand corner of Stata screen
+  - This is the directory Stata is currently reading from
+- Files are located in the StataStatistics folder on the Desktop
+- Start by telling Stata where to look for these
+
+#+name: changeDirCommand
+#+begin_src stata
+  ,* change directory
+  cd "~/StataStatistics"
+#+end_src
+
+- Use dir to see what is in the directory:
+
+#+name: dirCommand
+#+begin_src stata 
+  dir
+#+end_src
+
+#+RESULTS: dirCommand
+#+begin_example
+dir
+
+total 580
+drwxr-xr-x. 2 izahn users   4096 Oct 23 21:34 images/
+-rw-r--r--. 1 izahn users   9424 Oct 23 21:34 StataStatistics.do
+-rw-r--r--. 1 izahn users  38143 Oct 23 21:34 StataStatistics.html
+-rw-r--r--. 1 izahn users  22427 Oct 23 21:34 StataStatistics.org
+-rw-r--r--. 1 izahn users 433417 Oct 23 21:34 StataStatistics.pdf
+-rw-r--r--. 1 izahn users  26185 Oct 23 21:34 StataStatistics.tex
+-rw-r--r--. 1 izahn users   8977 Oct 23 21:34 states.dta
+-rw-r--r--. 1 izahn users  18793 Oct 23 21:34 style.css
+#+end_example
+
+- Load the data
+
+#+name: useCommand
+#+begin_src stata 
+  ,* use the states data set
+  use states.dta
+#+end_src
+
+** Steps for Running Regression
+  1. Examine descriptive statistics
+  2. Look at relationship graphically and test correlation(s)
+  3. Run and interpret regression
+  4. Test regression assumptions
+
+* Univariate regression
+
+** Univariate Regression: Preliminaries
+- We want to predict csat scores from expense
+- First, let's look at some descriptives
+
+#+name:sumStates
+#+begin_src stata 
+  ,* generate summary statistics for csat and expense
+  sum csat expense
+#+end_src
+
+#+RESULTS: sumStates
+#+begin_example
+sum csat expense
+
+    Variable |       Obs        Mean    Std. Dev.       Min        Max
+-------------+--------------------------------------------------------
+        csat |        51     944.098    66.93497        832       1093
+     expense |        51    5235.961    1401.155       2960       9259
+#+end_example
+
+** Univariate Regression Preliminaries
+- We want to predict csat scores from expense
+- First, let's look at some descriptives
+
+#+name: codebookStates
+#+begin_src stata 
+  ,* look at codebok
+  codebook csat expense
+#+end_src
+
+#+RESULTS: codebookStates
+#+begin_example
+
+codebook csat expense
+
+-------------------------------------------------------------------------------
+csat                                                   Mean composite SAT score
+-------------------------------------------------------------------------------
+
+                  type:  numeric (int)
+
+                 range:  [832,1093]                   units:  1
+         unique values:  45                       missing .:  0/51
+
+                  mean:   944.098
+              std. dev:    66.935
+
+           percentiles:        10%       25%       50%       75%       90%
+                               874       886       926       997      1024
+
+-------------------------------------------------------------------------------
+expense                                         Per pupil expenditures prim&sec
+-------------------------------------------------------------------------------
+
+                  type:  numeric (int)
+
+                 range:  [2960,9259]                  units:  1
+         unique values:  51                       missing .:  0/51
+
+                  mean:   5235.96
+              std. dev:   1401.16
+
+           percentiles:        10%       25%       50%       75%       90%
+                              3782      4351      5000      5865      6738
+#+end_example
+
+** Univariate Regression Preliminaries
+- Next, view relationship graphically
+- Scatterplots work well for univariate relationships
+
+#+name: scatterplot1
+#+begin_src stata 
+  ,* graph expense by csat
+  twoway scatter expense csat
+#+end_src
+
+#+attr_latex: :width .6\textwidth
+[[file:images/scatter1.png]]
+
+** Univariate Regression Preliminaries
+- Next look at the correlation matrix
+
+#+name: regressionUnivar1
+#+begin_src stata 
+  ,* correlate csat and expense
+  pwcorr csat expense, star(.05)
+#+end_src
+
+#+RESULTS: regressionUnivar1
+#+begin_example
+pwcorr csat expense, star(.05)
+
+             |     csat  expense
+-------------+------------------
+        csat |   1.0000 
+     expense |  -0.4663*  1.0000
+#+end_example
+
+- Not very interesting with only one predictor
+
+** Univariate Regression: SAT scores and Education Expenditures
+
+#+name: regressionUnivar2
+#+begin_src stata 
+  regress csat expense
+#+end_src
+
+#+RESULTS: regressionUnivar2
+#+begin_example
+regress csat expense
+
+      Source |       SS       df       MS              Number of obs =      51
+-------------+------------------------------           F(  1,    49) =   13.61
+       Model |  48708.3001     1  48708.3001           Prob > F      =  0.0006
+    Residual |   175306.21    49  3577.67775           R-squared     =  0.2174
+-------------+------------------------------           Adj R-squared =  0.2015
+       Total |   224014.51    50   4480.2902           Root MSE      =  59.814
+
+------------------------------------------------------------------------------
+        csat |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+     expense |  -.0222756   .0060371    -3.69   0.001    -.0344077   -.0101436
+       _cons |   1060.732    32.7009    32.44   0.000     995.0175    1126.447
+------------------------------------------------------------------------------
+#+end_example
+
+** Linear Regression Assumptions
+- Assumption 1: Normal Distribution
+- The errors of regression equation are normally distributed
+- Assumption 2: Homoscedasticity (The variance around the regression line is the same for all values of the predictor variable)
+- Assumption 3: Errors are independent
+- Assumption 4: Relationships are linear
+
+** Homoscedasticity
+
+#+latex: {\center
+#+attr_latex: :width .5\textwidth
+[[file:images/heteroscedasticity.png]]
+
+#+attr_latex: :width .5\textwidth
+[[file:images/homscedasticity.png]]
+
+#+latex: }
+
+** Testing Assumptions: Normality
+- A simple histogram of the residuals can be informative
+
+#+name: normalitytest1
+#+begin_src stata 
+  ,* graph the residual values of csat
+  predict resid, residual
+  histogram resid, normal 
+#+end_src
+
+#+attr_latex: :width .6\textwidth
+[[file:images/normalHist1.png]]
+
+** Testing Assumptions: Homoscedasticity
+
+#+name: homoscedasticityTest1
+#+begin_src stata 
+  rvfplot
+#+end_src
+
+#+attr_latex: :width .6\textwidth
+[[file:images/fittedResidual1.png]]
+
+* Multiple regression
+
+** Multiple Regression
+- Just keep adding predictors
+- Let's try adding some predictors to the model of SAT scores
+- income :: % students taking SATs 
+- percent :: % adults with HS diploma (high)
+
+** Multiple Regression Preliminaries
+- As before, start with descriptive statistics and correlations
+
+#+name: statsCorrelations1
+#+begin_src stata 
+  ,* descriptive statistics and correlations
+  sum income percent high
+  pwcorr csat expense income percent high
+#+end_src
+
+#+RESULTS: statsCorrelations1
+#+begin_example
+sum income percent high
+
+    Variable |       Obs        Mean    Std. Dev.       Min        Max
+-------------+--------------------------------------------------------
+      income |        51    33.95657    6.423134     23.465     48.618
+     percent |        51    35.76471    26.19281          4         81
+        high |        51    76.26078    5.588741       64.3       86.6
+pwcorr csat expense income percent high
+
+             |     csat  expense   income  percent     high
+-------------+---------------------------------------------
+        csat |   1.0000 
+     expense |  -0.4663   1.0000 
+      income |  -0.4713   0.6784   1.0000 
+     percent |  -0.8758   0.6509   0.6733   1.0000 
+        high |   0.0858   0.3133   0.5099   0.1413   1.0000
+#+end_example
+
+** Multiple Regression
+- regress csat on exense, income, percent, and high
+
+#+name: multipleRegression
+#+begin_src stata 
+  regress csat expense income percent high
+#+end_src
+
+#+RESULTS: multipleRegression
+#+begin_example
+regress csat expense income percent high
+
+      Source |       SS       df       MS              Number of obs =      51
+-------------+------------------------------           F(  4,    46) =   51.86
+       Model |  183354.603     4  45838.6508           Prob > F      =  0.0000
+    Residual |  40659.9067    46  883.911016           R-squared     =  0.8185
+-------------+------------------------------           Adj R-squared =  0.8027
+       Total |   224014.51    50   4480.2902           Root MSE      =  29.731
+
+------------------------------------------------------------------------------
+        csat |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+     expense |   .0045604    .004384     1.04   0.304    -.0042641     .013385
+      income |   .4437858   1.138947     0.39   0.699    -1.848795    2.736367
+     percent |  -2.533084   .2454477   -10.32   0.000    -3.027145   -2.039024
+        high |   2.086599   .9246023     2.26   0.029     .2254712    3.947727
+       _cons |   836.6197   58.33238    14.34   0.000     719.2027    954.0366
+------------------------------------------------------------------------------
+#+end_example
+
+** Exercise 1: Multiple Regression
+
+Open the datafile, states.dta.
+1. Select a few variables to use in a multiple regression of your own.  Before running the regression, examine descriptive of the variables and generate a few scatterplots.
+2. Run your regression 
+3. Examine the plausibility of the assumptions of normality and homogeneity
+
+* Interactions
+
+** Interactions
+- What if we wanted to test an interaction between percent & high?
+- Option 1: generate product terms by hand
+
+#+name: genprodbyhand
+#+begin_src stata 
+  ,* generate product of percent and high
+  gen percenthigh = percent*high 
+  regress csat expense income percent high percenthigh
+#+end_src
+
+#+RESULTS: genprodbyhand
+#+begin_example
+gen percenthigh = percent*high
+regress csat expense income percent high percenthigh
+
+      Source |       SS       df       MS              Number of obs =      51
+-------------+------------------------------           F(  5,    45) =   46.11
+       Model |  187430.401     5  37486.0801           Prob > F      =  0.0000
+    Residual |  36584.1091    45  812.980201           R-squared     =  0.8367
+-------------+------------------------------           Adj R-squared =  0.8185
+       Total |   224014.51    50   4480.2902           Root MSE      =  28.513
+
+------------------------------------------------------------------------------
+        csat |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+     expense |   .0045575   .0042044     1.08   0.284    -.0039107    .0130256
+      income |   .0887856    1.10374     0.08   0.936    -2.134261    2.311832
+     percent |  -8.143002   2.516509    -3.24   0.002    -13.21151   -3.074493
+        high |   .4240906   1.156545     0.37   0.716    -1.905311    2.753492
+ percenthigh |   .0740926   .0330909     2.24   0.030     .0074441    .1407411
+       _cons |    972.525    82.5457    11.78   0.000     806.2695    1138.781
+------------------------------------------------------------------------------
+#+end_example
+
+** Interactions
+- What if we wanted to test an interaction between percent & high?
+- Option 2: Let Stata do your dirty work
+
+#+name: genprodbauto
+#+begin_src stata 
+  ,* use the # sign to represent interactions 
+  regress csat percent high c.percent#c.high
+  ,* same as . regress csat c.percent##high
+#+end_src
+
+#+RESULTS: genprodbauto
+#+begin_example
+regress csat percent high c.percent#c.high
+
+      Source |       SS       df       MS              Number of obs =      51
+-------------+------------------------------           F(  3,    47) =   77.39
+       Model |  186302.091     3  62100.6971           Prob > F      =  0.0000
+    Residual |  37712.4186    47  802.391885           R-squared     =  0.8317
+-------------+------------------------------           Adj R-squared =  0.8209
+       Total |   224014.51    50   4480.2902           Root MSE      =  28.327
+
+------------------------------------------------------------------------------
+        csat |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+     percent |   -8.15717   2.488388    -3.28   0.002    -13.16316   -3.151179
+        high |   .6674578   1.082615     0.62   0.541    -1.510482    2.845398
+             |
+   c.percent#|
+      c.high |   .0764271   .0324919     2.35   0.023     .0110619    .1417924
+             |
+       _cons |   974.9354   81.98078    11.89   0.000     810.0113    1139.859
+------------------------------------------------------------------------------
+#+end_example
+
+** Categorical Predictors
+- For categorical variables, we first need to dummy code
+- Use region as example
+  - Option 1: create dummy codes before fitting regression model
+
+#+name: makedummycodes1
+#+begin_src stata
+  ,* create region dummy codes using tab 
+  tab region, gen(region) // could also use gen / replace
+
+  ,*regress csat on region
+  regress csat region1 region2 region3
+#+end_src
+
+** Categorical Predictors
+- For categorical variables, we first need to dummy code
+- Use region as example
+  - Option 2: Let Stata do it for you
+
+#+name: regressdummycodes
+#+begin_src stata
+  ,* regress csat on region using fvvarlist syntax
+  ,* see help fvvarlist for details
+  regress csat i.region
+#+end_src
+
+#+RESULTS: regressdummycodes
+#+begin_example
+regress csat i.region
+
+      Source |       SS       df       MS              Number of obs =      50
+-------------+------------------------------           F(  3,    46) =    9.61
+       Model |  82049.4719     3   27349.824           Prob > F      =  0.0000
+    Residual |  130911.908    46  2845.91105           R-squared     =  0.3853
+-------------+------------------------------           Adj R-squared =  0.3452
+       Total |   212961.38    49  4346.15061           Root MSE      =  53.347
+
+------------------------------------------------------------------------------
+        csat |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+      region |
+    N. East  |  -56.75214   23.13285    -2.45   0.018    -103.3161   -10.18813
+      South  |  -16.30769   19.91948    -0.82   0.417    -56.40353    23.78814
+    Midwest  |   63.77564   21.35592     2.99   0.005      20.7884    106.7629
+             |
+       _cons |   946.3077   14.79582    63.96   0.000     916.5253    976.0901
+------------------------------------------------------------------------------
+#+end_example
+
+** Exercise 2: Regression, Categorical Predictors, & Interactions
+Open the datafile, states.dta.
+1. Add on to the regression equation that you created in exercise 1 by generating an interaction term and testing the interaction.
+2. Try adding a categorical variable to your regression (remember, it will need to be dummy coded).  You could use region or generate a new categorical variable from one of the continuous variables in the dataset.
+
+* Exporting and saving results
+
+** Saving and exporting regression tables
+- Usually when we're running regression, we'll be testing multiple models at a time
+- Can be difficult to compare results
+- Stata offers several user-friendly options for storing and viewing regression output from multiple models
+- First, download the necessary packages:
+
+#+name: getesttaboutreg
+#+begin_src stata 
+  ,* install outreg2 package
+  findit outreg2
+#+end_src
+
+#+RESULTS: getesttaboutreg
+#+begin_example
+findit outreg2
+
+Search of official help files, FAQs, Examples, SJs, and STBs
+------------------------------------------------------------
+
+Web resources from Stata and other users
+----------------------------------------
+
+(contacting http://www.stata.com)
+
+8 packages found (Stata Journal and STB listed first)
+-----------------------------------------------------
+
+e_ from http://kk-adofiles.googlecode.com/hg
+    e_. / Add mean of e(depvar) to ereturn after a regression / / By Keith
+    Kranker / $ / example: / . regress y x1 x2 / . e_add_mean_y / . outreg2 /
+    Program by Keith Kranker
+
+corrtex from http://fmwww.bc.edu/RePEc/bocode/c
+    'CORRTEX': module to generate correlation tables formatted in LaTeX /
+    corrtex produces a correlation table in LaTeX format.  This / command is
+    inspired by mktab and outreg/outreg2 commands, and / its code heavily
+    borrows from mkcorr and sutex commands.  This / command offers a number of
+
+mean2 from http://fmwww.bc.edu/RePEc/bocode/m
+    'MEAN2': module to make a table of estimate means with subpopulation
+    differences / mean2 provides a fast and easy way to make a table of
+    estimate / means with subpopulation differences.  / KW: mean / KW: survey
+    / KW: lincom / KW: outreg2 / Requires: Stata version 9 /
+
+mfx2 from http://fmwww.bc.edu/RePEc/bocode/m
+    'MFX2': module to enhance mfx command for obtaining marginal effects or
+    elasticities after estimation / mfx2 obtains marginal effects or
+    elasticities after estimation. / It is probably most useful after
+    multiple-outcome commands like / ologit, oprobit, gologit2, slogit,
+
+mkest from http://fmwww.bc.edu/RePEc/bocode/m
+    'MKEST': module to convert variables to estimates matrix / mkest provides
+    a fast and easy way to convert variables into / estimates matrices e(b)
+    and e(V). mkest thus facilitates / exporting of variables into non-Stata
+    format through programs / such as est_table, xml_tab, or outreg2.  / KW:
+
+outreg2 from http://fmwww.bc.edu/RePEc/bocode/o
+    'OUTREG2': module to arrange regression outputs into an illustrative table
+    / outreg2 provides a fast and easy way to produce an illustrative / table
+    of regression outputs. The regression outputs are produced / piecemeal and
+    are difficult to compare without some type of / rearrangement. outreg2
+
+regdis from http://fmwww.bc.edu/RePEc/bocode/r
+    'REGDIS': module to control variables and decimals in regression displays
+    / regdis provides a fast and easy way to control variables and / decimals
+    in regression displays. In addition to setting the / number of decimals to
+    be displayed, regdis will also drop/keep / variables from the standard
+
+sum2 from http://fmwww.bc.edu/RePEc/bocode/s
+    'SUM2': module to store summary statistics / sum2 provides a fast and easy
+    way to store summary statistics for / use with standard table-making
+    programs such as outreg, / outreg2, estimates_table, xmltab, etc. sum2 was
+    motivated in part / by mfx2 and margeff that do the same thing for
+
+
+(end of search)
+#+end_example
+
+** Saving and replaying
+- You can store regression model results in Stata
+
+#+name: storerecall
+#+begin_src stata 
+  ,* fit two regression models and store the results
+  regress csat expense income percent high
+  estimates store Model1
+  regress csat expense income percent high i.region
+  estimates store Model2
+#+end_src
+
+#+RESULTS: storerecall
+#+begin_example
+regress csat expense income percent high
+
+      Source |       SS       df       MS              Number of obs =      51
+-------------+------------------------------           F(  4,    46) =   51.86
+       Model |  183354.603     4  45838.6508           Prob > F      =  0.0000
+    Residual |  40659.9067    46  883.911016           R-squared     =  0.8185
+-------------+------------------------------           Adj R-squared =  0.8027
+       Total |   224014.51    50   4480.2902           Root MSE      =  29.731
+
+------------------------------------------------------------------------------
+        csat |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+     expense |   .0045604    .004384     1.04   0.304    -.0042641     .013385
+      income |   .4437858   1.138947     0.39   0.699    -1.848795    2.736367
+     percent |  -2.533084   .2454477   -10.32   0.000    -3.027145   -2.039024
+        high |   2.086599   .9246023     2.26   0.029     .2254712    3.947727
+       _cons |   836.6197   58.33238    14.34   0.000     719.2027    954.0366
+------------------------------------------------------------------------------
+estimates store Model1
+regress csat expense income percent high i.region
+
+      Source |       SS       df       MS              Number of obs =      50
+-------------+------------------------------           F(  7,    42) =   51.07
+       Model |  190570.293     7  27224.3275           Prob > F      =  0.0000
+    Residual |  22391.0874    42  533.121128           R-squared     =  0.8949
+-------------+------------------------------           Adj R-squared =  0.8773
+       Total |   212961.38    49  4346.15061           Root MSE      =  23.089
+
+------------------------------------------------------------------------------
+        csat |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
+-------------+----------------------------------------------------------------
+     expense |   -.004375   .0044603    -0.98   0.332    -.0133763    .0046263
+      income |   1.306164    .950279     1.37   0.177    -.6115765    3.223905
+     percent |  -2.965514   .2496481   -11.88   0.000    -3.469325   -2.461704
+        high |   3.544804   1.075863     3.29   0.002     1.373625    5.715983
+             |
+      region |
+    N. East  |   80.81334    15.4341     5.24   0.000     49.66607    111.9606
+      South  |   33.61225   13.94521     2.41   0.020     5.469676    61.75483
+    Midwest  |   32.15421   10.20145     3.15   0.003     11.56686    52.74157
+             |
+       _cons |   724.8289   79.25065     9.15   0.000     564.8946    884.7631
+------------------------------------------------------------------------------
+estimates store Model2
+#+end_example
+
+** Saving and replaying
+- Stored models can be recalled
+
+#+name: storerecall2
+#+begin_src stata 
+  ,* Display Model1
+  estimates replay Model1
+#+end_src
+
+#+RESULTS: storerecall2
+#+begin_example
+estimates table Model1 Model2
+
+----------------------------------------
+    Variable |   Model1       Model2    
+-------------+--------------------------
+     expense |  .00456044   -.00437502  
+      income |  .44378583    1.3061642  
+     percent | -2.5330843   -2.9655142  
+        high |  2.0865991    3.5448038  
+             |
+      region |
+    N. East  |               80.813342  
+      South  |               33.612251  
+    Midwest  |               32.154215  
+             |
+       _cons |  836.61966    724.82886  
+----------------------------------------
+#+end_example
+
+** Saving and replaying
+- Stored models can be compared
+
+#+name: storerecall2
+#+begin_src stata 
+  ,* Compare Model1 and Model2 coefficients
+  estimates table Model1 Model2
+#+end_src
+
+** Exporting into Excel
+- Avoid human error when transferring coefficients into tables
+- Excel can be used to format publication-ready tables
+
+#+name: outregdemo
+#+begin_src stata 
+  outreg2 [Model1 Model2] using csatprediction.xls, replace
+#+end_src
+
+* Wrap-up
+
+** Help Us Make This Workshop Better
+- Please take a moment to fill out a very short feedback form
+- These workshops exist for you--tell us what you need!
+- [[ttp://tinyurl.com/StataRegressionFeedback]]
+
+** Additional resources
+- training and consulting
+  - IQSS workshops: http://projects.iq.harvard.edu/rtc/filter_by/workshops
+  - IQSS statistical consulting: http://rtc.iq.harvard.edu
+
+- Stata resources
+  - UCLA website: http://www.ats.ucla.edu/stat/Stata/
+  - Great for self-study
+  - Links to resources
+- Stata website: http://www.stata.com/help.cgi?contents
+- Email list: http://www.stata.com/statalist/
