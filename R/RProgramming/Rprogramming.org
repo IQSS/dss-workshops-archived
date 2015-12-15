@@ -16,7 +16,6 @@
 #+EXCLUDE_TAGS: noexport mitsetup
 
 #+SETUPFILE: ../workshopPreamble.org
-#+HTML_HEAD: <a href="https://github.com/izahn/workshops"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/652c5b9acfaddf3a9c326fa6bde407b87f7be0f4/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6f72616e67655f6666373630302e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_orange_ff7600.png"></a>
 
 #+name: setupR
 #+begin_src R :exports none :tangle no :results silent
@@ -31,6 +30,8 @@
 #+begin_src emacs-lisp :exports none :results silent :tangle no
   (load-file "../setupEnvironment.el")
 #+end_src
+
+# #+PROPERTY: session *R*
 
 * Workshop overview and materials
 
@@ -113,17 +114,9 @@ We can get all the =<a>= elements using the =html_nodes= function, and then extr
 
 #+RESULTS:
 #+begin_example
-> ## install.packages("rvest")
-> library(rvest)
-> 
-> ## read the web page into R
-> dataPage <- read_html("http://ceprdata.org/cps-uniform-data-extracts/cps-displaced-worker-survey/cps-dws-data/")
-> 
-> ## find the link ("a") elements.
-> allAnchors <- html_nodes(dataPage, "a")
-> head(allAnchors, 15)
+Loading required package: xml2
 {xml_nodeset (15)}
- [1] <a href="http://ceprdata.org/" title="Home" rel="home">\n  <img src="http://s4 ...
+ [1] <a href="http://ceprdata.org/" title="Home" rel="home">\n  <img src="htt ...
  [2] <a href="http://ceprdata.org/wp-login.php">Log in</a>
  [3] <a href="http://www.ceprdata.org">Home</a>
  [4] <a href="http://ceprdata.org/cps-uniform-data-extracts/">CPS</a>
@@ -132,35 +125,30 @@ We can get all the =<a>= elements using the =html_nodes= function, and then extr
  [7] <a href="http://ceprdata.org/other-data/">Other Data</a>
  [8] <a href="http://ceprdata.org/publications/">Publications</a>
  [9] <a href="http://ceprdata.org/contact/">Contact</a>
-[10] <a href="https://org.salsalabs.com/o/967/p/salsa/donation/common/public/?donat ...
-[11] <a rel="bookmark" href="http://ceprdata.org/cps-uniform-data-extracts/cps-disp ...
-[12] <a onclick="_gaq.push(['_trackEvent', 'File','Download', 'cepr_dws_2010_dta']) ...
-[13] <a onclick="_gaq.push(['_trackEvent', 'File','Download', 'cepr_dws_2008_dta']) ...
-[14] <a onclick="_gaq.push(['_trackEvent', 'File','Download', 'cepr_dws_2006_dta']) ...
-[15] <a onclick="_gaq.push(['_trackEvent', 'File','Download', 'cepr_dws_2004_dta']) ...
-> 
-> ## extract the link ("href") attributes
-> allLinks <- html_attr(allAnchors, "href")
-> head(allLinks, 15)
- [1] "http://ceprdata.org/"                                                                   
- [2] "http://ceprdata.org/wp-login.php"                                                       
- [3] "http://www.ceprdata.org"                                                                
- [4] "http://ceprdata.org/cps-uniform-data-extracts/"                                         
- [5] "http://ceprdata.org/sipp-uniform-data-extracts/"                                        
- [6] "http://ceprdata.org/acs-uniform-data-extracts/"                                         
- [7] "http://ceprdata.org/other-data/"                                                        
- [8] "http://ceprdata.org/publications/"                                                      
- [9] "http://ceprdata.org/contact/"                                                           
-[10] "https://org.salsalabs.com/o/967/p/salsa/donation/common/public/?donate_page_KEY=1809"   
+[10] <a href="https://org.salsalabs.com/o/967/p/salsa/donation/common/public/ ...
+[11] <a rel="bookmark" href="http://ceprdata.org/cps-uniform-data-extracts/cp ...
+[12] <a onclick="_gaq.push(['_trackEvent', 'File','Download', 'cepr_dws_2010_ ...
+[13] <a onclick="_gaq.push(['_trackEvent', 'File','Download', 'cepr_dws_2008_ ...
+[14] <a onclick="_gaq.push(['_trackEvent', 'File','Download', 'cepr_dws_2006_ ...
+[15] <a onclick="_gaq.push(['_trackEvent', 'File','Download', 'cepr_dws_2004_ ...
+ [1] "http://ceprdata.org/"
+ [2] "http://ceprdata.org/wp-login.php"
+ [3] "http://www.ceprdata.org"
+ [4] "http://ceprdata.org/cps-uniform-data-extracts/"
+ [5] "http://ceprdata.org/sipp-uniform-data-extracts/"
+ [6] "http://ceprdata.org/acs-uniform-data-extracts/"
+ [7] "http://ceprdata.org/other-data/"
+ [8] "http://ceprdata.org/publications/"
+ [9] "http://ceprdata.org/contact/"
+[10] "https://org.salsalabs.com/o/967/p/salsa/donation/common/public/?donate_page_KEY=1809"
 [11] "http://ceprdata.org/cps-uniform-data-extracts/cps-displaced-worker-survey/cps-dws-data/"
-[12] "/wp-content/cps/data/cepr_dws_2010_dta.zip"                                             
-[13] "/wp-content/cps/data/cepr_dws_2008_dta.zip"                                             
-[14] "/wp-content/cps/data/cepr_dws_2006_dta.zip"                                             
-[15] "/wp-content/cps/data/cepr_dws_2004_dta.zip"                                             
-> 
+[12] "/wp-content/cps/data/cepr_dws_2010_dta.zip"
+[13] "/wp-content/cps/data/cepr_dws_2008_dta.zip"
+[14] "/wp-content/cps/data/cepr_dws_2006_dta.zip"
+[15] "/wp-content/cps/data/cepr_dws_2004_dta.zip"
 #+end_example
 
-** Just the data please -- regular expressions to the rescue
+** TODO Just the data please -- regular expressions to the rescue
 Looking at the output from the previous example you might notice a problem; we've matched _all_ the URLs on the web page. Some of those (the ones that end in .zip) are the ones we want, others are menu links that we don't want. How can we separate the data links from the other links on the page?
 
 One answer is to use regular expressions to idenfify the links we want. Regular expressions are useful in general (not just in R!) and it is a good idea to be familiar with at least the basics. For our present purpose it will be more than enough to use regular expression that matches strings starting with =/wp= and ending with =.zip=.
@@ -169,7 +157,7 @@ In regulars expression =^=, =.=, =*=, and =$= are special characters with the fo
 - ^ :: matches the beginning of the string
 - . :: matches any character
 - * :: repeates the last caracter zero or more times
-- $ :: matches the end of the sring
+- $ :: matches the end of the string
 
 The backslashes in =\\.= are used to escape the =.= so that it is matched literally instead of matching any characters as it normallly would in a regular expression.
 
@@ -195,7 +183,7 @@ We can use the =grep= function to match the URLs we want using regular expressio
 > 
 #+end_example
 
-Finally, the data links we've extracted are relative to the ceprdata website. To make them valid we need to prepend =http://ceprdata.org/= to each one. We can do that using the =paste= funcion.
+Finally, the data links we've extracted are relative to the ceprdata website. To make them valid we need to prepend =http://ceprdata.org/= to each one. We can do that using the =paste= function.
 #+BEGIN_SRC R
   dataLinks <- paste("http://ceprdata.org", dataLinks, sep = "")
   head(dataLinks)
@@ -226,17 +214,12 @@ If you look at the result from the previous two methods you might notice that th
 
 #+RESULTS:
 #+begin_example
-> head(dataLinks <- paste("http://ceprdata.org/wp-content/cps/data/cepr_dws_",
-+                     seq(1994, 2010, by = 2),
-+                     "_dta.zip",
-+                     sep = ""))
 [1] "http://ceprdata.org/wp-content/cps/data/cepr_dws_1994_dta.zip"
 [2] "http://ceprdata.org/wp-content/cps/data/cepr_dws_1996_dta.zip"
 [3] "http://ceprdata.org/wp-content/cps/data/cepr_dws_1998_dta.zip"
 [4] "http://ceprdata.org/wp-content/cps/data/cepr_dws_2000_dta.zip"
 [5] "http://ceprdata.org/wp-content/cps/data/cepr_dws_2002_dta.zip"
 [6] "http://ceprdata.org/wp-content/cps/data/cepr_dws_2004_dta.zip"
-> 
 #+end_example
 
 Wow, that was a _lot_ easier. Why oh why didn't we just do that in the first place? Well, it works for this specific case, but it is much less general than the html parsing methods we discussed previously. Those methods will work in the general case, while pasting the year number into the URLs only works because the URLs we want have a very regular and consistent form.
@@ -253,69 +236,45 @@ but that is too much typing. Much easier to let R do that for us. We can iterate
 
 =for= and =while= loops in R work much the same as they do in other programming languages. The =apply= family of functions apply a function to each element of an object.
 
-** Iterating using for-loop
-One way to download the data files is to use a for-loop to iterate over the contents of our vector of URLs. Some people will tell you to avoid for-loops in R but this is nonsense. Loops are convenient and useful, and while they are not the best tool for all situations calling for iteration they are perfectly appropriate for downloading a series of files. If you've used a for loop in any other language you will probably find the R implementation to be very similar. 
-
-For now, lets start by downloading just the data files for years between 2006 and 2010. To do that we need to revisit regular expressions. In particular, we need to know about grouping, ranges, and logical "or". Regular expression groups are delimited by parentheses, and ranges are delimited by square brackets. The =|= indicates a logical "or". Using these regular expression features we can select links to data files for years 2006 though 2010 as follows: 
-#+BEGIN_SRC R :results silent
-  dataLinks_06_10 <- grep("dws_20(0[6-8]|10)", dataLinks, value = TRUE)
-#+END_SRC
-The regular expression above says "find strings containing "dws_20" followed by "0" followd by a "6", "7", "8", or "9", OR, followed by "10".
-
-Now that we've identified the correct links, we can use the =download.file= function to download the data files. The =download.file= function requires a URL as the first argument, and a file name as the second argument. We can use the =basename= function to strip of the location part of the URL, leaving only the file name:
-#+BEGIN_SRC R
-  dataLinks_06_10
-  basename(dataLinks_06_10)
-#+END_SRC
-
-#+RESULTS:
-#+begin_example
-> dataLinks_06_10
-[1] "http://ceprdata.org/wp-content/cps/data/cepr_dws_2006_dta.zip"
-[2] "http://ceprdata.org/wp-content/cps/data/cepr_dws_2008_dta.zip"
-[3] "http://ceprdata.org/wp-content/cps/data/cepr_dws_2010_dta.zip"
-> basename(dataLinks_06_10)
-[1] "cepr_dws_2006_dta.zip" "cepr_dws_2008_dta.zip" "cepr_dws_2010_dta.zip"
-> 
-#+end_example
-
-Finally we can write a for loop to iterate over the data links and download the files. For loops in R have the following general structure:
-=for(<placeholder> in <thing to iterate over>) {do stuff with placeholder}=. In our case we want to iterate over =dataLinks_06_10= and download each one, so this becomes
-#+BEGIN_SRC R
-  for(link in dataLinks_06_10) {
-      download.file(link, 
-                    destfile = basename(link))
-  }
-#+END_SRC
-
-#+RESULTS:
-#+begin_example
-> for(link in dataLinks_06_10) {
-+     download.file(link, 
-+                   destfile = basename(link))
-+ }
-> 
-#+end_example
 
 ** Writing functions
-Our for loop works well for downloading the data files form ceprdata.org. But what if we need to download data from other URLs as well? It might be nice to have a re-usable function that takes a url and downloads it, saving the result as the =basename= of the url. We can define such a function using the =function= function (say that three times fast!).
-#+BEGIN_SRC R :results silent
-  downloadFiles <- function(urls) {
-    for(link in urls) {
-        download.file(link, 
-                      destfile = basename(link))
-    }
+We can use the =download.file= function to download the data files. The =download.file= function requires a URL as the first argument, and a file name as the second argument. We can use the =basename= function to strip of the location part of the URL, leaving only the file name:
+#+BEGIN_SRC R
+  options(width = 100)
+  cbind(link = dataLinks, base = basename(dataLinks))
+#+END_SRC
+
+#+RESULTS:
+#+begin_example
+      link                                                            base
+ [1,] "http://ceprdata.org/wp-content/cps/data/cepr_dws_1994_dta.zip" "cepr_dws_1994_dta.zip"
+ [2,] "http://ceprdata.org/wp-content/cps/data/cepr_dws_1996_dta.zip" "cepr_dws_1996_dta.zip"
+ [3,] "http://ceprdata.org/wp-content/cps/data/cepr_dws_1998_dta.zip" "cepr_dws_1998_dta.zip"
+ [4,] "http://ceprdata.org/wp-content/cps/data/cepr_dws_2000_dta.zip" "cepr_dws_2000_dta.zip"
+ [5,] "http://ceprdata.org/wp-content/cps/data/cepr_dws_2002_dta.zip" "cepr_dws_2002_dta.zip"
+ [6,] "http://ceprdata.org/wp-content/cps/data/cepr_dws_2004_dta.zip" "cepr_dws_2004_dta.zip"
+ [7,] "http://ceprdata.org/wp-content/cps/data/cepr_dws_2006_dta.zip" "cepr_dws_2006_dta.zip"
+ [8,] "http://ceprdata.org/wp-content/cps/data/cepr_dws_2008_dta.zip" "cepr_dws_2008_dta.zip"
+ [9,] "http://ceprdata.org/wp-content/cps/data/cepr_dws_2010_dta.zip" "cepr_dws_2010_dta.zip"
+#+end_example
+
+It would be more convenient if the =download.file= function defaulted to =destfile = basename(url)=. Fortunately it is very easy to write your own functions in R. We can write a wrapper around the =download.file= function like this:
+#+BEGIN_SRC R
+  downloadFile <- function(url, destfile = basename(url), ...) {
+    download.file(url = url, destfile = destfile, ...)
   }
+  ## test it out
+  downloadFile("http://google.com", quiet = TRUE)
+  list.files(pattern = "google")
 #+END_SRC
 
-Now we can download files more simply with
-#+BEGIN_SRC R :results silent
-  downloadFiles(dataLinks_06_10)
-#+END_SRC
-and in fact we can use this function to download files from any urls we might have.
+#+RESULTS:
+#+begin_example
+[1] "google.com"
+#+end_example
 
-** The apply family of functions
-The /apply family/ of functions in R that are useful for iteration. The apply family of functions includes:
+** Iterating with the =apply= family of functions
+The /apply famiy/ of functions in R that are useful for iteration. The apply family of functions includes:
 - apply :: apply a function to each dimension (e.g., row or column), of a matrix or array
 - lapply :: apply a function to each element of a vector or list
 - sapply :: like lapply, but simplifies the result
@@ -353,20 +312,23 @@ For this task (downloading files) there is not much advantage to using =sapply= 
 #+BEGIN_SRC R :results silent
   fsizes <- sapply(list.files(pattern = "\\.zip$"),
                  file.size)
+  fsizes / 1024^2
 #+END_SRC
-How can we do that with a for loop? First we need to create a list to store the restults, then as we loop through we need to assign the result to an element of the list. It's not terrible:
+How can we do that with a for loop? First we need to create a vector to store the results, then as we loop through we need to assign the result to an element of the vector. It's not terrible:
 #+BEGIN_SRC R :results silent
-  fsizes <- list()
-  for (file in list.files(pattern = "\\.zip$")) {
-    fsises[[file]] <- file.size(file)
+  ceprFiles <- list.files(pattern = "\\.zip$")
+  fsizes <- vector(mode = "integer", length = length(dataFiles))
+  names(fsizes) <- ceprFiles
+  for (file in ceprFiles) {
+    fsizes[[file]] <- file.size(file)
   }
+  fsizes / 1025^2
 #+END_SRC
 As I said, not terrible, but definitely more complicated than the sapply version. 
 
-**** Iterating over arrays with the =apply= function
+*** Iterating over arrays with the =apply= function
 Now that we've downloaded some of the ceprdata.org data we might want to get some information about these files. We can do that using the =file.info= function:
 #+BEGIN_SRC R
-  ceprFiles <- list.files(pattern = "\\.zip$")
   ceprFileInfo <- cbind(size = file.size(ceprFiles), mode = file.mode(ceprFiles))
   rownames(ceprFileInfo) <- ceprFiles
   ceprFileInfo
@@ -374,20 +336,18 @@ Now that we've downloaded some of the ceprdata.org data we might want to get som
 
 #+RESULTS:
 #+begin_example
-> ceprFiles <- list.files(pattern = "\\.zip$")
-> ceprFileInfo <- cbind(size = file.size(ceprFiles), mode = file.mode(ceprFiles))
-> rownames(ceprFileInfo) <- ceprFiles
-> ceprFileInfo
                          size mode
+cepr_dws_1994_dta.zip 4973180  420
+cepr_dws_1996_dta.zip 4361662  420
+cepr_dws_1998_dta.zip 4363591  420
 cepr_dws_2000_dta.zip 4466213  420
 cepr_dws_2002_dta.zip 5341157  420
 cepr_dws_2004_dta.zip 5277171  420
 cepr_dws_2006_dta.zip 5215523  420
 cepr_dws_2008_dta.zip 5139020  420
 cepr_dws_2010_dta.zip 5278615  420
-> 
 #+end_example
-ceprFileInfo is a _matrix_, with each row containing information about one of the files we downloaded. We can calculate the means for each column in this mattrix using the =apply= fuction:
+ceprFileInfo is a _matrix_, with each row containing information about one of the files we downloaded. We can calculate the means for each column in this mattrix using the =apply= function:
 
 #+begin_src R
   ## average file size and permissions
@@ -420,7 +380,7 @@ mode                   0.0                   0.0                   0.0
 > 
 #+end_example
 
-Now that we understand iteration in R we we want to import and process the files we downloaded from ceprdata.org. First we need to unzip theme.
+Now that we understand iteration in R we we want to import and process the files we downloaded from ceprdata.org. First we need to unzip them.
 #+BEGIN_SRC R
   sapply(ceprFiles, unzip)
   ceprDataFiles <- list.files(pattern = "\\.dta$")
@@ -428,16 +388,29 @@ Now that we understand iteration in R we we want to import and process the files
 
 #+RESULTS:
 #+begin_example
-> sapply(ceprFiles, unzip)
-cepr_dws_2000_dta.zip cepr_dws_2002_dta.zip cepr_dws_2004_dta.zip 
-"./cepr_dws_2000.dta" "./cepr_dws_2002.dta" "./cepr_dws_2004.dta" 
-cepr_dws_2006_dta.zip cepr_dws_2008_dta.zip cepr_dws_2010_dta.zip 
-"./cepr_dws_2006.dta" "./cepr_dws_2008.dta" "./cepr_dws_2010.dta" 
-> ceprDataFiles <- list.files(pattern = "\\.dta$")
-> 
+cepr_dws_1994_dta.zip cepr_dws_1996_dta.zip cepr_dws_1998_dta.zip cepr_dws_2000_dta.zip
+"./cepr_dws_1994.dta" "./cepr_dws_1996.dta" "./cepr_dws_1998.dta" "./cepr_dws_2000.dta"
+cepr_dws_2002_dta.zip cepr_dws_2004_dta.zip cepr_dws_2006_dta.zip cepr_dws_2008_dta.zip
+"./cepr_dws_2002.dta" "./cepr_dws_2004.dta" "./cepr_dws_2006.dta" "./cepr_dws_2008.dta"
+cepr_dws_2010_dta.zip
+"./cepr_dws_2010.dta"
 #+end_example
 
 Finally we can read our data into R, but I leave that to you! Use a for loop or =sapply= (preferred) to read in each DWS data file. You can use the =read.dta= function from the foreign package to read these data files into R.
+
+
+
+** Iterating using for-loop
+One way to download the data files is to use a for-loop to iterate over the contents of our vector of URLs. Some people will tell you to avoid for-loops in R but this is nonsense. Loops are convenient and useful, and while they are not the best tool for all situations calling for iteration they are perfectly appropriate for downloading a series of files. If you've used a for loop in any other language you will probably find the R implementation to be very similar.
+
+Finally we can write a for loop to iterate over the data links and download the files. For loops in R have the following general structure:
+=for(<placeholder> in <thing to iterate over>) {do stuff with placeholder}=. In our case we want to iterate over =dataLinks= and download each one, so this becomes
+#+BEGIN_SRC R :results silent
+  for(link in dataLinks) {
+      download.file(link,
+                    destfile = basename(link))i
+  }
+#+END_SRC
 
 ** Exersise 1
 
@@ -454,14 +427,11 @@ BONUS (optional): calculate the size of each of the data sets you read in.
 
 #+RESULTS:
 #+begin_example
-> library(foreign)
-> ceprData <- sapply(ceprDataFiles, read.dta, simplify = FALSE)
-> sapply(ceprData, object.size)
-cepr_dws_2000.dta cepr_dws_2002.dta cepr_dws_2004.dta cepr_dws_2006.dta 
-        113418392         139094688         137007848         135336704 
-cepr_dws_2008.dta cepr_dws_2010.dta 
-        135192464         135916432 
-> 
+There were 37 warnings (use warnings() to see them)
+cepr_dws_1994.dta cepr_dws_1996.dta cepr_dws_1998.dta cepr_dws_2000.dta cepr_dws_2002.dta
+        129893032         111614672         112460056         113418392         139094688
+cepr_dws_2004.dta cepr_dws_2006.dta cepr_dws_2008.dta cepr_dws_2010.dta
+        137007848         135336704         135192464         135916432
 #+end_example
 
 
@@ -773,7 +743,7 @@ As we noted earlier data.frames are a special kind of list. Therefore both =[= a
 
 *** Exercise 2
 
-Extract elements from =ceprDataInfo= that will help you understand what each column contains. Include at least the variable =names= and =var.labels= as well as any other information that you think will be useful.
+Extract elements from =ceprDataInfo= that will help you understand what each column in =deprData= contains. Include at least the variable =names= and =var.labels= as well as any other information that you think will be useful.
 
 *** Exercise 1 prototype                                        :prototype:
 #+BEGIN_SRC R
