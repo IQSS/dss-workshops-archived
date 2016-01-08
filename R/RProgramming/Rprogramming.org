@@ -1,7 +1,7 @@
 # -*- eval: (save-excursion (org-babel-goto-named-src-block "workshopPreamble") (org-babel-execute-src-block)) -*-
 #+TITLE:     Introduction To Programming In R
 #+AUTHOR:    
-#+EMAIL:     support@help.hmdc.harvard.edu
+#+EMAIL:     help@iq.harvard.edu
 #+DATE:      ""
 #+STARTUP: showeverything
 
@@ -12,7 +12,7 @@
 # property and/or the EXCLUDE_TAGS, place the curser on the poperty line 
 # and press C-c C-c
 
-#+PROPERTY: exports none
+#+PROPERTY: exports both
 #+EXCLUDE_TAGS: noexport mitsetup
 
 #+SETUPFILE: ../workshopPreamble.org
@@ -71,7 +71,7 @@ Materials for this workshop include slides, example data sets, and example code.
 - I encourage you to add your own notes to this file!
 
 ** Example project overview
-Throughout this workshop we will return to a running example that involves acquiring, processing, and analyzing data from the [[http://ceprdata.org/cps-uniform-data-extracts/cps-displaced-worker-survey/cps-dws-data/][Displaced Worker Survery]] (DWS). In this context we will learn about finding and using R packages, importing and manipulating data, writing functions, and more. The web page has been mirrored at [[http://tutorials.iq.harvard.edu/cps-uniform-data-extracts-cps-displaced-worker-survey/cps-dws-data]] for convenience.
+Throughout this workshop we will return to a running example that involves acquiring, processing, and analyzing data from the [[http://ceprdata.org/cps-uniform-data-extracts/cps-displaced-worker-survey/cps-dws-data/][Displaced Worker Survery]] (DWS). In this context we will learn about finding and using R packages, importing and manipulating data, writing functions, and more. The web page has been mirrored at [[http://tutorials.iq.harvard.edu/cps-uniform-data-extracts/cps-displaced-worker-survey/cps-dws-data]] for convenience.
 
 * Extracting elements from html
 It is common for data to be made available on a website somewhere, either by a government agency, research group, or other organizations and entities. Often the data you want is spread over many files, and retrieving it all one file at a time is tedious and time consuming. Such is the case with the CPS data we will be using today.
@@ -118,15 +118,15 @@ We can get all the =<a>= elements using the =html_nodes= function, and then extr
 #+begin_example
 > ## install.packages("rvest")
 > library(rvest)
->
+> 
 > ## read the web page into R
 > dataPage <- read_html("http://tutorials.iq.harvard.edu/cps-uniform-data-extracts/cps-displaced-worker-survey/cps-dws-data/")
->
+> 
 > ## find the link ("a") elements.
 > allAnchors <- html_nodes(dataPage, "a")
 > head(allAnchors, 15)
 {xml_nodeset (15)}
- [1] <a href="http://ceprdata.org/" title="Home" rel="home">\n  <img src="htt ...
+ [1] <a href="http://ceprdata.org/" title="Home" rel="home">\n  <img src="http://s4 ...
  [2] <a href="http://ceprdata.org/wp-login.php">Log in</a>
  [3] <a href="http://www.ceprdata.org">Home</a>
  [4] <a href="http://ceprdata.org/cps-uniform-data-extracts/">CPS</a>
@@ -135,32 +135,32 @@ We can get all the =<a>= elements using the =html_nodes= function, and then extr
  [7] <a href="http://ceprdata.org/other-data/">Other Data</a>
  [8] <a href="http://ceprdata.org/publications/">Publications</a>
  [9] <a href="http://ceprdata.org/contact/">Contact</a>
-[10] <a href="https://org.salsalabs.com/o/967/p/salsa/donation/common/public/ ...
-[11] <a rel="bookmark" href="http://ceprdata.org/cps-uniform-data-extracts/cp ...
-[12] <a onclick="_gaq.push(['_trackEvent', 'File','Download', 'cepr_dws_2010_ ...
-[13] <a onclick="_gaq.push(['_trackEvent', 'File','Download', 'cepr_dws_2008_ ...
-[14] <a onclick="_gaq.push(['_trackEvent', 'File','Download', 'cepr_dws_2006_ ...
-[15] <a onclick="_gaq.push(['_trackEvent', 'File','Download', 'cepr_dws_2004_ ...
->
+[10] <a href="https://org.salsalabs.com/o/967/p/salsa/donation/common/public/?donat ...
+[11] <a rel="bookmark" href="http://ceprdata.org/cps-uniform-data-extracts/cps-disp ...
+[12] <a onclick="_gaq.push(['_trackEvent', 'File','Download', 'cepr_dws_2010_dta']) ...
+[13] <a onclick="_gaq.push(['_trackEvent', 'File','Download', 'cepr_dws_2008_dta']) ...
+[14] <a onclick="_gaq.push(['_trackEvent', 'File','Download', 'cepr_dws_2006_dta']) ...
+[15] <a onclick="_gaq.push(['_trackEvent', 'File','Download', 'cepr_dws_2004_dta']) ...
+> 
 > ## extract the link ("href") attributes
 > allLinks <- html_attr(allAnchors, "href")
 > head(allLinks, 15)
- [1] "http://ceprdata.org/"
- [2] "http://ceprdata.org/wp-login.php"
- [3] "http://www.ceprdata.org"
- [4] "http://ceprdata.org/cps-uniform-data-extracts/"
- [5] "http://ceprdata.org/sipp-uniform-data-extracts/"
- [6] "http://ceprdata.org/acs-uniform-data-extracts/"
- [7] "http://ceprdata.org/other-data/"
- [8] "http://ceprdata.org/publications/"
- [9] "http://ceprdata.org/contact/"
-[10] "https://org.salsalabs.com/o/967/p/salsa/donation/common/public/?donate_page_KEY=1809"
+ [1] "http://ceprdata.org/"                                                                   
+ [2] "http://ceprdata.org/wp-login.php"                                                       
+ [3] "http://www.ceprdata.org"                                                                
+ [4] "http://ceprdata.org/cps-uniform-data-extracts/"                                         
+ [5] "http://ceprdata.org/sipp-uniform-data-extracts/"                                        
+ [6] "http://ceprdata.org/acs-uniform-data-extracts/"                                         
+ [7] "http://ceprdata.org/other-data/"                                                        
+ [8] "http://ceprdata.org/publications/"                                                      
+ [9] "http://ceprdata.org/contact/"                                                           
+[10] "https://org.salsalabs.com/o/967/p/salsa/donation/common/public/?donate_page_KEY=1809"   
 [11] "http://ceprdata.org/cps-uniform-data-extracts/cps-displaced-worker-survey/cps-dws-data/"
-[12] "/wp-content/cps/data/cepr_dws_2010_dta.zip"
-[13] "/wp-content/cps/data/cepr_dws_2008_dta.zip"
-[14] "/wp-content/cps/data/cepr_dws_2006_dta.zip"
-[15] "/wp-content/cps/data/cepr_dws_2004_dta.zip"
->
+[12] "/wp-content/cps/data/cepr_dws_2010_dta.zip"                                             
+[13] "/wp-content/cps/data/cepr_dws_2008_dta.zip"                                             
+[14] "/wp-content/cps/data/cepr_dws_2006_dta.zip"                                             
+[15] "/wp-content/cps/data/cepr_dws_2004_dta.zip"                                             
+> 
 #+end_example
 
 ** Just the data please -- regular expressions to the rescue
@@ -173,8 +173,6 @@ In regulars expression =^=, =.=, =*=, and =$= are special characters with the fo
 - . :: matches any character
 - * :: repeates the last caracter zero or more times
 - $ :: matches the end of the string
-
-The backslashes in =\\.= are used to escape the =.= so that it is matched literally instead of matching any characters as it normallly would in a regular expression.
 
 If you have not been introduced to regular expressions yet a nice interactive regex tester is available at [[http://www.regexr.com/]] and an interactive tutorial is available at [[http://www.regexone.com/]].
 
@@ -195,8 +193,10 @@ R comes with a =grep= function that can be used to search for patterns in string
 [4] "/wp-content/cps/data/cepr_dws_2004_dta.zip"
 [5] "/wp-content/cps/data/cepr_dws_2002_dta.zip"
 [6] "/wp-content/cps/data/cepr_dws_2000_dta.zip"
->
+> 
 #+end_example
+
+(Note that the backslashes in the above example are used to escape the =.= so that it is matched literally instead of matching any characters as it normallly would in a regular expression.)
 
 Finally, the data links we've extracted are relative to the ceprdata website. To make them valid we need to prepend =http://tutorials.iq.harvard.edu/= to each one. We can do that using the =paste= function.
 #+BEGIN_SRC R
@@ -208,19 +208,19 @@ Finally, the data links we've extracted are relative to the ceprdata website. To
 #+begin_example
 > dataLinks <- paste("http://tutorials.iq.harvard.edu", dataLinks, sep = "")
 > head(dataLinks)
-[1] "http://tutorials.iq.harvard.eduhttp://tutorials.iq.harvard.edu/wp-content/cps/data/cepr_dws_1994_dta.zip"
-[2] "http://tutorials.iq.harvard.eduhttp://tutorials.iq.harvard.edu/wp-content/cps/data/cepr_dws_1996_dta.zip"
-[3] "http://tutorials.iq.harvard.eduhttp://tutorials.iq.harvard.edu/wp-content/cps/data/cepr_dws_1998_dta.zip"
-[4] "http://tutorials.iq.harvard.eduhttp://tutorials.iq.harvard.edu/wp-content/cps/data/cepr_dws_2000_dta.zip"
-[5] "http://tutorials.iq.harvard.eduhttp://tutorials.iq.harvard.edu/wp-content/cps/data/cepr_dws_2002_dta.zip"
-[6] "http://tutorials.iq.harvard.eduhttp://tutorials.iq.harvard.edu/wp-content/cps/data/cepr_dws_2004_dta.zip"
->
+[1] "http://tutorials.iq.harvard.edu/wp-content/cps/data/cepr_dws_2010_dta.zip"
+[2] "http://tutorials.iq.harvard.edu/wp-content/cps/data/cepr_dws_2008_dta.zip"
+[3] "http://tutorials.iq.harvard.edu/wp-content/cps/data/cepr_dws_2006_dta.zip"
+[4] "http://tutorials.iq.harvard.edu/wp-content/cps/data/cepr_dws_2004_dta.zip"
+[5] "http://tutorials.iq.harvard.edu/wp-content/cps/data/cepr_dws_2002_dta.zip"
+[6] "http://tutorials.iq.harvard.edu/wp-content/cps/data/cepr_dws_2000_dta.zip"
+> 
 #+end_example
 
 ** Getting the list of data links the easy way
 If you look at the result from the previous two methods you might notice that the URLs are all the same save for the year number. This suggests an even easier way to construct the list of URLs:
 #+BEGIN_SRC R
-  head(dataLinks <- paste("http://tutorials.iq.harvard.edu/wp-content/cps/data/cepr_dws_",
+  (dataLinks <- paste("http://tutorials.iq.harvard.edu/wp-content/cps/data/cepr_dws_",
                       seq(1994, 2010, by = 2),
                       "_dta.zip",
                       sep = ""))
@@ -229,7 +229,7 @@ If you look at the result from the previous two methods you might notice that th
 
 #+RESULTS:
 #+begin_example
-> head(dataLinks <- paste("http://tutorials.iq.harvard.edu/wp-content/cps/data/cepr_dws_",
+> (dataLinks <- paste("http://tutorials.iq.harvard.edu/wp-content/cps/data/cepr_dws_",
 +                     seq(1994, 2010, by = 2),
 +                     "_dta.zip",
 +                     sep = ""))
@@ -239,80 +239,98 @@ If you look at the result from the previous two methods you might notice that th
 [4] "http://tutorials.iq.harvard.edu/wp-content/cps/data/cepr_dws_2000_dta.zip"
 [5] "http://tutorials.iq.harvard.edu/wp-content/cps/data/cepr_dws_2002_dta.zip"
 [6] "http://tutorials.iq.harvard.edu/wp-content/cps/data/cepr_dws_2004_dta.zip"
->
+[7] "http://tutorials.iq.harvard.edu/wp-content/cps/data/cepr_dws_2006_dta.zip"
+[8] "http://tutorials.iq.harvard.edu/wp-content/cps/data/cepr_dws_2008_dta.zip"
+[9] "http://tutorials.iq.harvard.edu/wp-content/cps/data/cepr_dws_2010_dta.zip"
+> 
 #+end_example
 
 Wow, that was a _lot_ easier. Why oh why didn't we just do that in the first place? Well, it works for this specific case, but it is much less general than the html parsing methods we discussed previously. Those methods will work in the general case, while pasting the year number into the URLs only works because the URLs we want have a very regular and consistent form.
 
-* Iterating and defining new functions
-Now that we have a vector of URLs pointing to the data files we want to download, we want to iterate over the elements and download each file. We could do this verbosely by writing one line for each file:
-#+BEGIN_SRC R :results silent :eval no
-  ## download.file(dataLinks[1], "cepr_dws_1979.zip")
-  ## download.file(dataLinks[2], "cepr_dws_1980.zip")
-  ## ...
-  ## download.file(dataLinks[n], "dataSets/cepr_dws_n.zip")
-#+END_SRC
-but that is too much typing. Much easier to let R do that for us. We can iterate over the elements of a vector in R using a loop, or using one of the =apply= family of functions.
 
-=for= and =while= loops in R work much the same as they do in other programming languages. The =apply= family of functions apply a function to each element of an object.
+* Exercise 0: html parsing
+The [[http://ceprdata.org/]] website provides code books for the DWS data in =.pdf= format. Links to these code books are available on the documentation page at [[http://ceprdata.org/cps-uniform-data-extracts/cps-displaced-worker-survey/cps-dws-documentation/]]. Parse this page and extract the links to the code books.
 
+Extract all the links ending in =uniform-data-extracts= from the html page at =http://ceprdata.org/=
 
-** Writing functions
-We can use the =download.file= function to download the data files. The =download.file= function requires a URL as the first argument, and a file name as the second argument. We can use the =basename= function to strip of the location part of the URL, leaving only the file name:
+* Exercise 0 prototype                                            :prototype:
 #+BEGIN_SRC R
-  options(width = 110)
-  cbind(link = dataLinks, base = basename(dataLinks))
+  ## read in the html page
+  ceprDoc <- read_html(
+    "http://ceprdata.org/cps-uniform-data-extracts/cps-displaced-worker-survey/cps-dws-documentation/"
+  )
+  ## get the codebook links
+  ceprCodeBookLinks <- html_attr(#extract attributes
+    html_nodes(#from nodes  
+      ceprDoc,#in ceprDoc
+      ## This uses an xpath expression to select just the codebook links.
+      ## You could alternatively download all the links and filter them
+      ## with a regular expression. Use whatever works and is comfortable!
+      ## There is more than one right way.
+      xpath = '//*[@id="content"]/article/div/ul[1]//a'),#matching this xpath
+    'href' #extract href attributes
+  )
 #+END_SRC
 
 #+RESULTS:
 #+begin_example
-> options(width = 110)
-> cbind(link = dataLinks, base = basename(dataLinks))
-      link                                                                        base
- [1,] "http://tutorials.iq.harvard.edu/wp-content/cps/data/cepr_dws_1994_dta.zip" "cepr_dws_1994_dta.zip"
- [2,] "http://tutorials.iq.harvard.edu/wp-content/cps/data/cepr_dws_1996_dta.zip" "cepr_dws_1996_dta.zip"
- [3,] "http://tutorials.iq.harvard.edu/wp-content/cps/data/cepr_dws_1998_dta.zip" "cepr_dws_1998_dta.zip"
- [4,] "http://tutorials.iq.harvard.edu/wp-content/cps/data/cepr_dws_2000_dta.zip" "cepr_dws_2000_dta.zip"
- [5,] "http://tutorials.iq.harvard.edu/wp-content/cps/data/cepr_dws_2002_dta.zip" "cepr_dws_2002_dta.zip"
- [6,] "http://tutorials.iq.harvard.edu/wp-content/cps/data/cepr_dws_2004_dta.zip" "cepr_dws_2004_dta.zip"
- [7,] "http://tutorials.iq.harvard.edu/wp-content/cps/data/cepr_dws_2006_dta.zip" "cepr_dws_2006_dta.zip"
- [8,] "http://tutorials.iq.harvard.edu/wp-content/cps/data/cepr_dws_2008_dta.zip" "cepr_dws_2008_dta.zip"
- [9,] "http://tutorials.iq.harvard.edu/wp-content/cps/data/cepr_dws_2010_dta.zip" "cepr_dws_2010_dta.zip"
->
+> ## read in the html page
+> ceprDoc <- read_html(
++   "http://ceprdata.org/cps-uniform-data-extracts/cps-displaced-worker-survey/cps-dws-documentation/"
++ )
+> ## get the codebook links
+> ceprCodeBookLinks <- html_attr(#extract attributes
++   html_nodes(#from nodes  
++     ceprDoc,#in ceprDoc
++     ## This uses an xpath expression to select just the codebook links.
++     ## You could alternatively download all the links and filter them
++     ## with a regular expression. Use whatever works and is comfortable!
++     ## There is more than one right way.
++     xpath = '//*[@id="content"]/article/div/ul[1]//a'),#matching this xpath
++   'href' #extract href attributes
++ )
+> 
 #+end_example
 
-It would be more convenient if the =download.file= function defaulted to =destfile = basename(url)=. Fortunately it is very easy to write your own functions in R. We can write a wrapper around the =download.file= function like this:
-#+BEGIN_SRC R
+* Downloading files in R
+Now that we have a vector of URLs pointing to the data files we want to download, we want to iterate over the elements and download each file. We can use the =download.file= function to download the data files. 
+
+The =download.file= function requires a URL as the first argument, and a file name as the second argument. We can use the =basename= function to strip of the location part of the URL, leaving only the file name. We could do this verbosely by writing one line for each file:
+#+BEGIN_SRC R :results silent :eval no
+  ## download.file(dataLinks[1], basename(dataLinks[1]))
+  ## download.file(dataLinks[2], basename(dataLinks[2]))
+  ## ...
+  ## download.file(dataLinks[n], basename(dataLinks[3]))
+#+END_SRC
+but that is too much typing. First, it would be more convenient if the =download.file= function defaulted to =destfile = basename(url)=. Fortunately it is very easy to write your own functions in R. We can write a wrapper around the =download.file= function like this:
+
+#+BEGIN_SRC R :results silent
+  ## a simple function to make downloading files easier
   downloadFile <- function(url, # url to download
                            destfile = basename(url), # default name to save to
-                           outdir = "./", # directory to save in
-                           ... # other arguments passed to download.file
+                           outdir = "./dataSets/", # default directory to save in
+                           ... # other named arguments passed to download.file
                            ){
+    ## create output directory if it doesn't exist
+    if(!dir.exists(outdir)) {
+      dir.create(outdir)
+    }
+    ## download the file using the specified url, output directory, and file name
     download.file(url = url, destfile = paste(outdir, destfile, sep = ""), ...)
   }
-
-  ## test it out
-  downloadFile("http://google.com", quiet = TRUE)
-  list.files(pattern = "google")
 #+END_SRC
 
-#+RESULTS:
-> downloadFile <- function(url, destfile = basename(url), ...) {
-+   download.file(url = url, destfile = destfile, ...)
-+ }
-> ## test it out
-> downloadFile("http://google.com", quiet = TRUE)
-> list.files(pattern = "google")
-[1] "google.com"
->
-#+end_example
+Using this function we can download the data files more conveniently, but we haven't yet addressed how to avoid typing out separate function calls for each file we need to download. For that we need iteration.
 
+* Downloading all the files
+To download all the files conveniently we want to iterate over the vector of URLs and download each one. We can carry out this iteration in several ways, including using a =for= loop, or using one of the =apply= family of functions.
 
+=for= and =while= loops in R work much the same as they do in other programming languages. The =apply= family of functions apply a function to each element of an object.
 
 ** Iterating using for-loop
 One way to download the data files is to use a for-loop to iterate over the contents of our vector of URLs. Some people will tell you to avoid for-loops in R but this is nonsense. Loops are convenient and useful, and while they are not the best tool for all situations calling for iteration they are perfectly appropriate for downloading a series of files. If you've used a for loop in any other language you will probably find the R implementation to be very similar.
 
-Finally we can write a for loop to iterate over the data links and download the files. For loops in R have the following general structure:
+For loops in R have the following general structure:
 =for(<placeholder> in <thing to iterate over>) {do stuff with placeholder}=. In our case we want to iterate over =dataLinks= and download each one, so this becomes
 #+BEGIN_SRC R :results silent
   ## make a directory to store the data
@@ -332,251 +350,182 @@ The =sapply= function iterates over a vector or list and applies a function to e
          outdir = "dataSets/")
 #+END_SRC
 
-For this task (downloading files) there is not much advantage to using =sapply= instead of =for=. The main advantage is the simpler handling of return values. To see this, let's calculate the size of each of the files we downloaded earlier. We've already know how to do this with =sapply=;
+
+We can now use what we've learned about iteration to unzip all the files in the =dataSets= directory, a task I leave to you.
+
+* Exercise 1: Iterate and extract
+
+Use a =for= loop or =*apply= function to unzip each of the =.zip= files in the =dataSets= directory.
+
+BONUS (optional): calculate the size of each extracted file and calculate the difference in size between each =.dta= file and the =.zip= file it was extracted from.
+* Exercise 1 prototype                                            :prototype:
 #+BEGIN_SRC R
-  ## get list of files
-  dataFiles <- list.files("dataSets", pattern = "\\.zip$", full.names = TRUE)
-  ## get file size for each one
-  fsizes <- sapply(dataFiles,
-                   file.size)
-  fsizes / 1024^2 # in Mb.
+  ## using sapply
+  sapply(dataFiles, unzip, exdir = "dataSets")
+  ## using a for loop
+  for(f in dataFiles) unzip(f, exdir = "dataSets")
+
+  ## Calculating compression ratios
+  ceprDataFiles <- list.files("dataSets", pattern = "\\.dta$", full.names=TRUE)
+
+  uncompSize <- round(file.size(ceprDataFiles) / 1024^2)
+  compSize <- round(file.size(dataFiles) / 1024^2)
+
+  cbind(zipFile = paste0(basename(dataFiles), ": ", compSize, "Mb"),
+        dtaFile = paste0(basename(ceprDataFiles), ": ", uncompSize, "Mb"),
+        diff = paste0(round(uncompSize - compSize), "Mb"),
+        compression_ratio = round(uncompSize / compSize, digits = 3))
 #+END_SRC
 
 #+RESULTS:
-#+begin_example
-> ## get list of files
-> dataFiles <- list.files("dataSets", pattern = "\\.zip$", full.names = TRUE)
-> ## get file size for each one
-> fsizes <- sapply(dataFiles,
-+                  file.size)
-> fsizes / 1024^2 # in Mb.
-dataSets/cepr_dws_1994_dta.zip dataSets/cepr_dws_1996_dta.zip
-                      4.742794                       4.159605
-dataSets/cepr_dws_1998_dta.zip dataSets/cepr_dws_2000_dta.zip
-                      4.161445                       4.259313
-dataSets/cepr_dws_2002_dta.zip dataSets/cepr_dws_2004_dta.zip
-                      5.093724                       5.032702
-dataSets/cepr_dws_2006_dta.zip dataSets/cepr_dws_2008_dta.zip
-                      4.973910                       4.900951
-dataSets/cepr_dws_2010_dta.zip
-                      5.034080
->
-#+end_example
 
-How can we do that with a for loop? First we need to create a vector to store the results, then as we loop through we need to assign the result to an element of the vector. It's not terrible:
-#+BEGIN_SRC R
-  ## create vector to store the results
-  fsizes <- vector(mode = "integer", length = length(dataFiles))
-  ## names for keeping track
-  names(fsizes) <- dataFiles
-  ## loop over and calculate file.size
-  for (file in dataFiles) {
-    fsizes[[file]] <- file.size(file)
-  }
-  fsizes / 1024^2
-#+END_SRC
+* Importing and inspecting data and meta-data 
+Our next goal is to read in the data that we downloaded and extracted earlier. The data are stored as Stata data sets, which can be imported using the =read.dta= function in the =foreign= package. Let's start by reading just the first data set.
 
-#+RESULTS:
-#+begin_example
-> ## create vector to store the results
-> fsizes <- vector(mode = "integer", length = length(dataFiles))
-> ## names for keeping track
-> names(fsizes) <- dataFiles
-> ## loop over and calculate file.size
-> for (file in dataFiles) {
-+   fsizes[[file]] <- file.size(file)
-+ }
-> fsizes / 1024^2
-dataSets/cepr_dws_1994_dta.zip dataSets/cepr_dws_1996_dta.zip
-                      4.742794                       4.159605
-dataSets/cepr_dws_1998_dta.zip dataSets/cepr_dws_2000_dta.zip
-                      4.161445                       4.259313
-dataSets/cepr_dws_2002_dta.zip dataSets/cepr_dws_2004_dta.zip
-                      5.093724                       5.032702
-dataSets/cepr_dws_2006_dta.zip dataSets/cepr_dws_2008_dta.zip
-                      4.973910                       4.900951
-dataSets/cepr_dws_2010_dta.zip
-                      5.034080
->
-#+end_example
-
-As I said, not terrible, but definitely more complicated than the sapply version.
-
-Finally, note also that the previous =for= and =sapply= examples are contrived; =file.size= is vectorized, and the recommended way to get this size of all the files in a directory is simply
-#+BEGIN_SRC R
-  file.size(dataFiles)
-#+END_SRC
-
-#+RESULTS:
-#+begin_example
-> file.size(dataFiles)
-[1] 4973180 4361662 4363591 4466213 5341157 5277171 5215523 5139020 5278615
->
-#+end_example
-
-** Iterating over arrays with the =apply= function
-Now that we've downloaded some of the ceprdata.org data we might want to get some more information about these files. We can do that using the =file.info= function:
-#+BEGIN_SRC R
-  ## get file size, mode, and modification time.
-  ## note that "cbind" binds the vectors into a matrix, by column
-  ceprFileInfo <- cbind(size = file.size(dataFiles),
-                        mode = file.mode(dataFiles),
-                        mtime = file.mtime(dataFiles))
-  ## add rownames
-  rownames(ceprFileInfo) <- dataFiles
-  ceprFileInfo
-#+END_SRC
-
-#+RESULTS:
-#+begin_example
-> ## get file size, mode, and modification time.
-> ## note that "cbind" binds the vectors into a matrix, by column
-> ceprFileInfo <- cbind(size = file.size(dataFiles),
-+                       mode = file.mode(dataFiles),
-+                       mtime = file.mtime(dataFiles))
-> ## add rownames
-> rownames(ceprFileInfo) <- dataFiles
-> ceprFileInfo
-                                  size mode      mtime
-dataSets/cepr_dws_1994_dta.zip 4973180  420 1450204152
-dataSets/cepr_dws_1996_dta.zip 4361662  420 1450204152
-dataSets/cepr_dws_1998_dta.zip 4363591  420 1450204153
-dataSets/cepr_dws_2000_dta.zip 4466213  420 1450204153
-dataSets/cepr_dws_2002_dta.zip 5341157  420 1450204153
-dataSets/cepr_dws_2004_dta.zip 5277171  420 1450204153
-dataSets/cepr_dws_2006_dta.zip 5215523  420 1450204153
-dataSets/cepr_dws_2008_dta.zip 5139020  420 1450204153
-dataSets/cepr_dws_2010_dta.zip 5278615  420 1450204153
->
-#+end_example
-
-ceprFileInfo is a _matrix_, with each row containing information about one of the files we downloaded.
-
-How can we can calculate the means for each column in this matrix? We could do it using =sapply= or =for=, something like
-#+BEGIN_SRC R
-  sapply(colnames(ceprFileInfo), function(x) mean(ceprFileInfo[ , x]))
-#+END_SRC
-
-#+RESULTS:
-#+begin_example
-> sapply(colnames(ceprFileInfo), function(x) mean(ceprFileInfo[ , x]))
-      size       mode      mtime
-   4935126        420 1450204153
->
-#+end_example
-but this a) requires indexing which we haven't yet talked about, and b) there is an easier way to do it:
-#+begin_src R
-  ## average file size and permissions
-  (fileInfoAverage <- apply(ceprFileInfo, MARGIN = 2, mean))
-  ## standard deviation of file size and permissions
-  apply(ceprFileInfo, MARGIN = 2, sd)
-  ## deviation from the average
-  apply(ceprFileInfo, MARGIN = 1, function(x) x - fileInfoAverage) #
-
-#+end_src
-
-#+RESULTS:
-#+begin_example
-> ## average file size and permissions
-> (fileInfoAverage <- apply(ceprFileInfo, MARGIN = 2, mean))
-      size       mode      mtime
-   4935126        420 1450204153
-> ## standard deviation of file size and permissions
-> apply(ceprFileInfo, MARGIN = 2, sd)
-        size         mode        mtime
-4.178631e+05 0.000000e+00 3.608330e-01
-> ## deviation from the average
-> apply(ceprFileInfo, MARGIN = 1, function(x) x - fileInfoAverage) #
-      dataSets/cepr_dws_1994_dta.zip dataSets/cepr_dws_1996_dta.zip
-size                   38054.2222222                  -5.734638e+05
-mode                       0.0000000                   0.000000e+00
-mtime                     -0.6611264                  -3.411188e-01
-      dataSets/cepr_dws_1998_dta.zip dataSets/cepr_dws_2000_dta.zip
-size                   -5.715348e+05                  -4.689128e+05
-mode                    0.000000e+00                   0.000000e+00
-mtime                  -1.677816e-01                  -7.777953e-02
-      dataSets/cepr_dws_2002_dta.zip dataSets/cepr_dws_2004_dta.zip
-size                    4.060312e+05                   3.420452e+05
-mode                    0.000000e+00                   0.000000e+00
-mtime                   2.555633e-02                   1.255586e-01
-      dataSets/cepr_dws_2006_dta.zip dataSets/cepr_dws_2008_dta.zip
-size                    2.803972e+05                   2.038942e+05
-mode                    0.000000e+00                   0.000000e+00
-mtime                   2.188940e-01                   3.922315e-01
-      dataSets/cepr_dws_2010_dta.zip
-size                    3.434892e+05
-mode                    0.000000e+00
-mtime                   4.855669e-01
->
-#+end_example
-
-Now that we understand iteration in R we we want to import and process the files we downloaded from ceprdata.org. First we need to unzip them.
 #+BEGIN_SRC R :results silent
-  sapply(dataFiles, unzip)
-  ceprDataFiles <- list.files(pattern = "\\.dta$")
-#+END_SRC
-
-Finally we can read our data into R, but I leave that to you! Use a for loop or =sapply= (preferred) to read in each DWS data file. You can use the =read.dta= function from the foreign package to read these data files into R.
-
-** Exersise 1
-
-Read in all the DWS data we downloaded and unzipped earlier.
-
-BONUS (optional): calculate the size of each of the data sets you read in.
-
-** Exercise 1 prototype                                          :prototype:
-#+BEGIN_SRC R
+  ## attach the foreign packge so we can read stata files
   library(foreign)
-  ceprData <- sapply(ceprDataFiles, read.dta, simplify = FALSE)
-  (dataSizes <- sapply(ceprData, object.size)/1024^2)
+
+  ## get a list of all the stata files in the dataSets directory
+  ceprDataFiles <- list.files("dataSets", pattern = "\\.dta$", full.names=TRUE)
+
+  ## read in the first one
+  ceprData1 <- read.dta(ceprDataFiles[1])
 #+END_SRC
 
-#+RESULTS:
-#+begin_example
-> library(foreign)
-> ceprData <- sapply(ceprDataFiles, read.dta, simplify = FALSE)
-> (dataSizes <- sapply(ceprData, object.size)/1024^2)
-cepr_dws_1994.dta cepr_dws_1996.dta cepr_dws_1998.dta cepr_dws_2000.dta
-         123.8756          106.4440          107.2503          108.1642
-cepr_dws_2002.dta cepr_dws_2004.dta cepr_dws_2006.dta cepr_dws_2008.dta
-         132.6510          130.6609          129.0671          128.9296
-cepr_dws_2010.dta
-         129.6200
->
-#+end_example
-
-
-* Objects, attributes, and indexing
-Now that we've read in the cepr.org data we want to get some more information about it. 
+Now that we've read in some of the data we want to get some more information about it. 
 
 ** Mode and length
-Information about objects in R are stored as /attributes/ of the object. All R objects have a storage /mode/ and a /length/. Since all objects in R have the attributes we refer to them as /intrinsic attributes/. We can get the value of these intrinsic attributes using the =mode= and =length= functions respecively. For example, what is the mode and length of our =ceprData= object?
+Information about objects in R are stored as /attributes/ of the object. All R objects have a storage /mode/ and a /length/. Since all objects in R have the attributes we refer to them as /intrinsic attributes/. We can get the value of these intrinsic attributes using the =mode= and =length= functions respecively. For example, what is the mode and length of our =ceprData1= object?
 #+BEGIN_SRC R
-  mode(ceprData)
-  length(ceprData)
+  mode(ceprData1)
+  length(ceprData1)
 #+END_SRC  
 
 #+RESULTS:
 #+begin_example
-> mode(ceprData)
+> mode(ceprData1)
 [1] "list"
-> length(ceprData)
-[1] 6
+> length(ceprData1)
+[1] 178
 > 
 #+end_example
 
-Additional attributes and be accessed vie the =attributes= function. Let's see what other attributes our =ceprData= object has.
+** Other properties of data.frames
+So far we've seen that =ceprData1= is a list of length 178. Actually =ceprData1= is a special kind of list called a =data.frame=. We can see that by asking R what the =class= of the object is.
 #+BEGIN_SRC R
-  attributes(ceprData)
+  class(ceprData1)
 #+END_SRC
 
 #+RESULTS:
 #+begin_example
-> attributes(ceprData)
-$names
-[1] "cepr_dws_2000.dta" "cepr_dws_2002.dta" "cepr_dws_2004.dta" "cepr_dws_2006.dta"
-[5] "cepr_dws_2008.dta" "cepr_dws_2010.dta"
+> class(ceprData1)
+[1] "data.frame"
+> 
+#+end_example
 
+A /data.frame/ in R is a list with elements of equal length. It is a rectangular structure with rows and columns. In addition to the /mode/ and /length/ that all object in R have, /data.frames/ also have dimension, (col)names, and =rownames.
+#+BEGIN_SRC R
+  dim(ceprData1)
+  names(ceprData1)
+  c(head(rownames(ceprData1)), "...", tail(rownames(ceprData1)))
+#+END_SRC
+
+#+RESULTS:
+#+begin_example
+> dim(ceprData1)
+[1] 156246    178
+> names(ceprData1)
+  [1] "year"      "indws"     "dw_stat"   "dwswgt"    "dw"        "dw_bls"   
+  [7] "dw_why"    "dw_when"   "xrecall"   "notice"    "not_when"  "ljten"    
+ [13] "ljtenr"    "uibens"    "uiended"   "moved"     "movedec"   "worked"   
+ [19] "wkswo"     "numjobs"   "ljcowd"    "ljcow"     "ljindd94"  "ljindd04" 
+ [25] "ljind94"   "ljind04"   "ljagric"   "ljmanuf"   "ljservs"   "ljconstr" 
+ [31] "ljrwtrade" "ljfire"    "ljoccd94"  "ljoccd04"  "ljocc94"   "ljunion"  
+ [37] "ljhealth"  "hi_now"    "ljft"      "ljhv"      "cjftcps"   "cjhvcps"  
+ [43] "ljpayper"  "ljot"      "ljwage"    "ljwagetc"  "ljhours"   "ljwkot"   
+ [49] "ljottc"    "ljothrs"   "ljwktc"    "ljwkpay"   "ljweeks"   "ljpayr"   
+ [55] "cjppdws"   "cjpporg"   "cjpayper"  "cjhr_dws"  "cjhr_org"  "cjhrly"   
+ [61] "cjot_dws"  "cjot_org"  "cjot"      "cjw_dws"   "cjw_org"   "cjwage"   
+ [67] "cjwdwstc"  "cjworgtc"  "cjw_tc"    "cjh_dws"   "cjh_org"   "cjhours"  
+ [73] "cjotadws"  "cjotaorg"  "cjotamt"   "cjottcd"   "cjottco"   "cjottc"   
+ [79] "cjothrd"   "cjwtcdws"  "cjwtcorg"  "cjwtc"     "cjwpdws"   "cjwporg"  
+ [85] "cjwkpay"   "cjwk_dws"  "cjwk_cps"  "cjweeks"   "cjpayorg"  "cjpayr"   
+ [91] "month"     "minsamp"   "hhid"      "hhnum"     "hrlonglk"  "lineno"   
+ [97] "fnlwgt"    "orgwgt"    "lonwgt"    "famwgt"    "age"       "female"   
+[103] "wbho"      "forborn"   "citizen"   "prcitshp"  "penatvty"  "pemntvty" 
+[109] "pefntvty"  "prinusyr"  "arrived"   "vet"       "married"   "ownchild" 
+[115] "ch02"      "ch05"      "ch35"      "ch613"     "ch1417"    "famrel84" 
+[121] "famrel94"  "faminc"    "lfstat"    "empl"      "unem"      "nilf"     
+[127] "selfemp"   "selfinc"   "pubsect"   "pubfed"    "pubst"     "publoc"   
+[133] "unmem"     "uncov"     "union"     "student"   "studpt"    "state"    
+[139] "metro"     "centcity"  "suburb"    "rural"     "educ"      "ind_nber" 
+[145] "ind_2d"    "ind70"     "ind80"     "ind03"     "agric"     "manuf"    
+[151] "servs"     "constr"    "rwtrade"   "fire"      "docc70"    "docc80"   
+[157] "docc03"    "occ70"     "occ80"     "occ03"     "manag83"   "manag03"  
+[163] "hourslw"   "reason94"  "absent94"  "uhourse"   "ptecon"    "unempt"   
+[169] "prhrusl"   "pehrusl1"  "pehrusl2"  "pehruslt"  "peernhro"  "imphrs"   
+[175] "hrsimptd"  "hrernhr"   "uhoursi"   "blsimpt"  
+> c(head(rownames(ceprData1)), "...", tail(rownames(ceprData1)))
+ [1] "1"      "2"      "3"      "4"      "5"      "6"      "..."    "156241" "156242"
+[10] "156243" "156244" "156245" "156246"
+> 
+#+end_example
+
+** Additional attributes
+OK, so far we know the ceprData1 is a /data.frame/ with 156246 rows and 178 columns, and that the variables have terrible cryptic names like =cjpporg= and =ljagric=. What do we actually have here? One way to answer the question is
+#+BEGIN_SRC R :results silent
+  browseURL(ceprCodeBookLinks[1])
+#+END_SRC
+and that is a good answer actually. In our case the meta-data has also been embedded in the =.dta= files by our friends at [[http://ceprdata.org][ceprdata.org]]. This meta-data has been attached to the =ceprData1= data.frame in the form of additional attributes. 
+
+The system used by R for storing attributes of this kind is simple. Arbitrary attributes can be set using the =attr= function, and retrieved using either =attr= or the =attributes= function. Let's take a quick look a this system before using it to access the ceprData1 meta-data.
+
+#+BEGIN_SRC R
+  x <- 1:10
+  attributes(x)
+  attr(x, "description") <- "This is vector of integers from 1 to 10"
+  attributes(x)
+  attr(x, "how_many") <- "There are ten things in this vector"
+  attributes(x)
+  attr(x, "description")
+#+END_SRC
+
+#+RESULTS:
+#+begin_example
+> x <- 1:10
+> attributes(x)
+NULL
+> attr(x, "description") <- "This is vector of integers from 1 to 10"
+> attributes(x)
+$description
+[1] "This is vector of integers from 1 to 10"
+
+> attr(x, "how_many") <- "There are ten things in this vector"
+> attributes(x)
+$description
+[1] "This is vector of integers from 1 to 10"
+
+$how_many
+[1] "There are ten things in this vector"
+
+> attr(x, "description")
+[1] "This is vector of integers from 1 to 10"
+> 
+#+end_example
+
+ 
+As we've seen, additional attributes and be accessed vie the =attributes= function. Let's see what other attributes our =ceprData= object has.
+#+BEGIN_SRC R
+  names(attributes(ceprData1))
+#+END_SRC
+
+#+RESULTS:
+#+begin_example
+> names(attributes(ceprData1))
+ [1] "datalabel"        "time.stamp"       "names"            "formats"         
+ [5] "types"            "val.labels"       "var.labels"       "expansion.fields"
+ [9] "row.names"        "version"          "label.table"      "class"           
 > 
 #+end_example
 
@@ -599,30 +548,6 @@ We can extract or replace elements of R objects using bracket indexing. Exactly 
 #+END_SRC
 
 #+RESULTS:
-#+begin_example
-> ## what do we get when we extract one element with single brackets?
-> length(ceprData[1]); mode(ceprData[1]); class(ceprData[1]); attributes(ceprData[1])
-[1] 1
-[1] "list"
-[1] "list"
-$names
-[1] "cepr_dws_2000.dta"
-
-> ## what do we get when we extract the middle two elements with single brackets?
-> length(ceprData[2:3]); mode(ceprData[2:3]); class(ceprData[2:3]); attributes(ceprData[2:3])
-[1] 2
-[1] "list"
-[1] "list"
-$names
-[1] "cepr_dws_2002.dta" "cepr_dws_2004.dta"
-
-> ## what do we get when we extract the first element with a double bracket
-> length(ceprData[[1]]); mode(ceprData[[1]]); class(ceprData[[1]])#
-[1] 178
-[1] "list"
-[1] "data.frame"
-> 
-#+end_example
 
 Right. So what have we learned? We've learned that indexing lists works like this:
 [[file:images/HadleyWickham_index_list.png]][fn:3]
@@ -642,27 +567,6 @@ You may have noticed in the previous code example that I did _not_ ask for =attr
 #+END_SRC
 
 #+RESULTS:
-#+begin_example
-> ceprDataInfo <- attributes(ceprData[[1]])
-> mode(ceprDataInfo)
-[1] "list"
-> class(ceprDataInfo)
-[1] "list"
-> length(ceprDataInfo)
-[1] 12
-> names(ceprDataInfo)
- [1] "datalabel"        "time.stamp"       "names"            "formats"
- [5] "types"            "val.labels"       "var.labels"       "expansion.fields"
- [9] "row.names"        "version"          "label.table"      "class"
-> (ceprInfoLength <- sapply(ceprDataInfo, length))
-       datalabel       time.stamp            names          formats            types
-               1                1              178              178              178
-      val.labels       var.labels expansion.fields        row.names          version
-             178              178              525           156246                1
-     label.table            class
-              30                1
->
-#+end_example
 
 =ceprInfoLength= is an /atomic vector/, i.e., a vector with all elements of the same mode. We can index a vector with =[= and =[[=, just as we do for lists.
 
@@ -674,23 +578,6 @@ You may have noticed in the previous code example that I did _not_ ask for =attr
 #+END_SRC
 
 #+RESULTS:
-#+begin_example
-> mode(ceprInfoLength); class(ceprInfoLength); length(ceprInfoLength)
-[1] "numeric"
-[1] "integer"
-[1] 12
-> ceprInfoLength[1]
-datalabel 
-        1 
-> ceprInfoLength[[1]]
-[1] 1
-> ceprInfoLength[1:10]
-       datalabel       time.stamp            names          formats            types 
-               1                1              178              178              178 
-      val.labels       var.labels expansion.fields        row.names          version 
-             178              178              525           135570                1 
-> 
-#+end_example
 
 
 The code above is an example of /indexing by position/. We can also index by /name/ or using /logical indexing/ as shown below.
@@ -702,20 +589,6 @@ The code above is an example of /indexing by position/. We can also index by /na
 #+END_SRC
 
 #+RESULTS:
-#+begin_example
-> ceprInfoLength[c("names", "formats", "types")]
-  names formats   types 
-    178     178     178 
-> ceprInfoLength[grepl("lab", names(ceprInfoLength))]
-  datalabel  val.labels  var.labels label.table 
-          1         178         178          30 
-> ceprInfoLength[ceprInfoLength == 1]
- datalabel time.stamp    version      class 
-         1          1          1          1 
-> names(ceprInfoLength)[ceprInfoLength == 1]
-[1] "datalabel"  "time.stamp" "version"    "class"     
-> 
-#+end_example
 
 Finally, we can use negation and negative indices to reverse the usual meanings.
 #+BEGIN_SRC R
@@ -725,24 +598,6 @@ Finally, we can use negation and negative indices to reverse the usual meanings.
 #+END_SRC
 
 #+RESULTS:
-#+begin_example
-> ceprInfoLength[- c(3, 7, 9)]
-       datalabel       time.stamp          formats            types       val.labels 
-               1                1              178              178              178 
-expansion.fields          version      label.table            class 
-             525                1               30                1 
-> ceprInfoLength[setdiff(names(ceprInfoLength), c("names", "formats", "types"))]
-       datalabel       time.stamp       val.labels       var.labels expansion.fields 
-               1                1              178              178              525 
-       row.names          version      label.table            class 
-          135570                1               30                1 
-> ceprInfoLength[!grepl("lab", names(ceprInfoLength))]
-      time.stamp            names          formats            types expansion.fields 
-               1              178              178              178              525 
-       row.names          version            class 
-          135570                1                1 
-> 
-#+end_example
 
 *** Indexing matrices
 Now that we know a little more about indexing, let's get back to investigating the ceprData metadata. 
@@ -754,20 +609,6 @@ Now that we know a little more about indexing, let's get back to investigating t
 #+END_SRC
 
 #+RESULTS:
-#+begin_example
-> (infoInfo <- sapply(ceprDataInfo, function(x) {
-+   return(c(mode = mode(x), class = class(x), length = length(x)))
-+   }))
-       datalabel   time.stamp  names       formats     types     val.labels 
-mode   "character" "character" "character" "character" "numeric" "character"
-class  "character" "character" "character" "character" "integer" "character"
-length "1"         "1"         "178"       "178"       "178"     "178"      
-       var.labels  expansion.fields row.names   version   label.table class      
-mode   "character" "list"           "character" "numeric" "list"      "character"
-class  "character" "list"           "character" "integer" "list"      "character"
-length "178"       "525"            "135570"    "1"       "30"        "1"        
-> 
-#+end_example
 
 =infoInfo= contains information about the contents of =ceprDataInfo=. =infoInfo= is a /matrix/. A matrix in R is simply a vector with two dimensions. We can index a matrix exactly as we do a vector:
 #+BEGIN_SRC R
@@ -776,20 +617,6 @@ length "178"       "525"            "135570"    "1"       "30"        "1"
 #+END_SRC
 
 #+RESULTS:
-#+begin_example
-> infoInfo
-       datalabel   time.stamp  names       formats     types     val.labels 
-mode   "character" "character" "character" "character" "numeric" "character"
-class  "character" "character" "character" "character" "integer" "character"
-length "1"         "1"         "178"       "178"       "178"     "178"      
-       var.labels  expansion.fields row.names   version   label.table class      
-mode   "character" "list"           "character" "numeric" "list"      "character"
-class  "character" "list"           "character" "integer" "list"      "character"
-length "178"       "525"            "135570"    "1"       "30"        "1"        
-> infoInfo[c(1, 3, 9)]
-[1] "character" "1"         "178"      
-> 
-#+end_example
 
 but more commonly we will index a matrix by referring to both dimensions, like this:
 #+BEGIN_SRC R
@@ -799,25 +626,6 @@ but more commonly we will index a matrix by referring to both dimensions, like t
 #+END_SRC
 
 #+RESULTS:
-#+begin_example
-> infoInfo[1:2, c(7, 3, 1)]
-      var.labels  names       datalabel  
-mode  "character" "character" "character"
-class "character" "character" "character"
-> infoInfo[ , 1:2]
-       datalabel   time.stamp 
-mode   "character" "character"
-class  "character" "character"
-length "1"         "1"        
-> infoInfo[3:2, ]
-       datalabel   time.stamp  names       formats     types     val.labels 
-length "1"         "1"         "178"       "178"       "178"     "178"      
-class  "character" "character" "character" "character" "integer" "character"
-       var.labels  expansion.fields row.names   version   label.table class      
-length "178"       "525"            "135570"    "1"       "30"        "1"        
-class  "character" "list"           "character" "integer" "list"      "character"
-> 
-#+end_example
 
 All the techniques we learned for indexing vectors apply. For example:
 #+BEGIN_SRC R
@@ -826,27 +634,6 @@ All the techniques we learned for indexing vectors apply. For example:
 #+END_SRC
 
 #+RESULTS:
-#+begin_example
-> attributes(infoInfo)
-$dim
-[1]  3 12
-
-$dimnames
-$dimnames[[1]]
-[1] "mode"   "class"  "length"
-
-$dimnames[[2]]
- [1] "datalabel"        "time.stamp"       "names"            "formats"         
- [5] "types"            "val.labels"       "var.labels"       "expansion.fields"
- [9] "row.names"        "version"          "label.table"      "class"           
-
-
-> infoInfo[c("length", "mode"), grepl("name", colnames(infoInfo))]
-       names       row.names  
-length "178"       "135570"   
-mode   "character" "character"
-> 
-#+end_example
 
 *** Indexing data.frames
 As we noted earlier data.frames are a special kind of list. Therefore both =[= and =[[= indexing will work exactly as they do for lists. Unlike other lists, data.frames have two dimensions (like a matrix), so two-dimensional indexing works on data.frames just as it does for matrices.
@@ -863,24 +650,6 @@ Extract elements from =ceprDataInfo= that will help you understand what each col
 #+END_SRC
 
 #+RESULTS:
-#+begin_example
-> ceprCodebook <- data.frame(ceprDataInfo[ sapply(ceprDataInfo, length) == ncol(ceprData[[1]]) ])
-> rbind(head(ceprCodebook), tail(ceprCodebook))
-       names formats types val.labels                       var.labels
-1       year   %8.0g   252                                        Year
-2      indws   %8.0g   251                            Eligible for DWS
-3    dw_stat   %8.0g   251                        DWS interview status
-4     dwswgt   %9.0g   254                                  DWS weight
-5         dw   %8.0g   251                                   Displaced
-6     dw_bls   %8.0g   251            Displaced, strict BLS definition
-173 peernhro   %8.0g   251                      Usual hours, ORG (BLS)
-174   imphrs   %9.0g   254                   Hours, main job (imputed)
-175 hrsimptd   %9.0g   251                               Hours imputed
-176  hrernhr   %8.0g   251                      Hours assigned, ernhro
-177  uhoursi   %9.0g   251                        Hours, w/ imputation
-178  blsimpt   %8.0g   251                  BLS allocated weekly hours
->
-#+end_example
 
 * Aggregating and combining data
 Now that we have all the data read in, and we know what is in each column, I want to aggregate the data to down to a managable size. Specifically I want to calculate the average income by state/year/rural/gender. I can do that using the =aggregate= function (the =data.table= and =dplyr= packages provide advanced aggregation capabilities, but =aggregate= is available in base R and works well for many things).
@@ -894,14 +663,6 @@ Now that we have all the data read in, and we know what is in each column, I wan
 #+END_SRC
 
 #+RESULTS:
-#+begin_example
-> ceprData <- sapply(ceprData, function(x) {
-+   aggregate(x["wkswo"],
-+             by = x[c("year", "state", "rural", "female")],
-+             FUN = median, na.rm = TRUE)},
-+   simplify = FALSE)
->
-#+end_example
 
 In particular combine all the data together into a single data.frame. Right now we have a list of data.frames, and we simply want to stack this one on top of the other. We can do that with the =rbind= function. (Other ways you might want to combine data are described in =?cbind= and =?merge=).
 
@@ -915,10 +676,6 @@ and that's not too bad for four elements. But what if we had 100 or 1000000? You
 #+END_SRC
 
 #+RESULTS:
-#+begin_example
-> ceprData <- Reduce("rbind", ceprData)
->
-#+end_example
 
 Now we can take a look at the trends in wages over the last few years.
 #+BEGIN_SRC R :results output graphics :file images/out.png :width 900 :heigth 900
@@ -961,9 +718,9 @@ An /arglist/ consists of key-value pairs (with the value being optional). The ar
 #+RESULTS:
 #+begin_example
 > args(downloadFile)
-function (url, destfile = basename(url), ...)
+function (url, destfile = basename(url), outdir = "./", ...) 
 NULL
->
+> 
 #+end_example
 
 As we've seen, values can be functions of other keys. We've used that to set a reasonable default for the names of the files we are downloading, while still offering the user of our function the flexibility to specify alternative names.
@@ -1174,18 +931,18 @@ logical(0)
 +               outdir = "tmp/",
 +               base_url = "http://tutorials.iq.harvard.edu",
 +               pattern = "R/")
-            http://tutorials.iq.harvard.edu/R/Rintro/Rintro.html
-                                                               0
-      http://tutorials.iq.harvard.edu/R/Rgraphics/Rgraphics.html
-                                                               0
-  http://tutorials.iq.harvard.edu/R/Rstatistics/Rstatistics.html
-                                                               0
-http://tutorials.iq.harvard.edu/R/RProgramming/Rprogramming.html
-                                                               0
+            http://tutorials.iq.harvard.edu/R/Rintro/Rintro.html 
+                                                               0 
+      http://tutorials.iq.harvard.edu/R/Rgraphics/Rgraphics.html 
+                                                               0 
+  http://tutorials.iq.harvard.edu/R/Rstatistics/Rstatistics.html 
+                                                               0 
+http://tutorials.iq.harvard.edu/R/RProgramming/Rprogramming.html 
+                                                               0 
 > list.files("tmp")
-[1] "Rgraphics.html"           "Rintro.html"              "Rprogramming.html"
+[1] "Rgraphics.html"           "Rintro.html"              "Rprogramming.html"       
 [4] "Rstatistics.html"         "tutorials.iq.harvard.edu"
->
+> 
 #+end_example
 
 * Things that may surprise you
@@ -1563,8 +1320,26 @@ Use the built-in /iris/ data set (comes with R, will be available in your worksp
 
 * Footnotes
 
+[fn:2] Finally, note also that the previous =for= and =sapply= examples are contrived; =file.size= is vectorized, and the recommended way to get this size of all the files in a directory is simply
+#+BEGIN_SRC R
+  file.size(dataFiles)
+#+END_SRC
+
+#+RESULTS:
+#+begin_example
+> file.size(dataFiles)
+[1] 4973180 4361662 4363591 4466213 5341157 5277171 5215523 5139020 5278615
+>
+#+end_example
+
+Now that we understand iteration in R we can use it to unzip the data files we downloaded earlier. We can unzip single files using the =unzip= function, like this:
+#+BEGIN_SRC R :results silent
+  unzip(dataFiles[[1]])
+#+END_SRC
+
+
 [fn:3] Photo by Hadley Wickham via https://twitter.com/hadleywickham/status/643381054758363136/photo/1. Used by permission.
 
-[fn:2] [[http://stackoverflow.com/questions/1732348/regex-match-open-tags-except-xhtml-self-contained-tags]]
+[fn:4] [[http://stackoverflow.com/questions/1732348/regex-match-open-tags-except-xhtml-self-contained-tags]]
 
 [fn:1] Center for Economic and Policy Research. 2012. CPS Displaced Worker Uniform Extracts, Version 1.02. Washington, DC.
