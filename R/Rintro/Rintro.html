@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2015-10-15 Thu 17:32 -->
+<!-- 2016-01-11 Mon 12:42 -->
 <meta  http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta  name="viewport" content="width=device-width, initial-scale=1" />
 <title>Introduction to R</title>
@@ -150,11 +150,7 @@ for the JavaScript code in this tag.
 <h3 id="orgheadline1">Materials and setup</h3>
 <div class="outline-text-3" id="text-orgheadline1">
 <p>
-Lab computer users: Log in using the user name and password on the board to your left.
-</p>
-
-<p>
-Laptop users: You should have R installed &#x2013;if not:
+You should have R installed &#x2013;if not:
 </p>
 <ul class="org-ul">
 <li>Open a web browser and go to <a href="http://cran.r-project.org/">http://cran.r-project.org/</a> and download and install it</li>
@@ -162,7 +158,7 @@ Laptop users: You should have R installed &#x2013;if not:
 </ul>
 
 <p>
-Everyone: Download workshop materials:
+Download workshop materials:
 </p>
 <ul class="org-ul">
 <li>Download materials from <a href="http://tutorials.iq.harvard.edu/R/Rintro.zip">http://tutorials.iq.harvard.edu/R/Rintro.zip</a></li>
@@ -202,11 +198,11 @@ task, chances are good that there is an R package for that. For example:
 </ul>
 <div class="org-src-container">
 
-<pre class="src src-R"><span style="color: #a45bad;">library</span><span style="color: #2f96dc;">(</span>rgl<span style="color: #2f96dc;">)</span>
-open3d<span style="color: #2f96dc;">()</span>
-comet <span style="color: #a45bad;">&lt;-</span> readOBJ<span style="color: #2f96dc;">(</span>url<span style="color: #bc6ec5;">(</span><span style="color: #2d9574;">"http://sci.esa.int/science-e/www/object/doc.cfm?fobjectid=54726"</span><span style="color: #bc6ec5;">)</span><span style="color: #2f96dc;">)</span>
-shade3d<span style="color: #2f96dc;">(</span>comet, col=<span style="color: #2d9574;">"gray"</span><span style="color: #2f96dc;">)</span>
-writeWebGL<span style="color: #2f96dc;">(</span>dir=<span style="color: #2d9574;">"images"</span>, filename = <span style="color: #2d9574;">"images/comet.html"</span><span style="color: #2f96dc;">)</span>
+<pre class="src src-R"><span style="color: #a45bad;">library</span><span style="color: #4f97d7;">(</span>rgl<span style="color: #4f97d7;">)</span>
+open3d<span style="color: #4f97d7;">()</span>
+comet <span style="color: #a45bad;">&lt;-</span> readOBJ<span style="color: #4f97d7;">(</span>url<span style="color: #bc6ec5;">(</span><span style="color: #2d9574;">"http://sci.esa.int/science-e/www/object/doc.cfm?fobjectid=54726"</span><span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>
+shade3d<span style="color: #4f97d7;">(</span>comet, col=<span style="color: #2d9574;">"gray"</span><span style="color: #4f97d7;">)</span>
+writeWebGL<span style="color: #4f97d7;">(</span>dir=<span style="color: #2d9574;">"images"</span>, filename = <span style="color: #2d9574;">"images/comet.html"</span><span style="color: #4f97d7;">)</span>
 </pre>
 </div>
 
@@ -217,10 +213,10 @@ writeWebGL<span style="color: #2f96dc;">(</span>dir=<span style="color: #2d9574;
 </ul>
 <div class="org-src-container">
 
-<pre class="src src-R"><span style="color: #a45bad;">library</span><span style="color: #2f96dc;">(</span>ggmap<span style="color: #2f96dc;">)</span>
-nwbuilding <span style="color: #a45bad;">&lt;-</span> geocode<span style="color: #2f96dc;">(</span><span style="color: #2d9574;">"1737 Cambridge Street Cambridge, MA 02138"</span>, <span style="color: #a45bad;">source</span> = <span style="color: #2d9574;">"google"</span><span style="color: #2f96dc;">)</span> 
-ggmap<span style="color: #2f96dc;">(</span>get_map<span style="color: #bc6ec5;">(</span><span style="color: #2d9574;">"Cambridge, MA"</span>, zoom = 15<span style="color: #bc6ec5;">)</span><span style="color: #2f96dc;">)</span> +
-  geom_point<span style="color: #2f96dc;">(</span>data=nwbuilding, size = 7, shape = 13, color = <span style="color: #2d9574;">"red"</span><span style="color: #2f96dc;">)</span>
+<pre class="src src-R"><span style="color: #a45bad;">library</span><span style="color: #4f97d7;">(</span>ggmap<span style="color: #4f97d7;">)</span>
+nwbuilding <span style="color: #a45bad;">&lt;-</span> geocode<span style="color: #4f97d7;">(</span><span style="color: #2d9574;">"1737 Cambridge Street Cambridge, MA 02138"</span>, <span style="color: #a45bad;">source</span> = <span style="color: #2d9574;">"google"</span><span style="color: #4f97d7;">)</span> 
+ggmap<span style="color: #4f97d7;">(</span>get_map<span style="color: #bc6ec5;">(</span><span style="color: #2d9574;">"Cambridge, MA"</span>, zoom = 15<span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span> +
+  geom_point<span style="color: #4f97d7;">(</span>data=nwbuilding, size = 7, shape = 13, color = <span style="color: #2d9574;">"red"</span><span style="color: #4f97d7;">)</span>
 </pre>
 </div>
 
@@ -235,10 +231,10 @@ ggmap<span style="color: #2f96dc;">(</span>get_map<span style="color: #bc6ec5;">
 </ul>
 <div class="org-src-container">
 
-<pre class="src src-R"><span style="color: #a45bad;">library</span><span style="color: #2f96dc;">(</span>forecast<span style="color: #2f96dc;">)</span>
-fit <span style="color: #a45bad;">&lt;-</span> auto.arima<span style="color: #2f96dc;">(</span>austres<span style="color: #2f96dc;">)</span>
-<span style="color: #2aa1ae;">## </span><span style="color: #2aa1ae;">Projected numbers (in thousands) of Australian residents</span>
-plot<span style="color: #2f96dc;">(</span>forecast<span style="color: #bc6ec5;">(</span>fit<span style="color: #bc6ec5;">)</span><span style="color: #2f96dc;">)</span>
+<pre class="src src-R"><span style="color: #a45bad;">library</span><span style="color: #4f97d7;">(</span>forecast<span style="color: #4f97d7;">)</span>
+fit <span style="color: #a45bad;">&lt;-</span> auto.arima<span style="color: #4f97d7;">(</span>austres<span style="color: #4f97d7;">)</span>
+<span style="color: #2aa1ae; background-color: #292e34;">## </span><span style="color: #2aa1ae; background-color: #292e34;">Projected numbers (in thousands) of Australian residents</span>
+plot<span style="color: #4f97d7;">(</span>forecast<span style="color: #bc6ec5;">(</span>fit<span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>
 </pre>
 </div>
 
@@ -399,9 +395,9 @@ Values can be assigned names and used in subsequent operations
 
 <div class="org-src-container">
 
-<pre class="src src-R" id="orgsrcblock1">x <span style="color: #a45bad;">&lt;-</span> 10 <span style="color: #2aa1ae;"># </span><span style="color: #2aa1ae;">Assign the value 10 to a variable named x</span>
-x + 1 <span style="color: #2aa1ae;"># </span><span style="color: #2aa1ae;">Add 1 to x</span>
-y <span style="color: #a45bad;">&lt;-</span> x + 1 <span style="color: #2aa1ae;"># </span><span style="color: #2aa1ae;">Assign y the value x + 1</span>
+<pre class="src src-R" id="orgsrcblock1">x <span style="color: #a45bad;">&lt;-</span> 10 <span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">Assign the value 10 to a variable named x</span>
+x + 1 <span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">Add 1 to x</span>
+y <span style="color: #a45bad;">&lt;-</span> x + 1 <span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">Assign y the value x + 1</span>
 y
 </pre>
 </div>
@@ -422,12 +418,12 @@ Saved variables can be listed, overwritten and deleted
 </p>
 <div class="org-src-container">
 
-<pre class="src src-R" id="orgsrcblock2">ls<span style="color: #2f96dc;">()</span> <span style="color: #2aa1ae;"># </span><span style="color: #2aa1ae;">List variables in workspace</span>
-x <span style="color: #2aa1ae;"># </span><span style="color: #2aa1ae;">Print the value of x</span>
-x <span style="color: #a45bad;">&lt;-</span> 100 <span style="color: #2aa1ae;"># </span><span style="color: #2aa1ae;">Overwrite x. Note that no warning is given!</span>
+<pre class="src src-R" id="orgsrcblock2">ls<span style="color: #4f97d7;">()</span> <span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">List variables in workspace</span>
+x <span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">Print the value of x</span>
+x <span style="color: #a45bad;">&lt;-</span> 100 <span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">Overwrite x. Note that no warning is given!</span>
 x
-rm<span style="color: #2f96dc;">(</span>x<span style="color: #2f96dc;">)</span> <span style="color: #2aa1ae;"># </span><span style="color: #2aa1ae;">Delete x</span>
-ls<span style="color: #2f96dc;">()</span>
+rm<span style="color: #4f97d7;">(</span>x<span style="color: #4f97d7;">)</span> <span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">Delete x</span>
+ls<span style="color: #4f97d7;">()</span>
 </pre>
 </div>
 
@@ -463,7 +459,7 @@ Using R is mostly about applying <b>functions</b> to <b>variables</b>. Functions
 
 <p>
 The general form for calling R functions is 
-<code class="src src-R">FunctionName<span style="color: #2f96dc;">(</span>arg.1, arg.2, ... arg.n<span style="color: #2f96dc;">)</span>
+<code class="src src-R">FunctionName<span style="color: #4f97d7;">(</span>arg.1, arg.2, ... arg.n<span style="color: #4f97d7;">)</span>
 </code>
 </p>
 
@@ -476,11 +472,11 @@ Examples:
 </p>
 <div class="org-src-container">
 
-<pre class="src src-R" id="orgsrcblock3"><span style="color: #2aa1ae;">#</span><span style="color: #2aa1ae;">?sqrt</span>
-a <span style="color: #a45bad;">&lt;-</span> sqrt<span style="color: #2f96dc;">(</span>y<span style="color: #2f96dc;">)</span> <span style="color: #2aa1ae;"># </span><span style="color: #2aa1ae;">Call the sqrt function with argument x=y</span>
-round<span style="color: #2f96dc;">(</span>a, digits = 2<span style="color: #2f96dc;">)</span> <span style="color: #2aa1ae;"># </span><span style="color: #2aa1ae;">Call round() with arguments x=x and digits=2</span>
-<span style="color: #2aa1ae;"># </span><span style="color: #2aa1ae;">Functions can be nested so an alternative is</span>
-round<span style="color: #2f96dc;">(</span>sqrt<span style="color: #bc6ec5;">(</span>y<span style="color: #bc6ec5;">)</span>, digits = 5<span style="color: #2f96dc;">)</span> <span style="color: #2aa1ae;"># </span><span style="color: #2aa1ae;">Take sqrt of a and round</span>
+<pre class="src src-R" id="orgsrcblock3"><span style="color: #2aa1ae; background-color: #292e34;">#</span><span style="color: #2aa1ae; background-color: #292e34;">?sqrt</span>
+a <span style="color: #a45bad;">&lt;-</span> sqrt<span style="color: #4f97d7;">(</span>y<span style="color: #4f97d7;">)</span> <span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">Call the sqrt function with argument x=y</span>
+round<span style="color: #4f97d7;">(</span>a, digits = 2<span style="color: #4f97d7;">)</span> <span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">Call round() with arguments x=x and digits=2</span>
+<span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">Functions can be nested so an alternative is</span>
+round<span style="color: #4f97d7;">(</span>sqrt<span style="color: #bc6ec5;">(</span>y<span style="color: #bc6ec5;">)</span>, digits = 5<span style="color: #4f97d7;">)</span> <span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">Take sqrt of a and round</span>
 </pre>
 </div>
 
@@ -510,7 +506,7 @@ There are thousands of R packages that extend R's capabilities.
 <li>To see what packages are loaded:</li>
 </ul>
 <p>
-<code class="src src-R">search<span style="color: #2f96dc;">()</span>
+<code class="src src-R">search<span style="color: #4f97d7;">()</span>
 </code>
 </p>
 
@@ -518,7 +514,7 @@ There are thousands of R packages that extend R's capabilities.
 <li>To view available packages:</li>
 </ul>
 <p>
-<code class="src src-R"><span style="color: #a45bad;">library</span><span style="color: #2f96dc;">()</span>
+<code class="src src-R"><span style="color: #a45bad;">library</span><span style="color: #4f97d7;">()</span>
 </code>
 </p>
 
@@ -526,7 +522,7 @@ There are thousands of R packages that extend R's capabilities.
 <li>To load a package:</li>
 </ul>
 <p>
-<code class="src src-R"><span style="color: #a45bad;">library</span><span style="color: #2f96dc;">(</span><span style="color: #2d9574;">"car"</span><span style="color: #2f96dc;">)</span>
+<code class="src src-R"><span style="color: #a45bad;">library</span><span style="color: #4f97d7;">(</span><span style="color: #2d9574;">"car"</span><span style="color: #4f97d7;">)</span>
 </code>
 </p>
 
@@ -534,7 +530,7 @@ There are thousands of R packages that extend R's capabilities.
 <li>Install new package:</li>
 </ul>
 <p>
-<code class="src src-R">install.packages<span style="color: #2f96dc;">(</span><span style="color: #2d9574;">"stringdist"</span><span style="color: #2f96dc;">)</span>
+<code class="src src-R">install.packages<span style="color: #4f97d7;">(</span><span style="color: #2d9574;">"stringdist"</span><span style="color: #4f97d7;">)</span>
 </code>
 </p>
 </div>
@@ -574,7 +570,7 @@ R knows the directory it was started in, and refers to this as the "working dire
 </p>
 <div class="org-src-container">
 
-<pre class="src src-R" id="orgsrcblock4">setwd<span style="color: #2f96dc;">(</span><span style="color: #2d9574;">"~/Desktop/Rintro"</span><span style="color: #2f96dc;">)</span>
+<pre class="src src-R" id="orgsrcblock4">setwd<span style="color: #4f97d7;">(</span><span style="color: #2d9574;">"~/Desktop/Rintro"</span><span style="color: #4f97d7;">)</span>
 </pre>
 </div>
 
@@ -584,10 +580,10 @@ We can also set the working directory using paths relative to the current workin
 
 <div class="org-src-container">
 
-<pre class="src src-R" id="orgsrcblock5">getwd<span style="color: #2f96dc;">()</span> <span style="color: #2aa1ae;"># </span><span style="color: #2aa1ae;">get the current working directory</span>
-setwd<span style="color: #2f96dc;">(</span><span style="color: #2d9574;">"dataSets"</span><span style="color: #2f96dc;">)</span> <span style="color: #2aa1ae;"># </span><span style="color: #2aa1ae;">set wd to the dataSets folder</span>
-getwd<span style="color: #2f96dc;">()</span>
-setwd<span style="color: #2f96dc;">(</span><span style="color: #2d9574;">".."</span><span style="color: #2f96dc;">)</span> <span style="color: #2aa1ae;"># </span><span style="color: #2aa1ae;">set wd to enclosing folder ("up")</span>
+<pre class="src src-R" id="orgsrcblock5">getwd<span style="color: #4f97d7;">()</span> <span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">get the current working directory</span>
+setwd<span style="color: #4f97d7;">(</span><span style="color: #2d9574;">"dataSets"</span><span style="color: #4f97d7;">)</span> <span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">set wd to the dataSets folder</span>
+getwd<span style="color: #4f97d7;">()</span>
+setwd<span style="color: #4f97d7;">(</span><span style="color: #2d9574;">".."</span><span style="color: #4f97d7;">)</span> <span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">set wd to enclosing folder ("up")</span>
 </pre>
 </div>
 
@@ -606,8 +602,8 @@ It can be convenient to list files in a directory without leaving R
 </p>
 <div class="org-src-container">
 
-<pre class="src src-R" id="orgsrcblock6">list.files<span style="color: #2f96dc;">(</span><span style="color: #2d9574;">"dataSets"</span><span style="color: #2f96dc;">)</span> <span style="color: #2aa1ae;"># </span><span style="color: #2aa1ae;">list files in the dataSets folder</span>
-<span style="color: #2aa1ae;"># </span><span style="color: #2aa1ae;">list.files("dataSets", pattern = ".csv") # restrict to .csv files</span>
+<pre class="src src-R" id="orgsrcblock6">list.files<span style="color: #4f97d7;">(</span><span style="color: #2d9574;">"dataSets"</span><span style="color: #4f97d7;">)</span> <span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">list files in the dataSets folder</span>
+<span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">list.files("dataSets", pattern = ".csv") # restrict to .csv files</span>
 </pre>
 </div>
 
@@ -667,16 +663,16 @@ R is smart enough to recognize most common file formats for us using the <code>i
 </p>
 <div class="org-src-container">
 
-<pre class="src src-R" id="orgsrcblock7"><span style="color: #2aa1ae;">## </span><span style="color: #2aa1ae;">install and load the rio package</span>
-<span style="color: #2aa1ae;"># </span><span style="color: #2aa1ae;">install.packages("rio")</span>
-<span style="color: #a45bad;">library</span><span style="color: #2f96dc;">(</span>rio<span style="color: #2f96dc;">)</span>
-<span style="color: #2aa1ae;">## </span><span style="color: #2aa1ae;">import data from a variety of formats</span>
-<span style="color: #2aa1ae;"># </span><span style="color: #2aa1ae;">read gss data from the gss.rds R file</span>
-datGSS <span style="color: #a45bad;">&lt;-</span> import<span style="color: #2f96dc;">(</span><span style="color: #2d9574;">"dataSets/gss.rds"</span><span style="color: #2f96dc;">)</span>
-<span style="color: #2aa1ae;"># </span><span style="color: #2aa1ae;">read gss data from the gss.csv comma separated file</span>
-gss.data <span style="color: #a45bad;">&lt;-</span> import<span style="color: #2f96dc;">(</span><span style="color: #2d9574;">"dataSets/gss.csv"</span><span style="color: #2f96dc;">)</span>
-<span style="color: #2aa1ae;"># </span><span style="color: #2aa1ae;">read a Stata dataset from gss.dta </span>
-datGSS <span style="color: #a45bad;">&lt;-</span> import<span style="color: #2f96dc;">(</span><span style="color: #2d9574;">"dataSets/gss.dta"</span><span style="color: #2f96dc;">)</span>
+<pre class="src src-R" id="orgsrcblock7"><span style="color: #2aa1ae; background-color: #292e34;">## </span><span style="color: #2aa1ae; background-color: #292e34;">install and load the rio package</span>
+<span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">install.packages("rio")</span>
+<span style="color: #a45bad;">library</span><span style="color: #4f97d7;">(</span>rio<span style="color: #4f97d7;">)</span>
+<span style="color: #2aa1ae; background-color: #292e34;">## </span><span style="color: #2aa1ae; background-color: #292e34;">import data from a variety of formats</span>
+<span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">read gss data from the gss.rds R file</span>
+datGSS <span style="color: #a45bad;">&lt;-</span> import<span style="color: #4f97d7;">(</span><span style="color: #2d9574;">"dataSets/gss.rds"</span><span style="color: #4f97d7;">)</span>
+<span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">read gss data from the gss.csv comma separated file</span>
+gss.data <span style="color: #a45bad;">&lt;-</span> import<span style="color: #4f97d7;">(</span><span style="color: #2d9574;">"dataSets/gss.csv"</span><span style="color: #4f97d7;">)</span>
+<span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">read a Stata dataset from gss.dta </span>
+datGSS <span style="color: #a45bad;">&lt;-</span> import<span style="color: #4f97d7;">(</span><span style="color: #2d9574;">"dataSets/gss.dta"</span><span style="color: #4f97d7;">)</span>
 </pre>
 </div>
 
@@ -770,13 +766,13 @@ Examples:
 </p>
 <div class="org-src-container">
 
-<pre class="src src-R" id="orgsrcblock8"><span style="color: #2aa1ae;"># </span><span style="color: #2aa1ae;">read gss data from the gss.rds R file</span>
-datGSS <span style="color: #a45bad;">&lt;-</span> readRDS<span style="color: #2f96dc;">(</span><span style="color: #2d9574;">"dataSets/gss.rds"</span><span style="color: #2f96dc;">)</span>
-<span style="color: #2aa1ae;"># </span><span style="color: #2aa1ae;">read gss data from the gss.csv comma separated file</span>
-gss.data <span style="color: #a45bad;">&lt;-</span> read.csv<span style="color: #2f96dc;">(</span><span style="color: #2d9574;">"dataSets/gss.csv"</span><span style="color: #2f96dc;">)</span> <span style="color: #2aa1ae;"># </span><span style="color: #2aa1ae;">read gss data</span>
-<span style="color: #2aa1ae;"># </span><span style="color: #2aa1ae;">read a Stata dataset from gss.dta </span>
-<span style="color: #a45bad;">library</span><span style="color: #2f96dc;">(</span>foreign<span style="color: #2f96dc;">)</span> <span style="color: #2aa1ae;"># </span><span style="color: #2aa1ae;">load foreign data functions</span>
-datGSS <span style="color: #a45bad;">&lt;-</span> read.dta<span style="color: #2f96dc;">(</span>file=<span style="color: #2d9574;">"dataSets/gss.dta"</span><span style="color: #2f96dc;">)</span>
+<pre class="src src-R" id="orgsrcblock8"><span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">read gss data from the gss.rds R file</span>
+datGSS <span style="color: #a45bad;">&lt;-</span> readRDS<span style="color: #4f97d7;">(</span><span style="color: #2d9574;">"dataSets/gss.rds"</span><span style="color: #4f97d7;">)</span>
+<span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">read gss data from the gss.csv comma separated file</span>
+gss.data <span style="color: #a45bad;">&lt;-</span> read.csv<span style="color: #4f97d7;">(</span><span style="color: #2d9574;">"dataSets/gss.csv"</span><span style="color: #4f97d7;">)</span> <span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">read gss data</span>
+<span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">read a Stata dataset from gss.dta </span>
+<span style="color: #a45bad;">library</span><span style="color: #4f97d7;">(</span>foreign<span style="color: #4f97d7;">)</span> <span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">load foreign data functions</span>
+datGSS <span style="color: #a45bad;">&lt;-</span> read.dta<span style="color: #4f97d7;">(</span>file=<span style="color: #2d9574;">"dataSets/gss.dta"</span><span style="color: #4f97d7;">)</span>
 </pre>
 </div>
 
@@ -802,10 +798,10 @@ Always a good idea  to examine the imported data set&#x2013;usually we want the 
 </p>
 <div class="org-src-container">
 
-<pre class="src src-R" id="orgsrcblock9">class<span style="color: #2f96dc;">(</span>datGSS<span style="color: #2f96dc;">)</span> <span style="color: #2aa1ae;"># </span><span style="color: #2aa1ae;">check to see that test is what we expect it to be</span>
-dim<span style="color: #2f96dc;">(</span>datGSS<span style="color: #2f96dc;">)</span> <span style="color: #2aa1ae;"># </span><span style="color: #2aa1ae;">how many rows and columns?</span>
-names<span style="color: #2f96dc;">(</span>datGSS<span style="color: #2f96dc;">)</span> <span style="color: #2aa1ae;"># </span><span style="color: #2aa1ae;">or colnames(datGSS)</span>
-str<span style="color: #2f96dc;">(</span>datGSS<span style="color: #bc6ec5;">[</span>1:10<span style="color: #bc6ec5;">]</span><span style="color: #2f96dc;">)</span> <span style="color: #2aa1ae;"># </span><span style="color: #2aa1ae;">more details about the first 10 columns</span>
+<pre class="src src-R" id="orgsrcblock9">class<span style="color: #4f97d7;">(</span>datGSS<span style="color: #4f97d7;">)</span> <span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">check to see that test is what we expect it to be</span>
+dim<span style="color: #4f97d7;">(</span>datGSS<span style="color: #4f97d7;">)</span> <span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">how many rows and columns?</span>
+names<span style="color: #4f97d7;">(</span>datGSS<span style="color: #4f97d7;">)</span> <span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">or colnames(datGSS)</span>
+str<span style="color: #4f97d7;">(</span>datGSS<span style="color: #bc6ec5;">[</span>1:10<span style="color: #bc6ec5;">]</span><span style="color: #4f97d7;">)</span> <span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">more details about the first 10 columns</span>
 </pre>
 </div>
 
@@ -850,10 +846,10 @@ In addition to importing individual datasets, R can save and load entire workspa
 </ul>
 <div class="org-src-container">
 
-<pre class="src src-R" id="orgsrcblock10">ls<span style="color: #2f96dc;">()</span> <span style="color: #2aa1ae;"># </span><span style="color: #2aa1ae;">list objects in our workspace</span>
-save.image<span style="color: #2f96dc;">(</span>file=<span style="color: #2d9574;">"myWorkspace.RData"</span><span style="color: #2f96dc;">)</span> <span style="color: #2aa1ae;"># </span><span style="color: #2aa1ae;">save workspace </span>
-rm<span style="color: #2f96dc;">(</span>list=ls<span style="color: #bc6ec5;">()</span><span style="color: #2f96dc;">)</span> <span style="color: #2aa1ae;"># </span><span style="color: #2aa1ae;">remove all objects from our workspace </span>
-ls<span style="color: #2f96dc;">()</span> <span style="color: #2aa1ae;"># </span><span style="color: #2aa1ae;">list stored objects to make sure they are deleted</span>
+<pre class="src src-R" id="orgsrcblock10">ls<span style="color: #4f97d7;">()</span> <span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">list objects in our workspace</span>
+save.image<span style="color: #4f97d7;">(</span>file=<span style="color: #2d9574;">"myWorkspace.RData"</span><span style="color: #4f97d7;">)</span> <span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">save workspace </span>
+rm<span style="color: #4f97d7;">(</span>list=ls<span style="color: #bc6ec5;">()</span><span style="color: #4f97d7;">)</span> <span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">remove all objects from our workspace </span>
+ls<span style="color: #4f97d7;">()</span> <span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">list stored objects to make sure they are deleted</span>
 </pre>
 </div>
 
@@ -873,8 +869,8 @@ character(0)
 
 <div class="org-src-container">
 
-<pre class="src src-R" id="orgsrcblock11">load<span style="color: #2f96dc;">(</span><span style="color: #2d9574;">"myWorkspace.RData"</span><span style="color: #2f96dc;">)</span> <span style="color: #2aa1ae;"># </span><span style="color: #2aa1ae;">load myWorkspace.RData</span>
-ls<span style="color: #2f96dc;">()</span> <span style="color: #2aa1ae;"># </span><span style="color: #2aa1ae;">list objects</span>
+<pre class="src src-R" id="orgsrcblock11">load<span style="color: #4f97d7;">(</span><span style="color: #2d9574;">"myWorkspace.RData"</span><span style="color: #4f97d7;">)</span> <span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">load myWorkspace.RData</span>
+ls<span style="color: #4f97d7;">()</span> <span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">list objects</span>
 </pre>
 </div>
 
@@ -923,7 +919,7 @@ R has extensive built-in documentation that can be accessed through R commands o
 </ul></li>
 </ul>
 <p>
-<code class="src src-R">help.start<span style="color: #2f96dc;">()</span>
+<code class="src src-R">help.start<span style="color: #4f97d7;">()</span>
 </code>
 </p>
 
@@ -934,7 +930,7 @@ R has extensive built-in documentation that can be accessed through R commands o
 <li>Look up the documentation for a function</li>
 </ul>
 <p>
-<code class="src src-R">help<span style="color: #2f96dc;">(</span>plot<span style="color: #2f96dc;">)</span>
+<code class="src src-R">help<span style="color: #4f97d7;">(</span>plot<span style="color: #4f97d7;">)</span>
 </code>
 </p>
 
@@ -947,7 +943,7 @@ R has extensive built-in documentation that can be accessed through R commands o
 <li>Look up documentation for a package</li>
 </ul>
 <p>
-<code class="src src-R">help<span style="color: #2f96dc;">(</span>package=<span style="color: #2d9574;">"stats"</span><span style="color: #2f96dc;">)</span>
+<code class="src src-R">help<span style="color: #4f97d7;">(</span>package=<span style="color: #2d9574;">"stats"</span><span style="color: #4f97d7;">)</span>
 </code>
 </p>
 
@@ -955,7 +951,7 @@ R has extensive built-in documentation that can be accessed through R commands o
 <li>Search documentation from R (not always the best way&#x2026; google often works better)</li>
 </ul>
 <p>
-<code class="src src-R">help.search<span style="color: #2f96dc;">(</span><span style="color: #2d9574;">"classification"</span><span style="color: #2f96dc;">)</span>
+<code class="src src-R">help.search<span style="color: #4f97d7;">(</span><span style="color: #2d9574;">"classification"</span><span style="color: #4f97d7;">)</span>
 </code>
 </p>
 </div>
@@ -992,13 +988,13 @@ You can extract subsets of data.frames using the <code>subset()</code> function<
 </p>
 <div class="org-src-container">
 
-<pre class="src src-R" id="orgsrcblock12"><span style="color: #2aa1ae;"># </span><span style="color: #2aa1ae;">selecting specifig columns</span>
-head<span style="color: #2f96dc;">(</span><span style="color: #2aa1ae;"># </span><span style="color: #2aa1ae;">first n rows</span>
+<pre class="src src-R" id="orgsrcblock12"><span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">selecting specifig columns</span>
+head<span style="color: #4f97d7;">(</span><span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">first n rows</span>
      subset<span style="color: #bc6ec5;">(</span>datGSS,            
-            select = 1:4 <span style="color: #2aa1ae;"># </span><span style="color: #2aa1ae;">column 1 to 5</span>
+            select = 1:4 <span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">column 1 to 5</span>
             <span style="color: #bc6ec5;">)</span>,
-     n = 10<span style="color: #2aa1ae;"># </span><span style="color: #2aa1ae;">show first 10 rows</span>
-     <span style="color: #2f96dc;">)</span>
+     n = 10<span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">show first 10 rows</span>
+     <span style="color: #4f97d7;">)</span>
 </pre>
 </div>
 <p>
@@ -1006,14 +1002,14 @@ and the <code>subset</code> argument to select rows:
 </p>
 <div class="org-src-container">
 
-<pre class="src src-R">subset<span style="color: #2f96dc;">(</span>datGSS,
-       <span style="color: #2aa1ae;"># </span><span style="color: #2aa1ae;">rows where age &gt; 90</span>
+<pre class="src src-R">subset<span style="color: #4f97d7;">(</span>datGSS,
+       <span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">rows where age &gt; 90</span>
        subset = age &gt; 90,
-       <span style="color: #2aa1ae;">## </span><span style="color: #2aa1ae;">sex and age columns</span>
-       select = c<span style="color: #bc6ec5;">(</span><span style="color: #2d9574;">"sex"</span>, <span style="color: #2d9574;">"age"</span><span style="color: #bc6ec5;">)</span><span style="color: #2f96dc;">)</span>
+       <span style="color: #2aa1ae; background-color: #292e34;">## </span><span style="color: #2aa1ae; background-color: #292e34;">sex and age columns</span>
+       select = c<span style="color: #bc6ec5;">(</span><span style="color: #2d9574;">"sex"</span>, <span style="color: #2d9574;">"age"</span><span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>
 
-<span style="color: #2aa1ae;">## </span><span style="color: #2aa1ae;">the $ operator can be used to extract a single column</span>
-str<span style="color: #2f96dc;">(</span>datGSS$age<span style="color: #2f96dc;">)</span>
+<span style="color: #2aa1ae; background-color: #292e34;">## </span><span style="color: #2aa1ae; background-color: #292e34;">the $ operator can be used to extract a single column</span>
+str<span style="color: #4f97d7;">(</span>datGSS$age<span style="color: #4f97d7;">)</span>
 </pre>
 </div>
 
@@ -1081,23 +1077,23 @@ You can modify data.frames using the <code>transform()</code> function.
 
 <div class="org-src-container">
 
-<pre class="src src-R" id="orgsrcblock13"><span style="color: #2aa1ae;"># </span><span style="color: #2aa1ae;">creating new variable mean centered age</span>
-datGSS <span style="color: #a45bad;">&lt;-</span> transform<span style="color: #2f96dc;">(</span>datGSS,
-                    ageC = age - mean<span style="color: #bc6ec5;">(</span>age<span style="color: #bc6ec5;">)</span><span style="color: #2f96dc;">)</span>
+<pre class="src src-R" id="orgsrcblock13"><span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">creating new variable mean centered age</span>
+datGSS <span style="color: #a45bad;">&lt;-</span> transform<span style="color: #4f97d7;">(</span>datGSS,
+                    ageC = age - mean<span style="color: #bc6ec5;">(</span>age<span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>
 
- <span style="color: #2aa1ae;">#</span><span style="color: #2aa1ae;">education difference between wifes and husbands</span>
-datGSS <span style="color: #a45bad;">&lt;-</span> transform<span style="color: #2f96dc;">(</span>datGSS,
-                    educ.diff = wifeduc - husbeduc<span style="color: #2f96dc;">)</span>
+ <span style="color: #2aa1ae; background-color: #292e34;">#</span><span style="color: #2aa1ae; background-color: #292e34;">education difference between wifes and husbands</span>
+datGSS <span style="color: #a45bad;">&lt;-</span> transform<span style="color: #4f97d7;">(</span>datGSS,
+                    educ.diff = wifeduc - husbeduc<span style="color: #4f97d7;">)</span>
 
-datGSS$wifeduc_comp <span style="color: #a45bad;">&lt;-</span> ifelse<span style="color: #2f96dc;">(</span>
-                         is.na<span style="color: #bc6ec5;">(</span>datGSS$wifeduc<span style="color: #bc6ec5;">)</span>, <span style="color: #2aa1ae;">#</span><span style="color: #2aa1ae;">condition</span>
-                         mean<span style="color: #bc6ec5;">(</span>datGSS$wifeduc, na.rm=<span style="color: #ce537a; font-weight: bold;">TRUE</span><span style="color: #bc6ec5;">)</span>, <span style="color: #2aa1ae;"># </span><span style="color: #2aa1ae;">value if condition met</span>
-                         datGSS$wifeduc<span style="color: #2f96dc;">)</span> <span style="color: #2aa1ae;"># </span><span style="color: #2aa1ae;">value otherwise</span>
+datGSS$wifeduc_comp <span style="color: #a45bad;">&lt;-</span> ifelse<span style="color: #4f97d7;">(</span>
+                         is.na<span style="color: #bc6ec5;">(</span>datGSS$wifeduc<span style="color: #bc6ec5;">)</span>, <span style="color: #2aa1ae; background-color: #292e34;">#</span><span style="color: #2aa1ae; background-color: #292e34;">condition</span>
+                         mean<span style="color: #bc6ec5;">(</span>datGSS$wifeduc, na.rm=<span style="color: #ce537a; font-weight: bold;">TRUE</span><span style="color: #bc6ec5;">)</span>, <span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">value if condition met</span>
+                         datGSS$wifeduc<span style="color: #4f97d7;">)</span> <span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">value otherwise</span>
 
-  <span style="color: #2aa1ae;">## </span><span style="color: #2aa1ae;">examine our newly created variables</span>
-head<span style="color: #2f96dc;">(</span>subset<span style="color: #bc6ec5;">(</span>datGSS,
+  <span style="color: #2aa1ae; background-color: #292e34;">## </span><span style="color: #2aa1ae; background-color: #292e34;">examine our newly created variables</span>
+head<span style="color: #4f97d7;">(</span>subset<span style="color: #bc6ec5;">(</span>datGSS,
             select = c<span style="color: #2d9574;">(</span><span style="color: #2d9574;">"age"</span>, <span style="color: #2d9574;">"ageC"</span>, <span style="color: #2d9574;">"wifeduc"</span>, <span style="color: #2d9574;">"wifeduc_comp"</span>,
-                       <span style="color: #2d9574;">"husbeduc"</span>, <span style="color: #2d9574;">"educ.diff"</span><span style="color: #2d9574;">)</span><span style="color: #bc6ec5;">)</span>, n = 8<span style="color: #2f96dc;">)</span>
+                       <span style="color: #2d9574;">"husbeduc"</span>, <span style="color: #2d9574;">"educ.diff"</span><span style="color: #2d9574;">)</span><span style="color: #bc6ec5;">)</span>, n = 8<span style="color: #4f97d7;">)</span>
 </pre>
 </div>
 
@@ -1146,12 +1142,12 @@ Now that we have made some changes to our GSS data set, we might want to save th
 
 <div class="org-src-container">
 
-<pre class="src src-R" id="orgsrcblock14"><span style="color: #2aa1ae;"># </span><span style="color: #2aa1ae;">write data to a .csv file</span>
-write.csv<span style="color: #2f96dc;">(</span>datGSS, file = <span style="color: #2d9574;">"gss.csv"</span><span style="color: #2f96dc;">)</span>
-<span style="color: #2aa1ae;"># </span><span style="color: #2aa1ae;">write data to a Stata file</span>
-write.dta<span style="color: #2f96dc;">(</span>datGSS, file = <span style="color: #2d9574;">"gss.dta"</span><span style="color: #2f96dc;">)</span>
-<span style="color: #2aa1ae;"># </span><span style="color: #2aa1ae;">write data to an R file</span>
-saveRDS<span style="color: #2f96dc;">(</span>datGSS, file = <span style="color: #2d9574;">"gss.rds"</span><span style="color: #2f96dc;">)</span>
+<pre class="src src-R" id="orgsrcblock14"><span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">write data to a .csv file</span>
+write.csv<span style="color: #4f97d7;">(</span>datGSS, file = <span style="color: #2d9574;">"gss.csv"</span><span style="color: #4f97d7;">)</span>
+<span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">write data to a Stata file</span>
+write.dta<span style="color: #4f97d7;">(</span>datGSS, file = <span style="color: #2d9574;">"gss.dta"</span><span style="color: #4f97d7;">)</span>
+<span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">write data to an R file</span>
+saveRDS<span style="color: #4f97d7;">(</span>datGSS, file = <span style="color: #2d9574;">"gss.rds"</span><span style="color: #4f97d7;">)</span>
 </pre>
 </div>
 
@@ -1207,10 +1203,10 @@ Descriptive statistics of single variables are straightforward:
 </p>
 <div class="org-src-container">
 
-<pre class="src src-R" id="orgsrcblock15">mean<span style="color: #2f96dc;">(</span>datGSS$educ<span style="color: #2f96dc;">)</span> <span style="color: #2aa1ae;"># </span><span style="color: #2aa1ae;">calculate mean value of education</span>
-sd<span style="color: #2f96dc;">(</span>datGSS$educ<span style="color: #2f96dc;">)</span> <span style="color: #2aa1ae;"># </span><span style="color: #2aa1ae;">calculate standard deviation of x</span>
-<span style="color: #2aa1ae;"># </span><span style="color: #2aa1ae;">calculate min, max, quantiles, mean of educ, age, and ageC</span>
-summary<span style="color: #2f96dc;">(</span>subset<span style="color: #bc6ec5;">(</span>datGSS, select = c<span style="color: #2d9574;">(</span><span style="color: #2d9574;">"educ"</span>, <span style="color: #2d9574;">"age"</span>, <span style="color: #2d9574;">"ageC"</span><span style="color: #2d9574;">)</span><span style="color: #bc6ec5;">)</span><span style="color: #2f96dc;">)</span>
+<pre class="src src-R" id="orgsrcblock15">mean<span style="color: #4f97d7;">(</span>datGSS$educ<span style="color: #4f97d7;">)</span> <span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">calculate mean value of education</span>
+sd<span style="color: #4f97d7;">(</span>datGSS$educ<span style="color: #4f97d7;">)</span> <span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">calculate standard deviation of x</span>
+<span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">calculate min, max, quantiles, mean of educ, age, and ageC</span>
+summary<span style="color: #4f97d7;">(</span>subset<span style="color: #bc6ec5;">(</span>datGSS, select = c<span style="color: #2d9574;">(</span><span style="color: #2d9574;">"educ"</span>, <span style="color: #2d9574;">"age"</span>, <span style="color: #2d9574;">"ageC"</span><span style="color: #2d9574;">)</span><span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>
 </pre>
 </div>
 
@@ -1246,9 +1242,9 @@ Start by using the <code>table()</code> function to tabulate counts, then perfor
 </p>
 <div class="org-src-container">
 
-<pre class="src src-R" id="orgsrcblock16">sex.counts <span style="color: #a45bad;">&lt;-</span> table<span style="color: #2f96dc;">(</span>datGSS$sex<span style="color: #2f96dc;">)</span> <span style="color: #2aa1ae;"># </span><span style="color: #2aa1ae;">tabulate sex categories</span>
+<pre class="src src-R" id="orgsrcblock16">sex.counts <span style="color: #a45bad;">&lt;-</span> table<span style="color: #4f97d7;">(</span>datGSS$sex<span style="color: #4f97d7;">)</span> <span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">tabulate sex categories</span>
 sex.counts
-prop.table<span style="color: #2f96dc;">(</span>sex.counts<span style="color: #2f96dc;">)</span> <span style="color: #2aa1ae;"># </span><span style="color: #2aa1ae;">convert to proportions</span>
+prop.table<span style="color: #4f97d7;">(</span>sex.counts<span style="color: #4f97d7;">)</span> <span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">convert to proportions</span>
 </pre>
 </div>
 
@@ -1271,7 +1267,7 @@ Add variables for crosstabs
 
 <div class="org-src-container">
 
-<pre class="src src-R" id="orgsrcblock17">table<span style="color: #2f96dc;">(</span>subset<span style="color: #bc6ec5;">(</span>datGSS, select = c<span style="color: #2d9574;">(</span><span style="color: #2d9574;">"sex"</span>, <span style="color: #2d9574;">"happy"</span><span style="color: #2d9574;">)</span><span style="color: #bc6ec5;">)</span><span style="color: #2f96dc;">)</span> <span style="color: #2aa1ae;"># </span><span style="color: #2aa1ae;">crosstab marital X happy</span>
+<pre class="src src-R" id="orgsrcblock17">table<span style="color: #4f97d7;">(</span>subset<span style="color: #bc6ec5;">(</span>datGSS, select = c<span style="color: #2d9574;">(</span><span style="color: #2d9574;">"sex"</span>, <span style="color: #2d9574;">"happy"</span><span style="color: #2d9574;">)</span><span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span> <span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">crosstab marital X happy</span>
 </pre>
 </div>
 
@@ -1296,9 +1292,9 @@ The <code>by()</code> function can be used to perform a calculation separately f
 </p>
 <div class="org-src-container">
 
-<pre class="src src-R" id="orgsrcblock18">by<span style="color: #2f96dc;">(</span>subset<span style="color: #bc6ec5;">(</span>datGSS, select = c<span style="color: #2d9574;">(</span><span style="color: #2d9574;">"income"</span>, <span style="color: #2d9574;">"educ"</span><span style="color: #2d9574;">)</span><span style="color: #bc6ec5;">)</span>,
+<pre class="src src-R" id="orgsrcblock18">by<span style="color: #4f97d7;">(</span>subset<span style="color: #bc6ec5;">(</span>datGSS, select = c<span style="color: #2d9574;">(</span><span style="color: #2d9574;">"income"</span>, <span style="color: #2d9574;">"educ"</span><span style="color: #2d9574;">)</span><span style="color: #bc6ec5;">)</span>,
    INDICES=datGSS<span style="color: #bc6ec5;">[</span><span style="color: #2d9574;">"sex"</span><span style="color: #bc6ec5;">]</span>,
-   FUN=summary<span style="color: #2f96dc;">)</span>
+   FUN=summary<span style="color: #4f97d7;">)</span>
 </pre>
 </div>
 
@@ -1338,7 +1334,7 @@ Let's look at correlations among between age, income, and education
 </p>
 <div class="org-src-container">
 
-<pre class="src src-R" id="orgsrcblock19">cor<span style="color: #2f96dc;">(</span>subset<span style="color: #bc6ec5;">(</span>datGSS, select =  c<span style="color: #2d9574;">(</span><span style="color: #2d9574;">"age"</span>, <span style="color: #2d9574;">"incomdol"</span>, <span style="color: #2d9574;">"educ"</span><span style="color: #2d9574;">)</span><span style="color: #bc6ec5;">)</span><span style="color: #2f96dc;">)</span>
+<pre class="src src-R" id="orgsrcblock19">cor<span style="color: #4f97d7;">(</span>subset<span style="color: #bc6ec5;">(</span>datGSS, select =  c<span style="color: #2d9574;">(</span><span style="color: #2d9574;">"age"</span>, <span style="color: #2d9574;">"incomdol"</span>, <span style="color: #2d9574;">"educ"</span><span style="color: #2d9574;">)</span><span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>
 </pre>
 </div>
 
@@ -1357,8 +1353,8 @@ For significance tests, use cor.test()
 </p>
 <div class="org-src-container">
 
-<pre class="src src-R" id="orgsrcblock20">with<span style="color: #2f96dc;">(</span>datGSS,
-     cor.test<span style="color: #bc6ec5;">(</span>age, educ<span style="color: #bc6ec5;">)</span><span style="color: #2f96dc;">)</span>
+<pre class="src src-R" id="orgsrcblock20">with<span style="color: #4f97d7;">(</span>datGSS,
+     cor.test<span style="color: #bc6ec5;">(</span>age, educ<span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>
 </pre>
 </div>
 
@@ -1387,7 +1383,7 @@ sample estimates:
 <div class="outline-text-3" id="text-orgheadline33">
 <p>
 Modeling functions generally use the <i>formula</i> interface whith DV on left followed by "~" followed by predictors&#x2013;for details see
-<code class="src src-R">help<span style="color: #2f96dc;">(</span><span style="color: #2d9574;">"formula"</span><span style="color: #2f96dc;">)</span>
+<code class="src src-R">help<span style="color: #4f97d7;">(</span><span style="color: #2d9574;">"formula"</span><span style="color: #4f97d7;">)</span>
 </code>
 </p>
 
@@ -1396,8 +1392,8 @@ Modeling functions generally use the <i>formula</i> interface whith DV on left f
 </ul>
 <div class="org-src-container">
 
-<pre class="src src-R" id="orgsrcblock21">m1 <span style="color: #a45bad;">&lt;-</span> lm<span style="color: #2f96dc;">(</span>educ ~ sex + age, data = datGSS<span style="color: #2f96dc;">)</span>
-summary<span style="color: #2f96dc;">(</span>m1<span style="color: #2f96dc;">)</span>
+<pre class="src src-R" id="orgsrcblock21">m1 <span style="color: #a45bad;">&lt;-</span> lm<span style="color: #4f97d7;">(</span>educ ~ sex + age, data = datGSS<span style="color: #4f97d7;">)</span>
+summary<span style="color: #4f97d7;">(</span>m1<span style="color: #4f97d7;">)</span>
 </pre>
 </div>
 
@@ -1437,10 +1433,10 @@ Earlier we learned how to write a data set to a file. But what if we want to wri
 
 <div class="org-src-container">
 
-<pre class="src src-R" id="orgsrcblock22">sink<span style="color: #2f96dc;">(</span>file=<span style="color: #2d9574;">"output.txt"</span>, split=<span style="color: #ce537a; font-weight: bold;">TRUE</span><span style="color: #2f96dc;">)</span> <span style="color: #2aa1ae;"># </span><span style="color: #2aa1ae;">start logging</span>
-print<span style="color: #2f96dc;">(</span><span style="color: #2d9574;">"This is the result from model 1\n"</span><span style="color: #2f96dc;">)</span>
-print<span style="color: #2f96dc;">(</span>summary<span style="color: #bc6ec5;">(</span>m1<span style="color: #bc6ec5;">)</span><span style="color: #2f96dc;">)</span>
-sink<span style="color: #2f96dc;">()</span> <span style="color: #2aa1ae;">## </span><span style="color: #2aa1ae;">sink with no arguments turns logging off</span>
+<pre class="src src-R" id="orgsrcblock22">sink<span style="color: #4f97d7;">(</span>file=<span style="color: #2d9574;">"output.txt"</span>, split=<span style="color: #ce537a; font-weight: bold;">TRUE</span><span style="color: #4f97d7;">)</span> <span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">start logging</span>
+print<span style="color: #4f97d7;">(</span><span style="color: #2d9574;">"This is the result from model 1\n"</span><span style="color: #4f97d7;">)</span>
+print<span style="color: #4f97d7;">(</span>summary<span style="color: #bc6ec5;">(</span>m1<span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>
+sink<span style="color: #4f97d7;">()</span> <span style="color: #2aa1ae; background-color: #292e34;">## </span><span style="color: #2aa1ae; background-color: #292e34;">sink with no arguments turns logging off</span>
 </pre>
 </div>
 
@@ -1483,7 +1479,7 @@ Thanks to classes and methods, you can <code>plot()</code> many  kinds of object
 
 <div class="org-src-container">
 
-<pre class="src src-R" id="orgsrcblock23">plot<span style="color: #2f96dc;">(</span>datGSS$marital<span style="color: #2f96dc;">)</span> <span style="color: #2aa1ae;"># </span><span style="color: #2aa1ae;">Plot a factor</span>
+<pre class="src src-R" id="orgsrcblock23">plot<span style="color: #4f97d7;">(</span>datGSS$marital<span style="color: #4f97d7;">)</span> <span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">Plot a factor</span>
 </pre>
 </div>
 
@@ -1505,8 +1501,8 @@ Thanks to classes and methods, you can <code>plot()</code> many kinds of objects
 </p>
 <div class="org-src-container">
 
-<pre class="src src-R" id="orgsrcblock24">with<span style="color: #2f96dc;">(</span>datGSS,
-     plot<span style="color: #bc6ec5;">(</span>marital, educ<span style="color: #bc6ec5;">)</span><span style="color: #2f96dc;">)</span> <span style="color: #2aa1ae;"># </span><span style="color: #2aa1ae;">Plot ordinal by numeric</span>
+<pre class="src src-R" id="orgsrcblock24">with<span style="color: #4f97d7;">(</span>datGSS,
+     plot<span style="color: #bc6ec5;">(</span>marital, educ<span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span> <span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">Plot ordinal by numeric</span>
 </pre>
 </div>
 
@@ -1527,8 +1523,8 @@ Thanks to classes and methods, you can <code>plot()</code> many kinds of objects
 </p>
 <div class="org-src-container">
 
-<pre class="src src-R" id="orgsrcblock25">with<span style="color: #2f96dc;">(</span>datGSS, <span style="color: #2aa1ae;"># </span><span style="color: #2aa1ae;">Plot factor X factor</span>
-     plot<span style="color: #bc6ec5;">(</span>marital, happy<span style="color: #bc6ec5;">)</span><span style="color: #2f96dc;">)</span>
+<pre class="src src-R" id="orgsrcblock25">with<span style="color: #4f97d7;">(</span>datGSS, <span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">Plot factor X factor</span>
+     plot<span style="color: #bc6ec5;">(</span>marital, happy<span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>
 </pre>
 </div>
 
@@ -1660,8 +1656,8 @@ Using the datGSS data.frame
 </ol>
 <div class="org-src-container">
 
-<pre class="src src-R"><span style="color: #2aa1ae;">## </span><span style="color: #2aa1ae;">install.packages("rio")</span>
-<span style="color: #a45bad;">library</span><span style="color: #2f96dc;">(</span>rio<span style="color: #2f96dc;">)</span>
+<pre class="src src-R"><span style="color: #2aa1ae; background-color: #292e34;">## </span><span style="color: #2aa1ae; background-color: #292e34;">install.packages("rio")</span>
+<span style="color: #a45bad;">library</span><span style="color: #4f97d7;">(</span>rio<span style="color: #4f97d7;">)</span>
 </pre>
 </div>
 
@@ -1670,7 +1666,7 @@ Using the datGSS data.frame
 </ol>
 <div class="org-src-container">
 
-<pre class="src src-R">gss.data <span style="color: #a45bad;">&lt;-</span> import<span style="color: #2f96dc;">(</span><span style="color: #2d9574;">"dataSets/gss.sav"</span><span style="color: #2f96dc;">)</span>
+<pre class="src src-R">gss.data <span style="color: #a45bad;">&lt;-</span> import<span style="color: #4f97d7;">(</span><span style="color: #2d9574;">"dataSets/gss.sav"</span><span style="color: #4f97d7;">)</span>
 </pre>
 </div>
 
@@ -1679,7 +1675,7 @@ Using the datGSS data.frame
 </ol>
 <div class="org-src-container">
 
-<pre class="src src-R">class<span style="color: #2f96dc;">(</span>gss.data<span style="color: #2f96dc;">)</span>
+<pre class="src src-R">class<span style="color: #4f97d7;">(</span>gss.data<span style="color: #4f97d7;">)</span>
 </pre>
 </div>
 
@@ -1688,9 +1684,9 @@ Using the datGSS data.frame
 </ol>
 <div class="org-src-container">
 
-<pre class="src src-R">dim<span style="color: #2f96dc;">(</span>gss.data<span style="color: #2f96dc;">)</span>
-nrow<span style="color: #2f96dc;">(</span>gss.data<span style="color: #2f96dc;">)</span>
-ncol<span style="color: #2f96dc;">(</span>gss.data<span style="color: #2f96dc;">)</span>
+<pre class="src src-R">dim<span style="color: #4f97d7;">(</span>gss.data<span style="color: #4f97d7;">)</span>
+nrow<span style="color: #4f97d7;">(</span>gss.data<span style="color: #4f97d7;">)</span>
+ncol<span style="color: #4f97d7;">(</span>gss.data<span style="color: #4f97d7;">)</span>
 </pre>
 </div>
 
@@ -1699,8 +1695,8 @@ ncol<span style="color: #2f96dc;">(</span>gss.data<span style="color: #2f96dc;">
 </ol>
 <div class="org-src-container">
 
-<pre class="src src-R">dat <span style="color: #a45bad;">&lt;-</span> import<span style="color: #2f96dc;">(</span><span style="color: #2d9574;">"dataSets/gss.xlsx"</span><span style="color: #2f96dc;">)</span>
-class<span style="color: #2f96dc;">(</span>dat<span style="color: #2f96dc;">)</span>; dim<span style="color: #2f96dc;">(</span>dat<span style="color: #2f96dc;">)</span>
+<pre class="src src-R">dat <span style="color: #a45bad;">&lt;-</span> import<span style="color: #4f97d7;">(</span><span style="color: #2d9574;">"dataSets/gss.xlsx"</span><span style="color: #4f97d7;">)</span>
+class<span style="color: #4f97d7;">(</span>dat<span style="color: #4f97d7;">)</span>; dim<span style="color: #4f97d7;">(</span>dat<span style="color: #4f97d7;">)</span>
 </pre>
 </div>
 </div>
@@ -1715,7 +1711,7 @@ Use the gss.rds data set
 </p>
 <div class="org-src-container">
 
-<pre class="src src-R">gss <span style="color: #a45bad;">&lt;-</span> import<span style="color: #2f96dc;">(</span><span style="color: #2d9574;">"dataSets/gss.rds"</span><span style="color: #2f96dc;">)</span>
+<pre class="src src-R">gss <span style="color: #a45bad;">&lt;-</span> import<span style="color: #4f97d7;">(</span><span style="color: #2d9574;">"dataSets/gss.rds"</span><span style="color: #4f97d7;">)</span>
 </pre>
 </div>
 
@@ -1724,8 +1720,8 @@ Use the gss.rds data set
 </ol>
 <div class="org-src-container">
 
-<pre class="src src-R">gss.usecomp <span style="color: #a45bad;">&lt;-</span> subset<span style="color: #2f96dc;">(</span>gss, usecomp == <span style="color: #2d9574;">"Yes"</span><span style="color: #2f96dc;">)</span>
-nrow<span style="color: #2f96dc;">(</span>gss.usecomp<span style="color: #2f96dc;">)</span>
+<pre class="src src-R">gss.usecomp <span style="color: #a45bad;">&lt;-</span> subset<span style="color: #4f97d7;">(</span>gss, usecomp == <span style="color: #2d9574;">"Yes"</span><span style="color: #4f97d7;">)</span>
+nrow<span style="color: #4f97d7;">(</span>gss.usecomp<span style="color: #4f97d7;">)</span>
 </pre>
 </div>
 
@@ -1738,10 +1734,10 @@ nrow<span style="color: #2f96dc;">(</span>gss.usecomp<span style="color: #2f96dc
 </ol>
 <div class="org-src-container">
 
-<pre class="src src-R">gss <span style="color: #a45bad;">&lt;-</span> transform<span style="color: #2f96dc;">(</span>gss,
+<pre class="src src-R">gss <span style="color: #a45bad;">&lt;-</span> transform<span style="color: #4f97d7;">(</span>gss,
                  rich = ifelse<span style="color: #bc6ec5;">(</span>rincdol &lt; 100000, 0, 1<span style="color: #bc6ec5;">)</span>,
-                 sinc = incomdol - rincdol<span style="color: #2f96dc;">)</span>
-head<span style="color: #2f96dc;">(</span>subset<span style="color: #bc6ec5;">(</span>gss, select = c<span style="color: #2d9574;">(</span><span style="color: #2d9574;">"rincdol"</span>, <span style="color: #2d9574;">"incomdol"</span>, <span style="color: #2d9574;">"rich"</span>, <span style="color: #2d9574;">"sinc"</span><span style="color: #2d9574;">)</span><span style="color: #bc6ec5;">)</span><span style="color: #2f96dc;">)</span>
+                 sinc = incomdol - rincdol<span style="color: #4f97d7;">)</span>
+head<span style="color: #4f97d7;">(</span>subset<span style="color: #bc6ec5;">(</span>gss, select = c<span style="color: #2d9574;">(</span><span style="color: #2d9574;">"rincdol"</span>, <span style="color: #2d9574;">"incomdol"</span>, <span style="color: #2d9574;">"rich"</span>, <span style="color: #2d9574;">"sinc"</span><span style="color: #2d9574;">)</span><span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>
 </pre>
 </div>
 
@@ -1751,8 +1747,8 @@ head<span style="color: #2f96dc;">(</span>subset<span style="color: #bc6ec5;">(<
 </ol>
 <div class="org-src-container">
 
-<pre class="src src-R">gss$dual.earn <span style="color: #a45bad;">&lt;-</span> ifelse<span style="color: #2f96dc;">(</span>gss$wkftwife == 1 &amp; gss$wkfthusb == 1, 1, 0<span style="color: #2f96dc;">)</span>
-nrow<span style="color: #2f96dc;">(</span>subset<span style="color: #bc6ec5;">(</span>gss, dual.earn == 1<span style="color: #bc6ec5;">)</span><span style="color: #2f96dc;">)</span>
+<pre class="src src-R">gss$dual.earn <span style="color: #a45bad;">&lt;-</span> ifelse<span style="color: #4f97d7;">(</span>gss$wkftwife == 1 &amp; gss$wkfthusb == 1, 1, 0<span style="color: #4f97d7;">)</span>
+nrow<span style="color: #4f97d7;">(</span>subset<span style="color: #bc6ec5;">(</span>gss, dual.earn == 1<span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>
 </pre>
 </div>
 </div>
@@ -1770,7 +1766,7 @@ Using the datGSS data.frame
 </ol>
 <div class="org-src-container">
 
-<pre class="src src-R">with<span style="color: #2f96dc;">(</span>datGSS, table<span style="color: #bc6ec5;">(</span>emailhrs, sex<span style="color: #bc6ec5;">)</span><span style="color: #2f96dc;">)</span>
+<pre class="src src-R">with<span style="color: #4f97d7;">(</span>datGSS, table<span style="color: #bc6ec5;">(</span>emailhrs, sex<span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>
 </pre>
 </div>
 
@@ -1779,8 +1775,8 @@ Using the datGSS data.frame
 </ol>
 <div class="org-src-container">
 
-<pre class="src src-R">by<span style="color: #2f96dc;">(</span>datGSS$incomdol, datGSS$sex, mean<span style="color: #2f96dc;">)</span>
-by<span style="color: #2f96dc;">(</span>datGSS$incomdol, datGSS$sex, sd<span style="color: #2f96dc;">)</span>
+<pre class="src src-R">by<span style="color: #4f97d7;">(</span>datGSS$incomdol, datGSS$sex, mean<span style="color: #4f97d7;">)</span>
+by<span style="color: #4f97d7;">(</span>datGSS$incomdol, datGSS$sex, sd<span style="color: #4f97d7;">)</span>
 </pre>
 </div>
 
@@ -1789,7 +1785,7 @@ by<span style="color: #2f96dc;">(</span>datGSS$incomdol, datGSS$sex, sd<span sty
 </ol>
 <div class="org-src-container">
 
-<pre class="src src-R">plot<span style="color: #2f96dc;">(</span>subset<span style="color: #bc6ec5;">(</span>datGSS, select = c<span style="color: #2d9574;">(</span><span style="color: #2d9574;">"educ"</span>, <span style="color: #2d9574;">"incomdol"</span><span style="color: #2d9574;">)</span><span style="color: #bc6ec5;">)</span><span style="color: #2f96dc;">)</span>
+<pre class="src src-R">plot<span style="color: #4f97d7;">(</span>subset<span style="color: #bc6ec5;">(</span>datGSS, select = c<span style="color: #2d9574;">(</span><span style="color: #2d9574;">"educ"</span>, <span style="color: #2d9574;">"incomdol"</span><span style="color: #2d9574;">)</span><span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>
 </pre>
 </div>
 
@@ -1798,11 +1794,11 @@ by<span style="color: #2f96dc;">(</span>datGSS$incomdol, datGSS$sex, sd<span sty
 </p>
 <div class="org-src-container">
 
-<pre class="src src-R">plot<span style="color: #2f96dc;">(</span>log<span style="color: #bc6ec5;">(</span>incomdol<span style="color: #bc6ec5;">)</span> ~ jitter<span style="color: #bc6ec5;">(</span>educ, 8<span style="color: #bc6ec5;">)</span>, <span style="color: #2aa1ae;"># </span><span style="color: #2aa1ae;">formula interface with log an jitter</span>
-     data = subset<span style="color: #bc6ec5;">(</span>datGSS, <span style="color: #2aa1ae;"># </span><span style="color: #2aa1ae;">subsetting data as part of the plot call</span>
+<pre class="src src-R">plot<span style="color: #4f97d7;">(</span>log<span style="color: #bc6ec5;">(</span>incomdol<span style="color: #bc6ec5;">)</span> ~ jitter<span style="color: #bc6ec5;">(</span>educ, 8<span style="color: #bc6ec5;">)</span>, <span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">formula interface with log an jitter</span>
+     data = subset<span style="color: #bc6ec5;">(</span>datGSS, <span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">subsetting data as part of the plot call</span>
                    subset = educ &lt; 97<span style="color: #bc6ec5;">)</span>,
-     cex = .6 <span style="color: #2aa1ae;"># </span><span style="color: #2aa1ae;">make points smaller</span>
-     <span style="color: #2f96dc;">)</span>
+     cex = .6 <span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">make points smaller</span>
+     <span style="color: #4f97d7;">)</span>
 </pre>
 </div>
 </div>
