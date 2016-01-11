@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2016-01-07 Thu 17:29 -->
+<!-- 2016-01-11 Mon 11:50 -->
 <meta  http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta  name="viewport" content="width=device-width, initial-scale=1" />
 <title>Introduction To Programming In R</title>
@@ -98,57 +98,37 @@ for the JavaScript code in this tag.
 <li><a href="#orgheadline19">Mode and length</a></li>
 <li><a href="#orgheadline20">Other properties of data.frames</a></li>
 <li><a href="#orgheadline21">Additional attributes</a></li>
-<li><a href="#orgheadline22">Indexing</a>
+<li><a href="#orgheadline22">Extracting useful meta-data</a>
 <ul>
-<li><a href="#orgheadline23">Indexing lists</a></li>
-<li><a href="#orgheadline24">Indexing vectors</a></li>
-<li><a href="#orgheadline25">Indexing matrices</a></li>
-<li><a href="#orgheadline26">Indexing data.frames</a></li>
-<li><a href="#orgheadline27">Exercise 2</a></li>
-<li><a href="#orgheadline28">Exercise 2 prototype&#xa0;&#xa0;&#xa0;<span class="tag"><span class="prototype">prototype</span></span></a></li>
+<li><a href="#orgheadline23">Exercise 2</a></li>
+<li><a href="#orgheadline24">Exercise 2 prototype&#xa0;&#xa0;&#xa0;<span class="tag"><span class="prototype">prototype</span></span></a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li><a href="#orgheadline29">Aggregating and combining data</a></li>
-<li><a href="#orgheadline30">Writing smarter functions: Control flow and the S3 system</a>
+<li><a href="#orgheadline25">Aggregation</a></li>
+<li><a href="#orgheadline26">Exercise 3</a></li>
+<li><a href="#orgheadline27">Exercise 3 prototype&#xa0;&#xa0;&#xa0;<span class="tag"><span class="prototype">prototype</span></span></a></li>
+<li><a href="#orgheadline28">Finishing touches</a>
 <ul>
-<li><a href="#orgheadline31">Function arguments</a></li>
-<li><a href="#orgheadline32">Iteration and control flow</a></li>
-<li><a href="#orgheadline33">The S3 object class system</a>
-<ul>
-<li><a href="#orgheadline34">Object class</a></li>
-<li><a href="#orgheadline35">Function methods</a></li>
-<li><a href="#orgheadline36">Creating new function methods</a></li>
-<li><a href="#orgheadline37">Creating generic functions</a></li>
+<li><a href="#orgheadline29">Data formatting</a></li>
+<li><a href="#orgheadline30">Plotting</a></li>
 </ul>
 </li>
+<li><a href="#orgheadline31">What else?</a></li>
+<li><a href="#orgheadline32">Go forth and code!</a>
+<ul>
+<li><a href="#orgheadline33">Additional reading and resources</a></li>
+<li><a href="#orgheadline34">Things that may surprise you</a>
+<ul>
+<li><a href="#orgheadline35">Floating point comparison</a></li>
+<li><a href="#orgheadline36">Missing values</a></li>
+<li><a href="#orgheadline37">Automatic type conversion</a></li>
+<li><a href="#orgheadline38">Optional argument inconsistencies</a></li>
+<li><a href="#orgheadline39">Trouble with Factors</a></li>
 </ul>
 </li>
-<li><a href="#orgheadline38">Things that may surprise you</a>
-<ul>
-<li><a href="#orgheadline39">Floating point comparison</a></li>
-<li><a href="#orgheadline40">Missing values</a></li>
-<li><a href="#orgheadline41">Automatic type conversion</a></li>
-<li><a href="#orgheadline42">Optional argument inconsistencies</a></li>
-<li><a href="#orgheadline43">Trouble with Factors</a></li>
-</ul>
-</li>
-<li><a href="#orgheadline44">What else?</a></li>
-<li><a href="#orgheadline47">Additional resources</a>
-<ul>
-<li><a href="#orgheadline45">Additional reading and resources</a></li>
-<li><a href="#orgheadline46">Feedback</a></li>
-</ul>
-</li>
-<li><a href="#orgheadline54">OLD STUFF</a>
-<ul>
-<li><a href="#orgheadline48">Vector types</a></li>
-<li><a href="#orgheadline49">Vector attributes</a></li>
-<li><a href="#orgheadline50">Factor vectors</a></li>
-<li><a href="#orgheadline51">Lists and data.frames</a></li>
-<li><a href="#orgheadline52">Data types summary</a></li>
-<li><a href="#orgheadline53">Exercise 0</a></li>
+<li><a href="#orgheadline40">Feedback</a></li>
 </ul>
 </li>
 </ul>
@@ -445,10 +425,6 @@ Wow, that was a <span class="underline">lot</span> easier. Why oh why didn't we 
 <div class="outline-text-2" id="text-orgheadline10">
 <p>
 The <a href="http://ceprdata.org/">http://ceprdata.org/</a> website provides code books for the DWS data in <code>.pdf</code> format. Links to these code books are available on the documentation page at <a href="http://ceprdata.org/cps-uniform-data-extracts/cps-displaced-worker-survey/cps-dws-documentation/">http://ceprdata.org/cps-uniform-data-extracts/cps-displaced-worker-survey/cps-dws-documentation/</a>. Parse this page and extract the links to the code books.
-</p>
-
-<p>
-Extract all the links ending in <code>uniform-data-extracts</code> from the html page at <code>http://ceprdata.org/</code>
 </p>
 </div>
 </div>
@@ -817,12 +793,23 @@ As we've seen, additional attributes and be accessed vie the <code>attributes</c
 </p>
 <div class="org-src-container">
 
-<pre class="src src-R">names<span style="color: #4f97d7;">(</span>attributes<span style="color: #bc6ec5;">(</span>ceprData1<span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>
+<pre class="src src-R">ceprDataInfo <span style="color: #a45bad;">&lt;-</span> attributes<span style="color: #4f97d7;">(</span>ceprData1<span style="color: #4f97d7;">)</span>
+mode<span style="color: #4f97d7;">(</span>ceprDataInfo<span style="color: #4f97d7;">)</span>
+class<span style="color: #4f97d7;">(</span>ceprDataInfo<span style="color: #4f97d7;">)</span>
+length<span style="color: #4f97d7;">(</span>ceprDataInfo<span style="color: #4f97d7;">)</span>
+names<span style="color: #4f97d7;">(</span>ceprDataInfo<span style="color: #4f97d7;">)</span>
 </pre>
 </div>
 
 <pre class="example">
-&gt; names(attributes(ceprData1))
+&gt; ceprDataInfo &lt;- attributes(ceprData1)
+&gt; mode(ceprDataInfo)
+[1] "list"
+&gt; class(ceprDataInfo)
+[1] "list"
+&gt; length(ceprDataInfo)
+[1] 12
+&gt; names(ceprDataInfo)
  [1] "datalabel"        "time.stamp"       "names"            "formats"         
  [5] "types"            "val.labels"       "var.labels"       "expansion.fields"
  [9] "row.names"        "version"          "label.table"      "class"           
@@ -830,234 +817,352 @@ As we've seen, additional attributes and be accessed vie the <code>attributes</c
 </pre>
 
 <p>
-OK, so far we know that ceprData is a list of length 6 and that it has a names attribute. How can we find out what is inside the list?
+Let's iterate over the attributes of =ceprData1- and get some more information about the available meta-data
 </p>
+<div class="org-src-container">
+
+<pre class="src src-R">t<span style="color: #4f97d7;">(</span>sapply<span style="color: #bc6ec5;">(</span>attributes<span style="color: #2d9574;">(</span>ceprData1<span style="color: #2d9574;">)</span>,
+         <span style="color: #4f97d7; font-weight: bold;">function</span><span style="color: #2d9574;">(</span>x<span style="color: #2d9574;">)</span> <span style="color: #2d9574;">{</span>
+           c<span style="color: #67b11d;">(</span>mode = mode<span style="color: #b1951d;">(</span>x<span style="color: #b1951d;">)</span>, class = class<span style="color: #b1951d;">(</span>x<span style="color: #b1951d;">)</span>, length = length<span style="color: #b1951d;">(</span>x<span style="color: #b1951d;">)</span><span style="color: #67b11d;">)</span>
+         <span style="color: #2d9574;">}</span><span style="color: #bc6ec5;">)</span>
+  <span style="color: #4f97d7;">)</span>
+</pre>
+</div>
+
+<pre class="example">
+&gt; t(sapply(attributes(ceprData1),
++          function(x) {
++            c(mode = mode(x), class = class(x), length = length(x))
++          })
++   )
+                 mode        class       length  
+datalabel        "character" "character" "1"     
+time.stamp       "character" "character" "1"     
+names            "character" "character" "178"   
+formats          "character" "character" "178"   
+types            "numeric"   "integer"   "178"   
+val.labels       "character" "character" "178"   
+var.labels       "character" "character" "178"   
+expansion.fields "list"      "list"      "525"   
+row.names        "character" "character" "156246"
+version          "numeric"   "integer"   "1"     
+label.table      "list"      "list"      "30"    
+class            "character" "character" "1"     
+&gt;
+</pre>
 </div>
 </div>
 
 <div id="outline-container-orgheadline22" class="outline-3">
-<h3 id="orgheadline22">Indexing</h3>
+<h3 id="orgheadline22">Extracting useful meta-data</h3>
 <div class="outline-text-3" id="text-orgheadline22">
 <p>
-We can extract or replace elements of R objects using bracket indexing. Exactly how indexing works differs slightly depending on what kind of object we are working with.
+We can extract elements from lists in a few different ways:
 </p>
-</div>
-
-<div id="outline-container-orgheadline23" class="outline-4">
-<h4 id="orgheadline23">Indexing lists</h4>
-<div class="outline-text-4" id="text-orgheadline23">
-<p>
-For lists we can index using a single bracket to extract one or more elements of the list, or we can index using double brackets to extract a single element.
-</p>
-
 <div class="org-src-container">
 
-<pre class="src src-R"><span style="color: #2aa1ae; background-color: #292e34;">## </span><span style="color: #2aa1ae; background-color: #292e34;">what do we get when we extract one element with single brackets?</span>
-length<span style="color: #4f97d7;">(</span>ceprData<span style="color: #bc6ec5;">[</span>1<span style="color: #bc6ec5;">]</span><span style="color: #4f97d7;">)</span>; mode<span style="color: #4f97d7;">(</span>ceprData<span style="color: #bc6ec5;">[</span>1<span style="color: #bc6ec5;">]</span><span style="color: #4f97d7;">)</span>; class<span style="color: #4f97d7;">(</span>ceprData<span style="color: #bc6ec5;">[</span>1<span style="color: #bc6ec5;">]</span><span style="color: #4f97d7;">)</span>; attributes<span style="color: #4f97d7;">(</span>ceprData<span style="color: #bc6ec5;">[</span>1<span style="color: #bc6ec5;">]</span><span style="color: #4f97d7;">)</span>
-<span style="color: #2aa1ae; background-color: #292e34;">## </span><span style="color: #2aa1ae; background-color: #292e34;">what do we get when we extract the middle two elements with single brackets?</span>
-length<span style="color: #4f97d7;">(</span>ceprData<span style="color: #bc6ec5;">[</span>2:3<span style="color: #bc6ec5;">]</span><span style="color: #4f97d7;">)</span>; mode<span style="color: #4f97d7;">(</span>ceprData<span style="color: #bc6ec5;">[</span>2:3<span style="color: #bc6ec5;">]</span><span style="color: #4f97d7;">)</span>; class<span style="color: #4f97d7;">(</span>ceprData<span style="color: #bc6ec5;">[</span>2:3<span style="color: #bc6ec5;">]</span><span style="color: #4f97d7;">)</span>; attributes<span style="color: #4f97d7;">(</span>ceprData<span style="color: #bc6ec5;">[</span>2:3<span style="color: #bc6ec5;">]</span><span style="color: #4f97d7;">)</span>
-<span style="color: #2aa1ae; background-color: #292e34;">## </span><span style="color: #2aa1ae; background-color: #292e34;">what do we get when we extract the first element with a double bracket</span>
-length<span style="color: #4f97d7;">(</span>ceprData<span style="color: #bc6ec5;">[</span><span style="color: #2d9574;">[</span>1<span style="color: #2d9574;">]</span><span style="color: #bc6ec5;">]</span><span style="color: #4f97d7;">)</span>; mode<span style="color: #4f97d7;">(</span>ceprData<span style="color: #bc6ec5;">[</span><span style="color: #2d9574;">[</span>1<span style="color: #2d9574;">]</span><span style="color: #bc6ec5;">]</span><span style="color: #4f97d7;">)</span>; class<span style="color: #4f97d7;">(</span>ceprData<span style="color: #bc6ec5;">[</span><span style="color: #2d9574;">[</span>1<span style="color: #2d9574;">]</span><span style="color: #bc6ec5;">]</span><span style="color: #4f97d7;">)</span><span style="color: #2aa1ae; background-color: #292e34;">#</span>
+<pre class="src src-R"><span style="color: #2aa1ae; background-color: #292e34;">## </span><span style="color: #2aa1ae; background-color: #292e34;">extract by name</span>
+ceprDataInfo$datalabel <span style="color: #2aa1ae; background-color: #292e34;">#</span><span style="color: #2aa1ae; background-color: #292e34;">using $</span>
+ceprDataInfo<span style="color: #4f97d7;">[</span><span style="color: #2d9574;">"datalabel"</span><span style="color: #4f97d7;">]</span> <span style="color: #2aa1ae; background-color: #292e34;">#</span><span style="color: #2aa1ae; background-color: #292e34;">using [</span>
+ceprDataInfo<span style="color: #4f97d7;">[</span><span style="color: #bc6ec5;">[</span><span style="color: #2d9574;">"datalabel"</span><span style="color: #bc6ec5;">]</span> <span style="color: #2aa1ae; background-color: #292e34;">#</span><span style="color: #2aa1ae; background-color: #292e34;">using [[, note the difference</span>
+
+<span style="color: #2aa1ae; background-color: #292e34;">## </span><span style="color: #2aa1ae; background-color: #292e34;">by position</span>
+ceprDataInfo<span style="color: #bc6ec5;">[</span>1<span style="color: #bc6ec5;">]</span>; ceprDataInfo<span style="color: #bc6ec5;">[</span><span style="color: #2d9574;">[</span>1<span style="color: #2d9574;">]</span><span style="color: #bc6ec5;">]</span> <span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">note the difference</span>
+
+<span style="color: #2aa1ae; background-color: #292e34;">## </span><span style="color: #2aa1ae; background-color: #292e34;">by logical index</span>
+ceprDataInfo<span style="color: #bc6ec5;">[</span>c<span style="color: #2d9574;">(</span><span style="color: #ce537a; font-weight: bold;">TRUE</span>, <span style="color: #ce537a; font-weight: bold;">TRUE</span>, rep<span style="color: #67b11d;">(</span><span style="color: #ce537a; font-weight: bold;">FALSE</span>, 10<span style="color: #67b11d;">)</span><span style="color: #2d9574;">)</span><span style="color: #bc6ec5;">]</span>
+ceprDataInfo<span style="color: #bc6ec5;">[</span>sapply<span style="color: #2d9574;">(</span>ceprDataInfo, length<span style="color: #2d9574;">)</span> == 1<span style="color: #bc6ec5;">]</span>
 </pre>
 </div>
 
 <p>
-Right. So what have we learned? We've learned that indexing lists works like this:
+Note that <code>[</code> indexing on a list returns a list, and <code>[[</code> indexing returns whatever contained in a single element of the list. This visual explanation may help: 
 <img src="images/HadleyWickham_index_list.png" alt="HadleyWickham_index_list.png" /><sup><a id="fnr.2" class="footref" href="#fn.2">2</a></sup>
 </p>
 
 <p>
-We've also learned that <code>ceprData[[1]]</code> has mode <code>list</code> but <i>class</i> <code>data.frame</code>. We can find out more about these data structures by reading their help pages (<code>?list</code> and <code>?data.frame</code>), but briefly a data.frame is a special kind of list that is constrained such that all elements have the same length. A data.frame is a rectangular structure that can be indexed by rows and columns (more on this in a moment).
+You may have noticed during our earlier investigation of <code>ceprDataInfo</code> that many of the elements have length 178. That number might be familiar:
+</p>
+<div class="org-src-container">
+
+<pre class="src src-R">dim<span style="color: #4f97d7;">(</span>ceprData1<span style="color: #4f97d7;">)</span>
+</pre>
+</div>
+
+<pre class="example">
+&gt; dim(ceprData1)
+[1] 156246    178
+&gt;
+</pre>
+<p>
+it's the number of columns in the data set. It is therefor a good guess that those elements record information about each of the columns in the data set. 
+</p>
+</div>
+
+<div id="outline-container-orgheadline23" class="outline-4">
+<h4 id="orgheadline23">Exercise 2</h4>
+<div class="outline-text-4" id="text-orgheadline23">
+<p>
+Extract elements from <code>ceprDataInfo</code> that will help you understand what each column in <code>deprData</code> contains. Include at least the variable <code>names</code> and <code>var.labels</code> as well as any other information that you think will be useful.
+</p>
+
+<p>
+Bonus (optional): supplement the <code>ceprDataInfo</code> you extracted in step one with the mode, class, etc. of each column in <code>ceprData1</code> 
 </p>
 </div>
 </div>
 
 <div id="outline-container-orgheadline24" class="outline-4">
-<h4 id="orgheadline24">Indexing vectors</h4>
+<h4 id="orgheadline24">Exercise 2 prototype&#xa0;&#xa0;&#xa0;<span class="tag"><span class="prototype">prototype</span></span></h4>
 <div class="outline-text-4" id="text-orgheadline24">
-<p>
-You may have noticed in the previous code example that I did <span class="underline">not</span> ask for <code>attributes(ceprData[[1]])</code>. The reason for that is that each element of <code>ceprDATA</code> is a <code>data.frame</code> with a large number of attributes. Let's look at those attributes in a bit more detail.
-</p>
-
 <div class="org-src-container">
 
-<pre class="src src-R">ceprDataInfo <span style="color: #a45bad;">&lt;-</span> attributes<span style="color: #4f97d7;">(</span>ceprData<span style="color: #bc6ec5;">[</span><span style="color: #2d9574;">[</span>1<span style="color: #2d9574;">]</span><span style="color: #bc6ec5;">]</span><span style="color: #4f97d7;">)</span>
-mode<span style="color: #4f97d7;">(</span>ceprDataInfo<span style="color: #4f97d7;">)</span>
-class<span style="color: #4f97d7;">(</span>ceprDataInfo<span style="color: #4f97d7;">)</span>
-length<span style="color: #4f97d7;">(</span>ceprDataInfo<span style="color: #4f97d7;">)</span>
-names<span style="color: #4f97d7;">(</span>ceprDataInfo<span style="color: #4f97d7;">)</span>
-<span style="color: #4f97d7;">(</span>ceprInfoLength <span style="color: #a45bad;">&lt;-</span> sapply<span style="color: #bc6ec5;">(</span>ceprDataInfo, length<span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>
-</pre>
-</div>
+<pre class="src src-R">ceprCodebook <span style="color: #a45bad;">&lt;-</span> data.frame<span style="color: #4f97d7;">(</span>
+  ceprDataInfo<span style="color: #bc6ec5;">[</span>
+    sapply<span style="color: #2d9574;">(</span>ceprDataInfo, length<span style="color: #2d9574;">)</span> == ncol<span style="color: #2d9574;">(</span>ceprData1<span style="color: #2d9574;">)</span>
+  <span style="color: #bc6ec5;">]</span><span style="color: #4f97d7;">)</span>
 
-<p>
-<code>ceprInfoLength</code> is an <i>atomic vector</i>, i.e., a vector with all elements of the same mode. We can index a vector with <code>[</code> and <code>[[</code>, just as we do for lists.
-</p>
+ceprCodebook$mode <span style="color: #a45bad;">&lt;-</span> sapply<span style="color: #4f97d7;">(</span>ceprData1, mode<span style="color: #4f97d7;">)</span>
+ceprCodebook$class <span style="color: #a45bad;">&lt;-</span> sapply<span style="color: #4f97d7;">(</span>ceprData1, class<span style="color: #4f97d7;">)</span>
+ceprCodebook$n_distinct = sapply<span style="color: #4f97d7;">(</span>ceprData1, <span style="color: #4f97d7; font-weight: bold;">function</span><span style="color: #bc6ec5;">(</span>x<span style="color: #bc6ec5;">)</span> length<span style="color: #bc6ec5;">(</span>unique<span style="color: #2d9574;">(</span>x<span style="color: #2d9574;">)</span><span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>
 
-<div class="org-src-container">
-
-<pre class="src src-R">mode<span style="color: #4f97d7;">(</span>ceprInfoLength<span style="color: #4f97d7;">)</span>; class<span style="color: #4f97d7;">(</span>ceprInfoLength<span style="color: #4f97d7;">)</span>; length<span style="color: #4f97d7;">(</span>ceprInfoLength<span style="color: #4f97d7;">)</span>
-ceprInfoLength<span style="color: #4f97d7;">[</span>1<span style="color: #4f97d7;">]</span>
-ceprInfoLength<span style="color: #4f97d7;">[</span><span style="color: #bc6ec5;">[</span>1<span style="color: #bc6ec5;">]</span><span style="color: #4f97d7;">]</span>
-ceprInfoLength<span style="color: #4f97d7;">[</span>1:10<span style="color: #4f97d7;">]</span>
-</pre>
-</div>
-
-<p>
-The code above is an example of <i>indexing by position</i>. We can also index by <i>name</i> or using <i>logical indexing</i> as shown below.
-</p>
-<div class="org-src-container">
-
-<pre class="src src-R">ceprInfoLength<span style="color: #4f97d7;">[</span>c<span style="color: #bc6ec5;">(</span><span style="color: #2d9574;">"names"</span>, <span style="color: #2d9574;">"formats"</span>, <span style="color: #2d9574;">"types"</span><span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">]</span>
-ceprInfoLength<span style="color: #4f97d7;">[</span>grepl<span style="color: #bc6ec5;">(</span><span style="color: #2d9574;">"lab"</span>, names<span style="color: #2d9574;">(</span>ceprInfoLength<span style="color: #2d9574;">)</span><span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">]</span>
-ceprInfoLength<span style="color: #4f97d7;">[</span>ceprInfoLength == 1<span style="color: #4f97d7;">]</span>
-names<span style="color: #4f97d7;">(</span>ceprInfoLength<span style="color: #4f97d7;">)[</span>ceprInfoLength == 1<span style="color: #4f97d7;">]</span>
-</pre>
-</div>
-
-<p>
-Finally, we can use negation and negative indices to reverse the usual meanings.
-</p>
-<div class="org-src-container">
-
-<pre class="src src-R">ceprInfoLength<span style="color: #4f97d7;">[</span>- c<span style="color: #bc6ec5;">(</span>3, 7, 9<span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">]</span>
-ceprInfoLength<span style="color: #4f97d7;">[</span>setdiff<span style="color: #bc6ec5;">(</span>names<span style="color: #2d9574;">(</span>ceprInfoLength<span style="color: #2d9574;">)</span>, c<span style="color: #2d9574;">(</span><span style="color: #2d9574;">"names"</span>, <span style="color: #2d9574;">"formats"</span>, <span style="color: #2d9574;">"types"</span><span style="color: #2d9574;">)</span><span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">]</span>
-ceprInfoLength<span style="color: #4f97d7;">[</span>!grepl<span style="color: #bc6ec5;">(</span><span style="color: #2d9574;">"lab"</span>, names<span style="color: #2d9574;">(</span>ceprInfoLength<span style="color: #2d9574;">)</span><span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">]</span>
-</pre>
-</div>
-</div>
-</div>
-
-<div id="outline-container-orgheadline25" class="outline-4">
-<h4 id="orgheadline25">Indexing matrices</h4>
-<div class="outline-text-4" id="text-orgheadline25">
-<p>
-Now that we know a little more about indexing, let's get back to investigating the ceprData metadata. 
-</p>
-
-<div class="org-src-container">
-
-<pre class="src src-R"><span style="color: #4f97d7;">(</span>infoInfo <span style="color: #a45bad;">&lt;-</span> sapply<span style="color: #bc6ec5;">(</span>ceprDataInfo, <span style="color: #4f97d7; font-weight: bold;">function</span><span style="color: #2d9574;">(</span>x<span style="color: #2d9574;">)</span> <span style="color: #2d9574;">{</span>
-  <span style="color: #4f97d7; font-weight: bold;">return</span><span style="color: #67b11d;">(</span>c<span style="color: #b1951d;">(</span>mode = mode<span style="color: #4f97d7;">(</span>x<span style="color: #4f97d7;">)</span>, class = class<span style="color: #4f97d7;">(</span>x<span style="color: #4f97d7;">)</span>, length = length<span style="color: #4f97d7;">(</span>x<span style="color: #4f97d7;">)</span><span style="color: #b1951d;">)</span><span style="color: #67b11d;">)</span>
-  <span style="color: #2d9574;">}</span><span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>
-</pre>
-</div>
-
-<p>
-<code>infoInfo</code> contains information about the contents of <code>ceprDataInfo</code>. <code>infoInfo</code> is a <i>matrix</i>. A matrix in R is simply a vector with two dimensions. We can index a matrix exactly as we do a vector:
-</p>
-<div class="org-src-container">
-
-<pre class="src src-R">infoInfo
-infoInfo<span style="color: #4f97d7;">[</span>c<span style="color: #bc6ec5;">(</span>1, 3, 9<span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">]</span>
-</pre>
-</div>
-
-<p>
-but more commonly we will index a matrix by referring to both dimensions, like this:
-</p>
-<div class="org-src-container">
-
-<pre class="src src-R">infoInfo<span style="color: #4f97d7;">[</span>1:2, c<span style="color: #bc6ec5;">(</span>7, 3, 1<span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">]</span>
-infoInfo<span style="color: #4f97d7;">[</span> , 1:2<span style="color: #4f97d7;">]</span>
-infoInfo<span style="color: #4f97d7;">[</span>3:2, <span style="color: #4f97d7;">]</span>
-</pre>
-</div>
-
-<p>
-All the techniques we learned for indexing vectors apply. For example:
-</p>
-<div class="org-src-container">
-
-<pre class="src src-R">attributes<span style="color: #4f97d7;">(</span>infoInfo<span style="color: #4f97d7;">)</span>
-infoInfo<span style="color: #4f97d7;">[</span>c<span style="color: #bc6ec5;">(</span><span style="color: #2d9574;">"length"</span>, <span style="color: #2d9574;">"mode"</span><span style="color: #bc6ec5;">)</span>, grepl<span style="color: #bc6ec5;">(</span><span style="color: #2d9574;">"name"</span>, colnames<span style="color: #2d9574;">(</span>infoInfo<span style="color: #2d9574;">)</span><span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">]</span>
-</pre>
-</div>
-</div>
-</div>
-
-<div id="outline-container-orgheadline26" class="outline-4">
-<h4 id="orgheadline26">Indexing data.frames</h4>
-<div class="outline-text-4" id="text-orgheadline26">
-<p>
-As we noted earlier data.frames are a special kind of list. Therefore both <code>[</code> and <code>[[</code> indexing will work exactly as they do for lists. Unlike other lists, data.frames have two dimensions (like a matrix), so two-dimensional indexing works on data.frames just as it does for matrices.
-</p>
-</div>
-</div>
-
-
-<div id="outline-container-orgheadline27" class="outline-4">
-<h4 id="orgheadline27">Exercise 2</h4>
-<div class="outline-text-4" id="text-orgheadline27">
-<p>
-Extract elements from <code>ceprDataInfo</code> that will help you understand what each column in <code>deprData</code> contains. Include at least the variable <code>names</code> and <code>var.labels</code> as well as any other information that you think will be useful.
-</p>
-</div>
-</div>
-
-<div id="outline-container-orgheadline28" class="outline-4">
-<h4 id="orgheadline28">Exercise 2 prototype&#xa0;&#xa0;&#xa0;<span class="tag"><span class="prototype">prototype</span></span></h4>
-<div class="outline-text-4" id="text-orgheadline28">
-<div class="org-src-container">
-
-<pre class="src src-R">ceprCodebook <span style="color: #a45bad;">&lt;-</span> data.frame<span style="color: #4f97d7;">(</span>ceprDataInfo<span style="color: #bc6ec5;">[</span> sapply<span style="color: #2d9574;">(</span>ceprDataInfo, length<span style="color: #2d9574;">)</span> == ncol<span style="color: #2d9574;">(</span>ceprData<span style="color: #67b11d;">[</span><span style="color: #b1951d;">[</span>1<span style="color: #b1951d;">]</span><span style="color: #67b11d;">]</span><span style="color: #2d9574;">)</span> <span style="color: #bc6ec5;">]</span><span style="color: #4f97d7;">)</span>
 rbind<span style="color: #4f97d7;">(</span>head<span style="color: #bc6ec5;">(</span>ceprCodebook<span style="color: #bc6ec5;">)</span>, tail<span style="color: #bc6ec5;">(</span>ceprCodebook<span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>
 </pre>
 </div>
+
+<pre class="example">
+&gt; ceprCodebook &lt;- data.frame(
++   ceprDataInfo[
++     sapply(ceprDataInfo, length) == ncol(ceprData1)
++   ])
+&gt; 
+&gt; ceprCodebook$mode &lt;- sapply(ceprData1, mode)
+&gt; ceprCodebook$class &lt;- sapply(ceprData1, class)
+&gt; ceprCodebook$n_distinct = sapply(ceprData1, function(x) length(unique(x)))
+&gt; 
+&gt; rbind(head(ceprCodebook), tail(ceprCodebook))
+       names formats types val.labels                       var.labels    mode
+1       year   %8.0g   252                                        Year numeric
+2      indws   %8.0g   251                            Eligible for DWS numeric
+3    dw_stat   %8.0g   251                        DWS interview status numeric
+4     dwswgt   %9.0g   254                                  DWS weight numeric
+5         dw   %8.0g   251                                   Displaced numeric
+6     dw_bls   %8.0g   251            Displaced, strict BLS definition numeric
+173 peernhro   %8.0g   251                      Usual hours, ORG (BLS) numeric
+174   imphrs   %9.0g   254                   Hours, main job (imputed) numeric
+175 hrsimptd   %9.0g   251                               Hours imputed numeric
+176  hrernhr   %8.0g   251                      Hours assigned, ernhro numeric
+177  uhoursi   %9.0g   251                        Hours, w/ imputation numeric
+178  blsimpt   %8.0g   251                  BLS allocated weekly hours numeric
+      class n_distinct
+1   integer          1
+2   integer          2
+3   integer          3
+4   numeric      80402
+5   integer          3
+6   integer          2
+173 integer         66
+174 numeric       2198
+175 integer          2
+176 integer          3
+177 integer         96
+178 integer          2
+&gt;
+</pre>
 </div>
 </div>
 </div>
 </div>
 
-<div id="outline-container-orgheadline29" class="outline-2">
-<h2 id="orgheadline29">Aggregating and combining data</h2>
-<div class="outline-text-2" id="text-orgheadline29">
+<div id="outline-container-orgheadline25" class="outline-2">
+<h2 id="orgheadline25">Aggregation</h2>
+<div class="outline-text-2" id="text-orgheadline25">
 <p>
-Now that we have all the data read in, and we know what is in each column, I want to aggregate the data to down to a managable size. Specifically I want to calculate the average income by state/year/rural/gender. I can do that using the <code>aggregate</code> function (the <code>data.table</code> and <code>dplyr</code> packages provide advanced aggregation capabilities, but <code>aggregate</code> is available in base R and works well for many things).
+Now that we have the data read in, and we know what is in each column, I want to calculate the proportion displaced by year/rural/gender. I can do that using the <code>aggregate</code> function (the <code>data.table</code> and <code>dplyr</code> packages provide advanced aggregation capabilities, but <code>aggregate</code> is available in base R and works well for many things).
 </p>
 
 <div class="org-src-container">
 
-<pre class="src src-R">ceprData <span style="color: #a45bad;">&lt;-</span> sapply<span style="color: #4f97d7;">(</span>ceprData, <span style="color: #4f97d7; font-weight: bold;">function</span><span style="color: #bc6ec5;">(</span>x<span style="color: #bc6ec5;">)</span> <span style="color: #bc6ec5;">{</span>
-  aggregate<span style="color: #2d9574;">(</span>x<span style="color: #67b11d;">[</span><span style="color: #2d9574;">"wkswo"</span><span style="color: #67b11d;">]</span>,
-            by = x<span style="color: #67b11d;">[</span>c<span style="color: #b1951d;">(</span><span style="color: #2d9574;">"year"</span>, <span style="color: #2d9574;">"state"</span>, <span style="color: #2d9574;">"rural"</span>, <span style="color: #2d9574;">"female"</span><span style="color: #b1951d;">)</span><span style="color: #67b11d;">]</span>,
-            FUN = median, na.rm = <span style="color: #ce537a; font-weight: bold;">TRUE</span><span style="color: #2d9574;">)</span><span style="color: #bc6ec5;">}</span>,
+<pre class="src src-R">ceprData1 <span style="color: #a45bad;">&lt;-</span> aggregate<span style="color: #4f97d7;">(</span>ceprData1<span style="color: #bc6ec5;">[</span><span style="color: #2d9574;">"dw"</span><span style="color: #bc6ec5;">]</span>,
+                       by = ceprData1<span style="color: #bc6ec5;">[</span>c<span style="color: #2d9574;">(</span><span style="color: #2d9574;">"year"</span>, <span style="color: #2d9574;">"rural"</span>, <span style="color: #2d9574;">"female"</span><span style="color: #2d9574;">)</span><span style="color: #bc6ec5;">]</span>,
+                       FUN = <span style="color: #4f97d7; font-weight: bold;">function</span><span style="color: #bc6ec5;">(</span>x<span style="color: #bc6ec5;">)</span> <span style="color: #bc6ec5;">{</span>
+                         x <span style="color: #a45bad;">&lt;-</span> na.omit<span style="color: #2d9574;">(</span>x<span style="color: #2d9574;">)</span>
+                         length<span style="color: #2d9574;">(</span>x<span style="color: #67b11d;">[</span>x == 1<span style="color: #67b11d;">]</span><span style="color: #2d9574;">)</span>/length<span style="color: #2d9574;">(</span>x<span style="color: #2d9574;">)</span>
+                       <span style="color: #bc6ec5;">}</span><span style="color: #4f97d7;">)</span>
+ceprData1
+</pre>
+</div>
+
+<pre class="example">
+&gt; ceprData1 &lt;- aggregate(ceprData1["dw"],
++                        by = ceprData1[c("year", "rural", "female")],
++                        FUN = function(x) {
++                          x &lt;- na.omit(x)
++                          length(x[x == 1])/length(x)
++                        })
+&gt; ceprData1
+  year rural female         dw
+1 1994     0      0 0.09201620
+2 1994     1      0 0.07094765
+3 1994     0      1 0.06059583
+4 1994     1      1 0.04579923
+&gt;
+</pre>
+</div>
+</div>
+
+<div id="outline-container-orgheadline26" class="outline-2">
+<h2 id="orgheadline26">Exercise 3</h2>
+<div class="outline-text-2" id="text-orgheadline26">
+<p>
+Now that we have a process for importing and aggregating the data we can apply it to all the data files we downloaded earlier. We can do that by wrapping the <code>read.dta</code> and <code>aggregate</code> code in a function and applying that function to each element of <code>ceprDataFiles</code> using the <code>sapply</code> function, or using a <code>for</code> loop. Go ahead and give it a try! Note that this exercise is intentionally challenging; read the documentation, search stackoverflow.com, and use any other resources at your disposal as you attempt it.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline27" class="outline-2">
+<h2 id="orgheadline27">Exercise 3 prototype&#xa0;&#xa0;&#xa0;<span class="tag"><span class="prototype">prototype</span></span></h2>
+<div class="outline-text-2" id="text-orgheadline27">
+<div class="org-src-container">
+
+<pre class="src src-R"><span style="color: #a45bad;">library</span><span style="color: #4f97d7;">(</span>foreign<span style="color: #4f97d7;">)</span>
+
+ceprData <span style="color: #a45bad;">&lt;-</span> sapply<span style="color: #4f97d7;">(</span>ceprDataFiles, <span style="color: #4f97d7; font-weight: bold;">function</span><span style="color: #bc6ec5;">(</span>x<span style="color: #bc6ec5;">)</span> <span style="color: #bc6ec5;">{</span>
+  tmp <span style="color: #a45bad;">&lt;-</span> read.dta<span style="color: #2d9574;">(</span>x<span style="color: #2d9574;">)</span>
+  <span style="color: #4f97d7; font-weight: bold;">return</span><span style="color: #2d9574;">(</span>aggregate<span style="color: #67b11d;">(</span>tmp<span style="color: #b1951d;">[</span><span style="color: #2d9574;">"dw"</span><span style="color: #b1951d;">]</span>,
+                   by = tmp<span style="color: #b1951d;">[</span>c<span style="color: #4f97d7;">(</span><span style="color: #2d9574;">"year"</span>, <span style="color: #2d9574;">"rural"</span>, <span style="color: #2d9574;">"female"</span><span style="color: #4f97d7;">)</span><span style="color: #b1951d;">]</span>,
+                   FUN = <span style="color: #4f97d7; font-weight: bold;">function</span><span style="color: #b1951d;">(</span>y<span style="color: #b1951d;">)</span> <span style="color: #b1951d;">{</span>
+                     y <span style="color: #a45bad;">&lt;-</span> na.omit<span style="color: #4f97d7;">(</span>y<span style="color: #4f97d7;">)</span>
+                     length<span style="color: #4f97d7;">(</span>y<span style="color: #bc6ec5;">[</span>y == 1<span style="color: #bc6ec5;">]</span><span style="color: #4f97d7;">)</span>/length<span style="color: #4f97d7;">(</span>y<span style="color: #4f97d7;">)</span>
+                   <span style="color: #b1951d;">}</span><span style="color: #67b11d;">)</span><span style="color: #2d9574;">)</span><span style="color: #bc6ec5;">}</span>,
   simplify = <span style="color: #ce537a; font-weight: bold;">FALSE</span><span style="color: #4f97d7;">)</span>
 </pre>
 </div>
+</div>
+</div>
 
+<div id="outline-container-orgheadline28" class="outline-2">
+<h2 id="orgheadline28">Finishing touches</h2>
+<div class="outline-text-2" id="text-orgheadline28">
 <p>
-In particular combine all the data together into a single data.frame. Right now we have a list of data.frames, and we simply want to stack this one on top of the other. We can do that with the <code>rbind</code> function. (Other ways you might want to combine data are described in <code>?cbind</code> and <code>?merge</code>).
-</p>
-
-<p>
-A straightforward way to combine the data looks like this
+We now have a list of aggregated data.frames. The next step is to stack each element of the list so that we end up with one big data.frame instead of a list of small ones. We can stack two data.frames using the <code>rbind</code> function:
 </p>
 <div class="org-src-container">
 
-<pre class="src src-R"><span style="color: #2aa1ae; background-color: #292e34;">#</span><span style="color: #2aa1ae; background-color: #292e34;">ceprData &lt;- rbind(ceprData[[1]], ceprData[[2]], ceprData[[3]], ceprData[[4]])</span>
+<pre class="src src-R">ceprData<span style="color: #4f97d7;">[</span><span style="color: #bc6ec5;">[</span>1<span style="color: #bc6ec5;">]</span><span style="color: #4f97d7;">]</span>; ceprData<span style="color: #4f97d7;">[</span><span style="color: #bc6ec5;">[</span>2<span style="color: #bc6ec5;">]</span><span style="color: #4f97d7;">]</span>
+rbind<span style="color: #4f97d7;">(</span>ceprData<span style="color: #bc6ec5;">[</span><span style="color: #2d9574;">[</span>1<span style="color: #2d9574;">]</span><span style="color: #bc6ec5;">]</span>, ceprData<span style="color: #bc6ec5;">[</span><span style="color: #2d9574;">[</span>2<span style="color: #2d9574;">]</span><span style="color: #bc6ec5;">]</span><span style="color: #4f97d7;">)</span>
 </pre>
 </div>
+
+<pre class="example">
+&gt; ceprData[[1]]; ceprData[[2]]
+  year rural female         dw
+1 1994     0      0 0.09201620
+2 1994     1      0 0.07094765
+3 1994     0      1 0.06059583
+4 1994     1      1 0.04579923
+  year rural female         dw
+1 1996     0      0 0.10207612
+2 1996     1      0 0.09333333
+3 1996     0      1 0.07761280
+4 1996     1      1 0.06870622
+&gt; rbind(ceprData[[1]], ceprData[[2]])
+  year rural female         dw
+1 1994     0      0 0.09201620
+2 1994     1      0 0.07094765
+3 1994     0      1 0.06059583
+4 1994     1      1 0.04579923
+5 1996     0      0 0.10207612
+6 1996     1      0 0.09333333
+7 1996     0      1 0.07761280
+8 1996     1      1 0.06870622
+&gt;
+</pre>
 <p>
-and that's not too bad for four elements. But what if we had 100 or 1000000? You certainly don't want to type that many elements out yourself. Instead you can use <code>Reduce</code> to flatten the list, like this:
+and we can apply this operation to every element in the list using the <code>do.call</code> function.
 </p>
 <div class="org-src-container">
 
-<pre class="src src-R">ceprData <span style="color: #a45bad;">&lt;-</span> Reduce<span style="color: #4f97d7;">(</span><span style="color: #2d9574;">"rbind"</span>, ceprData<span style="color: #4f97d7;">)</span>
+<pre class="src src-R">str<span style="color: #4f97d7;">(</span>ceprData <span style="color: #a45bad;">&lt;-</span> do.call<span style="color: #bc6ec5;">(</span><span style="color: #2d9574;">"rbind"</span>, ceprData<span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>
 </pre>
 </div>
 
+<pre class="example">
+&gt; str(ceprData &lt;- do.call("rbind", ceprData))
+'data.frame':	36 obs. of  4 variables:
+ $ year  : int  1994 1994 1994 1994 1996 1996 1996 1996 1998 1998 ...
+ $ rural : int  0 1 0 1 0 1 0 1 0 1 ...
+ $ female: int  0 0 1 1 0 0 1 1 0 0 ...
+ $ dw    : num  0.092 0.0709 0.0606 0.0458 0.1021 ...
+&gt;
+</pre>
+</div>
+
+<div id="outline-container-orgheadline29" class="outline-3">
+<h3 id="orgheadline29">Data formatting</h3>
+<div class="outline-text-3" id="text-orgheadline29">
 <p>
-Now we can take a look at the trends in wages over the last few years.
+Our final step before plotting our data is to format the values for <code>rural</code> and <code>female</code>. Currently these values are stored as 0/1 dummy codes, but I would like for the values to be spelled out. 
+</p>
+
+<p>
+Earlier we saw how to extract elements of R objects using bracket notation. To replace elements we using the replacement form, which looks like this:
+</p>
+<div class="org-src-container">
+
+<pre class="src src-R"> ceprData<span style="color: #4f97d7;">[</span><span style="color: #bc6ec5;">[</span><span style="color: #2d9574;">"rural"</span><span style="color: #bc6ec5;">]</span><span style="color: #4f97d7;">]</span> <span style="color: #a45bad;">&lt;-</span> factor<span style="color: #4f97d7;">(</span>ceprData<span style="color: #bc6ec5;">[</span><span style="color: #2d9574;">[</span><span style="color: #2d9574;">"rural"</span><span style="color: #2d9574;">]</span><span style="color: #bc6ec5;">]</span>,
+                               levels = c<span style="color: #bc6ec5;">(</span>0, 1<span style="color: #bc6ec5;">)</span>,
+                               labels = c<span style="color: #bc6ec5;">(</span><span style="color: #2d9574;">"Non-rural"</span>, <span style="color: #2d9574;">"Rural"</span><span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>
+
+ ceprData<span style="color: #4f97d7;">[</span><span style="color: #bc6ec5;">[</span><span style="color: #2d9574;">"gender"</span><span style="color: #bc6ec5;">]</span><span style="color: #4f97d7;">]</span> <span style="color: #a45bad;">&lt;-</span> factor<span style="color: #4f97d7;">(</span>ceprData<span style="color: #bc6ec5;">[</span><span style="color: #2d9574;">[</span><span style="color: #2d9574;">"female"</span><span style="color: #2d9574;">]</span><span style="color: #bc6ec5;">]</span>,
+                               levels = c<span style="color: #bc6ec5;">(</span>1, 0<span style="color: #bc6ec5;">)</span>,
+                               labels = c<span style="color: #bc6ec5;">(</span><span style="color: #2d9574;">"Female"</span>, <span style="color: #2d9574;">"Male"</span><span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>
+
+ceprData$displaced_percent <span style="color: #a45bad;">&lt;-</span> ceprData$dw * 100
+
+str<span style="color: #4f97d7;">(</span>ceprData<span style="color: #4f97d7;">)</span>
+</pre>
+</div>
+
+<pre class="example">
+&gt;  ceprData[["rural"]] &lt;- factor(ceprData[["rural"]],
++                                levels = c(0, 1),
++                                labels = c("Non-rural", "Rural"))
+&gt; 
+&gt;  ceprData[["gender"]] &lt;- factor(ceprData[["female"]],
++                                levels = c(1, 0),
++                                labels = c("Female", "Male"))
+&gt; 
+&gt; ceprData$displaced_percent &lt;- ceprData$dw * 100
+&gt; 
+&gt; str(ceprData)
+'data.frame':	36 obs. of  6 variables:
+ $ year             : int  1994 1994 1994 1994 1996 1996 1996 1996 1998 1998 ...
+ $ rural            : Factor w/ 2 levels "Non-rural","Rural": 1 2 1 2 1 2 1 2 1 2 ...
+ $ female           : int  0 0 1 1 0 0 1 1 0 0 ...
+ $ dw               : num  0.092 0.0709 0.0606 0.0458 0.1021 ...
+ $ gender           : Factor w/ 2 levels "Female","Male": 2 2 1 1 2 2 1 1 2 2 ...
+ $ displaced_percent: num  9.2 7.09 6.06 4.58 10.21 ...
+&gt;
+</pre>
+</div>
+</div>
+
+<div id="outline-container-orgheadline30" class="outline-3">
+<h3 id="orgheadline30">Plotting</h3>
+<div class="outline-text-3" id="text-orgheadline30">
+<p>
+Now we can take a look at the trends in worker displacement over the last few years.
 </p>
 <div class="org-src-container">
 
 <pre class="src src-R"><span style="color: #a45bad;">library</span><span style="color: #4f97d7;">(</span>ggplot2<span style="color: #4f97d7;">)</span>
-ggplot<span style="color: #4f97d7;">(</span>ceprData, aes<span style="color: #bc6ec5;">(</span>x = year, y = wkswo, color = factor<span style="color: #2d9574;">(</span>female<span style="color: #2d9574;">)</span>, linetype = factor<span style="color: #2d9574;">(</span>rural<span style="color: #2d9574;">)</span><span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span> +
+<span style="color: #a45bad;">library</span><span style="color: #4f97d7;">(</span>directlabels<span style="color: #4f97d7;">)</span>
+ceprPlot <span style="color: #a45bad;">&lt;-</span> ggplot<span style="color: #4f97d7;">(</span>ceprData, aes<span style="color: #bc6ec5;">(</span>x = year, y = displaced_percent, color = gender<span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span> +
   geom_line<span style="color: #4f97d7;">()</span> +
-  facet_wrap<span style="color: #4f97d7;">(</span>~state, ncol = 9<span style="color: #4f97d7;">)</span> +
-  coord_cartesian<span style="color: #4f97d7;">(</span>ylim = c<span style="color: #bc6ec5;">(</span>0, 50<span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span> +
-  theme_minimal<span style="color: #4f97d7;">()</span>
+  geom_point<span style="color: #4f97d7;">()</span> +
+  facet_wrap<span style="color: #4f97d7;">(</span>~rural<span style="color: #4f97d7;">)</span>
+direct.label<span style="color: #4f97d7;">(</span>ceprPlot<span style="color: #4f97d7;">)</span>
 </pre>
 </div>
 
@@ -1068,368 +1173,79 @@ ggplot<span style="color: #4f97d7;">(</span>ceprData, aes<span style="color: #bc
 </div>
 </div>
 </div>
-
-<div id="outline-container-orgheadline30" class="outline-2">
-<h2 id="orgheadline30">Writing smarter functions: Control flow and the S3 system</h2>
-<div class="outline-text-2" id="text-orgheadline30">
-<p>
-Earlier we wrote a simple function to download a file from the internet. Our simple function looked like this:
-</p>
-<div class="org-src-container">
-
-<pre class="src src-R"><span style="color: #bc6ec5; font-weight: bold;">downloadFile</span> <span style="color: #a45bad;">&lt;-</span> <span style="color: #4f97d7; font-weight: bold;">function</span><span style="color: #4f97d7;">(</span>url, <span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">url to download</span>
-                         destfile = basename<span style="color: #bc6ec5;">(</span>url<span style="color: #bc6ec5;">)</span>, <span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">default name to save to</span>
-                         outdir = <span style="color: #2d9574;">"./"</span>, <span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">directory to save in</span>
-                         ... <span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">other arguments passed to download.file</span>
-                         <span style="color: #4f97d7;">){</span>
-  download.file<span style="color: #bc6ec5;">(</span>url = url, destfile = paste<span style="color: #2d9574;">(</span>outdir, destfile, sep = <span style="color: #2d9574;">""</span><span style="color: #2d9574;">)</span>, ...<span style="color: #bc6ec5;">)</span>
-<span style="color: #4f97d7;">}</span>
-</pre>
-</div>
-<p>
-This was fine for our purpose at the time, but if we want to make this function more generally useful there are a number of things that we might want to do:
-</p>
-<ul class="org-ul">
-<li>make it download multiple files from a vector of URLs</li>
-<li>make it work with both strings and parsed html</li>
-</ul>
-
-<p>
-In order to accomplish these things we need to lean a little more about function arguments, control flow, and classes and methods. Lets start with function arguments.
-</p>
 </div>
 
-<div id="outline-container-orgheadline31" class="outline-3">
-<h3 id="orgheadline31">Function arguments</h3>
-<div class="outline-text-3" id="text-orgheadline31">
+<div id="outline-container-orgheadline31" class="outline-2">
+<h2 id="orgheadline31">What else?</h2>
+<div class="outline-text-2" id="text-orgheadline31">
 <p>
-Functions in R have three componants: an <i>arglist</i>, a <i>body</i> and an <i>environment</i>. For the moment we are only concerned with the first two.
-</p>
-
-<p>
-An <i>arglist</i> consists of key-value pairs (with the value being optional). The arglist of our function so far is
-</p>
-<div class="org-src-container">
-
-<pre class="src src-R">args<span style="color: #4f97d7;">(</span>downloadFile<span style="color: #4f97d7;">)</span>
-</pre>
-</div>
-
-<pre class="example">
-&gt; args(downloadFile)
-function (url, destfile = basename(url), outdir = "./", ...) 
-NULL
-&gt;
-</pre>
-
-<p>
-As we've seen, values can be functions of other keys. We've used that to set a reasonable default for the names of the files we are downloading, while still offering the user of our function the flexibility to specify alternative names.
+If there is anything else you want to learn how to do, now is the time to ask!
 </p>
 </div>
 </div>
 
-<div id="outline-container-orgheadline32" class="outline-3">
-<h3 id="orgheadline32">Iteration and control flow</h3>
-<div class="outline-text-3" id="text-orgheadline32">
-<p>
-Next we want to modify our function so that it will download files from a vector of URLs. Note that <code>download.file</code> already handles this when using the libcurl method, but libcurl is not available on every system.
-</p>
-<div class="org-src-container">
 
-<pre class="src src-R"><span style="color: #bc6ec5; font-weight: bold;">downloadFiles</span> <span style="color: #a45bad;">&lt;-</span> <span style="color: #4f97d7; font-weight: bold;">function</span><span style="color: #4f97d7;">(</span>urls, <span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">url(s) to download</span>
-                          destfile = basename<span style="color: #bc6ec5;">(</span>urls<span style="color: #bc6ec5;">)</span>, <span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">default name to save to</span>
-                          outdir = <span style="color: #2d9574;">"./"</span>, <span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">directory to save in</span>
-                          ... <span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">other arguments passed to download.file</span>
-                          <span style="color: #4f97d7;">){</span>
-  <span style="color: #4f97d7; font-weight: bold;">if</span><span style="color: #bc6ec5;">(</span>length<span style="color: #2d9574;">(</span>urls<span style="color: #2d9574;">)</span> == 1<span style="color: #bc6ec5;">)</span> <span style="color: #bc6ec5;">{</span><span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">if there is only one url, download it.</span>
-    download.file<span style="color: #2d9574;">(</span>url = urls, destfile = paste<span style="color: #67b11d;">(</span>outdir, destfile, sep = <span style="color: #2d9574;">""</span><span style="color: #67b11d;">)</span>, ...<span style="color: #2d9574;">)</span>
-  <span style="color: #bc6ec5;">}</span> <span style="color: #4f97d7; font-weight: bold;">else</span> <span style="color: #bc6ec5;">{</span><span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">if there is more than one url, use downloadFiles (recursion!) to download them</span>
-    mapply<span style="color: #2d9574;">(</span>downloadFiles, urls = urls, destfile = destfile, outdir = outdir, MoreArgs = list<span style="color: #67b11d;">(</span>...<span style="color: #67b11d;">)</span><span style="color: #2d9574;">)</span>
-  <span style="color: #bc6ec5;">}</span>
-<span style="color: #4f97d7;">}</span>
-</pre>
-</div>
-
+<div id="outline-container-orgheadline32" class="outline-2">
+<h2 id="orgheadline32">Go forth and code!</h2>
+<div class="outline-text-2" id="text-orgheadline32">
 <p>
-By wrapping a section of our code in an <code>if</code> statement we ensure that it is only evaluated when the condition is satisfied.
+You now know everything you could possibly want to know about R. OK maybe not! But you do know how to manipulate character strings with regular expressions, write your own functions, execute code conditionally, iterate using <code>for</code> or <code>sapply</code>, inspect and modify attributes, and extract and replace object elements. There's a lot more to learn, but that's a pretty good start. As you go forth and write your own R code here are some resources that may be helpful.
 </p>
-</div>
 </div>
 
 <div id="outline-container-orgheadline33" class="outline-3">
-<h3 id="orgheadline33">The S3 object class system</h3>
+<h3 id="orgheadline33">Additional reading and resources</h3>
 <div class="outline-text-3" id="text-orgheadline33">
-<p>
-Our next goal is to make our function work with both text strings and with parsed html objects created by the <code>rvest</code> package. To do that we need to undersdand S3 classes and methods in R.
-</p>
-
-<p>
-R has three major object systems: 
-</p>
 <ul class="org-ul">
-<li>Relatively informal "S3" classes</li>
-<li>Stricter, more formal "S4" classes</li>
-<li>New and improved "Reference class" system</li>
+<li>Learn from the best: <a href="http://adv-r.had.co.nz/">http://adv-r.had.co.nz/</a></li>
+<li>S3 system overview: <a href="https://github.com/hadley/devtools/wiki/S3">https://github.com/hadley/devtools/wiki/S3</a></li>
+<li>S4 system overview: <a href="https://github.com/hadley/devtools/wiki/S4">https://github.com/hadley/devtools/wiki/S4</a></li>
+<li>R documentation: <a href="http://cran.r-project.org/manuals.html">http://cran.r-project.org/manuals.html</a></li>
+<li>Collection of R tutorials: <a href="http://cran.r-project.org/other-docs.html">http://cran.r-project.org/other-docs.html</a></li>
+
+<li>R for Programmers (by Norman Matloff, UC&#x2013;Davis)</li>
 </ul>
 <p>
-We will cover only the S3 system, not the S4 system. Basic idea: functions have different methods for different types of objects.
+<a href="http://heather.cs.ucdavis.edu/~matloff/R/RProg.pdf">http://heather.cs.ucdavis.edu/~matloff/R/RProg.pdf</a>
 </p>
-</div>
-
-<div id="outline-container-orgheadline34" class="outline-4">
-<h4 id="orgheadline34">Object class</h4>
-<div class="outline-text-4" id="text-orgheadline34">
-<p>
-The class of an object can be retrieved and modified using the <code>class()</code> function:
-</p>
-
-<div class="org-src-container">
-
-<pre class="src src-R" id="orgsrcblock1">x <span style="color: #a45bad;">&lt;-</span> 1:10
-class<span style="color: #4f97d7;">(</span>x<span style="color: #4f97d7;">)</span> 
-class<span style="color: #4f97d7;">(</span>x<span style="color: #4f97d7;">)</span> <span style="color: #a45bad;">&lt;-</span> <span style="color: #2d9574;">"foo"</span>
-class<span style="color: #4f97d7;">(</span>x<span style="color: #4f97d7;">)</span>
-</pre>
-</div>
-
-<pre class="example">
-&gt; x &lt;- 1:10
-&gt; class(x) 
-[1] "integer"
-&gt; class(x) &lt;- "foo"
-&gt; class(x)
-[1] "foo"
-&gt;
-</pre>
-
-<p>
-Objects are not limited to a single class, and can have many classes:
-</p>
-
-<div class="org-src-container">
-
-<pre class="src src-R" id="orgsrcblock2">class<span style="color: #4f97d7;">(</span>x<span style="color: #4f97d7;">)</span> <span style="color: #a45bad;">&lt;-</span> c<span style="color: #4f97d7;">(</span><span style="color: #2d9574;">"A"</span>, <span style="color: #2d9574;">"B"</span><span style="color: #4f97d7;">)</span>
-class<span style="color: #4f97d7;">(</span>x<span style="color: #4f97d7;">)</span>
-</pre>
-</div>
-
-<pre class="example">
-&gt; class(x) &lt;- c("A", "B")
-&gt; class(x) 
-[1] "A" "B"
-&gt;
-</pre>
-</div>
-</div>
-
-
-<div id="outline-container-orgheadline35" class="outline-4">
-<h4 id="orgheadline35">Function methods</h4>
-<div class="outline-text-4" id="text-orgheadline35">
 <ul class="org-ul">
-<li>Functions can have many methods, allowing us to have (e.g.) one plot() function that does different things depending on what is being plotted()</li>
-<li>Methods can only be defined for generic functions: plot, print, summary, mean, and several others are already generic</li>
+<li>Calling C and Fortran from R (by Charles Geyer, UMinn)</li>
 </ul>
-
-<div class="org-src-container">
-
-<pre class="src src-R" id="orgsrcblock3"><span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">see what methods have been defined for the mean function</span>
-methods<span style="color: #4f97d7;">(</span>mean<span style="color: #4f97d7;">)</span>
-<span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">which functions have methods for data.frames?</span>
-methods<span style="color: #4f97d7;">(</span>class=<span style="color: #2d9574;">"data.frame"</span><span style="color: #4f97d7;">)[</span>1:9<span style="color: #4f97d7;">]</span>
-</pre>
-</div>
-
-<pre class="example">
-&gt; # see what methods have been defined for the mean function
-&gt; methods(mean)
-[1] mean.Date     mean.default  mean.difftime mean.POSIXct  mean.POSIXlt 
-see '?methods' for accessing help and source code
-&gt; # which functions have methods for data.frames?
-&gt; methods(class="data.frame")[1:9]
-[1] "aggregate.data.frame"      "anyDuplicated.data.frame" 
-[3] "as.data.frame.data.frame"  "as.list.data.frame"       
-[5] "as.matrix.data.frame"      "by.data.frame"            
-[7] "cbind.data.frame"          "coerce,ANY,list-method"   
-[9] "coerce,oldClass,S3-method"
-&gt;
-</pre>
-</div>
-</div>
-
-
-<div id="outline-container-orgheadline36" class="outline-4">
-<h4 id="orgheadline36">Creating new function methods</h4>
-<div class="outline-text-4" id="text-orgheadline36">
 <p>
-To create a new method for a function that is already generic all you have to do is name your function <code>function.class</code>
+<a href="http://www.stat.umn.edu/~charlie/rc/">http://www.stat.umn.edu/~charlie/rc/</a>
+</p>
+<ul class="org-ul">
+<li>State of the Art in Parallel Computing with R (Schmidberger et al.)</li>
+</ul>
+<p>
+<a href="http://www.jstatso%7C.org/v31/i01/paper">http://www.jstatso%7C.org/v31/i01/paper</a>
 </p>
 
-<div class="org-src-container">
-
-<pre class="src src-R" id="orgsrcblock4"><span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">create a mean() method for objects of class "foo":</span>
-<span style="color: #bc6ec5; font-weight: bold;">mean.foo</span> <span style="color: #a45bad;">&lt;-</span> <span style="color: #4f97d7; font-weight: bold;">function</span><span style="color: #4f97d7;">(</span>x<span style="color: #4f97d7;">)</span> <span style="color: #4f97d7;">{</span> <span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">mean method for "foo" class</span>
-  <span style="color: #4f97d7; font-weight: bold;">if</span><span style="color: #bc6ec5;">(</span>is.numeric<span style="color: #2d9574;">(</span>x<span style="color: #2d9574;">)</span><span style="color: #bc6ec5;">)</span> <span style="color: #bc6ec5;">{</span>
-    cat<span style="color: #2d9574;">(</span><span style="color: #2d9574;">"The average is"</span>, mean.default<span style="color: #67b11d;">(</span>x<span style="color: #67b11d;">)</span><span style="color: #2d9574;">)</span>
-    <span style="color: #4f97d7; font-weight: bold;">return</span><span style="color: #2d9574;">(</span>invisible<span style="color: #67b11d;">(</span>mean.default<span style="color: #b1951d;">(</span>x<span style="color: #b1951d;">)</span><span style="color: #67b11d;">)</span><span style="color: #2d9574;">)</span> <span style="color: #2aa1ae; background-color: #292e34;">#</span><span style="color: #2aa1ae; background-color: #292e34;">use mean.default for numeric</span>
-  <span style="color: #bc6ec5;">}</span> <span style="color: #4f97d7; font-weight: bold;">else</span>
-    cat<span style="color: #bc6ec5;">(</span><span style="color: #2d9574;">"x is not numeric \n"</span><span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">}</span> <span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">otherwise say x not numeric</span>
-
-x <span style="color: #a45bad;">&lt;-</span> 1:10
-mean<span style="color: #4f97d7;">(</span>x<span style="color: #4f97d7;">)</span>
-class<span style="color: #4f97d7;">(</span>x<span style="color: #4f97d7;">)</span> <span style="color: #a45bad;">&lt;-</span> <span style="color: #2d9574;">"foo"</span>
-mean<span style="color: #4f97d7;">(</span>x<span style="color: #4f97d7;">)</span>
-
-x <span style="color: #a45bad;">&lt;-</span> as.character<span style="color: #4f97d7;">(</span>x<span style="color: #4f97d7;">)</span>
-class<span style="color: #4f97d7;">(</span>x<span style="color: #4f97d7;">)</span> <span style="color: #a45bad;">&lt;-</span> <span style="color: #2d9574;">"foo"</span>
-mean<span style="color: #4f97d7;">(</span>x<span style="color: #4f97d7;">)</span>
-</pre>
-</div>
-
-<pre class="example">
-&gt; # create a mean() method for objects of class "foo":
-&gt; mean.foo &lt;- function(x) { # mean method for "foo" class
-+   if(is.numeric(x)) {
-+     cat("The average is", mean.default(x))
-+     return(invisible(mean.default(x))) #use mean.default for numeric
-+   } else
-+     cat("x is not numeric \n")} # otherwise say x not numeric
-&gt; 
-&gt; x &lt;- 1:10
-&gt; mean(x)
-[1] 5.5
-&gt; class(x) &lt;- "foo"
-&gt; mean(x)
-The average is 5.5&gt;  
-&gt; x &lt;- as.character(x)
-&gt; class(x) &lt;- "foo"
-&gt; mean(x)
-x is not numeric 
-&gt;
-</pre>
+<ul class="org-ul">
+<li>Institute for Quantitative Social Science: <a href="http://iq.harvard.edu/">http://iq.harvard.edu/</a></li>
+<li>Research technology consulting: <a href="http://projects.iq.harvard.edu/rtc">http://projects.iq.harvard.edu/rtc</a></li>
+</ul>
 </div>
 </div>
 
-
-<div id="outline-container-orgheadline37" class="outline-4">
-<h4 id="orgheadline37">Creating generic functions</h4>
-<div class="outline-text-4" id="text-orgheadline37">
-<p>
-S3 generics are most often used for print, summary, and plot methods, but sometimes you may want to create a new generic function. Such is the case with our <code>downloadFiles</code> function. To make this function generic we need to set the body of the function to <code>UseMethod("downloadFiles")</code>, like this:
-</p>
-<div class="org-src-container">
-
-<pre class="src src-R"><span style="color: #bc6ec5; font-weight: bold;">downloadFiles</span> <span style="color: #a45bad;">&lt;-</span> <span style="color: #4f97d7; font-weight: bold;">function</span><span style="color: #4f97d7;">(</span>urls, ...<span style="color: #4f97d7;">)</span> <span style="color: #4f97d7;">{</span>
-  UseMethod<span style="color: #bc6ec5;">(</span><span style="color: #2d9574;">"downloadFiles"</span><span style="color: #bc6ec5;">)</span> 
-<span style="color: #4f97d7;">}</span>
-</pre>
-</div>
-<p>
-Note that the <code>...</code> allows us to pass additional arguments to the methods used for specific classes.
-</p>
-
-<p>
-Next we need to define methods for character strings and for parsed xml documents crated by the <code>rvest</code> package. 
-</p>
-
-<p>
-First we define a default method to be used when <code>urls</code> is a character vector.
-</p>
-<div class="org-src-container">
-
-<pre class="src src-R"><span style="color: #bc6ec5; font-weight: bold;">downloadFiles.default</span> <span style="color: #a45bad;">&lt;-</span> <span style="color: #4f97d7; font-weight: bold;">function</span><span style="color: #4f97d7;">(</span>urls, <span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">url(s) to download</span>
-                                  destfile = basename<span style="color: #bc6ec5;">(</span>urls<span style="color: #bc6ec5;">)</span>, <span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">default name to save to</span>
-                                  outdir = <span style="color: #2d9574;">"./"</span> <span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">directory to save in</span>
-                                  <span style="color: #4f97d7;">){</span>
-  <span style="color: #2aa1ae; background-color: #292e34;">## </span><span style="color: #2aa1ae; background-color: #292e34;">create output directory if it doesn't exist</span>
-  <span style="color: #4f97d7; font-weight: bold;">if</span><span style="color: #bc6ec5;">(</span>!dir.exists<span style="color: #2d9574;">(</span>outdir<span style="color: #2d9574;">)</span><span style="color: #bc6ec5;">)</span> dir.create<span style="color: #bc6ec5;">(</span>outdir<span style="color: #bc6ec5;">)</span>
-  <span style="color: #4f97d7; font-weight: bold;">if</span><span style="color: #bc6ec5;">(</span>length<span style="color: #2d9574;">(</span>urls<span style="color: #2d9574;">)</span> == 1<span style="color: #bc6ec5;">)</span> <span style="color: #bc6ec5;">{</span><span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">if there is only one url, download it.</span>
-    download.file<span style="color: #2d9574;">(</span>url = urls, destfile = paste<span style="color: #67b11d;">(</span>outdir, destfile, sep = <span style="color: #2d9574;">""</span><span style="color: #67b11d;">)</span><span style="color: #2d9574;">)</span>
-  <span style="color: #bc6ec5;">}</span> <span style="color: #4f97d7; font-weight: bold;">else</span> <span style="color: #bc6ec5;">{</span><span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">if there is more than one url, use downloadFiles (recursion!) to download them</span>
-    mapply<span style="color: #2d9574;">(</span>downloadFiles, urls = urls, destfile = destfile, MoreArgs = list<span style="color: #67b11d;">(</span>outdir = outdir<span style="color: #67b11d;">)</span><span style="color: #2d9574;">)</span>
-  <span style="color: #bc6ec5;">}</span>
-<span style="color: #4f97d7;">}</span>
-</pre>
-</div>
-
-<p>
-Next we define a method to be used when "urls" is a xml document.
-</p>
-<div class="org-src-container">
-
-<pre class="src src-R"><span style="color: #bc6ec5; font-weight: bold;">downloadFiles.xml_document</span> <span style="color: #a45bad;">&lt;-</span> <span style="color: #4f97d7; font-weight: bold;">function</span><span style="color: #4f97d7;">(</span>url,  outdir = <span style="color: #2d9574;">"./"</span>, base_url, pattern=<span style="color: #ce537a; font-weight: bold;">NULL</span><span style="color: #4f97d7;">)</span> <span style="color: #4f97d7;">{</span>
-  anodes <span style="color: #a45bad;">&lt;-</span> html_nodes<span style="color: #bc6ec5;">(</span>url, css = <span style="color: #2d9574;">"a"</span><span style="color: #bc6ec5;">)</span>
-  urls <span style="color: #a45bad;">&lt;-</span> html_attr<span style="color: #bc6ec5;">(</span>anodes, name = <span style="color: #2d9574;">"href"</span><span style="color: #bc6ec5;">)</span>
-  <span style="color: #4f97d7; font-weight: bold;">if</span><span style="color: #bc6ec5;">(</span>!is.null<span style="color: #2d9574;">(</span>pattern<span style="color: #2d9574;">)</span><span style="color: #bc6ec5;">)</span> urls <span style="color: #a45bad;">&lt;-</span> grep<span style="color: #bc6ec5;">(</span>pattern, urls, value = <span style="color: #ce537a; font-weight: bold;">TRUE</span><span style="color: #bc6ec5;">)</span>
-  urls<span style="color: #bc6ec5;">[</span>!grepl<span style="color: #2d9574;">(</span><span style="color: #2d9574;">"^http"</span>, urls<span style="color: #2d9574;">)</span><span style="color: #bc6ec5;">]</span> <span style="color: #a45bad;">&lt;-</span> paste<span style="color: #bc6ec5;">(</span>base_url, urls<span style="color: #2d9574;">[</span>!grepl<span style="color: #67b11d;">(</span><span style="color: #2d9574;">"^http"</span>, urls<span style="color: #67b11d;">)</span><span style="color: #2d9574;">]</span>, sep = <span style="color: #2d9574;">"/"</span><span style="color: #bc6ec5;">)</span>
-  downloadFiles.default<span style="color: #bc6ec5;">(</span>urls = urls, outdir=outdir<span style="color: #bc6ec5;">)</span>
-  <span style="color: #4f97d7;">}</span>
-</pre>
-</div>
-
-<p>
-Now we can call a single function that will do the right thing when we give it a vector of urls and when we give it a parsed html page containing links. Lets try it out!
-</p>
-
-<div class="org-src-container">
-
-<pre class="src src-R">file.remove<span style="color: #4f97d7;">(</span>list.files<span style="color: #bc6ec5;">(</span><span style="color: #2d9574;">"tmp"</span><span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>
-downloadFiles<span style="color: #4f97d7;">(</span><span style="color: #2d9574;">"http://tutorials.iq.harvard.edu"</span>, outdir = <span style="color: #2d9574;">"tmp/"</span><span style="color: #4f97d7;">)</span>
-list.files<span style="color: #4f97d7;">(</span><span style="color: #2d9574;">"tmp"</span><span style="color: #4f97d7;">)</span>
-downloadFiles<span style="color: #4f97d7;">(</span>read_html<span style="color: #bc6ec5;">(</span><span style="color: #2d9574;">"http://tutorials.iq.harvard.edu"</span><span style="color: #bc6ec5;">)</span>,
-              outdir = <span style="color: #2d9574;">"tmp/"</span>,
-              base_url = <span style="color: #2d9574;">"http://tutorials.iq.harvard.edu"</span>,
-              pattern = <span style="color: #2d9574;">"R/"</span><span style="color: #4f97d7;">)</span>
-list.files<span style="color: #4f97d7;">(</span><span style="color: #2d9574;">"tmp"</span><span style="color: #4f97d7;">)</span>
-</pre>
-</div>
-
-<pre class="example">
-&gt; file.remove(list.files("tmp"))
-logical(0)
-&gt; downloadFiles("http://tutorials.iq.harvard.edu", outdir = "tmp/")
-&gt; list.files("tmp")
-[1] "tutorials.iq.harvard.edu"
-&gt; downloadFiles(read_html("http://tutorials.iq.harvard.edu"),
-+               outdir = "tmp/",
-+               base_url = "http://tutorials.iq.harvard.edu",
-+               pattern = "R/")
-            http://tutorials.iq.harvard.edu/R/Rintro/Rintro.html 
-                                                               0 
-      http://tutorials.iq.harvard.edu/R/Rgraphics/Rgraphics.html 
-                                                               0 
-  http://tutorials.iq.harvard.edu/R/Rstatistics/Rstatistics.html 
-                                                               0 
-http://tutorials.iq.harvard.edu/R/RProgramming/Rprogramming.html 
-                                                               0 
-&gt; list.files("tmp")
-[1] "Rgraphics.html"           "Rintro.html"              "Rprogramming.html"       
-[4] "Rstatistics.html"         "tutorials.iq.harvard.edu"
-&gt;
-</pre>
-</div>
-</div>
-</div>
-</div>
-
-<div id="outline-container-orgheadline38" class="outline-2">
-<h2 id="orgheadline38">Things that may surprise you</h2>
-<div class="outline-text-2" id="text-orgheadline38">
+<div id="outline-container-orgheadline34" class="outline-3">
+<h3 id="orgheadline34">Things that may surprise you</h3>
+<div class="outline-text-3" id="text-orgheadline34">
 <p>
 There are an unfortunately large number of surprises in R programming. Some of these "gotcha's" are common problems in other languages, many are unique to R. We will only cover a few &#x2013; for a more comprehensive discussion please see <a href="http://www.burns-stat.com/pages/Tutor/R_inferno.pdf">http://www.burns-stat.com/pages/Tutor/R_inferno.pdf</a>
 </p>
 </div>
 
 
-<div id="outline-container-orgheadline39" class="outline-3">
-<h3 id="orgheadline39">Floating point comparison</h3>
-<div class="outline-text-3" id="text-orgheadline39">
+<div id="outline-container-orgheadline35" class="outline-4">
+<h4 id="orgheadline35">Floating point comparison</h4>
+<div class="outline-text-4" id="text-orgheadline35">
 <p>
 Floating point arithmetic is not exact:
 </p>
 <div class="org-src-container">
 
-<pre class="src src-R" id="orgsrcblock5">.1 == .3/3
+<pre class="src src-R" id="orgsrcblock1">.1 == .3/3
 </pre>
 </div>
 
@@ -1444,7 +1260,7 @@ Solution: <code>use all.equal()</code>:
 </p>
 <div class="org-src-container">
 
-<pre class="src src-R" id="orgsrcblock6">all.equal<span style="color: #4f97d7;">(</span>.1, .3/3<span style="color: #4f97d7;">)</span>
+<pre class="src src-R" id="orgsrcblock2">all.equal<span style="color: #4f97d7;">(</span>.1, .3/3<span style="color: #4f97d7;">)</span>
 </pre>
 </div>
 
@@ -1456,15 +1272,15 @@ Solution: <code>use all.equal()</code>:
 </div>
 </div>
 
-<div id="outline-container-orgheadline40" class="outline-3">
-<h3 id="orgheadline40">Missing values</h3>
-<div class="outline-text-3" id="text-orgheadline40">
+<div id="outline-container-orgheadline36" class="outline-4">
+<h4 id="orgheadline36">Missing values</h4>
+<div class="outline-text-4" id="text-orgheadline36">
 <p>
 R does not exclude missing values by default &#x2013; a single missing value in a vector means that many thing are unknown:
 </p>
 <div class="org-src-container">
 
-<pre class="src src-R" id="orgsrcblock7">x <span style="color: #a45bad;">&lt;-</span> c<span style="color: #4f97d7;">(</span>1:10, <span style="color: #ce537a; font-weight: bold;">NA</span>, 12:20<span style="color: #4f97d7;">)</span>
+<pre class="src src-R" id="orgsrcblock3">x <span style="color: #a45bad;">&lt;-</span> c<span style="color: #4f97d7;">(</span>1:10, <span style="color: #ce537a; font-weight: bold;">NA</span>, 12:20<span style="color: #4f97d7;">)</span>
 c<span style="color: #4f97d7;">(</span>mean<span style="color: #bc6ec5;">(</span>x<span style="color: #bc6ec5;">)</span>, sd<span style="color: #bc6ec5;">(</span>x<span style="color: #bc6ec5;">)</span>, median<span style="color: #bc6ec5;">(</span>x<span style="color: #bc6ec5;">)</span>, min<span style="color: #bc6ec5;">(</span>x<span style="color: #bc6ec5;">)</span>, sd<span style="color: #bc6ec5;">(</span>x<span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>
 </pre>
 </div>
@@ -1481,7 +1297,7 @@ NA is not equal to anything, not even NA
 </p>
 <div class="org-src-container">
 
-<pre class="src src-R" id="orgsrcblock8"><span style="color: #ce537a; font-weight: bold;">NA</span> == <span style="color: #ce537a; font-weight: bold;">NA</span>
+<pre class="src src-R" id="orgsrcblock4"><span style="color: #ce537a; font-weight: bold;">NA</span> == <span style="color: #ce537a; font-weight: bold;">NA</span>
 </pre>
 </div>
 
@@ -1497,16 +1313,16 @@ Solutions: use <code>na.rm = TRUE</code> option when calculating, and is.na to t
 </div>
 </div>
 
-<div id="outline-container-orgheadline41" class="outline-3">
-<h3 id="orgheadline41">Automatic type conversion</h3>
-<div class="outline-text-3" id="text-orgheadline41">
+<div id="outline-container-orgheadline37" class="outline-4">
+<h4 id="orgheadline37">Automatic type conversion</h4>
+<div class="outline-text-4" id="text-orgheadline37">
 <p>
 Automatic type conversion happens a lot which is often useful, but makes it easy to miss mistakes
 </p>
 
 <div class="org-src-container">
 
-<pre class="src src-R" id="orgsrcblock9"><span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">combining values coereces them to the most general type</span>
+<pre class="src src-R" id="orgsrcblock5"><span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">combining values coereces them to the most general type</span>
 <span style="color: #4f97d7;">(</span>x <span style="color: #a45bad;">&lt;-</span> c<span style="color: #bc6ec5;">(</span><span style="color: #ce537a; font-weight: bold;">TRUE</span>, <span style="color: #ce537a; font-weight: bold;">FALSE</span>, 1, 2, <span style="color: #2d9574;">"a"</span>, <span style="color: #2d9574;">"b"</span><span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>
 str<span style="color: #4f97d7;">(</span>x<span style="color: #4f97d7;">)</span>
 
@@ -1534,16 +1350,16 @@ Maybe this is what you expect&#x2026; I would like to at least get a warning!
 </div>
 </div>
 
-<div id="outline-container-orgheadline42" class="outline-3">
-<h3 id="orgheadline42">Optional argument inconsistencies</h3>
-<div class="outline-text-3" id="text-orgheadline42">
+<div id="outline-container-orgheadline38" class="outline-4">
+<h4 id="orgheadline38">Optional argument inconsistencies</h4>
+<div class="outline-text-4" id="text-orgheadline38">
 <p>
 Functions you might expect to work similarly don't always:
 </p>
 
 <div class="org-src-container">
 
-<pre class="src src-R" id="orgsrcblock10">mean<span style="color: #4f97d7;">(</span>1, 2, 3, 4, 5<span style="color: #4f97d7;">)</span>*5
+<pre class="src src-R" id="orgsrcblock6">mean<span style="color: #4f97d7;">(</span>1, 2, 3, 4, 5<span style="color: #4f97d7;">)</span>*5
 sum<span style="color: #4f97d7;">(</span>1, 2, 3, 4, 5<span style="color: #4f97d7;">)</span>
 </pre>
 </div>
@@ -1561,7 +1377,7 @@ Why are these different?!?
 </p>
 <div class="org-src-container">
 
-<pre class="src src-R" id="orgsrcblock11">args<span style="color: #4f97d7;">(</span>mean<span style="color: #4f97d7;">)</span>
+<pre class="src src-R" id="orgsrcblock7">args<span style="color: #4f97d7;">(</span>mean<span style="color: #4f97d7;">)</span>
 args<span style="color: #4f97d7;">(</span>sum<span style="color: #4f97d7;">)</span>
 </pre>
 </div>
@@ -1582,16 +1398,16 @@ Ouch. That is not nice at all!
 </div>
 </div>
 
-<div id="outline-container-orgheadline43" class="outline-3">
-<h3 id="orgheadline43">Trouble with Factors</h3>
-<div class="outline-text-3" id="text-orgheadline43">
+<div id="outline-container-orgheadline39" class="outline-4">
+<h4 id="orgheadline39">Trouble with Factors</h4>
+<div class="outline-text-4" id="text-orgheadline39">
 <p>
 Factors sometimes behave as numbers, and sometimes as characters, which can be confusing!
 </p>
 
 <div class="org-src-container">
 
-<pre class="src src-R" id="orgsrcblock12"><span style="color: #4f97d7;">(</span>x <span style="color: #a45bad;">&lt;-</span> factor<span style="color: #bc6ec5;">(</span>c<span style="color: #2d9574;">(</span>5, 5, 6, 6<span style="color: #2d9574;">)</span>, levels = c<span style="color: #2d9574;">(</span>6, 5<span style="color: #2d9574;">)</span><span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>
+<pre class="src src-R" id="orgsrcblock8"><span style="color: #4f97d7;">(</span>x <span style="color: #a45bad;">&lt;-</span> factor<span style="color: #bc6ec5;">(</span>c<span style="color: #2d9574;">(</span>5, 5, 6, 6<span style="color: #2d9574;">)</span>, levels = c<span style="color: #2d9574;">(</span>6, 5<span style="color: #2d9574;">)</span><span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>
 
 str<span style="color: #4f97d7;">(</span>x<span style="color: #4f97d7;">)</span>
 
@@ -1625,289 +1441,16 @@ Levels: 6 5
 </div>
 </div>
 
-<div id="outline-container-orgheadline44" class="outline-2">
-<h2 id="orgheadline44">What else?</h2>
-<div class="outline-text-2" id="text-orgheadline44">
-<p>
-If there is anything else you want to learn how to do, now is the time to ask!
-</p>
-</div>
-</div>
 
-<div id="outline-container-orgheadline47" class="outline-2">
-<h2 id="orgheadline47">Additional resources</h2>
-<div class="outline-text-2" id="text-orgheadline47">
-</div><div id="outline-container-orgheadline45" class="outline-3">
-<h3 id="orgheadline45">Additional reading and resources</h3>
-<div class="outline-text-3" id="text-orgheadline45">
-<ul class="org-ul">
-<li>Learn from the best: <a href="http://adv-r.had.co.nz/">http://adv-r.had.co.nz/</a></li>
-<li>S3 system overview: <a href="https://github.com/hadley/devtools/wiki/S3">https://github.com/hadley/devtools/wiki/S3</a></li>
-<li>S4 system overview: <a href="https://github.com/hadley/devtools/wiki/S4">https://github.com/hadley/devtools/wiki/S4</a></li>
-<li>R documentation: <a href="http://cran.r-project.org/manuals.html">http://cran.r-project.org/manuals.html</a></li>
-<li>Collection of R tutorials: <a href="http://cran.r-project.org/other-docs.html">http://cran.r-project.org/other-docs.html</a></li>
-
-<li>R for Programmers (by Norman Matloff, UC&#x2013;Davis)</li>
-</ul>
-<p>
-<a href="http://heather.cs.ucdavis.edu/~matloff/R/RProg.pdf">http://heather.cs.ucdavis.edu/~matloff/R/RProg.pdf</a>
-</p>
-<ul class="org-ul">
-<li>Calling C and Fortran from R (by Charles Geyer, UMinn)</li>
-</ul>
-<p>
-<a href="http://www.stat.umn.edu/~charlie/rc/">http://www.stat.umn.edu/~charlie/rc/</a>
-</p>
-<ul class="org-ul">
-<li>State of the Art in Parallel Computing with R (Schmidberger et al.)</li>
-</ul>
-<p>
-<a href="http://www.jstatso%7C.org/v31/i01/paper">http://www.jstatso%7C.org/v31/i01/paper</a>
-</p>
-
-<ul class="org-ul">
-<li>Institute for Quantitative Social Science: <a href="http://iq.harvard.edu/">http://iq.harvard.edu/</a></li>
-<li>Research technology consulting: <a href="http://projects.iq.harvard.edu/rtc">http://projects.iq.harvard.edu/rtc</a></li>
-</ul>
-</div>
-</div>
-
-
-<div id="outline-container-orgheadline46" class="outline-3">
-<h3 id="orgheadline46">Feedback</h3>
-<div class="outline-text-3" id="text-orgheadline46">
+<div id="outline-container-orgheadline40" class="outline-3">
+<h3 id="orgheadline40">Feedback</h3>
+<div class="outline-text-3" id="text-orgheadline40">
 <ul class="org-ul">
 <li>Help Us Make This Workshop Better!</li>
 <li>Please take a moment to fill out a very short feedback form</li>
 <li>These workshops exist for you &#x2013; tell us what you need!</li>
 <li><a href="http://tinyurl.com/RprogrammingFeedback">http://tinyurl.com/RprogrammingFeedback</a></li>
 </ul>
-</div>
-</div>
-</div>
-
-
-<div id="outline-container-orgheadline54" class="outline-2">
-<h2 id="orgheadline54">OLD STUFF</h2>
-<div class="outline-text-2" id="text-orgheadline54">
-</div><div id="outline-container-orgheadline48" class="outline-3">
-<h3 id="orgheadline48">Vector types</h3>
-<div class="outline-text-3" id="text-orgheadline48">
-<p>
-Vectors are the building blocks of data objects in R. There are a few basic types, including <code>logical</code>, <code>integer</code> , <code>double</code>, <code>complex</code>, and <code>character</code>. Values can be combined into vectors using the <code>c()</code> function.
-</p>
-<div class="org-src-container">
-
-<pre class="src src-R" id="orgsrcblock13">num.var <span style="color: #a45bad;">&lt;-</span> c<span style="color: #4f97d7;">(</span>1, 2, 3, 4<span style="color: #4f97d7;">)</span> <span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">numeric vector</span>
-char.var <span style="color: #a45bad;">&lt;-</span> c<span style="color: #4f97d7;">(</span><span style="color: #2d9574;">"1"</span>, <span style="color: #2d9574;">"2"</span>, <span style="color: #2d9574;">"3"</span>, <span style="color: #2d9574;">"4"</span><span style="color: #4f97d7;">)</span> <span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">character vector</span>
-log.var <span style="color: #a45bad;">&lt;-</span> c<span style="color: #4f97d7;">(</span><span style="color: #ce537a; font-weight: bold;">TRUE</span>, <span style="color: #ce537a; font-weight: bold;">TRUE</span>, <span style="color: #ce537a; font-weight: bold;">FALSE</span>, <span style="color: #ce537a; font-weight: bold;">TRUE</span><span style="color: #4f97d7;">)</span> <span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">logical vector</span>
-char.var2 <span style="color: #a45bad;">&lt;-</span> c<span style="color: #4f97d7;">(</span>num.var, char.var<span style="color: #4f97d7;">)</span> <span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">numbers coverted to character</span>
-</pre>
-</div>
-
-<pre class="example">
-&gt; num.var &lt;- c(1, 2, 3, 4) # numeric vector
-&gt; char.var &lt;- c("1", "2", "3", "4") # character vector
-&gt; log.var &lt;- c(TRUE, TRUE, FALSE, TRUE) # logical vector
-&gt; char.var2 &lt;- c(num.var, char.var) # numbers coverted to character
-&gt;
-</pre>
-
-<p>
-Vectors can be converted from one class to another using one of the many functions beginning with <code>as.</code>, e.g., <code>as.numeric</code> and <code>as.character</code>.
-</p>
-<div class="org-src-container">
-
-<pre class="src src-R" id="orgsrcblock14">class<span style="color: #4f97d7;">(</span>char.var2<span style="color: #4f97d7;">)</span>
-num.var2 <span style="color: #a45bad;">&lt;-</span> as.numeric<span style="color: #4f97d7;">(</span>char.var2<span style="color: #4f97d7;">)</span> <span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">convert to numeric</span>
-class<span style="color: #4f97d7;">(</span>num.var2<span style="color: #4f97d7;">)</span>
-mean<span style="color: #4f97d7;">(</span>as.numeric<span style="color: #bc6ec5;">(</span>char.var2<span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span> <span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">now we can calculate the mean</span>
-as.numeric<span style="color: #4f97d7;">(</span>c<span style="color: #bc6ec5;">(</span><span style="color: #2d9574;">"a"</span>, <span style="color: #2d9574;">"b"</span>, <span style="color: #2d9574;">"c"</span><span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span> <span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">cannot convert letters to numeric</span>
-</pre>
-</div>
-
-<pre class="example">
-&gt; class(char.var2)
-[1] "character"
-&gt; num.var2 &lt;- as.numeric(char.var2) # convert to numeric
-&gt; class(num.var2)
-[1] "numeric"
-&gt; mean(as.numeric(char.var2)) # now we can calculate the mean
-[1] 2.5
-&gt; as.numeric(c("a", "b", "c")) # cannot convert letters to numeric
-[1] NA NA NA
-&gt;
-</pre>
-</div>
-</div>
-
-<div id="outline-container-orgheadline49" class="outline-3">
-<h3 id="orgheadline49">Vector attributes</h3>
-<div class="outline-text-3" id="text-orgheadline49">
-<p>
-Vectors (and other R objects for that matter) will always have <code>mode</code> and <code>length</code> attributes. They may optionally have other attributes such as names or comments. 
-</p>
-<div class="org-src-container">
-
-<pre class="src src-R">ls<span style="color: #4f97d7;">()</span> <span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">list objects in our workspace</span>
-length<span style="color: #4f97d7;">(</span>char.var<span style="color: #4f97d7;">)</span> <span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">how many elements in char.var?</span>
-str<span style="color: #4f97d7;">(</span>num.var2<span style="color: #4f97d7;">)</span> <span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">what is the structure of num.var2?</span>
-names<span style="color: #4f97d7;">(</span>num.var2<span style="color: #4f97d7;">)</span> <span style="color: #a45bad;">&lt;-</span> paste<span style="color: #4f97d7;">(</span><span style="color: #2d9574;">"element"</span>, seq_along<span style="color: #bc6ec5;">(</span>num.var2<span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>
-str<span style="color: #4f97d7;">(</span>num.var2<span style="color: #4f97d7;">)</span>
-</pre>
-</div>
-
-<pre class="example">
-&gt; ls() # list objects in our workspace
- [1] "allAnchors"                 "allLinks"                  
- [3] "ceprCodebook"               "ceprData"                  
- [5] "ceprDataFiles"              "ceprDataInfo"              
- [7] "ceprFileInfo"               "ceprFiles"                 
- [9] "ceprInfoLength"             "char.var"                  
-[11] "char.var2"                  "dataLinks"                 
-[13] "dataLinks_06_10"            "dataPage"                  
-[15] "downloadFiles"              "downloadFiles.default"     
-[17] "downloadFiles.xml_document" "fileInfoAverage"           
-[19] "fsizes"                     "infoInfo"                  
-[21] "link"                       "log.var"                   
-[23] "mean.foo"                   "num.var"                   
-[25] "num.var2"                   "x"                         
-&gt; length(char.var) # how many elements in char.var?
-[1] 4
-&gt; str(num.var2) # what is the structure of num.var2?
- num [1:8] 1 2 3 4 1 2 3 4
-&gt; names(num.var2) &lt;- paste("element", seq_along(num.var2))
-&gt; str(num.var2)
- Named num [1:8] 1 2 3 4 1 2 3 4
- - attr(*, "names")= chr [1:8] "element 1" "element 2" "element 3" "element 4" ...
-&gt;
-</pre>
-
-<pre class="example">
-&gt; ls() # list objects in our workspace
-[1] "char.var"  "char.var2" "log.var"   "num.var"   "num.var2" 
-[6] "tmp"      
-&gt; length(char.var) # how many elements in char.var?
-[1] 4
-&gt; str(num.var2) # what is the structure of num.var2?
- num [1:8] 1 2 3 4 1 2 3 4
-&gt;
-</pre>
-</div>
-</div>
-
-<div id="outline-container-orgheadline50" class="outline-3">
-<h3 id="orgheadline50">Factor vectors</h3>
-<div class="outline-text-3" id="text-orgheadline50">
-<p>
-Factors are stored as numbers, but have character labels. Factors are useful for
-</p>
-<ul class="org-ul">
-<li>Modeling (automatically contrast coded)</li>
-<li>Sorting/presenting values in arbitrary order</li>
-</ul>
-
-<p>
-Most of the time we can treat factors as though they were character vectors
-</p>
-</div>
-</div>
-
-<div id="outline-container-orgheadline51" class="outline-3">
-<h3 id="orgheadline51">Lists and data.frames</h3>
-<div class="outline-text-3" id="text-orgheadline51">
-<ul class="org-ul">
-<li>A <i>data.frame</i> is a list of vectors, each of the same length</li>
-<li>A <i>list</i> is a collection of objects each of which can be almost anything</li>
-</ul>
-
-<div class="org-src-container">
-
-<pre class="src src-R" id="orgsrcblock15">DF <span style="color: #a45bad;">&lt;-</span> data.frame<span style="color: #4f97d7;">(</span>x=1:5, y=letters<span style="color: #bc6ec5;">[</span>1:5<span style="color: #bc6ec5;">]</span><span style="color: #4f97d7;">)</span>
-DF <span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">data.frame with two columns and 5 rows</span>
-DF$x <span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">select just the x column.</span>
-
-<span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">DF &lt;- data.frame(x=1:10, y=1:7) # illegal becase lengths differ</span>
-L <span style="color: #a45bad;">&lt;-</span> list<span style="color: #4f97d7;">(</span>x=1:5, y=1:3, z = DF<span style="color: #4f97d7;">)</span>
-L <span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">lists are much more flexible!</span>
-</pre>
-</div>
-
-<pre class="example">
-&gt; DF &lt;- data.frame(x=1:5, y=letters[1:5])
-&gt; DF # data.frame with two columns and 5 rows
-  x y
-1 1 a
-2 2 b
-3 3 c
-4 4 d
-5 5 e
-&gt; DF$x # select just the x column.
-[1] 1 2 3 4 5
-&gt; 
-&gt; # DF &lt;- data.frame(x=1:10, y=1:7) # illegal becase lengths differ
-&gt; L &lt;- list(x=1:5, y=1:3, z = DF)
-&gt; L # lists are much more flexible!
-$x
-[1] 1 2 3 4 5
-
-$y
-[1] 1 2 3
-
-$z
-  x y
-1 1 a
-2 2 b
-3 3 c
-4 4 d
-5 5 e
-
-&gt;
-</pre>
-</div>
-</div>
-
-<div id="outline-container-orgheadline52" class="outline-3">
-<h3 id="orgheadline52">Data types summary</h3>
-<div class="outline-text-3" id="text-orgheadline52">
-<p>
-Key points:
-</p>
-<ul class="org-ul">
-<li>vector classes include numeric, logical, character, and factors</li>
-<li>vectors can be combined into lists or  data.frames</li>
-<li>a data.frame can almost always be thought of as a list of vectors of equal length</li>
-<li>a list is a collection of objects, each of which can by of almost any type</li>
-</ul>
-<p>
-Functions introduced in this section: 
-</p>
-<dl class="org-dl">
-<dt>c</dt><dd>combine elements</dd>
-<dt>as.numeric</dt><dd>convert an object (e.g., a character verctor) to numeric</dd>
-<dt>data.frame</dt><dd>combine oject into a data.frame</dd>
-<dt>ls</dt><dd>list the objects in the workspace</dd>
-<dt>class</dt><dd>get the class of an object</dd>
-<dt>str</dt><dd>get the structure of an object</dd>
-<dt>length</dt><dd>get the number of elements in an object</dd>
-<dt>mean</dt><dd>calculate the mean of a vector</dd>
-<dt>$</dt><dd>extraction operator, selects a single element from a list or data.frame</dd>
-</dl>
-</div>
-</div>
-
-<div id="outline-container-orgheadline53" class="outline-3">
-<h3 id="orgheadline53">Exercise 0</h3>
-<div class="outline-text-3" id="text-orgheadline53">
-<p>
-Use the built-in <i>iris</i> data set (comes with R, will be available in your workspace automatically).
-</p>
-<ol class="org-ol">
-<li>Determine the <code>class</code> and <code>str</code> ucture of the <i>iris</i> data set.</li>
-<li>Determine the class of each column in the iris data set</li>
-<li>BONUS (OPTIONAL): Create a new variable by <code>c</code> ombining the Petal.Length and Petal.Width columns</li>
-<li>BONUS (OPTIONAL): Create a new data.frame with two columns; the first should be named <i>value</i>, and should be equal to the variable you created in step 3. The second should be named <i>variable</i> and should be either <i>Petal.Length</i> or <i>Petal.Width</i> as appropriate.</li>
-</ol>
 </div>
 </div>
 </div>

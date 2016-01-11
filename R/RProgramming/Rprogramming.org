@@ -251,8 +251,6 @@ Wow, that was a _lot_ easier. Why oh why didn't we just do that in the first pla
 * Exercise 0: html parsing
 The [[http://ceprdata.org/]] website provides code books for the DWS data in =.pdf= format. Links to these code books are available on the documentation page at [[http://ceprdata.org/cps-uniform-data-extracts/cps-displaced-worker-survey/cps-dws-documentation/]]. Parse this page and extract the links to the code books.
 
-Extract all the links ending in =uniform-data-extracts= from the html page at =http://ceprdata.org/=
-
 * Exercise 0 prototype                                            :prototype:
 #+BEGIN_SRC R
   ## read in the html page
@@ -517,440 +515,344 @@ $how_many
  
 As we've seen, additional attributes and be accessed vie the =attributes= function. Let's see what other attributes our =ceprData= object has.
 #+BEGIN_SRC R
-  names(attributes(ceprData1))
+  ceprDataInfo <- attributes(ceprData1)
+  mode(ceprDataInfo)
+  class(ceprDataInfo)
+  length(ceprDataInfo)
+  names(ceprDataInfo)
 #+END_SRC
 
 #+RESULTS:
 #+begin_example
-> names(attributes(ceprData1))
+> ceprDataInfo <- attributes(ceprData1)
+> mode(ceprDataInfo)
+[1] "list"
+> class(ceprDataInfo)
+[1] "list"
+> length(ceprDataInfo)
+[1] 12
+> names(ceprDataInfo)
  [1] "datalabel"        "time.stamp"       "names"            "formats"         
  [5] "types"            "val.labels"       "var.labels"       "expansion.fields"
  [9] "row.names"        "version"          "label.table"      "class"           
 > 
 #+end_example
 
-OK, so far we know that ceprData is a list of length 6 and that it has a names attribute. How can we find out what is inside the list?
-
-** Indexing
-We can extract or replace elements of R objects using bracket indexing. Exactly how indexing works differs slightly depending on what kind of object we are working with.
-
-*** Indexing lists
-
- For lists we can index using a single bracket to extract one or more elements of the list, or we can index using double brackets to extract a single element.
-
+Let's iterate over the attributes of =ceprData1- and get some more information about the available meta-data
 #+BEGIN_SRC R
-  ## what do we get when we extract one element with single brackets?
-  length(ceprData[1]); mode(ceprData[1]); class(ceprData[1]); attributes(ceprData[1])
-  ## what do we get when we extract the middle two elements with single brackets?
-  length(ceprData[2:3]); mode(ceprData[2:3]); class(ceprData[2:3]); attributes(ceprData[2:3])
-  ## what do we get when we extract the first element with a double bracket
-  length(ceprData[[1]]); mode(ceprData[[1]]); class(ceprData[[1]])#
+  t(sapply(attributes(ceprData1),
+           function(x) {
+             c(mode = mode(x), class = class(x), length = length(x))
+           })
+    )
+#+END_SRC
+
+#+RESULTS:
+#+begin_example
+> t(sapply(attributes(ceprData1),
++          function(x) {
++            c(mode = mode(x), class = class(x), length = length(x))
++          })
++   )
+                 mode        class       length  
+datalabel        "character" "character" "1"     
+time.stamp       "character" "character" "1"     
+names            "character" "character" "178"   
+formats          "character" "character" "178"   
+types            "numeric"   "integer"   "178"   
+val.labels       "character" "character" "178"   
+var.labels       "character" "character" "178"   
+expansion.fields "list"      "list"      "525"   
+row.names        "character" "character" "156246"
+version          "numeric"   "integer"   "1"     
+label.table      "list"      "list"      "30"    
+class            "character" "character" "1"     
+> 
+#+end_example
+
+** Extracting useful meta-data
+We can extract elements from lists in a few different ways:
+#+BEGIN_SRC R
+  ## extract by name
+  ceprDataInfo$datalabel #using $
+  ceprDataInfo["datalabel"] #using [
+  ceprDataInfo[["datalabel"] #using [[, note the difference
+  
+  ## by position
+  ceprDataInfo[1]; ceprDataInfo[[1]] # note the difference
+  
+  ## by logical index
+  ceprDataInfo[c(TRUE, TRUE, rep(FALSE, 10))]
+  ceprDataInfo[sapply(ceprDataInfo, length) == 1]
 #+END_SRC
 
 #+RESULTS:
 
-Right. So what have we learned? We've learned that indexing lists works like this:
+Note that =[= indexing on a list returns a list, and =[[= indexing returns whatever contained in a single element of the list. This visual explanation may help: 
 [[file:images/HadleyWickham_index_list.png]][fn:3]
 
-We've also learned that =ceprData[[1]]= has mode =list= but /class/ =data.frame=. We can find out more about these data structures by reading their help pages (=?list= and =?data.frame=), but briefly a data.frame is a special kind of list that is constrained such that all elements have the same length. A data.frame is a rectangular structure that can be indexed by rows and columns (more on this in a moment).
-
-*** Indexing vectors
-You may have noticed in the previous code example that I did _not_ ask for =attributes(ceprData[[1]])=. The reason for that is that each element of =ceprDATA= is a =data.frame= with a large number of attributes. Let's look at those attributes in a bit more detail.
-
+You may have noticed during our earlier investigation of =ceprDataInfo= that many of the elements have length 178. That number might be familiar:
 #+BEGIN_SRC R
-  ceprDataInfo <- attributes(ceprData[[1]])
-  mode(ceprDataInfo)
-  class(ceprDataInfo)
-  length(ceprDataInfo)
-  names(ceprDataInfo)
-  (ceprInfoLength <- sapply(ceprDataInfo, length))
+  dim(ceprData1)
 #+END_SRC
 
 #+RESULTS:
-
-=ceprInfoLength= is an /atomic vector/, i.e., a vector with all elements of the same mode. We can index a vector with =[= and =[[=, just as we do for lists.
-
-#+BEGIN_SRC R
-  mode(ceprInfoLength); class(ceprInfoLength); length(ceprInfoLength)
-  ceprInfoLength[1]
-  ceprInfoLength[[1]]
-  ceprInfoLength[1:10]
-#+END_SRC
-
-#+RESULTS:
-
-
-The code above is an example of /indexing by position/. We can also index by /name/ or using /logical indexing/ as shown below.
-#+BEGIN_SRC R
-  ceprInfoLength[c("names", "formats", "types")]
-  ceprInfoLength[grepl("lab", names(ceprInfoLength))]
-  ceprInfoLength[ceprInfoLength == 1]
-  names(ceprInfoLength)[ceprInfoLength == 1]
-#+END_SRC
-
-#+RESULTS:
-
-Finally, we can use negation and negative indices to reverse the usual meanings.
-#+BEGIN_SRC R
-  ceprInfoLength[- c(3, 7, 9)]
-  ceprInfoLength[setdiff(names(ceprInfoLength), c("names", "formats", "types"))]
-  ceprInfoLength[!grepl("lab", names(ceprInfoLength))]
-#+END_SRC
-
-#+RESULTS:
-
-*** Indexing matrices
-Now that we know a little more about indexing, let's get back to investigating the ceprData metadata. 
-
-#+BEGIN_SRC R
-  (infoInfo <- sapply(ceprDataInfo, function(x) {
-    return(c(mode = mode(x), class = class(x), length = length(x)))
-    }))
-#+END_SRC
-
-#+RESULTS:
-
-=infoInfo= contains information about the contents of =ceprDataInfo=. =infoInfo= is a /matrix/. A matrix in R is simply a vector with two dimensions. We can index a matrix exactly as we do a vector:
-#+BEGIN_SRC R
-  infoInfo
-  infoInfo[c(1, 3, 9)]
-#+END_SRC
-
-#+RESULTS:
-
-but more commonly we will index a matrix by referring to both dimensions, like this:
-#+BEGIN_SRC R
-  infoInfo[1:2, c(7, 3, 1)]
-  infoInfo[ , 1:2]
-  infoInfo[3:2, ]
-#+END_SRC
-
-#+RESULTS:
-
-All the techniques we learned for indexing vectors apply. For example:
-#+BEGIN_SRC R
-  attributes(infoInfo)
-  infoInfo[c("length", "mode"), grepl("name", colnames(infoInfo))]
-#+END_SRC
-
-#+RESULTS:
-
-*** Indexing data.frames
-As we noted earlier data.frames are a special kind of list. Therefore both =[= and =[[= indexing will work exactly as they do for lists. Unlike other lists, data.frames have two dimensions (like a matrix), so two-dimensional indexing works on data.frames just as it does for matrices.
-
+#+begin_example
+> dim(ceprData1)
+[1] 156246    178
+> 
+#+end_example
+it's the number of columns in the data set. It is therefor a good guess that those elements record information about each of the columns in the data set. 
 
 *** Exercise 2
 
 Extract elements from =ceprDataInfo= that will help you understand what each column in =deprData= contains. Include at least the variable =names= and =var.labels= as well as any other information that you think will be useful.
 
+Bonus (optional): supplement the =ceprDataInfo= you extracted in step one with the mode, class, etc. of each column in =ceprData1= 
+
 *** Exercise 2 prototype                                          :prototype:
 #+BEGIN_SRC R
-  ceprCodebook <- data.frame(ceprDataInfo[ sapply(ceprDataInfo, length) == ncol(ceprData[[1]]) ])
+  ceprCodebook <- data.frame(
+    ceprDataInfo[
+      sapply(ceprDataInfo, length) == ncol(ceprData1)
+    ])
+
+  ceprCodebook$mode <- sapply(ceprData1, mode)
+  ceprCodebook$class <- sapply(ceprData1, class)
+  ceprCodebook$n_distinct = sapply(ceprData1, function(x) length(unique(x)))
+
   rbind(head(ceprCodebook), tail(ceprCodebook))
 #+END_SRC
 
 #+RESULTS:
+#+begin_example
+> ceprCodebook <- data.frame(
++   ceprDataInfo[
++     sapply(ceprDataInfo, length) == ncol(ceprData1)
++   ])
+> 
+> ceprCodebook$mode <- sapply(ceprData1, mode)
+> ceprCodebook$class <- sapply(ceprData1, class)
+> ceprCodebook$n_distinct = sapply(ceprData1, function(x) length(unique(x)))
+> 
+> rbind(head(ceprCodebook), tail(ceprCodebook))
+       names formats types val.labels                       var.labels    mode
+1       year   %8.0g   252                                        Year numeric
+2      indws   %8.0g   251                            Eligible for DWS numeric
+3    dw_stat   %8.0g   251                        DWS interview status numeric
+4     dwswgt   %9.0g   254                                  DWS weight numeric
+5         dw   %8.0g   251                                   Displaced numeric
+6     dw_bls   %8.0g   251            Displaced, strict BLS definition numeric
+173 peernhro   %8.0g   251                      Usual hours, ORG (BLS) numeric
+174   imphrs   %9.0g   254                   Hours, main job (imputed) numeric
+175 hrsimptd   %9.0g   251                               Hours imputed numeric
+176  hrernhr   %8.0g   251                      Hours assigned, ernhro numeric
+177  uhoursi   %9.0g   251                        Hours, w/ imputation numeric
+178  blsimpt   %8.0g   251                  BLS allocated weekly hours numeric
+      class n_distinct
+1   integer          1
+2   integer          2
+3   integer          3
+4   numeric      80402
+5   integer          3
+6   integer          2
+173 integer         66
+174 numeric       2198
+175 integer          2
+176 integer          3
+177 integer         96
+178 integer          2
+> 
+#+end_example
 
-* Aggregating and combining data
-Now that we have all the data read in, and we know what is in each column, I want to aggregate the data to down to a managable size. Specifically I want to calculate the average income by state/year/rural/gender. I can do that using the =aggregate= function (the =data.table= and =dplyr= packages provide advanced aggregation capabilities, but =aggregate= is available in base R and works well for many things).
+* Aggregation
+Now that we have the data read in, and we know what is in each column, I want to calculate the proportion displaced by year/rural/gender. I can do that using the =aggregate= function (the =data.table= and =dplyr= packages provide advanced aggregation capabilities, but =aggregate= is available in base R and works well for many things).
 
 #+BEGIN_SRC R
-  ceprData <- sapply(ceprData, function(x) {
-    aggregate(x["wkswo"],
-              by = x[c("year", "state", "rural", "female")],
-              FUN = median, na.rm = TRUE)},
+  ceprData1 <- aggregate(ceprData1["dw"],
+                         by = ceprData1[c("year", "rural", "female")],
+                         FUN = function(x) {
+                           x <- na.omit(x)
+                           length(x[x == 1])/length(x)
+                         })
+  ceprData1
+#+END_SRC
+
+#+RESULTS:
+#+begin_example
+> ceprData1 <- aggregate(ceprData1["dw"],
++                        by = ceprData1[c("year", "rural", "female")],
++                        FUN = function(x) {
++                          x <- na.omit(x)
++                          length(x[x == 1])/length(x)
++                        })
+> ceprData1
+  year rural female         dw
+1 1994     0      0 0.09201620
+2 1994     1      0 0.07094765
+3 1994     0      1 0.06059583
+4 1994     1      1 0.04579923
+> 
+#+end_example
+
+* Exercise 3
+
+Now that we have a process for importing and aggregating the data we can apply it to all the data files we downloaded earlier. We can do that by wrapping the =read.dta= and =aggregate= code in a function and applying that function to each element of =ceprDataFiles= using the =sapply= function, or using a =for= loop. Go ahead and give it a try! Note that this exercise is intentionally challenging; read the documentation, search stackoverflow.com, and use any other resources at your disposal as you attempt it.
+
+* Exercise 3 prototype                                            :prototype:
+
+#+BEGIN_SRC R :results silent
+  library(foreign)
+
+  ceprData <- sapply(ceprDataFiles, function(x) {
+    tmp <- read.dta(x)
+    return(aggregate(tmp["dw"],
+                     by = tmp[c("year", "rural", "female")],
+                     FUN = function(y) {
+                       y <- na.omit(y)
+                       length(y[y == 1])/length(y)
+                     }))},
     simplify = FALSE)
 #+END_SRC
 
-#+RESULTS:
+*  Finishing touches
 
-In particular combine all the data together into a single data.frame. Right now we have a list of data.frames, and we simply want to stack this one on top of the other. We can do that with the =rbind= function. (Other ways you might want to combine data are described in =?cbind= and =?merge=).
-
-A straightforward way to combine the data looks like this
-#+BEGIN_SRC R :results silent
-  #ceprData <- rbind(ceprData[[1]], ceprData[[2]], ceprData[[3]], ceprData[[4]]) 
-#+END_SRC
-and that's not too bad for four elements. But what if we had 100 or 1000000? You certainly don't want to type that many elements out yourself. Instead you can use =Reduce= to flatten the list, like this:
+We now have a list of aggregated data.frames. The next step is to stack each element of the list so that we end up with one big data.frame instead of a list of small ones. We can stack two data.frames using the =rbind= function:
 #+BEGIN_SRC R
-  ceprData <- Reduce("rbind", ceprData)
+  ceprData[[1]]; ceprData[[2]]
+  rbind(ceprData[[1]], ceprData[[2]])
+#+END_SRC  
+
+#+RESULTS:
+#+begin_example
+> ceprData[[1]]; ceprData[[2]]
+  year rural female         dw
+1 1994     0      0 0.09201620
+2 1994     1      0 0.07094765
+3 1994     0      1 0.06059583
+4 1994     1      1 0.04579923
+  year rural female         dw
+1 1996     0      0 0.10207612
+2 1996     1      0 0.09333333
+3 1996     0      1 0.07761280
+4 1996     1      1 0.06870622
+> rbind(ceprData[[1]], ceprData[[2]])
+  year rural female         dw
+1 1994     0      0 0.09201620
+2 1994     1      0 0.07094765
+3 1994     0      1 0.06059583
+4 1994     1      1 0.04579923
+5 1996     0      0 0.10207612
+6 1996     1      0 0.09333333
+7 1996     0      1 0.07761280
+8 1996     1      1 0.06870622
+> 
+#+end_example
+and we can apply this operation to every element in the list using the =do.call= function.
+#+BEGIN_SRC R
+  str(ceprData <- do.call("rbind", ceprData))
 #+END_SRC
 
 #+RESULTS:
+#+begin_example
+> str(ceprData <- do.call("rbind", ceprData))
+'data.frame':	36 obs. of  4 variables:
+ $ year  : int  1994 1994 1994 1994 1996 1996 1996 1996 1998 1998 ...
+ $ rural : int  0 1 0 1 0 1 0 1 0 1 ...
+ $ female: int  0 0 1 1 0 0 1 1 0 0 ...
+ $ dw    : num  0.092 0.0709 0.0606 0.0458 0.1021 ...
+> 
+#+end_example
 
-Now we can take a look at the trends in wages over the last few years.
+** Data formatting
+
+Our final step before plotting our data is to format the values for =rural= and =female=. Currently these values are stored as 0/1 dummy codes, but I would like for the values to be spelled out. 
+
+Earlier we saw how to extract elements of R objects using bracket notation. To replace elements we using the replacement form, which looks like this:
+#+BEGIN_SRC R
+   ceprData[["rural"]] <- factor(ceprData[["rural"]],
+                                 levels = c(0, 1),
+                                 labels = c("Non-rural", "Rural"))
+
+   ceprData[["gender"]] <- factor(ceprData[["female"]],
+                                 levels = c(1, 0),
+                                 labels = c("Female", "Male"))
+
+  ceprData$displaced_percent <- ceprData$dw * 100
+
+  str(ceprData)
+#+END_SRC
+
+#+RESULTS:
+#+begin_example
+>  ceprData[["rural"]] <- factor(ceprData[["rural"]],
++                                levels = c(0, 1),
++                                labels = c("Non-rural", "Rural"))
+> 
+>  ceprData[["gender"]] <- factor(ceprData[["female"]],
++                                levels = c(1, 0),
++                                labels = c("Female", "Male"))
+> 
+> ceprData$displaced_percent <- ceprData$dw * 100
+> 
+> str(ceprData)
+'data.frame':	36 obs. of  6 variables:
+ $ year             : int  1994 1994 1994 1994 1996 1996 1996 1996 1998 1998 ...
+ $ rural            : Factor w/ 2 levels "Non-rural","Rural": 1 2 1 2 1 2 1 2 1 2 ...
+ $ female           : int  0 0 1 1 0 0 1 1 0 0 ...
+ $ dw               : num  0.092 0.0709 0.0606 0.0458 0.1021 ...
+ $ gender           : Factor w/ 2 levels "Female","Male": 2 2 1 1 2 2 1 1 2 2 ...
+ $ displaced_percent: num  9.2 7.09 6.06 4.58 10.21 ...
+> 
+#+end_example
+
+** Plotting
+
+Now we can take a look at the trends in worker displacement over the last few years.
 #+BEGIN_SRC R :results output graphics :file images/out.png :width 900 :heigth 900
   library(ggplot2)
-  ggplot(ceprData, aes(x = year, y = wkswo, color = factor(female), linetype = factor(rural))) +
+  library(directlabels)
+  ceprPlot <- ggplot(ceprData, aes(x = year, y = displaced_percent, color = gender)) +
     geom_line() +
-    facet_wrap(~state, ncol = 9) +
-    coord_cartesian(ylim = c(0, 50)) +
-    theme_minimal()
+    geom_point() +
+    facet_wrap(~rural)
+  direct.label(ceprPlot)
 #+END_SRC
 
 #+RESULTS:
 [[file:images/out.png]]
 
-* Writing smarter functions: Control flow and the S3 system
-Earlier we wrote a simple function to download a file from the internet. Our simple function looked like this:
-#+BEGIN_SRC R :results silent
-  downloadFile <- function(url, # url to download
-                           destfile = basename(url), # default name to save to
-                           outdir = "./", # directory to save in
-                           ... # other arguments passed to download.file
-                           ){
-    download.file(url = url, destfile = paste(outdir, destfile, sep = ""), ...)
-  }
-#+END_SRC
-This was fine for our purpose at the time, but if we want to make this function more generally useful there are a number of things that we might want to do:
-- make it download multiple files from a vector of URLs
-- make it work with both strings and parsed html
+* What else?
 
-In order to accomplish these things we need to lean a little more about function arguments, control flow, and classes and methods. Lets start with function arguments.
-
-** Function arguments
-Functions in R have three componants: an /arglist/, a /body/ and an /environment/. For the moment we are only concerned with the first two.
-
-An /arglist/ consists of key-value pairs (with the value being optional). The arglist of our function so far is
-#+BEGIN_SRC R
-  args(downloadFile)
-#+END_SRC
-
-#+RESULTS:
-#+begin_example
-> args(downloadFile)
-function (url, destfile = basename(url), outdir = "./", ...) 
-NULL
-> 
-#+end_example
-
-As we've seen, values can be functions of other keys. We've used that to set a reasonable default for the names of the files we are downloading, while still offering the user of our function the flexibility to specify alternative names.
-
-** Iteration and control flow
-Next we want to modify our function so that it will download files from a vector of URLs. Note that =download.file= already handles this when using the libcurl method, but libcurl is not available on every system.
-#+BEGIN_SRC R :results silent
-  downloadFiles <- function(urls, # url(s) to download
-                            destfile = basename(urls), # default name to save to
-                            outdir = "./", # directory to save in
-                            ... # other arguments passed to download.file
-                            ){
-    if(length(urls) == 1) {# if there is only one url, download it.
-      download.file(url = urls, destfile = paste(outdir, destfile, sep = ""), ...)
-    } else {# if there is more than one url, use downloadFiles (recursion!) to download them
-      mapply(downloadFiles, urls = urls, destfile = destfile, outdir = outdir, MoreArgs = list(...))
-    }
-  }
-#+END_SRC
-
-By wrapping a section of our code in an =if= statement we ensure that it is only evaluated when the condition is satisfied.
-
-** The S3 object class system 
-Our next goal is to make our function work with both text strings and with parsed html objects created by the =rvest= package. To do that we need to undersdand S3 classes and methods in R.
-
-R has three major object systems: 
-  - Relatively informal "S3" classes 
-  - Stricter, more formal "S4" classes
-  - New and improved "Reference class" system
-We will cover only the S3 system, not the S4 system. Basic idea: functions have different methods for different types of objects.
-
-*** Object class
-The class of an object can be retrieved and modified using the ~class()~ function:
-
-#+name: classExample
-#+begin_src R
-  x <- 1:10
-  class(x) 
-  class(x) <- "foo"
-  class(x)
-#+end_src
-
-#+results: classExample
-#+begin_example
-> x <- 1:10
-> class(x) 
-[1] "integer"
-> class(x) <- "foo"
-> class(x)
-[1] "foo"
-> 
-#+end_example
-
- Objects are not limited to a single class, and can have many classes:
-
-#+name: classExample2
-#+begin_src R
-  class(x) <- c("A", "B")
-  class(x) 
-#+end_src
-
-#+results: classExample2
-#+begin_example
-> class(x) <- c("A", "B")
-> class(x) 
-[1] "A" "B"
-> 
-#+end_example
+If there is anything else you want to learn how to do, now is the time to ask!
 
 
-*** Function methods
-- Functions can have many methods, allowing us to have (e.g.) one plot() function that does different things depending on what is being plotted()
-- Methods can only be defined for generic functions: plot, print, summary, mean, and several others are already generic
+* Go forth and code!
+You now know everything you could possibly want to know about R. OK maybe not! But you do know how to manipulate character strings with regular expressions, write your own functions, execute code conditionally, iterate using =for= or =sapply=, inspect and modify attributes, and extract and replace object elements. There's a lot more to learn, but that's a pretty good start. As you go forth and write your own R code here are some resources that may be helpful.
 
-#+name: getMethods
-#+begin_src R 
-  # see what methods have been defined for the mean function
-  methods(mean)
-  # which functions have methods for data.frames?
-  methods(class="data.frame")[1:9]
-#+end_src
+** Additional reading and resources
+- Learn from the best: [[http://adv-r.had.co.nz/]]
+- S3 system overview: https://github.com/hadley/devtools/wiki/S3
+- S4 system overview: https://github.com/hadley/devtools/wiki/S4
+- R documentation: http://cran.r-project.org/manuals.html
+- Collection of R tutorials: http://cran.r-project.org/other-docs.html
 
-#+results: getMethods
-#+begin_example
-> # see what methods have been defined for the mean function
-> methods(mean)
-[1] mean.Date     mean.default  mean.difftime mean.POSIXct  mean.POSIXlt 
-see '?methods' for accessing help and source code
-> # which functions have methods for data.frames?
-> methods(class="data.frame")[1:9]
-[1] "aggregate.data.frame"      "anyDuplicated.data.frame" 
-[3] "as.data.frame.data.frame"  "as.list.data.frame"       
-[5] "as.matrix.data.frame"      "by.data.frame"            
-[7] "cbind.data.frame"          "coerce,ANY,list-method"   
-[9] "coerce,oldClass,S3-method"
-> 
-#+end_example
+- R for Programmers (by Norman Matloff, UC--Davis)
+http://heather.cs.ucdavis.edu/~matloff/R/RProg.pdf
+- Calling C and Fortran from R (by Charles Geyer, UMinn)
+http://www.stat.umn.edu/~charlie/rc/
+- State of the Art in Parallel Computing with R (Schmidberger et al.)
+http://www.jstatso|.org/v31/i01/paper
 
-
-*** Creating new function methods
-To create a new method for a function that is already generic all you have to do is name your function ~function.class~
-
-#+name: fooMean
-#+begin_src R 
-  # create a mean() method for objects of class "foo":
-  mean.foo <- function(x) { # mean method for "foo" class
-    if(is.numeric(x)) {
-      cat("The average is", mean.default(x))
-      return(invisible(mean.default(x))) #use mean.default for numeric
-    } else
-      cat("x is not numeric \n")} # otherwise say x not numeric
-  
-  x <- 1:10
-  mean(x)
-  class(x) <- "foo"
-  mean(x)
+- Institute for Quantitative Social Science: http://iq.harvard.edu
+- Research technology consulting: http://projects.iq.harvard.edu/rtc
  
-  x <- as.character(x)
-  class(x) <- "foo"
-  mean(x)
-#+end_src
-
-#+RESULTS: fooMean
-#+begin_example
-> # create a mean() method for objects of class "foo":
-> mean.foo <- function(x) { # mean method for "foo" class
-+   if(is.numeric(x)) {
-+     cat("The average is", mean.default(x))
-+     return(invisible(mean.default(x))) #use mean.default for numeric
-+   } else
-+     cat("x is not numeric \n")} # otherwise say x not numeric
-> 
-> x <- 1:10
-> mean(x)
-[1] 5.5
-> class(x) <- "foo"
-> mean(x)
-The average is 5.5>  
-> x <- as.character(x)
-> class(x) <- "foo"
-> mean(x)
-x is not numeric 
-> 
-#+end_example
-
-
-*** Creating generic functions
-
-S3 generics are most often used for print, summary, and plot methods, but sometimes you may want to create a new generic function. Such is the case with our =downloadFiles= function. To make this function generic we need to set the body of the function to =UseMethod("downloadFiles")=, like this:
-#+BEGIN_SRC R :results silent
-  downloadFiles <- function(urls, ...) {
-    UseMethod("downloadFiles") 
-  }
-#+END_SRC
-Note that the =...= allows us to pass additional arguments to the methods used for specific classes.
-
-Next we need to define methods for character strings and for parsed xml documents crated by the =rvest= package. 
-
-First we define a default method to be used when =urls= is a character vector.
-#+BEGIN_SRC R :results silent
-  downloadFiles.default <- function(urls, # url(s) to download
-                                    destfile = basename(urls), # default name to save to
-                                    outdir = "./" # directory to save in
-                                    ){
-    ## create output directory if it doesn't exist
-    if(!dir.exists(outdir)) dir.create(outdir)
-    if(length(urls) == 1) {# if there is only one url, download it.
-      download.file(url = urls, destfile = paste(outdir, destfile, sep = ""))
-    } else {# if there is more than one url, use downloadFiles (recursion!) to download them
-      mapply(downloadFiles, urls = urls, destfile = destfile, MoreArgs = list(outdir = outdir))
-    }
-  }
-#+END_SRC
-
-Next we define a method to be used when "urls" is a xml document.
-#+BEGIN_SRC R :results silent
-  downloadFiles.xml_document <- function(url,  outdir = "./", base_url, pattern=NULL) {
-    anodes <- html_nodes(url, css = "a")
-    urls <- html_attr(anodes, name = "href")
-    if(!is.null(pattern)) urls <- grep(pattern, urls, value = TRUE)
-    urls[!grepl("^http", urls)] <- paste(base_url, urls[!grepl("^http", urls)], sep = "/")
-    downloadFiles.default(urls = urls, outdir=outdir)
-    }
-#+END_SRC
-
-Now we can call a single function that will do the right thing when we give it a vector of urls and when we give it a parsed html page containing links. Lets try it out!
-
-#+BEGIN_SRC R
-  file.remove(list.files("tmp"))
-  downloadFiles("http://tutorials.iq.harvard.edu", outdir = "tmp/")
-  list.files("tmp")
-  downloadFiles(read_html("http://tutorials.iq.harvard.edu"),
-                outdir = "tmp/",
-                base_url = "http://tutorials.iq.harvard.edu",
-                pattern = "R/")
-  list.files("tmp")
-
-#+END_SRC
-
-#+RESULTS:
-#+begin_example
-> file.remove(list.files("tmp"))
-logical(0)
-> downloadFiles("http://tutorials.iq.harvard.edu", outdir = "tmp/")
-> list.files("tmp")
-[1] "tutorials.iq.harvard.edu"
-> downloadFiles(read_html("http://tutorials.iq.harvard.edu"),
-+               outdir = "tmp/",
-+               base_url = "http://tutorials.iq.harvard.edu",
-+               pattern = "R/")
-            http://tutorials.iq.harvard.edu/R/Rintro/Rintro.html 
-                                                               0 
-      http://tutorials.iq.harvard.edu/R/Rgraphics/Rgraphics.html 
-                                                               0 
-  http://tutorials.iq.harvard.edu/R/Rstatistics/Rstatistics.html 
-                                                               0 
-http://tutorials.iq.harvard.edu/R/RProgramming/Rprogramming.html 
-                                                               0 
-> list.files("tmp")
-[1] "Rgraphics.html"           "Rintro.html"              "Rprogramming.html"       
-[4] "Rstatistics.html"         "tutorials.iq.harvard.edu"
-> 
-#+end_example
-
-* Things that may surprise you
+** Things that may surprise you
 
  There are an unfortunately large number of surprises in R programming. Some of these "gotcha's" are common problems in other languages, many are unique to R. We will only cover a few -- for a more comprehensive discussion please see http://www.burns-stat.com/pages/Tutor/R_inferno.pdf
 
 
-** Floating point comparison
+*** Floating point comparison
 
 Floating point arithmetic is not exact:
 #+name: floatingPointExample
@@ -978,7 +880,7 @@ Solution: ~use all.equal()~:
 > 
 #+end_example
 
-** Missing values
+*** Missing values
 R does not exclude missing values by default -- a single missing value in a vector means that many thing are unknown:
 #+name: MissingDataExample
 #+begin_src R
@@ -1009,7 +911,7 @@ NA is not equal to anything, not even NA
 
 Solutions: use ~na.rm = TRUE~ option when calculating, and is.na to test for missing
 
-** Automatic type conversion
+*** Automatic type conversion
 
 Automatic type conversion happens a lot which is often useful, but makes it easy to miss mistakes
 
@@ -1039,7 +941,7 @@ Automatic type conversion happens a lot which is often useful, but makes it easy
 
 Maybe this is what you expect... I would like to at least get a warning!
 
-** Optional argument inconsistencies
+*** Optional argument inconsistencies
 Functions you might expect to work similarly don't always:
 
 #+name: MeanVSsd
@@ -1077,7 +979,7 @@ NULL
 
 Ouch. That is not nice at all!
 
-** Trouble with Factors
+*** Trouble with Factors
 
 Factors sometimes behave as numbers, and sometimes as characters, which can be confusing!
 
@@ -1114,209 +1016,12 @@ Levels: 6 5
 > 
 #+end_example
 
-* What else?
-
-If there is anything else you want to learn how to do, now is the time to ask!
-
-* Additional resources
-
-** Additional reading and resources
-- Learn from the best: [[http://adv-r.had.co.nz/]]
-- S3 system overview: https://github.com/hadley/devtools/wiki/S3
-- S4 system overview: https://github.com/hadley/devtools/wiki/S4
-- R documentation: http://cran.r-project.org/manuals.html
-- Collection of R tutorials: http://cran.r-project.org/other-docs.html
-
-- R for Programmers (by Norman Matloff, UC--Davis)
-http://heather.cs.ucdavis.edu/~matloff/R/RProg.pdf
-- Calling C and Fortran from R (by Charles Geyer, UMinn)
-http://www.stat.umn.edu/~charlie/rc/
-- State of the Art in Parallel Computing with R (Schmidberger et al.)
-http://www.jstatso|.org/v31/i01/paper
-
-- Institute for Quantitative Social Science: http://iq.harvard.edu
-- Research technology consulting: http://projects.iq.harvard.edu/rtc
-
 
 ** Feedback
 - Help Us Make This Workshop Better!
 - Please take a moment to fill out a very short feedback form 
 - These workshops exist for you -- tell us what you need! 
 - http://tinyurl.com/RprogrammingFeedback 
-
-
-* OLD STUFF
-** Vector types
-
-Vectors are the building blocks of data objects in R. There are a few basic types, including =logical=, =integer= , =double=, =complex=, and =character=. Values can be combined into vectors using the ~c()~ function.
-#+name: VectorsExample
-#+begin_src R
-  num.var <- c(1, 2, 3, 4) # numeric vector
-  char.var <- c("1", "2", "3", "4") # character vector
-  log.var <- c(TRUE, TRUE, FALSE, TRUE) # logical vector
-  char.var2 <- c(num.var, char.var) # numbers coverted to character
-#+end_src
-
-#+RESULTS: VectorsExample
-#+begin_example
-> num.var <- c(1, 2, 3, 4) # numeric vector
-> char.var <- c("1", "2", "3", "4") # character vector
-> log.var <- c(TRUE, TRUE, FALSE, TRUE) # logical vector
-> char.var2 <- c(num.var, char.var) # numbers coverted to character
-> 
-#+end_example
-
-Vectors can be converted from one class to another using one of the many functions beginning with =as.=, e.g., =as.numeric= and =as.character=.
-#+name: VectorClassConversion
-#+begin_src R
-  class(char.var2)
-  num.var2 <- as.numeric(char.var2) # convert to numeric
-  class(num.var2)
-  mean(as.numeric(char.var2)) # now we can calculate the mean
-  as.numeric(c("a", "b", "c")) # cannot convert letters to numeric
-#+end_src
-
-#+RESULTS: VectorClassConversion
-#+begin_example
-> class(char.var2)
-[1] "character"
-> num.var2 <- as.numeric(char.var2) # convert to numeric
-> class(num.var2)
-[1] "numeric"
-> mean(as.numeric(char.var2)) # now we can calculate the mean
-[1] 2.5
-> as.numeric(c("a", "b", "c")) # cannot convert letters to numeric
-[1] NA NA NA
-> 
-#+end_example
-
-** Vector attributes
-Vectors (and other R objects for that matter) will always have =mode= and =length= attributes. They may optionally have other attributes such as names or comments. 
-#+begin_src R
-  ls() # list objects in our workspace
-  length(char.var) # how many elements in char.var?
-  str(num.var2) # what is the structure of num.var2?
-  names(num.var2) <- paste("element", seq_along(num.var2))
-  str(num.var2)
-#+end_src
-
-#+RESULTS:
-#+begin_example
-> ls() # list objects in our workspace
- [1] "allAnchors"                 "allLinks"                  
- [3] "ceprCodebook"               "ceprData"                  
- [5] "ceprDataFiles"              "ceprDataInfo"              
- [7] "ceprFileInfo"               "ceprFiles"                 
- [9] "ceprInfoLength"             "char.var"                  
-[11] "char.var2"                  "dataLinks"                 
-[13] "dataLinks_06_10"            "dataPage"                  
-[15] "downloadFiles"              "downloadFiles.default"     
-[17] "downloadFiles.xml_document" "fileInfoAverage"           
-[19] "fsizes"                     "infoInfo"                  
-[21] "link"                       "log.var"                   
-[23] "mean.foo"                   "num.var"                   
-[25] "num.var2"                   "x"                         
-> length(char.var) # how many elements in char.var?
-[1] 4
-> str(num.var2) # what is the structure of num.var2?
- num [1:8] 1 2 3 4 1 2 3 4
-> names(num.var2) <- paste("element", seq_along(num.var2))
-> str(num.var2)
- Named num [1:8] 1 2 3 4 1 2 3 4
- - attr(*, "names")= chr [1:8] "element 1" "element 2" "element 3" "element 4" ...
-> 
-#+end_example
-
-#+RESULTS: VectorLengthStructure
-#+begin_example
-> ls() # list objects in our workspace
-[1] "char.var"  "char.var2" "log.var"   "num.var"   "num.var2" 
-[6] "tmp"      
-> length(char.var) # how many elements in char.var?
-[1] 4
-> str(num.var2) # what is the structure of num.var2?
- num [1:8] 1 2 3 4 1 2 3 4
-> 
-#+end_example
-
-** Factor vectors
- Factors are stored as numbers, but have character labels. Factors are useful for
-  - Modeling (automatically contrast coded)
-  - Sorting/presenting values in arbitrary order
-
-Most of the time we can treat factors as though they were character vectors
-
-** Lists and data.frames
-- A /data.frame/ is a list of vectors, each of the same length
-- A /list/ is a collection of objects each of which can be almost anything
-
-#+name: ListsAndDataframeExample
-#+begin_src R
-  DF <- data.frame(x=1:5, y=letters[1:5])
-  DF # data.frame with two columns and 5 rows
-  DF$x # select just the x column.
-
-  # DF <- data.frame(x=1:10, y=1:7) # illegal becase lengths differ
-  L <- list(x=1:5, y=1:3, z = DF)
-  L # lists are much more flexible!
-#+end_src
-
-#+RESULTS: ListsAndDataframeExample
-#+begin_example
-> DF <- data.frame(x=1:5, y=letters[1:5])
-> DF # data.frame with two columns and 5 rows
-  x y
-1 1 a
-2 2 b
-3 3 c
-4 4 d
-5 5 e
-> DF$x # select just the x column.
-[1] 1 2 3 4 5
-> 
-> # DF <- data.frame(x=1:10, y=1:7) # illegal becase lengths differ
-> L <- list(x=1:5, y=1:3, z = DF)
-> L # lists are much more flexible!
-$x
-[1] 1 2 3 4 5
-
-$y
-[1] 1 2 3
-
-$z
-  x y
-1 1 a
-2 2 b
-3 3 c
-4 4 d
-5 5 e
-
-> 
-#+end_example
-
-** Data types summary
-Key points:
-- vector classes include numeric, logical, character, and factors
-- vectors can be combined into lists or  data.frames
-- a data.frame can almost always be thought of as a list of vectors of equal length
-- a list is a collection of objects, each of which can by of almost any type
-Functions introduced in this section: 
-- c :: combine elements
-- as.numeric :: convert an object (e.g., a character verctor) to numeric
-- data.frame :: combine oject into a data.frame
-- ls :: list the objects in the workspace
-- class :: get the class of an object
-- str :: get the structure of an object
-- length :: get the number of elements in an object
-- mean :: calculate the mean of a vector
-- $ :: extraction operator, selects a single element from a list or data.frame 
-
-** Exercise 0 
-Use the built-in /iris/ data set (comes with R, will be available in your workspace automatically).
-1. Determine the =class= and =str= ucture of the /iris/ data set.
-2. Determine the class of each column in the iris data set
-3. BONUS (OPTIONAL): Create a new variable by =c= ombining the Petal.Length and Petal.Width columns
-4. BONUS (OPTIONAL): Create a new data.frame with two columns; the first should be named /value/, and should be equal to the variable you created in step 3. The second should be named /variable/ and should be either /Petal.Length/ or /Petal.Width/ as appropriate.
 
 * Footnotes
 
@@ -1326,11 +1031,6 @@ Use the built-in /iris/ data set (comes with R, will be available in your worksp
 #+END_SRC
 
 #+RESULTS:
-#+begin_example
-> file.size(dataFiles)
-[1] 4973180 4361662 4363591 4466213 5341157 5277171 5215523 5139020 5278615
->
-#+end_example
 
 Now that we understand iteration in R we can use it to unzip the data files we downloaded earlier. We can unzip single files using the =unzip= function, like this:
 #+BEGIN_SRC R :results silent
