@@ -358,19 +358,19 @@ Use a =for= loop or =*apply= function to unzip each of the =.zip= files in the =
 BONUS (optional): calculate the size of each extracted file and calculate the difference in size between each =.dta= file and the =.zip= file it was extracted from.
 * Exercise 1 prototype                                            :prototype:
 #+BEGIN_SRC R
+  dataFiles <- list.files("dataSets", pattern = "\\.dta$", full.names=TRUE)
+
   ## using sapply
   sapply(dataFiles, unzip, exdir = "dataSets")
   ## using a for loop
   for(f in dataFiles) unzip(f, exdir = "dataSets")
 
   ## Calculating compression ratios
-  ceprDataFiles <- list.files("dataSets", pattern = "\\.dta$", full.names=TRUE)
-
-  uncompSize <- round(file.size(ceprDataFiles) / 1024^2)
+  uncompSize <- round(file.size(dataFiles) / 1024^2)
   compSize <- round(file.size(dataFiles) / 1024^2)
 
   cbind(zipFile = paste0(basename(dataFiles), ": ", compSize, "Mb"),
-        dtaFile = paste0(basename(ceprDataFiles), ": ", uncompSize, "Mb"),
+        dtaFile = paste0(basename(dataFiles), ": ", uncompSize, "Mb"),
         diff = paste0(round(uncompSize - compSize), "Mb"),
         compression_ratio = round(uncompSize / compSize, digits = 3))
 #+END_SRC
@@ -385,10 +385,10 @@ Our next goal is to read in the data that we downloaded and extracted earlier. T
   library(foreign)
 
   ## get a list of all the stata files in the dataSets directory
-  ceprDataFiles <- list.files("dataSets", pattern = "\\.dta$", full.names=TRUE)
+  dataFiles <- list.files("dataSets", pattern = "\\.dta$", full.names=TRUE)
 
   ## read in the first one
-  ceprData1 <- read.dta(ceprDataFiles[1])
+  ceprData1 <- read.dta(dataFiles[1])
 #+END_SRC
 
 Now that we've read in some of the data we want to get some more information about it. 
@@ -671,47 +671,26 @@ Now that we have the data read in, and we know what is in each column, I want to
 #+BEGIN_SRC R
   ceprData1 <- aggregate(ceprData1["dw"],
                          by = ceprData1[c("year", "rural", "female")],
-                         FUN = function(x) {
-                           x <- na.omit(x)
-                           length(x[x == 1])/length(x)
-                         })
+                         FUN = mean)
   ceprData1
 #+END_SRC
 
 #+RESULTS:
-#+begin_example
-> ceprData1 <- aggregate(ceprData1["dw"],
-+                        by = ceprData1[c("year", "rural", "female")],
-+                        FUN = function(x) {
-+                          x <- na.omit(x)
-+                          length(x[x == 1])/length(x)
-+                        })
-> ceprData1
-  year rural female         dw
-1 1994     0      0 0.09201620
-2 1994     1      0 0.07094765
-3 1994     0      1 0.06059583
-4 1994     1      1 0.04579923
-> 
-#+end_example
 
 * Exercise 3
 
-Now that we have a process for importing and aggregating the data we can apply it to all the data files we downloaded earlier. We can do that by wrapping the =read.dta= and =aggregate= code in a function and applying that function to each element of =ceprDataFiles= using the =sapply= function, or using a =for= loop. Go ahead and give it a try! Note that this exercise is intentionally challenging; read the documentation, search stackoverflow.com, and use any other resources at your disposal as you attempt it.
+Now that we have a process for importing and aggregating the data we can apply it to all the data files we downloaded earlier. We can do that by wrapping the =read.dta= and =aggregate= code in a function and applying that function to each element of =dataFiles= using the =sapply= function, or using a =for= loop. Go ahead and give it a try! Note that this exercise is intentionally challenging; read the documentation, search stackoverflow.com, and use any other resources at your disposal as you attempt it.
 
 * Exercise 3 prototype                                            :prototype:
 
 #+BEGIN_SRC R :results silent
   library(foreign)
 
-  ceprData <- sapply(ceprDataFiles, function(x) {
+  ceprData <- sapply(dataFiles, function(x) {
     tmp <- read.dta(x)
     return(aggregate(tmp["dw"],
                      by = tmp[c("year", "rural", "female")],
-                     FUN = function(y) {
-                       y <- na.omit(y)
-                       length(y[y == 1])/length(y)
-                     }))},
+                     FUN = mean})),
     simplify = FALSE)
 #+END_SRC
 

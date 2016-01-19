@@ -326,6 +326,7 @@ sapply(dataLinks,
 ## Exercise 1 prototype                                         :prototype:
 ## ════════════════════
 
+dataFiles <- list.files("dataSets", pattern = "\\.dta$", full.names=TRUE)
 
 ## using sapply
 sapply(dataFiles, unzip, exdir = "dataSets")
@@ -333,13 +334,11 @@ sapply(dataFiles, unzip, exdir = "dataSets")
 for(f in dataFiles) unzip(f, exdir = "dataSets")
 
 ## Calculating compression ratios
-ceprDataFiles <- list.files("dataSets", pattern = "\\.dta$", full.names=TRUE)
-
-uncompSize <- round(file.size(ceprDataFiles) / 1024^2)
+uncompSize <- round(file.size(dataFiles) / 1024^2)
 compSize <- round(file.size(dataFiles) / 1024^2)
 
 cbind(zipFile = paste0(basename(dataFiles), ": ", compSize, "Mb"),
-      dtaFile = paste0(basename(ceprDataFiles), ": ", uncompSize, "Mb"),
+      dtaFile = paste0(basename(dataFiles), ": ", uncompSize, "Mb"),
       diff = paste0(round(uncompSize - compSize), "Mb"),
       compression_ratio = round(uncompSize / compSize, digits = 3))
 
@@ -357,10 +356,10 @@ cbind(zipFile = paste0(basename(dataFiles), ": ", compSize, "Mb"),
 library(foreign)
 
 ## get a list of all the stata files in the dataSets directory
-ceprDataFiles <- list.files("dataSets", pattern = "\\.dta$", full.names=TRUE)
+dataFiles <- list.files("dataSets", pattern = "\\.dta$", full.names=TRUE)
 
 ## read in the first one
-ceprData1 <- read.dta(ceprDataFiles[1])
+ceprData1 <- read.dta(dataFiles[1])
 
 
 ##   Now that we've read in some of the data we want to get some more
@@ -530,10 +529,7 @@ rbind(head(ceprCodebook), tail(ceprCodebook))
 
 ceprData1 <- aggregate(ceprData1["dw"],
                        by = ceprData1[c("year", "rural", "female")],
-                       FUN = function(x) {
-                         x <- na.omit(x)
-                         length(x[x == 1])/length(x)
-                       })
+                       FUN = mean)
 ceprData1
 
 
@@ -543,7 +539,7 @@ ceprData1
 ##   Now that we have a process for importing and aggregating the data we
 ##   can apply it to all the data files we downloaded earlier. We can do
 ##   that by wrapping the `read.dta' and `aggregate' code in a function and
-##   applying that function to each element of `ceprDataFiles' using the
+##   applying that function to each element of `dataFiles' using the
 ##   `sapply' function, or using a `for' loop. Go ahead and give it a try!
 ##   Note that this exercise is intentionally challenging; read the
 ##   documentation, search stackoverflow.com, and use any other resources
@@ -555,14 +551,11 @@ ceprData1
 
 library(foreign)
 
-ceprData <- sapply(ceprDataFiles, function(x) {
+ceprData <- sapply(dataFiles, function(x) {
   tmp <- read.dta(x)
   return(aggregate(tmp["dw"],
                    by = tmp[c("year", "rural", "female")],
-                   FUN = function(y) {
-                     y <- na.omit(y)
-                     length(y[y == 1])/length(y)
-                   }))},
+                   FUN = mean))},
   simplify = FALSE)
 
 

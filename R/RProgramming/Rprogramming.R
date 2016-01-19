@@ -12,9 +12,12 @@
 ##   http://tutorials.iq.harvard.edu/cps-uniform-data-extracts/cps-displaced-worker-survey/cps-dws-data.
 
 ##   Our first task is to read the web page into R. We can do that using the
-##   `read_html' function in the rvest package. Next we want to find all the
-##   links (the `<a>' tags) and extract their `href' attributes.
+##   `read_html' function in the rvest package.
+## >>>
+dataPage <-
 
+## Next we want to find all the links (the `<a>' tags) and extract their `href'
+## attributes.
 
 ##   Here is what the html for the 2010 data file link looks like:
 ##   ┌────
@@ -28,15 +31,18 @@
 ##   then extract the `href' attributes usig the `html_attr' function, like
 ##   this:
 # >>>
+allAnchors <- 
 
+allLinks <- 
 
 ##   Use regular expressions to extract just the data links.
 ## >>>
-
+dataLinks <- 
 
 ##   Prepend 'http://tutorials.iq.harvard.edu/' to each URL using
 ##   the `paste' function.
 ## >>>
+dataLinks <-
 
 ## Exercise 0: html parsing
 ## ════════════════════════
@@ -56,7 +62,7 @@
 ##   file name as the second argument. We can write a wrapper around the
 ##   `download.file' function to make it more convenient for our purposes.
 ## >>>
-
+downloadFile <-
 
 
 ##   To download all the files conveniently we want to iterate over the
@@ -92,7 +98,9 @@
 
 ## Read in just the first data set.
 ## >>>
+dataFiles <-
 
+ceprData1 <-
 
 ##  What is the mode and length of our `ceprData1' object?
 ## >>>
@@ -108,7 +116,7 @@
 
 ##   What other attributes does our data have?
 ## >>>
-
+cdprDataInfo <- 
 
 ##   Iterate over the attributes of =ceprData1- and get
 ##   some more information about the available meta-data
