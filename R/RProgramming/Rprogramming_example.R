@@ -2,18 +2,55 @@
 ##                     INTRODUCTION TO PROGRAMMING IN R
 ##                    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+
 ##                                    ""
+
 
 ## Table of Contents
 ## ─────────────────
+
+## Workshop overview and materials
 ## Extracting elements from html
 ## Downloading files in R
 ## Downloading all the files
 ## Importing and inspecting data and meta-data
 ## Aggregation
 ## Finishing touches
-## What else?
-## Go forth and code!
+
+## Workshop overview and materials
+## ═══════════════════════════════
+
+## Workshop description
+## ────────────────────
+
+##   This is an intermediate/advanced R course appropriate for those with
+##   basic knowledge of R. It is intended for those already comfortable
+##   with using R for data analysis who wish to move on to writing their
+##   own functions. To the extent possible this workshop uses real-world
+##   examples. That is to say that concepts are introduced as they are
+##   needed for a realistic analysis task. In the course of working through
+##   a realistic project we will lean about interacting with web services,
+##   regular expressions, iteration, functions, control flow and more.
+
+##   Prerequisite: basic familiarity with R, such as acquired from an
+##   introductory R workshop.
+
+
+## Materials and setup
+## ───────────────────
+
+##   Everyone should have R installed – if not:
+
+##   • Open a web browser and go to [http://cran.r-project.org] and
+##     download and install it
+##   • Also helpful to install RStudio (download from [http://rstudio.com])
+
+##   Materials for this workshop include slides, example data sets, and
+##   example code.
+
+##   • Download materials from
+##     [http://tutorials.iq.harvard.edu/R/RProgramming.zip]
+##   • Extract the zip file containing the materials to your desktop
 
 
 ## Example project overview
@@ -93,19 +130,19 @@
 ##   then extract the `href' attributes usig the `html_attr' function, like
 ##   this:
 
-## install.packages("rvest")
-library(rvest)
-
-## read the web page into R
-dataPage <- read_html("http://tutorials.iq.harvard.edu/cps-uniform-data-extracts/cps-displaced-worker-survey/cps-dws-data/")
-
-## find the link ("a") elements.
-allAnchors <- html_nodes(dataPage, "a")
-head(allAnchors, 15)
-
-## extract the link ("href") attributes
-allLinks <- html_attr(allAnchors, "href")
-head(allLinks, 15)
+ ## install.packages("rvest")
+ library(rvest)
+ 
+ ## read the web page into R
+ dataPage <- read_html("http://tutorials.iq.harvard.edu/cps-uniform-data-extracts/cps-displaced-worker-survey/cps-dws-data/")
+ 
+ ## find the link ("a") elements.
+ allAnchors <- html_nodes(dataPage, "a")
+ head(allAnchors, 15)
+ 
+ ## extract the link ("href") attributes
+ allLinks <- html_attr(allAnchors, "href")
+ head(allLinks, 15)
 
 
 ## Just the data please – regular expressions to the rescue
@@ -142,9 +179,8 @@ head(allLinks, 15)
 ##   suffice, but if you need to do extensive string manipulation in R the
 ##   `stringi' package is the way to go.
 
-
-dataLinks <- grep("^/wp.*\\.zip$", allLinks, value = TRUE)
-head(dataLinks)
+ dataLinks <- grep("^/wp.*\\.zip$", allLinks, value = TRUE)
+ head(dataLinks)
 
 
 ##   (Note that the backslashes in the above example are used to escape the
@@ -155,9 +191,8 @@ head(dataLinks)
 ##   website. To make them valid we need to prepend
 ##   `http://tutorials.iq.harvard.edu/' to each one. We can do that using
 ##   the `paste' function.
-
-dataLinks <- paste("http://tutorials.iq.harvard.edu", dataLinks, sep = "")
-head(dataLinks)
+ dataLinks <- paste("http://tutorials.iq.harvard.edu", dataLinks, sep = "")
+ head(dataLinks)
 
 
 ## Getting the list of data links the easy way
@@ -166,11 +201,11 @@ head(dataLinks)
 ##   If you look at the result from the previous two methods you might
 ##   notice that the URLs are all the same save for the year number. This
 ##   suggests an even easier way to construct the list of URLs:
+ (dataLinks <- paste("http://tutorials.iq.harvard.edu/wp-content/cps/data/cepr_dws_",
+                     seq(1994, 2010, by = 2),
+                     "_dta.zip",
+                     sep = ""))
 
-(dataLinks <- paste("http://tutorials.iq.harvard.edu/wp-content/cps/data/cepr_dws_",
-                    seq(1994, 2010, by = 2),
-                    "_dta.zip",
-                    sep = ""))
 
 ##   Wow, that was a _lot_ easier. Why oh why didn't we just do that in the
 ##   first place? Well, it works for this specific case, but it is much
@@ -189,29 +224,25 @@ head(dataLinks)
 ##   [http://ceprdata.org/cps-uniform-data-extracts/cps-displaced-worker-survey/cps-dws-documentation/].
 ##   Parse this page and extract the links to the code books.
 
-##   Extract all the links ending in `uniform-data-extracts' from the html
-##   page at `http://ceprdata.org/'
-
 
 ## Exercise 0 prototype                                         :prototype:
 ## ════════════════════
 
-
-## read in the html page
-ceprDoc <- read_html(
-  "http://ceprdata.org/cps-uniform-data-extracts/cps-displaced-worker-survey/cps-dws-documentation/"
-)
-## get the codebook links
-ceprCodeBookLinks <- html_attr(#extract attributes
-  html_nodes(#from nodes  
-    ceprDoc,#in ceprDoc
-    ## This uses an xpath expression to select just the codebook links.
-    ## You could alternatively download all the links and filter them
-    ## with a regular expression. Use whatever works and is comfortable!
-    ## There is more than one right way.
-    xpath = '//*[@id="content"]/article/div/ul[1]//a'),#matching this xpath
-  'href' #extract href attributes
-)
+ ## read in the html page
+ ceprDoc <- read_html(
+   "http://ceprdata.org/cps-uniform-data-extracts/cps-displaced-worker-survey/cps-dws-documentation/"
+ )
+ ## get the codebook links
+ ceprCodeBookLinks <- html_attr(#extract attributes
+   html_nodes(#from nodes  
+     ceprDoc,#in ceprDoc
+     ## This uses an xpath expression to select just the codebook links.
+     ## You could alternatively download all the links and filter them
+     ## with a regular expression. Use whatever works and is comfortable!
+     ## There is more than one right way.
+     xpath = '//*[@id="content"]/article/div/ul[1]//a'),#matching this xpath
+   'href' #extract href attributes
+ )
 
 
 ## Downloading files in R
@@ -226,31 +257,29 @@ ceprCodeBookLinks <- html_attr(#extract attributes
 ##   a file name as the second argument. We can use the `basename' function
 ##   to strip of the location part of the URL, leaving only the file name.
 ##   We could do this verbosely by writing one line for each file:
-
-## download.file(dataLinks[1], basename(dataLinks[1]))
-## download.file(dataLinks[2], basename(dataLinks[2]))
-## ...
-## download.file(dataLinks[n], basename(dataLinks[3]))
+ ## download.file(dataLinks[1], basename(dataLinks[1]))
+ ## download.file(dataLinks[2], basename(dataLinks[2]))
+ ## ...
+ ## download.file(dataLinks[n], basename(dataLinks[3]))
 
 ##   but that is too much typing. First, it would be more convenient if the
 ##   `download.file' function defaulted to `destfile = basename(url)'.
 ##   Fortunately it is very easy to write your own functions in R. We can
 ##   write a wrapper around the `download.file' function like this:
 
-
-## a simple function to make downloading files easier
-downloadFile <- function(url, # url to download
-                         destfile = basename(url), # default name to save to
-                         outdir = "./dataSets/", # default directory to save in
-                         ... # other named arguments passed to download.file
-                         ){
-  ## create output directory if it doesn't exist
-  if(!dir.exists(outdir)) {
-    dir.create(outdir)
-  }
-  ## download the file using the specified url, output directory, and file name
-  download.file(url = url, destfile = paste(outdir, destfile, sep = ""), ...)
-}
+ ## a simple function to make downloading files easier
+ downloadFile <- function(url, # url to download
+                          destfile = basename(url), # default name to save to
+                          outdir = "./dataSets/", # default directory to save in
+                          ... # other named arguments passed to download.file
+                          ){
+   ## create output directory if it doesn't exist
+   if(!dir.exists(outdir)) {
+     dir.create(outdir)
+   }
+   ## download the file using the specified url, output directory, and file name
+   download.file(url = url, destfile = paste(outdir, destfile, sep = ""), ...)
+ }
 
 
 ##   Using this function we can download the data files more conveniently,
@@ -286,13 +315,14 @@ downloadFile <- function(url, # url to download
 ##   `for(<placeholder> in <thing to iterate over>) {do stuff with
 ##   placeholder}'. In our case we want to iterate over `dataLinks' and
 ##   download each one, so this becomes
-
-## make a directory to store the data
-dir.create("dataSets")
-
-for(link in dataLinks) {
-    downloadFile(link, outdir = "dataSets/")
-}
+ str(dataLinks)
+ 
+ ## make a directory to store the data
+ dir.create("dataSets")
+ 
+ for(link in dataLinks) {
+     downloadFile(link, outdir = "dataSets/")
+ }
 
 
 ## Iterating over vectors and lists with the `sapply' function
@@ -301,11 +331,25 @@ for(link in dataLinks) {
 ##   The `sapply' function iterates over a vector or list and applies a
 ##   function to each element. To start, let's use `sapply' do download all
 ##   the displaced worker survey data files:
+ ## download all the dws data
+ sapply(dataLinks,
+        downloadFile,
+        outdir = "dataSets/")
 
-## download all the dws data
-sapply(dataLinks,
-       downloadFile,
-       outdir = "dataSets/")
+
+## Iterating in parallel with the `mclapply' function
+## ──────────────────────────────────────────────────
+
+##   The `mclapply' function iterates over a vector or list and applies a
+##   function to each element using multiple CPU cores (where available).
+##   Let's use `mclapply' do download all the displaced worker survey data
+##   files:
+ ## download all the dws data
+ library(parallel)
+ mclapply(dataLinks,
+        downloadFile,
+        outdir = "dataSets/",
+        mc.cores = detectCores())
 
 
 ##   We can now use what we've learned about iteration to unzip all the
@@ -326,21 +370,23 @@ sapply(dataLinks,
 ## Exercise 1 prototype                                         :prototype:
 ## ════════════════════
 
-dataFiles <- list.files("dataSets", pattern = "\\.dta$", full.names=TRUE)
-
-## using sapply
-sapply(dataFiles, unzip, exdir = "dataSets")
-## using a for loop
-for(f in dataFiles) unzip(f, exdir = "dataSets")
-
-## Calculating compression ratios
-uncompSize <- round(file.size(dataFiles) / 1024^2)
-compSize <- round(file.size(dataFiles) / 1024^2)
-
-cbind(zipFile = paste0(basename(dataFiles), ": ", compSize, "Mb"),
-      dtaFile = paste0(basename(dataFiles), ": ", uncompSize, "Mb"),
-      diff = paste0(round(uncompSize - compSize), "Mb"),
-      compression_ratio = round(uncompSize / compSize, digits = 3))
+ zipFiles <- list.files("dataSets", pattern = "\\.zip$", full.names=TRUE)
+ 
+ ## using sapply
+ sapply(zipFiles, unzip, exdir = "dataSets")
+ ## using a for loop
+ for(f in zipFiles) unzip(f, exdir = "dataSets")
+ 
+ ## Calculating compression ratios
+ dataFiles <- list.files("dataSets", pattern = "\\.dta$", full.names = TRUE)
+ 
+ uncompSize <- round(file.size(dataFiles) / 1024^2)
+ compSize <- round(file.size(zipFiles) / 1024^2)
+ 
+ cbind(zipFile = paste0(basename(zipFiles), ": ", compSize, "Mb"),
+       dtaFile = paste0(basename(dataFiles), ": ", uncompSize, "Mb"),
+       diff = paste0(round(uncompSize - compSize), "Mb"),
+       compression_ratio = round(uncompSize / compSize, digits = 3))
 
 
 ## Importing and inspecting data and meta-data
@@ -351,15 +397,14 @@ cbind(zipFile = paste0(basename(dataFiles), ": ", compSize, "Mb"),
 ##   using the `read.dta' function in the `foreign' package. Let's start by
 ##   reading just the first data set.
 
-
-## attach the foreign packge so we can read stata files
-library(foreign)
-
-## get a list of all the stata files in the dataSets directory
-dataFiles <- list.files("dataSets", pattern = "\\.dta$", full.names=TRUE)
-
-## read in the first one
-ceprData1 <- read.dta(dataFiles[1])
+ ## attach the foreign packge so we can read stata files
+ library(foreign)
+ 
+ ## get a list of all the stata files in the dataSets directory
+ dataFiles <- list.files("dataSets", pattern = "\\.dta$", full.names=TRUE)
+ 
+ ## read in the first one
+ ceprData1 <- read.dta(dataFiles[1])
 
 
 ##   Now that we've read in some of the data we want to get some more
@@ -371,13 +416,12 @@ ceprData1 <- read.dta(dataFiles[1])
 
 ##   Information about objects in R are stored as /attributes/ of the
 ##   object. All R objects have a storage /mode/ and a /length/. Since all
-##   objects in R have the attributes we refer to them as /intrinsic
+##   objects in R have these attributes we refer to them as /intrinsic
 ##   attributes/. We can get the value of these intrinsic attributes using
 ##   the `mode' and `length' functions respecively. For example, what is
 ##   the mode and length of our `ceprData1' object?
-
-mode(ceprData1)
-length(ceprData1)
+ mode(ceprData1)
+ length(ceprData1)
 
 
 ## Other properties of data.frames
@@ -386,18 +430,16 @@ length(ceprData1)
 ##   So far we've seen that `ceprData1' is a list of length 178. Actually
 ##   `ceprData1' is a special kind of list called a `data.frame'. We can
 ##   see that by asking R what the `class' of the object is.
-
-class(ceprData1)
+ class(ceprData1)
 
 
 ##   A /data.frame/ in R is a list with elements of equal length. It is a
 ##   rectangular structure with rows and columns. In addition to the /mode/
 ##   and /length/ that all object in R have, /data.frames/ also have
 ##   dimension, (col)names, and =rownames.
-
-dim(ceprData1)
-names(ceprData1)
-c(head(rownames(ceprData1)), "...", tail(rownames(ceprData1)))
+ dim(ceprData1)
+ names(ceprData1)
+ c(head(rownames(ceprData1)), "...", tail(rownames(ceprData1)))
 
 
 ## Additional attributes
@@ -407,8 +449,7 @@ c(head(rownames(ceprData1)), "...", tail(rownames(ceprData1)))
 ##   and 178 columns, and that the variables have terrible cryptic names
 ##   like `cjpporg' and `ljagric'. What do we actually have here? One way
 ##   to answer the question is
-
-browseURL(ceprCodeBookLinks[1])
+ browseURL(ceprCodeBookLinks[1])
 
 ##   and that is a good answer actually. In our case the meta-data has also
 ##   been embedded in the `.dta' files by our friends at [ceprdata.org].
@@ -421,35 +462,32 @@ browseURL(ceprCodeBookLinks[1])
 ##   a quick look a this system before using it to access the ceprData1
 ##   meta-data.
 
-
-x <- 1:10
-attributes(x)
-attr(x, "description") <- "This is vector of integers from 1 to 10"
-attributes(x)
-attr(x, "how_many") <- "There are ten things in this vector"
-attributes(x)
-attr(x, "description")
+ x <- 1:10
+ attributes(x)
+ attr(x, "description") <- "This is vector of integers from 1 to 10"
+ attributes(x)
+ attr(x, "how_many") <- "There are ten things in this vector"
+ attributes(x)
+ attr(x, "description")
 
 
 ##   As we've seen, additional attributes and be accessed vie the
 ##   `attributes' function. Let's see what other attributes our `ceprData'
 ##   object has.
-
-ceprDataInfo <- attributes(ceprData1)
-mode(ceprDataInfo)
-class(ceprDataInfo)
-length(ceprDataInfo)
-names(ceprDataInfo)
+ ceprDataInfo <- attributes(ceprData1)
+ mode(ceprDataInfo)
+ class(ceprDataInfo)
+ length(ceprDataInfo)
+ names(ceprDataInfo)
 
 
 ##   Let's iterate over the attributes of =ceprData1- and get some more
 ##   information about the available meta-data
-
-t(sapply(attributes(ceprData1),
-         function(x) {
-           c(mode = mode(x), class = class(x), length = length(x))
-         })
-  )
+ t(sapply(attributes(ceprData1),
+          function(x) {
+            c(mode = mode(x), class = class(x), length = length(x))
+          })
+   )
 
 
 ##   [ceprdata.org] http://ceprdata.org
@@ -459,18 +497,17 @@ t(sapply(attributes(ceprData1),
 ## ───────────────────────────
 
 ##   We can extract elements from lists in a few different ways:
-
-## extract by name
-ceprDataInfo$datalabel #using $
-ceprDataInfo["datalabel"] #using [
-ceprDataInfo[["datalabel"] #using [[, note the difference
-
-## by position
-ceprDataInfo[1]; ceprDataInfo[[1]] # note the difference
-
-## by logical index
-ceprDataInfo[c(TRUE, TRUE, rep(FALSE, 10))]
-ceprDataInfo[sapply(ceprDataInfo, length) == 1]
+ ## extract by name
+ ceprDataInfo$datalabel #using $
+ ceprDataInfo["datalabel"] #using [
+ ceprDataInfo[["datalabel"]] #using [[, note the difference
+ 
+ ## by position
+ ceprDataInfo[1]; ceprDataInfo[[1]] # note the difference
+ 
+ ## by logical index
+ ceprDataInfo[c(TRUE, TRUE, rep(FALSE, 10))]
+ ceprDataInfo[sapply(ceprDataInfo, length) == 1]
 
 
 ##   Note that `[' indexing on a list returns a list, and `[[' indexing
@@ -481,8 +518,7 @@ ceprDataInfo[sapply(ceprDataInfo, length) == 1]
 ##   You may have noticed during our earlier investigation of
 ##   `ceprDataInfo' that many of the elements have length 178. That number
 ##   might be familiar:
-
-dim(ceprData1)
+ dim(ceprData1)
 
 ##   it's the number of columns in the data set. It is therefor a good
 ##   guess that those elements record information about each of the columns
@@ -504,17 +540,16 @@ dim(ceprData1)
 ## Exercise 2 prototype                                         :prototype:
 ## ╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌
 
-
-ceprCodebook <- data.frame(
-  ceprDataInfo[
-    sapply(ceprDataInfo, length) == ncol(ceprData1)
-  ])
-
-ceprCodebook$mode <- sapply(ceprData1, mode)
-ceprCodebook$class <- sapply(ceprData1, class)
-ceprCodebook$n_distinct = sapply(ceprData1, function(x) length(unique(x)))
-
-rbind(head(ceprCodebook), tail(ceprCodebook))
+ ceprCodebook <- data.frame(
+   ceprDataInfo[
+     sapply(ceprDataInfo, length) == ncol(ceprData1)
+   ])
+ 
+ ceprCodebook$mode <- sapply(ceprData1, mode)
+ ceprCodebook$class <- sapply(ceprData1, class)
+ ceprCodebook$n_distinct = sapply(ceprData1, function(x) length(unique(x)))
+ 
+ rbind(head(ceprCodebook), tail(ceprCodebook))
 
 
 ## Aggregation
@@ -526,11 +561,10 @@ rbind(head(ceprCodebook), tail(ceprCodebook))
 ##   `dplyr' packages provide advanced aggregation capabilities, but
 ##   `aggregate' is available in base R and works well for many things).
 
-
-ceprData1 <- aggregate(ceprData1["dw"],
-                       by = ceprData1[c("year", "rural", "female")],
-                       FUN = mean)
-ceprData1
+ ceprData1 <- aggregate(ceprData1["dw"],
+                        by = ceprData1[c("year", "rural", "female")],
+                        FUN = mean, na.rm = TRUE)
+ ceprData1
 
 
 ## Exercise 3
@@ -545,18 +579,17 @@ ceprData1
 ##   documentation, search stackoverflow.com, and use any other resources
 ##   at your disposal as you attempt it.
 
+
 ## Exercise 3 prototype                                         :prototype:
 ## ════════════════════
 
-
-library(foreign)
-
-ceprData <- sapply(dataFiles, function(x) {
-  tmp <- read.dta(x)
-  return(aggregate(tmp["dw"],
-                   by = tmp[c("year", "rural", "female")],
-                   FUN = mean))},
-  simplify = FALSE)
+ library(foreign)
+ 
+ ceprData <- mclapply(dataFiles, function(x) {
+   tmp <- read.dta(x)
+   return(aggregate(tmp["dw"],
+                    by = tmp[c("year", "rural", "female")],
+                    FUN = mean, na.rm = TRUE))})
 
 
 ## Finishing touches
@@ -566,14 +599,12 @@ ceprData <- sapply(dataFiles, function(x) {
 ##   stack each element of the list so that we end up with one big
 ##   data.frame instead of a list of small ones. We can stack two
 ##   data.frames using the `rbind' function:
-
-ceprData[[1]]; ceprData[[2]]
-rbind(ceprData[[1]], ceprData[[2]])
+ ceprData[[1]]; ceprData[[2]]
+ rbind(ceprData[[1]], ceprData[[2]])
 
 ##   and we can apply this operation to every element in the list using the
 ##   `do.call' function.
-
-str(ceprData <- do.call("rbind", ceprData))
+ str(ceprData <- do.call("rbind", ceprData))
 
 
 ## Data formatting
@@ -586,32 +617,31 @@ str(ceprData <- do.call("rbind", ceprData))
 ##   Earlier we saw how to extract elements of R objects using bracket
 ##   notation. To replace elements we using the replacement form, which
 ##   looks like this:
-
- ceprData[["rural"]] <- factor(ceprData[["rural"]],
-                               levels = c(0, 1),
-                               labels = c("Non-rural", "Rural"))
-
- ceprData[["gender"]] <- factor(ceprData[["female"]],
-                               levels = c(1, 0),
-                               labels = c("Female", "Male"))
-
-ceprData$displaced_percent <- ceprData$dw * 100
-
-str(ceprData)
+  ceprData[["rural"]] <- factor(ceprData[["rural"]],
+                                levels = c(0, 1),
+                                labels = c("Non-rural", "Rural"))
+ 
+  ceprData[["gender"]] <- factor(ceprData[["female"]],
+                                levels = c(1, 0),
+                                labels = c("Female", "Male"))
+ 
+ ceprData$displaced_percent <- ceprData$dw * 100
+ 
+ str(ceprData)
 
 
 ## Plotting
 ## ────────
 
-##   Now we can take a look at the trends in wages over the last few years.
-
-library(ggplot2)
-library(directlabels)
-ceprPlot <- ggplot(ceprData, aes(x = year, y = displaced_percent, color = gender)) +
-  geom_line() +
-  geom_point() +
-  facet_wrap(~rural)
-direct.label(ceprPlot)
+##   Now we can take a look at the trends in worker displacement over the
+##   last few years.
+ library(ggplot2)
+ library(directlabels)
+ ceprPlot <- ggplot(ceprData, aes(x = year, y = displaced_percent, color = gender)) +
+   geom_line() +
+   geom_point() +
+   facet_wrap(~rural)
+ direct.label(ceprPlot)
 
 
 ## What else?
@@ -668,13 +698,11 @@ direct.label(ceprPlot)
 ## ╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌
 
 ##   Floating point arithmetic is not exact:
-
-.1 == .3/3
+ .1 == .3/3
 
 
 ##   Solution: `use all.equal()':
-
-all.equal(.1, .3/3)
+ all.equal(.1, .3/3)
 
 
 ## Missing values
@@ -682,14 +710,12 @@ all.equal(.1, .3/3)
 
 ##   R does not exclude missing values by default – a single missing value
 ##   in a vector means that many thing are unknown:
-
-x <- c(1:10, NA, 12:20)
-c(mean(x), sd(x), median(x), min(x), sd(x))
+ x <- c(1:10, NA, 12:20)
+ c(mean(x), sd(x), median(x), min(x), sd(x))
 
 
 ##   NA is not equal to anything, not even NA
-
-NA == NA
+ NA == NA
 
 
 ##   Solutions: use `na.rm = TRUE' option when calculating, and is.na to
@@ -702,13 +728,12 @@ NA == NA
 ##   Automatic type conversion happens a lot which is often useful, but
 ##   makes it easy to miss mistakes
 
-
-# combining values coereces them to the most general type
-(x <- c(TRUE, FALSE, 1, 2, "a", "b"))
-str(x)
-
-# comparisons convert arguments to most general type
-1 > "a"
+ # combining values coereces them to the most general type
+ (x <- c(TRUE, FALSE, 1, 2, "a", "b"))
+ str(x)
+ 
+ # comparisons convert arguments to most general type
+ 1 > "a"
 
 
 ##   Maybe this is what you expect… I would like to at least get a warning!
@@ -719,15 +744,13 @@ str(x)
 
 ##   Functions you might expect to work similarly don't always:
 
-
-mean(1, 2, 3, 4, 5)*5
-sum(1, 2, 3, 4, 5)
+ mean(1, 2, 3, 4, 5)*5
+ sum(1, 2, 3, 4, 5)
 
 
 ##   Why are these different?!?
-
-args(mean)
-args(sum)
+ args(mean)
+ args(sum)
 
 
 ##   Ouch. That is not nice at all!
@@ -739,16 +762,15 @@ args(sum)
 ##   Factors sometimes behave as numbers, and sometimes as characters,
 ##   which can be confusing!
 
-
-(x <- factor(c(5, 5, 6, 6), levels = c(6, 5)))
-
-str(x)
-
-as.character(x)
-# here is where people sometimes get lost...
-as.numeric(x)
-# you probably want
-as.numeric(as.character(x))
+ (x <- factor(c(5, 5, 6, 6), levels = c(6, 5)))
+ 
+ str(x)
+ 
+ as.character(x)
+ # here is where people sometimes get lost...
+ as.numeric(x)
+ # you probably want
+ as.numeric(as.character(x))
 
 
 ## Feedback

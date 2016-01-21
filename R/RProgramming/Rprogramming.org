@@ -12,7 +12,7 @@
 # property and/or the EXCLUDE_TAGS, place the curser on the poperty line 
 # and press C-c C-c
 
-#+PROPERTY: exports both
+#+PROPERTY: exports code
 #+EXCLUDE_TAGS: noexport mitsetup
 
 #+SETUPFILE: ../workshopPreamble.org
@@ -23,7 +23,7 @@
   .First <- function() {
     options(width=86)
     require(rvest)
-    require(stringi)
+    require(parallel)
   }
 #+end_src
 
@@ -331,6 +331,8 @@ One way to download the data files is to use a for-loop to iterate over the cont
 For loops in R have the following general structure:
 =for(<placeholder> in <thing to iterate over>) {do stuff with placeholder}=. In our case we want to iterate over =dataLinks= and download each one, so this becomes
 #+BEGIN_SRC R :results silent
+  str(dataLinks)
+
   ## make a directory to store the data
   dir.create("dataSets")
 
@@ -349,6 +351,19 @@ The =sapply= function iterates over a vector or list and applies a function to e
 #+END_SRC
 
 
+** Iterating in parallel with the =mclapply= function
+The =mclapply= function iterates over a vector or list and applies a function to each element using multiple CPU cores (where available). Let's use =mclapply= do download all the displaced worker survey data files:
+#+BEGIN_SRC R :results silent
+  ## download all the dws data
+  library(parallel)
+  mclapply(dataLinks,
+         downloadFile,
+         outdir = "dataSets/",
+         mc.cores = detectCores())
+#+END_SRC
+
+
+
 We can now use what we've learned about iteration to unzip all the files in the =dataSets= directory, a task I leave to you.
 
 * Exercise 1: Iterate and extract
@@ -358,24 +373,66 @@ Use a =for= loop or =*apply= function to unzip each of the =.zip= files in the =
 BONUS (optional): calculate the size of each extracted file and calculate the difference in size between each =.dta= file and the =.zip= file it was extracted from.
 * Exercise 1 prototype                                            :prototype:
 #+BEGIN_SRC R
-  dataFiles <- list.files("dataSets", pattern = "\\.dta$", full.names=TRUE)
+  zipFiles <- list.files("dataSets", pattern = "\\.zip$", full.names=TRUE)
 
   ## using sapply
-  sapply(dataFiles, unzip, exdir = "dataSets")
+  sapply(zipFiles, unzip, exdir = "dataSets")
   ## using a for loop
-  for(f in dataFiles) unzip(f, exdir = "dataSets")
+  for(f in zipFiles) unzip(f, exdir = "dataSets")
 
   ## Calculating compression ratios
-  uncompSize <- round(file.size(dataFiles) / 1024^2)
-  compSize <- round(file.size(dataFiles) / 1024^2)
+  dataFiles <- list.files("dataSets", pattern = "\\.dta$", full.names = TRUE)
 
-  cbind(zipFile = paste0(basename(dataFiles), ": ", compSize, "Mb"),
+  uncompSize <- round(file.size(dataFiles) / 1024^2)
+  compSize <- round(file.size(zipFiles) / 1024^2)
+
+  cbind(zipFile = paste0(basename(zipFiles), ": ", compSize, "Mb"),
         dtaFile = paste0(basename(dataFiles), ": ", uncompSize, "Mb"),
         diff = paste0(round(uncompSize - compSize), "Mb"),
         compression_ratio = round(uncompSize / compSize, digits = 3))
 #+END_SRC
 
 #+RESULTS:
+#+begin_example
+> zipFiles <- list.files("dataSets", pattern = "\\.zip$", full.names=TRUE)
+> 
+> ## using sapply
+> sapply(zipFiles, unzip, exdir = "dataSets")
+dataSets/cepr_dws_1994_dta.zip dataSets/cepr_dws_1996_dta.zip 
+  "dataSets/cepr_dws_1994.dta"   "dataSets/cepr_dws_1996.dta" 
+dataSets/cepr_dws_1998_dta.zip dataSets/cepr_dws_2000_dta.zip 
+  "dataSets/cepr_dws_1998.dta"   "dataSets/cepr_dws_2000.dta" 
+dataSets/cepr_dws_2002_dta.zip dataSets/cepr_dws_2004_dta.zip 
+  "dataSets/cepr_dws_2002.dta"   "dataSets/cepr_dws_2004.dta" 
+dataSets/cepr_dws_2006_dta.zip dataSets/cepr_dws_2008_dta.zip 
+  "dataSets/cepr_dws_2006.dta"   "dataSets/cepr_dws_2008.dta" 
+dataSets/cepr_dws_2010_dta.zip 
+  "dataSets/cepr_dws_2010.dta" 
+> ## using a for loop
+> for(f in zipFiles) unzip(f, exdir = "dataSets")
+> 
+> ## Calculating compression ratios
+> dataFiles <- list.files("dataSets", pattern = "\\.dta$", full.names = TRUE)
+> 
+> uncompSize <- round(file.size(dataFiles) / 1024^2)
+> compSize <- round(file.size(zipFiles) / 1024^2)
+> 
+> cbind(zipFile = paste0(basename(zipFiles), ": ", compSize, "Mb"),
++       dtaFile = paste0(basename(dataFiles), ": ", uncompSize, "Mb"),
++       diff = paste0(round(uncompSize - compSize), "Mb"),
++       compression_ratio = round(uncompSize / compSize, digits = 3))
+      zipFile                      dtaFile                   diff   compression_ratio
+ [1,] "cepr_dws_1994_dta.zip: 5Mb" "cepr_dws_1994.dta: 35Mb" "30Mb" "7"              
+ [2,] "cepr_dws_1996_dta.zip: 4Mb" "cepr_dws_1996.dta: 31Mb" "27Mb" "7.75"           
+ [3,] "cepr_dws_1998_dta.zip: 4Mb" "cepr_dws_1998.dta: 31Mb" "27Mb" "7.75"           
+ [4,] "cepr_dws_2000_dta.zip: 4Mb" "cepr_dws_2000.dta: 31Mb" "27Mb" "7.75"           
+ [5,] "cepr_dws_2002_dta.zip: 5Mb" "cepr_dws_2002.dta: 40Mb" "35Mb" "8"              
+ [6,] "cepr_dws_2004_dta.zip: 5Mb" "cepr_dws_2004.dta: 39Mb" "34Mb" "7.8"            
+ [7,] "cepr_dws_2006_dta.zip: 5Mb" "cepr_dws_2006.dta: 39Mb" "34Mb" "7.8"            
+ [8,] "cepr_dws_2008_dta.zip: 5Mb" "cepr_dws_2008.dta: 39Mb" "34Mb" "7.8"            
+ [9,] "cepr_dws_2010_dta.zip: 5Mb" "cepr_dws_2010.dta: 39Mb" "34Mb" "7.8"            
+> 
+#+end_example
 
 * Importing and inspecting data and meta-data 
 Our next goal is to read in the data that we downloaded and extracted earlier. The data are stored as Stata data sets, which can be imported using the =read.dta= function in the =foreign= package. Let's start by reading just the first data set.
@@ -394,7 +451,7 @@ Our next goal is to read in the data that we downloaded and extracted earlier. T
 Now that we've read in some of the data we want to get some more information about it. 
 
 ** Mode and length
-Information about objects in R are stored as /attributes/ of the object. All R objects have a storage /mode/ and a /length/. Since all objects in R have the attributes we refer to them as /intrinsic attributes/. We can get the value of these intrinsic attributes using the =mode= and =length= functions respecively. For example, what is the mode and length of our =ceprData1= object?
+Information about objects in R are stored as /attributes/ of the object. All R objects have a storage /mode/ and a /length/. Since all objects in R have these attributes we refer to them as /intrinsic attributes/. We can get the value of these intrinsic attributes using the =mode= and =length= functions respecively. For example, what is the mode and length of our =ceprData1= object?
 #+BEGIN_SRC R
   mode(ceprData1)
   length(ceprData1)
@@ -576,7 +633,7 @@ We can extract elements from lists in a few different ways:
   ## extract by name
   ceprDataInfo$datalabel #using $
   ceprDataInfo["datalabel"] #using [
-  ceprDataInfo[["datalabel"] #using [[, note the difference
+  ceprDataInfo[["datalabel"]] #using [[, note the difference
   
   ## by position
   ceprDataInfo[1]; ceprDataInfo[[1]] # note the difference
@@ -587,6 +644,47 @@ We can extract elements from lists in a few different ways:
 #+END_SRC
 
 #+RESULTS:
+#+begin_example
+> ## extract by name
+> ceprDataInfo$datalabel #using $
+[1] "CEPR DWS Extract, Version 1.01, 1994"
+> ceprDataInfo["datalabel"] #using [
+$datalabel
+[1] "CEPR DWS Extract, Version 1.01, 1994"
+
+> ceprDataInfo[["datalabel"]] #using [[, note the difference
+[1] "CEPR DWS Extract, Version 1.01, 1994"
+> 
+> ## by position
+> ceprDataInfo[1]; ceprDataInfo[[1]] # note the difference
+$datalabel
+[1] "CEPR DWS Extract, Version 1.01, 1994"
+
+[1] "CEPR DWS Extract, Version 1.01, 1994"
+> 
+> ## by logical index
+> ceprDataInfo[c(TRUE, TRUE, rep(FALSE, 10))]
+$datalabel
+[1] "CEPR DWS Extract, Version 1.01, 1994"
+
+$time.stamp
+[1] "17 Feb 2011 18:18"
+
+> ceprDataInfo[sapply(ceprDataInfo, length) == 1]
+$datalabel
+[1] "CEPR DWS Extract, Version 1.01, 1994"
+
+$time.stamp
+[1] "17 Feb 2011 18:18"
+
+$version
+[1] 8
+
+$class
+[1] "data.frame"
+
+> 
+#+end_example
 
 Note that =[= indexing on a list returns a list, and =[[= indexing returns whatever contained in a single element of the list. This visual explanation may help: 
 [[file:images/HadleyWickham_index_list.png]][fn:3]
@@ -597,11 +695,6 @@ You may have noticed during our earlier investigation of =ceprDataInfo= that man
 #+END_SRC
 
 #+RESULTS:
-#+begin_example
-> dim(ceprData1)
-[1] 156246    178
-> 
-#+end_example
 it's the number of columns in the data set. It is therefor a good guess that those elements record information about each of the columns in the data set. 
 
 *** Exercise 2
@@ -625,45 +718,6 @@ Bonus (optional): supplement the =ceprDataInfo= you extracted in step one with t
 #+END_SRC
 
 #+RESULTS:
-#+begin_example
-> ceprCodebook <- data.frame(
-+   ceprDataInfo[
-+     sapply(ceprDataInfo, length) == ncol(ceprData1)
-+   ])
-> 
-> ceprCodebook$mode <- sapply(ceprData1, mode)
-> ceprCodebook$class <- sapply(ceprData1, class)
-> ceprCodebook$n_distinct = sapply(ceprData1, function(x) length(unique(x)))
-> 
-> rbind(head(ceprCodebook), tail(ceprCodebook))
-       names formats types val.labels                       var.labels    mode
-1       year   %8.0g   252                                        Year numeric
-2      indws   %8.0g   251                            Eligible for DWS numeric
-3    dw_stat   %8.0g   251                        DWS interview status numeric
-4     dwswgt   %9.0g   254                                  DWS weight numeric
-5         dw   %8.0g   251                                   Displaced numeric
-6     dw_bls   %8.0g   251            Displaced, strict BLS definition numeric
-173 peernhro   %8.0g   251                      Usual hours, ORG (BLS) numeric
-174   imphrs   %9.0g   254                   Hours, main job (imputed) numeric
-175 hrsimptd   %9.0g   251                               Hours imputed numeric
-176  hrernhr   %8.0g   251                      Hours assigned, ernhro numeric
-177  uhoursi   %9.0g   251                        Hours, w/ imputation numeric
-178  blsimpt   %8.0g   251                  BLS allocated weekly hours numeric
-      class n_distinct
-1   integer          1
-2   integer          2
-3   integer          3
-4   numeric      80402
-5   integer          3
-6   integer          2
-173 integer         66
-174 numeric       2198
-175 integer          2
-176 integer          3
-177 integer         96
-178 integer          2
-> 
-#+end_example
 
 * Aggregation
 Now that we have the data read in, and we know what is in each column, I want to calculate the proportion displaced by year/rural/gender. I can do that using the =aggregate= function (the =data.table= and =dplyr= packages provide advanced aggregation capabilities, but =aggregate= is available in base R and works well for many things).
@@ -671,11 +725,23 @@ Now that we have the data read in, and we know what is in each column, I want to
 #+BEGIN_SRC R
   ceprData1 <- aggregate(ceprData1["dw"],
                          by = ceprData1[c("year", "rural", "female")],
-                         FUN = mean)
+                         FUN = mean, na.rm = TRUE)
   ceprData1
 #+END_SRC
 
 #+RESULTS:
+#+begin_example
+> ceprData1 <- aggregate(ceprData1["dw"],
++                        by = ceprData1[c("year", "rural", "female")],
++                        FUN = mean, na.rm = TRUE)
+> ceprData1
+  year rural female         dw
+1 1994     0      0 0.09201620
+2 1994     1      0 0.07094765
+3 1994     0      1 0.06059583
+4 1994     1      1 0.04579923
+> 
+#+end_example
 
 * Exercise 3
 
@@ -686,12 +752,11 @@ Now that we have a process for importing and aggregating the data we can apply i
 #+BEGIN_SRC R :results silent
   library(foreign)
 
-  ceprData <- sapply(dataFiles, function(x) {
+  ceprData <- mclapply(dataFiles, function(x) {
     tmp <- read.dta(x)
     return(aggregate(tmp["dw"],
                      by = tmp[c("year", "rural", "female")],
-                     FUN = mean})),
-    simplify = FALSE)
+                     FUN = mean, na.rm = TRUE))})
 #+END_SRC
 
 *  Finishing touches
@@ -1010,6 +1075,11 @@ Levels: 6 5
 #+END_SRC
 
 #+RESULTS:
+#+begin_example
+> file.size(dataFiles)
+numeric(0)
+> 
+#+end_example
 
 Now that we understand iteration in R we can use it to unzip the data files we downloaded earlier. We can unzip single files using the =unzip= function, like this:
 #+BEGIN_SRC R :results silent

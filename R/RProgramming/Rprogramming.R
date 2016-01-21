@@ -91,14 +91,15 @@ downloadFile <-
 ##   calculate the difference in size between each `.dta' file and the
 ##   `.zip' file it was extracted from.
 
-
+## >>>
+zipFiles <- 
+dataFiles <- 
 ## ═══════════════════════════════
 
 
 
 ## Read in just the first data set.
 ## >>>
-dataFiles <-
 
 ceprData1 <-
 
@@ -163,6 +164,8 @@ cdprDataInfo <-
 ##   documentation, search stackoverflow.com, and use any other resources
 ##   at your disposal as you attempt it.
 
+## >>>
+ceprData <-
 
 ## ══════════
 
@@ -170,7 +173,7 @@ cdprDataInfo <-
 
 ##  Stack each yearly data set to from a single data.frame 
 ## >>>
-
+ceprData <- 
 
 ##   Format the values for `rural' and `female'.
 ## >>>
