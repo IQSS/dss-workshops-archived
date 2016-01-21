@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2015-10-15 Thu 17:32 -->
+<!-- 2016-01-19 Tue 15:20 -->
 <meta  http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta  name="viewport" content="width=device-width, initial-scale=1" />
 <title>Introduction to R Graphics with <code>ggplot2</code></title>
@@ -298,27 +298,27 @@ The <code>ggplot()</code> function is used to initialize the basic graph structu
 
 <div class="org-src-container">
 
-<pre class="src src-R" id="orgsrcblock1">ggplot<span style="color: #2f96dc;">(</span>data = &lt;default data set&gt;, 
+<pre class="src src-R" id="orgsrcblock1">ggplot<span style="color: #4f97d7;">(</span>data = &lt;default data set&gt;, 
        aes<span style="color: #bc6ec5;">(</span>x = &lt;default x axis variable&gt;,
            y = &lt;default y axis variable&gt;,
            ... &lt;other default aesthetic mappings&gt;<span style="color: #bc6ec5;">)</span>,
-       ... &lt;other plot defaults&gt;<span style="color: #2f96dc;">)</span> +
+       ... &lt;other plot defaults&gt;<span style="color: #4f97d7;">)</span> +
 
-       geom_&lt;geom type&gt;<span style="color: #2f96dc;">(</span>aes<span style="color: #bc6ec5;">(</span>size = &lt;size variable <span style="color: #237fbf; font-weight: bold;">for</span> this geom&gt;, 
+       geom_&lt;geom type&gt;<span style="color: #4f97d7;">(</span>aes<span style="color: #bc6ec5;">(</span>size = &lt;size variable <span style="color: #4f97d7; font-weight: bold;">for</span> this geom&gt;, 
                       ... &lt;other aesthetic mappings&gt;<span style="color: #bc6ec5;">)</span>,
-                  data = &lt;data <span style="color: #237fbf; font-weight: bold;">for</span> this point geom&gt;,
-                  stat = &lt;statistic string or <span style="color: #237fbf; font-weight: bold;">function</span>&gt;,
-                  position = &lt;position string or <span style="color: #237fbf; font-weight: bold;">function</span>&gt;,
+                  data = &lt;data <span style="color: #4f97d7; font-weight: bold;">for</span> this point geom&gt;,
+                  stat = &lt;statistic string or <span style="color: #4f97d7; font-weight: bold;">function</span>&gt;,
+                  position = &lt;position string or <span style="color: #4f97d7; font-weight: bold;">function</span>&gt;,
                   color = &lt;<span style="color: #2d9574;">"fixed color specification"</span>&gt;,
-                  &lt;other arguments, possibly passed to the _stat_ <span style="color: #237fbf; font-weight: bold;">function</span><span style="color: #2f96dc;">)</span> +
+                  &lt;other arguments, possibly passed to the _stat_ <span style="color: #4f97d7; font-weight: bold;">function</span><span style="color: #4f97d7;">)</span> +
 
-  scale_&lt;aesthetic&gt;_&lt;type&gt;<span style="color: #2f96dc;">(</span>name = &lt;<span style="color: #2d9574;">"scale label"</span>&gt;,
+  scale_&lt;aesthetic&gt;_&lt;type&gt;<span style="color: #4f97d7;">(</span>name = &lt;<span style="color: #2d9574;">"scale label"</span>&gt;,
                      breaks = &lt;where to put tick marks&gt;,
-                     labels = &lt;labels <span style="color: #237fbf; font-weight: bold;">for</span> tick marks&gt;,
-                     ... &lt;other options <span style="color: #237fbf; font-weight: bold;">for</span> the scale&gt;<span style="color: #2f96dc;">)</span> +
+                     labels = &lt;labels <span style="color: #4f97d7; font-weight: bold;">for</span> tick marks&gt;,
+                     ... &lt;other options <span style="color: #4f97d7; font-weight: bold;">for</span> the scale&gt;<span style="color: #4f97d7;">)</span> +
 
-  theme<span style="color: #2f96dc;">(</span>plot.background = element_rect<span style="color: #bc6ec5;">(</span>fill = <span style="color: #2d9574;">"gray"</span><span style="color: #bc6ec5;">)</span>,
-        ... &lt;other theme elements&gt;<span style="color: #2f96dc;">)</span>
+  theme<span style="color: #4f97d7;">(</span>plot.background = element_rect<span style="color: #bc6ec5;">(</span>fill = <span style="color: #2d9574;">"gray"</span><span style="color: #bc6ec5;">)</span>,
+        ... &lt;other theme elements&gt;<span style="color: #4f97d7;">)</span>
 </pre>
 </div>
 
@@ -337,8 +337,8 @@ Let's look at housing prices.
 </p>
 <div class="org-src-container">
 
-<pre class="src src-R" id="orgsrcblock2">housing <span style="color: #a45bad;">&lt;-</span> read.csv<span style="color: #2f96dc;">(</span><span style="color: #2d9574;">"dataSets/landdata-states.csv"</span><span style="color: #2f96dc;">)</span>
-head<span style="color: #2f96dc;">(</span>housing<span style="color: #bc6ec5;">[</span>1:5<span style="color: #bc6ec5;">]</span><span style="color: #2f96dc;">)</span>
+<pre class="src src-R" id="orgsrcblock2">housing <span style="color: #a45bad;">&lt;-</span> read.csv<span style="color: #4f97d7;">(</span><span style="color: #2d9574;">"dataSets/landdata-states.csv"</span><span style="color: #4f97d7;">)</span>
+head<span style="color: #4f97d7;">(</span>housing<span style="color: #bc6ec5;">[</span>1:5<span style="color: #bc6ec5;">]</span><span style="color: #4f97d7;">)</span>
 </pre>
 </div>
 
@@ -386,7 +386,7 @@ Base graphics histogram example:
 
 <div class="org-src-container">
 
-<pre class="src src-R" id="orgsrcblock3">hist<span style="color: #2f96dc;">(</span>housing$Home.Value<span style="color: #2f96dc;">)</span>
+<pre class="src src-R" id="orgsrcblock3">hist<span style="color: #4f97d7;">(</span>housing$Home.Value<span style="color: #4f97d7;">)</span>
 </pre>
 </div>
 
@@ -403,8 +403,8 @@ Base graphics histogram example:
 
 <div class="org-src-container">
 
-<pre class="src src-R" id="orgsrcblock4">ggplot<span style="color: #2f96dc;">(</span>housing, aes<span style="color: #bc6ec5;">(</span>x = Home.Value<span style="color: #bc6ec5;">)</span><span style="color: #2f96dc;">)</span> +
-  geom_histogram<span style="color: #2f96dc;">()</span>
+<pre class="src src-R" id="orgsrcblock4">ggplot<span style="color: #4f97d7;">(</span>housing, aes<span style="color: #bc6ec5;">(</span>x = Home.Value<span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span> +
+  geom_histogram<span style="color: #4f97d7;">()</span>
 </pre>
 </div>
 
@@ -426,14 +426,14 @@ Base colored scatter plot example:
 
 <div class="org-src-container">
 
-<pre class="src src-R" id="orgsrcblock5">plot<span style="color: #2f96dc;">(</span>Home.Value ~ Date,
-     data=subset<span style="color: #bc6ec5;">(</span>housing, State == <span style="color: #2d9574;">"MA"</span><span style="color: #bc6ec5;">)</span><span style="color: #2f96dc;">)</span>
-points<span style="color: #2f96dc;">(</span>Home.Value ~ Date, col=<span style="color: #2d9574;">"red"</span>,
-       data=subset<span style="color: #bc6ec5;">(</span>housing, State == <span style="color: #2d9574;">"TX"</span><span style="color: #bc6ec5;">)</span><span style="color: #2f96dc;">)</span>
-legend<span style="color: #2f96dc;">(</span>19750, 400000,
+<pre class="src src-R" id="orgsrcblock5">plot<span style="color: #4f97d7;">(</span>Home.Value ~ Date,
+     data=subset<span style="color: #bc6ec5;">(</span>housing, State == <span style="color: #2d9574;">"MA"</span><span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>
+points<span style="color: #4f97d7;">(</span>Home.Value ~ Date, col=<span style="color: #2d9574;">"red"</span>,
+       data=subset<span style="color: #bc6ec5;">(</span>housing, State == <span style="color: #2d9574;">"TX"</span><span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>
+legend<span style="color: #4f97d7;">(</span>19750, 400000,
        c<span style="color: #bc6ec5;">(</span><span style="color: #2d9574;">"MA"</span>, <span style="color: #2d9574;">"TX"</span><span style="color: #bc6ec5;">)</span>, title=<span style="color: #2d9574;">"State"</span>,
        col=c<span style="color: #bc6ec5;">(</span><span style="color: #2d9574;">"black"</span>, <span style="color: #2d9574;">"red"</span><span style="color: #bc6ec5;">)</span>,
-       pch=c<span style="color: #bc6ec5;">(</span>1, 1<span style="color: #bc6ec5;">)</span><span style="color: #2f96dc;">)</span>
+       pch=c<span style="color: #bc6ec5;">(</span>1, 1<span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>
 </pre>
 </div>
 
@@ -450,11 +450,11 @@ legend<span style="color: #2f96dc;">(</span>19750, 400000,
 
 <div class="org-src-container">
 
-<pre class="src src-R" id="orgsrcblock6">ggplot<span style="color: #2f96dc;">(</span>subset<span style="color: #bc6ec5;">(</span>housing, State %<span style="color: #237fbf; font-weight: bold;">in</span>% c<span style="color: #2d9574;">(</span><span style="color: #2d9574;">"MA"</span>, <span style="color: #2d9574;">"TX"</span><span style="color: #2d9574;">)</span><span style="color: #bc6ec5;">)</span>,
+<pre class="src src-R" id="orgsrcblock6">ggplot<span style="color: #4f97d7;">(</span>subset<span style="color: #bc6ec5;">(</span>housing, State %<span style="color: #4f97d7; font-weight: bold;">in</span>% c<span style="color: #2d9574;">(</span><span style="color: #2d9574;">"MA"</span>, <span style="color: #2d9574;">"TX"</span><span style="color: #2d9574;">)</span><span style="color: #bc6ec5;">)</span>,
        aes<span style="color: #bc6ec5;">(</span>x=Date,
            y=Home.Value,
-           color=State<span style="color: #bc6ec5;">)</span><span style="color: #2f96dc;">)</span>+
-  geom_point<span style="color: #2f96dc;">()</span>
+           color=State<span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>+
+  geom_point<span style="color: #4f97d7;">()</span>
 </pre>
 </div>
 
@@ -517,7 +517,7 @@ You can get a list of available geometric objects using the code below:
 </p>
 <div class="org-src-container">
 
-<pre class="src src-R" id="orgsrcblock7">help.search<span style="color: #2f96dc;">(</span><span style="color: #2d9574;">"geom_"</span>, package = <span style="color: #2d9574;">"ggplot2"</span><span style="color: #2f96dc;">)</span>
+<pre class="src src-R" id="orgsrcblock7">help.search<span style="color: #4f97d7;">(</span><span style="color: #2d9574;">"geom_"</span>, package = <span style="color: #2d9574;">"ggplot2"</span><span style="color: #4f97d7;">)</span>
 </pre>
 </div>
 <p>
@@ -535,10 +535,10 @@ Now that we know about geometric objects and aesthetic mapping, we can make a gg
 
 <div class="org-src-container">
 
-<pre class="src src-R" id="orgsrcblock8">hp2001Q1 <span style="color: #a45bad;">&lt;-</span> subset<span style="color: #2f96dc;">(</span>housing, Date == 20011<span style="color: #2f96dc;">)</span> 
-ggplot<span style="color: #2f96dc;">(</span>hp2001Q1,
-       aes<span style="color: #bc6ec5;">(</span>y = Structure.Cost, x = Land.Value<span style="color: #bc6ec5;">)</span><span style="color: #2f96dc;">)</span> +
-  geom_point<span style="color: #2f96dc;">()</span>
+<pre class="src src-R" id="orgsrcblock8">hp2001Q1 <span style="color: #a45bad;">&lt;-</span> subset<span style="color: #4f97d7;">(</span>housing, Date == 20011<span style="color: #4f97d7;">)</span> 
+ggplot<span style="color: #4f97d7;">(</span>hp2001Q1,
+       aes<span style="color: #bc6ec5;">(</span>y = Structure.Cost, x = Land.Value<span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span> +
+  geom_point<span style="color: #4f97d7;">()</span>
 </pre>
 </div>
 
@@ -559,12 +559,12 @@ A plot constructed with <code>ggplot</code> can have more than one geom. In that
 
 <div class="org-src-container">
 
-<pre class="src src-R" id="orgsrcblock9">hp2001Q1$pred.SC <span style="color: #a45bad;">&lt;-</span> predict<span style="color: #2f96dc;">(</span>lm<span style="color: #bc6ec5;">(</span>Structure.Cost ~ Land.Value, data = hp2001Q1<span style="color: #bc6ec5;">)</span><span style="color: #2f96dc;">)</span>
+<pre class="src src-R" id="orgsrcblock9">hp2001Q1$pred.SC <span style="color: #a45bad;">&lt;-</span> predict<span style="color: #4f97d7;">(</span>lm<span style="color: #bc6ec5;">(</span>Structure.Cost ~ Land.Value, data = hp2001Q1<span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>
 
-p1 <span style="color: #a45bad;">&lt;-</span> ggplot<span style="color: #2f96dc;">(</span>hp2001Q1, aes<span style="color: #bc6ec5;">(</span>x = Land.Value, y = Structure.Cost<span style="color: #bc6ec5;">)</span><span style="color: #2f96dc;">)</span>
+p1 <span style="color: #a45bad;">&lt;-</span> ggplot<span style="color: #4f97d7;">(</span>hp2001Q1, aes<span style="color: #bc6ec5;">(</span>x = Land.Value, y = Structure.Cost<span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>
 
-p1 + geom_point<span style="color: #2f96dc;">(</span>aes<span style="color: #bc6ec5;">(</span>color = Home.Value<span style="color: #bc6ec5;">)</span><span style="color: #2f96dc;">)</span> +
-  geom_line<span style="color: #2f96dc;">(</span>aes<span style="color: #bc6ec5;">(</span>y = pred.SC<span style="color: #bc6ec5;">)</span><span style="color: #2f96dc;">)</span>
+p1 + geom_point<span style="color: #4f97d7;">(</span>aes<span style="color: #bc6ec5;">(</span>color = Home.Value<span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span> +
+  geom_line<span style="color: #4f97d7;">(</span>aes<span style="color: #bc6ec5;">(</span>y = pred.SC<span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>
 </pre>
 </div>
 
@@ -587,8 +587,8 @@ Not all geometric objects are simple shapes&#x2013;the smooth geom includes a li
 <div class="org-src-container">
 
 <pre class="src src-R" id="orgsrcblock10">p1 +
-  geom_point<span style="color: #2f96dc;">(</span>aes<span style="color: #bc6ec5;">(</span>color = Home.Value<span style="color: #bc6ec5;">)</span><span style="color: #2f96dc;">)</span> +
-  geom_smooth<span style="color: #2f96dc;">()</span>
+  geom_point<span style="color: #4f97d7;">(</span>aes<span style="color: #bc6ec5;">(</span>color = Home.Value<span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span> +
+  geom_smooth<span style="color: #4f97d7;">()</span>
 </pre>
 </div>
 
@@ -611,7 +611,7 @@ Each <code>geom</code> accepts a particualar set of mappings&#x2013;for example 
 <div class="org-src-container">
 
 <pre class="src src-R" id="orgsrcblock11">p1 + 
-  geom_text<span style="color: #2f96dc;">(</span>aes<span style="color: #bc6ec5;">(</span>label=State<span style="color: #bc6ec5;">)</span>, size=2<span style="color: #2f96dc;">)</span>
+  geom_text<span style="color: #4f97d7;">(</span>aes<span style="color: #bc6ec5;">(</span>label=State<span style="color: #bc6ec5;">)</span>, size = 3<span style="color: #4f97d7;">)</span>
 </pre>
 </div>
 
@@ -619,6 +619,23 @@ Each <code>geom</code> accepts a particualar set of mappings&#x2013;for example 
 
 <div class="figure">
 <p><img src="images/textGeomMapping.png" alt="textGeomMapping.png" />
+</p>
+</div>
+
+
+<div class="org-src-container">
+
+<pre class="src src-R" id="orgsrcblock12"><span style="color: #2aa1ae; background-color: #292e34;">## </span><span style="color: #2aa1ae; background-color: #292e34;">install.packages("ggrepel") </span>
+<span style="color: #a45bad;">library</span><span style="color: #4f97d7;">(</span><span style="color: #2d9574;">"ggrepel"</span><span style="color: #4f97d7;">)</span>
+p1 + 
+  geom_point<span style="color: #4f97d7;">()</span> + 
+  geom_text_repel<span style="color: #4f97d7;">(</span>aes<span style="color: #bc6ec5;">(</span>label=State<span style="color: #bc6ec5;">)</span>, size = 3<span style="color: #4f97d7;">)</span>
+</pre>
+</div>
+
+
+<div class="figure">
+<p><img src="images/textGeomMapping2.png" alt="textGeomMapping2.png" />
 </p>
 </div>
 </div>
@@ -633,9 +650,9 @@ Note that variables are mapped to aesthetics with the <code>aes()</code> functio
 
 <div class="org-src-container">
 
-<pre class="src src-R" id="orgsrcblock12">p1 +
-  geom_point<span style="color: #2f96dc;">(</span>aes<span style="color: #bc6ec5;">(</span>size = 2<span style="color: #bc6ec5;">)</span>,<span style="color: #2aa1ae;"># </span><span style="color: #2aa1ae;">incorrect! 2 is not a variable</span>
-             color=<span style="color: #2d9574;">"red"</span><span style="color: #2f96dc;">)</span> <span style="color: #2aa1ae;"># </span><span style="color: #2aa1ae;">this is fine -- all points red</span>
+<pre class="src src-R" id="orgsrcblock13">p1 +
+  geom_point<span style="color: #4f97d7;">(</span>aes<span style="color: #bc6ec5;">(</span>size = 2<span style="color: #bc6ec5;">)</span>,<span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">incorrect! 2 is not a variable</span>
+             color=<span style="color: #2d9574;">"red"</span><span style="color: #4f97d7;">)</span> <span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">this is fine -- all points red</span>
 </pre>
 </div>
 
@@ -657,8 +674,8 @@ Other aesthetics are mapped in the same way as x and y in the previous example.
 
 <div class="org-src-container">
 
-<pre class="src src-R" id="orgsrcblock13">p1 +
-  geom_point<span style="color: #2f96dc;">(</span>aes<span style="color: #bc6ec5;">(</span>color=Home.Value, shape = region<span style="color: #bc6ec5;">)</span><span style="color: #2f96dc;">)</span>
+<pre class="src src-R" id="orgsrcblock14">p1 +
+  geom_point<span style="color: #4f97d7;">(</span>aes<span style="color: #bc6ec5;">(</span>color=Home.Value, shape = region<span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>
 </pre>
 </div>
 
@@ -679,7 +696,7 @@ The data for the exercises is available in the <code>dataSets/EconomistData.csv<
 </p>
 <div class="org-src-container">
 
-<pre class="src src-R">dat <span style="color: #a45bad;">&lt;-</span> read.csv<span style="color: #2f96dc;">(</span><span style="color: #2d9574;">"dataSets/EconomistData.csv"</span><span style="color: #2f96dc;">)</span>
+<pre class="src src-R">dat <span style="color: #a45bad;">&lt;-</span> read.csv<span style="color: #4f97d7;">(</span><span style="color: #2d9574;">"dataSets/EconomistData.csv"</span><span style="color: #4f97d7;">)</span>
 </pre>
 </div>
 
@@ -716,8 +733,8 @@ These data consist of <i>Human Development Index</i> and <i>Corruption Perceptio
 </ol>
 <div class="org-src-container">
 
-<pre class="src src-R">ggplot<span style="color: #2f96dc;">(</span>dat, aes<span style="color: #bc6ec5;">(</span>x = CPI, y = HDI<span style="color: #bc6ec5;">)</span><span style="color: #2f96dc;">)</span> +
-  geom_point<span style="color: #2f96dc;">()</span>
+<pre class="src src-R">ggplot<span style="color: #4f97d7;">(</span>dat, aes<span style="color: #bc6ec5;">(</span>x = CPI, y = HDI<span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span> +
+  geom_point<span style="color: #4f97d7;">()</span>
 </pre>
 </div>
 <ol class="org-ol">
@@ -725,8 +742,8 @@ These data consist of <i>Human Development Index</i> and <i>Corruption Perceptio
 </ol>
 <div class="org-src-container">
 
-<pre class="src src-R">ggplot<span style="color: #2f96dc;">(</span>dat, aes<span style="color: #bc6ec5;">(</span>x = CPI, y = HDI<span style="color: #bc6ec5;">)</span><span style="color: #2f96dc;">)</span> +
-  geom_point<span style="color: #2f96dc;">(</span>color = <span style="color: #2d9574;">"blue"</span><span style="color: #2f96dc;">)</span>
+<pre class="src src-R">ggplot<span style="color: #4f97d7;">(</span>dat, aes<span style="color: #bc6ec5;">(</span>x = CPI, y = HDI<span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span> +
+  geom_point<span style="color: #4f97d7;">(</span>color = <span style="color: #2d9574;">"blue"</span><span style="color: #4f97d7;">)</span>
 </pre>
 </div>
 <ol class="org-ol">
@@ -734,8 +751,8 @@ These data consist of <i>Human Development Index</i> and <i>Corruption Perceptio
 </ol>
 <div class="org-src-container">
 
-<pre class="src src-R">ggplot<span style="color: #2f96dc;">(</span>dat, aes<span style="color: #bc6ec5;">(</span>x = CPI, y = HDI<span style="color: #bc6ec5;">)</span><span style="color: #2f96dc;">)</span> +
-  geom_point<span style="color: #2f96dc;">(</span>aes<span style="color: #bc6ec5;">(</span>color = Region<span style="color: #bc6ec5;">)</span><span style="color: #2f96dc;">)</span>
+<pre class="src src-R">ggplot<span style="color: #4f97d7;">(</span>dat, aes<span style="color: #bc6ec5;">(</span>x = CPI, y = HDI<span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span> +
+  geom_point<span style="color: #4f97d7;">(</span>aes<span style="color: #bc6ec5;">(</span>color = Region<span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>
 </pre>
 </div>
 <ol class="org-ol">
@@ -743,8 +760,8 @@ These data consist of <i>Human Development Index</i> and <i>Corruption Perceptio
 </ol>
 <div class="org-src-container">
 
-<pre class="src src-R">ggplot<span style="color: #2f96dc;">(</span>dat, aes<span style="color: #bc6ec5;">(</span>x = Region, y = CPI<span style="color: #bc6ec5;">)</span><span style="color: #2f96dc;">)</span> +
-  geom_boxplot<span style="color: #2f96dc;">()</span>
+<pre class="src src-R">ggplot<span style="color: #4f97d7;">(</span>dat, aes<span style="color: #bc6ec5;">(</span>x = Region, y = CPI<span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span> +
+  geom_boxplot<span style="color: #4f97d7;">()</span>
 </pre>
 </div>
 <ol class="org-ol">
@@ -752,9 +769,9 @@ These data consist of <i>Human Development Index</i> and <i>Corruption Perceptio
 </ol>
 <div class="org-src-container">
 
-<pre class="src src-R">ggplot<span style="color: #2f96dc;">(</span>dat, aes<span style="color: #bc6ec5;">(</span>x = Region, y = CPI<span style="color: #bc6ec5;">)</span><span style="color: #2f96dc;">)</span> +
-  geom_boxplot<span style="color: #2f96dc;">()</span> +
-  geom_point<span style="color: #2f96dc;">()</span>
+<pre class="src src-R">ggplot<span style="color: #4f97d7;">(</span>dat, aes<span style="color: #bc6ec5;">(</span>x = Region, y = CPI<span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span> +
+  geom_boxplot<span style="color: #4f97d7;">()</span> +
+  geom_point<span style="color: #4f97d7;">()</span>
 </pre>
 </div>
 </div>
@@ -775,21 +792,27 @@ Some plot types (such as scatterplots) do not require transformations&#x2013;eac
 </ul>
 
 <p>
-Each <code>geom</code> has a default statistic, but these can be changed. For example, the default statistic for <code>geom_bar</code> is <code>stat_bin</code>:
+Each <code>geom</code> has a default statistic, but these can be changed. For example, the default statistic for <code>geom_bar</code> is <code>stat_count</code>:
 </p>
 <div class="org-src-container">
 
-<pre class="src src-R" id="orgsrcblock14">args<span style="color: #2f96dc;">(</span>geom_bar<span style="color: #2f96dc;">)</span>
-<span style="color: #2aa1ae;"># </span><span style="color: #2aa1ae;">?stat_bin</span>
+<pre class="src src-R" id="orgsrcblock15">args<span style="color: #4f97d7;">(</span>geom_histogram<span style="color: #4f97d7;">)</span>
+args<span style="color: #4f97d7;">(</span>stat_bin<span style="color: #4f97d7;">)</span>
 </pre>
 </div>
 
 <pre class="example">
-&gt; args(geom_bar)
-function (mapping = NULL, data = NULL, stat = "bin", position = "stack", 
-    ...) 
+&gt; args(geom_histogram)
+function (mapping = NULL, data = NULL, stat = "bin", binwidth = NULL, 
+    bins = NULL, origin = NULL, right = FALSE, position = "stack", 
+    na.rm = FALSE, show.legend = NA, inherit.aes = TRUE, ...) 
 NULL
-&gt; # ?stat_bin
+&gt; args(stat_bin)
+function (mapping = NULL, data = NULL, geom = "bar", position = "stack", 
+    width = 0.9, drop = FALSE, right = FALSE, binwidth = NULL, 
+    bins = NULL, origin = NULL, breaks = NULL, na.rm = FALSE, 
+    show.legend = NA, inherit.aes = TRUE, ...) 
+NULL
 &gt;
 </pre>
 </div>
@@ -807,8 +830,8 @@ For example, here is the default histogram of Home.Value:
 </p>
 <div class="org-src-container">
 
-<pre class="src src-R" id="orgsrcblock15">p2 <span style="color: #a45bad;">&lt;-</span> ggplot<span style="color: #2f96dc;">(</span>housing, aes<span style="color: #bc6ec5;">(</span>x = Home.Value<span style="color: #bc6ec5;">)</span><span style="color: #2f96dc;">)</span>
-p2 + geom_bar<span style="color: #2f96dc;">()</span>
+<pre class="src src-R" id="orgsrcblock16">p2 <span style="color: #a45bad;">&lt;-</span> ggplot<span style="color: #4f97d7;">(</span>housing, aes<span style="color: #bc6ec5;">(</span>x = Home.Value<span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>
+p2 + geom_histogram<span style="color: #4f97d7;">()</span>
 </pre>
 </div>
 
@@ -819,30 +842,16 @@ The binwidth looks reasonable by default, but we can change it by passing the <c
 </p>
 <div class="org-src-container">
 
-<pre class="src src-R" id="orgsrcblock16">p2 + geom_bar<span style="color: #2f96dc;">(</span>stat = <span style="color: #2d9574;">"bin"</span>, binwidth=4000<span style="color: #2f96dc;">)</span>
+<pre class="src src-R" id="orgsrcblock17">p2 + geom_histogram<span style="color: #4f97d7;">(</span>stat = <span style="color: #2d9574;">"bin"</span>, binwidth=4000<span style="color: #4f97d7;">)</span>
 </pre>
 </div>
 
-
-<p>
-<img src="images/ChangeStatBinArgs.png" alt="ChangeStatBinArgs.png" />
-If you're thinking to yourself "this is crazy, there must be a better way" you can construct the same plot using <code>stat_bin</code> in place of geom<sub>bar</sub>, like this:
-</p>
-<div class="org-src-container">
-
-<pre class="src src-R" id="orgsrcblock17">p2 + stat_bin<span style="color: #2f96dc;">(</span>binwidth=9000, geom=<span style="color: #2d9574;">"bar"</span><span style="color: #2f96dc;">)</span>
-</pre>
-</div>
 
 
 <div class="figure">
-<p><img src="images/ChangeStatBinArgs2.png" alt="ChangeStatBinArgs2.png" />
+<p><img src="images/ChangeStatBinArgs.png" alt="ChangeStatBinArgs.png" />
 </p>
 </div>
-
-<p>
-but I prefer to construct my layers with <code>geom_</code> calls rather than <code>stat_</code> calls.
-</p>
 </div>
 </div>
 
@@ -854,8 +863,8 @@ Sometimes the default statistical transformation is not what you need. This is o
 </p>
 <div class="org-src-container">
 
-<pre class="src src-R" id="orgsrcblock18">housing.sum <span style="color: #a45bad;">&lt;-</span> aggregate<span style="color: #2f96dc;">(</span>housing<span style="color: #bc6ec5;">[</span><span style="color: #2d9574;">"Home.Value"</span><span style="color: #bc6ec5;">]</span>, housing<span style="color: #bc6ec5;">[</span><span style="color: #2d9574;">"State"</span><span style="color: #bc6ec5;">]</span>, FUN=mean<span style="color: #2f96dc;">)</span>
-rbind<span style="color: #2f96dc;">(</span>head<span style="color: #bc6ec5;">(</span>housing.sum<span style="color: #bc6ec5;">)</span>, tail<span style="color: #bc6ec5;">(</span>housing.sum<span style="color: #bc6ec5;">)</span><span style="color: #2f96dc;">)</span>
+<pre class="src src-R" id="orgsrcblock18">housing.sum <span style="color: #a45bad;">&lt;-</span> aggregate<span style="color: #4f97d7;">(</span>housing<span style="color: #bc6ec5;">[</span><span style="color: #2d9574;">"Home.Value"</span><span style="color: #bc6ec5;">]</span>, housing<span style="color: #bc6ec5;">[</span><span style="color: #2d9574;">"State"</span><span style="color: #bc6ec5;">]</span>, FUN=mean<span style="color: #4f97d7;">)</span>
+rbind<span style="color: #4f97d7;">(</span>head<span style="color: #bc6ec5;">(</span>housing.sum<span style="color: #bc6ec5;">)</span>, tail<span style="color: #bc6ec5;">(</span>housing.sum<span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>
 </pre>
 </div>
 
@@ -880,29 +889,24 @@ rbind<span style="color: #2f96dc;">(</span>head<span style="color: #bc6ec5;">(</
 
 <div class="org-src-container">
 
-<pre class="src src-R">ggplot<span style="color: #2f96dc;">(</span>housing.sum, aes<span style="color: #bc6ec5;">(</span>x=State, y=Home.Value<span style="color: #bc6ec5;">)</span><span style="color: #2f96dc;">)</span> + 
-  geom_bar<span style="color: #2f96dc;">()</span>
+<pre class="src src-R">ggplot<span style="color: #4f97d7;">(</span>housing.sum, aes<span style="color: #bc6ec5;">(</span>x=State, y=Home.Value<span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span> + 
+  geom_bar<span style="color: #4f97d7;">()</span>
 </pre>
 </div>
 
 <pre class="example">
-  ggplot(housing.sum, aes(x=State, y=Home.Value)) + 
-    geom_bar()
-Error : Mapping a variable to y and also using stat="bin".
-  With stat="bin", it will attempt to set the y value to the count of cases in each group.
-  This can result in unexpected behavior and will not be allowed in a future version of ggplot2.
-  If you want y to represent counts of cases, use stat="bin" and don't map a variable to y.
-  If you want y to represent values in the data, use stat="identity".
-  See ?geom_bar for examples. (Defunct; last used in version 0.9.2)
+ggplot(housing.sum, aes(x=State, y=Home.Value)) + 
+  geom_bar()
+Error: stat_count() must not be used with a y aesthetic.
 </pre>
 
 <p>
-What is the problem with the previous plot? Basically we take binned and summarized data and ask ggplot to bin and summarize it again (remember, <code>geom_bar</code> defaults to <code>stat = stat_bin</code>); obviously this will not work. We can fix it by telling <code>geom_bar</code> to use a different statistical transformation function:
+What is the problem with the previous plot? Basically we take binned and summarized data and ask ggplot to bin and summarize it again (remember, <code>geom_bar</code> defaults to <code>stat = stat_count</code>); obviously this will not work. We can fix it by telling <code>geom_bar</code> to use a different statistical transformation function:
 </p>
 <div class="org-src-container">
 
-<pre class="src src-R" id="orgsrcblock19">ggplot<span style="color: #2f96dc;">(</span>housing.sum, aes<span style="color: #bc6ec5;">(</span>x=State, y=Home.Value<span style="color: #bc6ec5;">)</span><span style="color: #2f96dc;">)</span> + 
-  geom_bar<span style="color: #2f96dc;">(</span>stat=<span style="color: #2d9574;">"identity"</span><span style="color: #2f96dc;">)</span>
+<pre class="src src-R" id="orgsrcblock19">ggplot<span style="color: #4f97d7;">(</span>housing.sum, aes<span style="color: #bc6ec5;">(</span>x=State, y=Home.Value<span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span> + 
+  geom_bar<span style="color: #4f97d7;">(</span>stat=<span style="color: #2d9574;">"identity"</span><span style="color: #4f97d7;">)</span>
 </pre>
 </div>
 
@@ -935,8 +939,8 @@ What is the problem with the previous plot? Basically we take binned and summari
 </ol>
 <div class="org-src-container">
 
-<pre class="src src-R">ggplot<span style="color: #2f96dc;">(</span>dat, aes<span style="color: #bc6ec5;">(</span>x = CPI, y = HDI<span style="color: #bc6ec5;">)</span><span style="color: #2f96dc;">)</span> +
-  geom_point<span style="color: #2f96dc;">()</span>
+<pre class="src src-R">ggplot<span style="color: #4f97d7;">(</span>dat, aes<span style="color: #bc6ec5;">(</span>x = CPI, y = HDI<span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span> +
+  geom_point<span style="color: #4f97d7;">()</span>
 </pre>
 </div>
 <ol class="org-ol">
@@ -944,9 +948,9 @@ What is the problem with the previous plot? Basically we take binned and summari
 </ol>
 <div class="org-src-container">
 
-<pre class="src src-R">ggplot<span style="color: #2f96dc;">(</span>dat, aes<span style="color: #bc6ec5;">(</span>x = CPI, y = HDI<span style="color: #bc6ec5;">)</span><span style="color: #2f96dc;">)</span> +
-  geom_point<span style="color: #2f96dc;">()</span> +
-  geom_smooth<span style="color: #2f96dc;">(</span>method = <span style="color: #2d9574;">"lm"</span><span style="color: #2f96dc;">)</span>
+<pre class="src src-R">ggplot<span style="color: #4f97d7;">(</span>dat, aes<span style="color: #bc6ec5;">(</span>x = CPI, y = HDI<span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span> +
+  geom_point<span style="color: #4f97d7;">()</span> +
+  geom_smooth<span style="color: #4f97d7;">(</span>method = <span style="color: #2d9574;">"lm"</span><span style="color: #4f97d7;">)</span>
 </pre>
 </div>
 <ol class="org-ol">
@@ -954,9 +958,9 @@ What is the problem with the previous plot? Basically we take binned and summari
 </ol>
 <div class="org-src-container">
 
-<pre class="src src-R">ggplot<span style="color: #2f96dc;">(</span>dat, aes<span style="color: #bc6ec5;">(</span>x = CPI, y = HDI<span style="color: #bc6ec5;">)</span><span style="color: #2f96dc;">)</span> +
-  geom_point<span style="color: #2f96dc;">()</span> +
-  geom_smooth<span style="color: #2f96dc;">()</span>
+<pre class="src src-R">ggplot<span style="color: #4f97d7;">(</span>dat, aes<span style="color: #bc6ec5;">(</span>x = CPI, y = HDI<span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span> +
+  geom_point<span style="color: #4f97d7;">()</span> +
+  geom_smooth<span style="color: #4f97d7;">()</span>
 </pre>
 </div>
 <ol class="org-ol">
@@ -964,9 +968,9 @@ What is the problem with the previous plot? Basically we take binned and summari
 </ol>
 <div class="org-src-container">
 
-<pre class="src src-R">ggplot<span style="color: #2f96dc;">(</span>dat, aes<span style="color: #bc6ec5;">(</span>x = CPI, y = HDI<span style="color: #bc6ec5;">)</span><span style="color: #2f96dc;">)</span> +
-  geom_point<span style="color: #2f96dc;">()</span> +
-  geom_smooth<span style="color: #2f96dc;">(</span>span = .4<span style="color: #2f96dc;">)</span>
+<pre class="src src-R">ggplot<span style="color: #4f97d7;">(</span>dat, aes<span style="color: #bc6ec5;">(</span>x = CPI, y = HDI<span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span> +
+  geom_point<span style="color: #4f97d7;">()</span> +
+  geom_smooth<span style="color: #4f97d7;">(</span>span = .4<span style="color: #4f97d7;">)</span>
 </pre>
 </div>
 </div>
@@ -1023,15 +1027,15 @@ Start by constructing a dotplot showing the distribution of home values by Date 
 
 <div class="org-src-container">
 
-<pre class="src src-R" id="orgsrcblock20">p3 <span style="color: #a45bad;">&lt;-</span> ggplot<span style="color: #2f96dc;">(</span>housing,
+<pre class="src src-R" id="orgsrcblock20">p3 <span style="color: #a45bad;">&lt;-</span> ggplot<span style="color: #4f97d7;">(</span>housing,
              aes<span style="color: #bc6ec5;">(</span>x = State,
-                 y = Home.Price.Index<span style="color: #bc6ec5;">)</span><span style="color: #2f96dc;">)</span> + 
-        theme<span style="color: #2f96dc;">(</span>legend.position=<span style="color: #2d9574;">"top"</span>,
-              axis.text=element_text<span style="color: #bc6ec5;">(</span>size = 6<span style="color: #bc6ec5;">)</span><span style="color: #2f96dc;">)</span>
-<span style="color: #2f96dc;">(</span>p4 <span style="color: #a45bad;">&lt;-</span> p3 + geom_point<span style="color: #bc6ec5;">(</span>aes<span style="color: #2d9574;">(</span>color = Date<span style="color: #2d9574;">)</span>,
+                 y = Home.Price.Index<span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span> + 
+        theme<span style="color: #4f97d7;">(</span>legend.position=<span style="color: #2d9574;">"top"</span>,
+              axis.text=element_text<span style="color: #bc6ec5;">(</span>size = 6<span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>
+<span style="color: #4f97d7;">(</span>p4 <span style="color: #a45bad;">&lt;-</span> p3 + geom_point<span style="color: #bc6ec5;">(</span>aes<span style="color: #2d9574;">(</span>color = Date<span style="color: #2d9574;">)</span>,
                        alpha = 0.5,
                        size = 1.5,
-                       position = position_jitter<span style="color: #2d9574;">(</span>width = 0.25, height = 0<span style="color: #2d9574;">)</span><span style="color: #bc6ec5;">)</span><span style="color: #2f96dc;">)</span>
+                       position = position_jitter<span style="color: #2d9574;">(</span>width = 0.25, height = 0<span style="color: #2d9574;">)</span><span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>
 </pre>
 </div>
 
@@ -1048,10 +1052,10 @@ Now modify the breaks and labels for the x axis and color scales
 
 <div class="org-src-container">
 
-<pre class="src src-R" id="orgsrcblock21">p4 + scale_x_discrete<span style="color: #2f96dc;">(</span>name=<span style="color: #2d9574;">"State Abbreviation"</span><span style="color: #2f96dc;">)</span> +
-  scale_color_continuous<span style="color: #2f96dc;">(</span>name=<span style="color: #2d9574;">""</span>,
+<pre class="src src-R" id="orgsrcblock21">p4 + scale_x_discrete<span style="color: #4f97d7;">(</span>name=<span style="color: #2d9574;">"State Abbreviation"</span><span style="color: #4f97d7;">)</span> +
+  scale_color_continuous<span style="color: #4f97d7;">(</span>name=<span style="color: #2d9574;">""</span>,
                          breaks = c<span style="color: #bc6ec5;">(</span>19751, 19941, 20131<span style="color: #bc6ec5;">)</span>,
-                         labels = c<span style="color: #bc6ec5;">(</span>1971, 1994, 2013<span style="color: #bc6ec5;">)</span><span style="color: #2f96dc;">)</span>
+                         labels = c<span style="color: #bc6ec5;">(</span>1971, 1994, 2013<span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>
 </pre>
 </div>
 
@@ -1068,11 +1072,11 @@ Next change the low and high values to blue and red:
 <div class="org-src-container">
 
 <pre class="src src-R" id="orgsrcblock22">p4 +
-  scale_x_discrete<span style="color: #2f96dc;">(</span>name=<span style="color: #2d9574;">"State Abbreviation"</span><span style="color: #2f96dc;">)</span> +
-  scale_color_continuous<span style="color: #2f96dc;">(</span>name=<span style="color: #2d9574;">""</span>,
+  scale_x_discrete<span style="color: #4f97d7;">(</span>name=<span style="color: #2d9574;">"State Abbreviation"</span><span style="color: #4f97d7;">)</span> +
+  scale_color_continuous<span style="color: #4f97d7;">(</span>name=<span style="color: #2d9574;">""</span>,
                          breaks = c<span style="color: #bc6ec5;">(</span>19751, 19941, 20131<span style="color: #bc6ec5;">)</span>,
                          labels = c<span style="color: #bc6ec5;">(</span>1971, 1994, 2013<span style="color: #bc6ec5;">)</span>,
-                         low = <span style="color: #2d9574;">"blue"</span>, high = <span style="color: #2d9574;">"red"</span><span style="color: #2f96dc;">)</span>
+                         low = <span style="color: #2d9574;">"blue"</span>, high = <span style="color: #2d9574;">"red"</span><span style="color: #4f97d7;">)</span>
 </pre>
 </div>
 
@@ -1086,10 +1090,10 @@ Next change the low and high values to blue and red:
 <div class="org-src-container">
 
 <pre class="src src-R" id="orgsrcblock23">p4 +
-  scale_color_continuous<span style="color: #2f96dc;">(</span>name=<span style="color: #2d9574;">""</span>,
+  scale_color_continuous<span style="color: #4f97d7;">(</span>name=<span style="color: #2d9574;">""</span>,
                          breaks = c<span style="color: #bc6ec5;">(</span>19751, 19941, 20131<span style="color: #bc6ec5;">)</span>,
                          labels = c<span style="color: #bc6ec5;">(</span>1971, 1994, 2013<span style="color: #bc6ec5;">)</span>,
-                         low = muted<span style="color: #bc6ec5;">(</span><span style="color: #2d9574;">"blue"</span><span style="color: #bc6ec5;">)</span>, high = muted<span style="color: #bc6ec5;">(</span><span style="color: #2d9574;">"red"</span><span style="color: #bc6ec5;">)</span><span style="color: #2f96dc;">)</span>
+                         low = muted<span style="color: #bc6ec5;">(</span><span style="color: #2d9574;">"blue"</span><span style="color: #bc6ec5;">)</span>, high = muted<span style="color: #bc6ec5;">(</span><span style="color: #2d9574;">"red"</span><span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>
 </pre>
 </div>
 
@@ -1110,13 +1114,13 @@ ggplot2 has a wide variety of color scales; here is an example using <code>scale
 <div class="org-src-container">
 
 <pre class="src src-R" id="orgsrcblock24">p4 +
-  scale_color_gradient2<span style="color: #2f96dc;">(</span>name=<span style="color: #2d9574;">""</span>,
+  scale_color_gradient2<span style="color: #4f97d7;">(</span>name=<span style="color: #2d9574;">""</span>,
                         breaks = c<span style="color: #bc6ec5;">(</span>19751, 19941, 20131<span style="color: #bc6ec5;">)</span>,
                         labels = c<span style="color: #bc6ec5;">(</span>1971, 1994, 2013<span style="color: #bc6ec5;">)</span>,
                         low = muted<span style="color: #bc6ec5;">(</span><span style="color: #2d9574;">"blue"</span><span style="color: #bc6ec5;">)</span>,
                         high = muted<span style="color: #bc6ec5;">(</span><span style="color: #2d9574;">"red"</span><span style="color: #bc6ec5;">)</span>,
                         mid = <span style="color: #2d9574;">"gray60"</span>,
-                        midpoint = 19941<span style="color: #2f96dc;">)</span>
+                        midpoint = 19941<span style="color: #4f97d7;">)</span>
 </pre>
 </div>
 
@@ -1271,8 +1275,8 @@ Note that in RStudio you can type <code>scale_</code> followed by TAB to get the
 </ol>
 <div class="org-src-container">
 
-<pre class="src src-R">ggplot<span style="color: #2f96dc;">(</span>dat, aes<span style="color: #bc6ec5;">(</span>x = CPI, y = HDI, color = <span style="color: #2d9574;">"Region"</span><span style="color: #bc6ec5;">)</span><span style="color: #2f96dc;">)</span> +
-  geom_point<span style="color: #2f96dc;">()</span>
+<pre class="src src-R">ggplot<span style="color: #4f97d7;">(</span>dat, aes<span style="color: #bc6ec5;">(</span>x = CPI, y = HDI, color = <span style="color: #2d9574;">"Region"</span><span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span> +
+  geom_point<span style="color: #4f97d7;">()</span>
 </pre>
 </div>
 <ol class="org-ol">
@@ -1280,11 +1284,11 @@ Note that in RStudio you can type <code>scale_</code> followed by TAB to get the
 </ol>
 <div class="org-src-container">
 
-<pre class="src src-R">ggplot<span style="color: #2f96dc;">(</span>dat, aes<span style="color: #bc6ec5;">(</span>x = CPI, y = HDI, color = <span style="color: #2d9574;">"Region"</span><span style="color: #bc6ec5;">)</span><span style="color: #2f96dc;">)</span> +
-geom_point<span style="color: #2f96dc;">()</span> +
-scale_x_continuous<span style="color: #2f96dc;">(</span>name = <span style="color: #2d9574;">"Corruption Perception Index"</span><span style="color: #2f96dc;">)</span> +
-scale_y_continuous<span style="color: #2f96dc;">(</span>name = <span style="color: #2d9574;">"Human Development Index"</span><span style="color: #2f96dc;">)</span> +
-scale_color_discrete<span style="color: #2f96dc;">(</span>name = <span style="color: #2d9574;">"Region of the world"</span><span style="color: #2f96dc;">)</span>
+<pre class="src src-R">ggplot<span style="color: #4f97d7;">(</span>dat, aes<span style="color: #bc6ec5;">(</span>x = CPI, y = HDI, color = <span style="color: #2d9574;">"Region"</span><span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span> +
+geom_point<span style="color: #4f97d7;">()</span> +
+scale_x_continuous<span style="color: #4f97d7;">(</span>name = <span style="color: #2d9574;">"Corruption Perception Index"</span><span style="color: #4f97d7;">)</span> +
+scale_y_continuous<span style="color: #4f97d7;">(</span>name = <span style="color: #2d9574;">"Human Development Index"</span><span style="color: #4f97d7;">)</span> +
+scale_color_discrete<span style="color: #4f97d7;">(</span>name = <span style="color: #2d9574;">"Region of the world"</span><span style="color: #4f97d7;">)</span>
 </pre>
 </div>
 <ol class="org-ol">
@@ -1292,17 +1296,17 @@ scale_color_discrete<span style="color: #2f96dc;">(</span>name = <span style="co
 </ol>
 <div class="org-src-container">
 
-<pre class="src src-R">ggplot<span style="color: #2f96dc;">(</span>dat, aes<span style="color: #bc6ec5;">(</span>x = CPI, y = HDI, color = <span style="color: #2d9574;">"Region"</span><span style="color: #bc6ec5;">)</span><span style="color: #2f96dc;">)</span> +
-geom_point<span style="color: #2f96dc;">()</span> +
-scale_x_continuous<span style="color: #2f96dc;">(</span>name = <span style="color: #2d9574;">"Corruption Perception Index"</span><span style="color: #2f96dc;">)</span> +
-scale_y_continuous<span style="color: #2f96dc;">(</span>name = <span style="color: #2d9574;">"Human Development Index"</span><span style="color: #2f96dc;">)</span> +
-  scale_color_manual<span style="color: #2f96dc;">(</span>name = <span style="color: #2d9574;">"Region of the world"</span>,
+<pre class="src src-R">ggplot<span style="color: #4f97d7;">(</span>dat, aes<span style="color: #bc6ec5;">(</span>x = CPI, y = HDI, color = <span style="color: #2d9574;">"Region"</span><span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span> +
+geom_point<span style="color: #4f97d7;">()</span> +
+scale_x_continuous<span style="color: #4f97d7;">(</span>name = <span style="color: #2d9574;">"Corruption Perception Index"</span><span style="color: #4f97d7;">)</span> +
+scale_y_continuous<span style="color: #4f97d7;">(</span>name = <span style="color: #2d9574;">"Human Development Index"</span><span style="color: #4f97d7;">)</span> +
+  scale_color_manual<span style="color: #4f97d7;">(</span>name = <span style="color: #2d9574;">"Region of the world"</span>,
                      values = c<span style="color: #bc6ec5;">(</span><span style="color: #2d9574;">"#24576D"</span>,
                                 <span style="color: #2d9574;">"#099DD7"</span>,
                                 <span style="color: #2d9574;">"#28AADC"</span>,
                                 <span style="color: #2d9574;">"#248E84"</span>,
                                 <span style="color: #2d9574;">"#F2583F"</span>,
-                                <span style="color: #2d9574;">"#96503F"</span><span style="color: #bc6ec5;">)</span><span style="color: #2f96dc;">)</span>
+                                <span style="color: #2d9574;">"#96503F"</span><span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>
 </pre>
 </div>
 </div>
@@ -1337,8 +1341,8 @@ scale_y_continuous<span style="color: #2f96dc;">(</span>name = <span style="colo
 </ul>
 <div class="org-src-container">
 
-<pre class="src src-R" id="orgsrcblock25">p5 <span style="color: #a45bad;">&lt;-</span> ggplot<span style="color: #2f96dc;">(</span>housing, aes<span style="color: #bc6ec5;">(</span>x = Date, y = Home.Value<span style="color: #bc6ec5;">)</span><span style="color: #2f96dc;">)</span>
-p5 + geom_line<span style="color: #2f96dc;">(</span>aes<span style="color: #bc6ec5;">(</span>color = State<span style="color: #bc6ec5;">)</span><span style="color: #2f96dc;">)</span>
+<pre class="src src-R" id="orgsrcblock25">p5 <span style="color: #a45bad;">&lt;-</span> ggplot<span style="color: #4f97d7;">(</span>housing, aes<span style="color: #bc6ec5;">(</span>x = Date, y = Home.Value<span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>
+p5 + geom_line<span style="color: #4f97d7;">(</span>aes<span style="color: #bc6ec5;">(</span>color = State<span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>
 </pre>
 </div>
 
@@ -1364,8 +1368,8 @@ We can remedy the deficiencies of the previous plot by faceting by state rather 
 
 <div class="org-src-container">
 
-<pre class="src src-R" id="orgsrcblock26"><span style="color: #2f96dc;">(</span>p5 <span style="color: #a45bad;">&lt;-</span> p5 + geom_line<span style="color: #bc6ec5;">()</span> +
-   facet_wrap<span style="color: #bc6ec5;">(</span>~State, ncol = 10<span style="color: #bc6ec5;">)</span><span style="color: #2f96dc;">)</span>
+<pre class="src src-R" id="orgsrcblock26"><span style="color: #4f97d7;">(</span>p5 <span style="color: #a45bad;">&lt;-</span> p5 + geom_line<span style="color: #bc6ec5;">()</span> +
+   facet_wrap<span style="color: #bc6ec5;">(</span>~State, ncol = 10<span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>
 </pre>
 </div>
 
@@ -1408,7 +1412,7 @@ Built-in themes include:
 </ul>
 <div class="org-src-container">
 
-<pre class="src src-R" id="orgsrcblock27">p5 + theme_linedraw<span style="color: #2f96dc;">()</span>
+<pre class="src src-R" id="orgsrcblock27">p5 + theme_linedraw<span style="color: #4f97d7;">()</span>
 </pre>
 </div>
 
@@ -1421,7 +1425,7 @@ Built-in themes include:
 
 <div class="org-src-container">
 
-<pre class="src src-R" id="orgsrcblock28">p5 + theme_light<span style="color: #2f96dc;">()</span>
+<pre class="src src-R" id="orgsrcblock28">p5 + theme_light<span style="color: #4f97d7;">()</span>
 </pre>
 </div>
 
@@ -1441,8 +1445,8 @@ Specific theme elements can be overridden using <code>theme()</code>. For exampl
 </p>
 <div class="org-src-container">
 
-<pre class="src src-R" id="orgsrcblock29">p5 + theme_minimal<span style="color: #2f96dc;">()</span> +
-  theme<span style="color: #2f96dc;">(</span>text = element_text<span style="color: #bc6ec5;">(</span>color = <span style="color: #2d9574;">"turquoise"</span><span style="color: #bc6ec5;">)</span><span style="color: #2f96dc;">)</span>
+<pre class="src src-R" id="orgsrcblock29">p5 + theme_minimal<span style="color: #4f97d7;">()</span> +
+  theme<span style="color: #4f97d7;">(</span>text = element_text<span style="color: #bc6ec5;">(</span>color = <span style="color: #2d9574;">"turquoise"</span><span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>
 </pre>
 </div>
 
@@ -1468,13 +1472,13 @@ You can create new themes, as in the following example:
 
 <div class="org-src-container">
 
-<pre class="src src-R" id="orgsrcblock30">theme_new <span style="color: #a45bad;">&lt;-</span> theme_bw<span style="color: #2f96dc;">()</span> +
-  theme<span style="color: #2f96dc;">(</span>plot.background = element_rect<span style="color: #bc6ec5;">(</span>size = 1, color = <span style="color: #2d9574;">"blue"</span>, fill = <span style="color: #2d9574;">"black"</span><span style="color: #bc6ec5;">)</span>,
+<pre class="src src-R" id="orgsrcblock30">theme_new <span style="color: #a45bad;">&lt;-</span> theme_bw<span style="color: #4f97d7;">()</span> +
+  theme<span style="color: #4f97d7;">(</span>plot.background = element_rect<span style="color: #bc6ec5;">(</span>size = 1, color = <span style="color: #2d9574;">"blue"</span>, fill = <span style="color: #2d9574;">"black"</span><span style="color: #bc6ec5;">)</span>,
         text=element_text<span style="color: #bc6ec5;">(</span>size = 12, family = <span style="color: #2d9574;">"Serif"</span>, color = <span style="color: #2d9574;">"ivory"</span><span style="color: #bc6ec5;">)</span>,
         axis.text.y = element_text<span style="color: #bc6ec5;">(</span>colour = <span style="color: #2d9574;">"purple"</span><span style="color: #bc6ec5;">)</span>,
         axis.text.x = element_text<span style="color: #bc6ec5;">(</span>colour = <span style="color: #2d9574;">"red"</span><span style="color: #bc6ec5;">)</span>,
         panel.background = element_rect<span style="color: #bc6ec5;">(</span>fill = <span style="color: #2d9574;">"pink"</span><span style="color: #bc6ec5;">)</span>,
-        strip.background = element_rect<span style="color: #bc6ec5;">(</span>fill = muted<span style="color: #2d9574;">(</span><span style="color: #2d9574;">"orange"</span><span style="color: #2d9574;">)</span><span style="color: #bc6ec5;">)</span><span style="color: #2f96dc;">)</span>
+        strip.background = element_rect<span style="color: #bc6ec5;">(</span>fill = muted<span style="color: #2d9574;">(</span><span style="color: #2d9574;">"orange"</span><span style="color: #2d9574;">)</span><span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>
 
 p5 + theme_new
 </pre>
@@ -1506,14 +1510,14 @@ The most frequently asked question goes something like this: <i>I have two varia
 <div class="outline-text-4" id="text-orgheadline54">
 <div class="org-src-container">
 
-<pre class="src src-R" id="orgsrcblock31">housing.byyear <span style="color: #a45bad;">&lt;-</span> aggregate<span style="color: #2f96dc;">(</span>cbind<span style="color: #bc6ec5;">(</span>Home.Value, Land.Value<span style="color: #bc6ec5;">)</span> ~ Date, data = housing, mean<span style="color: #2f96dc;">)</span>
-ggplot<span style="color: #2f96dc;">(</span>housing.byyear,
-       aes<span style="color: #bc6ec5;">(</span>x=Date<span style="color: #bc6ec5;">)</span><span style="color: #2f96dc;">)</span> +
-  geom_line<span style="color: #2f96dc;">(</span>aes<span style="color: #bc6ec5;">(</span>y=Home.Value<span style="color: #bc6ec5;">)</span>, color=<span style="color: #2d9574;">"red"</span><span style="color: #2f96dc;">)</span> +
-  geom_line<span style="color: #2f96dc;">(</span>aes<span style="color: #bc6ec5;">(</span>y=Land.Value<span style="color: #bc6ec5;">)</span>, color=<span style="color: #2d9574;">"blue"</span><span style="color: #2f96dc;">)</span>
+<pre class="src src-R" id="orgsrcblock31">housing.byyear <span style="color: #a45bad;">&lt;-</span> aggregate<span style="color: #4f97d7;">(</span>cbind<span style="color: #bc6ec5;">(</span>Home.Value, Land.Value<span style="color: #bc6ec5;">)</span> ~ Date, data = housing, mean<span style="color: #4f97d7;">)</span>
+ggplot<span style="color: #4f97d7;">(</span>housing.byyear,
+       aes<span style="color: #bc6ec5;">(</span>x=Date<span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span> +
+  geom_line<span style="color: #4f97d7;">(</span>aes<span style="color: #bc6ec5;">(</span>y=Home.Value<span style="color: #bc6ec5;">)</span>, color=<span style="color: #2d9574;">"red"</span><span style="color: #4f97d7;">)</span> +
+  geom_line<span style="color: #4f97d7;">(</span>aes<span style="color: #bc6ec5;">(</span>y=Land.Value<span style="color: #bc6ec5;">)</span>, color=<span style="color: #2d9574;">"blue"</span><span style="color: #4f97d7;">)</span>
 
 
-<span style="color: #2aa1ae;">#</span>
+<span style="color: #2aa1ae; background-color: #292e34;">#</span>
 </pre>
 </div>
 
@@ -1532,16 +1536,16 @@ ggplot<span style="color: #2f96dc;">(</span>housing.byyear,
 <div class="outline-text-4" id="text-orgheadline55">
 <div class="org-src-container">
 
-<pre class="src src-R" id="orgsrcblock32"><span style="color: #a45bad;">library</span><span style="color: #2f96dc;">(</span>tidyr<span style="color: #2f96dc;">)</span>
-home.land.byyear <span style="color: #a45bad;">&lt;-</span> gather<span style="color: #2f96dc;">(</span>housing.byyear,
+<pre class="src src-R" id="orgsrcblock32"><span style="color: #a45bad;">library</span><span style="color: #4f97d7;">(</span>tidyr<span style="color: #4f97d7;">)</span>
+home.land.byyear <span style="color: #a45bad;">&lt;-</span> gather<span style="color: #4f97d7;">(</span>housing.byyear,
                            value = <span style="color: #2d9574;">"value"</span>,
                            key = <span style="color: #2d9574;">"type"</span>,
-                           Home.Value, Land.Value<span style="color: #2f96dc;">)</span>
-ggplot<span style="color: #2f96dc;">(</span>home.land.byyear,
+                           Home.Value, Land.Value<span style="color: #4f97d7;">)</span>
+ggplot<span style="color: #4f97d7;">(</span>home.land.byyear,
        aes<span style="color: #bc6ec5;">(</span>x=Date,
            y=value,
-           color=type<span style="color: #bc6ec5;">)</span><span style="color: #2f96dc;">)</span> +
-  geom_line<span style="color: #2f96dc;">()</span>
+           color=type<span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span> +
+  geom_line<span style="color: #4f97d7;">()</span>
 </pre>
 </div>
 
@@ -1596,10 +1600,10 @@ Lets start by creating the basic scatter plot, then we can make a list of things
 
 <div class="org-src-container">
 
-<pre class="src src-R" id="orgsrcblock33">dat <span style="color: #a45bad;">&lt;-</span> read.csv<span style="color: #2f96dc;">(</span><span style="color: #2d9574;">"dataSets/EconomistData.csv"</span><span style="color: #2f96dc;">)</span>
+<pre class="src src-R" id="orgsrcblock33">dat <span style="color: #a45bad;">&lt;-</span> read.csv<span style="color: #4f97d7;">(</span><span style="color: #2d9574;">"dataSets/EconomistData.csv"</span><span style="color: #4f97d7;">)</span>
 
-pc1 <span style="color: #a45bad;">&lt;-</span> ggplot<span style="color: #2f96dc;">(</span>dat, aes<span style="color: #bc6ec5;">(</span>x = CPI, y = HDI, color = Region<span style="color: #bc6ec5;">)</span><span style="color: #2f96dc;">)</span>
-pc1 + geom_point<span style="color: #2f96dc;">()</span>
+pc1 <span style="color: #a45bad;">&lt;-</span> ggplot<span style="color: #4f97d7;">(</span>dat, aes<span style="color: #bc6ec5;">(</span>x = CPI, y = HDI, color = Region<span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>
+pc1 + geom_point<span style="color: #4f97d7;">()</span>
 </pre>
 </div>
 
@@ -1636,13 +1640,13 @@ Adding the trend line is not too difficult, though we need to guess at the model
 </p>
 <div class="org-src-container">
 
-<pre class="src src-R" id="orgsrcblock34"><span style="color: #2f96dc;">(</span>pc2 <span style="color: #a45bad;">&lt;-</span> pc1 +
+<pre class="src src-R" id="orgsrcblock34"><span style="color: #4f97d7;">(</span>pc2 <span style="color: #a45bad;">&lt;-</span> pc1 +
    geom_smooth<span style="color: #bc6ec5;">(</span>aes<span style="color: #2d9574;">(</span>group = 1<span style="color: #2d9574;">)</span>,
                method = <span style="color: #2d9574;">"lm"</span>,
                formula = y ~ log<span style="color: #2d9574;">(</span>x<span style="color: #2d9574;">)</span>,
                se = <span style="color: #ce537a; font-weight: bold;">FALSE</span>,
-               color = <span style="color: #2d9574;">"red"</span><span style="color: #bc6ec5;">)</span><span style="color: #2f96dc;">)</span> +
-   geom_point<span style="color: #2f96dc;">()</span>
+               color = <span style="color: #2d9574;">"red"</span><span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span> +
+   geom_point<span style="color: #4f97d7;">()</span>
 </pre>
 </div>
 
@@ -1667,16 +1671,16 @@ This one is a little tricky. We know that we can change the shape with the <code
 </p>
 <div class="org-src-container">
 
-<pre class="src src-R"><span style="color: #2aa1ae;">## </span><span style="color: #2aa1ae;">A look at all 25 symbols</span>
-df2 <span style="color: #a45bad;">&lt;-</span> data.frame<span style="color: #2f96dc;">(</span>x = 1:5 , y = 1:25, z = 1:25<span style="color: #2f96dc;">)</span>
-s <span style="color: #a45bad;">&lt;-</span> ggplot<span style="color: #2f96dc;">(</span>df2, aes<span style="color: #bc6ec5;">(</span>x = x, y = y<span style="color: #bc6ec5;">)</span><span style="color: #2f96dc;">)</span>
-s + geom_point<span style="color: #2f96dc;">(</span>aes<span style="color: #bc6ec5;">(</span>shape = z<span style="color: #bc6ec5;">)</span>, size = 4<span style="color: #2f96dc;">)</span> + scale_shape_identity<span style="color: #2f96dc;">()</span>
-<span style="color: #2aa1ae;">## </span><span style="color: #2aa1ae;">While all symbols have a foreground colour, symbols 19-25 also take a</span>
-<span style="color: #2aa1ae;">## </span><span style="color: #2aa1ae;">background colour (fill)</span>
-s + geom_point<span style="color: #2f96dc;">(</span>aes<span style="color: #bc6ec5;">(</span>shape = z<span style="color: #bc6ec5;">)</span>, size = 4, colour = <span style="color: #2d9574;">"Red"</span><span style="color: #2f96dc;">)</span> +
-  scale_shape_identity<span style="color: #2f96dc;">()</span>
-s + geom_point<span style="color: #2f96dc;">(</span>aes<span style="color: #bc6ec5;">(</span>shape = z<span style="color: #bc6ec5;">)</span>, size = 4, colour = <span style="color: #2d9574;">"Red"</span>, fill = <span style="color: #2d9574;">"Black"</span><span style="color: #2f96dc;">)</span> +
-  scale_shape_identity<span style="color: #2f96dc;">()</span>
+<pre class="src src-R"><span style="color: #2aa1ae; background-color: #292e34;">## </span><span style="color: #2aa1ae; background-color: #292e34;">A look at all 25 symbols</span>
+df2 <span style="color: #a45bad;">&lt;-</span> data.frame<span style="color: #4f97d7;">(</span>x = 1:5 , y = 1:25, z = 1:25<span style="color: #4f97d7;">)</span>
+s <span style="color: #a45bad;">&lt;-</span> ggplot<span style="color: #4f97d7;">(</span>df2, aes<span style="color: #bc6ec5;">(</span>x = x, y = y<span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>
+s + geom_point<span style="color: #4f97d7;">(</span>aes<span style="color: #bc6ec5;">(</span>shape = z<span style="color: #bc6ec5;">)</span>, size = 4<span style="color: #4f97d7;">)</span> + scale_shape_identity<span style="color: #4f97d7;">()</span>
+<span style="color: #2aa1ae; background-color: #292e34;">## </span><span style="color: #2aa1ae; background-color: #292e34;">While all symbols have a foreground colour, symbols 19-25 also take a</span>
+<span style="color: #2aa1ae; background-color: #292e34;">## </span><span style="color: #2aa1ae; background-color: #292e34;">background colour (fill)</span>
+s + geom_point<span style="color: #4f97d7;">(</span>aes<span style="color: #bc6ec5;">(</span>shape = z<span style="color: #bc6ec5;">)</span>, size = 4, colour = <span style="color: #2d9574;">"Red"</span><span style="color: #4f97d7;">)</span> +
+  scale_shape_identity<span style="color: #4f97d7;">()</span>
+s + geom_point<span style="color: #4f97d7;">(</span>aes<span style="color: #bc6ec5;">(</span>shape = z<span style="color: #bc6ec5;">)</span>, size = 4, colour = <span style="color: #2d9574;">"Red"</span>, fill = <span style="color: #2d9574;">"Black"</span><span style="color: #4f97d7;">)</span> +
+  scale_shape_identity<span style="color: #4f97d7;">()</span>
 </pre>
 </div>
 
@@ -1692,7 +1696,7 @@ This shows us that <i>shape 1</i> is an open circle, so
 <div class="org-src-container">
 
 <pre class="src src-R" id="orgsrcblock35">pc2 +
-  geom_point<span style="color: #2f96dc;">(</span>shape = 1, size = 4<span style="color: #2f96dc;">)</span>
+  geom_point<span style="color: #4f97d7;">(</span>shape = 1, size = 4<span style="color: #4f97d7;">)</span>
 </pre>
 </div>
 
@@ -1709,10 +1713,10 @@ That is better, but unfortunately the size of the line around the points is much
 
 <div class="org-src-container">
 
-<pre class="src src-R"><span style="color: #2f96dc;">(</span>pc3 <span style="color: #a45bad;">&lt;-</span> pc2 +
+<pre class="src src-R"><span style="color: #4f97d7;">(</span>pc3 <span style="color: #a45bad;">&lt;-</span> pc2 +
    geom_point<span style="color: #bc6ec5;">(</span>size = 4.5, shape = 1<span style="color: #bc6ec5;">)</span> +
    geom_point<span style="color: #bc6ec5;">(</span>size = 4, shape = 1<span style="color: #bc6ec5;">)</span> +
-   geom_point<span style="color: #bc6ec5;">(</span>size = 3.5, shape = 1<span style="color: #bc6ec5;">)</span><span style="color: #2f96dc;">)</span>
+   geom_point<span style="color: #bc6ec5;">(</span>size = 3.5, shape = 1<span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>
 </pre>
 </div>
 
@@ -1732,12 +1736,12 @@ This one is tricky in a couple of ways. First, there is no attribute in the data
 </p>
 <div class="org-src-container">
 
-<pre class="src src-R">pointsToLabel <span style="color: #a45bad;">&lt;-</span> c<span style="color: #2f96dc;">(</span><span style="color: #2d9574;">"Russia"</span>, <span style="color: #2d9574;">"Venezuela"</span>, <span style="color: #2d9574;">"Iraq"</span>, <span style="color: #2d9574;">"Myanmar"</span>, <span style="color: #2d9574;">"Sudan"</span>,
+<pre class="src src-R">pointsToLabel <span style="color: #a45bad;">&lt;-</span> c<span style="color: #4f97d7;">(</span><span style="color: #2d9574;">"Russia"</span>, <span style="color: #2d9574;">"Venezuela"</span>, <span style="color: #2d9574;">"Iraq"</span>, <span style="color: #2d9574;">"Myanmar"</span>, <span style="color: #2d9574;">"Sudan"</span>,
                    <span style="color: #2d9574;">"Afghanistan"</span>, <span style="color: #2d9574;">"Congo"</span>, <span style="color: #2d9574;">"Greece"</span>, <span style="color: #2d9574;">"Argentina"</span>, <span style="color: #2d9574;">"Brazil"</span>,
                    <span style="color: #2d9574;">"India"</span>, <span style="color: #2d9574;">"Italy"</span>, <span style="color: #2d9574;">"China"</span>, <span style="color: #2d9574;">"South Africa"</span>, <span style="color: #2d9574;">"Spane"</span>,
                    <span style="color: #2d9574;">"Botswana"</span>, <span style="color: #2d9574;">"Cape Verde"</span>, <span style="color: #2d9574;">"Bhutan"</span>, <span style="color: #2d9574;">"Rwanda"</span>, <span style="color: #2d9574;">"France"</span>,
                    <span style="color: #2d9574;">"United States"</span>, <span style="color: #2d9574;">"Germany"</span>, <span style="color: #2d9574;">"Britain"</span>, <span style="color: #2d9574;">"Barbados"</span>, <span style="color: #2d9574;">"Norway"</span>, <span style="color: #2d9574;">"Japan"</span>,
-                   <span style="color: #2d9574;">"New Zealand"</span>, <span style="color: #2d9574;">"Singapore"</span><span style="color: #2f96dc;">)</span>
+                   <span style="color: #2d9574;">"New Zealand"</span>, <span style="color: #2d9574;">"Singapore"</span><span style="color: #4f97d7;">)</span>
 </pre>
 </div>
 
@@ -1750,10 +1754,10 @@ Now we can label these points using <code>geom_text</code>, like this:
 </p>
 <div class="org-src-container">
 
-<pre class="src src-R" id="orgsrcblock36">pc3 +
-  geom_text<span style="color: #2f96dc;">(</span>aes<span style="color: #bc6ec5;">(</span>label = Country<span style="color: #bc6ec5;">)</span>,
+<pre class="src src-R" id="orgsrcblock36"><span style="color: #4f97d7;">(</span>pc4 <span style="color: #a45bad;">&lt;-</span> pc3 +
+  geom_text<span style="color: #bc6ec5;">(</span>aes<span style="color: #2d9574;">(</span>label = Country<span style="color: #2d9574;">)</span>,
             color = <span style="color: #2d9574;">"gray20"</span>,
-            data = subset<span style="color: #bc6ec5;">(</span>dat, Country %<span style="color: #237fbf; font-weight: bold;">in</span>% pointsToLabel<span style="color: #bc6ec5;">)</span><span style="color: #2f96dc;">)</span>
+            data = subset<span style="color: #2d9574;">(</span>dat, Country %<span style="color: #4f97d7; font-weight: bold;">in</span>% pointsToLabel<span style="color: #2d9574;">)</span><span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>
 </pre>
 </div>
 
@@ -1764,36 +1768,25 @@ Now we can label these points using <code>geom_text</code>, like this:
 </div>
 
 <p>
-This more or less gets the information across, but the labels overlap in a most unpleasing fashion. This part is tricky. Unfortunately there is no simple way to automatically adjust the labels so they dont't overlap. We can use some heristics to improve things a bit, but We'll have to do some final positioning more or less manually.
+This more or less gets the information across, but the labels overlap in a most unpleasing fashion. We can use the <code>ggrepel</code> package to make things better, but if you want perfection you will probably have to do some hand-adjustment.
 </p>
 
 <div class="org-src-container">
 
-<pre class="src src-R">dat$hdi.l <span style="color: #a45bad;">&lt;-</span> dat$HDI
-dat<span style="color: #2f96dc;">[</span>dat$Country == <span style="color: #2d9574;">"Sudan"</span>, <span style="color: #2d9574;">"hdi.l"</span><span style="color: #2f96dc;">]</span> <span style="color: #a45bad;">&lt;-</span> dat<span style="color: #2f96dc;">[</span>dat$Country == <span style="color: #2d9574;">"Sudan"</span>, <span style="color: #2d9574;">"hdi.l"</span><span style="color: #2f96dc;">]</span> + 0.01
-dat<span style="color: #2f96dc;">[</span>dat$Country == <span style="color: #2d9574;">"United States"</span>, <span style="color: #2d9574;">"hdi.l"</span><span style="color: #2f96dc;">]</span> <span style="color: #a45bad;">&lt;-</span> dat<span style="color: #2f96dc;">[</span>dat$Country == <span style="color: #2d9574;">"United States"</span>, <span style="color: #2d9574;">"hdi.l"</span><span style="color: #2f96dc;">]</span> + 0.02
-dat<span style="color: #2f96dc;">[</span>dat$Country == <span style="color: #2d9574;">"Japan"</span>, <span style="color: #2d9574;">"hdi.l"</span><span style="color: #2f96dc;">]</span> <span style="color: #a45bad;">&lt;-</span> dat<span style="color: #2f96dc;">[</span>dat$Country == <span style="color: #2d9574;">"Japan"</span>, <span style="color: #2d9574;">"hdi.l"</span><span style="color: #2f96dc;">]</span> - 0.02
-
-
-<span style="color: #2f96dc;">(</span>pc4 <span style="color: #a45bad;">&lt;-</span> pc3 + geom_text<span style="color: #bc6ec5;">(</span>aes<span style="color: #2d9574;">(</span>y = hdi.l,
-                            label = Country,
-                            hjust = <span style="color: #67b11d;">(</span>1 - CPI/max<span style="color: #b1951d;">(</span>CPI<span style="color: #b1951d;">)</span><span style="color: #67b11d;">)</span>,
-                            vjust = HDI/max<span style="color: #67b11d;">(</span>HDI<span style="color: #67b11d;">)</span><span style="color: #2d9574;">)</span>,
-                        color = <span style="color: #2d9574;">"gray10"</span>,
-                        data = subset<span style="color: #2d9574;">(</span>dat, Country %<span style="color: #237fbf; font-weight: bold;">in</span>% pointsToLabel<span style="color: #2d9574;">)</span>,
-                        size = 4<span style="color: #bc6ec5;">)</span><span style="color: #2f96dc;">)</span>
+<pre class="src src-R" id="orgsrcblock37"><span style="color: #a45bad;">library</span><span style="color: #4f97d7;">(</span><span style="color: #2d9574;">"ggrepel"</span><span style="color: #4f97d7;">)</span>
+pc3 +
+  geom_text_repel<span style="color: #4f97d7;">(</span>aes<span style="color: #bc6ec5;">(</span>label = Country<span style="color: #bc6ec5;">)</span>,
+            color = <span style="color: #2d9574;">"gray20"</span>,
+            data = subset<span style="color: #bc6ec5;">(</span>dat, Country %<span style="color: #4f97d7; font-weight: bold;">in</span>% pointsToLabel<span style="color: #bc6ec5;">)</span>,
+            force = 10<span style="color: #4f97d7;">)</span>
 </pre>
 </div>
 
 
 <div class="figure">
-<p><img src="images/econScatter5.png" alt="econScatter5.png" />
+<p><img src="images/econScatter4.png" alt="econScatter4.png" />
 </p>
 </div>
-
-<p>
-We could use this method to adjust more points, or we could do some post-processing of the image in something like <a href="http://inkscape/org">Inkscape</a>, but for now I'll call it good enough. Some of the points are obscured by the labels (unlike in the original), but the tradoff is that our labels are actually closer to the point in space that they correspond to. In my opinion moving the labels farther away from the points (as was done in the original) makes it harder to grasp the information being conveyed, so I'll leave it there.
-</p>
 </div>
 </div>
 
@@ -1809,7 +1802,7 @@ Comparing our graph to the original we notice that the labels and order of the R
 </p>
 <div class="org-src-container">
 
-<pre class="src src-R">dat$Region <span style="color: #a45bad;">&lt;-</span> factor<span style="color: #2f96dc;">(</span>dat$Region,
+<pre class="src src-R">dat$Region <span style="color: #a45bad;">&lt;-</span> factor<span style="color: #4f97d7;">(</span>dat$Region,
                      levels = c<span style="color: #bc6ec5;">(</span><span style="color: #2d9574;">"EU W. Europe"</span>,
                                 <span style="color: #2d9574;">"Americas"</span>,
                                 <span style="color: #2d9574;">"Asia Pacific"</span>,
@@ -1821,7 +1814,7 @@ Comparing our graph to the original we notice that the labels and order of the R
                                 <span style="color: #2d9574;">"Asia &amp;\nOceania"</span>,
                                 <span style="color: #2d9574;">"Central &amp;\nEastern Europe"</span>,
                                 <span style="color: #2d9574;">"Middle East &amp;\nnorth Africa"</span>,
-                                <span style="color: #2d9574;">"Sub-Saharan\nAfrica"</span><span style="color: #bc6ec5;">)</span><span style="color: #2f96dc;">)</span>
+                                <span style="color: #2d9574;">"Sub-Saharan\nAfrica"</span><span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>
 </pre>
 </div>
 
@@ -1853,8 +1846,8 @@ The next step is to add the title and format the axes. We do that using the <cod
 
 <div class="org-src-container">
 
-<pre class="src src-R"><span style="color: #a45bad;">library</span><span style="color: #2f96dc;">(</span>grid<span style="color: #2f96dc;">)</span>
-<span style="color: #2f96dc;">(</span>pc5 <span style="color: #a45bad;">&lt;-</span> pc4 +
+<pre class="src src-R"><span style="color: #a45bad;">library</span><span style="color: #4f97d7;">(</span>grid<span style="color: #4f97d7;">)</span>
+<span style="color: #4f97d7;">(</span>pc5 <span style="color: #a45bad;">&lt;-</span> pc4 +
   scale_x_continuous<span style="color: #bc6ec5;">(</span>name = <span style="color: #2d9574;">"Corruption Perceptions Index, 2011 (10=least corrupt)"</span>,
                      limits = c<span style="color: #2d9574;">(</span>.9, 10.5<span style="color: #2d9574;">)</span>,
                      breaks = 1:10<span style="color: #bc6ec5;">)</span> +
@@ -1868,7 +1861,7 @@ The next step is to add the title and format the axes. We do that using the <cod
                                 <span style="color: #2d9574;">"#248E84"</span>,
                                 <span style="color: #2d9574;">"#F2583F"</span>,
                                 <span style="color: #2d9574;">"#96503F"</span><span style="color: #2d9574;">)</span><span style="color: #bc6ec5;">)</span> +
-  ggtitle<span style="color: #bc6ec5;">(</span><span style="color: #2d9574;">"Corruption and Human development"</span><span style="color: #bc6ec5;">)</span><span style="color: #2f96dc;">)</span>
+  ggtitle<span style="color: #bc6ec5;">(</span><span style="color: #2d9574;">"Corruption and Human development"</span><span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>
 </pre>
 </div>
 
@@ -1889,25 +1882,23 @@ Our graph is almost there. To finish up, we need to adjust some of the theme ele
 
 <div class="org-src-container">
 
-<pre class="src src-R"><span style="color: #a45bad;">library</span><span style="color: #2f96dc;">(</span>grid<span style="color: #2f96dc;">)</span> <span style="color: #2aa1ae;"># </span><span style="color: #2aa1ae;">for the 'unit' function</span>
-<span style="color: #2f96dc;">(</span>pc6 <span style="color: #a45bad;">&lt;-</span> pc5 +
-  theme_minimal<span style="color: #bc6ec5;">()</span> + <span style="color: #2aa1ae;"># </span><span style="color: #2aa1ae;">start with a minimal theme and add what we need</span>
+<pre class="src src-R"><span style="color: #a45bad;">library</span><span style="color: #4f97d7;">(</span>grid<span style="color: #4f97d7;">)</span> <span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">for the 'unit' function</span>
+<span style="color: #4f97d7;">(</span>pc6 <span style="color: #a45bad;">&lt;-</span> pc5 +
+  theme_minimal<span style="color: #bc6ec5;">()</span> + <span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">start with a minimal theme and add what we need</span>
   theme<span style="color: #bc6ec5;">(</span>text = element_text<span style="color: #2d9574;">(</span>color = <span style="color: #2d9574;">"gray20"</span><span style="color: #2d9574;">)</span>,
-        legend.position = c<span style="color: #2d9574;">(</span>0.0, 1.05<span style="color: #2d9574;">)</span>, <span style="color: #2aa1ae;"># </span><span style="color: #2aa1ae;">position the legend in the upper left </span>
+        legend.position = c<span style="color: #2d9574;">(</span><span style="color: #2d9574;">"top"</span><span style="color: #2d9574;">)</span>, <span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">position the legend in the upper left </span>
         legend.direction = <span style="color: #2d9574;">"horizontal"</span>,
-        legend.justification = 0.1, <span style="color: #2aa1ae;"># </span><span style="color: #2aa1ae;">anchor point for legend.position.</span>
+        legend.justification = 0.1, <span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">anchor point for legend.position.</span>
         legend.text = element_text<span style="color: #2d9574;">(</span>size = 11, color = <span style="color: #2d9574;">"gray10"</span><span style="color: #2d9574;">)</span>,
         axis.text = element_text<span style="color: #2d9574;">(</span>face = <span style="color: #2d9574;">"italic"</span><span style="color: #2d9574;">)</span>,
-        axis.title.x = element_text<span style="color: #2d9574;">(</span>vjust = -1<span style="color: #2d9574;">)</span>, <span style="color: #2aa1ae;"># </span><span style="color: #2aa1ae;">move title away from axis</span>
-        axis.title.y = element_text<span style="color: #2d9574;">(</span>vjust = 2<span style="color: #2d9574;">)</span>, <span style="color: #2aa1ae;"># </span><span style="color: #2aa1ae;">move away for axis</span>
-        axis.ticks.y = element_blank<span style="color: #2d9574;">()</span>, <span style="color: #2aa1ae;"># </span><span style="color: #2aa1ae;">element_blank() is how we remove elements</span>
+        axis.title.x = element_text<span style="color: #2d9574;">(</span>vjust = -1<span style="color: #2d9574;">)</span>, <span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">move title away from axis</span>
+        axis.title.y = element_text<span style="color: #2d9574;">(</span>vjust = 2<span style="color: #2d9574;">)</span>, <span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">move away for axis</span>
+        axis.ticks.y = element_blank<span style="color: #2d9574;">()</span>, <span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">element_blank() is how we remove elements</span>
         axis.line = element_line<span style="color: #2d9574;">(</span>color = <span style="color: #2d9574;">"gray40"</span>, size = 0.5<span style="color: #2d9574;">)</span>,
         axis.line.y = element_blank<span style="color: #2d9574;">()</span>,
         panel.grid.major = element_line<span style="color: #2d9574;">(</span>color = <span style="color: #2d9574;">"gray50"</span>, size = 0.5<span style="color: #2d9574;">)</span>,
-        panel.grid.major.x = element_blank<span style="color: #2d9574;">()</span>,
-        plot.margin = unit<span style="color: #2d9574;">(</span>c<span style="color: #67b11d;">(</span>15, 2, 15, 4<span style="color: #67b11d;">)</span>, <span style="color: #2d9574;">"mm"</span><span style="color: #2d9574;">)</span>, <span style="color: #2aa1ae;"># </span><span style="color: #2aa1ae;">make some space at top and bottom</span>
-        plot.title = element_text<span style="color: #2d9574;">(</span>face = <span style="color: #2d9574;">"bold"</span>, hjust = -.07, vjust = 5<span style="color: #2d9574;">)</span> <span style="color: #2aa1ae;"># </span><span style="color: #2aa1ae;">bad hack to get the title in the right spot.</span>
-        <span style="color: #bc6ec5;">)</span><span style="color: #2f96dc;">)</span>
+        panel.grid.major.x = element_blank<span style="color: #2d9574;">()</span>
+        <span style="color: #bc6ec5;">)</span><span style="color: #4f97d7;">)</span>
 </pre>
 </div>
 
@@ -1927,7 +1918,7 @@ The last bit of information that we want to have on the graph is the variance ex
 </p>
 <div class="org-src-container">
 
-<pre class="src src-R"><span style="color: #2f96dc;">(</span>mR2 <span style="color: #a45bad;">&lt;-</span> summary<span style="color: #bc6ec5;">(</span>lm<span style="color: #2d9574;">(</span>HDI ~ log<span style="color: #67b11d;">(</span>CPI<span style="color: #67b11d;">)</span>, data = dat<span style="color: #2d9574;">)</span><span style="color: #bc6ec5;">)</span>$r.squared<span style="color: #2f96dc;">)</span>
+<pre class="src src-R"><span style="color: #4f97d7;">(</span>mR2 <span style="color: #a45bad;">&lt;-</span> summary<span style="color: #bc6ec5;">(</span>lm<span style="color: #2d9574;">(</span>HDI ~ log<span style="color: #67b11d;">(</span>CPI<span style="color: #67b11d;">)</span>, data = dat<span style="color: #2d9574;">)</span><span style="color: #bc6ec5;">)</span>$r.squared<span style="color: #4f97d7;">)</span>
 </pre>
 </div>
 
@@ -1947,26 +1938,26 @@ And here it is, our final version!
 
 <div class="org-src-container">
 
-<pre class="src src-R"><span style="color: #a45bad;">library</span><span style="color: #2f96dc;">(</span>grid<span style="color: #2f96dc;">)</span>
-png<span style="color: #2f96dc;">(</span>file = <span style="color: #2d9574;">"images/econScatter10.png"</span>, width = 800, height = 600<span style="color: #2f96dc;">)</span>
+<pre class="src src-R"><span style="color: #a45bad;">library</span><span style="color: #4f97d7;">(</span>grid<span style="color: #4f97d7;">)</span>
+png<span style="color: #4f97d7;">(</span>file = <span style="color: #2d9574;">"images/econScatter10.png"</span>, width = 800, height = 600<span style="color: #4f97d7;">)</span>
 pc6 
-grid.text<span style="color: #2f96dc;">(</span><span style="color: #2d9574;">"Sources: Transparency International; UN Human Development Report"</span>,
+grid.text<span style="color: #4f97d7;">(</span><span style="color: #2d9574;">"Sources: Transparency International; UN Human Development Report"</span>,
          x = .02, y = .03,
          just = <span style="color: #2d9574;">"left"</span>,
-         draw = <span style="color: #ce537a; font-weight: bold;">TRUE</span><span style="color: #2f96dc;">)</span>
-grid.segments<span style="color: #2f96dc;">(</span>x0 = 0.81, x1 = 0.825,
+         draw = <span style="color: #ce537a; font-weight: bold;">TRUE</span><span style="color: #4f97d7;">)</span>
+grid.segments<span style="color: #4f97d7;">(</span>x0 = 0.81, x1 = 0.825,
               y0 = 0.90, y1 = 0.90,
               gp = gpar<span style="color: #bc6ec5;">(</span>col = <span style="color: #2d9574;">"red"</span><span style="color: #bc6ec5;">)</span>,
-              draw = <span style="color: #ce537a; font-weight: bold;">TRUE</span><span style="color: #2f96dc;">)</span>
-grid.text<span style="color: #2f96dc;">(</span>paste0<span style="color: #bc6ec5;">(</span><span style="color: #2d9574;">"R&#178; = "</span>,
+              draw = <span style="color: #ce537a; font-weight: bold;">TRUE</span><span style="color: #4f97d7;">)</span>
+grid.text<span style="color: #4f97d7;">(</span>paste0<span style="color: #bc6ec5;">(</span><span style="color: #2d9574;">"R&#178; = "</span>,
                  as.integer<span style="color: #2d9574;">(</span>mR2*100<span style="color: #2d9574;">)</span>,
                  <span style="color: #2d9574;">"%"</span><span style="color: #bc6ec5;">)</span>,
           x = 0.835, y = 0.90,
           gp = gpar<span style="color: #bc6ec5;">(</span>col = <span style="color: #2d9574;">"gray20"</span><span style="color: #bc6ec5;">)</span>,
           draw = <span style="color: #ce537a; font-weight: bold;">TRUE</span>,
-          just = <span style="color: #2d9574;">"left"</span><span style="color: #2f96dc;">)</span>
+          just = <span style="color: #2d9574;">"left"</span><span style="color: #4f97d7;">)</span>
 
-dev.off<span style="color: #2f96dc;">()</span>
+dev.off<span style="color: #4f97d7;">()</span>
 </pre>
 </div>
 
