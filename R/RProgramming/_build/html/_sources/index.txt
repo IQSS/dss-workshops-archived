@@ -2,13 +2,6 @@ Workshop overview and materials
 ===============================
 
 
-Contents:
-
-.. toctree::
-   :maxdepth: 2
-
-
-
 Indices and tables
 ==================
 
