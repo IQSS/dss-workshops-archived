@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 #
 # r-prog documentation build configuration file, created by
-# sphinx-quickstart on Tue Mar  8 10:54:22 2016.
+# sphinx-quickstart on Tue Mar  8 11:29:34 2016.
 #
 # This file is execfile()d with the current directory set to its
 # containing dir.
@@ -29,7 +29,9 @@ import os
 # Add any Sphinx extension module names here, as strings. They can be
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
-extensions = []
+extensions = [
+    'sphinx.ext.mathjax',
+]
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
@@ -43,7 +45,7 @@ source_suffix = '.rst'
 #source_encoding = 'utf-8-sig'
 
 # The master toctree document.
-master_doc = 'RProgramming'
+master_doc = 'index'
 
 # General information about the project.
 project = 'r-prog'
@@ -137,7 +139,7 @@ html_theme = 'alabaster'
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,
 # so a file named "default.css" will overwrite the builtin "default.css".
-html_static_path = ['_static']
+html_static_path = ['_static', 'images']
 
 # Add any extra paths that contain custom files (such as robots.txt or
 # .htaccess) here, relative to this directory. These files are copied
