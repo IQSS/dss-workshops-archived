@@ -89,7 +89,7 @@ tags) and extract their `href` attributes. To give a better sense of
 this here is what the html for the 2010 data file link looks
 like:
 
-``` example
+```
 <a onclick="_gaq.push(['_trackEvent', 'File','Download', 'cepr_dws_2010_dta']);"
    href="/wp-content/cps/data/cepr_dws_2010_dta.zip">cepr_dws_2010_dta.zip</a>
 ```
