@@ -141,6 +141,7 @@ Base graphics histogram example:
 `ggplot2` histogram example:
 
 ``` r
+  library(ggplot2)
   ggplot(housing, aes(x = Home.Value)) +
     geom_histogram()
 ```
