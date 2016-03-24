@@ -38,18 +38,14 @@
 ** Copy the workshop materials to your home directory		   :mitsetup:
 
 - *Log in to an Athena workstation* using your Athena user name and password
-
 - *Click on the "Ubuntu" button* on the upper-left and type "term" as shown below
 #+attr_latex: width=.8\textwidth
 [[./images/OpenTerminal.png]]
-
 - *Click on the "Terminal" icon* as shown above
-
 - In the terminal, *type this line exactly as shown*:
 #+LaTeX: {\footnotesize
 : cd; wget j.mp/stata-datman; unzip stata-datman
 #+LaTeX: \normalsize}
-
 - If you see "ERROR 404: Not Found", then you mistyped the command -- try again, making sure to type the command exactly as shown. If it still doesn't work, open [[http://j.mp/stata-datman]] in a web browser.
 
 ** Launch Stata on Athena					   :mitsetup:
@@ -58,11 +54,8 @@
 :     add stata
 :     xstata
 - Open up today's Stata script
-
   - In Stata, go to *Window => New do file => Open*
-
   - Locate and open the =StatDatMan.do= script in the StataDatMan folder in your home directory
-
 - I encourage you to add your own notes to this file!
 
 
@@ -141,14 +134,17 @@ Many different means of accomplishing the same thing in Stata -- find what is co
 
 ** Generate and Replace
 The ~replace~ command is often used with logic statements. Available logical operators include the following:
-    - == :: equal to (status quo)
-    - != :: not equal to
-    - > :: greater than
-    - < :: less than
-    - >= :: greater than or equal to
-    - <= :: less than or equal to 
-    - & :: and
-    - | :: or
+ 
+| Operator | Meaning                  |
+|----------|--------------------------|
+| ==       | equal to                 |
+| !=       | not equal to             |
+| &gt;     | greater than             |
+| &gt;=    | greater than or equal to |
+| &lt;     | less than                |
+| &lt;=    | less than or equal to    |
+| &        | and                      |
+| \vert    | or                       |
 
 For example:
 
@@ -327,30 +323,30 @@ Open the gss.dta data.
 ** Exercise 1 prototype                                          :prototype:
 Open the gss.dta data.
 1. [@1] Generate a new variable that represents the squared value of age.
-   #+BEGIN_SRC stata
+#+BEGIN_SRC stata
      use dataSets/gss.dta, clear
      gen age2 = age^2
-   #+END_SRC
+#+END_SRC
 
-   #+RESULTS:
-   #+begin_example
+#+RESULTS:
+#+begin_example
    use dataSets/gss.dta, clear
    gen age2 = age^2
 #+end_example
 
    
 2. [@2] Generate a new variable equal to "1" if income is greater than "19".
-   #+BEGIN_SRC stata
+#+BEGIN_SRC stata
      describe income
      label list income
      recode income (99=.) (98=.)
      gen highincome =0 if income != .
      replace highincome=1 if income>19
      sum highincome
-   #+END_SRC
+#+END_SRC
 
-   #+RESULTS:
-   #+begin_example
+#+RESULTS:
+#+begin_example
    describe income
 
                  storage   display    value

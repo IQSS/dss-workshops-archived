@@ -67,11 +67,9 @@ Everyone:
 ** Launch RStudio						   :labsetup:
 
 - Open the RStudio program from the Windows start menu
-
 - Open up today's R script
   - In RStudio, Go to *File => Open Script*
   - Locate and open the =Rstatistics.R= script in the Rstatistics folder on your desktop
-
 - Go to *Tools => Set working directory => To source file location* (more on the working directory later)
 - I encourage you to add your own notes to this file!
   
@@ -338,7 +336,6 @@ expense      -0.0344   -0.0101
 
 ** Linear Regression Assumptions
 - Ordinary least squares regression relies on several assumptions, including that the residuals are normally distributed and homoscedastic, the errors are independent and the relationships are linear.
-
 - Investigate these assumptions visually by plotting your model:
 #+LATEX: \begin{columns} \column{.9\textwidth} \begin{block}{}
 #+BEGIN_SRC R :results output graphics :exports both :file images/regressionsAssumptions1.png :width 500 :height 200
@@ -683,8 +680,8 @@ Note that the data is not perfectly clean and ready to be modeled. You will need
 - Used to model variation due to group membership where the goal is to generalize to a population of groups
 - Can model different intercepts and/or slopes for each group
 - Mixed-effecs models include two types of predictors: fixed-effects and random effects
-  - Fixed-effects :: observed levels are of direct interest (.e.g, sex, political party...)
-  - Random-effects :: observed levels not of direct interest: goal is to make inferences to a population represented by observed levels
+  - Fixed-effects -- observed levels are of direct interest (.e.g, sex, political party...)
+  - Random-effects -- observed levels not of direct interest: goal is to make inferences to a population represented by observed levels
 - In R the lme4 package is the most popular for mixed effects models
   - Use the =lmer= function for liner mixed models, =glmer= for generalized mixed models 
 
@@ -731,16 +728,18 @@ Note that the data is not perfectly clean and ready to be modeled. You will need
 ** The Exam data
 The Exam data set contans exam scores of 4,059 students from 65 schools in Inner London. The variable names are as follows:
 
-- school :: School ID - a factor.
-- normexam :: Normalized exam score.
-- schgend :: School gender - a factor.  Levels are 'mixed', 'boys', and 'girls'.
-- schavg :: School average of intake score.
-- vr :: Student level Verbal Reasoning (VR) score band at intake - a factor.  Levels are 'bottom 25%', 'mid 50%', and 'top 25%'.
-- intake :: Band of student's intake score - a factor.  Levels are 'bottom 25%', 'mid 50%' and 'top 25%'./
-- standLRT :: Standardised LR test score.
-- sex :: Sex of the student - levels are 'F' and 'M'.
-- type :: School type - levels are 'Mxd' and 'Sngl'.
-- student :: Student id (within school) - a factor
+| variable | Description                                                                                        |
+|----------+----------------------------------------------------------------------------------------------------|
+| school   | School ID - a factor.                                                                              |
+| normexam | Normalized exam score.                                                                             |
+| schgend  | School gender - a factor.  Levels are 'mixed', 'boys', and 'girls'.                                |
+| schavg   | School average of intake score.                                                                    |
+| vr       | Student level Verbal Reasoning (VR) score band at intake - 'bottom 25%', 'mid 50%', and 'top 25%'. |
+| intake   | Band of student's intake score - a factor.  Levels are 'bottom 25%', 'mid 50%' and 'top 25%'./     |
+| standLRT | Standardised LR test score.                                                                        |
+| sex      | Sex of the student - levels are 'F' and 'M'.                                                       |
+| type     | School type - levels are 'Mxd' and 'Sngl'.                                                         |
+| student  | Student id (within school) - a factor                                                              |
 
 #+name: tasdf
 #+begin_src R
@@ -1551,7 +1550,6 @@ feedback form
 ** Additional resources
 - IQSS workshops: http://projects.iq.harvard.edu/rtc/filter_by/workshops
 - IQSS statistical consulting: http://rtc.iq.harvard.edu
-
 - Zelig
   - Website: http://gking.harvard.edu/zelig
   - Documentation: http://r.iq.harvard.edu/docs/zelig.pdf
