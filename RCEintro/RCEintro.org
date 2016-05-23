@@ -4,6 +4,7 @@
 #+EMAIL:     istazahn@gmail.com
 #+DATE:      
 
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="http://tutorials.iq.harvard.edu/org-html-themes/styles/readtheorg/css/htmlize.css"/>
 #+HTML_HEAD: <link rel="stylesheet" type="text/css" href="http://tutorials.iq.harvard.edu/org-html-themes/styles/readtheorg/css/readtheorg.css"/>
 
 #+HTML_HEAD: <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
@@ -767,25 +768,25 @@ As it turns out, we almost already know how to do that: if you you look closely 
 **** Submit file passing process as an argument
 We can use the =$(Process)= macro to pass information to our program, like this:
 #+BEGIN_SRC conf :eval no :tangle Python_examples/power2/power.submit
-  # Universe whould always be 'vanilla'. This line MUST be 
-  #included in your submit file, exactly as shown below.
-  Universe = vanilla
+    # Universe whould always be 'vanilla'. This line MUST be 
+    #included in your submit file, exactly as shown below.
+    Universe = vanilla
 
-  # Enter the path to the python program.
-  Executable = /usr/local/bin/python33
+    # Enter the path to the python program.
+    Executable = /usr/local/bin/python33
 
-  # Specify any arguments you want to pass to the executable
-  Arguments = power.py $(Process)
+    # Specify any arguments you want to pass to the executable
+    Arguments = power.py $(Process)
 
-# Specify where to output any results printed by your program.
-  output = output/out.$(Process)
+  # Specify where to output any results printed by your program.
+    output = output/out.$(Process)
 
-  # Specify where to save any errors returned by your program.
-  error = output/error.$(Process)
+    # Specify where to save any errors returned by your program.
+    error = output/error.$(Process)
 
-  Log = log.txt
-  # Enter the number of processes to request.
-  Queue 40
+    Log = log.txt
+    # Enter the number of processes to request.
+    Queue 40
 #+END_SRC
 
 Notice that we used =--args $(Process)= to pass the process number to the python program. =$(Process)= will be an integer starting from =0=. 
