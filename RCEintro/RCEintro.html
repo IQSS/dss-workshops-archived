@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2015-09-04 Fri 11:51 -->
+<!-- 2016-05-23 Mon 15:17 -->
 <meta  http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta  name="viewport" content="width=device-width, initial-scale=1" />
 <title>RCE Quick-Start</title>
@@ -181,30 +181,42 @@ for the JavaScript code in this tag.
 <li><a href="#orgheadline18">R Batch Examples</a>
 <ul>
 <li><a href="#orgheadline23">Batch example: Simple power simulation in R</a></li>
-<li><a href="#orgheadline29">Batch example: Power simulation in R with varying parameters</a></li>
+<li><a href="#orgheadline28">Batch example: Power simulation in R with varying parameters</a></li>
 </ul>
 </li>
 <li><a href="#orgheadline19">Stata Batch Examples</a>
 <ul>
-<li><a href="#orgheadline34">Stata bootstrap do-file</a></li>
-<li><a href="#orgheadline35">Submit file</a></li>
-<li><a href="#orgheadline36">Monitoring submitted jobs</a></li>
-<li><a href="#orgheadline37">Aggregating results</a></li>
-<li><a href="#orgheadline38">Try it yourself!</a></li>
+<li><a href="#orgheadline33">Stata bootstrap do-file</a></li>
+<li><a href="#orgheadline34">Submit file</a></li>
+<li><a href="#orgheadline35">Aggregating results</a></li>
+<li><a href="#orgheadline36">Try it yourself!</a></li>
 </ul>
 </li>
-<li><a href="#orgheadline20"><span class="todo nilTODO">TODO</span> Python Batch Examples</a></li>
-<li><a href="#orgheadline21"><span class="todo nilTODO">TODO</span> Matlab Batch Examples</a></li>
-</ul>
-</li>
-<li><a href="#orgheadline42"><span class="todo nilTODO">TODO</span> Installing custom packages on the RCE</a>
+<li><a href="#orgheadline20">Python Batch Examples</a>
 <ul>
-<li><a href="#orgheadline39">Installing R packages</a></li>
-<li><a href="#orgheadline40">Installing Python packages</a></li>
-<li><a href="#orgheadline41">Installing Stata packages</a></li>
+<li><a href="#orgheadline37">Batch example: Simple power simulation in python</a></li>
+<li><a href="#orgheadline42">Batch example: Power simulation in python with varying parameters</a></li>
 </ul>
 </li>
-<li><a href="#orgheadline43"><span class="todo nilTODO">TODO</span> Getting help</a></li>
+</ul>
+</li>
+<li><a href="#orgheadline47">Monitoring and manageing submitted batch jobs</a>
+<ul>
+<li>
+<ul>
+<li><a href="#orgheadline21"><span class="todo TODO">TODO</span> Matlab Batch Examples</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#orgheadline51"><span class="todo TODO">TODO</span> Installing custom packages on the RCE</a>
+<ul>
+<li><a href="#orgheadline48">Installing R packages</a></li>
+<li><a href="#orgheadline49">Installing Python packages</a></li>
+<li><a href="#orgheadline50">Installing Stata packages</a></li>
+</ul>
+</li>
+<li><a href="#orgheadline52"><span class="todo TODO">TODO</span> Getting help</a></li>
 </ul>
 </div>
 </div>
@@ -318,7 +330,7 @@ More specifically, the RCE provides three levels of service:
 <h2 id="orgheadline4">Project folders &amp; shared space</h2>
 <div class="outline-text-2" id="text-orgheadline4">
 <p>
-When your RCE account was created a home folder was set up for you, with <i>Documents</i>, <i>Downloads</i>, <i>Desktop</i> and other common sub-directories. However you can only store a maximum of 5Gb in your home folder. For larger projects you should use a <i>project folder</i>; one was probably set up for you when your account was activated. There is a shortcut in your home directory named <i>shared_space</i>, which will contain any project folders you have access to. You should store large data sets and other large or numerous files in these project folders.
+When your RCE account was created a home folder was set up for you, with <i>Documents</i>, <i>Downloads</i>, <i>Desktop</i> and other common sub-directories. However you can only store a maximum of 5Gb in your home folder. For larger projects you should use a <i>project folder</i>; one was probably set up for you when your account was activated. There is a shortcut in your home directory named <i>shared<sub>space</sub></i>, which will contain any project folders you have access to. You should store large data sets and other large or numerous files in these project folders.
 </p>
 
 <p>
@@ -414,13 +426,13 @@ We start by setting up a helper function to repeatedly generate a sample of a gi
 </p>
 <div class="org-src-container">
 
-<pre class="src src-R"><span style="color: #2aa198; background-color: #eff3ea;">## </span><span style="color: #2aa198; background-color: #eff3ea;">function to generate distribution of means for a range of sample sizes</span>
-<span style="color: #6c3163; font-weight: bold;">meanDist</span> <span style="color: #4e3163;">&lt;-</span> <span style="color: #237fbf; font-weight: bold;">function</span><span style="color: #2f96dc;">(</span>n, nsamp = 5000<span style="color: #2f96dc;">)</span> <span style="color: #2f96dc;">{</span>
-  replicate<span style="color: #6c3163;">(</span>nsamp, mean<span style="color: #2aa198;">(</span>rnorm<span style="color: #67b11d;">(</span>n<span style="color: #67b11d;">)</span><span style="color: #2aa198;">)</span><span style="color: #6c3163;">)</span>
-<span style="color: #2f96dc;">}</span>
+<pre class="src src-R"><span style="color: #2aa1ae; background-color: #292e34;">## </span><span style="color: #2aa1ae; background-color: #292e34;">function to generate distribution of means for a range of sample sizes</span>
+<span style="color: #bc6ec5; font-weight: bold;">meanDist</span> <span style="color: #a45bad;">&lt;-</span> <span style="color: #4f97d7; font-weight: bold;">function</span>(n, nsamp = <span style="color: #a45bad;">5000</span>) {
+  replicate(nsamp, mean(rnorm(n)))
+}
 
-<span style="color: #2aa198; background-color: #eff3ea;">## </span><span style="color: #2aa198; background-color: #eff3ea;">range of sample sizes to iterate over</span>
-sampSizes <span style="color: #4e3163;">&lt;-</span> seq<span style="color: #2f96dc;">(</span>10, 500, by = 5<span style="color: #2f96dc;">)</span>
+<span style="color: #2aa1ae; background-color: #292e34;">## </span><span style="color: #2aa1ae; background-color: #292e34;">range of sample sizes to iterate over</span>
+sampSizes <span style="color: #a45bad;">&lt;-</span> seq(<span style="color: #a45bad;">10</span>, <span style="color: #a45bad;">500</span>, by = <span style="color: #a45bad;">5</span>)
 </pre>
 </div>
 
@@ -429,7 +441,7 @@ Next iterate over a range of sample sizes, generating a distribution of means fo
 </p>
 <div class="org-src-container">
 
-<pre class="src src-R">system.time<span style="color: #2f96dc;">(</span>means <span style="color: #4e3163;">&lt;-</span> lapply<span style="color: #6c3163;">(</span>sampSizes, meanDist<span style="color: #6c3163;">)</span><span style="color: #2f96dc;">)</span>
+<pre class="src src-R">system.time(means <span style="color: #a45bad;">&lt;-</span> lapply(sampSizes, meanDist))
 </pre>
 </div>
 
@@ -443,8 +455,8 @@ The simulation can be carried out much more rapidly using <code>mclapply</code> 
 </p>
 <div class="org-src-container">
 
-<pre class="src src-R"><span style="color: #4e3163;">library</span><span style="color: #2f96dc;">(</span>parallel<span style="color: #2f96dc;">)</span> 
-system.time<span style="color: #2f96dc;">(</span>means <span style="color: #4e3163;">&lt;-</span> mclapply<span style="color: #6c3163;">(</span>sampSizes, meanDist, mc.cores = 7<span style="color: #6c3163;">)</span><span style="color: #2f96dc;">)</span>
+<pre class="src src-R"><span style="color: #a45bad;">library</span>(parallel) 
+system.time(means <span style="color: #a45bad;">&lt;-</span> mclapply(sampSizes, meanDist, mc.cores = <span style="color: #a45bad;">7</span>))
 </pre>
 </div>
 
@@ -458,15 +470,15 @@ Like <code>lapply</code> the <code>mclapply</code> function returns a list, whic
 </p>
 <div class="org-src-container">
 
-<pre class="src src-R"><span style="color: #2aa198; background-color: #eff3ea;">## </span><span style="color: #2aa198; background-color: #eff3ea;">plot the distribution of means at various sample sizes</span>
-par<span style="color: #2f96dc;">(</span>mfrow=c<span style="color: #6c3163;">(</span>6, 5<span style="color: #6c3163;">)</span>, mar = c<span style="color: #6c3163;">(</span>0,0,2,2<span style="color: #6c3163;">)</span>, cex = .7<span style="color: #2f96dc;">)</span>
-<span style="color: #237fbf; font-weight: bold;">for</span><span style="color: #2f96dc;">(</span>i <span style="color: #237fbf; font-weight: bold;">in</span> 1:30<span style="color: #2f96dc;">)</span> <span style="color: #2f96dc;">{</span>
-  hist<span style="color: #6c3163;">(</span>means<span style="color: #2aa198;">[</span><span style="color: #67b11d;">[</span>i<span style="color: #67b11d;">]</span><span style="color: #2aa198;">]</span>, 
-       main = paste<span style="color: #2aa198;">(</span><span style="color: #2aa198;">"n ="</span>, 
-                    sampSizes<span style="color: #67b11d;">[</span>i<span style="color: #67b11d;">]</span><span style="color: #2aa198;">)</span>, 
-       axes = <span style="color: #428374; font-weight: bold;">FALSE</span>,
-       xlim = range<span style="color: #2aa198;">(</span>unlist<span style="color: #67b11d;">(</span>means<span style="color: #67b11d;">)</span><span style="color: #2aa198;">)</span><span style="color: #6c3163;">)</span>
-<span style="color: #2f96dc;">}</span>
+<pre class="src src-R"><span style="color: #2aa1ae; background-color: #292e34;">## </span><span style="color: #2aa1ae; background-color: #292e34;">plot the distribution of means at various sample sizes</span>
+par(mfrow=c(<span style="color: #a45bad;">6</span>, <span style="color: #a45bad;">5</span>), mar = c(<span style="color: #a45bad;">0</span>,<span style="color: #a45bad;">0</span>,<span style="color: #a45bad;">2</span>,<span style="color: #a45bad;">2</span>), cex = .7)
+<span style="color: #4f97d7; font-weight: bold;">for</span>(i <span style="color: #4f97d7; font-weight: bold;">in</span> <span style="color: #a45bad;">1:30</span>) {
+  hist(means[[i]], 
+       main = paste(<span style="color: #2d9574;">"n ="</span>, 
+                    sampSizes[i]), 
+       axes = <span style="color: #ce537a; font-weight: bold;">FALSE</span>,
+       xlim = range(unlist(means)))
+}
 </pre>
 </div>
 
@@ -484,28 +496,28 @@ In the previous example we generated the data on each iteration. This kind of si
 </p>
 <div class="org-src-container">
 
-<pre class="src src-R"><span style="color: #2aa198; background-color: #eff3ea;">## </span><span style="color: #2aa198; background-color: #eff3ea;">List the files to iterate over</span>
-textFiles<span style="color: #4e3163;">&lt;-</span> list.files<span style="color: #2f96dc;">(</span><span style="color: #2aa198;">"/usr/share/texlive/"</span>, 
-                       recursive = <span style="color: #428374; font-weight: bold;">TRUE</span>, 
-                       pattern = <span style="color: #2aa198;">"\\.txt$|\\.tex$"</span>,
-                       full.names = <span style="color: #428374; font-weight: bold;">TRUE</span><span style="color: #2f96dc;">)</span>
+<pre class="src src-R"><span style="color: #2aa1ae; background-color: #292e34;">## </span><span style="color: #2aa1ae; background-color: #292e34;">List the files to iterate over</span>
+textFiles<span style="color: #a45bad;">&lt;-</span> list.files(<span style="color: #2d9574;">"/usr/share/texlive/"</span>, 
+                       recursive = <span style="color: #ce537a; font-weight: bold;">TRUE</span>, 
+                       pattern = <span style="color: #2d9574;">"\\.txt$|\\.tex$"</span>,
+                       full.names = <span style="color: #ce537a; font-weight: bold;">TRUE</span>)
 
-<span style="color: #2aa198; background-color: #eff3ea;">## </span><span style="color: #2aa198; background-color: #eff3ea;">function for counting characters (NOTE: this example isn't realistic -- it </span>
-<span style="color: #2aa198; background-color: #eff3ea;">## </span><span style="color: #2aa198; background-color: #eff3ea;">would be better to use the unix "wc" utility if you were doing this</span>
-<span style="color: #2aa198; background-color: #eff3ea;">## </span><span style="color: #2aa198; background-color: #eff3ea;">in real life...)</span>
-<span style="color: #6c3163; font-weight: bold;">countChars</span> <span style="color: #4e3163;">&lt;-</span>  <span style="color: #237fbf; font-weight: bold;">function</span><span style="color: #2f96dc;">(</span>x<span style="color: #2f96dc;">)</span> <span style="color: #2f96dc;">{</span>
-  sum<span style="color: #6c3163;">(</span>nchar<span style="color: #2aa198;">(</span>readLines<span style="color: #67b11d;">(</span>x, warn = <span style="color: #428374; font-weight: bold;">FALSE</span><span style="color: #67b11d;">)</span>, type = <span style="color: #2aa198;">"width"</span><span style="color: #2aa198;">)</span><span style="color: #6c3163;">)</span>
-<span style="color: #2f96dc;">}</span>
+<span style="color: #2aa1ae; background-color: #292e34;">## </span><span style="color: #2aa1ae; background-color: #292e34;">function for counting characters (</span><span style="color: #d0bf8f;">NOTE</span><span style="color: #2aa1ae; background-color: #292e34;">: this example isn't realistic -- it </span>
+<span style="color: #2aa1ae; background-color: #292e34;">## </span><span style="color: #2aa1ae; background-color: #292e34;">would be better to use the unix "wc" utility if you were doing this</span>
+<span style="color: #2aa1ae; background-color: #292e34;">## </span><span style="color: #2aa1ae; background-color: #292e34;">in real life...)</span>
+<span style="color: #bc6ec5; font-weight: bold;">countChars</span> <span style="color: #a45bad;">&lt;-</span>  <span style="color: #4f97d7; font-weight: bold;">function</span>(x) {
+  sum(nchar(readLines(x, warn = <span style="color: #ce537a; font-weight: bold;">FALSE</span>), type = <span style="color: #2d9574;">"width"</span>))
+}
 </pre>
 </div>
 
 <p>
-We have <code class="src src-r">length<span style="color: #2f96dc;">(</span>textFiles<span style="color: #2f96dc;">)</span>
+We have <code class="src src-r">length(textFiles)
 </code> text files to process. We can do this using a single core:
 </p>
 <div class="org-src-container">
 
-<pre class="src src-R">system.time<span style="color: #2f96dc;">(</span>nchars <span style="color: #4e3163;">&lt;-</span> unlist<span style="color: #6c3163;">(</span>lapply<span style="color: #2aa198;">(</span>textFiles, countChars<span style="color: #2aa198;">)</span><span style="color: #6c3163;">)</span><span style="color: #2f96dc;">)</span>
+<pre class="src src-R">system.time(nchars <span style="color: #a45bad;">&lt;-</span> unlist(lapply(textFiles, countChars)))
 </pre>
 </div>
 
@@ -519,7 +531,7 @@ but this is too slow. We can do the computation more quickly using multiple core
 </p>
 <div class="org-src-container">
 
-<pre class="src src-R">system.time<span style="color: #2f96dc;">(</span>nchars <span style="color: #4e3163;">&lt;-</span> unlist<span style="color: #6c3163;">(</span>mclapply<span style="color: #2aa198;">(</span>textFiles, countChars, mc.cores = 7<span style="color: #2aa198;">)</span><span style="color: #6c3163;">)</span><span style="color: #2f96dc;">)</span>
+<pre class="src src-R">system.time(nchars <span style="color: #a45bad;">&lt;-</span> unlist(mclapply(textFiles, countChars, mc.cores = <span style="color: #a45bad;">7</span>)))
 </pre>
 </div>
 
@@ -532,7 +544,7 @@ and calculate the total number of characters in the text files by summing over t
 </p>
 <div class="org-src-container">
 
-<pre class="src src-R">sum<span style="color: #2f96dc;">(</span>nchars, na.rm = <span style="color: #428374; font-weight: bold;">TRUE</span><span style="color: #2f96dc;">)</span>
+<pre class="src src-R">sum(nchars, na.rm = <span style="color: #ce537a; font-weight: bold;">TRUE</span>)
 </pre>
 </div>
 
@@ -555,66 +567,66 @@ Running computations in parallel on multiple cores is often an effective way to 
 
 <div class="org-src-container">
 
-<pre class="src src-python"><span style="color: #237fbf; font-weight: bold;">import</span> os
-<span style="color: #237fbf; font-weight: bold;">import</span> fnmatch
-<span style="color: #715ab1;">textFiles</span> = <span style="color: #2f96dc;">[]</span>
-<span style="color: #237fbf; font-weight: bold;">for</span> root, dirnames, filenames <span style="color: #237fbf; font-weight: bold;">in</span> os.walk<span style="color: #2f96dc;">(</span><span style="color: #2aa198;">'/usr/share/texlive'</span><span style="color: #2f96dc;">)</span>:
-    <span style="color: #237fbf; font-weight: bold;">for</span> filename <span style="color: #237fbf; font-weight: bold;">in</span> fnmatch.<span style="color: #1f71ab;">filter</span><span style="color: #2f96dc;">(</span>filenames, <span style="color: #2aa198;">'*.tex'</span><span style="color: #2f96dc;">)</span> + fnmatch.<span style="color: #1f71ab;">filter</span><span style="color: #2f96dc;">(</span>filenames, <span style="color: #2aa198;">"*.txt"</span><span style="color: #2f96dc;">)</span>:
-        textFiles.append<span style="color: #2f96dc;">(</span>os.path.join<span style="color: #6c3163;">(</span>root, filename<span style="color: #6c3163;">)</span><span style="color: #2f96dc;">)</span>
+<pre class="src src-python"><span style="color: #4f97d7; font-weight: bold;">import</span> os
+<span style="color: #4f97d7; font-weight: bold;">import</span> fnmatch
+<span style="color: #7590db;">textFiles</span> = []
+<span style="color: #4f97d7; font-weight: bold;">for</span> root, dirnames, filenames <span style="color: #4f97d7; font-weight: bold;">in</span> os.walk(<span style="color: #2d9574;">'/usr/share/texlive'</span>):
+    <span style="color: #4f97d7; font-weight: bold;">for</span> filename <span style="color: #4f97d7; font-weight: bold;">in</span> fnmatch.<span style="color: #4f97d7;">filter</span>(filenames, <span style="color: #2d9574;">'*.tex'</span>) + fnmatch.<span style="color: #4f97d7;">filter</span>(filenames, <span style="color: #2d9574;">"*.txt"</span>):
+        textFiles.append(os.path.join(root, filename))
 </pre>
 </div>
 
 <p>
-We have <code class="src src-python"><span style="color: #1f71ab;">len</span><span style="color: #2f96dc;">(</span>textFiles<span style="color: #2f96dc;">)</span>
+We have <code class="src src-python"><span style="color: #4f97d7;">len</span>(textFiles)
 </code> <code>2080</code> text files to process. We can do this using a single core:
 </p>
 <div class="org-src-container">
 
-<pre class="src src-python"><span style="color: #237fbf; font-weight: bold;">import</span> time
-<span style="color: #715ab1;">start</span> = time.time<span style="color: #2f96dc;">()</span>
+<pre class="src src-python"><span style="color: #4f97d7; font-weight: bold;">import</span> time
+<span style="color: #7590db;">start</span> = time.time()
 
-<span style="color: #715ab1;">num_chars</span> = <span style="color: #4e3163;">0</span>
-<span style="color: #237fbf; font-weight: bold;">for</span> fname <span style="color: #237fbf; font-weight: bold;">in</span> textFiles:
-    <span style="color: #237fbf; font-weight: bold;">try</span>:
-        <span style="color: #237fbf; font-weight: bold;">with</span> <span style="color: #1f71ab;">open</span><span style="color: #2f96dc;">(</span>fname, <span style="color: #2aa198;">'r'</span><span style="color: #2f96dc;">)</span> <span style="color: #237fbf; font-weight: bold;">as</span> f:
-            <span style="color: #237fbf; font-weight: bold;">for</span> line <span style="color: #237fbf; font-weight: bold;">in</span> f:
-                <span style="color: #715ab1;">num_chars</span> += <span style="color: #1f71ab;">len</span><span style="color: #2f96dc;">(</span>line<span style="color: #2f96dc;">)</span>
-    <span style="color: #237fbf; font-weight: bold;">except</span>:
-        <span style="color: #237fbf; font-weight: bold;">pass</span>
+<span style="color: #7590db;">num_chars</span> = <span style="color: #a45bad;">0</span>
+<span style="color: #4f97d7; font-weight: bold;">for</span> fname <span style="color: #4f97d7; font-weight: bold;">in</span> textFiles:
+    <span style="color: #4f97d7; font-weight: bold;">try</span>:
+        <span style="color: #4f97d7; font-weight: bold;">with</span> <span style="color: #4f97d7;">open</span>(fname, <span style="color: #2d9574;">'r'</span>) <span style="color: #4f97d7; font-weight: bold;">as</span> f:
+            <span style="color: #4f97d7; font-weight: bold;">for</span> line <span style="color: #4f97d7; font-weight: bold;">in</span> f:
+                <span style="color: #7590db;">num_chars</span> += <span style="color: #4f97d7;">len</span>(line)
+    <span style="color: #4f97d7; font-weight: bold;">except</span>:
+        <span style="color: #4f97d7; font-weight: bold;">pass</span>
 
-<span style="color: #715ab1;">stop</span> = time.time<span style="color: #2f96dc;">()</span>
+<span style="color: #7590db;">stop</span> = time.time()
 </pre>
 </div>
 <p>
-. It takes around <code class="src src-python"><span style="color: #237fbf; font-weight: bold;">print</span><span style="color: #2f96dc;">(</span>stop - start<span style="color: #2f96dc;">)</span>
+. It takes around <code class="src src-python"><span style="color: #4f97d7; font-weight: bold;">print</span>(stop - start)
 </code> <code>1.2721843719482422</code> seconds to count the characters in these files, which is aleady pretty fast. But, for even more speed we can use the <code>multiprocessing</code> library to perform the operation using multiple cores:
 </p>
 <div class="org-src-container">
 
-<pre class="src src-python"><span style="color: #237fbf; font-weight: bold;">import</span> multiprocessing
+<pre class="src src-python"><span style="color: #4f97d7; font-weight: bold;">import</span> multiprocessing
 
-<span style="color: #237fbf; font-weight: bold;">def</span> <span style="color: #6c3163; font-weight: bold;">f</span><span style="color: #2f96dc;">(</span>fname<span style="color: #2f96dc;">)</span>:
-    <span style="color: #715ab1;">num_chars</span> = <span style="color: #2f96dc;">[]</span>
-    <span style="color: #237fbf; font-weight: bold;">try</span>:
-        <span style="color: #237fbf; font-weight: bold;">with</span> <span style="color: #1f71ab;">open</span><span style="color: #2f96dc;">(</span>fname, <span style="color: #2aa198;">'r'</span><span style="color: #2f96dc;">)</span> <span style="color: #237fbf; font-weight: bold;">as</span> this_file:
-            <span style="color: #237fbf; font-weight: bold;">for</span> line <span style="color: #237fbf; font-weight: bold;">in</span> this_file:
-                num_chars.append<span style="color: #2f96dc;">(</span><span style="color: #1f71ab;">len</span><span style="color: #6c3163;">(</span>line<span style="color: #6c3163;">)</span><span style="color: #2f96dc;">)</span>
-    <span style="color: #237fbf; font-weight: bold;">except</span>:
-        <span style="color: #237fbf; font-weight: bold;">pass</span>
-    <span style="color: #237fbf; font-weight: bold;">return</span> <span style="color: #1f71ab;">sum</span><span style="color: #2f96dc;">(</span>num_chars<span style="color: #2f96dc;">)</span>
+<span style="color: #4f97d7; font-weight: bold;">def</span> <span style="color: #bc6ec5; font-weight: bold;">f</span>(fname):
+    <span style="color: #7590db;">num_chars</span> = []
+    <span style="color: #4f97d7; font-weight: bold;">try</span>:
+        <span style="color: #4f97d7; font-weight: bold;">with</span> <span style="color: #4f97d7;">open</span>(fname, <span style="color: #2d9574;">'r'</span>) <span style="color: #4f97d7; font-weight: bold;">as</span> this_file:
+            <span style="color: #4f97d7; font-weight: bold;">for</span> line <span style="color: #4f97d7; font-weight: bold;">in</span> this_file:
+                num_chars.append(<span style="color: #4f97d7;">len</span>(line))
+    <span style="color: #4f97d7; font-weight: bold;">except</span>:
+        <span style="color: #4f97d7; font-weight: bold;">pass</span>
+    <span style="color: #4f97d7; font-weight: bold;">return</span> <span style="color: #4f97d7;">sum</span>(num_chars)
 
-<span style="color: #715ab1;">start</span> = time.time<span style="color: #2f96dc;">()</span>
+<span style="color: #7590db;">start</span> = time.time()
 
-<span style="color: #715ab1;">pool</span> = multiprocessing.Pool<span style="color: #2f96dc;">(</span><span style="color: #4e3163;">7</span><span style="color: #2f96dc;">)</span>
-<span style="color: #715ab1;">nchar</span> = pool.<span style="color: #1f71ab;">map</span><span style="color: #2f96dc;">(</span>f, textFiles<span style="color: #2f96dc;">)</span>
-pool.close<span style="color: #2f96dc;">()</span>
-pool.join<span style="color: #2f96dc;">()</span>
+<span style="color: #7590db;">pool</span> = multiprocessing.Pool(<span style="color: #a45bad;">7</span>)
+<span style="color: #7590db;">nchar</span> = pool.<span style="color: #4f97d7;">map</span>(f, textFiles)
+pool.close()
+pool.join()
 
-<span style="color: #715ab1;">end</span> = time.time<span style="color: #2f96dc;">()</span>
+<span style="color: #7590db;">end</span> = time.time()
 </pre>
 </div>
 <p>
-which reduces the time to <code class="src src-python"><span style="color: #237fbf; font-weight: bold;">print</span><span style="color: #2f96dc;">(</span>end - start<span style="color: #2f96dc;">)</span>
+which reduces the time to <code class="src src-python"><span style="color: #4f97d7; font-weight: bold;">print</span>(end - start)
 </code> <code>0.33490753173828125</code> seconds.
 </p>
 </div>
@@ -680,40 +692,40 @@ The submit file template below includes all required elements. (Note that this f
 </p>
 <div class="org-src-container">
 
-<pre class="src src-conf"><span style="color: #2aa198; background-color: #eff3ea;"># </span><span style="color: #2aa198; background-color: #eff3ea;">Universe whould always be 'vanilla'. This line MUST be </span>
-<span style="color: #2aa198; background-color: #eff3ea;">#</span><span style="color: #2aa198; background-color: #eff3ea;">included in your submit file, exactly as shown below.</span>
-<span style="color: #715ab1;">Universe</span> = vanilla
+<pre class="src src-conf"><span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">Universe whould always be 'vanilla'. This line MUST be </span>
+<span style="color: #2aa1ae; background-color: #292e34;">#</span><span style="color: #2aa1ae; background-color: #292e34;">included in your submit file, exactly as shown below.</span>
+<span style="color: #7590db;">Universe</span> = vanilla
 
-<span style="color: #2aa198; background-color: #eff3ea;"># </span><span style="color: #2aa198; background-color: #eff3ea;">The following arguments are _optional_. If included</span>
-<span style="color: #2aa198; background-color: #eff3ea;"># </span><span style="color: #2aa198; background-color: #eff3ea;">they are used to specify the requirements for the</span>
-<span style="color: #2aa198; background-color: #eff3ea;"># </span><span style="color: #2aa198; background-color: #eff3ea;">submission.</span>
-<span style="color: #715ab1;">request_cpus</span> = 1
-<span style="color: #715ab1;">request_disk</span> = 4GB
-<span style="color: #715ab1;">request_memory</span> = 4GB
+<span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">The following arguments are _optional_. If included</span>
+<span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">they are used to specify the requirements for the</span>
+<span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">submission.</span>
+<span style="color: #7590db;">request_cpus</span> = 1
+<span style="color: #7590db;">request_disk</span> = 4GB
+<span style="color: #7590db;">request_memory</span> = 4GB
 
-<span style="color: #2aa198; background-color: #eff3ea;"># </span><span style="color: #2aa198; background-color: #eff3ea;">Enter the path to the program you wish to run.</span>
-<span style="color: #2aa198; background-color: #eff3ea;"># </span><span style="color: #2aa198; background-color: #eff3ea;">The default runs the R program. To run another</span>
-<span style="color: #2aa198; background-color: #eff3ea;"># </span><span style="color: #2aa198; background-color: #eff3ea;">program just change '/user/local/bin/R' to the</span>
-<span style="color: #2aa198; background-color: #eff3ea;"># </span><span style="color: #2aa198; background-color: #eff3ea;">path to the program you want to run. For example,</span>
-<span style="color: #2aa198; background-color: #eff3ea;"># </span><span style="color: #2aa198; background-color: #eff3ea;">to run Stata set Executable to '/usr/local/bin/stata'.</span>
-<span style="color: #715ab1;">Executable</span> = /usr/local/bin/R
+<span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">Enter the path to the program you wish to run.</span>
+<span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">The default runs the R program. To run another</span>
+<span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">program just change '/user/local/bin/R' to the</span>
+<span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">path to the program you want to run. For example,</span>
+<span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">to run Stata set Executable to '/usr/local/bin/stata'.</span>
+<span style="color: #7590db;">Executable</span> = /usr/local/bin/R
 
-<span style="color: #2aa198; background-color: #eff3ea;"># </span><span style="color: #2aa198; background-color: #eff3ea;">Specify any arguments you want to pass to the executable.</span>
-<span style="color: #715ab1;">Arguments</span> = --no-save --no-restore --slave
+<span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">Specify any arguments you want to pass to the executable.</span>
+<span style="color: #7590db;">Arguments</span> = --no-save --no-restore --slave
 
-<span style="color: #2aa198; background-color: #eff3ea;"># </span><span style="color: #2aa198; background-color: #eff3ea;">Specify the relative path to the input file (if any). If you</span>
-<span style="color: #2aa198; background-color: #eff3ea;"># </span><span style="color: #2aa198; background-color: #eff3ea;">are using R this should be your R script. If you are using</span>
-<span style="color: #2aa198; background-color: #eff3ea;"># </span><span style="color: #2aa198; background-color: #eff3ea;">Stata this should be your do file.</span>
-<span style="color: #715ab1;">input</span> = example.R
+<span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">Specify the relative path to the input file (if any). If you</span>
+<span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">are using R this should be your R script. If you are using</span>
+<span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">Stata this should be your do file.</span>
+<span style="color: #7590db;">input</span> = example.R
 
-<span style="color: #2aa198; background-color: #eff3ea;"># </span><span style="color: #2aa198; background-color: #eff3ea;">Specify where to output any results printed by your program.</span>
-<span style="color: #715ab1;">output</span> = output/out.$(Process)
-<span style="color: #2aa198; background-color: #eff3ea;"># </span><span style="color: #2aa198; background-color: #eff3ea;">Specify where to save any errors returned by your program.</span>
-<span style="color: #715ab1;">error</span> = output/error.$(Process)
-<span style="color: #2aa198; background-color: #eff3ea;"># </span><span style="color: #2aa198; background-color: #eff3ea;">Specify where to save the log file.</span>
-<span style="color: #715ab1;">Log</span> = output/log
-<span style="color: #2aa198; background-color: #eff3ea;"># </span><span style="color: #2aa198; background-color: #eff3ea;">Enter the number of processes to request. This should </span>
-<span style="color: #2aa198; background-color: #eff3ea;"># </span><span style="color: #2aa198; background-color: #eff3ea;">always be the last part of your submit file.</span>
+<span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">Specify where to output any results printed by your program.</span>
+<span style="color: #7590db;">output</span> = output/out.$(Process)
+<span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">Specify where to save any errors returned by your program.</span>
+<span style="color: #7590db;">error</span> = output/error.$(Process)
+<span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">Specify where to save the log file.</span>
+<span style="color: #7590db;">Log</span> = output/log
+<span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">Enter the number of processes to request. This should </span>
+<span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">always be the last part of your submit file.</span>
 Queue 10
 </pre>
 </div>
@@ -759,23 +771,23 @@ The first step is to write a script or program to carry out the desired computat
 </p>
 <div class="org-src-container">
 
-<pre class="src src-R"><span style="color: #2aa198; background-color: #eff3ea;">## </span><span style="color: #2aa198; background-color: #eff3ea;">function to simulate data and perform a t.test</span>
-<span style="color: #6c3163; font-weight: bold;">sim.ttest</span> <span style="color: #4e3163;">&lt;-</span> <span style="color: #237fbf; font-weight: bold;">function</span><span style="color: #2f96dc;">(</span>mu1, mu2, sd, n1, n2<span style="color: #2f96dc;">)</span> <span style="color: #2f96dc;">{</span>
-    d <span style="color: #4e3163;">&lt;-</span> data.frame<span style="color: #6c3163;">(</span>x = c<span style="color: #2aa198;">(</span>rep<span style="color: #67b11d;">(</span><span style="color: #2aa198;">"group1"</span>, n1<span style="color: #67b11d;">)</span>, rep<span style="color: #67b11d;">(</span><span style="color: #2aa198;">"group2"</span>, n2<span style="color: #67b11d;">)</span><span style="color: #2aa198;">)</span>,
-                    y = c<span style="color: #2aa198;">(</span>rnorm<span style="color: #67b11d;">(</span>n1, mean = mu1, sd = sd<span style="color: #67b11d;">)</span>,
-                          rnorm<span style="color: #67b11d;">(</span>n2, mean = mu2, sd = sd<span style="color: #67b11d;">)</span><span style="color: #2aa198;">)</span><span style="color: #6c3163;">)</span>
-    <span style="color: #237fbf; font-weight: bold;">return</span><span style="color: #6c3163;">(</span>t.test<span style="color: #2aa198;">(</span>y ~ x, data = d<span style="color: #2aa198;">)</span>$p.value<span style="color: #6c3163;">)</span>
-<span style="color: #2f96dc;">}</span>
+<pre class="src src-R"><span style="color: #2aa1ae; background-color: #292e34;">## </span><span style="color: #2aa1ae; background-color: #292e34;">function to simulate data and perform a t.test</span>
+<span style="color: #bc6ec5; font-weight: bold;">sim.ttest</span> <span style="color: #a45bad;">&lt;-</span> <span style="color: #4f97d7; font-weight: bold;">function</span>(mu1, mu2, sd, n1, n2) {
+    d <span style="color: #a45bad;">&lt;-</span> data.frame(x = c(rep(<span style="color: #2d9574;">"group1"</span>, n1), rep(<span style="color: #2d9574;">"group2"</span>, n2)),
+                    y = c(rnorm(n1, mean = mu1, sd = sd),
+                          rnorm(n2, mean = mu2, sd = sd)))
+    <span style="color: #4f97d7; font-weight: bold;">return</span>(t.test(y ~ x, data = d)$p.value)
+}
 
-<span style="color: #2aa198; background-color: #eff3ea;">##  </span><span style="color: #2aa198; background-color: #eff3ea;">run the function 10,000 times </span>
-p <span style="color: #4e3163;">&lt;-</span> replicate<span style="color: #2f96dc;">(</span>10000,
-               sim.ttest<span style="color: #6c3163;">(</span>mu1 = 1,
-                         mu2 = 1.3,
-                         sd = 1,
-                         n1 = 50,
-                         n2 = 150<span style="color: #6c3163;">)</span><span style="color: #2f96dc;">)</span>
-<span style="color: #2aa198; background-color: #eff3ea;">## </span><span style="color: #2aa198; background-color: #eff3ea;">calculate the proportion of significant tests</span>
-cat<span style="color: #2f96dc;">(</span>length<span style="color: #6c3163;">(</span>p<span style="color: #2aa198;">[</span>p &lt; .05<span style="color: #2aa198;">]</span><span style="color: #6c3163;">)</span>/length<span style="color: #6c3163;">(</span>p<span style="color: #6c3163;">)</span><span style="color: #2f96dc;">)</span>
+<span style="color: #2aa1ae; background-color: #292e34;">##  </span><span style="color: #2aa1ae; background-color: #292e34;">run the function 10,000 times </span>
+p <span style="color: #a45bad;">&lt;-</span> replicate(<span style="color: #a45bad;">10000</span>,
+               sim.ttest(mu1 = <span style="color: #a45bad;">1</span>,
+                         mu2 = <span style="color: #a45bad;">1.3</span>,
+                         sd = <span style="color: #a45bad;">1</span>,
+                         n1 = <span style="color: #a45bad;">50</span>,
+                         n2 = <span style="color: #a45bad;">150</span>))
+<span style="color: #2aa1ae; background-color: #292e34;">## </span><span style="color: #2aa1ae; background-color: #292e34;">calculate the proportion of significant tests</span>
+cat(length(p[p &lt; .05])/length(p))
 </pre>
 </div>
 </div></li>
@@ -786,30 +798,30 @@ If we want to run this function one million times it may take a while, especiall
 </p>
 <div class="org-src-container">
 
-<pre class="src src-conf"><span style="color: #2aa198; background-color: #eff3ea;"># </span><span style="color: #2aa198; background-color: #eff3ea;">Universe whould always be 'vanilla'. This line MUST be </span>
-<span style="color: #2aa198; background-color: #eff3ea;">#</span><span style="color: #2aa198; background-color: #eff3ea;">included in your submit file, exactly as shown below.</span>
-<span style="color: #715ab1;">Universe</span> = vanilla
+<pre class="src src-conf"><span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">Universe whould always be 'vanilla'. This line MUST be </span>
+<span style="color: #2aa1ae; background-color: #292e34;">#</span><span style="color: #2aa1ae; background-color: #292e34;">included in your submit file, exactly as shown below.</span>
+<span style="color: #7590db;">Universe</span> = vanilla
 
-<span style="color: #2aa198; background-color: #eff3ea;"># </span><span style="color: #2aa198; background-color: #eff3ea;">Enter the path to the R program.</span>
-<span style="color: #715ab1;">Executable</span> = /usr/local/bin/R
+<span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">Enter the path to the R program.</span>
+<span style="color: #7590db;">Executable</span> = /usr/local/bin/R
 
-<span style="color: #2aa198; background-color: #eff3ea;"># </span><span style="color: #2aa198; background-color: #eff3ea;">Specify any arguments you want to pass to the executable.</span>
-<span style="color: #2aa198; background-color: #eff3ea;"># </span><span style="color: #2aa198; background-color: #eff3ea;">Here we pass arguments to make R not save or restore workspaces,</span>
-<span style="color: #2aa198; background-color: #eff3ea;"># </span><span style="color: #2aa198; background-color: #eff3ea;">and to run as quietly as possible.</span>
-<span style="color: #715ab1;">Arguments</span> = --no-save --no-restore --slave
+<span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">Specify any arguments you want to pass to the executable.</span>
+<span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">Here we pass arguments to make R not save or restore workspaces,</span>
+<span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">and to run as quietly as possible.</span>
+<span style="color: #7590db;">Arguments</span> = --no-save --no-restore --slave
 
-<span style="color: #2aa198; background-color: #eff3ea;"># </span><span style="color: #2aa198; background-color: #eff3ea;">Specify the relative path to the input file</span>
-<span style="color: #715ab1;">input</span> = power.R
+<span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">Specify the relative path to the input file</span>
+<span style="color: #7590db;">input</span> = power.R
 
-<span style="color: #2aa198; background-color: #eff3ea;"># </span><span style="color: #2aa198; background-color: #eff3ea;">Specify where to output any results printed by your program.</span>
-<span style="color: #715ab1;">output</span> = output/out.$(Process)
-<span style="color: #2aa198; background-color: #eff3ea;"># </span><span style="color: #2aa198; background-color: #eff3ea;">Specify where to save any errors returned by your program.</span>
-<span style="color: #715ab1;">error</span> = output/error.$(Process)
-<span style="color: #2aa198; background-color: #eff3ea;"># </span><span style="color: #2aa198; background-color: #eff3ea;">Specify where to save the log file.</span>
-<span style="color: #715ab1;">Log</span> = output/log
+<span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">Specify where to output any results printed by your program.</span>
+<span style="color: #7590db;">output</span> = output/out.$(Process)
+<span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">Specify where to save any errors returned by your program.</span>
+<span style="color: #7590db;">error</span> = output/error.$(Process)
+<span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">Specify where to save the log file.</span>
+<span style="color: #7590db;">Log</span> = output/log
 
-<span style="color: #2aa198; background-color: #eff3ea;"># </span><span style="color: #2aa198; background-color: #eff3ea;">Enter the number of processes to request.</span>
-<span style="color: #2aa198; background-color: #eff3ea;"># </span><span style="color: #2aa198; background-color: #eff3ea;">This section should always come last.</span>
+<span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">Enter the number of processes to request.</span>
+<span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">This section should always come last.</span>
 Queue 100
 </pre>
 </div>
@@ -826,7 +838,565 @@ Now that we have our script and the submit file we can run submit the job as fol
 </ol>
 </div></li>
 
-<li><a id="orgheadline26"></a>Monitoring submitted jobs<br  /><div class="outline-text-5" id="text-orgheadline26">
+<li><a id="orgheadline26"></a>Aggregating results<br  /><div class="outline-text-5" id="text-orgheadline26">
+<p>
+When your batch job is finished you are usually left with multiple output files that need to be aggregated. In the case of our simulation example, we have files <code>output/out.0 -- output/out99</code>, each of which contains a single number representing the proportion of significant tests. We can aggregate them with a simple R script, like this:
+</p>
+<div class="org-src-container">
+
+<pre class="src src-R"><span style="color: #2aa1ae; background-color: #292e34;">## </span><span style="color: #2aa1ae; background-color: #292e34;">list all output files in the output directory</span>
+output_files <span style="color: #a45bad;">&lt;-</span> list.files(<span style="color: #2d9574;">"output"</span>,
+                           pattern = <span style="color: #2d9574;">"^out\\.[0-9]+$"</span>,
+                           full.names=<span style="color: #ce537a; font-weight: bold;">TRUE</span>)
+
+<span style="color: #2aa1ae; background-color: #292e34;">## </span><span style="color: #2aa1ae; background-color: #292e34;">read each file, convert it to a number, and take the average</span>
+mean(as.double(sapply(
+                      output_files,
+                      readLines,
+                      warn = <span style="color: #ce537a; font-weight: bold;">FALSE</span>)))
+</pre>
+</div>
+</div></li>
+
+<li><a id="orgheadline27"></a>Try it yourself!<br  /><div class="outline-text-5" id="text-orgheadline27">
+<p>
+Download the <a href="R_examples/power1.zip">power simulation example files</a>, to the RCE, extract the zip file and running <code>condor_submit power.submit</code> in the <code>power1</code> directory.
+</p>
+</div></li></ul>
+</div>
+
+<div id="outline-container-orgheadline28" class="outline-4">
+<h4 id="orgheadline28">Batch example: Power simulation in R with varying parameters</h4>
+<div class="outline-text-4" id="text-orgheadline28">
+<p>
+The previous example was relatively simple, because we wanted to run exactly the same code on all 100 nodes. Often however you want each node to do something slightly different. For example, we may wish to vary the sample size from 100 &#x2013; 500 in increments of 10, to see how power changes as a function of that parameter. In that case we need to pass some additional information to each process, telling it which parameter space it is responsible for. 
+</p>
+
+<p>
+As it turns out, we almost already know how to do that: if you you look closely at the submit file in the previous example you will notice that we used <code>$(Process)</code> to append the process number to the output and error files. 
+</p>
+</div>
+<ul class="org-ul"><li><a id="orgheadline29"></a>Submit file passing process as an argument<br  /><div class="outline-text-5" id="text-orgheadline29">
+<p>
+We can use the <code>$(Process)</code> macro to pass information to our program, like this:
+</p>
+<div class="org-src-container">
+
+<pre class="src src-conf"><span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">Universe whould always be 'vanilla'. This line MUST be </span>
+<span style="color: #2aa1ae; background-color: #292e34;">#</span><span style="color: #2aa1ae; background-color: #292e34;">included in your submit file, exactly as shown below.</span>
+<span style="color: #7590db;">Universe</span> = vanilla
+
+<span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">Enter the path to the R program.</span>
+<span style="color: #7590db;">Executable</span> = /usr/local/bin/R
+
+<span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">Specify any arguments you want to pass to the executable</span>
+<span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">to make r not save or restore workspaces, and to </span>
+<span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">run as quietly as possible</span>
+<span style="color: #7590db;">Arguments</span> = --no-save --no-restore --slave --args $(Process)
+
+<span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">Specify the relative path to the input file</span>
+<span style="color: #7590db;">input</span> = power.R
+
+<span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">Specify where to save any errors returned by your program.</span>
+<span style="color: #7590db;">error</span> = output/error.$(Process)
+
+<span style="color: #7590db;">Log</span> = log.txt
+<span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">Enter the number of processes to request.</span>
+Queue 40
+</pre>
+</div>
+<p>
+Notice that we used <code>--args $(Process)</code> to pass the process number to the R program. <code>$(Process)</code> will be an integer starting from <code>0</code>. 
+</p>
+</div></li>
+
+<li><a id="orgheadline30"></a>R script argument processing<br  /><div class="outline-text-5" id="text-orgheadline30">
+<p>
+Next we need to 1) retrieve the process number in our R program and 2) map it to the parameter space. We can retrieve the arguments in R like this:
+</p>
+<div class="org-src-container">
+
+<pre class="src src-R"><span style="color: #2aa1ae; background-color: #292e34;">## </span><span style="color: #2aa1ae; background-color: #292e34;">retrieve arguments passed from the command line.</span>
+process <span style="color: #a45bad;">&lt;-</span> as.integer(as.character(commandArgs(trailingOnly = <span style="color: #ce537a; font-weight: bold;">TRUE</span>)))
+</pre>
+</div>
+<p>
+We now have a variable in R that tells us which process we are. Now we need to map that to our parameter space; recall that we want to test sample sizes from 100 to 500, so we need to map <code>process 0</code> to <code>n = 100</code>,  <code>process 1</code> to <code>n = 110</code>, <code>process 2</code> to <code>n = 120</code> and so on:
+</p>
+<div class="org-src-container">
+
+<pre class="src src-R"><span style="color: #2aa1ae; background-color: #292e34;">## </span><span style="color: #2aa1ae; background-color: #292e34;">map process to sample size parameter.</span>
+n <span style="color: #a45bad;">&lt;-</span> (process + <span style="color: #a45bad;">100</span>) + (process*<span style="color: #a45bad;">10</span> - process)
+</pre>
+</div>
+
+<p>
+There is one additional complication we need to handle: in the previous example we did need to keep track of the parameters used by each process because the parameters did not vary. Now that they do, it would be nice if we had output that recorded the value of the varying parameter as well as the result. We could of course just print the <code>n</code> parameter we calculated from the process number along with the result, but it will be easier to combine the outputs if we write them to a machine-readable format (e.g., a comma-separated-values file). You may have noticed that in the submit file above I omitted the <code>output</code> directive: that is because we are going to explicitly save the results in the R script, so we don't need the batch scheduler to save those output files for us.
+</p>
+
+<p>
+Now we can set up the simulation as before, passing the <code>n</code> calculated above into our simulation function, writing the results to files. 
+</p>
+<div class="org-src-container">
+
+<pre class="src src-R">  <span style="color: #2aa1ae; background-color: #292e34;">## </span><span style="color: #2aa1ae; background-color: #292e34;">function to simulate data and perform a t.test</span>
+  <span style="color: #bc6ec5; font-weight: bold;">sim.ttest</span> <span style="color: #a45bad;">&lt;-</span> <span style="color: #4f97d7; font-weight: bold;">function</span>(mu1, mu2, sd, n1, n2) {
+      d <span style="color: #a45bad;">&lt;-</span> data.frame(x = c(rep(<span style="color: #2d9574;">"group1"</span>, n1), rep(<span style="color: #2d9574;">"group2"</span>, n2)),
+                      y = c(rnorm(n1, mean = mu1, sd = sd),
+                            rnorm(n2, mean = mu2, sd = sd)))
+      <span style="color: #4f97d7; font-weight: bold;">return</span>(t.test(y ~ x, data = d)$p.value)
+  }
+
+  <span style="color: #2aa1ae; background-color: #292e34;">##  </span><span style="color: #2aa1ae; background-color: #292e34;">run the function 10,000 times </span>
+  p <span style="color: #a45bad;">&lt;-</span> replicate(<span style="color: #a45bad;">10000</span>,
+                 sim.ttest(mu1 = <span style="color: #a45bad;">1</span>,
+                           mu2 = <span style="color: #a45bad;">1.3</span>,
+                           sd = <span style="color: #a45bad;">1</span>,
+                           n1 = n,
+                           n2 = n))
+write.csv(data.frame(n = n, power = length(p[p &lt; .05])/length(p)),
+          row.names = <span style="color: #ce537a; font-weight: bold;">FALSE</span>,
+          file = paste0(<span style="color: #2d9574;">"output/out"</span>, process, <span style="color: #2d9574;">".csv"</span>))
+</pre>
+</div>
+
+<p>
+Now we have all the required elements to submit out job, and can do so using <code>condor_submit</code> as before. 
+</p>
+</div></li>
+
+<li><a id="orgheadline31"></a>Aggregating results<br  /><div class="outline-text-5" id="text-orgheadline31">
+<p>
+Each of our 40 processes produced a file in the <code>output</code> directory name <code>out&lt;process&gt;csv</code>; our next task is to aggregate these results. The R script below reads each of these files, joins them together into a single data.frame, and plots the result.
+</p>
+<div class="org-src-container">
+
+<pre class="src src-R"><span style="color: #2aa1ae; background-color: #292e34;">## </span><span style="color: #2aa1ae; background-color: #292e34;">list all output files in the output directory</span>
+output_files <span style="color: #a45bad;">&lt;-</span> list.files(<span style="color: #2d9574;">"output"</span>,
+                           pattern = <span style="color: #2d9574;">"^out[0-9]+\\.csv$"</span>,
+                           full.names=<span style="color: #ce537a; font-weight: bold;">TRUE</span>)
+
+<span style="color: #2aa1ae; background-color: #292e34;">## </span><span style="color: #2aa1ae; background-color: #292e34;">read each file and append them</span>
+results <span style="color: #a45bad;">&lt;-</span> do.call(rbind, lapply(output_files, read.csv))
+
+<span style="color: #2aa1ae; background-color: #292e34;">## </span><span style="color: #2aa1ae; background-color: #292e34;">plot</span>
+plot(results)
+abline(h = <span style="color: #a45bad;">0.8</span>)
+</pre>
+</div>
+
+
+<div class="figure">
+<p><img src="images/powerDist.png" alt="powerDist.png" />
+</p>
+</div>
+</div></li>
+
+<li><a id="orgheadline32"></a>Try it yourself!<br  /><div class="outline-text-5" id="text-orgheadline32">
+<p>
+Download the <a href="R_examples/power2.zip">power simulation example files</a>, to the RCE, extract the zip file, and run the example by calling <code>condor_submit power.submit</code> from the <code>power2</code> directory.
+</p>
+</div></li></ul>
+</div>
+</div>
+
+<div id="outline-container-orgheadline19" class="outline-3">
+<h3 id="orgheadline19">Stata Batch Examples</h3>
+<div class="outline-text-3" id="text-orgheadline19">
+<p>
+In this example we use the batch system to bootstrap a distribution of means. Each process will calculate the mean for a single bootstrap sample and save the result. Since we need to give the output files unique names we will pass the batch process number to Stata and use it to construct the file names.
+</p>
+</div>
+<div id="outline-container-orgheadline33" class="outline-4">
+<h4 id="orgheadline33">Stata bootstrap do-file</h4>
+<div class="outline-text-4" id="text-orgheadline33">
+<p>
+To use the batch system we need to write a do-file that does the calculation without further user input. The do-file below reads a Stata data set, sets a seed for random number generation, samples (with replacement) from the data, calculates the average value of the sampled data, and saves the result.
+</p>
+<div class="org-src-container">
+
+<pre class="src src-stata"><span style="color: #a45bad;">set</span> <span style="color: #a45bad;">mo</span><span style="color: #ce537a; font-weight: bold;">re</span> off
+
+<span style="color: #2aa1ae; background-color: #292e34;">// collect the arguments passed by submit file</span>
+args process
+
+<span style="color: #2aa1ae; background-color: #292e34;">// load the dataset</span>
+<span style="color: #4f97d7; font-weight: bold;">use</span> <span style="color: #2d9574;">"mydata"</span>, <span style="color: #4f97d7; font-weight: bold;">clear</span>
+
+<span style="color: #2aa1ae; background-color: #292e34;">// set seed (shouldn't have to do this, but stata's</span>
+<span style="color: #2aa1ae; background-color: #292e34;">// random bsample defaults to the same seed each time).</span>
+<span style="color: #2aa1ae; background-color: #292e34;">// we nee to find a better way to do this.</span>
+<span style="color: #a45bad;">set</span> <span style="color: #a45bad;">se</span><span style="color: #ce537a; font-weight: bold;">ed</span> `<span style="color: #7590db;">process</span>'
+
+<span style="color: #2aa1ae; background-color: #292e34;">// sample with replacement</span>
+<span style="color: #4f97d7; font-weight: bold;">bsample</span>, cluster(id) idcluster(newid)
+
+<span style="color: #2aa1ae; background-color: #292e34;">// calculate the mean and standard deviation</span>
+collapse (mean) mean_myvar = myvar (sd) sd_myvar = myvar
+
+<span style="color: #2aa1ae; background-color: #292e34;">// save the result, appending the process number to the file name</span>
+<span style="color: #4f97d7; font-weight: bold;">save</span> <span style="color: #2d9574;">"output/output_`</span><span style="color: #7590db;">process</span><span style="color: #2d9574;">'.dta"</span>, <span style="color: #4f97d7; font-weight: bold;">replace</span>
+</pre>
+</div>
+<p>
+Note the use of <code>args process</code>, which retrieves the value of the process argument. The argument itself is specified in the <code>.submit</code> file (see below).
+</p>
+</div>
+</div>
+<div id="outline-container-orgheadline34" class="outline-4">
+<h4 id="orgheadline34">Submit file</h4>
+<div class="outline-text-4" id="text-orgheadline34">
+<p>
+The Stata code in the example above draws one bootstrap sample and calculates the mean. If we want to do this 1,000 times we could write a loop, but each iteration would be done sequentially. We can carry out this operation faster by running it simultaneously on hundreds of machines. We just need a <code>.submit</code> file like the one below:
+</p>
+<div class="org-src-container">
+
+<pre class="src src-conf"><span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">Universe whould always be 'vanilla'. This line MUST be </span>
+<span style="color: #2aa1ae; background-color: #292e34;">#</span><span style="color: #2aa1ae; background-color: #292e34;">included in your submit file, exactly as shown below.</span>
+<span style="color: #7590db;">Universe</span> = vanilla
+
+<span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">Enter the path to the Stata program.</span>
+<span style="color: #7590db;">Executable</span> = /usr/local/bin/stata-mp
+
+<span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">Specify any arguments you want to pass to the executable.</span>
+<span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">Here we pass arguments to make Stata run the bootstrap.do</span>
+<span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">file. We also pass the process number, which will be used</span>
+<span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">to append the process number to the output files.</span>
+<span style="color: #7590db;">Arguments</span> = -q do bootstrap.do $(Process)
+
+<span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">Specify where to output any results printed by your program.</span>
+<span style="color: #7590db;">output</span> = output/bootstrap$(Process).out
+<span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">Specify where to save any errors returned by your program.</span>
+<span style="color: #7590db;">error</span> = output/bootstrap$(Process).err
+<span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">Specify where to save the log file.</span>
+<span style="color: #7590db;">Log</span> = output/bootstrap$(Process).log
+
+<span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">Enter the number of processes to request.</span>
+<span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">This section should always come last.</span>
+Queue 1000
+</pre>
+</div>
+<p>
+Notice that we passed the <code>$(Process)</code> argument so that we can retrieve that value in the do-file and save each output to a unique file that includes the process name.
+</p>
+
+<p>
+To submit this job we open a terminal on the RCE, <code>cd</code> to the project folder and run <code>condor_submit bootstrap.submit</code> to submit the jobs to the cluster. The <a href="Stata_examples/bootstrap.zip">bootstrap example files are available for download</a> so you can try it yourself.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline35" class="outline-4">
+<h4 id="orgheadline35">Aggregating results</h4>
+<div class="outline-text-4" id="text-orgheadline35">
+<p>
+Each of our 1000 processes produced a file in the <code>output</code> directory name <code>out&lt;process&gt;.dta</code>; our next task is to aggregate these results. The do-file below reads each of these files, joins them together, appends them, and plots the result.
+</p>
+<div class="org-src-container">
+
+<pre class="src src-Stata"><span style="color: #4f97d7; font-weight: bold;">clear</span>
+<span style="color: #a45bad;">set</span> <span style="color: #a45bad;">mo</span><span style="color: #ce537a; font-weight: bold;">re</span> off
+<span style="color: #2aa1ae; background-color: #292e34;">// change to the output directory</span>
+<span style="color: #4f97d7; font-weight: bold;">cd</span> output
+<span style="color: #2aa1ae; background-color: #292e34;">// get a list of the output files created by bootstrap.do</span>
+<span style="color: #a45bad;">local</span><span style="color: #7590db;"> list</span>: <span style="color: #a45bad;">dir</span> . files <span style="color: #2d9574;">"output*.dta"</span>
+<span style="color: #2aa1ae; background-color: #292e34;">//loop over the output files appending each one</span>
+<span style="color: #a45bad;">local</span><span style="color: #7590db;"> f</span>=<span style="color: #a45bad;">1</span>
+foreach file of local <span style="color: #a45bad;">list</span> {
+        <span style="color: #a45bad;">di</span> <span style="color: #2d9574;">"`file"</span>'
+        <span style="color: #a45bad;">if</span> `<span style="color: #7590db;">f</span>'== <span style="color: #a45bad;">1</span> {
+                <span style="color: #4f97d7; font-weight: bold;">use</span> `<span style="color: #7590db;">file</span>', <span style="color: #4f97d7; font-weight: bold;">clear</span>
+        }
+        <span style="color: #a45bad;">else</span> {
+                <span style="color: #4f97d7; font-weight: bold;">append</span> <span style="color: #a45bad;">using</span> `<span style="color: #7590db;">file</span>'
+        }
+        <span style="color: #a45bad;">local</span> ++f
+}
+<span style="color: #2aa1ae; background-color: #292e34;">// save the appended results</span>
+saveold <span style="color: #2d9574;">"mybootresults"</span>, <span style="color: #4f97d7; font-weight: bold;">replace</span>
+
+<span style="color: #2aa1ae; background-color: #292e34;">// make a histogram</span>
+hist(mean_myvar)
+
+<span style="color: #2aa1ae; background-color: #292e34;">// save the graph</span>
+graph export <span style="color: #2d9574;">"stata_bootstrap.eps"</span>, <span style="color: #4f97d7; font-weight: bold;">replace</span>
+</pre>
+</div>
+
+
+<div class="figure">
+<p><img src="images/stata_bootstrap.png" alt="stata_bootstrap.png" />
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-orgheadline36" class="outline-4">
+<h4 id="orgheadline36">Try it yourself!</h4>
+<div class="outline-text-4" id="text-orgheadline36">
+<p>
+Download the <a href="Stata_examples/bootstrap.zip">bootstrap example files</a>, to the RCE, extract the zip file, and run the example by calling <code>condor_submit bootstrap.submit</code> from the <code>bootstrap</code> directory.
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgheadline20" class="outline-3">
+<h3 id="orgheadline20">Python Batch Examples</h3>
+<div class="outline-text-3" id="text-orgheadline20">
+</div><div id="outline-container-orgheadline37" class="outline-4">
+<h4 id="orgheadline37">Batch example: Simple power simulation in python</h4>
+<div class="outline-text-4" id="text-orgheadline37">
+<p>
+The simplest kind of batch job is one for which you just want to run the same code multiple times, without varying any parameters. For example, suppose that we wish to run a power simulation for a t.test with unequal group sizes. 
+</p>
+</div>
+
+<ul class="org-ul"><li><a id="orgheadline38"></a>python power simulation script<br  /><div class="outline-text-5" id="text-orgheadline38">
+<p>
+The first step is to write a script or program to carry out the desired computation. The python script below simulates distributions with a specified mean difference, performs two-sample t-tests on the difference, and calculates the proportion of significant tests.
+</p>
+<div class="org-src-container">
+
+<pre class="src src-python"><span style="color: #4f97d7; font-weight: bold;">import</span> numpy <span style="color: #4f97d7; font-weight: bold;">as</span> np
+<span style="color: #4f97d7; font-weight: bold;">from</span> scipy <span style="color: #4f97d7; font-weight: bold;">import</span> stats
+
+<span style="color: #2aa1ae; background-color: #292e34;">## </span><span style="color: #2aa1ae; background-color: #292e34;">function to simulate data and perform a t.test</span>
+<span style="color: #4f97d7; font-weight: bold;">def</span> <span style="color: #bc6ec5; font-weight: bold;">sim_ttest</span>(mu1, mu2, sd, n1, n2):
+    <span style="color: #7590db;">x</span> = stats.norm.rvs(loc = mu1, scale = sd, size = n1)
+    <span style="color: #7590db;">y</span> = stats.norm.rvs(loc = mu2, scale = sd, size = n2)
+    <span style="color: #4f97d7; font-weight: bold;">return</span>(stats.ttest_ind(x, y)[<span style="color: #a45bad;">1</span>])
+
+<span style="color: #2aa1ae; background-color: #292e34;">##  </span><span style="color: #2aa1ae; background-color: #292e34;">run the function 10,000 times</span>
+<span style="color: #7590db;">nsims</span> = <span style="color: #a45bad;">10000</span>
+<span style="color: #7590db;">p</span> = [sim_ttest(<span style="color: #a45bad;">1</span>, <span style="color: #a45bad;">1</span>.<span style="color: #a45bad;">3</span>, <span style="color: #a45bad;">1</span>, <span style="color: #a45bad;">50</span>, <span style="color: #a45bad;">150</span>)  <span style="color: #4f97d7; font-weight: bold;">for</span> x <span style="color: #4f97d7; font-weight: bold;">in</span> <span style="color: #4f97d7;">range</span>(nsims)]
+<span style="color: #2aa1ae; background-color: #292e34;">## </span><span style="color: #2aa1ae; background-color: #292e34;">calculate proportion of significant tests</span>
+<span style="color: #4f97d7; font-weight: bold;">print</span>(<span style="color: #4f97d7;">len</span>([x <span style="color: #4f97d7; font-weight: bold;">for</span> x <span style="color: #4f97d7; font-weight: bold;">in</span> p <span style="color: #4f97d7; font-weight: bold;">if</span> x &lt; .<span style="color: #a45bad;">05</span>])/nsims)
+</pre>
+</div>
+
+<pre class="example">
+....:    ....:    ....:    ....:
+
+
+
+
+0.4468
+</pre>
+</div></li>
+
+<li><a id="orgheadline39"></a>Submit file<br  /><div class="outline-text-5" id="text-orgheadline39">
+<p>
+If we want to run this function one million times it may take a while, especially if our computer is an older less powerful model. So let's run it on 100 separate machines (each one will simulate the test 10000 times). To do that we need, in addition to the python script above, a submit file to request resources and run the computation.  
+</p>
+<div class="org-src-container">
+
+<pre class="src src-conf"><span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">Universe whould always be 'vanilla'. This line MUST be </span>
+<span style="color: #2aa1ae; background-color: #292e34;">#</span><span style="color: #2aa1ae; background-color: #292e34;">included in your submit file, exactly as shown below.</span>
+<span style="color: #7590db;">Universe</span> = vanilla
+
+<span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">Enter the path to the python program.</span>
+<span style="color: #7590db;">Executable</span> = /usr/local/bin/python33
+
+<span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">Specify any arguments you want to pass to the executable.</span>
+<span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">Here we pass arguments to make python not save or restore workspaces,</span>
+<span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">and to run as quietly as possible.</span>
+<span style="color: #7590db;">Arguments</span> = power.py
+
+<span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">Note that unlike R batch job submission we pass the python script in</span>
+<span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">the Arguments section rather than in the "Input" section.</span>
+<span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">Specify the relative path to the input file</span>
+
+<span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">Specify where to output any results printed by your program.</span>
+<span style="color: #7590db;">output</span> = output/out.$(Process)
+<span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">Specify where to save any errors returned by your program.</span>
+<span style="color: #7590db;">error</span> = output/error.$(Process)
+<span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">Specify where to save the log file.</span>
+<span style="color: #7590db;">Log</span> = output/log
+
+<span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">Enter the number of processes to request.</span>
+<span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">This section should always come last.</span>
+Queue 100
+</pre>
+</div>
+
+<p>
+Now that we have our script and the submit file we can run submit the job as follows:
+</p>
+<ol class="org-ol">
+<li>make a project folder for this run if it doesn't exist</li>
+<li>save the python script (as power.python) and the submit file (as power.submit) in the project folder</li>
+<li>make a sub folder named <code>output</code></li>
+<li>open a terminal and <code>cd</code> to the project folder</li>
+<li>run <code>condor_submit power.submit</code> to submit the jobs to the cluster</li>
+</ol>
+</div></li>
+
+<li><a id="orgheadline40"></a>Aggregating results<br  /><div class="outline-text-5" id="text-orgheadline40">
+<p>
+When your batch job is finished you are usually left with multiple output files that need to be aggregated. In the case of our simulation example, we have files <code>output/out.0 -- output/out99</code>, each of which contains a single number representing the proportion of significant tests. We can aggregate them with a simple python script, like this:
+</p>
+<div class="org-src-container">
+
+<pre class="src src-python"><span style="color: #4f97d7; font-weight: bold;">import</span> numpy <span style="color: #4f97d7; font-weight: bold;">as</span> np
+<span style="color: #4f97d7; font-weight: bold;">import</span> glob
+<span style="color: #2aa1ae; background-color: #292e34;">## </span><span style="color: #2aa1ae; background-color: #292e34;">list all output files in the output directory</span>
+<span style="color: #7590db;">output_files</span> = glob.glob(<span style="color: #2d9574;">"output/out*"</span>)
+
+<span style="color: #7590db;">output_values</span> = <span style="color: #4f97d7;">map</span>(<span style="color: #4f97d7; font-weight: bold;">lambda</span> f: np.<span style="color: #4f97d7;">float</span>(<span style="color: #4f97d7;">open</span>(f).read()), output_files)
+<span style="color: #4f97d7; font-weight: bold;">print</span>(<span style="color: #4f97d7;">list</span>(output_values))
+</pre>
+</div>
+</div></li>
+
+<li><a id="orgheadline41"></a>Try it yourself!<br  /><div class="outline-text-5" id="text-orgheadline41">
+<p>
+Download the <a href="Python_examples/power1.zip">power simulation example files</a>, to the pythonCE, extract the zip file and running <code>condor_submit power.submit</code> in the <code>power1</code> directory.
+</p>
+</div></li></ul>
+</div>
+
+<div id="outline-container-orgheadline42" class="outline-4">
+<h4 id="orgheadline42">Batch example: Power simulation in python with varying parameters</h4>
+<div class="outline-text-4" id="text-orgheadline42">
+<p>
+The previous example was relatively simple, because we wanted to run exactly the same code on all 100 nodes. Often however you want each node to do something slightly different. For example, we may wish to vary the sample size from 100 &#x2013; 500 in increments of 10, to see how power changes as a function of that parameter. In that case we need to pass some additional information to each process, telling it which parameter space it is responsible for. 
+</p>
+
+<p>
+As it turns out, we almost already know how to do that: if you you look closely at the submit file in the previous example you will notice that we used <code>$(Process)</code> to append the process number to the output and error files. 
+</p>
+</div>
+<ul class="org-ul"><li><a id="orgheadline43"></a>Submit file passing process as an argument<br  /><div class="outline-text-5" id="text-orgheadline43">
+<p>
+We can use the <code>$(Process)</code> macro to pass information to our program, like this:
+</p>
+<div class="org-src-container">
+
+<pre class="src src-conf">  <span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">Universe whould always be 'vanilla'. This line MUST be </span>
+  <span style="color: #2aa1ae; background-color: #292e34;">#</span><span style="color: #2aa1ae; background-color: #292e34;">included in your submit file, exactly as shown below.</span>
+  <span style="color: #7590db;">Universe</span> = vanilla
+
+  <span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">Enter the path to the python program.</span>
+  <span style="color: #7590db;">Executable</span> = /usr/local/bin/python33
+
+  <span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">Specify any arguments you want to pass to the executable</span>
+  <span style="color: #7590db;">Arguments</span> = power.py $(Process)
+
+<span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">Specify where to output any results printed by your program.</span>
+  <span style="color: #7590db;">output</span> = output/out.$(Process)
+
+  <span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">Specify where to save any errors returned by your program.</span>
+  <span style="color: #7590db;">error</span> = output/error.$(Process)
+
+  <span style="color: #7590db;">Log</span> = log.txt
+  <span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">Enter the number of processes to request.</span>
+  Queue 40
+</pre>
+</div>
+
+<p>
+Notice that we used <code>--args $(Process)</code> to pass the process number to the python program. <code>$(Process)</code> will be an integer starting from <code>0</code>. 
+</p>
+</div></li>
+
+<li><a id="orgheadline44"></a>python script argument processing<br  /><div class="outline-text-5" id="text-orgheadline44">
+<p>
+Next we need to 1) retrieve the process number in our python program and 2) map it to the parameter space. We can retrieve the arguments in python like this:
+</p>
+<div class="org-src-container">
+
+<pre class="src src-python"><span style="color: #4f97d7; font-weight: bold;">import</span> sys
+<span style="color: #2aa1ae; background-color: #292e34;">## </span><span style="color: #2aa1ae; background-color: #292e34;">retrieve arguments passed from the command line.</span>
+<span style="color: #7590db;">process</span> = <span style="color: #4f97d7;">int</span>(sys.argv[<span style="color: #a45bad;">1</span>])
+</pre>
+</div>
+<p>
+We now have a variable in python that tells us which process we are. Now we need to map that to our parameter space; recall that we want to test sample sizes from 100 to 500, so we need to map <code>process 0</code> to <code>n = 100</code>,  <code>process 1</code> to <code>n = 110</code>, <code>process 2</code> to <code>n = 120</code> and so on:
+</p>
+<div class="org-src-container">
+
+<pre class="src src-python"><span style="color: #2aa1ae; background-color: #292e34;">## </span><span style="color: #2aa1ae; background-color: #292e34;">map process to sample size parameter.</span>
+<span style="color: #7590db;">n</span> = (process + <span style="color: #a45bad;">100</span>) + (process*<span style="color: #a45bad;">10</span> - process)
+</pre>
+</div>
+
+<p>
+There is one additional complication we need to handle: in the previous example we did need to keep track of the parameters used by each process because the parameters did not vary. Now that they do, it would be nice if we had output that recorded the value of the varying parameter as well as the result. We could of course just print the <code>n</code> parameter we calculated from the process number along with the result, but it will be easier to combine the outputs if we write them to a machine-readable format (e.g., a comma-separated-values file). You may have noticed that in the submit file above I omitted the <code>output</code> directive: that is because we are going to explicitly save the results in the python script, so we don't need the batch scheduler to save those output files for us.
+</p>
+
+<p>
+Now we can set up the simulation as before, passing the <code>n</code> calculated above into our simulation function, writing the results to files. 
+</p>
+<div class="org-src-container">
+
+<pre class="src src-python"><span style="color: #2aa1ae; background-color: #292e34;">## </span><span style="color: #2aa1ae; background-color: #292e34;">function to simulate data and perform a t.test</span>
+<span style="color: #4f97d7; font-weight: bold;">import</span> numpy <span style="color: #4f97d7; font-weight: bold;">as</span> np
+<span style="color: #4f97d7; font-weight: bold;">from</span> scipy <span style="color: #4f97d7; font-weight: bold;">import</span> stats
+
+<span style="color: #2aa1ae; background-color: #292e34;">## </span><span style="color: #2aa1ae; background-color: #292e34;">function to simulate data and perform a t.test</span>
+<span style="color: #4f97d7; font-weight: bold;">def</span> <span style="color: #bc6ec5; font-weight: bold;">sim_ttest</span>(mu1, mu2, sd, n1, n2):
+    <span style="color: #7590db;">x</span> = stats.norm.rvs(loc = mu1, scale = sd, size = n1)
+    <span style="color: #7590db;">y</span> = stats.norm.rvs(loc = mu2, scale = sd, size = n2)
+    <span style="color: #4f97d7; font-weight: bold;">return</span>(stats.ttest_ind(x, y)[<span style="color: #a45bad;">1</span>])
+
+<span style="color: #2aa1ae; background-color: #292e34;">##  </span><span style="color: #2aa1ae; background-color: #292e34;">run the function 10,000 times</span>
+<span style="color: #7590db;">nsims</span> = <span style="color: #a45bad;">10000</span>
+<span style="color: #7590db;">p</span> = [sim_ttest(<span style="color: #a45bad;">1</span>, <span style="color: #a45bad;">1</span>.<span style="color: #a45bad;">3</span>, <span style="color: #a45bad;">1</span>, n, n)  <span style="color: #4f97d7; font-weight: bold;">for</span> x <span style="color: #4f97d7; font-weight: bold;">in</span> <span style="color: #4f97d7;">range</span>(nsims)]
+<span style="color: #4f97d7; font-weight: bold;">print</span>(<span style="color: #4f97d7;">len</span>([x <span style="color: #4f97d7; font-weight: bold;">for</span> x <span style="color: #4f97d7; font-weight: bold;">in</span> p <span style="color: #4f97d7; font-weight: bold;">if</span> x &lt; .<span style="color: #a45bad;">05</span>])/nsims)
+<span style="color: #4f97d7; font-weight: bold;">print</span>(n)
+</pre>
+</div>
+
+<p>
+Now we have all the required elements to submit out job, and can do so using <code>condor_submit</code> as before. 
+</p>
+</div></li>
+
+<li><a id="orgheadline45"></a>Aggregating results<br  /><div class="outline-text-5" id="text-orgheadline45">
+<p>
+Each of our 40 processes produced a file in the <code>output</code> directory name <code>out&lt;process&gt;csv</code>; our next task is to aggregate these results. The python script below reads each of these files, joins them together into a single array, and plots the result.
+</p>
+<div class="org-src-container">
+
+<pre class="src src-python"><span style="color: #4f97d7; font-weight: bold;">import</span> numpy <span style="color: #4f97d7; font-weight: bold;">as</span> np
+<span style="color: #4f97d7; font-weight: bold;">import</span> glob
+<span style="color: #4f97d7; font-weight: bold;">import</span> matplotlib.pyplot <span style="color: #4f97d7; font-weight: bold;">as</span> plt
+<span style="color: #2aa1ae; background-color: #292e34;">## </span><span style="color: #2aa1ae; background-color: #292e34;">list all output files in the output directory</span>
+<span style="color: #7590db;">output_files</span> = glob.glob(<span style="color: #2d9574;">"output/out*"</span>)
+
+<span style="color: #7590db;">output_values</span> = np.array([x.split(<span style="color: #2d9574;">"\n"</span>)[:<span style="color: #a45bad;">2</span>]
+                          <span style="color: #4f97d7; font-weight: bold;">for</span> x <span style="color: #4f97d7; font-weight: bold;">in</span> [<span style="color: #4f97d7;">open</span>(f).read() <span style="color: #4f97d7; font-weight: bold;">for</span> f <span style="color: #4f97d7; font-weight: bold;">in</span> output_files]],
+                         dtype = <span style="color: #2d9574;">"float"</span>)
+
+plt.plot(<span style="color: #4f97d7;">list</span>(output_values[:, <span style="color: #a45bad;">1</span>]), <span style="color: #4f97d7;">list</span>(output_values[:, <span style="color: #a45bad;">0</span>]), <span style="color: #2d9574;">"bo"</span>)
+plt.xlabel(<span style="color: #2d9574;">"Sample Size"</span>)
+plt.ylabel(<span style="color: #2d9574;">"Power"</span>)
+plt.savefig(<span style="color: #2d9574;">"power.png"</span>)
+</pre>
+</div>
+
+
+<div class="figure">
+<p><img src="images/python_powerDist.png" alt="python_powerDist.png" />
+</p>
+</div>
+</div></li>
+
+<li><a id="orgheadline46"></a>Try it yourself!<br  /><div class="outline-text-5" id="text-orgheadline46">
+<p>
+Download the <a href="Python_examples/power2.zip">power simulation example files</a>, to the pythonCE, extract the zip file, and run the example by calling <code>condor_submit power.submit</code> from the <code>power2</code> directory.
+</p>
+</div></li></ul>
+</div>
+</div>
+</div>
+
+
+
+
+<div id="outline-container-orgheadline47" class="outline-2">
+<h2 id="orgheadline47">Monitoring and manageing submitted batch jobs</h2>
+<div class="outline-text-2" id="text-orgheadline47">
 <p>
 After submitting the jobs we may wish to monitor them, e.g. to check if they are running. You can do this by running <code>condor_q &lt;your_user_name&gt;</code> in a terminal. If this returns nothing then you have no jobs in the queue. Otherwise you will see information for each request in the queue which will look something like this:
 </p>
@@ -854,370 +1424,40 @@ Perhaps the most important information returned by <code>condor_q</code> is the 
 <p>
 You will know your job is finished when it is no longer listed in the <code>condor_q</code> output. When it finishes you can examine the output and/or error files to see if the program exited successfully.
 </p>
-</div></li>
 
-<li><a id="orgheadline27"></a>Aggregating results<br  /><div class="outline-text-5" id="text-orgheadline27">
 <p>
-When your batch job is finished you are usually left with multiple output files that need to be aggregated. In the case of our simulation example, we have files <code>output/out.0 -- output/out40</code>, each of which contains a single number representing the proportion of significant tests. We can aggregate them with a simple R script, like this:
-</p>
-<div class="org-src-container">
-
-<pre class="src src-R"><span style="color: #2aa198; background-color: #eff3ea;">## </span><span style="color: #2aa198; background-color: #eff3ea;">list all output files in the output directory</span>
-output_files <span style="color: #4e3163;">&lt;-</span> list.files<span style="color: #2f96dc;">(</span><span style="color: #2aa198;">"output"</span>,
-                           pattern = <span style="color: #2aa198;">"^out\\.[0-9]+$"</span>,
-                           full.names=<span style="color: #428374; font-weight: bold;">TRUE</span><span style="color: #2f96dc;">)</span>
-
-<span style="color: #2aa198; background-color: #eff3ea;">## </span><span style="color: #2aa198; background-color: #eff3ea;">read each file, convert it to a number, and take the average</span>
-mean<span style="color: #2f96dc;">(</span>as.double<span style="color: #6c3163;">(</span>sapply<span style="color: #2aa198;">(</span>
-                      output_files,
-                      readLines,
-                      warn = <span style="color: #428374; font-weight: bold;">FALSE</span><span style="color: #2aa198;">)</span><span style="color: #6c3163;">)</span><span style="color: #2f96dc;">)</span>
-</pre>
-</div>
-</div></li>
-
-<li><a id="orgheadline28"></a>Try it yourself!<br  /><div class="outline-text-5" id="text-orgheadline28">
-<p>
-Download the <a href="R_examples/power1.zip">power simulation example files</a>, to the RCE, extract the zip file and running <code>condor_submit power.submit</code> in the <code>power1</code> directory.
-</p>
-</div></li></ul>
-</div>
-
-<div id="outline-container-orgheadline29" class="outline-4">
-<h4 id="orgheadline29">Batch example: Power simulation in R with varying parameters</h4>
-<div class="outline-text-4" id="text-orgheadline29">
-<p>
-The previous example was relatively simple, because we wanted to run exactly the same code on all 100 nodes. Often however you want each node to do something slightly different. For example, we may wish to vary the sample size from 100 &#x2013; 500 in increments of 10, to see how power changes as a function of that parameter. In that case we need to pass some additional information to each process, telling it which parameter space it is responsible for. 
+If you would like to remove a batch job from the queue you may do so using <code>condor_rm</code>. For example <code>condor_rm 200</code> will remove the jobs listed above.
 </p>
 
 <p>
-As it turns out, we almost already know how to do that: if you you look closely at the submit file in the previous example you will notice that we used <code>$(Process)</code> to append the process number to the output and error files. 
+For more details on monitoring and manageing your batch jobs please refer to <a href="http://projects.iq.harvard.edu/rce/book/checking-your-process-status">http://projects.iq.harvard.edu/rce/book/checking-your-process-status</a>
 </p>
 </div>
-<ul class="org-ul"><li><a id="orgheadline30"></a>Submit file passing process as an argument<br  /><div class="outline-text-5" id="text-orgheadline30">
-<p>
-We can use the <code>$(Process)</code> macro to pass information to our program, like this:
-</p>
-<div class="org-src-container">
 
-<pre class="src src-conf"><span style="color: #2aa198; background-color: #eff3ea;"># </span><span style="color: #2aa198; background-color: #eff3ea;">Universe whould always be 'vanilla'. This line MUST be </span>
-<span style="color: #2aa198; background-color: #eff3ea;">#</span><span style="color: #2aa198; background-color: #eff3ea;">included in your submit file, exactly as shown below.</span>
-<span style="color: #715ab1;">Universe</span> = vanilla
-
-<span style="color: #2aa198; background-color: #eff3ea;"># </span><span style="color: #2aa198; background-color: #eff3ea;">Enter the path to the R program.</span>
-<span style="color: #715ab1;">Executable</span> = /usr/local/bin/R
-
-<span style="color: #2aa198; background-color: #eff3ea;"># </span><span style="color: #2aa198; background-color: #eff3ea;">Specify any arguments you want to pass to the executable</span>
-<span style="color: #2aa198; background-color: #eff3ea;"># </span><span style="color: #2aa198; background-color: #eff3ea;">to make r not save or restore workspaces, and to </span>
-<span style="color: #2aa198; background-color: #eff3ea;"># </span><span style="color: #2aa198; background-color: #eff3ea;">run as quietly as possible</span>
-<span style="color: #715ab1;">Arguments</span> = --no-save --no-restore --slave --args $(Process)
-
-<span style="color: #2aa198; background-color: #eff3ea;"># </span><span style="color: #2aa198; background-color: #eff3ea;">Specify the relative path to the input file</span>
-<span style="color: #715ab1;">input</span> = power.R
-
-<span style="color: #2aa198; background-color: #eff3ea;"># </span><span style="color: #2aa198; background-color: #eff3ea;">Specify where to save any errors returned by your program.</span>
-<span style="color: #715ab1;">error</span> = output/error.$(Process)
-
-<span style="color: #715ab1;">Log</span> = log.txt
-<span style="color: #2aa198; background-color: #eff3ea;"># </span><span style="color: #2aa198; background-color: #eff3ea;">Enter the number of processes to request.</span>
-Queue 40
-</pre>
-</div>
-<p>
-Notice that we used <code>--args $(Process)</code> to pass the process number to the R program. <code>$(Process)</code> will be an integer starting from <code>0</code>. 
-</p>
-</div></li>
-
-<li><a id="orgheadline31"></a>R script argument processing<br  /><div class="outline-text-5" id="text-orgheadline31">
-<p>
-Next we need to 1) retrieve the process number in our R program and 2) map it to the parameter space. We can retrieve the arguments in R like this:
-</p>
-<div class="org-src-container">
-
-<pre class="src src-R"><span style="color: #2aa198; background-color: #eff3ea;">## </span><span style="color: #2aa198; background-color: #eff3ea;">retrieve arguments passed from the command line.</span>
-process <span style="color: #4e3163;">&lt;-</span> as.integer<span style="color: #2f96dc;">(</span>as.character<span style="color: #6c3163;">(</span>commandArgs<span style="color: #2aa198;">(</span>trailingOnly = <span style="color: #428374; font-weight: bold;">TRUE</span><span style="color: #2aa198;">)</span><span style="color: #6c3163;">)</span><span style="color: #2f96dc;">)</span>
-</pre>
-</div>
-<p>
-We now have a variable in R that tells us which process we are. Now we need to map that to our parameter space; recall that we want to test sample sizes from 100 to 500, so we need to map <code>process 0</code> to <code>n = 100</code>,  <code>process 1</code> to <code>n = 110</code>, <code>process 2</code> to <code>n = 120</code> and so on:
-</p>
-<div class="org-src-container">
-
-<pre class="src src-R"><span style="color: #2aa198; background-color: #eff3ea;">## </span><span style="color: #2aa198; background-color: #eff3ea;">map process to sample size parameter.</span>
-n <span style="color: #4e3163;">&lt;-</span> <span style="color: #2f96dc;">(</span>process + 100<span style="color: #2f96dc;">)</span> + <span style="color: #2f96dc;">(</span>process*10 - process<span style="color: #2f96dc;">)</span>
-</pre>
-</div>
-
-<p>
-There is one additional complication we need to handle: in the previous example we did need to keep track of the parameters used by each process because the parameters did not vary. Now that they do, it would be nice if we had output that recorded the value of the varying parameter as well as the result. We could of course just print the <code>n</code> parameter we calculated from the process number along with the result, but it will be easier to combine the outputs if we write them to a machine-readable format (e.g., a comma-separated-values file). You may have noticed that in the submit file above I omitted the <code>output</code> directive: that is because we are going to explicitly save the results in the R script, so we don't need the batch scheduler to save those output files for us.
-</p>
-
-<p>
-Now we can set up the simulation as before, passing the <code>n</code> calculated above into our simulation function, writing the results to files. 
-</p>
-<div class="org-src-container">
-
-<pre class="src src-R">  <span style="color: #2aa198; background-color: #eff3ea;">## </span><span style="color: #2aa198; background-color: #eff3ea;">function to simulate data and perform a t.test</span>
-  <span style="color: #6c3163; font-weight: bold;">sim.ttest</span> <span style="color: #4e3163;">&lt;-</span> <span style="color: #237fbf; font-weight: bold;">function</span><span style="color: #2f96dc;">(</span>mu1, mu2, sd, n1, n2<span style="color: #2f96dc;">)</span> <span style="color: #2f96dc;">{</span>
-      d <span style="color: #4e3163;">&lt;-</span> data.frame<span style="color: #6c3163;">(</span>x = c<span style="color: #2aa198;">(</span>rep<span style="color: #67b11d;">(</span><span style="color: #2aa198;">"group1"</span>, n1<span style="color: #67b11d;">)</span>, rep<span style="color: #67b11d;">(</span><span style="color: #2aa198;">"group2"</span>, n2<span style="color: #67b11d;">)</span><span style="color: #2aa198;">)</span>,
-                      y = c<span style="color: #2aa198;">(</span>rnorm<span style="color: #67b11d;">(</span>n1, mean = mu1, sd = sd<span style="color: #67b11d;">)</span>,
-                            rnorm<span style="color: #67b11d;">(</span>n2, mean = mu2, sd = sd<span style="color: #67b11d;">)</span><span style="color: #2aa198;">)</span><span style="color: #6c3163;">)</span>
-      <span style="color: #237fbf; font-weight: bold;">return</span><span style="color: #6c3163;">(</span>t.test<span style="color: #2aa198;">(</span>y ~ x, data = d<span style="color: #2aa198;">)</span>$p.value<span style="color: #6c3163;">)</span>
-  <span style="color: #2f96dc;">}</span>
-
-  <span style="color: #2aa198; background-color: #eff3ea;">##  </span><span style="color: #2aa198; background-color: #eff3ea;">run the function 10,000 times </span>
-  p <span style="color: #4e3163;">&lt;-</span> replicate<span style="color: #2f96dc;">(</span>10000,
-                 sim.ttest<span style="color: #6c3163;">(</span>mu1 = 1,
-                           mu2 = 1.3,
-                           sd = 1,
-                           n1 = n,
-                           n2 = n<span style="color: #6c3163;">)</span><span style="color: #2f96dc;">)</span>
-write.csv<span style="color: #2f96dc;">(</span>data.frame<span style="color: #6c3163;">(</span>n = n, power = length<span style="color: #2aa198;">(</span>p<span style="color: #67b11d;">[</span>p &lt; .05<span style="color: #67b11d;">]</span><span style="color: #2aa198;">)</span>/length<span style="color: #2aa198;">(</span>p<span style="color: #2aa198;">)</span><span style="color: #6c3163;">)</span>,
-          row.names = <span style="color: #428374; font-weight: bold;">FALSE</span>,
-          file = paste0<span style="color: #6c3163;">(</span><span style="color: #2aa198;">"output/out"</span>, process, <span style="color: #2aa198;">".csv"</span><span style="color: #6c3163;">)</span><span style="color: #2f96dc;">)</span>
-</pre>
-</div>
-
-<p>
-Now we have all the required elements to submit out job, and can do so using <code>condor_submit</code> as before. 
-</p>
-</div></li>
-
-<li><a id="orgheadline32"></a>Aggregating results<br  /><div class="outline-text-5" id="text-orgheadline32">
-<p>
-Each of our 40 processes produced a file in the <code>output</code> directory name <code>out&lt;process&gt;csv</code>; our next task is to aggregate these results. The R script below reads each of these files, joins them together into a single data.frame, and plots the result.
-</p>
-<div class="org-src-container">
-
-<pre class="src src-R"><span style="color: #2aa198; background-color: #eff3ea;">## </span><span style="color: #2aa198; background-color: #eff3ea;">list all output files in the output directory</span>
-output_files <span style="color: #4e3163;">&lt;-</span> list.files<span style="color: #2f96dc;">(</span><span style="color: #2aa198;">"output"</span>,
-                           pattern = <span style="color: #2aa198;">"^out[0-9]+\\.csv$"</span>,
-                           full.names=<span style="color: #428374; font-weight: bold;">TRUE</span><span style="color: #2f96dc;">)</span>
-
-<span style="color: #2aa198; background-color: #eff3ea;">## </span><span style="color: #2aa198; background-color: #eff3ea;">read each file and append them</span>
-results <span style="color: #4e3163;">&lt;-</span> do.call<span style="color: #2f96dc;">(</span>rbind, lapply<span style="color: #6c3163;">(</span>output_files, read.csv<span style="color: #6c3163;">)</span><span style="color: #2f96dc;">)</span>
-
-<span style="color: #2aa198; background-color: #eff3ea;">## </span><span style="color: #2aa198; background-color: #eff3ea;">plot</span>
-plot<span style="color: #2f96dc;">(</span>results<span style="color: #2f96dc;">)</span>
-abline<span style="color: #2f96dc;">(</span>h = 0.8<span style="color: #2f96dc;">)</span>
-</pre>
-</div>
-
-
-<div class="figure">
-<p><img src="images/powerDist.png" alt="powerDist.png" />
-</p>
-</div>
-</div></li>
-
-<li><a id="orgheadline33"></a>Try it yourself!<br  /><div class="outline-text-5" id="text-orgheadline33">
-<p>
-Download the <a href="R_examples/power2.zip">power simulation example files</a>, to the RCE, extract the zip file, and run the example by calling <code>condor_submit power.submit</code> from the <code>power2</code> directory.
-</p>
-</div></li></ul>
-</div>
-</div>
-
-<div id="outline-container-orgheadline19" class="outline-3">
-<h3 id="orgheadline19">Stata Batch Examples</h3>
-<div class="outline-text-3" id="text-orgheadline19">
-<p>
-In this example we use the batch system to bootstrap a distribution of means. Each process will calculate the mean for a single bootstrap sample and save the result. Since we need to give the output files unique names we will pass the batch process number to Stata and use it to construct the file names.
-</p>
-</div>
-<div id="outline-container-orgheadline34" class="outline-4">
-<h4 id="orgheadline34">Stata bootstrap do-file</h4>
-<div class="outline-text-4" id="text-orgheadline34">
-<p>
-To use the batch system we need to write a do-file that does the calculation without further user input. The do-file below reads a Stata data set, sets a seed for random number generation, samples (with replacement) from the data, calculates the average value of the sampled data, and saves the result.
-</p>
-<div class="org-src-container">
-
-<pre class="src src-stata"><span style="color: #4e3163;">set</span> <span style="color: #4e3163;">mo</span><span style="color: #428374; font-weight: bold;">re</span> off
-
-<span style="color: #2aa198; background-color: #eff3ea;">// collect the arguments passed by submit file</span>
-args process
-
-<span style="color: #2aa198; background-color: #eff3ea;">// load the dataset</span>
-<span style="color: #237fbf; font-weight: bold;">use</span> <span style="color: #2aa198;">"mydata"</span>, <span style="color: #237fbf; font-weight: bold;">clear</span>
-
-<span style="color: #2aa198; background-color: #eff3ea;">// set seed (shouldn't have to do this, but stata's</span>
-<span style="color: #2aa198; background-color: #eff3ea;">// random bsample defaults to the same seed each time).</span>
-<span style="color: #2aa198; background-color: #eff3ea;">// we nee to find a better way to do this.</span>
-<span style="color: #4e3163;">set</span> <span style="color: #4e3163;">se</span><span style="color: #428374; font-weight: bold;">ed</span> <span style="color: #2f96dc;">`</span><span style="color: #715ab1;">process</span><span style="color: #2f96dc;">'</span>
-
-<span style="color: #2aa198; background-color: #eff3ea;">// sample with replacement</span>
-<span style="color: #237fbf; font-weight: bold;">bsample</span>, cluster<span style="color: #2f96dc;">(</span>id<span style="color: #2f96dc;">)</span> idcluster<span style="color: #2f96dc;">(</span>newid<span style="color: #2f96dc;">)</span>
-
-<span style="color: #2aa198; background-color: #eff3ea;">// calculate the mean and standard deviation</span>
-collapse <span style="color: #2f96dc;">(</span>mean<span style="color: #2f96dc;">)</span> mean_myvar = myvar <span style="color: #2f96dc;">(</span>sd<span style="color: #2f96dc;">)</span> sd_myvar = myvar
-
-<span style="color: #2aa198; background-color: #eff3ea;">// save the result, appending the process number to the file name</span>
-<span style="color: #237fbf; font-weight: bold;">save</span> <span style="color: #2aa198;">"output/output_`</span><span style="color: #715ab1;">process</span><span style="color: #2aa198;">'.dta"</span>, <span style="color: #237fbf; font-weight: bold;">replace</span>
-</pre>
-</div>
-<p>
-Note the use of <code>args process</code>, which retrieves the value of the process argument. The argument itself is specified in the <code>.submit</code> file (see below).
-</p>
-</div>
-</div>
-<div id="outline-container-orgheadline35" class="outline-4">
-<h4 id="orgheadline35">Submit file</h4>
-<div class="outline-text-4" id="text-orgheadline35">
-<p>
-The Stata code in the example above draws one bootstrap sample and calculates the mean. If we want to do this 1,000 times we could write a loop, but each iteration would be done sequentially. We can carry out this operation faster by running it simultaneously on hundreds of machines. We just need a <code>.submit</code> file like the one below:
-</p>
-<div class="org-src-container">
-
-<pre class="src src-conf"><span style="color: #2aa198; background-color: #eff3ea;"># </span><span style="color: #2aa198; background-color: #eff3ea;">Universe whould always be 'vanilla'. This line MUST be </span>
-<span style="color: #2aa198; background-color: #eff3ea;">#</span><span style="color: #2aa198; background-color: #eff3ea;">included in your submit file, exactly as shown below.</span>
-<span style="color: #715ab1;">Universe</span> = vanilla
-
-<span style="color: #2aa198; background-color: #eff3ea;"># </span><span style="color: #2aa198; background-color: #eff3ea;">Enter the path to the Stata program.</span>
-<span style="color: #715ab1;">Executable</span> = /usr/local/bin/stata-mp
-
-<span style="color: #2aa198; background-color: #eff3ea;"># </span><span style="color: #2aa198; background-color: #eff3ea;">Specify any arguments you want to pass to the executable.</span>
-<span style="color: #2aa198; background-color: #eff3ea;"># </span><span style="color: #2aa198; background-color: #eff3ea;">Here we pass arguments to make Stata run the bootstrap.do</span>
-<span style="color: #2aa198; background-color: #eff3ea;"># </span><span style="color: #2aa198; background-color: #eff3ea;">file. We also pass the process number, which will be used</span>
-<span style="color: #2aa198; background-color: #eff3ea;"># </span><span style="color: #2aa198; background-color: #eff3ea;">to append the process number to the output files.</span>
-<span style="color: #715ab1;">Arguments</span> = -q do bootstrap.do $(Process)
-
-<span style="color: #2aa198; background-color: #eff3ea;"># </span><span style="color: #2aa198; background-color: #eff3ea;">Specify where to output any results printed by your program.</span>
-<span style="color: #715ab1;">output</span> = output/bootstrap$(Process).out
-<span style="color: #2aa198; background-color: #eff3ea;"># </span><span style="color: #2aa198; background-color: #eff3ea;">Specify where to save any errors returned by your program.</span>
-<span style="color: #715ab1;">error</span> = output/bootstrap$(Process).err
-<span style="color: #2aa198; background-color: #eff3ea;"># </span><span style="color: #2aa198; background-color: #eff3ea;">Specify where to save the log file.</span>
-<span style="color: #715ab1;">Log</span> = output/bootstrap$(Process).log
-
-<span style="color: #2aa198; background-color: #eff3ea;"># </span><span style="color: #2aa198; background-color: #eff3ea;">Enter the number of processes to request.</span>
-<span style="color: #2aa198; background-color: #eff3ea;"># </span><span style="color: #2aa198; background-color: #eff3ea;">This section should always come last.</span>
-Queue 1000
-</pre>
-</div>
-<p>
-Notice that we passed the <code>$(Process)</code> argument so that we can retrieve that value in the do-file and save each output to a unique file that includes the process name.
-</p>
-
-<p>
-To submit this job we open a terminal on the RCE, <code>cd</code> to the project folder and run <code>condor_submit bootstrap.submit</code> to submit the jobs to the cluster. The <a href="Stata_examples/bootstrap.zip">bootstrap example files are available for download</a> so you can try it yourself.
-</p>
-</div>
-</div>
-
-<div id="outline-container-orgheadline36" class="outline-4">
-<h4 id="orgheadline36">Monitoring submitted jobs</h4>
-<div class="outline-text-4" id="text-orgheadline36">
-<p>
-After submitting the jobs we may wish to monitor them, e.g. to check if they are running. You can do this by running <code>condor_q &lt;your_user_name&gt;</code> in a terminal. If this returns nothing then you have no jobs in the queue. Otherwise you will see information for each request in the queue which will look something like this:
-</p>
-<pre class="example">
--- Schedd: HMDC.batch@rce6-5.hmdc.harvard.edu : &lt;10.0.0.10:9619?sock=7858_e19e_247&gt;
- ID      OWNER            SUBMITTED     RUN_TIME ST PRI SIZE CMD               
-24072.0   izahn           6/2  10:22   0+00:00:06 R  0   0.0  stata-mp -q do boo
-24072.1   izahn           6/2  10:22   0+00:00:06 R  0   0.0  stata-mp -q do boo
-24072.2   izahn           6/2  10:22   0+00:00:06 R  0   0.0  stata-mp -q do boo
-24072.6   izahn           6/2  10:22   0+00:00:06 R  0   0.0  stata-mp -q do boo
-24072.8   izahn           6/2  10:22   0+00:00:06 R  0   0.0  stata-mp -q do boo
-24072.9   izahn           6/2  10:22   0+00:00:06 R  0   0.0  stata-mp -q do boo
-24072.10  izahn           6/2  10:22   0+00:00:05 R  0   0.0  stata-mp -q do boo
-24072.11  izahn           6/2  10:22   0+00:00:06 R  0   0.0  stata-mp -q do boo
-24072.12  izahn           6/2  10:22   0+00:00:06 R  0   0.0  stata-mp -q do boo
-24072.13  izahn           6/2  10:22   0+00:00:06 R  0   0.0  stata-mp -q do boo
-24072.14  izahn           6/2  10:22   0+00:00:05 R  0   0.0  stata-mp -q do boo
-</pre>
-<p>
-Perhaps the most important information returned by <code>condor_q</code> is the program status (the <b>ST</b> column). Status <b>I</b> means your job is in the queue but has not yet started running, <b>R</b> means the job is currently running, and <b>H</b> means the job is on hold. If you job is on hold you can get more information about what the problem might be by running <code>condor_q -hold</code>.
-</p>
-
-<p>
-You will know your job is finished when it is no longer listed in the <code>condor_q</code> output. When it finishes you can examine the output and/or error files to see if the program exited successfully.
-</p>
+<div id="outline-container-orgheadline21" class="outline-4">
+<h4 id="orgheadline21"><span class="todo TODO">TODO</span> Matlab Batch Examples</h4>
 </div>
 </div>
 
 
-<div id="outline-container-orgheadline37" class="outline-4">
-<h4 id="orgheadline37">Aggregating results</h4>
-<div class="outline-text-4" id="text-orgheadline37">
-<p>
-Each of our 1000 processes produced a file in the <code>output</code> directory name <code>out&lt;process&gt;.dta</code>; our next task is to aggregate these results. The do-file below reads each of these files, joins them together, appends them, and plots the result.
-</p>
-<div class="org-src-container">
-
-<pre class="src src-Stata"><span style="color: #237fbf; font-weight: bold;">clear</span>
-<span style="color: #4e3163;">set</span> <span style="color: #4e3163;">mo</span><span style="color: #428374; font-weight: bold;">re</span> off
-<span style="color: #2aa198; background-color: #eff3ea;">// change to the output directory</span>
-<span style="color: #237fbf; font-weight: bold;">cd</span> output
-<span style="color: #2aa198; background-color: #eff3ea;">// get a list of the output files created by bootstrap.do</span>
-<span style="color: #4e3163;">local</span><span style="color: #715ab1;"> list</span>: <span style="color: #4e3163;">dir</span> . files <span style="color: #2aa198;">"output*.dta"</span>
-<span style="color: #2aa198; background-color: #eff3ea;">//loop over the output files appending each one</span>
-<span style="color: #4e3163;">local</span><span style="color: #715ab1;"> f</span>=1
-foreach file of local <span style="color: #4e3163;">list</span> <span style="color: #2f96dc;">{</span>
-        <span style="color: #4e3163;">di</span> <span style="color: #2aa198;">"`file"</span><span style="color: #dc752f;">'</span>
-        <span style="color: #4e3163;">if</span> <span style="color: #2f96dc;">`</span><span style="color: #715ab1;">f</span><span style="color: #2f96dc;">'</span>== 1 <span style="color: #2f96dc;">{</span>
-                <span style="color: #237fbf; font-weight: bold;">use</span> <span style="color: #6c3163;">`</span><span style="color: #715ab1;">file</span><span style="color: #6c3163;">'</span>, <span style="color: #237fbf; font-weight: bold;">clear</span>
-        <span style="color: #2f96dc;">}</span>
-        <span style="color: #4e3163;">else</span> <span style="color: #2f96dc;">{</span>
-                <span style="color: #237fbf; font-weight: bold;">append</span> <span style="color: #4e3163;">using</span> <span style="color: #6c3163;">`</span><span style="color: #715ab1;">file</span><span style="color: #6c3163;">'</span>
-        <span style="color: #2f96dc;">}</span>
-        <span style="color: #4e3163;">local</span> ++f
-<span style="color: #dc752f;">}</span>
-<span style="color: #2aa198; background-color: #eff3ea;">// save the appended results</span>
-saveold <span style="color: #2aa198;">"mybootresults"</span>, <span style="color: #237fbf; font-weight: bold;">replace</span>
-
-<span style="color: #2aa198; background-color: #eff3ea;">// make a histogram</span>
-hist<span style="color: #dc752f;">(</span>mean_myvar<span style="color: #dc752f;">)</span>
-
-<span style="color: #2aa198; background-color: #eff3ea;">// save the graph</span>
-graph export <span style="color: #2aa198;">"stata_bootstrap.eps"</span>, <span style="color: #237fbf; font-weight: bold;">replace</span>
-</pre>
+<div id="outline-container-orgheadline51" class="outline-2">
+<h2 id="orgheadline51"><span class="todo TODO">TODO</span> Installing custom packages on the RCE</h2>
+<div class="outline-text-2" id="text-orgheadline51">
+</div><div id="outline-container-orgheadline48" class="outline-3">
+<h3 id="orgheadline48">Installing R packages</h3>
 </div>
 
+<div id="outline-container-orgheadline49" class="outline-3">
+<h3 id="orgheadline49">Installing Python packages</h3>
+</div>
 
-<div class="figure">
-<p><img src="images/stata_bootstrap.png" alt="stata_bootstrap.png" />
-</p>
-</div>
-</div>
-</div>
-<div id="outline-container-orgheadline38" class="outline-4">
-<h4 id="orgheadline38">Try it yourself!</h4>
-<div class="outline-text-4" id="text-orgheadline38">
-<p>
-Download the <a href="Stata_examples/bootstrap.zip">bootstrap example files</a>, to the RCE, extract the zip file, and run the example by calling <code>condor_submit bootstrap.submit</code> from the <code>bootstrap</code> directory.
-</p>
-</div>
+<div id="outline-container-orgheadline50" class="outline-3">
+<h3 id="orgheadline50">Installing Stata packages</h3>
 </div>
 </div>
 
-<div id="outline-container-orgheadline20" class="outline-3">
-<h3 id="orgheadline20"><span class="todo TODO">TODO</span> Python Batch Examples</h3>
-</div>
-
-<div id="outline-container-orgheadline21" class="outline-3">
-<h3 id="orgheadline21"><span class="todo TODO">TODO</span> Matlab Batch Examples</h3>
-</div>
-</div>
-
-
-<div id="outline-container-orgheadline42" class="outline-2">
-<h2 id="orgheadline42"><span class="todo TODO">TODO</span> Installing custom packages on the RCE</h2>
-<div class="outline-text-2" id="text-orgheadline42">
-</div><div id="outline-container-orgheadline39" class="outline-3">
-<h3 id="orgheadline39">Installing R packages</h3>
-</div>
-
-<div id="outline-container-orgheadline40" class="outline-3">
-<h3 id="orgheadline40">Installing Python packages</h3>
-</div>
-
-<div id="outline-container-orgheadline41" class="outline-3">
-<h3 id="orgheadline41">Installing Stata packages</h3>
-</div>
-</div>
-
-<div id="outline-container-orgheadline43" class="outline-2">
-<h2 id="orgheadline43"><span class="todo TODO">TODO</span> Getting help</h2>
+<div id="outline-container-orgheadline52" class="outline-2">
+<h2 id="orgheadline52"><span class="todo TODO">TODO</span> Getting help</h2>
 </div>
 <div id="footnotes">
 <h2 class="footnotes">Footnotes: </h2>
