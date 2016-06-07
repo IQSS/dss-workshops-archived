@@ -465,7 +465,7 @@ replace young=1 if age_wealth==1 | age_wealth==2
 *   - IQSS workshops:
 *     [http://projects.iq.harvard.edu/rtc/filter_by/workshops]
 * 
-*   - IQSS statistical consulting: [http://rtc.iq.harvard.edu]
+*   - IQSS statistical consulting: [http://dss.iq.harvard.edu]
 * 
 *   - The RCE
 *     - Research Computing Enviroment (RCE) service available to Harvard &

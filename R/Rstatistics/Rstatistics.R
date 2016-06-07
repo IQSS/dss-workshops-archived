@@ -654,7 +654,7 @@ anova(mod.grp1, mod.grp2)
 
 ##   • IQSS workshops:
 ##     [http://projects.iq.harvard.edu/rtc/filter_by/workshops]
-##   • IQSS statistical consulting: [http://rtc.iq.harvard.edu]
+##   • IQSS statistical consulting: [http://dss.iq.harvard.edu]
 
 ##   • Zelig
 ##     • Website: [http://gking.harvard.edu/zelig]

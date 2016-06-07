@@ -600,7 +600,7 @@ Additional resources
 --------------------
 
 -   IQSS workshops: <http://projects.iq.harvard.edu/rtc/filter_by/workshops>
--   IQSS statistical consulting: <http://rtc.iq.harvard.edu>
+-   IQSS statistical consulting: <http://dss.iq.harvard.edu>
 -   Zelig
     -   Website: <http://gking.harvard.edu/zelig>
     -   Documentation: <http://r.iq.harvard.edu/docs/zelig.pdf>

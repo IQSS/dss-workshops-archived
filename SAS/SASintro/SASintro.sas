@@ -492,7 +492,7 @@ RUN;
 /*   - www.iq.harvard.edu */
 /*   Computer labs */
 /*   - www.iq.harvard.edu/facilities */
-/*   Research Technology Consulting */
+/*   Data Science Services */
 /*   - www.iq.harvard.edu/researchconsulting */
 /*   Training */
 /*   - [http://projects.iq.harvard.edu/rtc/filter_by/workshops] */

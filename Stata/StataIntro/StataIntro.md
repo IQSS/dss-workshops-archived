@@ -634,7 +634,7 @@ Additional resources
 
 -   IQSS workshops: <http://projects.iq.harvard.edu/rtc/filter_by/workshops>
 
--   IQSS statistical consulting: <http://rtc.iq.harvard.edu>
+-   IQSS statistical consulting: <http://dss.iq.harvard.edu>
 
 -   The RCE
     -   Research Computing Enviroment (RCE) service available to Harvard & MIT users

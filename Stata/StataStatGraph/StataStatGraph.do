@@ -685,7 +685,7 @@ palette linepalette
 *   - training and consulting
 *     - IQSS workshops:
 *       [http://projects.iq.harvard.edu/rtc/filter_by/workshops]
-*     - IQSS statistical consulting: [http://rtc.iq.harvard.edu]
+*     - IQSS statistical consulting: [http://dss.iq.harvard.edu]
 * 
 *   - Stata resources
 *     - UCLA website: [http://www.ats.ucla.edu/stat/Stata/]
