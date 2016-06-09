@@ -11,7 +11,7 @@
 
 ;; add license note at the bottom of the page
 (setq-local org-html-postamble
-            "<p><a rel='license' href='http://creativecommons.org/licenses/by-sa/4.0/'><img alt='Creative Commons License' style='border-width:0' src='https://i.creativecommons.org/l/by-sa/4.0/80x15.png' /></a><span xmlns:dct='http://purl.org/dc/terms/' property='dct:title'> These statistical software workshop materials</span> by <a xmlns:cc='http://creativecommons.org/ns#' href='http://dss.iq.harvard.edu' property='cc:attributionName' rel='cc:attributionURL'>Harvard University</a> are licensed under a <a rel='license' href='http://creativecommons.org/licenses/by-sa/4.0/'>Creative Commons Attribution-ShareAlike 4.0 International License</a>. Presented by <a href='http://dss.iq.harvard.edu'>Data Science Services</a> at <a href='http://iq.harvard.edu'> IQSS</a></p>")
+            "<p><span xmlns:dct='http://purl.org/dc/terms/' property='dct:title'> These workshop notes </span> by <a xmlns:cc='http://creativecommons.org/ns#' href='http://dss.iq.harvard.edu' property='cc:attributionName' rel='cc:attributionURL'>Harvard University</a> are licensed <a rel='license' href='http://creativecommons.org/licenses/by-sa/4.0/'><img alt='Creative Commons License' style='border-width:0' src='https://i.creativecommons.org/l/by-sa/4.0/80x15.png' /></a>. Presented by <a href='http://dss.iq.harvard.edu'>Data Science Services</a> at <a href='http://iq.harvard.edu'> IQSS</a></p>")
 
 ;; no section numbers
 (setq-local org-export-with-section-numbers nil)
