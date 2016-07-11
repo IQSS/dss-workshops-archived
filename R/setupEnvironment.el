@@ -23,7 +23,9 @@
 (setq-local org-babel-min-lines-for-block-output 0)
 
 ;; do not re-evaluate source code on export
-(set (make-local-variable 'org-export-babel-evaluate) nil)
+(setq-local org-babel-default-header-args
+       (cons '(:eval . "never-export")
+             (assq-delete-all :noweb org-babel-default-header-args)))
 
 ;; enable source code support in orgmode
 (org-babel-do-load-languages

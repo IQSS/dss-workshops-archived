@@ -21,7 +21,9 @@
 (set (make-local-variable 'org-babel-min-lines-for-block-output) 0)
 
 ;; do not re-evaluate source code on export
-(set (make-local-variable 'org-export-babel-evaluate) nil)
+(setq-local org-babel-default-header-args
+      (cons '(:eval . "never-export")
+            (assq-delete-all :noweb org-babel-default-header-args)))
 
 ;; add license note at the bottom of the page
 (setq-local org-html-postamble

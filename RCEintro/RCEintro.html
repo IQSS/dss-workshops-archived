@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2016-06-09 Thu 11:23 -->
+<!-- 2016-07-11 Mon 16:15 -->
 <meta  http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta  name="viewport" content="width=device-width, initial-scale=1" />
 <title>RCE Quick-Start</title>
@@ -427,13 +427,13 @@ We start by setting up a helper function to repeatedly generate a sample of a gi
 </p>
 <div class="org-src-container">
 
-<pre class="src src-R"><span class="org-comment-delimiter">## </span><span class="org-comment">function to generate distribution of means for a range of sample sizes</span>
-<span class="org-function-name">meanDist</span> <span class="org-constant">&lt;-</span> <span class="org-keyword">function</span>(n, nsamp = <span class="org-highlight-numbers-number">5000</span>) {
+<pre class="src src-R"><span style="color: #2aa1ae; background-color: #292e34;">## </span><span style="color: #2aa1ae; background-color: #292e34;">function to generate distribution of means for a range of sample sizes</span>
+<span style="color: #bc6ec5; font-weight: bold;">meanDist</span> <span style="color: #a45bad;">&lt;-</span> <span style="color: #4f97d7; font-weight: bold;">function</span>(n, nsamp = <span style="color: #a45bad;">5000</span>) {
   replicate(nsamp, mean(rnorm(n)))
 }
 
-<span class="org-comment-delimiter">## </span><span class="org-comment">range of sample sizes to iterate over</span>
-sampSizes <span class="org-constant">&lt;-</span> seq(<span class="org-highlight-numbers-number">10</span>, <span class="org-highlight-numbers-number">500</span>, by = <span class="org-highlight-numbers-number">5</span>)
+<span style="color: #2aa1ae; background-color: #292e34;">## </span><span style="color: #2aa1ae; background-color: #292e34;">range of sample sizes to iterate over</span>
+sampSizes <span style="color: #a45bad;">&lt;-</span> seq(<span style="color: #a45bad;">10</span>, <span style="color: #a45bad;">500</span>, by = <span style="color: #a45bad;">5</span>)
 </pre>
 </div>
 
@@ -442,7 +442,7 @@ Next iterate over a range of sample sizes, generating a distribution of means fo
 </p>
 <div class="org-src-container">
 
-<pre class="src src-R">system.time(means <span class="org-constant">&lt;-</span> lapply(sampSizes, meanDist))
+<pre class="src src-R">system.time(means <span style="color: #a45bad;">&lt;-</span> lapply(sampSizes, meanDist))
 </pre>
 </div>
 
@@ -456,8 +456,8 @@ The simulation can be carried out much more rapidly using <code>mclapply</code> 
 </p>
 <div class="org-src-container">
 
-<pre class="src src-R"><span class="org-constant">library</span>(parallel) 
-system.time(means <span class="org-constant">&lt;-</span> mclapply(sampSizes, meanDist, mc.cores = <span class="org-highlight-numbers-number">7</span>))
+<pre class="src src-R"><span style="color: #a45bad;">library</span>(parallel) 
+system.time(means <span style="color: #a45bad;">&lt;-</span> mclapply(sampSizes, meanDist, mc.cores = <span style="color: #a45bad;">7</span>))
 </pre>
 </div>
 
@@ -471,13 +471,13 @@ Like <code>lapply</code> the <code>mclapply</code> function returns a list, whic
 </p>
 <div class="org-src-container">
 
-<pre class="src src-R"><span class="org-comment-delimiter">## </span><span class="org-comment">plot the distribution of means at various sample sizes</span>
-par(mfrow=c(<span class="org-highlight-numbers-number">6</span>, <span class="org-highlight-numbers-number">5</span>), mar = c(<span class="org-highlight-numbers-number">0</span>,<span class="org-highlight-numbers-number">0</span>,<span class="org-highlight-numbers-number">2</span>,<span class="org-highlight-numbers-number">2</span>), cex = .7)
-<span class="org-keyword">for</span>(i <span class="org-keyword">in</span> <span class="org-highlight-numbers-number">1:30</span>) {
+<pre class="src src-R"><span style="color: #2aa1ae; background-color: #292e34;">## </span><span style="color: #2aa1ae; background-color: #292e34;">plot the distribution of means at various sample sizes</span>
+par(mfrow=c(<span style="color: #a45bad;">6</span>, <span style="color: #a45bad;">5</span>), mar = c(<span style="color: #a45bad;">0</span>,<span style="color: #a45bad;">0</span>,<span style="color: #a45bad;">2</span>,<span style="color: #a45bad;">2</span>), cex = .7)
+<span style="color: #4f97d7; font-weight: bold;">for</span>(i <span style="color: #4f97d7; font-weight: bold;">in</span> <span style="color: #a45bad;">1</span>:<span style="color: #a45bad;">30</span>) {
   hist(means[[i]], 
-       main = paste(<span class="org-string">"n ="</span>, 
+       main = paste(<span style="color: #2d9574;">"n ="</span>, 
                     sampSizes[i]), 
-       axes = <span class="org-type">FALSE</span>,
+       axes = <span style="color: #ce537a; font-weight: bold;">FALSE</span>,
        xlim = range(unlist(means)))
 }
 </pre>
@@ -497,17 +497,17 @@ In the previous example we generated the data on each iteration. This kind of si
 </p>
 <div class="org-src-container">
 
-<pre class="src src-R"><span class="org-comment-delimiter">## </span><span class="org-comment">List the files to iterate over</span>
-textFiles<span class="org-constant">&lt;-</span> list.files(<span class="org-string">"/usr/share/texlive/"</span>, 
-                       recursive = <span class="org-type">TRUE</span>, 
-                       pattern = <span class="org-string">"\\.txt$|\\.tex$"</span>,
-                       full.names = <span class="org-type">TRUE</span>)
+<pre class="src src-R"><span style="color: #2aa1ae; background-color: #292e34;">## </span><span style="color: #2aa1ae; background-color: #292e34;">List the files to iterate over</span>
+textFiles<span style="color: #a45bad;">&lt;-</span> list.files(<span style="color: #2d9574;">"/usr/share/texlive/"</span>, 
+                       recursive = <span style="color: #ce537a; font-weight: bold;">TRUE</span>, 
+                       pattern = <span style="color: #2d9574;">"\\.txt$|\\.tex$"</span>,
+                       full.names = <span style="color: #ce537a; font-weight: bold;">TRUE</span>)
 
-<span class="org-comment-delimiter">## </span><span class="org-comment">function for counting characters (</span><span class="ATTRLIST">NOTE</span><span class="org-comment">: this example isn't realistic -- it </span>
-<span class="org-comment-delimiter">## </span><span class="org-comment">would be better to use the unix "wc" utility if you were doing this</span>
-<span class="org-comment-delimiter">## </span><span class="org-comment">in real life...)</span>
-<span class="org-function-name">countChars</span> <span class="org-constant">&lt;-</span>  <span class="org-keyword">function</span>(x) {
-  sum(nchar(readLines(x, warn = <span class="org-type">FALSE</span>), type = <span class="org-string">"width"</span>))
+<span style="color: #2aa1ae; background-color: #292e34;">## </span><span style="color: #2aa1ae; background-color: #292e34;">function for counting characters (</span><span style="color: #d0bf8f;">NOTE</span><span style="color: #2aa1ae; background-color: #292e34;">: this example isn't realistic -- it </span>
+<span style="color: #2aa1ae; background-color: #292e34;">## </span><span style="color: #2aa1ae; background-color: #292e34;">would be better to use the unix "wc" utility if you were doing this</span>
+<span style="color: #2aa1ae; background-color: #292e34;">## </span><span style="color: #2aa1ae; background-color: #292e34;">in real life...)</span>
+<span style="color: #bc6ec5; font-weight: bold;">countChars</span> <span style="color: #a45bad;">&lt;-</span>  <span style="color: #4f97d7; font-weight: bold;">function</span>(x) {
+  sum(nchar(readLines(x, warn = <span style="color: #ce537a; font-weight: bold;">FALSE</span>), type = <span style="color: #2d9574;">"width"</span>))
 }
 </pre>
 </div>
@@ -518,7 +518,7 @@ We have <code class="src src-r">length(textFiles)
 </p>
 <div class="org-src-container">
 
-<pre class="src src-R">system.time(nchars <span class="org-constant">&lt;-</span> unlist(lapply(textFiles, countChars)))
+<pre class="src src-R">system.time(nchars <span style="color: #a45bad;">&lt;-</span> unlist(lapply(textFiles, countChars)))
 </pre>
 </div>
 
@@ -532,7 +532,7 @@ but this is too slow. We can do the computation more quickly using multiple core
 </p>
 <div class="org-src-container">
 
-<pre class="src src-R">system.time(nchars <span class="org-constant">&lt;-</span> unlist(mclapply(textFiles, countChars, mc.cores = <span class="org-highlight-numbers-number">7</span>)))
+<pre class="src src-R">system.time(nchars <span style="color: #a45bad;">&lt;-</span> unlist(mclapply(textFiles, countChars, mc.cores = <span style="color: #a45bad;">7</span>)))
 </pre>
 </div>
 
@@ -545,7 +545,7 @@ and calculate the total number of characters in the text files by summing over t
 </p>
 <div class="org-src-container">
 
-<pre class="src src-R">sum(nchars, na.rm = <span class="org-type">TRUE</span>)
+<pre class="src src-R">sum(nchars, na.rm = <span style="color: #ce537a; font-weight: bold;">TRUE</span>)
 </pre>
 </div>
 
@@ -568,66 +568,66 @@ Running computations in parallel on multiple cores is often an effective way to 
 
 <div class="org-src-container">
 
-<pre class="src src-python"><span class="org-keyword">import</span> os
-<span class="org-keyword">import</span> fnmatch
-<span class="org-variable-name">textFiles</span> = []
-<span class="org-keyword">for</span> root, dirnames, filenames <span class="org-keyword">in</span> os.walk(<span class="org-string">'/usr/share/texlive'</span>):
-    <span class="org-keyword">for</span> filename <span class="org-keyword">in</span> fnmatch.<span class="org-builtin">filter</span>(filenames, <span class="org-string">'*.tex'</span>) + fnmatch.<span class="org-builtin">filter</span>(filenames, <span class="org-string">"*.txt"</span>):
+<pre class="src src-python"><span style="color: #4f97d7; font-weight: bold;">import</span> os
+<span style="color: #4f97d7; font-weight: bold;">import</span> fnmatch
+<span style="color: #7590db;">textFiles</span> = []
+<span style="color: #4f97d7; font-weight: bold;">for</span> root, dirnames, filenames <span style="color: #4f97d7; font-weight: bold;">in</span> os.walk(<span style="color: #2d9574;">'/usr/share/texlive'</span>):
+    <span style="color: #4f97d7; font-weight: bold;">for</span> filename <span style="color: #4f97d7; font-weight: bold;">in</span> fnmatch.<span style="color: #4f97d7;">filter</span>(filenames, <span style="color: #2d9574;">'*.tex'</span>) + fnmatch.<span style="color: #4f97d7;">filter</span>(filenames, <span style="color: #2d9574;">"*.txt"</span>):
         textFiles.append(os.path.join(root, filename))
 </pre>
 </div>
 
 <p>
-We have <code class="src src-python"><span class="org-builtin">len</span>(textFiles)
+We have <code class="src src-python"><span style="color: #4f97d7;">len</span>(textFiles)
 </code> <code>2080</code> text files to process. We can do this using a single core:
 </p>
 <div class="org-src-container">
 
-<pre class="src src-python"><span class="org-keyword">import</span> time
-<span class="org-variable-name">start</span> = time.time()
+<pre class="src src-python"><span style="color: #4f97d7; font-weight: bold;">import</span> time
+<span style="color: #7590db;">start</span> = time.time()
 
-<span class="org-variable-name">num_chars</span> = <span class="org-highlight-numbers-number">0</span>
-<span class="org-keyword">for</span> fname <span class="org-keyword">in</span> textFiles:
-    <span class="org-keyword">try</span>:
-        <span class="org-keyword">with</span> <span class="org-builtin">open</span>(fname, <span class="org-string">'r'</span>) <span class="org-keyword">as</span> f:
-            <span class="org-keyword">for</span> line <span class="org-keyword">in</span> f:
-                <span class="org-variable-name">num_chars</span> += <span class="org-builtin">len</span>(line)
-    <span class="org-keyword">except</span>:
-        <span class="org-keyword">pass</span>
+<span style="color: #7590db;">num_chars</span> = <span style="color: #a45bad;">0</span>
+<span style="color: #4f97d7; font-weight: bold;">for</span> fname <span style="color: #4f97d7; font-weight: bold;">in</span> textFiles:
+    <span style="color: #4f97d7; font-weight: bold;">try</span>:
+        <span style="color: #4f97d7; font-weight: bold;">with</span> <span style="color: #4f97d7;">open</span>(fname, <span style="color: #2d9574;">'r'</span>) <span style="color: #4f97d7; font-weight: bold;">as</span> f:
+            <span style="color: #4f97d7; font-weight: bold;">for</span> line <span style="color: #4f97d7; font-weight: bold;">in</span> f:
+                <span style="color: #7590db;">num_chars</span> += <span style="color: #4f97d7;">len</span>(line)
+    <span style="color: #4f97d7; font-weight: bold;">except</span>:
+        <span style="color: #4f97d7; font-weight: bold;">pass</span>
 
-<span class="org-variable-name">stop</span> = time.time()
+<span style="color: #7590db;">stop</span> = time.time()
 </pre>
 </div>
 <p>
-. It takes around <code class="src src-python"><span class="org-keyword">print</span>(stop - start)
+. It takes around <code class="src src-python"><span style="color: #4f97d7; font-weight: bold;">print</span>(stop - start)
 </code> <code>1.2721843719482422</code> seconds to count the characters in these files, which is aleady pretty fast. But, for even more speed we can use the <code>multiprocessing</code> library to perform the operation using multiple cores:
 </p>
 <div class="org-src-container">
 
-<pre class="src src-python"><span class="org-keyword">import</span> multiprocessing
+<pre class="src src-python"><span style="color: #4f97d7; font-weight: bold;">import</span> multiprocessing
 
-<span class="org-keyword">def</span> <span class="org-function-name">f</span>(fname):
-    <span class="org-variable-name">num_chars</span> = []
-    <span class="org-keyword">try</span>:
-        <span class="org-keyword">with</span> <span class="org-builtin">open</span>(fname, <span class="org-string">'r'</span>) <span class="org-keyword">as</span> this_file:
-            <span class="org-keyword">for</span> line <span class="org-keyword">in</span> this_file:
-                num_chars.append(<span class="org-builtin">len</span>(line))
-    <span class="org-keyword">except</span>:
-        <span class="org-keyword">pass</span>
-    <span class="org-keyword">return</span> <span class="org-builtin">sum</span>(num_chars)
+<span style="color: #4f97d7; font-weight: bold;">def</span> <span style="color: #bc6ec5; font-weight: bold;">f</span>(fname):
+    <span style="color: #7590db;">num_chars</span> = []
+    <span style="color: #4f97d7; font-weight: bold;">try</span>:
+        <span style="color: #4f97d7; font-weight: bold;">with</span> <span style="color: #4f97d7;">open</span>(fname, <span style="color: #2d9574;">'r'</span>) <span style="color: #4f97d7; font-weight: bold;">as</span> this_file:
+            <span style="color: #4f97d7; font-weight: bold;">for</span> line <span style="color: #4f97d7; font-weight: bold;">in</span> this_file:
+                num_chars.append(<span style="color: #4f97d7;">len</span>(line))
+    <span style="color: #4f97d7; font-weight: bold;">except</span>:
+        <span style="color: #4f97d7; font-weight: bold;">pass</span>
+    <span style="color: #4f97d7; font-weight: bold;">return</span> <span style="color: #4f97d7;">sum</span>(num_chars)
 
-<span class="org-variable-name">start</span> = time.time()
+<span style="color: #7590db;">start</span> = time.time()
 
-<span class="org-variable-name">pool</span> = multiprocessing.Pool(<span class="org-highlight-numbers-number">7</span>)
-<span class="org-variable-name">nchar</span> = pool.<span class="org-builtin">map</span>(f, textFiles)
+<span style="color: #7590db;">pool</span> = multiprocessing.Pool(<span style="color: #a45bad;">7</span>)
+<span style="color: #7590db;">nchar</span> = pool.<span style="color: #4f97d7;">map</span>(f, textFiles)
 pool.close()
 pool.join()
 
-<span class="org-variable-name">end</span> = time.time()
+<span style="color: #7590db;">end</span> = time.time()
 </pre>
 </div>
 <p>
-which reduces the time to <code class="src src-python"><span class="org-keyword">print</span>(end - start)
+which reduces the time to <code class="src src-python"><span style="color: #4f97d7; font-weight: bold;">print</span>(end - start)
 </code> <code>0.33490753173828125</code> seconds.
 </p>
 </div>
@@ -693,40 +693,40 @@ The submit file template below includes all required elements. (Note that this f
 </p>
 <div class="org-src-container">
 
-<pre class="src src-conf"><span class="org-comment-delimiter"># </span><span class="org-comment">Universe whould always be 'vanilla'. This line MUST be </span>
-<span class="org-comment-delimiter">#</span><span class="org-comment">included in your submit file, exactly as shown below.</span>
-<span class="org-variable-name">Universe</span> = vanilla
+<pre class="src src-conf"><span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">Universe whould always be 'vanilla'. This line MUST be </span>
+<span style="color: #2aa1ae; background-color: #292e34;">#</span><span style="color: #2aa1ae; background-color: #292e34;">included in your submit file, exactly as shown below.</span>
+<span style="color: #7590db;">Universe</span> = vanilla
 
-<span class="org-comment-delimiter"># </span><span class="org-comment">The following arguments are _optional_. If included</span>
-<span class="org-comment-delimiter"># </span><span class="org-comment">they are used to specify the requirements for the</span>
-<span class="org-comment-delimiter"># </span><span class="org-comment">submission.</span>
-<span class="org-variable-name">request_cpus</span> = 1
-<span class="org-variable-name">request_disk</span> = 4GB
-<span class="org-variable-name">request_memory</span> = 4GB
+<span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">The following arguments are _optional_. If included</span>
+<span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">they are used to specify the requirements for the</span>
+<span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">submission.</span>
+<span style="color: #7590db;">request_cpus</span> = 1
+<span style="color: #7590db;">request_disk</span> = 4GB
+<span style="color: #7590db;">request_memory</span> = 4GB
 
-<span class="org-comment-delimiter"># </span><span class="org-comment">Enter the path to the program you wish to run.</span>
-<span class="org-comment-delimiter"># </span><span class="org-comment">The default runs the R program. To run another</span>
-<span class="org-comment-delimiter"># </span><span class="org-comment">program just change '/user/local/bin/R' to the</span>
-<span class="org-comment-delimiter"># </span><span class="org-comment">path to the program you want to run. For example,</span>
-<span class="org-comment-delimiter"># </span><span class="org-comment">to run Stata set Executable to '/usr/local/bin/stata'.</span>
-<span class="org-variable-name">Executable</span> = /usr/local/bin/R
+<span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">Enter the path to the program you wish to run.</span>
+<span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">The default runs the R program. To run another</span>
+<span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">program just change '/user/local/bin/R' to the</span>
+<span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">path to the program you want to run. For example,</span>
+<span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">to run Stata set Executable to '/usr/local/bin/stata'.</span>
+<span style="color: #7590db;">Executable</span> = /usr/local/bin/R
 
-<span class="org-comment-delimiter"># </span><span class="org-comment">Specify any arguments you want to pass to the executable.</span>
-<span class="org-variable-name">Arguments</span> = --no-save --no-restore --slave
+<span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">Specify any arguments you want to pass to the executable.</span>
+<span style="color: #7590db;">Arguments</span> = --no-save --no-restore --slave
 
-<span class="org-comment-delimiter"># </span><span class="org-comment">Specify the relative path to the input file (if any). If you</span>
-<span class="org-comment-delimiter"># </span><span class="org-comment">are using R this should be your R script. If you are using</span>
-<span class="org-comment-delimiter"># </span><span class="org-comment">Stata this should be your do file.</span>
-<span class="org-variable-name">input</span> = example.R
+<span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">Specify the relative path to the input file (if any). If you</span>
+<span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">are using R this should be your R script. If you are using</span>
+<span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">Stata this should be your do file.</span>
+<span style="color: #7590db;">input</span> = example.R
 
-<span class="org-comment-delimiter"># </span><span class="org-comment">Specify where to output any results printed by your program.</span>
-<span class="org-variable-name">output</span> = output/out.$(Process)
-<span class="org-comment-delimiter"># </span><span class="org-comment">Specify where to save any errors returned by your program.</span>
-<span class="org-variable-name">error</span> = output/error.$(Process)
-<span class="org-comment-delimiter"># </span><span class="org-comment">Specify where to save the log file.</span>
-<span class="org-variable-name">Log</span> = output/log
-<span class="org-comment-delimiter"># </span><span class="org-comment">Enter the number of processes to request. This should </span>
-<span class="org-comment-delimiter"># </span><span class="org-comment">always be the last part of your submit file.</span>
+<span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">Specify where to output any results printed by your program.</span>
+<span style="color: #7590db;">output</span> = output/out.$(Process)
+<span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">Specify where to save any errors returned by your program.</span>
+<span style="color: #7590db;">error</span> = output/error.$(Process)
+<span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">Specify where to save the log file.</span>
+<span style="color: #7590db;">Log</span> = output/log
+<span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">Enter the number of processes to request. This should </span>
+<span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">always be the last part of your submit file.</span>
 Queue 10
 </pre>
 </div>
@@ -772,22 +772,22 @@ The first step is to write a script or program to carry out the desired computat
 </p>
 <div class="org-src-container">
 
-<pre class="src src-R"><span class="org-comment-delimiter">## </span><span class="org-comment">function to simulate data and perform a t.test</span>
-<span class="org-function-name">sim.ttest</span> <span class="org-constant">&lt;-</span> <span class="org-keyword">function</span>(mu1, mu2, sd, n1, n2) {
-    d <span class="org-constant">&lt;-</span> data.frame(x = c(rep(<span class="org-string">"group1"</span>, n1), rep(<span class="org-string">"group2"</span>, n2)),
+<pre class="src src-R"><span style="color: #2aa1ae; background-color: #292e34;">## </span><span style="color: #2aa1ae; background-color: #292e34;">function to simulate data and perform a t.test</span>
+<span style="color: #bc6ec5; font-weight: bold;">sim.ttest</span> <span style="color: #a45bad;">&lt;-</span> <span style="color: #4f97d7; font-weight: bold;">function</span>(mu1, mu2, sd, n1, n2) {
+    d <span style="color: #a45bad;">&lt;-</span> data.frame(x = c(rep(<span style="color: #2d9574;">"group1"</span>, n1), rep(<span style="color: #2d9574;">"group2"</span>, n2)),
                     y = c(rnorm(n1, mean = mu1, sd = sd),
                           rnorm(n2, mean = mu2, sd = sd)))
-    <span class="org-keyword">return</span>(t.test(y ~ x, data = d)$p.value)
+    <span style="color: #4f97d7; font-weight: bold;">return</span>(t.test(y ~ x, data = d)$p.value)
 }
 
-<span class="org-comment-delimiter">##  </span><span class="org-comment">run the function 10,000 times </span>
-p <span class="org-constant">&lt;-</span> replicate(<span class="org-highlight-numbers-number">10000</span>,
-               sim.ttest(mu1 = <span class="org-highlight-numbers-number">1</span>,
-                         mu2 = <span class="org-highlight-numbers-number">1.3</span>,
-                         sd = <span class="org-highlight-numbers-number">1</span>,
-                         n1 = <span class="org-highlight-numbers-number">50</span>,
-                         n2 = <span class="org-highlight-numbers-number">150</span>))
-<span class="org-comment-delimiter">## </span><span class="org-comment">calculate the proportion of significant tests</span>
+<span style="color: #2aa1ae; background-color: #292e34;">##  </span><span style="color: #2aa1ae; background-color: #292e34;">run the function 10,000 times </span>
+p <span style="color: #a45bad;">&lt;-</span> replicate(<span style="color: #a45bad;">10000</span>,
+               sim.ttest(mu1 = <span style="color: #a45bad;">1</span>,
+                         mu2 = <span style="color: #a45bad;">1.3</span>,
+                         sd = <span style="color: #a45bad;">1</span>,
+                         n1 = <span style="color: #a45bad;">50</span>,
+                         n2 = <span style="color: #a45bad;">150</span>))
+<span style="color: #2aa1ae; background-color: #292e34;">## </span><span style="color: #2aa1ae; background-color: #292e34;">calculate the proportion of significant tests</span>
 cat(length(p[p &lt; .05])/length(p))
 </pre>
 </div>
@@ -799,30 +799,30 @@ If we want to run this function one million times it may take a while, especiall
 </p>
 <div class="org-src-container">
 
-<pre class="src src-conf"><span class="org-comment-delimiter"># </span><span class="org-comment">Universe whould always be 'vanilla'. This line MUST be </span>
-<span class="org-comment-delimiter">#</span><span class="org-comment">included in your submit file, exactly as shown below.</span>
-<span class="org-variable-name">Universe</span> = vanilla
+<pre class="src src-conf"><span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">Universe whould always be 'vanilla'. This line MUST be </span>
+<span style="color: #2aa1ae; background-color: #292e34;">#</span><span style="color: #2aa1ae; background-color: #292e34;">included in your submit file, exactly as shown below.</span>
+<span style="color: #7590db;">Universe</span> = vanilla
 
-<span class="org-comment-delimiter"># </span><span class="org-comment">Enter the path to the R program.</span>
-<span class="org-variable-name">Executable</span> = /usr/local/bin/R
+<span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">Enter the path to the R program.</span>
+<span style="color: #7590db;">Executable</span> = /usr/local/bin/R
 
-<span class="org-comment-delimiter"># </span><span class="org-comment">Specify any arguments you want to pass to the executable.</span>
-<span class="org-comment-delimiter"># </span><span class="org-comment">Here we pass arguments to make R not save or restore workspaces,</span>
-<span class="org-comment-delimiter"># </span><span class="org-comment">and to run as quietly as possible.</span>
-<span class="org-variable-name">Arguments</span> = --no-save --no-restore --slave
+<span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">Specify any arguments you want to pass to the executable.</span>
+<span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">Here we pass arguments to make R not save or restore workspaces,</span>
+<span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">and to run as quietly as possible.</span>
+<span style="color: #7590db;">Arguments</span> = --no-save --no-restore --slave
 
-<span class="org-comment-delimiter"># </span><span class="org-comment">Specify the relative path to the input file</span>
-<span class="org-variable-name">input</span> = power.R
+<span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">Specify the relative path to the input file</span>
+<span style="color: #7590db;">input</span> = power.R
 
-<span class="org-comment-delimiter"># </span><span class="org-comment">Specify where to output any results printed by your program.</span>
-<span class="org-variable-name">output</span> = output/out.$(Process)
-<span class="org-comment-delimiter"># </span><span class="org-comment">Specify where to save any errors returned by your program.</span>
-<span class="org-variable-name">error</span> = output/error.$(Process)
-<span class="org-comment-delimiter"># </span><span class="org-comment">Specify where to save the log file.</span>
-<span class="org-variable-name">Log</span> = output/log
+<span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">Specify where to output any results printed by your program.</span>
+<span style="color: #7590db;">output</span> = output/out.$(Process)
+<span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">Specify where to save any errors returned by your program.</span>
+<span style="color: #7590db;">error</span> = output/error.$(Process)
+<span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">Specify where to save the log file.</span>
+<span style="color: #7590db;">Log</span> = output/log
 
-<span class="org-comment-delimiter"># </span><span class="org-comment">Enter the number of processes to request.</span>
-<span class="org-comment-delimiter"># </span><span class="org-comment">This section should always come last.</span>
+<span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">Enter the number of processes to request.</span>
+<span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">This section should always come last.</span>
 Queue 100
 </pre>
 </div>
@@ -845,16 +845,16 @@ When your batch job is finished you are usually left with multiple output files 
 </p>
 <div class="org-src-container">
 
-<pre class="src src-R"><span class="org-comment-delimiter">## </span><span class="org-comment">list all output files in the output directory</span>
-output_files <span class="org-constant">&lt;-</span> list.files(<span class="org-string">"output"</span>,
-                           pattern = <span class="org-string">"^out\\.[0-9]+$"</span>,
-                           full.names=<span class="org-type">TRUE</span>)
+<pre class="src src-R"><span style="color: #2aa1ae; background-color: #292e34;">## </span><span style="color: #2aa1ae; background-color: #292e34;">list all output files in the output directory</span>
+output_files <span style="color: #a45bad;">&lt;-</span> list.files(<span style="color: #2d9574;">"output"</span>,
+                           pattern = <span style="color: #2d9574;">"^out\\.[0-9]+$"</span>,
+                           full.names=<span style="color: #ce537a; font-weight: bold;">TRUE</span>)
 
-<span class="org-comment-delimiter">## </span><span class="org-comment">read each file, convert it to a number, and take the average</span>
+<span style="color: #2aa1ae; background-color: #292e34;">## </span><span style="color: #2aa1ae; background-color: #292e34;">read each file, convert it to a number, and take the average</span>
 mean(as.double(sapply(
                       output_files,
                       readLines,
-                      warn = <span class="org-type">FALSE</span>)))
+                      warn = <span style="color: #ce537a; font-weight: bold;">FALSE</span>)))
 </pre>
 </div>
 </div></li>
@@ -883,26 +883,26 @@ We can use the <code>$(Process)</code> macro to pass information to our program,
 </p>
 <div class="org-src-container">
 
-<pre class="src src-conf"><span class="org-comment-delimiter"># </span><span class="org-comment">Universe whould always be 'vanilla'. This line MUST be </span>
-<span class="org-comment-delimiter">#</span><span class="org-comment">included in your submit file, exactly as shown below.</span>
-<span class="org-variable-name">Universe</span> = vanilla
+<pre class="src src-conf"><span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">Universe whould always be 'vanilla'. This line MUST be </span>
+<span style="color: #2aa1ae; background-color: #292e34;">#</span><span style="color: #2aa1ae; background-color: #292e34;">included in your submit file, exactly as shown below.</span>
+<span style="color: #7590db;">Universe</span> = vanilla
 
-<span class="org-comment-delimiter"># </span><span class="org-comment">Enter the path to the R program.</span>
-<span class="org-variable-name">Executable</span> = /usr/local/bin/R
+<span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">Enter the path to the R program.</span>
+<span style="color: #7590db;">Executable</span> = /usr/local/bin/R
 
-<span class="org-comment-delimiter"># </span><span class="org-comment">Specify any arguments you want to pass to the executable</span>
-<span class="org-comment-delimiter"># </span><span class="org-comment">to make r not save or restore workspaces, and to </span>
-<span class="org-comment-delimiter"># </span><span class="org-comment">run as quietly as possible</span>
-<span class="org-variable-name">Arguments</span> = --no-save --no-restore --slave --args $(Process)
+<span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">Specify any arguments you want to pass to the executable</span>
+<span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">to make r not save or restore workspaces, and to </span>
+<span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">run as quietly as possible</span>
+<span style="color: #7590db;">Arguments</span> = --no-save --no-restore --slave --args $(Process)
 
-<span class="org-comment-delimiter"># </span><span class="org-comment">Specify the relative path to the input file</span>
-<span class="org-variable-name">input</span> = power.R
+<span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">Specify the relative path to the input file</span>
+<span style="color: #7590db;">input</span> = power.R
 
-<span class="org-comment-delimiter"># </span><span class="org-comment">Specify where to save any errors returned by your program.</span>
-<span class="org-variable-name">error</span> = output/error.$(Process)
+<span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">Specify where to save any errors returned by your program.</span>
+<span style="color: #7590db;">error</span> = output/error.$(Process)
 
-<span class="org-variable-name">Log</span> = log.txt
-<span class="org-comment-delimiter"># </span><span class="org-comment">Enter the number of processes to request.</span>
+<span style="color: #7590db;">Log</span> = log.txt
+<span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">Enter the number of processes to request.</span>
 Queue 40
 </pre>
 </div>
@@ -917,8 +917,8 @@ Next we need to 1) retrieve the process number in our R program and 2) map it to
 </p>
 <div class="org-src-container">
 
-<pre class="src src-R"><span class="org-comment-delimiter">## </span><span class="org-comment">retrieve arguments passed from the command line.</span>
-process <span class="org-constant">&lt;-</span> as.integer(as.character(commandArgs(trailingOnly = <span class="org-type">TRUE</span>)))
+<pre class="src src-R"><span style="color: #2aa1ae; background-color: #292e34;">## </span><span style="color: #2aa1ae; background-color: #292e34;">retrieve arguments passed from the command line.</span>
+process <span style="color: #a45bad;">&lt;-</span> as.integer(as.character(commandArgs(trailingOnly = <span style="color: #ce537a; font-weight: bold;">TRUE</span>)))
 </pre>
 </div>
 <p>
@@ -926,8 +926,8 @@ We now have a variable in R that tells us which process we are. Now we need to m
 </p>
 <div class="org-src-container">
 
-<pre class="src src-R"><span class="org-comment-delimiter">## </span><span class="org-comment">map process to sample size parameter.</span>
-n <span class="org-constant">&lt;-</span> (process + <span class="org-highlight-numbers-number">100</span>) + (process*<span class="org-highlight-numbers-number">10</span> - process)
+<pre class="src src-R"><span style="color: #2aa1ae; background-color: #292e34;">## </span><span style="color: #2aa1ae; background-color: #292e34;">map process to sample size parameter.</span>
+n <span style="color: #a45bad;">&lt;-</span> (process + <span style="color: #a45bad;">100</span>) + (process*<span style="color: #a45bad;">10</span> - process)
 </pre>
 </div>
 
@@ -940,24 +940,24 @@ Now we can set up the simulation as before, passing the <code>n</code> calculate
 </p>
 <div class="org-src-container">
 
-<pre class="src src-R">  <span class="org-comment-delimiter">## </span><span class="org-comment">function to simulate data and perform a t.test</span>
-  <span class="org-function-name">sim.ttest</span> <span class="org-constant">&lt;-</span> <span class="org-keyword">function</span>(mu1, mu2, sd, n1, n2) {
-      d <span class="org-constant">&lt;-</span> data.frame(x = c(rep(<span class="org-string">"group1"</span>, n1), rep(<span class="org-string">"group2"</span>, n2)),
+<pre class="src src-R">  <span style="color: #2aa1ae; background-color: #292e34;">## </span><span style="color: #2aa1ae; background-color: #292e34;">function to simulate data and perform a t.test</span>
+  <span style="color: #bc6ec5; font-weight: bold;">sim.ttest</span> <span style="color: #a45bad;">&lt;-</span> <span style="color: #4f97d7; font-weight: bold;">function</span>(mu1, mu2, sd, n1, n2) {
+      d <span style="color: #a45bad;">&lt;-</span> data.frame(x = c(rep(<span style="color: #2d9574;">"group1"</span>, n1), rep(<span style="color: #2d9574;">"group2"</span>, n2)),
                       y = c(rnorm(n1, mean = mu1, sd = sd),
                             rnorm(n2, mean = mu2, sd = sd)))
-      <span class="org-keyword">return</span>(t.test(y ~ x, data = d)$p.value)
+      <span style="color: #4f97d7; font-weight: bold;">return</span>(t.test(y ~ x, data = d)$p.value)
   }
 
-  <span class="org-comment-delimiter">##  </span><span class="org-comment">run the function 10,000 times </span>
-  p <span class="org-constant">&lt;-</span> replicate(<span class="org-highlight-numbers-number">10000</span>,
-                 sim.ttest(mu1 = <span class="org-highlight-numbers-number">1</span>,
-                           mu2 = <span class="org-highlight-numbers-number">1.3</span>,
-                           sd = <span class="org-highlight-numbers-number">1</span>,
+  <span style="color: #2aa1ae; background-color: #292e34;">##  </span><span style="color: #2aa1ae; background-color: #292e34;">run the function 10,000 times </span>
+  p <span style="color: #a45bad;">&lt;-</span> replicate(<span style="color: #a45bad;">10000</span>,
+                 sim.ttest(mu1 = <span style="color: #a45bad;">1</span>,
+                           mu2 = <span style="color: #a45bad;">1.3</span>,
+                           sd = <span style="color: #a45bad;">1</span>,
                            n1 = n,
                            n2 = n))
 write.csv(data.frame(n = n, power = length(p[p &lt; .05])/length(p)),
-          row.names = <span class="org-type">FALSE</span>,
-          file = paste0(<span class="org-string">"output/out"</span>, process, <span class="org-string">".csv"</span>))
+          row.names = <span style="color: #ce537a; font-weight: bold;">FALSE</span>,
+          file = paste0(<span style="color: #2d9574;">"output/out"</span>, process, <span style="color: #2d9574;">".csv"</span>))
 </pre>
 </div>
 
@@ -972,17 +972,17 @@ Each of our 40 processes produced a file in the <code>output</code> directory na
 </p>
 <div class="org-src-container">
 
-<pre class="src src-R"><span class="org-comment-delimiter">## </span><span class="org-comment">list all output files in the output directory</span>
-output_files <span class="org-constant">&lt;-</span> list.files(<span class="org-string">"output"</span>,
-                           pattern = <span class="org-string">"^out[0-9]+\\.csv$"</span>,
-                           full.names=<span class="org-type">TRUE</span>)
+<pre class="src src-R"><span style="color: #2aa1ae; background-color: #292e34;">## </span><span style="color: #2aa1ae; background-color: #292e34;">list all output files in the output directory</span>
+output_files <span style="color: #a45bad;">&lt;-</span> list.files(<span style="color: #2d9574;">"output"</span>,
+                           pattern = <span style="color: #2d9574;">"^out[0-9]+\\.csv$"</span>,
+                           full.names=<span style="color: #ce537a; font-weight: bold;">TRUE</span>)
 
-<span class="org-comment-delimiter">## </span><span class="org-comment">read each file and append them</span>
-results <span class="org-constant">&lt;-</span> do.call(rbind, lapply(output_files, read.csv))
+<span style="color: #2aa1ae; background-color: #292e34;">## </span><span style="color: #2aa1ae; background-color: #292e34;">read each file and append them</span>
+results <span style="color: #a45bad;">&lt;-</span> do.call(rbind, lapply(output_files, read.csv))
 
-<span class="org-comment-delimiter">## </span><span class="org-comment">plot</span>
+<span style="color: #2aa1ae; background-color: #292e34;">## </span><span style="color: #2aa1ae; background-color: #292e34;">plot</span>
 plot(results)
-abline(h = <span class="org-highlight-numbers-number">0.8</span>)
+abline(h = <span style="color: #a45bad;">0.8</span>)
 </pre>
 </div>
 
@@ -1016,27 +1016,27 @@ To use the batch system we need to write a do-file that does the calculation wit
 </p>
 <div class="org-src-container">
 
-<pre class="src src-stata"><span class="org-constant">set</span> <span class="org-constant">mo</span><span class="org-type">re</span> off
+<pre class="src src-stata"><span style="color: #a45bad;">set</span> <span style="color: #a45bad;">mo</span><span style="color: #ce537a; font-weight: bold;">re</span> off
 
-<span class="org-comment">// collect the arguments passed by submit file</span>
+<span style="color: #2aa1ae; background-color: #292e34;">// collect the arguments passed by submit file</span>
 args process
 
-<span class="org-comment">// load the dataset</span>
-<span class="org-keyword">use</span> <span class="org-string">"mydata"</span>, <span class="org-keyword">clear</span>
+<span style="color: #2aa1ae; background-color: #292e34;">// load the dataset</span>
+<span style="color: #4f97d7; font-weight: bold;">use</span> <span style="color: #2d9574;">"mydata"</span>, <span style="color: #4f97d7; font-weight: bold;">clear</span>
 
-<span class="org-comment">// set seed (shouldn't have to do this, but stata's</span>
-<span class="org-comment">// random bsample defaults to the same seed each time).</span>
-<span class="org-comment">// we nee to find a better way to do this.</span>
-<span class="org-constant">set</span> <span class="org-constant">se</span><span class="org-type">ed</span> `<span class="org-variable-name">process</span>'
+<span style="color: #2aa1ae; background-color: #292e34;">// set seed (shouldn't have to do this, but stata's</span>
+<span style="color: #2aa1ae; background-color: #292e34;">// random bsample defaults to the same seed each time).</span>
+<span style="color: #2aa1ae; background-color: #292e34;">// we nee to find a better way to do this.</span>
+<span style="color: #a45bad;">set</span> <span style="color: #a45bad;">se</span><span style="color: #ce537a; font-weight: bold;">ed</span> `<span style="color: #7590db;">process</span>'
 
-<span class="org-comment">// sample with replacement</span>
-<span class="org-keyword">bsample</span>, cluster(id) idcluster(newid)
+<span style="color: #2aa1ae; background-color: #292e34;">// sample with replacement</span>
+<span style="color: #4f97d7; font-weight: bold;">bsample</span>, cluster(id) idcluster(newid)
 
-<span class="org-comment">// calculate the mean and standard deviation</span>
+<span style="color: #2aa1ae; background-color: #292e34;">// calculate the mean and standard deviation</span>
 collapse (mean) mean_myvar = myvar (sd) sd_myvar = myvar
 
-<span class="org-comment">// save the result, appending the process number to the file name</span>
-<span class="org-keyword">save</span> <span class="org-string">"output/output_`</span><span class="org-variable-name">process</span><span class="org-string">'.dta"</span>, <span class="org-keyword">replace</span>
+<span style="color: #2aa1ae; background-color: #292e34;">// save the result, appending the process number to the file name</span>
+<span style="color: #4f97d7; font-weight: bold;">save</span> <span style="color: #2d9574;">"output/output_`</span><span style="color: #7590db;">process</span><span style="color: #2d9574;">'.dta"</span>, <span style="color: #4f97d7; font-weight: bold;">replace</span>
 </pre>
 </div>
 <p>
@@ -1052,28 +1052,28 @@ The Stata code in the example above draws one bootstrap sample and calculates th
 </p>
 <div class="org-src-container">
 
-<pre class="src src-conf"><span class="org-comment-delimiter"># </span><span class="org-comment">Universe whould always be 'vanilla'. This line MUST be </span>
-<span class="org-comment-delimiter">#</span><span class="org-comment">included in your submit file, exactly as shown below.</span>
-<span class="org-variable-name">Universe</span> = vanilla
+<pre class="src src-conf"><span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">Universe whould always be 'vanilla'. This line MUST be </span>
+<span style="color: #2aa1ae; background-color: #292e34;">#</span><span style="color: #2aa1ae; background-color: #292e34;">included in your submit file, exactly as shown below.</span>
+<span style="color: #7590db;">Universe</span> = vanilla
 
-<span class="org-comment-delimiter"># </span><span class="org-comment">Enter the path to the Stata program.</span>
-<span class="org-variable-name">Executable</span> = /usr/local/bin/stata-mp
+<span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">Enter the path to the Stata program.</span>
+<span style="color: #7590db;">Executable</span> = /usr/local/bin/stata-mp
 
-<span class="org-comment-delimiter"># </span><span class="org-comment">Specify any arguments you want to pass to the executable.</span>
-<span class="org-comment-delimiter"># </span><span class="org-comment">Here we pass arguments to make Stata run the bootstrap.do</span>
-<span class="org-comment-delimiter"># </span><span class="org-comment">file. We also pass the process number, which will be used</span>
-<span class="org-comment-delimiter"># </span><span class="org-comment">to append the process number to the output files.</span>
-<span class="org-variable-name">Arguments</span> = -q do bootstrap.do $(Process)
+<span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">Specify any arguments you want to pass to the executable.</span>
+<span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">Here we pass arguments to make Stata run the bootstrap.do</span>
+<span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">file. We also pass the process number, which will be used</span>
+<span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">to append the process number to the output files.</span>
+<span style="color: #7590db;">Arguments</span> = -q do bootstrap.do $(Process)
 
-<span class="org-comment-delimiter"># </span><span class="org-comment">Specify where to output any results printed by your program.</span>
-<span class="org-variable-name">output</span> = output/bootstrap$(Process).out
-<span class="org-comment-delimiter"># </span><span class="org-comment">Specify where to save any errors returned by your program.</span>
-<span class="org-variable-name">error</span> = output/bootstrap$(Process).err
-<span class="org-comment-delimiter"># </span><span class="org-comment">Specify where to save the log file.</span>
-<span class="org-variable-name">Log</span> = output/bootstrap$(Process).log
+<span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">Specify where to output any results printed by your program.</span>
+<span style="color: #7590db;">output</span> = output/bootstrap$(Process).out
+<span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">Specify where to save any errors returned by your program.</span>
+<span style="color: #7590db;">error</span> = output/bootstrap$(Process).err
+<span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">Specify where to save the log file.</span>
+<span style="color: #7590db;">Log</span> = output/bootstrap$(Process).log
 
-<span class="org-comment-delimiter"># </span><span class="org-comment">Enter the number of processes to request.</span>
-<span class="org-comment-delimiter"># </span><span class="org-comment">This section should always come last.</span>
+<span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">Enter the number of processes to request.</span>
+<span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">This section should always come last.</span>
 Queue 1000
 </pre>
 </div>
@@ -1095,32 +1095,32 @@ Each of our 1000 processes produced a file in the <code>output</code> directory 
 </p>
 <div class="org-src-container">
 
-<pre class="src src-Stata"><span class="org-keyword">clear</span>
-<span class="org-constant">set</span> <span class="org-constant">mo</span><span class="org-type">re</span> off
-<span class="org-comment">// change to the output directory</span>
-<span class="org-keyword">cd</span> output
-<span class="org-comment">// get a list of the output files created by bootstrap.do</span>
-<span class="org-constant">local</span><span class="org-variable-name"> list</span>: <span class="org-constant">dir</span> . files <span class="org-string">"output*.dta"</span>
-<span class="org-comment">//loop over the output files appending each one</span>
-<span class="org-constant">local</span><span class="org-variable-name"> f</span>=<span class="org-highlight-numbers-number">1</span>
-foreach file of local <span class="org-constant">list</span> {
-        <span class="org-constant">di</span> <span class="org-string">"`file"</span>'
-        <span class="org-constant">if</span> `<span class="org-variable-name">f</span>'== <span class="org-highlight-numbers-number">1</span> {
-                <span class="org-keyword">use</span> `<span class="org-variable-name">file</span>', <span class="org-keyword">clear</span>
+<pre class="src src-Stata"><span style="color: #4f97d7; font-weight: bold;">clear</span>
+<span style="color: #a45bad;">set</span> <span style="color: #a45bad;">mo</span><span style="color: #ce537a; font-weight: bold;">re</span> off
+<span style="color: #2aa1ae; background-color: #292e34;">// change to the output directory</span>
+<span style="color: #4f97d7; font-weight: bold;">cd</span> output
+<span style="color: #2aa1ae; background-color: #292e34;">// get a list of the output files created by bootstrap.do</span>
+<span style="color: #a45bad;">local</span><span style="color: #7590db;"> list</span>: <span style="color: #a45bad;">dir</span> . files <span style="color: #2d9574;">"output*.dta"</span>
+<span style="color: #2aa1ae; background-color: #292e34;">//loop over the output files appending each one</span>
+<span style="color: #a45bad;">local</span><span style="color: #7590db;"> f</span>=<span style="color: #a45bad;">1</span>
+foreach file of local <span style="color: #a45bad;">list</span> {
+        <span style="color: #a45bad;">di</span> <span style="color: #2d9574;">"`file"</span>'
+        <span style="color: #a45bad;">if</span> `<span style="color: #7590db;">f</span>'== <span style="color: #a45bad;">1</span> {
+                <span style="color: #4f97d7; font-weight: bold;">use</span> `<span style="color: #7590db;">file</span>', <span style="color: #4f97d7; font-weight: bold;">clear</span>
         }
-        <span class="org-constant">else</span> {
-                <span class="org-keyword">append</span> <span class="org-constant">using</span> `<span class="org-variable-name">file</span>'
+        <span style="color: #a45bad;">else</span> {
+                <span style="color: #4f97d7; font-weight: bold;">append</span> <span style="color: #a45bad;">using</span> `<span style="color: #7590db;">file</span>'
         }
-        <span class="org-constant">local</span> ++f
+        <span style="color: #a45bad;">local</span> ++f
 }
-<span class="org-comment">// save the appended results</span>
-saveold <span class="org-string">"mybootresults"</span>, <span class="org-keyword">replace</span>
+<span style="color: #2aa1ae; background-color: #292e34;">// save the appended results</span>
+saveold <span style="color: #2d9574;">"mybootresults"</span>, <span style="color: #4f97d7; font-weight: bold;">replace</span>
 
-<span class="org-comment">// make a histogram</span>
+<span style="color: #2aa1ae; background-color: #292e34;">// make a histogram</span>
 hist(mean_myvar)
 
-<span class="org-comment">// save the graph</span>
-graph export <span class="org-string">"stata_bootstrap.eps"</span>, <span class="org-keyword">replace</span>
+<span style="color: #2aa1ae; background-color: #292e34;">// save the graph</span>
+graph export <span style="color: #2d9574;">"stata_bootstrap.eps"</span>, <span style="color: #4f97d7; font-weight: bold;">replace</span>
 </pre>
 </div>
 
@@ -1158,20 +1158,20 @@ The first step is to write a script or program to carry out the desired computat
 </p>
 <div class="org-src-container">
 
-<pre class="src src-python"><span class="org-keyword">import</span> numpy <span class="org-keyword">as</span> np
-<span class="org-keyword">from</span> scipy <span class="org-keyword">import</span> stats
+<pre class="src src-python"><span style="color: #4f97d7; font-weight: bold;">import</span> numpy <span style="color: #4f97d7; font-weight: bold;">as</span> np
+<span style="color: #4f97d7; font-weight: bold;">from</span> scipy <span style="color: #4f97d7; font-weight: bold;">import</span> stats
 
-<span class="org-comment-delimiter">## </span><span class="org-comment">function to simulate data and perform a t.test</span>
-<span class="org-keyword">def</span> <span class="org-function-name">sim_ttest</span>(mu1, mu2, sd, n1, n2):
-    <span class="org-variable-name">x</span> = stats.norm.rvs(loc = mu1, scale = sd, size = n1)
-    <span class="org-variable-name">y</span> = stats.norm.rvs(loc = mu2, scale = sd, size = n2)
-    <span class="org-keyword">return</span>(stats.ttest_ind(x, y)[<span class="org-highlight-numbers-number">1</span>])
+<span style="color: #2aa1ae; background-color: #292e34;">## </span><span style="color: #2aa1ae; background-color: #292e34;">function to simulate data and perform a t.test</span>
+<span style="color: #4f97d7; font-weight: bold;">def</span> <span style="color: #bc6ec5; font-weight: bold;">sim_ttest</span>(mu1, mu2, sd, n1, n2):
+    <span style="color: #7590db;">x</span> = stats.norm.rvs(loc = mu1, scale = sd, size = n1)
+    <span style="color: #7590db;">y</span> = stats.norm.rvs(loc = mu2, scale = sd, size = n2)
+    <span style="color: #4f97d7; font-weight: bold;">return</span>(stats.ttest_ind(x, y)[<span style="color: #a45bad;">1</span>])
 
-<span class="org-comment-delimiter">##  </span><span class="org-comment">run the function 10,000 times</span>
-<span class="org-variable-name">nsims</span> = <span class="org-highlight-numbers-number">10000</span>
-<span class="org-variable-name">p</span> = [sim_ttest(<span class="org-highlight-numbers-number">1</span>, <span class="org-highlight-numbers-number">1</span>.<span class="org-highlight-numbers-number">3</span>, <span class="org-highlight-numbers-number">1</span>, <span class="org-highlight-numbers-number">50</span>, <span class="org-highlight-numbers-number">150</span>)  <span class="org-keyword">for</span> x <span class="org-keyword">in</span> <span class="org-builtin">range</span>(nsims)]
-<span class="org-comment-delimiter">## </span><span class="org-comment">calculate proportion of significant tests</span>
-<span class="org-keyword">print</span>(<span class="org-builtin">len</span>([x <span class="org-keyword">for</span> x <span class="org-keyword">in</span> p <span class="org-keyword">if</span> x &lt; .<span class="org-highlight-numbers-number">05</span>])/nsims)
+<span style="color: #2aa1ae; background-color: #292e34;">##  </span><span style="color: #2aa1ae; background-color: #292e34;">run the function 10,000 times</span>
+<span style="color: #7590db;">nsims</span> = <span style="color: #a45bad;">10000</span>
+<span style="color: #7590db;">p</span> = [sim_ttest(<span style="color: #a45bad;">1</span>, <span style="color: #a45bad;">1</span>.<span style="color: #a45bad;">3</span>, <span style="color: #a45bad;">1</span>, <span style="color: #a45bad;">50</span>, <span style="color: #a45bad;">150</span>)  <span style="color: #4f97d7; font-weight: bold;">for</span> x <span style="color: #4f97d7; font-weight: bold;">in</span> <span style="color: #4f97d7;">range</span>(nsims)]
+<span style="color: #2aa1ae; background-color: #292e34;">## </span><span style="color: #2aa1ae; background-color: #292e34;">calculate proportion of significant tests</span>
+<span style="color: #4f97d7; font-weight: bold;">print</span>(<span style="color: #4f97d7;">len</span>([x <span style="color: #4f97d7; font-weight: bold;">for</span> x <span style="color: #4f97d7; font-weight: bold;">in</span> p <span style="color: #4f97d7; font-weight: bold;">if</span> x &lt; .<span style="color: #a45bad;">05</span>])/nsims)
 </pre>
 </div>
 
@@ -1191,31 +1191,31 @@ If we want to run this function one million times it may take a while, especiall
 </p>
 <div class="org-src-container">
 
-<pre class="src src-conf"><span class="org-comment-delimiter"># </span><span class="org-comment">Universe whould always be 'vanilla'. This line MUST be </span>
-<span class="org-comment-delimiter">#</span><span class="org-comment">included in your submit file, exactly as shown below.</span>
-<span class="org-variable-name">Universe</span> = vanilla
+<pre class="src src-conf"><span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">Universe whould always be 'vanilla'. This line MUST be </span>
+<span style="color: #2aa1ae; background-color: #292e34;">#</span><span style="color: #2aa1ae; background-color: #292e34;">included in your submit file, exactly as shown below.</span>
+<span style="color: #7590db;">Universe</span> = vanilla
 
-<span class="org-comment-delimiter"># </span><span class="org-comment">Enter the path to the python program.</span>
-<span class="org-variable-name">Executable</span> = /usr/local/bin/python33
+<span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">Enter the path to the python program.</span>
+<span style="color: #7590db;">Executable</span> = /usr/local/bin/python33
 
-<span class="org-comment-delimiter"># </span><span class="org-comment">Specify any arguments you want to pass to the executable.</span>
-<span class="org-comment-delimiter"># </span><span class="org-comment">Here we pass arguments to make python not save or restore workspaces,</span>
-<span class="org-comment-delimiter"># </span><span class="org-comment">and to run as quietly as possible.</span>
-<span class="org-variable-name">Arguments</span> = power.py
+<span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">Specify any arguments you want to pass to the executable.</span>
+<span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">Here we pass arguments to make python not save or restore workspaces,</span>
+<span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">and to run as quietly as possible.</span>
+<span style="color: #7590db;">Arguments</span> = power.py
 
-<span class="org-comment-delimiter"># </span><span class="org-comment">Note that unlike R batch job submission we pass the python script in</span>
-<span class="org-comment-delimiter"># </span><span class="org-comment">the Arguments section rather than in the "Input" section.</span>
-<span class="org-comment-delimiter"># </span><span class="org-comment">Specify the relative path to the input file</span>
+<span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">Note that unlike R batch job submission we pass the python script in</span>
+<span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">the Arguments section rather than in the "Input" section.</span>
+<span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">Specify the relative path to the input file</span>
 
-<span class="org-comment-delimiter"># </span><span class="org-comment">Specify where to output any results printed by your program.</span>
-<span class="org-variable-name">output</span> = output/out.$(Process)
-<span class="org-comment-delimiter"># </span><span class="org-comment">Specify where to save any errors returned by your program.</span>
-<span class="org-variable-name">error</span> = output/error.$(Process)
-<span class="org-comment-delimiter"># </span><span class="org-comment">Specify where to save the log file.</span>
-<span class="org-variable-name">Log</span> = output/log
+<span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">Specify where to output any results printed by your program.</span>
+<span style="color: #7590db;">output</span> = output/out.$(Process)
+<span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">Specify where to save any errors returned by your program.</span>
+<span style="color: #7590db;">error</span> = output/error.$(Process)
+<span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">Specify where to save the log file.</span>
+<span style="color: #7590db;">Log</span> = output/log
 
-<span class="org-comment-delimiter"># </span><span class="org-comment">Enter the number of processes to request.</span>
-<span class="org-comment-delimiter"># </span><span class="org-comment">This section should always come last.</span>
+<span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">Enter the number of processes to request.</span>
+<span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">This section should always come last.</span>
 Queue 100
 </pre>
 </div>
@@ -1238,13 +1238,13 @@ When your batch job is finished you are usually left with multiple output files 
 </p>
 <div class="org-src-container">
 
-<pre class="src src-python"><span class="org-keyword">import</span> numpy <span class="org-keyword">as</span> np
-<span class="org-keyword">import</span> glob
-<span class="org-comment-delimiter">## </span><span class="org-comment">list all output files in the output directory</span>
-<span class="org-variable-name">output_files</span> = glob.glob(<span class="org-string">"output/out*"</span>)
+<pre class="src src-python"><span style="color: #4f97d7; font-weight: bold;">import</span> numpy <span style="color: #4f97d7; font-weight: bold;">as</span> np
+<span style="color: #4f97d7; font-weight: bold;">import</span> glob
+<span style="color: #2aa1ae; background-color: #292e34;">## </span><span style="color: #2aa1ae; background-color: #292e34;">list all output files in the output directory</span>
+<span style="color: #7590db;">output_files</span> = glob.glob(<span style="color: #2d9574;">"output/out*"</span>)
 
-<span class="org-variable-name">output_values</span> = <span class="org-builtin">map</span>(<span class="org-keyword">lambda</span> f: np.<span class="org-builtin">float</span>(<span class="org-builtin">open</span>(f).read()), output_files)
-<span class="org-keyword">print</span>(<span class="org-builtin">list</span>(output_values))
+<span style="color: #7590db;">output_values</span> = <span style="color: #4f97d7;">map</span>(<span style="color: #4f97d7; font-weight: bold;">lambda</span> f: np.<span style="color: #4f97d7;">float</span>(<span style="color: #4f97d7;">open</span>(f).read()), output_files)
+<span style="color: #4f97d7; font-weight: bold;">print</span>(<span style="color: #4f97d7;">list</span>(output_values))
 </pre>
 </div>
 </div></li>
@@ -1273,24 +1273,24 @@ We can use the <code>$(Process)</code> macro to pass information to our program,
 </p>
 <div class="org-src-container">
 
-<pre class="src src-conf">  <span class="org-comment-delimiter"># </span><span class="org-comment">Universe whould always be 'vanilla'. This line MUST be </span>
-  <span class="org-comment-delimiter">#</span><span class="org-comment">included in your submit file, exactly as shown below.</span>
-  <span class="org-variable-name">Universe</span> = vanilla
+<pre class="src src-conf">  <span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">Universe whould always be 'vanilla'. This line MUST be </span>
+  <span style="color: #2aa1ae; background-color: #292e34;">#</span><span style="color: #2aa1ae; background-color: #292e34;">included in your submit file, exactly as shown below.</span>
+  <span style="color: #7590db;">Universe</span> = vanilla
 
-  <span class="org-comment-delimiter"># </span><span class="org-comment">Enter the path to the python program.</span>
-  <span class="org-variable-name">Executable</span> = /usr/local/bin/python33
+  <span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">Enter the path to the python program.</span>
+  <span style="color: #7590db;">Executable</span> = /usr/local/bin/python33
 
-  <span class="org-comment-delimiter"># </span><span class="org-comment">Specify any arguments you want to pass to the executable</span>
-  <span class="org-variable-name">Arguments</span> = power.py $(Process)
+  <span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">Specify any arguments you want to pass to the executable</span>
+  <span style="color: #7590db;">Arguments</span> = power.py $(Process)
 
-<span class="org-comment-delimiter"># </span><span class="org-comment">Specify where to output any results printed by your program.</span>
-  <span class="org-variable-name">output</span> = output/out.$(Process)
+<span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">Specify where to output any results printed by your program.</span>
+  <span style="color: #7590db;">output</span> = output/out.$(Process)
 
-  <span class="org-comment-delimiter"># </span><span class="org-comment">Specify where to save any errors returned by your program.</span>
-  <span class="org-variable-name">error</span> = output/error.$(Process)
+  <span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">Specify where to save any errors returned by your program.</span>
+  <span style="color: #7590db;">error</span> = output/error.$(Process)
 
-  <span class="org-variable-name">Log</span> = log.txt
-  <span class="org-comment-delimiter"># </span><span class="org-comment">Enter the number of processes to request.</span>
+  <span style="color: #7590db;">Log</span> = log.txt
+  <span style="color: #2aa1ae; background-color: #292e34;"># </span><span style="color: #2aa1ae; background-color: #292e34;">Enter the number of processes to request.</span>
   Queue 40
 </pre>
 </div>
@@ -1306,9 +1306,9 @@ Next we need to 1) retrieve the process number in our python program and 2) map 
 </p>
 <div class="org-src-container">
 
-<pre class="src src-python"><span class="org-keyword">import</span> sys
-<span class="org-comment-delimiter">## </span><span class="org-comment">retrieve arguments passed from the command line.</span>
-<span class="org-variable-name">process</span> = <span class="org-builtin">int</span>(sys.argv[<span class="org-highlight-numbers-number">1</span>])
+<pre class="src src-python"><span style="color: #4f97d7; font-weight: bold;">import</span> sys
+<span style="color: #2aa1ae; background-color: #292e34;">## </span><span style="color: #2aa1ae; background-color: #292e34;">retrieve arguments passed from the command line.</span>
+<span style="color: #7590db;">process</span> = <span style="color: #4f97d7;">int</span>(sys.argv[<span style="color: #a45bad;">1</span>])
 </pre>
 </div>
 <p>
@@ -1316,8 +1316,8 @@ We now have a variable in python that tells us which process we are. Now we need
 </p>
 <div class="org-src-container">
 
-<pre class="src src-python"><span class="org-comment-delimiter">## </span><span class="org-comment">map process to sample size parameter.</span>
-<span class="org-variable-name">n</span> = (process + <span class="org-highlight-numbers-number">100</span>) + (process*<span class="org-highlight-numbers-number">10</span> - process)
+<pre class="src src-python"><span style="color: #2aa1ae; background-color: #292e34;">## </span><span style="color: #2aa1ae; background-color: #292e34;">map process to sample size parameter.</span>
+<span style="color: #7590db;">n</span> = (process + <span style="color: #a45bad;">100</span>) + (process*<span style="color: #a45bad;">10</span> - process)
 </pre>
 </div>
 
@@ -1330,21 +1330,21 @@ Now we can set up the simulation as before, passing the <code>n</code> calculate
 </p>
 <div class="org-src-container">
 
-<pre class="src src-python"><span class="org-comment-delimiter">## </span><span class="org-comment">function to simulate data and perform a t.test</span>
-<span class="org-keyword">import</span> numpy <span class="org-keyword">as</span> np
-<span class="org-keyword">from</span> scipy <span class="org-keyword">import</span> stats
+<pre class="src src-python"><span style="color: #2aa1ae; background-color: #292e34;">## </span><span style="color: #2aa1ae; background-color: #292e34;">function to simulate data and perform a t.test</span>
+<span style="color: #4f97d7; font-weight: bold;">import</span> numpy <span style="color: #4f97d7; font-weight: bold;">as</span> np
+<span style="color: #4f97d7; font-weight: bold;">from</span> scipy <span style="color: #4f97d7; font-weight: bold;">import</span> stats
 
-<span class="org-comment-delimiter">## </span><span class="org-comment">function to simulate data and perform a t.test</span>
-<span class="org-keyword">def</span> <span class="org-function-name">sim_ttest</span>(mu1, mu2, sd, n1, n2):
-    <span class="org-variable-name">x</span> = stats.norm.rvs(loc = mu1, scale = sd, size = n1)
-    <span class="org-variable-name">y</span> = stats.norm.rvs(loc = mu2, scale = sd, size = n2)
-    <span class="org-keyword">return</span>(stats.ttest_ind(x, y)[<span class="org-highlight-numbers-number">1</span>])
+<span style="color: #2aa1ae; background-color: #292e34;">## </span><span style="color: #2aa1ae; background-color: #292e34;">function to simulate data and perform a t.test</span>
+<span style="color: #4f97d7; font-weight: bold;">def</span> <span style="color: #bc6ec5; font-weight: bold;">sim_ttest</span>(mu1, mu2, sd, n1, n2):
+    <span style="color: #7590db;">x</span> = stats.norm.rvs(loc = mu1, scale = sd, size = n1)
+    <span style="color: #7590db;">y</span> = stats.norm.rvs(loc = mu2, scale = sd, size = n2)
+    <span style="color: #4f97d7; font-weight: bold;">return</span>(stats.ttest_ind(x, y)[<span style="color: #a45bad;">1</span>])
 
-<span class="org-comment-delimiter">##  </span><span class="org-comment">run the function 10,000 times</span>
-<span class="org-variable-name">nsims</span> = <span class="org-highlight-numbers-number">10000</span>
-<span class="org-variable-name">p</span> = [sim_ttest(<span class="org-highlight-numbers-number">1</span>, <span class="org-highlight-numbers-number">1</span>.<span class="org-highlight-numbers-number">3</span>, <span class="org-highlight-numbers-number">1</span>, n, n)  <span class="org-keyword">for</span> x <span class="org-keyword">in</span> <span class="org-builtin">range</span>(nsims)]
-<span class="org-keyword">print</span>(<span class="org-builtin">len</span>([x <span class="org-keyword">for</span> x <span class="org-keyword">in</span> p <span class="org-keyword">if</span> x &lt; .<span class="org-highlight-numbers-number">05</span>])/nsims)
-<span class="org-keyword">print</span>(n)
+<span style="color: #2aa1ae; background-color: #292e34;">##  </span><span style="color: #2aa1ae; background-color: #292e34;">run the function 10,000 times</span>
+<span style="color: #7590db;">nsims</span> = <span style="color: #a45bad;">10000</span>
+<span style="color: #7590db;">p</span> = [sim_ttest(<span style="color: #a45bad;">1</span>, <span style="color: #a45bad;">1</span>.<span style="color: #a45bad;">3</span>, <span style="color: #a45bad;">1</span>, n, n)  <span style="color: #4f97d7; font-weight: bold;">for</span> x <span style="color: #4f97d7; font-weight: bold;">in</span> <span style="color: #4f97d7;">range</span>(nsims)]
+<span style="color: #4f97d7; font-weight: bold;">print</span>(<span style="color: #4f97d7;">len</span>([x <span style="color: #4f97d7; font-weight: bold;">for</span> x <span style="color: #4f97d7; font-weight: bold;">in</span> p <span style="color: #4f97d7; font-weight: bold;">if</span> x &lt; .<span style="color: #a45bad;">05</span>])/nsims)
+<span style="color: #4f97d7; font-weight: bold;">print</span>(n)
 </pre>
 </div>
 
@@ -1359,20 +1359,20 @@ Each of our 40 processes produced a file in the <code>output</code> directory na
 </p>
 <div class="org-src-container">
 
-<pre class="src src-python"><span class="org-keyword">import</span> numpy <span class="org-keyword">as</span> np
-<span class="org-keyword">import</span> glob
-<span class="org-keyword">import</span> matplotlib.pyplot <span class="org-keyword">as</span> plt
-<span class="org-comment-delimiter">## </span><span class="org-comment">list all output files in the output directory</span>
-<span class="org-variable-name">output_files</span> = glob.glob(<span class="org-string">"output/out*"</span>)
+<pre class="src src-python"><span style="color: #4f97d7; font-weight: bold;">import</span> numpy <span style="color: #4f97d7; font-weight: bold;">as</span> np
+<span style="color: #4f97d7; font-weight: bold;">import</span> glob
+<span style="color: #4f97d7; font-weight: bold;">import</span> matplotlib.pyplot <span style="color: #4f97d7; font-weight: bold;">as</span> plt
+<span style="color: #2aa1ae; background-color: #292e34;">## </span><span style="color: #2aa1ae; background-color: #292e34;">list all output files in the output directory</span>
+<span style="color: #7590db;">output_files</span> = glob.glob(<span style="color: #2d9574;">"output/out*"</span>)
 
-<span class="org-variable-name">output_values</span> = np.array([x.split(<span class="org-string">"\n"</span>)[:<span class="org-highlight-numbers-number">2</span>]
-                          <span class="org-keyword">for</span> x <span class="org-keyword">in</span> [<span class="org-builtin">open</span>(f).read() <span class="org-keyword">for</span> f <span class="org-keyword">in</span> output_files]],
-                         dtype = <span class="org-string">"float"</span>)
+<span style="color: #7590db;">output_values</span> = np.array([x.split(<span style="color: #2d9574;">"\n"</span>)[:<span style="color: #a45bad;">2</span>]
+                          <span style="color: #4f97d7; font-weight: bold;">for</span> x <span style="color: #4f97d7; font-weight: bold;">in</span> [<span style="color: #4f97d7;">open</span>(f).read() <span style="color: #4f97d7; font-weight: bold;">for</span> f <span style="color: #4f97d7; font-weight: bold;">in</span> output_files]],
+                         dtype = <span style="color: #2d9574;">"float"</span>)
 
-plt.plot(<span class="org-builtin">list</span>(output_values[:, <span class="org-highlight-numbers-number">1</span>]), <span class="org-builtin">list</span>(output_values[:, <span class="org-highlight-numbers-number">0</span>]), <span class="org-string">"bo"</span>)
-plt.xlabel(<span class="org-string">"Sample Size"</span>)
-plt.ylabel(<span class="org-string">"Power"</span>)
-plt.savefig(<span class="org-string">"power.png"</span>)
+plt.plot(<span style="color: #4f97d7;">list</span>(output_values[:, <span style="color: #a45bad;">1</span>]), <span style="color: #4f97d7;">list</span>(output_values[:, <span style="color: #a45bad;">0</span>]), <span style="color: #2d9574;">"bo"</span>)
+plt.xlabel(<span style="color: #2d9574;">"Sample Size"</span>)
+plt.ylabel(<span style="color: #2d9574;">"Power"</span>)
+plt.savefig(<span style="color: #2d9574;">"power.png"</span>)
 </pre>
 </div>
 
