@@ -1,6 +1,8 @@
 Introduction
 ============
 
+<div class="materials-no-ipynb">
+
 Materials and setup
 -------------------
 
@@ -30,6 +32,8 @@ Class Structure and Organization:
 -   Ask questions at any time. Really!
 -   Collaboration is encouraged
 -   This is your class! Special requests are encouraged
+
+</div>
 
 This is an intermediate R course:
 

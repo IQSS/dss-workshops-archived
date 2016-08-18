@@ -1,9 +1,10 @@
 Workshop Materials and Introduction
 ===================================
 
+<div class="materials-no-ipynb">
+
 Materials and setup
 -------------------
-
 You should have R installed --if not:
 
 -   Open a web browser and go to <http://cran.r-project.org> and download and install it
@@ -13,6 +14,8 @@ Download workshop materials:
 
 -   Download materials from <http://tutorials.iq.harvard.edu/R/Rintro.zip>
 -   Extract the zip file containing the materials to your desktop
+
+</div>
 
 What is R?
 ----------

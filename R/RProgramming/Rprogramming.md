@@ -8,6 +8,8 @@ This is an intermediate/advanced R course appropriate for those with basic knowl
 
 Prerequisite: basic familiarity with R, such as acquired from an introductory R workshop.
 
+<div class="materials-no-ipynb">
+
 Materials and setup
 -------------------
 
@@ -20,6 +22,8 @@ Materials for this workshop include slides, example data sets, and example code.
 
 -   Download materials from <http://tutorials.iq.harvard.edu/R/RProgramming.zip>
 -   Extract the zip file containing the materials to your desktop
+
+<div class="materials-no-ipynb">
 
 Example project overview
 ------------------------

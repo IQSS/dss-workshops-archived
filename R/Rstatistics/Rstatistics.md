@@ -13,6 +13,8 @@ Workshop description
     -   Perform model comparisons
     -   Run and interpret variety of regression models in R
 
+<div class="materials-no-ipynb">
+
 Materials and Setup<span class="tag" data-tag-name="labsetup"></span>
 ---------------------------------------------------------------------
 
@@ -37,6 +39,8 @@ Launch RStudio<span class="tag" data-tag-name="labsetup"></span>
     -   Locate and open the `Rstatistics.R` script in the Rstatistics folder on your desktop
 -   Go to **Tools =&gt; Set working directory =&gt; To source file location** (more on the working directory later)
 -   I encourage you to add your own notes to this file!
+
+</div>
 
 Set working directory
 ---------------------
