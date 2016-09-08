@@ -12,7 +12,7 @@
 # property and/or the EXCLUDE_TAGS, place the curser on the poperty line 
 # and press C-c C-c
 
-#+PROPERTY: exports both
+#+PROPERTY: exports code
 #+EXCLUDE_TAGS: noexport mitsetup
 
 
@@ -38,6 +38,11 @@
 #+HTML: <a class="github-fork-ribbon right-top" href="https://github.com/izahn/workshops" title="Fork me on GitHub">Fork me on GitHub</a>
 
 * Workshop Materials and Introduction
+
+#+BEGIN_HTML
+  <div class="materials-no-ipynb">
+#+END_HTML
+
 ** Materials and setup
 # Lab computer users: Log in using the user name and password on the board to your left.
 You should have R installed --if not:
@@ -47,7 +52,11 @@ You should have R installed --if not:
 Download workshop materials:
   - Download materials from [[http://tutorials.iq.harvard.edu/R/Rintro.zip]]
   - Extract the zip file containing the materials to your desktop
- 
+
+#+BEGIN_HTML
+  </div>
+#+END_HTML
+
 ** What is R?
 R is a /programming language designed for statistical computing/. Notable characteristics include:
 - Vast capabilities, wide range of statistical and graphical techniques
@@ -114,7 +123,7 @@ The old-school way is to run R directly in a terminal
 #+attr_html: :width 95%
 [[file:images/Rconsole.png]]
 
-But hardly anybody does it that way anymore! The Windows versio of R comes with a GUI that looks like this:
+But hardly anybody does it that way anymore! The Windows version of R comes with a GUI that looks like this:
 
 #+attr_html: :width 95%
 [[file:images/Rgui.png]]
@@ -260,6 +269,20 @@ Examples:
 [1] 3.31662
 > 
 #+end_example
+  
+* Asking R for help
+R has extensive built-in documentation that can be accessed through R commands or through the GUI.
+- Start html help, search/browse using web browser
+  - at the R console:
+src_R[:exports code :eval no]{help.start()}
+  - or use the help menu from you GUI
+- Look up the documentation for a function
+src_R[:exports code :eval no]{help(plot)}
+src_R[:exports code :eval no]{?kmeans}
+- Look up documentation for a package
+src_R[:exports code :eval no]{help(package="stats")}
+- Search documentation from R (not always the best way... google often works better)
+src_R[:exports code :eval no]{help.search("classification")}
 
 
 * R packages
@@ -369,7 +392,7 @@ R is smart enough to recognize most common file formats for us using the =import
   # read gss data from the gss.rds R file
   datGSS <- import("dataSets/gss.rds")
   # read gss data from the gss.csv comma separated file
-  gss.data <- import("dataSets/gss.csv")
+  datGSS <- import("dataSets/gss.csv")
   # read a Stata dataset from gss.dta 
   datGSS <- import("dataSets/gss.dta")
 #+end_src
@@ -383,14 +406,14 @@ R is smart enough to recognize most common file formats for us using the =import
 > # read gss data from the gss.rds R file
 > datGSS <- import("dataSets/gss.rds")
 > # read gss data from the gss.csv comma separated file
-> gss.data <- import("dataSets/gss.csv")
+> datGSS <- import("dataSets/gss.csv")
 > # read a Stata dataset from gss.dta 
 > datGSS <- import("dataSets/gss.dta")
 > 
 #+end_example
 
 ** Importing data from files the hard way
-In order to read data from a file, you have to know what kind of file it is. The table below lists the functions needed to import data from common file formats.
+In order to read data from a file, you have to know what kind of file it is. The table below lists the functions that can import data from common file formats.
 
 | data type                  | function                | package         |
 |----------------------------+-------------------------+-----------------|
@@ -400,7 +423,7 @@ In order to read data from a file, you have to know what kind of file it is. The
 | Stata version 13-14 (.dta) | read_dta()              | haven           |
 | SPSS (.sav)                | read.spss()             | foreign         |
 | SAS (.sas7bdat)            | read.sas7bdat()         | sas7bdat        |
-| Excel (.xls, .xlsx)        | readWorksheetFromFile() | XLConnect       |
+| Excel (.xls, .xlsx)        | read_excel              | readxl          |
 |----------------------------+-------------------------+-----------------|
 
 Examples:
@@ -409,7 +432,7 @@ Examples:
   # read gss data from the gss.rds R file
   datGSS <- readRDS("dataSets/gss.rds")
   # read gss data from the gss.csv comma separated file
-  gss.data <- read.csv("dataSets/gss.csv") # read gss data
+  datGSS <- read.csv("dataSets/gss.csv") # read gss data
   # read a Stata dataset from gss.dta 
   library(foreign) # load foreign data functions
   datGSS <- read.dta(file="dataSets/gss.dta")
@@ -420,7 +443,7 @@ Examples:
 > # read gss data from the gss.rds R file
 > datGSS <- readRDS("dataSets/gss.rds")
 > # read gss data from the gss.csv comma separated file
-> gss.data <- read.csv("dataSets/gss.csv") # read gss data
+> datGSS <- read.csv("dataSets/gss.csv") # read gss data
 > # read a Stata dataset from gss.dta 
 > library(foreign) # load foreign data functions
 > datGSS <- read.dta(file="dataSets/gss.dta")
@@ -512,29 +535,19 @@ When you close R you will be asked if you want to save your workspace -- if you 
 
 ** Exercise 1
 
-1. Install and attach the =rio= package if you haven't already done so
+Install and attach the =rio= package if you haven't already done so.
+
+1. Read the Excel data set in dataSets/gss.xlsx and assign the result to an R object named GSS.xl
 
 2. Read the SPSS data set in dataSets/gss.sav and assign the result to an R data object named GSS.sav
 
 3. Make sure that the data loaded in step 2 is a data.frame
 
-4. Display the dimensions of the GSS.sav
+4. Display the dimensions of GSS.sav
 
-5. BONUS: figure out how to read the Excel file "gss.xlsx" into R
-  
-* Asking R for help
-R has extensive built-in documentation that can be accessed through R commands or through the GUI.
-- Start html help, search/browse using web browser
-  - at the R console:
-src_R[:exports code :eval no]{help.start()}
-  - or use the help menu from you GUI
-- Look up the documentation for a function
-src_R[:exports code :eval no]{help(plot)}
-src_R[:exports code :eval no]{?kmeans}
-- Look up documentation for a package
-src_R[:exports code :eval no]{help(package="stats")}
-- Search documentation from R (not always the best way... google often works better)
-src_R[:exports code :eval no]{help.search("classification")}
+5. Assign the dimensions of GSS.sav to the name 'gss.dim'
+
+6. Check if the dimensions of GSS.xl are equal to the values you stored in gss.dim
 
 
 * Data Manipulation
@@ -556,64 +569,56 @@ You can extract subsets of data.frames using the =subset()= function[fn:1]. Use 
 #+name: indexingDataFrame
 #+begin_src R 
   # selecting specifig columns
-  head(# first n rows
-       subset(datGSS,            
-              select = 1:4 # column 1 to 5
-              ),
-       n = 10# show first 10 rows
-       )
+  gss_1.4 <- subset(datGSS,            
+                    select = 1:4 # column 1 to 4
+                    )
+  str(gss_1.4)
 #+end_src
-and the =subset= argument to select rows:
-#+begin_src R                                          
-  subset(datGSS,
-         # rows where age > 90
-         subset = age > 90,
-         ## sex and age columns
-         select = c("sex", "age"))
-
-  ## the $ operator can be used to extract a single column
-  str(datGSS$age)
-#+end_src
-
-#+RESULTS:
-#+begin_example
-> subset(datGSS,
-+        # rows where age > 90
-+        subset = age > 90,
-+        ## sex and age columns
-+        select = c("sex", "age"))
-       sex age
-315 Female  99
-665   Male  99
-> 
-> ## the $ operator can be used to extract a single column
-> str(datGSS$age)
- num [1:1419] 69 27 19 21 19 87 42 19 78 70 ...
-> 
-#+end_example
 
 #+RESULTS: indexingDataFrame
 #+begin_example
 > # selecting specifig columns
-> head(# first n rows
-+      subset(datGSS,            
-+             select = 1:4 # column 1 to 5
-+             ),
-+      n = 10# show first 10 rows
-+      )
-   age educ emailhrs hrs1
-1   69   12       -1   -1
-2   27   10       -1   60
-3   19   11        0   32
-4   21    9       -1   20
-5   19   11       50   -1
-6   87    8       -1   -1
-7   42   11        3   -1
-8   19   11       -1   -1
-9   78    7       -1   -1
-10  70    9       -1   22
+> gss_1.4 <- subset(datGSS,            
++                   select = 1:4 # column 1 to 4
++                   )
+> str(gss_1.4)
+'data.frame':	1419 obs. of  4 variables:
+ $ age     : num  69 27 19 21 19 87 42 19 78 70 ...
+ $ educ    : num  12 10 11 9 11 8 11 11 7 9 ...
+ $ emailhrs: num  -1 -1 0 -1 50 -1 3 -1 -1 -1 ...
+ $ hrs1    : num  -1 60 32 20 -1 -1 -1 -1 -1 22 ...
 > 
 #+end_example
+
+and the =subset= argument to select rows:
+#+begin_src R                                          
+  gss_gt90 <- subset(datGSS,
+                     ## rows where age > 90
+                     subset = age > 90,
+                     ## sex and age columns
+                     select = c("sex", "age"))
+  str(gss_gt90)
+  ## the $ operator can be used to extract a single column
+  str(gss_gt90$age)
+#+end_src
+
+#+RESULTS:
+#+begin_example
+> gss_gt90 <- subset(datGSS,
++                    ## rows where age > 90
++                    subset = age > 90,
++                    ## sex and age columns
++                    select = c("sex", "age"))
+> str(gss_gt90)
+'data.frame':	2 obs. of  2 variables:
+ $ sex: Factor w/ 2 levels "Male","Female": 2 1
+ $ age: num  99 99
+> ## the $ operator can be used to extract a single column
+> str(gss_gt90$age)
+ num [1:2] 99 99
+> 
+#+end_example
+
 
 In the previous example we used =>= to select rows where age was greater than 90. Other relational and logical operators are listed below.
 
@@ -718,12 +723,11 @@ Use the gss.rds data set
 1. Generate the following variables:
    - "rich" equal to 0 if rincdol is less than 100000, and 1 otherwise
    - "sinc" equal to incomdol - rincdol
-2. Create a subset of the data containing only rows where "usecomp" = "Yes"
-3. Examine the data.frame created in step 2, and answer the following questions:
-   - How many rows does it have?
-   - How many columns does it have?
-   - What is the class of the "satjob" variable?
-4. BONUS (hard): Generate a variable named "dual.earn" equal to 1 if both wkftwife = 1 and wkfthusb = 1, and zero otherwise
+2. Generate a variable named "dual.earn" equal to 1 if both wkftwife = 1 and wkfthusb = 1, and zero otherwise. How many dual earners are there?
+3. Create a subset of the data containing only rows where "usecomp" = "Yes"
+4. Examine the data.frame created in step 2, and answer the following questions:
+   - How many computer users are there?
+   - How many non computer users are there?
 
 
 
@@ -1008,7 +1012,7 @@ Thanks to classes and methods, you can ~plot()~ many kinds of objects:
 ** Exercise 3
 Using the datGSS data.frame
 
-1. Cross-tabulate sex and emailhrs
+1. Cross-tabulate sex and educ
 2. Calculate the mean and standard deviation of incomdol by sex
 3. Save the results of the previous two calculations to a file
 4. Create a scatter plot with educ on the x-axis and incomdol on the y-axis
@@ -1032,7 +1036,9 @@ Using the datGSS data.frame
   - ESS (emacs R package): http://ess.r-project.org/
 - Online tutorials
   - http://www.codeschool.com/courses/try-r
-  - http://www.datamind.org
+  - http://www.datacamp.org
+  - http://swirlstats.com/
+  - http://r4ds.had.co.nz/
 - Getting help:
   - Documentation and tutorials: http://cran.r-project.org/other-docs.html
   - Recommended R packages by topic: http://cran.r-project.org/web/views/
@@ -1076,55 +1082,73 @@ Using the datGSS data.frame
 #+BEGIN_SRC R :results silent
   ## install.packages("rio")
   library(rio)
+  GSS.xlsx <- read.dta("dataSets/gss.xlsx")
 #+END_SRC
 
 2) [@2] Read the SPSS data set in dataSets/gss.sav and assign the result to an R data object named GSS.sav
 #+BEGIN_SRC R :results silent
-  gss.data <- import("dataSets/gss.sav")
+  GSS.sav <- import("dataSets/gss.sav")
 #+END_SRC
 
-3) [@3] Make sure that the data loaded in step 2 is a data.frame (hint: check the arguments documented in the help page)
+3) [@3] Make sure that the data loaded in step 2 is a data.frame
 #+BEGIN_SRC R
-  class(gss.data)
+  class(GSS.sav)
 #+END_SRC
 
 #+RESULTS:
 #+begin_example
-> class(gss.data)
+> class(GSS.sav)
 [1] "data.frame"
 > 
 #+end_example
 
 4) [@4] Display the dimensions of the GSS.sav. 
 #+BEGIN_SRC R
-  dim(gss.data)
-  nrow(gss.data)
-  ncol(gss.data)
+  dim(GSS.sav)
+  nrow(GSS.sav)
+  ncol(GSS.sav)
 #+END_SRC
 
 #+RESULTS:
 #+begin_example
-> dim(gss.data)
+> dim(GSS.sav)
 [1] 217   7
-> nrow(gss.data)
+> nrow(GSS.sav)
 [1] 217
-> ncol(gss.data)
+> ncol(GSS.sav)
 [1] 7
 > 
 #+end_example
 
-6) [@6] BONUS: figure out how to read the Excel file "gss.xlsx" into R
+
+5) [@5] Save the dimensions of GSS.sav to an object named gss.dim
+
 #+BEGIN_SRC R
-  dat <- import("dataSets/gss.xlsx")
-  class(dat); dim(dat)
+  gss.dim <- dim(GSS.sav)
 #+END_SRC
 
 #+RESULTS:
 #+begin_example
-> dat <- import("dataSets/gss.xlsx")
-> class(dat); dim(dat)
-[1] "data.frame"
+> gss.dim <- dim(GSS.sav)
+> 
+#+end_example
+
+
+7) [@7] Check if the dimensions of GSS.xl are equal to the values you stored in gss.dim
+#+BEGIN_SRC R
+  dim(GSS.xl)
+  gss.dim
+  gss.dim == dim(GSS.xl)
+#+END_SRC
+
+#+RESULTS:
+#+begin_example
+> dim(GSS.xl)
 [1] 1419   47
+> gss.dim
+[1] 217   7
+> gss.dim == dim(GSS.xl)
+[1] FALSE FALSE
 > 
 #+end_example
 
@@ -1135,21 +1159,7 @@ Use the gss.rds data set
   gss <- import("dataSets/gss.rds")
 #+END_SRC
 
-1) [@1] Create a subset of the data containing only rows where "usecomp" = "Yes". How many computer users are there?
-#+BEGIN_SRC R
-  gss.usecomp <- subset(gss, usecomp == "Yes")
-  nrow(gss.usecomp)
-#+END_SRC
-
-#+RESULTS:
-#+begin_example
-> gss.usecomp <- subset(gss, usecomp == "Yes")
-> nrow(gss.usecomp)
-[1] 789
-> 
-#+end_example
-
-2) [@2] Generate the following variables:
+1) [@1] Generate the following variables:
    - "rich" equal to 0 if rincdol is less than 100000, and 1 otherwise
    - "sinc" equal to incomdol - rincdol
 #+BEGIN_SRC R
@@ -1176,7 +1186,7 @@ Use the gss.rds data set
 #+end_example
 
 
-3) [@3] Generate a variable named "dual.earn" equal to 1 if both wkftwife = 1 and wkfthusb = 1, and zero otherwise. How many dual earners are there?
+2) [@2] Generate a variable named "dual.earn" equal to 1 if both wkftwife = 1 and wkfthusb = 1, and zero otherwise.
 #+BEGIN_SRC R
   gss$dual.earn <- ifelse(gss$wkftwife == 1 & gss$wkfthusb == 1, 1, 0)
   nrow(subset(gss, dual.earn == 1))
@@ -1190,62 +1200,75 @@ Use the gss.rds data set
 > 
 #+end_example
 
+
+3) [@3] Create a subset of the data containing only rows where "usecomp" = "Yes".
+#+BEGIN_SRC R
+  gss.usecomp <- subset(gss, usecomp == "Yes")
+#+END_SRC
+
+#+RESULTS:
+#+begin_example
+> gss.usecomp <- subset(gss, usecomp == "Yes")
+> 
+#+end_example
+
+4) [@4] How many computer and non computer users?
+#+BEGIN_SRC R
+  ## how many computer users?
+  nrow(gss.usecomp)
+  ## how many non computer users?
+  nrow(gss) - nrow(gss.usecomp)
+  ## how many non computer users really?
+  nrow(subset(gss, usecomp == "No"))
+#+END_SRC
+#+RESULTS:
+#+begin_example
+> ## how many computer users?
+> nrow(gss.usecomp)
+[1] 789
+> ## how many non computer users?
+> nrow(gss) - nrow(gss.usecomp)
+[1] 630
+> ## how many non computer users really?
+> nrow(subset(gss, usecomp == "No"))
+[1] 623
+> 
+#+end_example
+
 ** Exercise 3 solution                                            :prototype:
 Using the datGSS data.frame
 
 1) [@1] Cross-tabulate sex and emailhrs
 #+BEGIN_SRC R
-  with(datGSS, table(emailhrs, sex))
+  with(datGSS, table(educ, sex))
 #+END_SRC
 
 #+RESULTS:
 #+begin_example
-> with(datGSS, table(emailhrs, sex))
-                    sex
-emailhrs             Male Female
-  -3                   13     18
-  -2                    1      2
-  -1                  303    431
-  0                    29     39
-  0.0166666666666667    1      0
-  0.0333333333333333    0      1
-  0.0833333333333333   11      4
-  0.166666666666667    11      5
-  0.25                  6      7
-  0.266666666666667     1      0
-  0.333333333333333     5     10
-  0.5                  26     16
-  0.583333333333333     2      0
-  0.666666666666667     1      0
-  0.75                  0      2
-  0.833333333333333     1      0
-  1                    47     66
-  1.25                  1      0
-  1.5                   5      4
-  1.66666666666667      0      1
-  2                    32     50
-  2.5                   0      3
-  3                    30     30
-  3.5                   1      3
-  4                    15     12
-  5                    16     24
-  6                     7      6
-  7                    11      8
-  8                     3      9
-  10                   17     15
-  12                    1      0
-  14                    1      3
-  15                    6      7
-  16                    2      0
-  18                    1      0
-  20                    6      8
-  21                    2      0
-  25                    1      1
-  30                    3      2
-  35                    0      1
-  40                    1      8
-  50                    2      0
-  60                    0      1
+> with(datGSS, table(educ, sex))
+    sex
+educ Male Female
+  0     0      1
+  2     0      2
+  3     0      2
+  4     1      2
+  5     3      2
+  6     4      2
+  7     4      8
+  8    23     31
+  9    12     24
+  10   25     35
+  11   36     52
+  12  164    245
+  13   56     81
+  14   78     91
+  15   30     36
+  16  101    112
+  17   23     20
+  18   25     29
+  19   17      5
+  20   19     14
+  99    1      3
 > 
 #+end_example
 
@@ -1272,16 +1295,35 @@ datGSS$sex: Female
 > 
 #+end_example
 
-3) [@3] Create a scatter plot with educ on the x-axis and incomdol on the y-axis
-#+BEGIN_SRC R :results output graphics :file ex3.png :height 300
+3) [@3]
+#+BEGIN_SRC R
+  sink(file = "bysex.txt")
+  with(datGSS, table(educ, sex))
+  by(datGSS$incomdol, datGSS$sex, mean)
+  by(datGSS$incomdol, datGSS$sex, sd)
+  sink()
+#+END_SRC
+
+#+RESULTS:
+#+begin_example
+> sink(file = "bysex.txt")
+> with(datGSS, table(educ, sex))
+> by(datGSS$incomdol, datGSS$sex, mean)
+> by(datGSS$incomdol, datGSS$sex, sd)
+> sink()
+> 
+#+end_example
+
+4) [@4] Create a scatter plot with educ on the x-axis and incomdol on the y-axis
+#+BEGIN_SRC R :results output graphics :file images/ex3.png :height 300
   plot(subset(datGSS, select = c("educ", "incomdol")))
 #+END_SRC
 
 #+RESULTS:
-[[file:ex3.png]]
+[[file:images/ex3.png]]
 
 =That first attempt is pretty ugly, let's clean it up.=
-#+BEGIN_SRC R :results output graphics :file ex3_1.png :height 300
+#+BEGIN_SRC R :results output graphics :file images/ex3_1.png :height 300
   plot(log(incomdol) ~ jitter(educ, 8), # formula interface with log an jitter
        data = subset(datGSS, # subsetting data as part of the plot call
                      subset = educ < 97),
@@ -1290,7 +1332,8 @@ datGSS$sex: Female
 #+END_SRC
 
 #+RESULTS:
-[[file:ex3_1.png]]
+[[file:images/ex3_1.png]]
+
 
 
 * Cleanup                                                          :noexport:

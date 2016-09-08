@@ -91,7 +91,7 @@ The old-school way is to run R directly in a terminal
 
 ![](images/Rconsole.png)
 
-But hardly anybody does it that way anymore! The Windows versio of R comes with a GUI that looks like this:
+But hardly anybody does it that way anymore! The Windows version of R comes with a GUI that looks like this:
 
 ![](images/Rgui.png)
 
@@ -267,7 +267,7 @@ In order to read data from a file, you usually have to know what kind of file it
 | SAS (.sas7bdat)        |
 | Excel (.xls, .xlsx)    |
 
-R is smart enough to recognize most common file formats for us using the `import()` function. To use this functionality we first need to install and attache the `rio` package.
+R is smart enough to recognize most common file formats for us using the `import()` function. To use this functionality we first need to install and attach the `rio` package.
 
 ``` r
   ## install and load the rio package
