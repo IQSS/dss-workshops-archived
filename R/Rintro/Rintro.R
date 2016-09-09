@@ -214,12 +214,14 @@ round(sqrt(y), digits = 5) # Take sqrt of a and round
 ##   commands or through the GUI.
 ##   - Start html help, search/browse using web browser
 ##     - at the R console:
-##   `help.start()'
+help.start()
 ##   - or use the help menu from you GUI
 ##   - Look up the documentation for a function
-##   `help(plot)' `?kmeans'
+help(plot)
+##     or
+?plot
 ##   - Look up documentation for a package
-##   `help(package="stats")'
+help(package="stats")
 ##   - Search documentation from R (not always the best way... google often
 ##     works better)
 ##   `help.search("classification")'
@@ -230,16 +232,13 @@ round(sqrt(y), digits = 5) # Take sqrt of a and round
 ##   There are thousands of R packages that extend R's capabilities.
 
 ##   - To see what packages are loaded:
-##   `search()'
-
+search()
 ##   - To view available packages:
-##   `library()'
-
+library()
 ##   - To load a package:
-##   `library("car")'
-
+library("car")
 ##   - Install new package:
-##   `install.packages("stringdist")'
+install.packages("stringdist")
 
 ## Getting data into R
 ## ===================
