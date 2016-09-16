@@ -11,8 +11,8 @@
 # property and/or the EXCLUDE_TAGS, place the curser on the poperty line 
 # and press C-c C-c
 
-#+PROPERTY: exports both
-#+EXCLUDE_TAGS: noexport mitsetup
+#+PROPERTY: exports code
+#+EXCLUDE_TAGS: noexport mitsetup labsetup prototype
 
 
 
@@ -32,9 +32,6 @@
   .First <- function() {
     options(width=70)
     options(useFancyQuotes=FALSE)
-    options(show.signif.stars=FALSE)
-    options(scipen = 10)
-    options(digits = 3)
     require(ascii)
     require(xtable)
     require(ggplot2)
@@ -139,39 +136,6 @@ The basic idea: independently specify plot building blocks and combine them to c
 - position adjustments
 - faceting
 
-
-** The structure of a =ggplot=
-
-The =ggplot()= function is used to initialize the basic graph structure, then we add to it. The structure of a ggplot looks like this:
-
-#+name: ggplotIntro
-#+begin_src R :eval never :exports code :tangle no
-  ggplot(data = <default data set>, 
-         aes(x = <default x axis variable>,
-             y = <default y axis variable>,
-             ... <other default aesthetic mappings>),
-         ... <other plot defaults>) +
-             
-         geom_<geom type>(aes(size = <size variable for this geom>, 
-                        ... <other aesthetic mappings>),
-                    data = <data for this point geom>,
-                    stat = <statistic string or function>,
-                    position = <position string or function>,
-                    color = <"fixed color specification">,
-                    <other arguments, possibly passed to the _stat_ function) +
-                        
-    scale_<aesthetic>_<type>(name = <"scale label">,
-                       breaks = <where to put tick marks>,
-                       labels = <labels for tick marks>,
-                       ... <other options for the scale>) +
-                           
-    theme(plot.background = element_rect(fill = "gray"),
-          ... <other theme elements>)
-#+end_src
-
-Don't be afraid, you will understand this by the end of the workshop! The basic idea is that you specify different parts of the plot, and add them together using the =+= operator.
-
-
 ** Example Data: =Housing prices=
 Let's look at housing prices.
 #+name: housingData
@@ -195,6 +159,14 @@ Let's look at housing prices.
 #+end_example
 
 (Data from https://www.lincolninst.edu/subcenters/land-values/land-prices-by-state.asp)
+
+#+BEGIN_SRC R
+  housing <- read.csv("dataSets/landdata-states.csv")
+  housing$Year <- as.numeric(substr(housing$Date, 1, 4))
+  housing$Qrtr <- as.numeric(substr(housing$Date, 5, 5))
+  housing$Date <- housing$Year + housing$Qrtr/4
+
+#+END_SRC
 
 ** =ggplot2= VS Base Graphics
 Compared to base graphics, =ggplot2=
@@ -303,7 +275,7 @@ Now that we know about geometric objects and aesthetic mapping, we can make a gg
 
 #+name: ourFirstScatterplot
 #+begin_src R :results output graphics :file images/firstScatter.png 
-  hp2001Q1 <- subset(housing, Date == 20011) 
+  hp2001Q1 <- subset(housing, Date == 2001.25) 
   ggplot(hp2001Q1,
          aes(y = Structure.Cost, x = Land.Value)) +
     geom_point()
@@ -312,14 +284,25 @@ Now that we know about geometric objects and aesthetic mapping, we can make a gg
 
 #+RESULTS: ourFirstScatterplot
 [[file:images/firstScatter.png]]
+
+#+name: ourFirstLogScatterplot
+#+begin_src R :results output graphics :file images/firstScatterLog.png 
+  ggplot(hp2001Q1,
+         aes(y = Structure.Cost, x = log(Land.Value))) +
+    geom_point()
+#+end_src
+
+#+RESULTS: ourFirstLogScatterplot
+[[file:images/firstScatterLog.png]]
+
 ** Lines (Prediction Line)
 A plot constructed with =ggplot= can have more than one geom. In that case the mappings established in the =ggplot()= call are plot defaults that can be added to or overridden. Our plot could use a regression line:
 
 #+name: multipleLayers
 #+begin_src R :results output graphics :file images/housingLayers.png 
-  hp2001Q1$pred.SC <- predict(lm(Structure.Cost ~ Land.Value, data = hp2001Q1))
+  hp2001Q1$pred.SC <- predict(lm(Structure.Cost ~ log(Land.Value), data = hp2001Q1))
 
-  p1 <- ggplot(hp2001Q1, aes(x = Land.Value, y = Structure.Cost))
+  p1 <- ggplot(hp2001Q1, aes(x = log(Land.Value), y = Structure.Cost))
 
   p1 + geom_point(aes(color = Home.Value)) +
     geom_line(aes(y = pred.SC))
@@ -401,6 +384,9 @@ Other aesthetics are mapped in the same way as x and y in the previous example.
 The data for the exercises is available in the ~dataSets/EconomistData.csv~ file. Read it in with 
 #+BEGIN_SRC R
   dat <- read.csv("dataSets/EconomistData.csv")
+  head(dat)
+
+  ggplot(dat, aes(x = CPI, y = HDI, size = HDI.Rank)) + geom_point()
 #+END_SRC
 
 #+RESULTS:
@@ -416,10 +402,10 @@ Original sources for these data are
 These data consist of /Human Development Index/ and /Corruption Perception Index/ scores for several countries.
 
 1. Create a scatter plot with CPI on the x axis and HDI on the y axis.
-2. Color the points in the previous plot blue.
-3. Color the points in the previous plot according to /Region/.
-4. Create boxplots of CPI by Region
-5. Overlay points on top of the box plots
+2. Color the points blue.
+3. Map the color of the the points to Region.
+4. Make the points bigger by setting size to 2
+5. Map the size of the points to HDI.Rank
 
 ** Exercise I prototype                                          :prototype:
 1. [@1] Create a scatter plot with CPI on the x axis and HDI on the y axis.
@@ -439,14 +425,13 @@ These data consist of /Human Development Index/ and /Corruption Perception Index
 #+END_SRC
 4. [@4] Create boxplots of CPI by Region
 #+BEGIN_SRC R :results silent
-  ggplot(dat, aes(x = Region, y = CPI)) +
-    geom_boxplot()
+  ggplot(dat, aes(x = CPI, y = HDI)) +
+    geom_point(aes(color = Region), size = 2)
 #+END_SRC
 5. [@5] Overlay points on top of the box plots
 #+BEGIN_SRC R :results silent
-  ggplot(dat, aes(x = Region, y = CPI)) +
-    geom_boxplot() +
-    geom_point() 
+    ggplot(dat, aes(x = CPI, y = HDI)) +
+    geom_point(aes(color = Region, size =  HDI.Rank))
 #+END_SRC
 * Statistical Transformations
 
@@ -556,9 +541,10 @@ What is the problem with the previous plot? Basically we take binned and summari
 ** Exercise II
 
 1. Re-create a scatter plot with CPI on the x axis and HDI on the y axis (as you did in the previous exercise).
-2. Overlay a smoothing line on top of the scatter plot using the /lm/ method. Hint: see =?stat_smooth=.
-3. Overlay a smoothing line on top of the scatter plot using the default method.
-4. BONUS (optional): Overlay a smoothing line on top of the scatter plot using the default /loess/ method, but make it less smooth. Hint: see =?loess=.
+2. Overlay a smoothing line on top of the scatter plot using geom_smooth.
+3. Overlay a smoothing line on top of the scatter plot using geom_smooth, but use a linear model for the predictions. Hint: see =?stat_smooth=.
+4. Overlay a smoothling line on top of the scatter plot using geom_line. Hint: change the statistical transformation.
+5. BONUS: Overlay a smoothing line on top of the scatter plot using the default /loess/ method, but make it less smooth. Hint: see =?loess=.
 
 ** Exercise II prototype                                         :prototype:
 
@@ -567,19 +553,25 @@ What is the problem with the previous plot? Basically we take binned and summari
   ggplot(dat, aes(x = CPI, y = HDI)) +
     geom_point()
 #+END_SRC
-2. [@2] Overlay a smoothing line on top of the scatter plot using the /lm/ method. Hint: see =?stat_smooth=.
-#+BEGIN_SRC R :results silent
-  ggplot(dat, aes(x = CPI, y = HDI)) +
-    geom_point() +
-    geom_smooth(method = "lm")
-#+END_SRC
-3. [@3] Overlay a smoothing line on top of the scatter plot using the default method.
+2. [@2] Overlay a smoothing line on top of the scatter plot using geom_smooth
 #+BEGIN_SRC R :results silent
   ggplot(dat, aes(x = CPI, y = HDI)) +
     geom_point() +
     geom_smooth()
 #+END_SRC
-4. [@4] BONUS (optional): Overlay a smoothing line on top of the scatter plot using the default /loess/ method, but make it less smooth. Hint: see =?loess=.
+3. [@3] Overlay a smoothing line on top of the scatter plot using geom_smooth, but use a linear model for the predictions. Hint: see =?stat_smooth=.
+#+BEGIN_SRC R :results silent
+  ggplot(dat, aes(x = CPI, y = HDI)) +
+    geom_point() +
+    geom_smooth(method = "lm")
+#+END_SRC
+4. [@4] Overlay a loess (method = "loess") smoothling line on top of the scatter plot using geom_line. Hint: change the statistical transformation.
+#+BEGIN_SRC R :results silent
+  ggplot(dat, aes(x = CPI, y = HDI)) +
+    geom_point() +
+    geom_line(stat = "smooth", method = "loess")
+#+END_SRC
+4. [@4] BONUS: Overlay a smoothing line on top of the scatter plot using the /loess/ method, but make it less smooth. Hint: see =?loess=.
 #+BEGIN_SRC R :results silent
   ggplot(dat, aes(x = CPI, y = HDI)) +
     geom_point() +
@@ -589,7 +581,7 @@ What is the problem with the previous plot? Basically we take binned and summari
 * Scales
 
 ** Scales: Controlling Aesthetic Mapping
-Aesthetic mapping (i.e., with =aes()=) only says that a variable should be mapped to an aesthetic. It doesn't say /how/ that should happy. For example, when mapping a variable to /shape/ with =aes(shape = x)= you don't say /what/ shapes should be used. Similarly, =aes(color = z)= doesn't say /what/ colors should be used. Describing what colors/shapes/sizes etc. to use is done by modifying the corresponding /scale/. In =ggplot2= scales include
+Aesthetic mapping (i.e., with =aes()=) only says that a variable should be mapped to an aesthetic. It doesn't say /how/ that should happen. For example, when mapping a variable to /shape/ with =aes(shape = x)= you don't say /what/ shapes should be used. Similarly, =aes(color = z)= doesn't say /what/ colors should be used. Describing what colors/shapes/sizes etc. to use is done by modifying the corresponding /scale/. In =ggplot2= scales include
 - position
 - color and fill
 - size
@@ -627,14 +619,14 @@ Start by constructing a dotplot showing the distribution of home values by Date 
 #+RESULTS: modifyScales1
 [[file:images/modifyScales1.png]]
 
-Now modify the breaks and labels for the x axis and color scales
+Now modify the breaks for the x axis and color scales
 
 #+name: modifyScales2
 #+begin_src R :results output graphics :file images/modifyScales2.png  :width 800
   p4 + scale_x_discrete(name="State Abbreviation") +
     scale_color_continuous(name="",
-                           breaks = c(19751, 19941, 20131),
-                           labels = c(1971, 1994, 2013))
+                           breaks = c(1976, 1994, 2013),
+                           labels = c("'76", "'94", "'13"))
 #+end_src
 
 
@@ -647,8 +639,8 @@ Next change the low and high values to blue and red:
   p4 +
     scale_x_discrete(name="State Abbreviation") +
     scale_color_continuous(name="",
-                           breaks = c(19751, 19941, 20131),
-                           labels = c(1971, 1994, 2013),
+                           breaks = c(1976, 1994, 2013),
+                           labels = c("'76", "'94", "'13"),
                            low = "blue", high = "red")
 
 #+end_src
@@ -661,8 +653,8 @@ Next change the low and high values to blue and red:
 #+begin_src R :results output graphics :file images/modifyScales3b.png :width 800
   p4 +
     scale_color_continuous(name="",
-                           breaks = c(19751, 19941, 20131),
-                           labels = c(1971, 1994, 2013),
+                           breaks = c(1976, 1994, 2013),
+                           labels = c("'76", "'94", "'13"),
                            low = muted("blue"), high = muted("red"))
 
 #+end_src
@@ -676,12 +668,12 @@ ggplot2 has a wide variety of color scales; here is an example using =scale_colo
 #+begin_src R :results output graphics :file images/modifyScales4.png :width 800
   p4 +
     scale_color_gradient2(name="",
-                          breaks = c(19751, 19941, 20131),
-                          labels = c(1971, 1994, 2013),
+                          breaks = c(1976, 1994, 2013),
+                          labels = c("'76", "'94", "'13"),
                           low = muted("blue"),
                           high = muted("red"),
                           mid = "gray60",
-                          midpoint = 19941)
+                          midpoint = 1994)
 #+end_src
 
 
@@ -984,13 +976,10 @@ This shows us that /shape 1/ is an open circle, so
 #+RESULTS: econDatScatter3
 [[file:images/econScatter3.png]]
 
-That is better, but unfortunately the size of the line around the points is much narrower than on the original. This is a frustrating aspect of ggplot2, and we will have to hack around it. One way to do that is to multiple point layers of slightly different sizes.
+That is better, but unfortunately the size of the line around the points is much narrower than on the original.
 
 #+begin_src R :results output graphics :file images/econScatter3b.png 
-  (pc3 <- pc2 +
-     geom_point(size = 4.5, shape = 1) +
-     geom_point(size = 4, shape = 1) +
-     geom_point(size = 3.5, shape = 1))
+  (pc3 <- pc2 + geom_point(shape = 1, size = 2.5, stroke = 1.25))
 #+end_src
 
 #+RESULTS:
@@ -1024,17 +1013,17 @@ Now we can label these points using =geom_text=, like this:
 This more or less gets the information across, but the labels overlap in a most unpleasing fashion. We can use the =ggrepel= package to make things better, but if you want perfection you will probably have to do some hand-adjustment.
 
 #+name: econDatScatter5
-#+begin_src R :results output graphics :file images/econScatter4.png :width 800 :height 600
+#+begin_src R :results output graphics :file images/econScatter4b.png :width 800 :height 600
   library("ggrepel")
-  pc3 +
-    geom_text_repel(aes(label = Country),
-              color = "gray20",
-              data = subset(dat, Country %in% pointsToLabel),
-              force = 10)
+  (pc4 <- pc3 +
+     geom_text_repel(aes(label = Country),
+                     color = "gray20",
+                     data = subset(dat, Country %in% pointsToLabel),
+                     force = 10))
 #+end_src
 
 #+RESULTS: econDatScatter5
-[[file:images/econScatter4.png]]
+[[file:images/econScatter4b.png]]
 
 ** Change the region labels and order
 Thinkgs are starting to come together. There are just a couple more things we need to add, and then all that will be left are themeing changes. 
@@ -1130,7 +1119,7 @@ The last bit of information that we want to have on the graph is the variance ex
 #+RESULTS:
 #+begin_example
 > (mR2 <- summary(lm(HDI ~ log(CPI), data = dat))$r.squared)
-[1] 0.521
+[1] 0.5212859
 > 
 #+end_example
 
@@ -1167,7 +1156,7 @@ Comparing it to the original suggests that we've got most of the important eleme
 [[file:images/Economist1.png]]
 * Wrap-up
 
-** Help Us Make This Workshop Even Better!
+** Help Us Make This Workshop Better!
 - Please take a moment to fill out a very short feedback form 
 - These workshops exist for you -- tell us what you need! 
 - http://tinyurl.com/R-graphics-feedback
@@ -1179,6 +1168,7 @@ Comparing it to the original suggests that we've got most of the important eleme
   - Website: http://had.co.nz/ggplot2/
   - StackOverflow: http://stackoverflow.com/questions/tagged/ggplot
 - IQSS resources
-  - Research technology consulting: [[http://projects.iq.harvard.edu/rtc]]
-  - Workshops: http://projects.iq.harvard.edu/rtc/filter_by/workshops
+  - Research technology consulting: [[http://dss.iq.harvard.edu]]
+  - Workshops materials: http://dss.iq.harvard.edu/workshop-materials
+  - Workshop schedule and registration: http://dss.iq.harvard.edu/workshop-registration
 

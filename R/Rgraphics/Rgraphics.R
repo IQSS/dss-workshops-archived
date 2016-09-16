@@ -6,7 +6,7 @@
 ## ─────────────────
 
 ## Introduction
-## eometric Objects And Aesthetics
+## Geometric Objects And Aesthetics
 ## Statistical Transformations
 ## Scales
 ## Faceting
@@ -20,9 +20,6 @@
 
 ## Materials and setup
 ## ───────────────────
-
-## Lab computer users: Log in using the user name and password on the board to your left. :labsetup:
-## ╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌
 
 ## Laptop users: You should have R installed –if not:
 ## ╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌
@@ -96,17 +93,21 @@
 ##   • coordinate system
 ##   • position adjustments
 ##   • faceting
-##
+
 ## Example Data: `Housing prices'
 ## ──────────────────────────────
 
 ##   Let's look at housing prices.
-
 housing <- read.csv("dataSets/landdata-states.csv")
 head(housing[1:5])
 
 ##   (Data from
 ##   [https://www.lincolninst.edu/subcenters/land-values/land-prices-by-state.asp])
+
+housing <- read.csv("dataSets/landdata-states.csv")
+housing$Year <- as.numeric(substr(housing$Date, 1, 4))
+housing$Qrtr <- as.numeric(substr(housing$Date, 5, 5))
+housing$Date <- housing$Year + housing$Qrtr/4
 
 ## `ggplot2' VS Base Graphics
 ## ──────────────────────────
@@ -126,6 +127,7 @@ hist(housing$Home.Value)
 
 ##   `ggplot2' histogram example:
 
+library(ggplot2)
 ggplot(housing, aes(x = Home.Value)) +
   geom_histogram()
 
@@ -187,9 +189,7 @@ ggplot(subset(housing, State %in% c("MA", "TX")),
 
 ##   You can get a list of available geometric objects using the code
 ##   below:
-
 help.search("geom_", package = "ggplot2")
-
 ##   or simply type `geom_<tab>' in any good R IDE (such as Rstudio or ESS)
 ##   to see a list of functions starting with `geom_'.
 
@@ -200,9 +200,13 @@ help.search("geom_", package = "ggplot2")
 ##   make a ggplot. `geom_point' requires mappings for x and y, all others
 ##   are optional.
 
-hp2001Q1 <- subset(housing, Date == 20011) 
+hp2001Q1 <- subset(housing, Date == 2001.25) 
 ggplot(hp2001Q1,
        aes(y = Structure.Cost, x = Land.Value)) +
+  geom_point()
+
+ggplot(hp2001Q1,
+       aes(y = Structure.Cost, x = log(Land.Value))) +
   geom_point()
 
 ## Lines (Prediction Line)
@@ -213,9 +217,9 @@ ggplot(hp2001Q1,
 ##   that can be added to or overridden. Our plot could use a regression
 ##   line:
 
-hp2001Q1$pred.SC <- predict(lm(Structure.Cost ~ Land.Value, data = hp2001Q1))
+hp2001Q1$pred.SC <- predict(lm(Structure.Cost ~ log(Land.Value), data = hp2001Q1))
 
-p1 <- ggplot(hp2001Q1, aes(x = Land.Value, y = Structure.Cost))
+p1 <- ggplot(hp2001Q1, aes(x = log(Land.Value), y = Structure.Cost))
 
 p1 + geom_point(aes(color = Home.Value)) +
   geom_line(aes(y = pred.SC))
@@ -237,7 +241,13 @@ p1 +
 ##   `geom_text()' accepts a `labels' mapping.
 
 p1 + 
-  geom_text(aes(label=State), size=2)
+  geom_text(aes(label=State), size = 3)
+
+## install.packages("ggrepel") 
+library("ggrepel")
+p1 + 
+  geom_point() + 
+  geom_text_repel(aes(label=State), size = 3)
 
 ## Aesthetic Mapping VS Assignment
 ## ───────────────────────────────
@@ -264,8 +274,10 @@ p1 +
 
 ##   The data for the exercises is available in the
 ##   `dataSets/EconomistData.csv' file. Read it in with
-
 dat <- read.csv("dataSets/EconomistData.csv")
+head(dat)
+
+ggplot(dat, aes(x = CPI, y = HDI, size = HDI.Rank)) + geom_point()
 
 ##   Original sources for these data are
 ##     [http://www.transparency.org/content/download/64476/1031428]
@@ -275,10 +287,10 @@ dat <- read.csv("dataSets/EconomistData.csv")
 ##   Perception Index/ scores for several countries.
 
 ##   1. Create a scatter plot with CPI on the x axis and HDI on the y axis.
-##   2. Color the points in the previous plot blue.
-##   3. Color the points in the previous plot according to /Region/.
-##   4. Create boxplots of CPI by Region
-##   5. Overlay points on top of the box plots
+##   2. Color the points blue.
+##   3. Map the color of the the points to Region.
+##   4. Make the points bigger by setting size to 2
+##   5. Map the size of the points to HDI.Rank
 
 ## Statistical Transformations
 ## ═══════════════════════════
@@ -296,10 +308,9 @@ dat <- read.csv("dataSets/EconomistData.csv")
 ##     predicted values
 
 ##   Each `geom' has a default statistic, but these can be changed. For
-##   example, the default statistic for `geom_bar' is `stat_bin':
-
-args(geom_bar)
-# ?stat_bin
+##   example, the default statistic for `geom_bar' is `stat_count':
+args(geom_histogram)
+args(stat_bin)
 
 ## Setting Statistical Transformation Arguments
 ## ────────────────────────────────────────────
@@ -310,45 +321,29 @@ args(geom_bar)
 ##   the arguments to that stat.
 
 ##   For example, here is the default histogram of Home.Value:
-
 p2 <- ggplot(housing, aes(x = Home.Value))
-p2 + geom_bar()
+p2 + geom_histogram()
 
 ##   The binwidth looks reasonable by default, but we can change it by
 ##   passing the `binwidth' argument to the `stat_bin' function:
-
-p2 + geom_bar(stat = "bin", binwidth=4000)
-
-##   If you're thinking to yourself "this is crazy, there must be a better
-##   way" you can construct the same plot using `stat_bin' in place of
-##   geom_bar, like this:
-
-p2 + stat_bin(binwidth=9000, geom="bar")
-
-##   but I prefer to construct my layers with `geom_' calls rather than
-##   `stat_' calls.
+p2 + geom_histogram(stat = "bin", binwidth=4000)
 
 ## Changing The Statistical Transformation
 ## ───────────────────────────────────────
 
 ##   Sometimes the default statistical transformation is not what you need.
 ##   This is often the case with pre-summarized data:
-
 housing.sum <- aggregate(housing["Home.Value"], housing["State"], FUN=mean)
 rbind(head(housing.sum), tail(housing.sum))
 
 ggplot(housing.sum, aes(x=State, y=Home.Value)) + 
   geom_bar()
 
-  ggplot(housing.sum, aes(x=State, y=Home.Value)) + 
-    geom_bar()
-
 ##   What is the problem with the previous plot? Basically we take binned
 ##   and summarized data and ask ggplot to bin and summarize it again
-##   (remember, `geom_bar' defaults to `stat = stat_bin'); obviously this
+##   (remember, `geom_bar' defaults to `stat = stat_count'); obviously this
 ##   will not work. We can fix it by telling `geom_bar' to use a different
 ##   statistical transformation function:
-
 ggplot(housing.sum, aes(x=State, y=Home.Value)) + 
   geom_bar(stat="identity")
 
@@ -357,13 +352,16 @@ ggplot(housing.sum, aes(x=State, y=Home.Value)) +
 
 ##   1. Re-create a scatter plot with CPI on the x axis and HDI on the y
 ##      axis (as you did in the previous exercise).
-##   2. Overlay a smoothing line on top of the scatter plot using the /lm/
-##      method. Hint: see `?stat_smooth'.
-##   3. Overlay a smoothing line on top of the scatter plot using the
-##      default method.
-##   4. BONUS (optional): Overlay a smoothing line on top of the scatter
-##      plot using the default /loess/ method, but make it less smooth.
-##      Hint: see `?loess'.
+##   2. Overlay a smoothing line on top of the scatter plot using
+##      geom_smooth.
+##   3. Overlay a smoothing line on top of the scatter plot using
+##      geom_smooth, but use a linear model for the predictions. Hint: see
+##      `?stat_smooth'.
+##   4. Overlay a smoothling line on top of the scatter plot using
+##      geom_line. Hint: change the statistical transformation.
+##   5. BONUS: Overlay a smoothing line on top of the scatter plot using
+##      the default /loess/ method, but make it less smooth. Hint: see
+##      `?loess'.
 
 ## Scales
 ## ══════
@@ -373,11 +371,11 @@ ggplot(housing.sum, aes(x=State, y=Home.Value)) +
 
 ##   Aesthetic mapping (i.e., with `aes()') only says that a variable
 ##   should be mapped to an aesthetic. It doesn't say /how/ that should
-##   happy. For example, when mapping a variable to /shape/ with `aes(shape
-##   = x)' you don't say /what/ shapes should be used. Similarly,
-##   `aes(color = z)' doesn't say /what/ colors should be used. Describing
-##   what colors/shapes/sizes etc. to use is done by modifying the
-##   corresponding /scale/. In `ggplot2' scales include
+##   happen. For example, when mapping a variable to /shape/ with
+##   `aes(shape = x)' you don't say /what/ shapes should be used.
+##   Similarly, `aes(color = z)' doesn't say /what/ colors should be used.
+##   Describing what colors/shapes/sizes etc. to use is done by modifying
+##   the corresponding /scale/. In `ggplot2' scales include
 ##   • position
 ##   • color and fill
 ##   • size
@@ -416,26 +414,25 @@ p3 <- ggplot(housing,
                        size = 1.5,
                        position = position_jitter(width = 0.25, height = 0)))
 
-##   Now modify the breaks and labels for the x axis and color scales
+##   Now modify the breaks for the x axis and color scales
 
 p4 + scale_x_discrete(name="State Abbreviation") +
   scale_color_continuous(name="",
-                         breaks = c(19751, 19941, 20131),
-                         labels = c(1971, 1994, 2013))
+                         breaks = c(1976, 1994, 2013),
+                         labels = c("'76", "'94", "'13"))
 
 ##   Next change the low and high values to blue and red:
-
 p4 +
   scale_x_discrete(name="State Abbreviation") +
   scale_color_continuous(name="",
-                         breaks = c(19751, 19941, 20131),
-                         labels = c(1971, 1994, 2013),
+                         breaks = c(1976, 1994, 2013),
+                         labels = c("'76", "'94", "'13"),
                          low = "blue", high = "red")
 
 p4 +
   scale_color_continuous(name="",
-                         breaks = c(19751, 19941, 20131),
-                         labels = c(1971, 1994, 2013),
+                         breaks = c(1976, 1994, 2013),
+                         labels = c("'76", "'94", "'13"),
                          low = muted("blue"), high = muted("red"))
 
 ## Using different color scales
@@ -443,15 +440,14 @@ p4 +
 
 ##   ggplot2 has a wide variety of color scales; here is an example using
 ##   `scale_color_gradient2' to interpolate between three different colors.
-
 p4 +
   scale_color_gradient2(name="",
-                        breaks = c(19751, 19941, 20131),
-                        labels = c(1971, 1994, 2013),
+                        breaks = c(1976, 1994, 2013),
+                        labels = c("'76", "'94", "'13"),
                         low = muted("blue"),
                         high = muted("red"),
                         mid = "gray60",
-                        midpoint = 19941)
+                        midpoint = 1994)
 
 ## Available Scales
 ## ────────────────
@@ -510,7 +506,6 @@ p4 +
 ## ──────────────────────────────────────────────────
 
 ##   • Start by using a technique we already know–map State to color:
-
 p5 <- ggplot(housing, aes(x = Date, y = Home.Value))
 p5 + geom_line(aes(color = State))
 
@@ -544,7 +539,6 @@ p5 + geom_line(aes(color = State))
 ##   • `theme_gray()' (default)
 ##   • `theme_bw()'
 ##   • `theme_classc()'
-
 p5 + theme_linedraw()
 
 p5 + theme_light()
@@ -554,7 +548,6 @@ p5 + theme_light()
 
 ##   Specific theme elements can be overridden using `theme()'. For
 ##   example:
-
 p5 + theme_minimal() +
   theme(text = element_text(color = "turquoise"))
 
@@ -595,6 +588,7 @@ ggplot(housing.byyear,
   geom_line(aes(y=Home.Value), color="red") +
   geom_line(aes(y=Land.Value), color="blue")
 
+
 #
 
 ## Right
@@ -625,11 +619,13 @@ ggplot(home.land.byyear,
 ##   put the finishing touches to make it as close as possible to the
 ##   original economist graph.
 
+##   [file:images/Economist1.png]
+
 ## Wrap-up
 ## ═══════
 
-## Help Us Make This Workshop Even Better!
-## ───────────────────────────────────────
+## Help Us Make This Workshop Better!
+## ──────────────────────────────────
 
 ##   • Please take a moment to fill out a very short feedback form
 ##   • These workshops exist for you – tell us what you need!
@@ -644,7 +640,8 @@ ggplot(home.land.byyear,
 ##     • Website: [http://had.co.nz/ggplot2/]
 ##     • StackOverflow: [http://stackoverflow.com/questions/tagged/ggplot]
 ##   • IQSS resources
-##     • Research technology consulting:
-##       [http://projects.iq.harvard.edu/rtc]
-##     • Workshops:
-##       [http://projects.iq.harvard.edu/rtc/filter_by/workshops]
+##     • Research technology consulting: [http://dss.iq.harvard.edu]
+##     • Workshops materials:
+##       [http://dss.iq.harvard.edu/workshop-materials]
+##     • Workshop schedule and registration:
+##       [http://dss.iq.harvard.edu/workshop-registration]
