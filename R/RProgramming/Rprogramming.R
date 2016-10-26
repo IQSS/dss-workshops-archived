@@ -1,7 +1,5 @@
 ##                    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ##                     INTRODUCTION TO PROGRAMMING IN R
-##                    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
 
 ## Table of Contents
 ## ─────────────────
@@ -11,11 +9,12 @@
 ## Reading all the files (iteration, functions)
 ## Adding a Year column (data structures, indexing)
 ## Final data cleanup
-## Manipulating data.frames
-## Addressing obvious pitfalls in tracking name popularity
+## What can we learn about baby names?
 ## What else?
 ## Go forth and code!
-
+## Additional reading and resources
+## Epilogue: Things that may surprise you
+## Feedback
 
 ## Workshop overview and materials
 ## ═══════════════════════════════
@@ -39,7 +38,6 @@
 ##   Prerequisite: basic familiarity with R, such as acquired from an
 ##   introductory R workshop.
 
-
 ## [tidyverse] https://cran.r-project.org/web/packages/tidyverse/index.html
 
 ## [readr] https://cran.r-project.org/web/packages/readr/index.html
@@ -49,7 +47,6 @@
 ## [tidyr] https://cran.r-project.org/web/packages/tidyr/index.html
 
 ## [purrr] https://cran.r-project.org/web/packages/purrr/index.html
-
 
 ## Materials and setup
 ## ───────────────────
@@ -67,7 +64,6 @@
 ##     [http://tutorials.iq.harvard.edu/R/RProgramming.zip]
 ##   • Extract the zip file containing the materials to your desktop
 
-
 ## Example project overview
 ## ────────────────────────
 
@@ -75,7 +71,6 @@
 ##   involves acquiring, processing, and analyzing UK baby names
 ##   statistics. In this context we will learn about data types, iteration,
 ##   file IO, writing functions, and more.
-
 
 ## Extracting information from a text file (string manipulation)
 ## ═════════════════════════════════════════════════════════════
@@ -101,7 +96,6 @@
 ##   In order to do that we need a list of the Uniform Resource Locators
 ##   (URLs) of those files. The URLs we need are right there as links in
 ##   the web page. All we need to do is extract them.
-
 
 ## [Office for National Statistics] https://www.ons.gov.uk
 
@@ -151,13 +145,11 @@ letters[1:5] %>%
 ##   The examples in this workshop use the pipe when it makes examples
 ##   easier to follow.
 
-
 ## [stringr] https://cran.r-project.org/web/packages/stringr/index.html
 
 ## [stringi] https://cran.r-project.org/web/packages/stringi/index.html
 
 ## [tidyverse] https://cran.r-project.org/web/packages/tidyverse/index.html
-
 
 ## Reading text over http
 ## ──────────────────────
@@ -219,7 +211,6 @@ cat(tail(baby.names.page), sep = "\n")
 ##   `str_extract' function, but in order to use it effectively we need to
 ##   know something about regular expressions.
 
-
 ## String manipulation with the stringr package
 ## ────────────────────────────────────────────
 
@@ -246,11 +237,9 @@ str_subset(user.info, email.regex)
 str_extract(user.info, email.regex)
 str_replace(user.info, email.regex, "<a href='\\1'>\\1</a>")
 
-
 ##   If you have not been introduced to regular expressions yet a nice
 ##   interactive regex tester is available at [http://www.regexr.com/] and
 ##   an interactive tutorial is available at [http://www.regexone.com/].
-
 
 ## Exercise 1: string manipulation and regular expressions
 ## ───────────────────────────────────────────────────────
@@ -277,7 +266,6 @@ str_replace(user.info, email.regex, "<a href='\\1'>\\1</a>")
 ##      "[http://tutorials.iq.harvard.edu/example_data/baby_names/]" to
 ##      `girl.file.names' and `boy.file.names'.
 
-
 ## Reading all the files (iteration, functions)
 ## ════════════════════════════════════════════
 
@@ -290,132 +278,64 @@ str_replace(user.info, email.regex, "<a href='\\1'>\\1</a>")
 girl.names.1 <- read_csv(girl.file.names[1], na = "")
 head(girl.names.1)
 
+##   Notice that we selected the first element of `girl.file.names' using
+##   `['. This is called /bracket extraction/ and it is a very useful
+##   feature of the R language.
 
-## Iterating using the map function
-## ────────────────────────────────
-
-##   To read all the files conveniently we want to iterate over the vector
-##   of URLs and download each one. We can carry out this iteration in
-##   several ways, including using one of the `map*' functions in the purrr
-##   package. Here is how it works.
-
-list.1 <- list(a = sample(1:5, 20, replace = TRUE),
-               b = sample(1:10, 20, replace = TRUE),
-               c = sample(10:15, 20, replace = TRUE))
-
-## calculate the mean of every entry
-map.1 <- map(list.1, mean)
-str(map.1)
-## calculate the mean of every entry, returning a numberic vector instead of a list
-map.2 <- map_dbl(list.1, mean)
-str(map.2)
-## calculate the mean of every entry, returning a character vector
-map.3 <- map_chr(list.1, mean)
-## calculate summaries (map returns a list)
-map.4 <- map(list.1, summary)
-str(map.4)
-
-
-## Writing your own functions
-## ──────────────────────────
-
-##   The `map*' functions are useful when you want to apply a function to a
-##   list or vector of inputs and obtain the return values. This is very
-##   convenient when a function already exists that does exactly what you
-##   want. In the examples above we mapped `mean' and `summary' to the
-##   elements of a list. But what if there is no existing function that
-##   does exactly what we want? Suppose that rather than the set of
-##   statistics reported by the `summary' function we want to summarize
-##   each element in the list by calculating the /length/, /mean/, and
-##   /standard deviation/? In that case we will need to write a function
-##   that does what we want. Fortunately, writing functions in R is easy.
-my.summary <- function(x) {
-  n <- length(x)
-  avg <- mean(x)
-  std.dev <- sd(x)
-  return(c(N = n, Mean = avg, Standard.Deviation = std.dev))
-}
-my.summary(list.1[[1]])
-map(list.1, my.summary)
-
-##   OK, back to the problem at hand. We want to read each file in the
-##   `girl.file.names' and `boy.file.names' vectors. The files contain
-##   columns "Rank", "Name", and "Count". The year each file contains data
-##   for is not included as a column in the data, but it is encoded in the
-##   file names.
-
-
-## Exercise 2: Iteration, file IO, functions
-## ─────────────────────────────────────────
-
-##   We know how to read csv files using `read_csv'. We know how to iterate
-##   using `map'. All we need to do now is put the two things together.
-
-##   1. Use the `map' and `read_csv' functions to read all the girls data
-##      into an object named `girls.data'.
-##   2. Do the same thing for the boys data (name the object `boys.data').
-##   3. Inspect the boys and girls data lists. How many elements do they
-##      have? What class are they?
-##   4. Write a function that returns the `class', `mode', and `length' of
-##      its argument. `map' this function to `girls.data' and `boys.data'.
-
-
-
-## Adding a Year column (data structures, indexing)
-## ════════════════════════════════════════════════
-
-##   OK, at this point we have read in all the data. That is a good start!
-##   Lets take a closer look at what we are working with.
-
-str(girls.data, max.level = 1)
-
-##   OK, so we have a /list/ with 20 elements. A list in R is a very
-##   flexible data structure that can hold just about anything (including
-##   other lists). Our `girls.data' is a list that happens to contain
-##   /data.frames/.
-
-##   A data.frame in R is a special type of list in which each element is
-##   the same length. Elements of data.frames are often /atomic vectors/
-##   ("logical", "integer", "numeric (double)" etc. as discussed above),
-##   though elements of a data.frame can be anything you can store in other
-##   lists, provided only that each element is the same length.
-
-##   There are many useful things we can do with data.frames: (But remember
-##   that this list of methods is not all you can do with data.frames.)
-
-girls.data.1 <- girls.data[[1]]
-class(girls.data.1)
-methods(class = "data.frame")
-dim(girls.data.1)
-nrow(girls.data.1)
-ncol(girls.data.1)
-names(girls.data.1)
-summary(girls.data.1)
-
-
-##   The data.frames in `girls.data' all have three elements (columns):
-##   Rank (a number), Name (a character), and Count (a number). That is a
-##   problem, because we don't have the year each name and count
-##   corresponds to! Year was stored in the file names rather than in the
-##   contents of the files.
-
-##   Lets take a closer look at the first data.frame in the list. The year
-##   corresponding to `girls.data[1]' is in `girl.file.names[1]'.
-(girls.file.name.1 <- girl.file.names[1]) ## enclosing parens is a shortcut for assigning and printing
-(girls.year.1 <- str_extract(girls.file.name.1, "[0-9]+"))
-girls.data.1 <- girls.data[[1]]
-str(girls.data.1)
-
-##   How can we insert the year information into each corresponding
-##   data.frame? To do that it will be helpful to know a few more things
-##   about how extraction and replacement work in R.
-
-
-## Extracting and replacing elements
-## ─────────────────────────────────
+## Extracting and replacing vector elements
+## ────────────────────────────────────────
 
 ##   Elements of R objects can be extracted and replaced using bracket
-##   notation. Bracket extraction comes in a few different flavors.
+##   notation. Bracket extraction comes in a few different flavors. We can
+##   index atomic vectors in several different ways.
+
+example.int.1 <- c(10, 11, 12, 13, 14, 15)
+names(example.int.1) <- c("a1", "a2", "b1", "b2", "c1", "c2")
+str(example.int.1)
+
+## extract by position
+example.int.1[1]
+example.int.1[c(1, 3, 5)]
+
+## extract by name
+example.int.1[c("c2", "a1")]
+
+## logical extraction 
+(one.names <- str_detect(names(example.int.1), "1"))
+example.int.1[one.names]
+example.int.1[example.int.1 > 12]
+
+## extract non-existent element
+example.int.1["z1"]
+
+##   Replacement works by assigning a value to an extraction.
+
+example.int.2 <- example.int.1
+
+## replace by position
+example.int.2[1] <- 100
+
+## replace by name
+example.int.2["a2"] <- 200
+example.int.2
+
+## logical replacement
+(lt14 <- example.int.2 < 14)
+example.int.2[lt14] <- 0
+example.int.2
+## "replace" non-existing element
+example.int.2[c("z1", "z2")] <- -10 
+
+## compare lists to see the changes we made
+example.int.1
+example.int.2
+
+## Extracting and replacing list elements
+## ──────────────────────────────────────
+
+##   List elements can be extracted and replaced in the same way as
+##   elements of atomic vectors. In addition, `[[' can be used to extract
+##   or replace the contents of a list element. Here is how it works:
 
 example.list.1 <- list(a1 = c(a = 1, b = 2, c = 3),
                      a2 = c(4, 5, 6),
@@ -458,49 +378,202 @@ example.list.2[c("a1", "a2")] <- map(example.list.2[c("a1", "a2")],
 example.list.2[el.length4] <- map(example.list.2[el.length4],
                                      function(x) str_c("letter", x, sep = "_"))
 ## "replace" non-existing element
-example.list.2[["c"]] <- data.frame(x = letters[1:5], y = 1:5)
+example.list.2[["c"]] <- list(x = letters[1:5], y = 1:5)
 
 ## compare lists to see the changes we made
 str(example.list.1)
 str(example.list.2)
 
+##   Using our knowledge of bracket extraction we could start reading in
+##   the data files like this:
 
-## Using extraction and replacement to add a Year column
-## ─────────────────────────────────────────────────────
+boys <- list()
+girls <- list()
 
-##   Now that we know to extract and replace data.frame columns we can use
-##   that technique to add a Year column to our baby names data. Recall
-##   that we earlier extracted the first element of `girls.data' into
-##   `girls.data.1' and the first element of `girls.file.names' into
-##   `girls.file.name.1'. Lets use those to practice.
-girls.data.1[["Year"]] <- girls.file.name.1 %>%
-  str_extract(pattern = "[0-9]+") %>%
-  as.integer()
-str(girls.data.1)
+boys[[1]] <- read_csv(boy.file.names[1], na = "")
+boys[[2]] <- read_csv(boy.file.names[2], na = "")
+## ...
+girls[[1]] <- read_csv(girl.file.names[1], na = "")
+girls[[2]] <- read_csv(girl.file.names[2], na = "")
+## ...
 
-##   Now we want to repeat that for each element in the list. We know how
-##   to do it for one data.frame, and we know how to map a function to each
-##   element of a list. We just need to put these techniques together.
+## Exercise 2: String manipulation, extraction and replacement
+## ───────────────────────────────────────────────────────────
 
+##   We saw in the previous example one way to start reading the baby name
+##   data, using positional bracket extraction and replacement. In this
+##   exercise we will improve on this method by doing the same thing using
+##   named extraction and replacement. The first step is to extract the
+##   years from `boy.file.names' and `girl.file.names' and assign then to
+##   the `names' attribute of our `boys' and `girls' lists.
 
-## Exercise 3: Iteration, data.frame manipulation
+##   1. Create empty lists named `boys' and `girls'.
+##   2. Write a regular expression that matches digits 0-9 repeated any
+##      number of times and use it to extract the years from
+##      `boy.file.names' and `girl.file.names' (use `str_extract').
+##   3. Assign the years vectors from step one to the names of
+##      `boy.file.names' and `girl.file.names' respectively.
+##   4. Extract the element named "2015" from `girl.file.names' and pass it
+##      as the argument to `read_csv', assigning the result to a new
+##      element of the `girls' list named "2015". Repeat for elements
+##      "2014" and "2013".
+##   5. Repeat step three using `boy.file.names' and the `boys' list.
+
+## Iterating using the map function
+## ────────────────────────────────
+
+##   With a small number of files reading each one separately isn't too
+##   bad, but it obviously doesn't scale well. To read all the files
+##   conveniently we instead want to instruct R to iterate over the vector
+##   of URLs for us and download each one. We can carry out this iteration
+##   in several ways, including using one of the `map*' functions in the
+##   purrr package. Here is how it works.
+
+list.1 <- list(a = sample(1:5, 20, replace = TRUE),
+               b = sample(1:10, 20, replace = TRUE),
+               c = sample(10:15, 20, replace = TRUE))
+
+## calculate the mean of every entry
+map.1 <- map(list.1, mean)
+str(map.1)
+## calculate the mean of every entry, returning a numberic vector instead of a list
+map.2 <- map_dbl(list.1, mean)
+str(map.2)
+## calculate the mean of every entry, returning a character vector
+map.3 <- map_chr(list.1, mean)
+## calculate summaries (map returns a list)
+map.4 <- map(list.1, summary)
+str(map.4)
+
+## Writing your own functions
+## ──────────────────────────
+
+##   The `map*' functions are useful when you want to apply a function to a
+##   list or vector of inputs and obtain the return values. This is very
+##   convenient when a function already exists that does exactly what you
+##   want. In the examples above we mapped `mean' and `summary' to the
+##   elements of a list. But what if there is no existing function that
+##   does exactly what we want? Suppose that rather than the set of
+##   statistics reported by the `summary' function we want to summarize
+##   each element in the list by calculating the /length/, /mean/, and
+##   /standard deviation/? In that case we will need to write a function
+##   that does what we want. Fortunately, writing functions in R is easy.
+my.summary <- function(x) {
+  n <- length(x)
+  avg <- mean(x)
+  std.dev <- sd(x)
+  return(c(N = n, Mean = avg, Standard.Deviation = std.dev))
+}
+my.summary(list.1[[1]])
+map(list.1, my.summary)
+
+##   OK, back to the problem at hand. We want to read each file in the
+##   `girl.file.names' and `boy.file.names' vectors. The files contain
+##   columns "Rank", "Name", and "Count". The year each file contains data
+##   for is not included as a column in the data, but it is encoded in the
+##   file names.
+
+## Exercise 3: Iteration, file IO, functions
+## ─────────────────────────────────────────
+
+##   We know how to read csv files using `read_csv'. We know how to iterate
+##   using `map'. All we need to do now is put the two things together.
+
+##   1. Use the `map' and `read_csv' functions to read all the girls data
+##      into an object named `girls.data'.
+##   2. Do the same thing for the boys data (name the object `boys.data').
+##   3. Inspect the boys and girls data lists. How many elements do they
+##      have? What class are they?
+##   4. Write a function that returns the `class', `mode', and `length' of
+##      its argument. `map' this function to `girls.data' and `boys.data'.
+
+## Adding a Year column (data structures, indexing)
+## ════════════════════════════════════════════════
+
+##   OK, at this point we have read in all the data. That is a good start!
+##   Lets take a closer look at what we are working with.
+
+str(girls.data, max.level = 1)
+
+##   OK, so we have a /list/ with 20 elements. A list in R is a very
+##   flexible data structure that can hold just about anything (including
+##   other lists). Our `girls.data' is a list that happens to contain
+##   /data.frames/.
+
+##   A data.frame in R is a special type of list in which each element is
+##   the same length. Elements of data.frames are often /atomic vectors/
+##   ("logical", "integer", "numeric (double)" etc. as discussed above),
+##   though elements of a data.frame can be anything you can store in other
+##   lists, provided only that each element is the same length.
+
+##   There are many useful things we can do with data.frames: (But remember
+##   that this list of methods is not all you can do with data.frames.)
+
+girls.data.1 <- girls.data[[1]]
+class(girls.data.1)
+methods(class = "data.frame")
+dim(girls.data.1)
+nrow(girls.data.1)
+ncol(girls.data.1)
+names(girls.data.1)
+summary(girls.data.1)
+
+## Adding a year column using bracket extraction/replacement
+## ─────────────────────────────────────────────────────────
+
+##   The data.frames in `girls.data' all have three elements (columns):
+##   Rank (a number), Name (a character), and Count (a number). That is a
+##   problem, because we need to have a column that records the year! Year
+##   was stored in the file names rather than in the contents of the files,
+##   and so it appears as the names of the list elements rather than as a
+##   column in each data.frame.
+
+##   How can we insert the year information into each corresponding
+##   data.frame? Recall that a data.frame _is_ a list, so we can use
+##   bracket extraction just as we would for other kinds of lists. That is,
+##   we can add a year column to the data.frame in position 1 of
+##   `girls.data' like this:
+str(girls.data[[1]])
+girls.data[[1]][["Year"]] <- names(girls.data[1])
+##        ^                                  ^ 
+## double brackets to extract data.frame   single brackets to extract a list containing a data.frame
+str(girls.data[[1]])
+girls.data[[1]][["Year"]] <- as.integer(names(girls.data[1]))
+str(girls.data[[1]])
+
+##   Now we want to repeat that for each element in the list. We previously
+##   learned how to iterate using the `map' function, but that won't work
+##   here because we need a function with two arguments: the list element
+##   to modify, and the year value to insert. For that we can use the
+##   `map2' function, which works just like `map' except that we iterate
+##   over two things with a function that takes two arguments. It works
+##   like this:
+example.list.3 <- list(a = 1:3,
+                       b = 4:6,
+                       c = 7:9)
+upper.name <- function(x, y) {
+  x.upper <- str_to_upper(x)
+  return(str_c(y, x.upper, sep = ": "))
+}
+
+example.list.4 <- map2(example.list.3, names(example.list.3), upper.name)
+str(example.list.3)
+str(example.list.4)
+
+## Exercise 4: Iteration, data.frame manipulation
 ## ──────────────────────────────────────────────
 
 ##   We know how to read add a Year column. We know how to iterate using
-##   `map'. All we need to do now is put the two things together.
+##   `map2'. All we need to do now is put the two things together.
 
-##   1. Extract the year data from `girl.file.names' and `boy.file.names'
-##      using the `str_extract' function. Assign the results to the names
-##      `girl.years' and `boy.years' respectively.
-##   2. Write a function named `add.column' that takes a data.frame and a
+##   1. Write a function named `add.year' that takes a data.frame and a
 ##      vector as arguments and returns a data.frame with the vector
 ##      included as a column.
-##   3. Test your function on the first elements of `girls.data' and
-##      `girl.years' from step 1.
-##   4. Use the `map2' function to iterate over `girls.data' and insert the
-##      corresponding year from `girl.years' using the function you wrote
-##      in step 1. Do the same for `boys.data' and `boys.years'.
-
+##   2. Test your function on the first elements of `girls.data' and
+##      `names(girls.data)' from step 1.
+##   3. Use the `map2' function to iterate over `girls.data' and insert the
+##      corresponding year from `names(girls.data)' using the function you
+##      wrote in step 1. Do the same for `boys.data'.
 
 ## Final data cleanup
 ## ══════════════════
@@ -513,49 +586,130 @@ girls.data <- bind_rows(girls.data)
 str(boys.data)
 str(girls.data)
 
-##   Finally, we want to insert columns indicating sex and combine the boys
-##   and girls baby names.
+##   Finally, we want to insert columns indicating sex, combine the boys
+##   and girls baby names, and convert the "Year" column to integer.
 
 girls.data[["Sex"]] <- "girl"
 boys.data[["Sex"]] <- "boy"
 baby.names <- bind_rows(girls.data, boys.data)
+baby.names$Year <- as.integer(baby.names$Year)
 
+## What can we learn about baby names?
+## ═══════════════════════════════════
 
-## Manipulating data.frames
-## ════════════════════════
+##   Now that we have the data loaded and cleaned up we can use it to
+##   answer interesting questions. For example:
 
-##   Earlier we mentioned that data.frames are a special kind of list in
-##   which each element must be of the same length. What we perhaps did not
+##   • How many children were born each year?
+##   • What are the most popular names overall?
+##   • How has the popularity of the most popular names changed over time?
+##   • Has the number of names changed over time?
+##   • Has the average length of names changed over time?
+##   • What are the most popular first letters in baby names? Has this
+##     changed over time?
+##   • What were the most popular names in 2015 (the last year for which we
+##     have data)?
+##   • How has the popularity of the most popular names in 2015 changed
+##     over time?
+
+##   Earlier I mentioned that data.frames are a special kind of list in
+##   which each element must be of the same length. What I perhaps did not
 ##   emphasize enough is how important the data.frame concept is in R
 ##   programming. Because of the centrality of the data.frame in many R
 ##   workflows there are many functions available specifically for
 ##   manipulating data.frames. In particular, the /dplyr/ and /tidyr/
 ##   packages provides many useful functions for working with data.frames.
+##   In this section we will use the /dplyr/ package answer some of our
+##   questions about baby names.
 
+## Number of children born each year
+## ─────────────────────────────────
+
+##   Now that we have the data read in and we know what is in each column,
+##   I want to know how many children were born each year. To one way to do
+##   that is to use the `group_by' and `summarize' functions from the
+##   /dplyr/ package. It works like this:
+
+## make up some example data
+(example.df <- data.frame(id  = rep(letters[1:4], each = 4),
+                          t   = rep(1:4, times = 4),
+                          var1 = runif(16),
+                          var2 = sample(letters[1:3], 16, replace = TRUE)))
+
+## summarize
+summarize(example.df,
+          var1 = sum(var1))
+
+## summarize by id
+example.df %>%
+  group_by(id) %>%
+  summarize(var1 = sum(var1))
+
+## summarize by id and var2
+example.df %>%
+  group_by(id, var2) %>%
+  summarize(var1 = sum(var1))
+
+## Exercise 5: Group and Summarize
+## ───────────────────────────────
+
+##   Now that we know how to group and summarize, we can use these tools to
+##   calculate the number of babies born each year.
+
+##   1. Calculate the total number of babies born between 1996 and 2015.
+##   2. Calculate the total number of boys and the total number of girls
+##      born between 1996 and 2015.
+##   3. Calculate the number of children born each year between 1996 and
+##      2015.
+##   4. Calculate the number of girls and the number of boys born each year
+##      between 1996 and 2015, assigning the result to the name
+##      'name.totals.by.year'.
 
 ## Most popular names overall
 ## ──────────────────────────
 
-##   Now that we have the data read in and we know what is in each column,
-##   I want to find the five most popular girl and boy names overall. This
-##   requires learning several new functions, but they all have intuitive
-##   names and syntax.
+##   Next I want to find the five most popular girl and boy names overall.
 
-##   The first step is to collapse across years to get the sum for each
-##   baby name across time. We will do this separately for boys and girls
-##   using the `group_by' function.
-baby.names.totals <- baby.names %>%
-  group_by(Sex, Name) %>%
-  summarize(Count = sum(Count))
+##   Specifically I want to:
+##   1. Sum the counts for each name by sex using `group_by' and
+##      `summarize'.
+##   2. Sort names by the summed counts using `arrange'.
+##   3. Select the top 10 using `slice'.
 
-##   Next we need to arrange the data with the highest counts first, and
-##   select the top 10.
+##   You already know how `group_by' and `summarize' work. The following
+##   example shows how `arrange' and `slice' work.
+## summarize by id and var2
+(example.df.2 <- example.df %>%
+   group_by(id, var2) %>%
+   summarize(var1 = sum(var1)))
 
-(top.names.overall <- baby.names.totals %>%
-   group_by(Sex) %>%
-   arrange(desc(Count)) %>%
-   slice(1:5))
+## sort by var1
+example.df.2 %>%
+  arrange(var1)
 
+example.df.2 %>%
+  arrange(desc(var1))
+
+## sort by var1 within id
+(example.df.2 <- example.df.2 %>%
+   arrange(id, desc(var1)))
+
+## select the top 2 var1's within each id group
+example.df.2 %>%
+  group_by(id) %>%
+  slice(1:2)
+
+## Exercise 6: Summarize, arrange, and slice
+## ─────────────────────────────────────────
+
+##   Now that we know how to group, summarize, arrange, and slice we can
+##   use these tools to identify the most popular boy and girl names.
+
+##   1. Sum the counts for each name by sex using `group_by' and
+##      `summarize'.
+##   2. Sort names by the summed counts using `arrange'.
+##   3. Select the top 10 using `slice' and assign the result to a
+##      data.frame named 'top.names.overall'.
 
 ## Changes in most frequent names over time
 ## ────────────────────────────────────────
@@ -580,43 +734,28 @@ ggplot(top.names.over.time,
   geom_point() +
   facet_wrap(Sex ~ Name, ncol = 5)
 
+## Exercise 7: join, mutate, graphing
+## ──────────────────────────────────
 
-## Exercise 4
-## ──────────
+##   In order to calculate the percent of boys and girls with each name in
+##   each year we need to know a) The number of girls(boys) with each name
+##   in each year, and b the total number of girls(boys) in each year. The
+##   first number is already there in the "Count" variable, and we already
+##   calculated the second number (the "total" column in the
+##   `name.totals.by.year' data.frame). Once we have these numbers we can
+##   calculate the percent as `(Count/total) * 100'.
 
-##   1. Use the `filter', `arrange', and `slice' functions to identify the
-##      5 most popular boy and girl names in 2015.
-##   2. Filter `baby.names' to include only the 5 most popular boy and girl
-##      names in 2015
-##   3. Create a plot showing how the most popular names in 2015 have
-##      changed over time
-
-
-## Addressing obvious pitfalls in tracking name popularity
-## ═══════════════════════════════════════════════════════
-
-## Changes in name popularity or population growth?
-## ────────────────────────────────────────────────
-
-##   The graphs that we have constructed thus far show the number of
-##   children with a particular name in particular years. All else equal,
-##   these counts would be expected to increase with increasing number of
-##   children being born each year. If our goals is to examine changes in
-##   name popularity we should be more careful about it! Fortunately we
-##   already have all the tools we need to calculate the percentage of boys
-##   and girls with particular names each year.
-
-
-## Exercise 5
-## ──────────
-
-##   Now that we've combined names with different spellings lets re-do the
-##   "most popular overall" graph using combined names.
-
-##   1. Calculate the percent of boys and girls with each name in each year
-##   2. Re-do the graph from the previous exercise using Percent instead of
-##      Count
-
+##   1. Use the `inner_join' function to add the yearly totals from
+##      `name.totals.by.year' to `top.names.over.time'.
+##   2. Use `[[' to add a "Percent" column to `top.names.over.time'.
+##   3. Use the `mutate' function to add a "Percent.check" column to
+##      top.names.over.time.
+##   4. Use the `all.equal' function to check that the "Percent" column
+##      computed in step 2 is the same as the "Percent.check" column
+##      computed in step 3.
+##   5. Re-do the popularity over time graph using Percent instead of
+##      Count. Fee free to copy the `ggplot' code from the example and
+##      modify it.
 
 ## Combining similar names
 ## ───────────────────────
@@ -646,9 +785,9 @@ spelling <- c(
 
 ##   Once we have identified which words are the same (but spelled
 ##   differently) we can combine those words.
-(spelling.data <- mutate(group_by(spelling.data, Sounds.like),
-                         Alternative.spellings = str_c(sort(original),
-                                                       collapse = "/")))
+(spelling.data <- spelling.data %>%
+   group_by(Sounds.like) %>%
+   mutate(Alternative.spellings = str_c(sort(original), collapse = "/")))
 
 ##   We can use this technique to identify and group names with alternative
 ##   spellings. Since any one algorithm tends to group two aggressively
@@ -666,9 +805,8 @@ baby.names <- baby.names %>%
 
   str(baby.names)
 
-
-## Exercise 6
-## ──────────
+## Exercise 8: More data frame manipulation practice
+## ─────────────────────────────────────────────────
 
 ##   Now that we've combined names with different spellings lets re-do the
 ##   "most popular overall" graph using combined names.
@@ -684,6 +822,37 @@ baby.names <- baby.names %>%
 ##      7. `inner_join' with the result from step 1.
 ##   3. Graph the prevalence of the most popular combined names over time.
 
+## Most popular "starts with" and "ends with"
+## ──────────────────────────────────────────
+
+##   Not only do the most popular names change over time, but the most
+##   popular first and last letters also display temporal trends. We can
+##   extract the first/last n letters using `str_sub', like this:
+
+month.name
+str_sub(month.name, 1, 1)
+str_sub(month.name, 1, 3)
+str_sub(month.name, -1, -1)
+str_sub(month.name, -3, -1)
+
+## Exercise 9: string manipulation, data.frame manipulation
+## ────────────────────────────────────────────────────────
+
+##   In order to examine trends in name beginnings and endings we need to
+##   create new columns with just the first/last n letters of each name,
+##   and then summarize the data to the level of the first n letters.
+
+##   1. Create a new column named "First.1", containing just the first
+##      letter of the "Name" column.
+##   2. Create a new column named "First.2", containing just the first two
+##      letters of the "Name" column.
+##   3. Create a new column named "Last.1", containing just the last letter
+##      of the "Name" column.
+##   4. Create a new column named "Last.2", containing just the last two
+##      letters of the "Name" column.
+##   5. Construct a graph showing changes over time in the 5 most popular
+##      last letter for boys and girls. Feel free to copy/paste/modify the
+##      code from the previous exercise.
 
 ## What else?
 ## ══════════
@@ -691,25 +860,21 @@ baby.names <- baby.names %>%
 ##   If there is anything else you want to learn how to do, now is the time
 ##   to ask!
 
-
 ## Go forth and code!
 ## ══════════════════
 
 ##   You now know everything you could possibly want to know about R. OK
 ##   maybe not! But you do know how to manipulate character strings with
-##   regular expressions, write your own functions, execute code
-##   conditionally, iterate using `for' or `sapply', inspect and modify
-##   attributes, and extract and replace object elements. There's a lot
-##   more to learn, but that's a pretty good start. As you go forth and
+##   regular expressions, write your own functions, iterate, inspect and
+##   modify attributes, and extract and replace object elements. There's a
+##   lot more to learn, but that's a pretty good start. As you go forth and
 ##   write your own R code here are some resources that may be helpful.
 
-
 ## Additional reading and resources
-## ────────────────────────────────
+## ════════════════════════════════
 
-##   • Learn from the best: [http://adv-r.had.co.nz/]
-##   • S3 system overview: [https://github.com/hadley/devtools/wiki/S3]
-##   • S4 system overview: [https://github.com/hadley/devtools/wiki/S4]
+##   • Learn from the best: [http://adv-r.had.co.nz/];
+##     [http://r4ds.had.co.nz/]
 ##   • R documentation: [http://cran.r-project.org/manuals.html]
 ##   • Collection of R tutorials:
 ##     [http://cran.r-project.org/other-docs.html]
@@ -724,16 +889,14 @@ baby.names <- baby.names %>%
 ##   • Institute for Quantitative Social Science: [http://iq.harvard.edu]
 ##   • Research technology consulting: [http://projects.iq.harvard.edu/rtc]
 
-
-## Things that may surprise you
-## ────────────────────────────
+## Epilogue: Things that may surprise you
+## ══════════════════════════════════════
 
 ##   There are an unfortunately large number of surprises in R programming.
 ##   Some of these "gotcha's" are common problems in other languages, many
 ##   are unique to R. We will only cover a few – for a more comprehensive
 ##   discussion please see
 ##   [http://www.burns-stat.com/pages/Tutor/R_inferno.pdf]
-
 
 ## Floating point comparison
 ## ╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌
@@ -743,7 +906,6 @@ baby.names <- baby.names %>%
 
 ##   Solution: `use all.equal()':
 all.equal(.1, .3/3)
-
 
 ## Missing values
 ## ╌╌╌╌╌╌╌╌╌╌╌╌╌╌
@@ -758,7 +920,6 @@ NA == NA
 
 ##   Solutions: use `na.rm = TRUE' option when calculating, and is.na to
 ##   test for missing
-
 
 ## Automatic type conversion
 ## ╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌
@@ -775,7 +936,6 @@ str(x)
 
 ##   Maybe this is what you expect… I would like to at least get a warning!
 
-
 ## Optional argument inconsistencies
 ## ╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌
 
@@ -789,7 +949,6 @@ args(mean)
 args(sum)
 
 ##   Ouch. That is not nice at all!
-
 
 ## Trouble with Factors
 ## ╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌
@@ -807,7 +966,6 @@ as.numeric(x)
 # you probably want
 as.numeric(as.character(x))
 
-
 ## Feedback
 ## ────────
 
@@ -815,8 +973,6 @@ as.numeric(as.character(x))
 ##   • Please take a moment to fill out a very short feedback form
 ##   • These workshops exist for you – tell us what you need!
 ##   • [http://tinyurl.com/RprogrammingFeedback]
-
-
 
 ## Footnotes
 ## ─────────
