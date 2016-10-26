@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2016-06-09 Thu 10:01 -->
+<!-- 2016-10-26 Wed 12:14 -->
 <meta  http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta  name="viewport" content="width=device-width, initial-scale=1" />
 <title>Introduction To Programming In R</title>
@@ -75,62 +75,70 @@ for the JavaScript code in this tag.
 <li><a href="#orgheadline3">Example project overview</a></li>
 </ul>
 </li>
-<li><a href="#orgheadline5">Extracting elements from html</a>
+<li><a href="#orgheadline5">Extracting information from a text file (string manipulation)</a>
 <ul>
-<li><a href="#orgheadline6">Packages for parsing html</a></li>
-<li><a href="#orgheadline7">Extracting information from web pages with the <code>rvest</code> package</a></li>
-<li><a href="#orgheadline8">Just the data please &#x2013; regular expressions to the rescue</a></li>
-<li><a href="#orgheadline9">Getting the list of data links the easy way</a></li>
+<li><a href="#orgheadline6">Introduction to the tidyverse</a></li>
+<li><a href="#orgheadline7">Reading text over http</a></li>
+<li><a href="#orgheadline8">String manipulation with the stringr package</a></li>
+<li><a href="#orgheadline9">Exercise 1: string manipulation and regular expressions</a></li>
+<li><a href="#orgheadline10">Exercise 1 prototype&#xa0;&#xa0;&#xa0;<span class="tag"><span class="prototype">prototype</span></span></a></li>
 </ul>
 </li>
-<li><a href="#orgheadline10">Exercise 0: html parsing</a></li>
-<li><a href="#orgheadline11">Exercise 0 prototype&#xa0;&#xa0;&#xa0;<span class="tag"><span class="prototype">prototype</span></span></a></li>
-<li><a href="#orgheadline12">Downloading files in R</a></li>
-<li><a href="#orgheadline13">Downloading all the files</a>
+<li><a href="#orgheadline20">Reading all the files (iteration, functions)</a>
 <ul>
-<li><a href="#orgheadline14">Iterating using for-loop</a></li>
-<li><a href="#orgheadline15">Iterating over vectors and lists with the <code>sapply</code> function</a></li>
-<li><a href="#orgheadline16">Iterating in parallel with the <code>mclapply</code> function</a></li>
+<li><a href="#orgheadline11">Reading .csv files</a></li>
+<li><a href="#orgheadline12">Extracting and replacing vector elements</a></li>
+<li><a href="#orgheadline13">Extracting and replacing list elements</a></li>
+<li><a href="#orgheadline14">Exercise 2: String manipulation, extraction and replacement</a></li>
+<li><a href="#orgheadline15">Exercise 2 prototype&#xa0;&#xa0;&#xa0;<span class="tag"><span class="prototype">prototype</span></span></a></li>
+<li><a href="#orgheadline16">Iterating using the map function</a></li>
+<li><a href="#orgheadline17">Writing your own functions</a></li>
+<li><a href="#orgheadline18">Exercise 3: Iteration, file IO, functions</a></li>
+<li><a href="#orgheadline19">Exercise 3 prototype&#xa0;&#xa0;&#xa0;<span class="tag"><span class="prototype">prototype</span></span></a></li>
 </ul>
 </li>
-<li><a href="#orgheadline17">Exercise 1: Iterate and extract</a></li>
-<li><a href="#orgheadline18">Exercise 1 prototype&#xa0;&#xa0;&#xa0;<span class="tag"><span class="prototype">prototype</span></span></a></li>
-<li><a href="#orgheadline19">Importing and inspecting data and meta-data</a>
+<li><a href="#orgheadline21">Adding a Year column (data structures, indexing)</a>
 <ul>
-<li><a href="#orgheadline20">Mode and length</a></li>
-<li><a href="#orgheadline21">Other properties of data.frames</a></li>
-<li><a href="#orgheadline22">Additional attributes</a></li>
-<li><a href="#orgheadline23">Extracting useful meta-data</a>
-<ul>
-<li><a href="#orgheadline24">Exercise 2</a></li>
-<li><a href="#orgheadline25">Exercise 2 prototype&#xa0;&#xa0;&#xa0;<span class="tag"><span class="prototype">prototype</span></span></a></li>
+<li><a href="#orgheadline22">Adding a year column using bracket extraction/replacement</a></li>
+<li><a href="#orgheadline23">Exercise 4: Iteration, data.frame manipulation</a></li>
+<li><a href="#orgheadline24">Exercise 4 prototype&#xa0;&#xa0;&#xa0;<span class="tag"><span class="prototype">prototype</span></span></a></li>
 </ul>
 </li>
+<li><a href="#orgheadline25">Final data cleanup</a></li>
+<li><a href="#orgheadline26">What can we learn about baby names?</a>
+<ul>
+<li><a href="#orgheadline27">Number of children born each year</a></li>
+<li><a href="#orgheadline28">Exercise 5: Group and Summarize</a></li>
+<li><a href="#orgheadline29">Exercise 5 prototype&#xa0;&#xa0;&#xa0;<span class="tag"><span class="prototype">prototype</span></span></a></li>
+<li><a href="#orgheadline30">Most popular names overall</a></li>
+<li><a href="#orgheadline31">Exercise 6: Summarize, arrange, and slice</a></li>
+<li><a href="#orgheadline32">Exercise 6 prototype&#xa0;&#xa0;&#xa0;<span class="tag"><span class="prototype">prototype</span></span></a></li>
+<li><a href="#orgheadline33">Changes in most frequent names over time</a></li>
+<li><a href="#orgheadline34">Exercise 7: join, mutate, graphing</a></li>
+<li><a href="#orgheadline35">Exercise 7 prototype&#xa0;&#xa0;&#xa0;<span class="tag"><span class="prototype">prototype</span></span></a></li>
+<li><a href="#orgheadline36">Combining similar names</a></li>
+<li><a href="#orgheadline37">Exercise 8: More data frame manipulation practice</a></li>
+<li><a href="#orgheadline38">Exercise 8 prototype&#xa0;&#xa0;&#xa0;<span class="tag"><span class="prototype">prototype</span></span></a></li>
+<li><a href="#orgheadline39">Most popular "starts with" and "ends with"</a></li>
+<li><a href="#orgheadline40">Exercise 9: string manipulation, data.frame manipulation</a></li>
+<li><a href="#orgheadline41">Exercise 9 prototype&#xa0;&#xa0;&#xa0;<span class="tag"><span class="prototype">prototype</span></span></a></li>
 </ul>
 </li>
-<li><a href="#orgheadline26">Aggregation</a></li>
-<li><a href="#orgheadline27">Exercise 3</a></li>
-<li><a href="#orgheadline28">Exercise 3 prototype&#xa0;&#xa0;&#xa0;<span class="tag"><span class="prototype">prototype</span></span></a></li>
-<li><a href="#orgheadline29">Finishing touches</a>
+<li><a href="#orgheadline42">What else?</a></li>
+<li><a href="#orgheadline43">Go forth and code!</a></li>
+<li><a href="#orgheadline44">Additional reading and resources</a></li>
+<li><a href="#orgheadline45">Epilogue: Things that may surprise you</a>
 <ul>
-<li><a href="#orgheadline30">Data formatting</a></li>
-<li><a href="#orgheadline31">Plotting</a></li>
+<li>
+<ul>
+<li><a href="#orgheadline46">Floating point comparison</a></li>
+<li><a href="#orgheadline47">Missing values</a></li>
+<li><a href="#orgheadline48">Automatic type conversion</a></li>
+<li><a href="#orgheadline49">Optional argument inconsistencies</a></li>
+<li><a href="#orgheadline50">Trouble with Factors</a></li>
 </ul>
 </li>
-<li><a href="#orgheadline32">What else?</a></li>
-<li><a href="#orgheadline33">Go forth and code!</a>
-<ul>
-<li><a href="#orgheadline34">Additional reading and resources</a></li>
-<li><a href="#orgheadline35">Things that may surprise you</a>
-<ul>
-<li><a href="#orgheadline36">Floating point comparison</a></li>
-<li><a href="#orgheadline37">Missing values</a></li>
-<li><a href="#orgheadline38">Automatic type conversion</a></li>
-<li><a href="#orgheadline39">Optional argument inconsistencies</a></li>
-<li><a href="#orgheadline40">Trouble with Factors</a></li>
-</ul>
-</li>
-<li><a href="#orgheadline41">Feedback</a></li>
+<li><a href="#orgheadline51">Feedback</a></li>
 </ul>
 </li>
 </ul>
@@ -149,11 +157,14 @@ This is an intermediate/advanced R course appropriate for those with basic knowl
 </p>
 
 <p>
+This workshop uses the <a href="https://cran.r-project.org/web/packages/tidyverse/index.html">tidyverse</a> package which provides more consistent file IO (<a href="https://cran.r-project.org/web/packages/readr/index.html">readr</a>), data manipulation (<a href="https://cran.r-project.org/web/packages/dplyr/index.html">dplyr</a>, <a href="https://cran.r-project.org/web/packages/tidyr/index.html">tidyr</a>) and functional programming (<a href="https://cran.r-project.org/web/packages/purrr/index.html">purrr</a>) tools for R.
+</p>
+
+<p>
 Prerequisite: basic familiarity with R, such as acquired from an introductory R workshop.
 </p>
 </div>
 </div>
-
 
 <div id="outline-container-orgheadline2" class="outline-3">
 <h3 id="orgheadline2">Materials and setup</h3>
@@ -163,8 +174,8 @@ Everyone should have R installed &#x2013; if not:
 </p>
 
 <ul class="org-ul">
-<li>Open a web browser and go to <a href="http://cran.r-project.org/">http://cran.r-project.org/</a> and download and install it</li>
-<li>Also helpful to install RStudio (download from <a href="http://rstudio.com/">http://rstudio.com/</a>)</li>
+<li>Open a web browser and go to <a href="http://cran.r-project.org">http://cran.r-project.org</a> and download and install it</li>
+<li>Also helpful to install RStudio (download from <a href="http://rstudio.com">http://rstudio.com</a>)</li>
 </ul>
 
 <p>
@@ -182,1058 +193,2280 @@ Materials for this workshop include slides, example data sets, and example code.
 <h3 id="orgheadline3">Example project overview</h3>
 <div class="outline-text-3" id="text-orgheadline3">
 <p>
-Throughout this workshop we will return to a running example that involves acquiring, processing, and analyzing data from the <a href="http://ceprdata.org/cps-uniform-data-extracts/cps-displaced-worker-survey/cps-dws-data/">Displaced Worker Survery</a> (DWS). In this context we will learn about finding and using R packages, importing and manipulating data, writing functions, and more. The web page has been mirrored at <a href="http://tutorials.iq.harvard.edu/cps-uniform-data-extracts/cps-displaced-worker-survey/cps-dws-data">http://tutorials.iq.harvard.edu/cps-uniform-data-extracts/cps-displaced-worker-survey/cps-dws-data</a> for convenience.
+Throughout this workshop we will return to a running example that involves acquiring, processing, and analyzing UK baby names statistics. In this context we will learn about data types, iteration, file IO, writing functions, and more.
 </p>
 </div>
 </div>
 </div>
 
 <div id="outline-container-orgheadline5" class="outline-2">
-<h2 id="orgheadline5">Extracting elements from html</h2>
+<h2 id="orgheadline5">Extracting information from a text file (string manipulation)</h2>
 <div class="outline-text-2" id="text-orgheadline5">
 <p>
-It is common for data to be made available on a website somewhere, either by a government agency, research group, or other organizations and entities. Often the data you want is spread over many files, and retrieving it all one file at a time is tedious and time consuming. Such is the case with the CPS data we will be using today.
+It is common for data to be made available on a website somewhere, either by a government agency, research group, or other organizations and entities. Often the data you want is spread over many files, and retrieving it all one file at a time is tedious and time consuming. Such is the case with the baby names data we will be using today.
 </p>
 
 <p>
-The Center for Economic and Policy Research has helpfully <a href="http://ceprdata.org/cps-uniform-data-extracts/cps-displaced-worker-survey/cps-dws-data/">compiled DWS data going back to 1994</a><sup><a id="fnr.1" class="footref" href="#fn.1">1</a></sup>. Although we could open a web browser and download these files one at a time, it will be faster and easier to instruct R to do that for us. Doing it this way will also give us an excuse to talk about html parsing, regular expressions, package management, and other useful techniques.
+The UK <a href="https://www.ons.gov.uk">Office for National Statistics</a> provides yearly data on the most popular baby names going back to 1996. The data is provided separately for boys and girls. These data have been cleaned up and copied to <a href="http://tutorials/iq/harvard.edu/exampel_data/baby_names">http://tutorials/iq/harvard.edu/exampel_data/baby_names</a>. Although we could open a web browser and download files one at a time, it will be faster and easier to instruct R to do that for us. Doing it this way will also give us an excuse to talk about iteration, text processing, and other useful techniques.
 </p>
 
 <p>
-Our goal is to download all the Stata data sets from <a href="http://tutorials.iq.harvard.edu/cps-uniform-data-extracts/cps-displaced-worker-survey/cps-dws-data/">http://tutorials.iq.harvard.edu/cps-uniform-data-extracts/cps-displaced-worker-survey/cps-dws-data/</a>. In order to do that we need a list of the Uniform Resource Locators (URLs) of those files. The URLs we need are right there as links in the ceprdata.org webpage. All we have to do is read that data in a way R can understand. 
+Our first goal is to download all the .csv files from <a href="http://tutorials/iq/harvard.edu/exampel_data/baby_names">http://tutorials/iq/harvard.edu/exampel_data/baby_names</a>.
+</p>
+
+<p>
+In order to do that we need a list of the Uniform Resource Locators (URLs) of those files. The URLs we need are right there as links in the web page. All we need to do is extract them.
 </p>
 </div>
 
 <div id="outline-container-orgheadline6" class="outline-3">
-<h3 id="orgheadline6">Packages for parsing html</h3>
+<h3 id="orgheadline6">Introduction to the tidyverse</h3>
 <div class="outline-text-3" id="text-orgheadline6">
 <p>
-In order extract the data URls from the ceprdata.org website we need a package for parsing XML and HTML. How do we find such a package?
+In order extract the data URls from the website we will use functions for manipulating strings<sup><a id="fnr.1" class="footref" href="#fn.1">1</a></sup>. What functions or packages should we use? Here are some tools to help us decide.
 </p>
 <dl class="org-dl">
-<dt>Task views</dt><dd><a href="https://cran.r-project.org/web/views/WebTechnologies.html">https://cran.r-project.org/web/views/WebTechnologies.html</a></dd>
-<dt>R package search</dt><dd><a href="http://www.r-pkg.org/search.html?q=html+xml">http://www.r-pkg.org/search.html?q=html+xml</a></dd>
-<dt>Web search</dt><dd><a href="https://www.google.com/search?q=R+parse+html+xml&amp;ie=utf-8&amp;oe=utf-8">https://www.google.com/search?q=R+parse+html+xml&amp;ie=utf-8&amp;oe=utf-8</a></dd>
+<dt>Task views</dt><dd><a href="https://cran.r-project.org/web/views/NaturalLanguageProcessing.html">https://cran.r-project.org/web/views/NaturalLanguageProcessing.html</a></dd>
+<dt>R package search</dt><dd><a href="http://www.r-pkg.org/search.html?q=string">http://www.r-pkg.org/search.html?q=string</a></dd>
+<dt>Web search</dt><dd><a href="https://www.google.com/search?q=R+string+manipulation&amp;ie=utf-8&amp;oe=utf-8">https://www.google.com/search?q=R+string+manipulation&amp;ie=utf-8&amp;oe=utf-8</a></dd>
 </dl>
 
 <p>
-For parsing html in R I recommend either the <code>xml2</code> package or the <code>rvest</code> package, with the former being more flexible and the later being more user friendly. Let's use the friendlier one.
+Base R provides some string manipulation capabilities (see <code>?regex</code>, <code>?sub</code> and <code>?grep</code>), but I recommend either the <a href="https://cran.r-project.org/web/packages/stringr/index.html">stringr</a> or <a href="https://cran.r-project.org/web/packages/stringi/index.html">stringi</a> packages. The stringr package is more user-friendly, and the stringi package is more powerful and complex. Let's use the friendlier one. While we're attaching packages we'll also attach the <a href="https://cran.r-project.org/web/packages/tidyverse/index.html">tidyverse</a> package which provides more modern versions of many basic functions in R.
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-R"><span style="color: #2aa1ae;">## </span><span style="color: #2aa1ae;">install.packages("tidyverse")</span>
+<span style="color: #4e3163;">library</span>(tidyverse)
+<span style="color: #4e3163;">library</span>(stringr)
+</pre>
+</div>
+
+<p>
+Packages in the tidyverse are often more convenient to use with pipes rather than nested function calls. The pipe operator looks like <code>%&gt;%</code> and it works like this:
+</p>
+<div class="org-src-container">
+
+<pre class="src src-R"><span style="color: #2aa1ae;">## </span><span style="color: #2aa1ae;">nested function calls to sample letters, convert to uppercase, sort, and append numbers</span>
+set.seed(<span style="color: #4e3163;">10</span>)
+str_c(
+  sort(
+    str_to_upper(
+      sample(letters[<span style="color: #4e3163;">1</span>:<span style="color: #4e3163;">5</span>],
+             <span style="color: #4e3163;">20</span>,
+             replace = <span style="color: #ba2f59; font-weight: bold;">TRUE</span>))),
+  <span style="color: #4e3163;">1</span>:<span style="color: #4e3163;">20</span>)
+
+<span style="color: #2aa1ae;">## </span><span style="color: #2aa1ae;">pipeline that does the same thing:</span>
+set.seed(<span style="color: #4e3163;">10</span>)
+letters[<span style="color: #4e3163;">1</span>:<span style="color: #4e3163;">5</span>] <span style="color: #4e3163;">%&gt;%</span>
+  sample(<span style="color: #4e3163;">20</span>, replace = <span style="color: #ba2f59; font-weight: bold;">TRUE</span>) <span style="color: #4e3163;">%&gt;%</span>
+  str_to_upper() <span style="color: #4e3163;">%&gt;%</span>
+  sort() <span style="color: #4e3163;">%&gt;%</span>
+  str_c(<span style="color: #4e3163;">1</span>:<span style="color: #4e3163;">20</span>)
+</pre>
+</div>
+
+<pre class="example">
+&gt; ## nested function calls to sample letters, convert to uppercase, sort, and append numbers
+&gt; set.seed(10)
+&gt; str_c(
++   sort(
++     str_to_upper(
++       sample(letters[1:5],
++              20,
++              replace = TRUE))),
++   1:20)
+ [1] "A1"  "A2"  "A3"  "B4"  "B5"  "B6"  "B7"  "B8"  "B9"  "B10" "C11" "C12" "C13"
+[14] "C14" "C15" "C16" "D17" "D18" "D19" "E20"
+&gt; 
+&gt; ## pipeline that does the same thing:
+&gt; set.seed(10)
+&gt; letters[1:5] %&gt;%
++   sample(20, replace = TRUE) %&gt;%
++   str_to_upper() %&gt;%
++   sort() %&gt;%
++   str_c(1:20)
+ [1] "A1"  "A2"  "A3"  "B4"  "B5"  "B6"  "B7"  "B8"  "B9"  "B10" "C11" "C12" "C13"
+[14] "C14" "C15" "C16" "D17" "D18" "D19" "E20"
+&gt;
+</pre>
+
+<p>
+The examples in this workshop use the pipe when it makes examples easier to follow.
 </p>
 </div>
 </div>
 
 <div id="outline-container-orgheadline7" class="outline-3">
-<h3 id="orgheadline7">Extracting information from web pages with the <code>rvest</code> package</h3>
+<h3 id="orgheadline7">Reading text over http</h3>
 <div class="outline-text-3" id="text-orgheadline7">
 <p>
-Our first task is to read the web page into R. We can do that using the <code>read_html</code> function. Next we want to find all the links (the <code>&lt;a&gt;</code> tags) and extract their <code>href</code> attributes. To give a better sense of this here is what the html for the 2010 data file link looks like:
-</p>
-<pre class="example">
-&lt;a onclick="_gaq.push(['_trackEvent', 'File','Download', 'cepr_dws_2010_dta']);"
-   href="/wp-content/cps/data/cepr_dws_2010_dta.zip"&gt;cepr_dws_2010_dta.zip&lt;/a&gt;
-</pre>
-<p>
-We want the <code>href</code> part, i.e., "/wp-content/cps/data/cepr<sub>dws</sub><sub>2010</sub><sub>dta.zip</sub>".
+Our first task is to read the web page into R. Most of the file IO functions in R can read either from a local path or from internet URLS. We can read text into R line-by-line using the <code>read_lines</code> function. 
 </p>
 
+<div class="org-src-container">
+
+<pre class="src src-R">base.url <span style="color: #4e3163;">&lt;-</span> <span style="color: #2d9574;">"http://tutorials.iq.harvard.edu"</span>
+baby.names.path <span style="color: #4e3163;">&lt;-</span> <span style="color: #2d9574;">"example_data/baby_names"</span> 
+baby.names.url <span style="color: #4e3163;">&lt;-</span> str_c(base.url, baby.names.path, sep = <span style="color: #2d9574;">"/"</span>)
+
+baby.names.page <span style="color: #4e3163;">&lt;-</span> read_lines(baby.names.url)
+</pre>
+</div>
+
 <p>
-We can get all the <code>&lt;a&gt;</code> elements using the <code>html_nodes</code> function, and then extract the <code>href</code> attributes usig the <code>html_attr</code> function, like this:
+What did we just do? We assigned character vectors of length 1 to <code>base.url</code> and <code>baby.names.path</code>, and we assigned whatever <code>read_lines</code> returns. Lets look closer. What are these things?
 </p>
 <div class="org-src-container">
 
-<pre class="src src-R"><span class="org-comment-delimiter">## </span><span class="org-comment">install.packages("rvest")</span>
-<span class="org-constant">library</span>(rvest)
+<pre class="src src-R"><span style="color: #2aa1ae;">## </span><span style="color: #2aa1ae;">whate is base.url?</span>
+mode(base.url)
+length(base.url)
+class(base.url)
+str(base.url)
 
-<span class="org-comment-delimiter">## </span><span class="org-comment">read the web page into R</span>
-dataPage <span class="org-constant">&lt;-</span> read_html(<span class="org-string">"http://tutorials.iq.harvard.edu/cps-uniform-data-extracts/cps-displaced-worker-survey/cps-dws-data/"</span>)
+<span style="color: #2aa1ae;">## </span><span style="color: #2aa1ae;">what is baby.names.url?</span>
+mode(baby.names.url)
+length(baby.names.url)
+class(baby.names.url)
+str(baby.names.url)
 
-<span class="org-comment-delimiter">## </span><span class="org-comment">find the link ("a") elements.</span>
-allAnchors <span class="org-constant">&lt;-</span> html_nodes(dataPage, <span class="org-string">"a"</span>)
-head(allAnchors, <span class="org-highlight-numbers-number">15</span>)
-
-<span class="org-comment-delimiter">## </span><span class="org-comment">extract the link ("href") attributes</span>
-allLinks <span class="org-constant">&lt;-</span> html_attr(allAnchors, <span class="org-string">"href"</span>)
-head(allLinks, <span class="org-highlight-numbers-number">15</span>)
+<span style="color: #2aa1ae;">## </span><span style="color: #2aa1ae;">what is baby.names.page?</span>
+mode(baby.names.page)
+length(baby.names.page)
+class(baby.names.page)
+str(baby.names.page)
 </pre>
 </div>
 
 <pre class="example">
-&gt; ## install.packages("rvest")
-&gt; library(rvest)
+&gt; ## whate is base.url?
+&gt; mode(base.url)
+[1] "character"
+&gt; length(base.url)
+[1] 1
+&gt; class(base.url)
+[1] "character"
+&gt; str(base.url)
+ chr "http://tutorials.iq.harvard.edu"
 &gt; 
-&gt; ## read the web page into R
-&gt; dataPage &lt;- read_html("http://tutorials.iq.harvard.edu/cps-uniform-data-extracts/cps-displaced-worker-survey/cps-dws-data/")
+&gt; ## what is baby.names.url?
+&gt; mode(baby.names.url)
+[1] "character"
+&gt; length(baby.names.url)
+[1] 1
+&gt; class(baby.names.url)
+[1] "character"
+&gt; str(baby.names.url)
+ chr "http://tutorials.iq.harvard.edu/example_data/baby_names"
 &gt; 
-&gt; ## find the link ("a") elements.
-&gt; allAnchors &lt;- html_nodes(dataPage, "a")
-&gt; head(allAnchors, 15)
-{xml_nodeset (15)}
- [1] &lt;a href="http://ceprdata.org/" title="Home" rel="home"&gt;\n  &lt;img src="http://s4 ...
- [2] &lt;a href="http://ceprdata.org/wp-login.php"&gt;Log in&lt;/a&gt;
- [3] &lt;a href="http://www.ceprdata.org"&gt;Home&lt;/a&gt;
- [4] &lt;a href="http://ceprdata.org/cps-uniform-data-extracts/"&gt;CPS&lt;/a&gt;
- [5] &lt;a href="http://ceprdata.org/sipp-uniform-data-extracts/"&gt;SIPP&lt;/a&gt;
- [6] &lt;a href="http://ceprdata.org/acs-uniform-data-extracts/"&gt;ACS&lt;/a&gt;
- [7] &lt;a href="http://ceprdata.org/other-data/"&gt;Other Data&lt;/a&gt;
- [8] &lt;a href="http://ceprdata.org/publications/"&gt;Publications&lt;/a&gt;
- [9] &lt;a href="http://ceprdata.org/contact/"&gt;Contact&lt;/a&gt;
-[10] &lt;a href="https://org.salsalabs.com/o/967/p/salsa/donation/common/public/?donat ...
-[11] &lt;a rel="bookmark" href="http://ceprdata.org/cps-uniform-data-extracts/cps-disp ...
-[12] &lt;a onclick="_gaq.push(['_trackEvent', 'File','Download', 'cepr_dws_2010_dta']) ...
-[13] &lt;a onclick="_gaq.push(['_trackEvent', 'File','Download', 'cepr_dws_2008_dta']) ...
-[14] &lt;a onclick="_gaq.push(['_trackEvent', 'File','Download', 'cepr_dws_2006_dta']) ...
-[15] &lt;a onclick="_gaq.push(['_trackEvent', 'File','Download', 'cepr_dws_2004_dta']) ...
-&gt; 
-&gt; ## extract the link ("href") attributes
-&gt; allLinks &lt;- html_attr(allAnchors, "href")
-&gt; head(allLinks, 15)
- [1] "http://ceprdata.org/"                                                                   
- [2] "http://ceprdata.org/wp-login.php"                                                       
- [3] "http://www.ceprdata.org"                                                                
- [4] "http://ceprdata.org/cps-uniform-data-extracts/"                                         
- [5] "http://ceprdata.org/sipp-uniform-data-extracts/"                                        
- [6] "http://ceprdata.org/acs-uniform-data-extracts/"                                         
- [7] "http://ceprdata.org/other-data/"                                                        
- [8] "http://ceprdata.org/publications/"                                                      
- [9] "http://ceprdata.org/contact/"                                                           
-[10] "https://org.salsalabs.com/o/967/p/salsa/donation/common/public/?donate_page_KEY=1809"   
-[11] "http://ceprdata.org/cps-uniform-data-extracts/cps-displaced-worker-survey/cps-dws-data/"
-[12] "/wp-content/cps/data/cepr_dws_2010_dta.zip"                                             
-[13] "/wp-content/cps/data/cepr_dws_2008_dta.zip"                                             
-[14] "/wp-content/cps/data/cepr_dws_2006_dta.zip"                                             
-[15] "/wp-content/cps/data/cepr_dws_2004_dta.zip"                                             
+&gt; ## what is baby.names.page?
+&gt; mode(baby.names.page)
+[1] "character"
+&gt; length(baby.names.page)
+[1] 53
+&gt; class(baby.names.page)
+[1] "character"
+&gt; str(baby.names.page)
+ chr [1:53] "&lt;!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 3.2 Final//EN\"&gt;" ...
 &gt;
 </pre>
+
+<p>
+What can we do with them?
+</p>
+<div class="org-src-container">
+
+<pre class="src src-R">methods(class = class(base.url))
+</pre>
+</div>
+
+<pre class="example">
+&gt; methods(class = class(base.url))
+ [1] all.equal                as.data.frame            as.Date                 
+ [4] as_function              as.POSIXlt               as.raster               
+ [7] coerce                   coerce&lt;-                 escape                  
+[10] formula                  getDLLRegisteredRoutines Ops                     
+[13] recode                  
+see '?methods' for accessing help and source code
+&gt;
+</pre>
+
+<p>
+Note that these methods are not exhaustive &#x2013; we can do other things with these objects as well. <code>methods(class = )</code> just tells you which functions have specific methods for working with objects of that class.
+</p>
+
+<p>
+The <code>mode</code> function tells us how the object is stored in memory. "Character" is one of the six <i>atomic</i> modes in R. The others are "logical", "integer", "numeric (double)", "complex", and "raw". Objects reporting their <code>mode</code> as one of these are <i>atomic vectors</i>; they are the building blocks of most data structures in R.  
+</p>
+
+<p>
+Now that we know what we're working with we can proceed to find and extract all the links in the page. Lets start by printing the last few lines of <code>baby.names.page</code>.
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-R">cat(tail(baby.names.page), sep = <span style="color: #2d9574;">"\n"</span>)
+</pre>
+</div>
+
+<pre class="example">
+&gt; cat(tail(baby.names.page), sep = "\n")
+&lt;tr&gt;&lt;td valign="top"&gt;&lt;img src="/icons/unknown.gif" alt="[   ]"&gt;&lt;/td&gt;&lt;td&gt;&lt;a href="girls_2014.csv"&gt;girls_2014.csv&lt;/a&gt;&lt;/td&gt;&lt;td align="right"&gt;06-Oct-2016 13:12  &lt;/td&gt;&lt;td align="right"&gt;144K&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td valign="top"&gt;&lt;img src="/icons/unknown.gif" alt="[   ]"&gt;&lt;/td&gt;&lt;td&gt;&lt;a href="girls_2015.csv"&gt;girls_2015.csv&lt;/a&gt;&lt;/td&gt;&lt;td align="right"&gt;06-Oct-2016 13:12  &lt;/td&gt;&lt;td align="right"&gt;145K&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;th colspan="5"&gt;&lt;hr&gt;&lt;/th&gt;&lt;/tr&gt;
+&lt;/table&gt;
+&lt;address&gt;Apache/2.2.3 (Red Hat) Server at tutorials.iq.harvard.edu Port 80&lt;/address&gt;
+&lt;/body&gt;&lt;/html&gt;
+&gt;
+</pre>
+
+<p>
+We want to extract the "href" attributes, i.e., "girls<sub>2014.csv</sub>" and "girls<sub>2015.csv</sub>" in the above snippet. We can do that using the <code>str_extract</code> function, but in order to use it effectively we need to know something about regular expressions.
+</p>
 </div>
 </div>
 
 <div id="outline-container-orgheadline8" class="outline-3">
-<h3 id="orgheadline8">Just the data please &#x2013; regular expressions to the rescue</h3>
+<h3 id="orgheadline8">String manipulation with the stringr package</h3>
 <div class="outline-text-3" id="text-orgheadline8">
 <p>
-Looking at the output from the previous example you might notice a problem; we've matched <span class="underline">all</span> the URLs on the web page. Some of those (the ones that end in .zip) are the ones we want, others are menu links that we don't want. How can we separate the data links from the other links on the page?
+Regular expressions are useful in general (not just in R!) and it is a good idea to be familiar with at least the basics. 
 </p>
 
 <p>
-One answer is to use regular expressions to idenfify the links we want. Regular expressions are useful in general (not just in R!) and it is a good idea to be familiar with at least the basics. For our present purpose it will be more than enough to use regular expression that matches strings starting with <code>/wp</code> and ending with <code>.zip</code>.
-</p>
-
-<p>
-In regulars expression <code>^</code>, <code>.</code>, <code>*</code>, and <code>$</code> are special characters with the following meanings:
+In regulars expression <code>^</code>, <code>.</code>, <code>*</code>, <code>$</code> and <code>\</code> are special characters with the following meanings:
 </p>
 <dl class="org-dl">
 <dt>^</dt><dd>matches the beginning of the string</dd>
 <dt>.</dt><dd>matches any character</dd>
 <dt>*</dt><dd>repeates the last caracter zero or more times</dd>
 <dt>$</dt><dd>matches the end of the string</dd>
+<dt>[]</dt><dd>specifies ranges of characters: [a-z] matches lower case letters</dd>
+<dt>\</dt><dd><p>
+escapes special meaning: '.' means "anything", '\.' means "."
+</p>
+
+<p>
+Here's how it works in R using the stringr package.
+</p></dd>
 </dl>
+<div class="org-src-container">
+
+<pre class="src src-R">user.info <span style="color: #4e3163;">&lt;-</span> c(<span style="color: #2d9574;">"Dexter Bacon dbacon@gmail.com 32"</span>,
+               <span style="color: #2d9574;">"Angelica Sampson not available 28"</span>,
+               <span style="color: #2d9574;">"Roberta Modela roberta.modela@harvard.edu 26"</span>
+               )
+email.regex <span style="color: #4e3163;">&lt;-</span> <span style="color: #2d9574;">"([a-z0-9_\\.-]+@[a-z0-9\\.-]+\\.[a-z\\.]+)"</span>
+str_detect(user.info, email.regex)
+str_subset(user.info, email.regex)
+str_extract(user.info, email.regex)
+str_replace(user.info, email.regex, <span style="color: #2d9574;">"&lt;a href='\\1'&gt;\\1&lt;/a&gt;"</span>)
+</pre>
+</div>
+
+<pre class="example">
+&gt; user.info &lt;- c("Dexter Bacon dbacon@gmail.com 32",
++                "Angelica Sampson not available 28",
++                "Roberta Modela roberta.modela@harvard.edu 26"
++                )
+&gt; email.regex &lt;- "([a-z0-9_\\.-]+@[a-z0-9\\.-]+\\.[a-z\\.]+)"
+&gt; str_detect(user.info, email.regex)
+[1]  TRUE FALSE  TRUE
+&gt; str_subset(user.info, email.regex)
+[1] "Dexter Bacon dbacon@gmail.com 32"            
+[2] "Roberta Modela roberta.modela@harvard.edu 26"
+&gt; str_extract(user.info, email.regex)
+[1] "dbacon@gmail.com"           NA                          
+[3] "roberta.modela@harvard.edu"
+&gt; str_replace(user.info, email.regex, "&lt;a href='\\1'&gt;\\1&lt;/a&gt;")
+[1] "Dexter Bacon &lt;a href='dbacon@gmail.com'&gt;dbacon@gmail.com&lt;/a&gt; 32"                      
+[2] "Angelica Sampson not available 28"                                                    
+[3] "Roberta Modela &lt;a href='roberta.modela@harvard.edu'&gt;roberta.modela@harvard.edu&lt;/a&gt; 26"
+&gt;
+</pre>
+
 
 <p>
 If you have not been introduced to regular expressions yet a nice interactive regex tester is available at <a href="http://www.regexr.com/">http://www.regexr.com/</a> and an interactive tutorial is available at <a href="http://www.regexone.com/">http://www.regexone.com/</a>.
 </p>
-
-<p>
-R comes with a <code>grep</code> function that can be used to search for patterns in strings, but for more sophisticated string manipulation I recommend the <code>stringi</code> package. The function names are more verbose, but it provides much more complete and robust string handling than is available in base R. For our relatively simple needs <code>grep</code> will suffice, but if you need to do extensive string manipulation in R the <code>stringi</code> package is the way to go.
-</p>
-
-<div class="org-src-container">
-
-<pre class="src src-R">dataLinks <span class="org-constant">&lt;-</span> grep(<span class="org-string">"^/wp.*\\.zip$"</span>, allLinks, value = <span class="org-type">TRUE</span>)
-head(dataLinks)
-</pre>
-</div>
-
-<pre class="example">
-&gt; dataLinks &lt;- grep("^/wp.*\\.zip$", allLinks, value = TRUE)
-&gt; head(dataLinks)
-[1] "/wp-content/cps/data/cepr_dws_2010_dta.zip"
-[2] "/wp-content/cps/data/cepr_dws_2008_dta.zip"
-[3] "/wp-content/cps/data/cepr_dws_2006_dta.zip"
-[4] "/wp-content/cps/data/cepr_dws_2004_dta.zip"
-[5] "/wp-content/cps/data/cepr_dws_2002_dta.zip"
-[6] "/wp-content/cps/data/cepr_dws_2000_dta.zip"
-&gt;
-</pre>
-
-<p>
-(Note that the backslashes in the above example are used to escape the <code>.</code> so that it is matched literally instead of matching any characters as it normallly would in a regular expression.)
-</p>
-
-<p>
-Finally, the data links we've extracted are relative to the ceprdata website. To make them valid we need to prepend <code>http://tutorials.iq.harvard.edu/</code> to each one. We can do that using the <code>paste</code> function.
-</p>
-<div class="org-src-container">
-
-<pre class="src src-R">dataLinks <span class="org-constant">&lt;-</span> paste(<span class="org-string">"http://tutorials.iq.harvard.edu"</span>, dataLinks, sep = <span class="org-string">""</span>)
-head(dataLinks)
-</pre>
-</div>
-
-<pre class="example">
-&gt; dataLinks &lt;- paste("http://tutorials.iq.harvard.edu", dataLinks, sep = "")
-&gt; head(dataLinks)
-[1] "http://tutorials.iq.harvard.edu/wp-content/cps/data/cepr_dws_2010_dta.zip"
-[2] "http://tutorials.iq.harvard.edu/wp-content/cps/data/cepr_dws_2008_dta.zip"
-[3] "http://tutorials.iq.harvard.edu/wp-content/cps/data/cepr_dws_2006_dta.zip"
-[4] "http://tutorials.iq.harvard.edu/wp-content/cps/data/cepr_dws_2004_dta.zip"
-[5] "http://tutorials.iq.harvard.edu/wp-content/cps/data/cepr_dws_2002_dta.zip"
-[6] "http://tutorials.iq.harvard.edu/wp-content/cps/data/cepr_dws_2000_dta.zip"
-&gt;
-</pre>
 </div>
 </div>
 
 <div id="outline-container-orgheadline9" class="outline-3">
-<h3 id="orgheadline9">Getting the list of data links the easy way</h3>
+<h3 id="orgheadline9">Exercise 1: string manipulation and regular expressions</h3>
 <div class="outline-text-3" id="text-orgheadline9">
 <p>
-If you look at the result from the previous two methods you might notice that the URLs are all the same save for the year number. This suggests an even easier way to construct the list of URLs:
+Our job now is to match the file names using regular expressions. To get started lets copy an example string into the interactive regex tester at <a href="http://www.regexr.com/">http://www.regexr.com/</a> and work with it until we find a regular expression that works.
 </p>
+
+<ol class="org-ol">
+<li>Open  <a href="http://www.regexr.com/">http://www.regexr.com/</a> in your web browser and paste in this string:</li>
+</ol>
+<p>
+&lt;tr&gt;&lt;td valign="top"&gt;&lt;img src="/icons/unknown.gif" alt="[   ]"&gt;&lt;/td&gt;&lt;td&gt;&lt;a href="girls<sub>2014.csv</sub>"&gt;girls<sub>2014.csv</sub>&lt;/a&gt;&lt;/td&gt;&lt;td align="right"&gt;06-Oct-2016 13:12  &lt;/td&gt;&lt;td align="right"&gt;144K&lt;/td&gt;&lt;/tr&gt;
+</p>
+<ol class="org-ol">
+<li value="2">Find a regular expression that matches 'girls<sub>2014.csv</sub>' and nothing else.</li>
+<li value="3">Assign the regular expression you found to the name 'girl.file.regex' in R. Replace any backslashes with a double backslash.</li>
+<li value="4">Extract the girl file names from <code>baby.names.page</code> and assign the values to the name 'girl.file.names'</li>
+<li value="5">Repeat steps 1:4 for boys.</li>
+<li value="6">Use the <code>str_c</code> function to prepend "<a href="http://tutorials.iq.harvard.edu/example_data/baby_names/">http://tutorials.iq.harvard.edu/example_data/baby_names/</a>" to <code>girl.file.names</code> and <code>boy.file.names</code>.</li>
+</ol>
+</div>
+</div>
+
+<div id="outline-container-orgheadline10" class="outline-3">
+<h3 id="orgheadline10">Exercise 1 prototype&#xa0;&#xa0;&#xa0;<span class="tag"><span class="prototype">prototype</span></span></h3>
+<div class="outline-text-3" id="text-orgheadline10">
 <div class="org-src-container">
 
-<pre class="src src-R">(dataLinks <span class="org-constant">&lt;-</span> paste(<span class="org-string">"http://tutorials.iq.harvard.edu/wp-content/cps/data/cepr_dws_"</span>,
-                    seq(<span class="org-highlight-numbers-number">1994</span>, <span class="org-highlight-numbers-number">2010</span>, by = <span class="org-highlight-numbers-number">2</span>),
-                    <span class="org-string">"_dta.zip"</span>,
-                    sep = <span class="org-string">""</span>))
+<pre class="src src-R"><span style="color: #2aa1ae;">## </span><span style="color: #2aa1ae;">regular expression for girl csv files</span>
+girl.file.regex <span style="color: #4e3163;">&lt;-</span> <span style="color: #2d9574;">"girls_[0-9]*\\.csv"</span>
+<span style="color: #2aa1ae;">## </span><span style="color: #2aa1ae;">extract girl file names</span>
+girl.file.names <span style="color: #4e3163;">&lt;-</span> baby.names.page <span style="color: #4e3163;">%&gt;%</span>
+  str_subset(pattern = girl.file.regex) <span style="color: #4e3163;">%&gt;%</span>
+  str_extract(pattern = girl.file.regex)
+
+<span style="color: #2aa1ae;">## </span><span style="color: #2aa1ae;">same thing for boys</span>
+boy.file.regex <span style="color: #4e3163;">&lt;-</span> <span style="color: #2d9574;">"boys_[0-9]*\\.csv"</span>
+boy.file.names <span style="color: #4e3163;">&lt;-</span> baby.names.page <span style="color: #4e3163;">%&gt;%</span>
+  str_subset(pattern = boy.file.regex) <span style="color: #4e3163;">%&gt;%</span>
+  str_extract(pattern = boy.file.regex)
+
+<span style="color: #2aa1ae;">## </span><span style="color: #2aa1ae;">construct URLs</span>
+girl.file.names <span style="color: #4e3163;">&lt;-</span> str_c(<span style="color: #2d9574;">"http://tutorials.iq.harvard.edu/example_data/baby_names/"</span>, girl.file.names)
+boy.file.names <span style="color: #4e3163;">&lt;-</span> str_c(<span style="color: #2d9574;">"http://tutorials.iq.harvard.edu/example_data/baby_names/"</span>, boy.file.names)
 </pre>
 </div>
 
 <pre class="example">
-&gt; (dataLinks &lt;- paste("http://tutorials.iq.harvard.edu/wp-content/cps/data/cepr_dws_",
-+                     seq(1994, 2010, by = 2),
-+                     "_dta.zip",
-+                     sep = ""))
-[1] "http://tutorials.iq.harvard.edu/wp-content/cps/data/cepr_dws_1994_dta.zip"
-[2] "http://tutorials.iq.harvard.edu/wp-content/cps/data/cepr_dws_1996_dta.zip"
-[3] "http://tutorials.iq.harvard.edu/wp-content/cps/data/cepr_dws_1998_dta.zip"
-[4] "http://tutorials.iq.harvard.edu/wp-content/cps/data/cepr_dws_2000_dta.zip"
-[5] "http://tutorials.iq.harvard.edu/wp-content/cps/data/cepr_dws_2002_dta.zip"
-[6] "http://tutorials.iq.harvard.edu/wp-content/cps/data/cepr_dws_2004_dta.zip"
-[7] "http://tutorials.iq.harvard.edu/wp-content/cps/data/cepr_dws_2006_dta.zip"
-[8] "http://tutorials.iq.harvard.edu/wp-content/cps/data/cepr_dws_2008_dta.zip"
-[9] "http://tutorials.iq.harvard.edu/wp-content/cps/data/cepr_dws_2010_dta.zip"
+&gt; ## regular expression for girl csv files
+&gt; girl.file.regex &lt;- "girls_[0-9]*\\.csv"
+&gt; ## extract girl file names
+&gt; girl.file.names &lt;- baby.names.page %&gt;%
++   str_subset(pattern = girl.file.regex) %&gt;%
++   str_extract(pattern = girl.file.regex)
+&gt; 
+&gt; ## same thing for boys
+&gt; boy.file.regex &lt;- "boys_[0-9]*\\.csv"
+&gt; boy.file.names &lt;- baby.names.page %&gt;%
++   str_subset(pattern = boy.file.regex) %&gt;%
++   str_extract(pattern = boy.file.regex)
+&gt; 
+&gt; ## construct URLs
+&gt; girl.file.names &lt;- str_c("http://tutorials.iq.harvard.edu/example_data/baby_names/", girl.file.names)
+&gt; boy.file.names &lt;- str_c("http://tutorials.iq.harvard.edu/example_data/baby_names/", boy.file.names)
 &gt;
 </pre>
+</div>
+</div>
+</div>
 
+<div id="outline-container-orgheadline20" class="outline-2">
+<h2 id="orgheadline20">Reading all the files (iteration, functions)</h2>
+<div class="outline-text-2" id="text-orgheadline20">
+</div><div id="outline-container-orgheadline11" class="outline-3">
+<h3 id="orgheadline11">Reading .csv files</h3>
+<div class="outline-text-3" id="text-orgheadline11">
 <p>
-Wow, that was a <span class="underline">lot</span> easier. Why oh why didn't we just do that in the first place? Well, it works for this specific case, but it is much less general than the html parsing methods we discussed previously. Those methods will work in the general case, while pasting the year number into the URLs only works because the URLs we want have a very regular and consistent form.
+As mentioned earlier, we can read files directly from the internet. For example, we can read the first girls names file like this:
 </p>
-</div>
-</div>
-</div>
 
-
-<div id="outline-container-orgheadline10" class="outline-2">
-<h2 id="orgheadline10">Exercise 0: html parsing</h2>
-<div class="outline-text-2" id="text-orgheadline10">
-<p>
-The <a href="http://ceprdata.org/">http://ceprdata.org/</a> website provides code books for the DWS data in <code>.pdf</code> format. Links to these code books are available on the documentation page at <a href="http://ceprdata.org/cps-uniform-data-extracts/cps-displaced-worker-survey/cps-dws-documentation/">http://ceprdata.org/cps-uniform-data-extracts/cps-displaced-worker-survey/cps-dws-documentation/</a>. Parse this page and extract the links to the code books.
-</p>
-</div>
-</div>
-
-<div id="outline-container-orgheadline11" class="outline-2">
-<h2 id="orgheadline11">Exercise 0 prototype&#xa0;&#xa0;&#xa0;<span class="tag"><span class="prototype">prototype</span></span></h2>
-<div class="outline-text-2" id="text-orgheadline11">
 <div class="org-src-container">
 
-<pre class="src src-R"><span class="org-comment-delimiter">## </span><span class="org-comment">read in the html page</span>
-ceprDoc <span class="org-constant">&lt;-</span> read_html(
-  <span class="org-string">"http://ceprdata.org/cps-uniform-data-extracts/cps-displaced-worker-survey/cps-dws-documentation/"</span>
-)
-<span class="org-comment-delimiter">## </span><span class="org-comment">get the codebook links</span>
-ceprCodeBookLinks <span class="org-constant">&lt;-</span> html_attr(<span class="org-comment-delimiter">#</span><span class="org-comment">extract attributes</span>
-  html_nodes(<span class="org-comment-delimiter">#</span><span class="org-comment">from nodes  </span>
-    ceprDoc,<span class="org-comment-delimiter">#</span><span class="org-comment">in ceprDoc</span>
-    <span class="org-comment-delimiter">## </span><span class="org-comment">This uses an xpath expression to select just the codebook links.</span>
-    <span class="org-comment-delimiter">## </span><span class="org-comment">You could alternatively download all the links and filter them</span>
-    <span class="org-comment-delimiter">## </span><span class="org-comment">with a regular expression. Use whatever works and is comfortable!</span>
-    <span class="org-comment-delimiter">## </span><span class="org-comment">There is more than one right way.</span>
-    xpath = <span class="org-string">'//*[@id="content"]/article/div/ul[1]//a'</span>),<span class="org-comment-delimiter">#</span><span class="org-comment">matching this xpath</span>
-  <span class="org-string">'href'</span> <span class="org-comment-delimiter">#</span><span class="org-comment">extract href attributes</span>
-)
+<pre class="src src-R">girl.names.1 <span style="color: #4e3163;">&lt;-</span> read_csv(girl.file.names[<span style="color: #4e3163;">1</span>], na = <span style="color: #2d9574;">""</span>)
+head(girl.names.1)
 </pre>
 </div>
 
 <pre class="example">
-&gt; ## read in the html page
-&gt; ceprDoc &lt;- read_html(
-+   "http://ceprdata.org/cps-uniform-data-extracts/cps-displaced-worker-survey/cps-dws-documentation/"
-+ )
-&gt; ## get the codebook links
-&gt; ceprCodeBookLinks &lt;- html_attr(#extract attributes
-+   html_nodes(#from nodes  
-+     ceprDoc,#in ceprDoc
-+     ## This uses an xpath expression to select just the codebook links.
-+     ## You could alternatively download all the links and filter them
-+     ## with a regular expression. Use whatever works and is comfortable!
-+     ## There is more than one right way.
-+     xpath = '//*[@id="content"]/article/div/ul[1]//a'),#matching this xpath
-+   'href' #extract href attributes
-+ )
+&gt; girl.names.1 &lt;- read_csv(girl.file.names[1], na = "")
+&gt; head(girl.names.1)
+# A tibble: 6 × 3
+   Rank    Name Count
+  &lt;dbl&gt;   &lt;chr&gt; &lt;dbl&gt;
+1     1  SOPHIE  7087
+2     2   CHLOE  6824
+3     3 JESSICA  6711
+4     4   EMILY  6415
+5     5  LAUREN  6299
+6     6  HANNAH  5916
+&gt;
+</pre>
+
+<p>
+Notice that we selected the first element of <code>girl.file.names</code> using <code>[</code>. This is called <i>bracket extraction</i> and it is a very useful feature of the R language.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline12" class="outline-3">
+<h3 id="orgheadline12">Extracting and replacing vector elements</h3>
+<div class="outline-text-3" id="text-orgheadline12">
+<p>
+Elements of R objects can be extracted and replaced using bracket notation. Bracket extraction comes in a few different flavors. We can index atomic vectors in several different ways.
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-R">example.int.1 <span style="color: #4e3163;">&lt;-</span> c(<span style="color: #4e3163;">10</span>, <span style="color: #4e3163;">11</span>, <span style="color: #4e3163;">12</span>, <span style="color: #4e3163;">13</span>, <span style="color: #4e3163;">14</span>, <span style="color: #4e3163;">15</span>)
+names(example.int.1) <span style="color: #4e3163;">&lt;-</span> c(<span style="color: #2d9574;">"a1"</span>, <span style="color: #2d9574;">"a2"</span>, <span style="color: #2d9574;">"b1"</span>, <span style="color: #2d9574;">"b2"</span>, <span style="color: #2d9574;">"c1"</span>, <span style="color: #2d9574;">"c2"</span>)
+str(example.int.1)
+
+<span style="color: #2aa1ae;">## </span><span style="color: #2aa1ae;">extract by position</span>
+example.int.1[<span style="color: #4e3163;">1</span>]
+example.int.1[c(<span style="color: #4e3163;">1</span>, <span style="color: #4e3163;">3</span>, <span style="color: #4e3163;">5</span>)]
+
+<span style="color: #2aa1ae;">## </span><span style="color: #2aa1ae;">extract by name</span>
+example.int.1[c(<span style="color: #2d9574;">"c2"</span>, <span style="color: #2d9574;">"a1"</span>)]
+
+<span style="color: #2aa1ae;">## </span><span style="color: #2aa1ae;">logical extraction </span>
+(one.names <span style="color: #4e3163;">&lt;-</span> str_detect(names(example.int.1), <span style="color: #2d9574;">"1"</span>))
+example.int.1[one.names]
+example.int.1[example.int.1 &gt; <span style="color: #4e3163;">12</span>]
+
+<span style="color: #2aa1ae;">## </span><span style="color: #2aa1ae;">extract non-existent element</span>
+example.int.1[<span style="color: #2d9574;">"z1"</span>]
+</pre>
+</div>
+
+<pre class="example">
+&gt; example.int.1 &lt;- c(10, 11, 12, 13, 14, 15)
+&gt; names(example.int.1) &lt;- c("a1", "a2", "b1", "b2", "c1", "c2")
+&gt; str(example.int.1)
+ Named num [1:6] 10 11 12 13 14 15
+ - attr(*, "names")= chr [1:6] "a1" "a2" "b1" "b2" ...
+&gt; 
+&gt; ## extract by position
+&gt; example.int.1[1]
+a1 
+10 
+&gt; example.int.1[c(1, 3, 5)]
+a1 b1 c1 
+10 12 14 
+&gt; 
+&gt; ## extract by name
+&gt; example.int.1[c("c2", "a1")]
+c2 a1 
+15 10 
+&gt; 
+&gt; ## logical extraction 
+&gt; (one.names &lt;- str_detect(names(example.int.1), "1"))
+[1]  TRUE FALSE  TRUE FALSE  TRUE FALSE
+&gt; example.int.1[one.names]
+a1 b1 c1 
+10 12 14 
+&gt; example.int.1[example.int.1 &gt; 12]
+b2 c1 c2 
+13 14 15 
+&gt; 
+&gt; ## extract non-existent element
+&gt; example.int.1["z1"]
+&lt;NA&gt; 
+  NA 
+&gt;
+</pre>
+
+<p>
+Replacement works by assigning a value to an extraction. 
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-R">example.int.2 <span style="color: #4e3163;">&lt;-</span> example.int.1
+
+<span style="color: #2aa1ae;">## </span><span style="color: #2aa1ae;">replace by position</span>
+example.int.2[<span style="color: #4e3163;">1</span>] <span style="color: #4e3163;">&lt;-</span> <span style="color: #4e3163;">100</span>
+
+<span style="color: #2aa1ae;">## </span><span style="color: #2aa1ae;">replace by name</span>
+example.int.2[<span style="color: #2d9574;">"a2"</span>] <span style="color: #4e3163;">&lt;-</span> <span style="color: #4e3163;">200</span>
+example.int.2
+
+<span style="color: #2aa1ae;">## </span><span style="color: #2aa1ae;">logical replacement</span>
+(lt14 <span style="color: #4e3163;">&lt;-</span> example.int.2 &lt; <span style="color: #4e3163;">14</span>)
+example.int.2[lt14] <span style="color: #4e3163;">&lt;-</span> <span style="color: #4e3163;">0</span>
+example.int.2
+<span style="color: #2aa1ae;">## </span><span style="color: #2aa1ae;">"replace" non-existing element</span>
+example.int.2[c(<span style="color: #2d9574;">"z1"</span>, <span style="color: #2d9574;">"z2"</span>)] <span style="color: #4e3163;">&lt;-</span> -<span style="color: #4e3163;">10</span> 
+
+<span style="color: #2aa1ae;">## </span><span style="color: #2aa1ae;">compare lists to see the changes we made</span>
+example.int.1
+example.int.2
+</pre>
+</div>
+
+<pre class="example">
+&gt; example.int.2 &lt;- example.int.1
+&gt; 
+&gt; ## replace by position
+&gt; example.int.2[1] &lt;- 100
+&gt; 
+&gt; ## replace by name
+&gt; example.int.2["a2"] &lt;- 200
+&gt; example.int.2
+ a1  a2  b1  b2  c1  c2 
+100 200  12  13  14  15 
+&gt; 
+&gt; ## logical replacement
+&gt; (lt14 &lt;- example.int.2 &lt; 14)
+   a1    a2    b1    b2    c1    c2 
+FALSE FALSE  TRUE  TRUE FALSE FALSE 
+&gt; example.int.2[lt14] &lt;- 0
+&gt; example.int.2
+ a1  a2  b1  b2  c1  c2 
+100 200   0   0  14  15 
+&gt; ## "replace" non-existing element
+&gt; example.int.2[c("z1", "z2")] &lt;- -10 
+&gt; 
+&gt; ## compare lists to see the changes we made
+&gt; example.int.1
+a1 a2 b1 b2 c1 c2 
+10 11 12 13 14 15 
+&gt; example.int.2
+ a1  a2  b1  b2  c1  c2  z1  z2 
+100 200   0   0  14  15 -10 -10 
 &gt;
 </pre>
 </div>
 </div>
 
-<div id="outline-container-orgheadline12" class="outline-2">
-<h2 id="orgheadline12">Downloading files in R</h2>
-<div class="outline-text-2" id="text-orgheadline12">
+<div id="outline-container-orgheadline13" class="outline-3">
+<h3 id="orgheadline13">Extracting and replacing list elements</h3>
+<div class="outline-text-3" id="text-orgheadline13">
 <p>
-Now that we have a vector of URLs pointing to the data files we want to download, we want to iterate over the elements and download each file. We can use the <code>download.file</code> function to download the data files. 
+List elements can be extracted and replaced in the same way as elements of atomic vectors. In addition, <code>[[</code> can be used to extract or replace the contents of a list element. Here is how it works:
 </p>
 
-<p>
-The <code>download.file</code> function requires a URL as the first argument, and a file name as the second argument. We can use the <code>basename</code> function to strip of the location part of the URL, leaving only the file name. We could do this verbosely by writing one line for each file:
-</p>
-<div class="org-src-container">
-
-<pre class="src src-R"><span class="org-comment-delimiter">## </span><span class="org-comment">download.file(dataLinks[1], basename(dataLinks[1]))</span>
-<span class="org-comment-delimiter">## </span><span class="org-comment">download.file(dataLinks[2], basename(dataLinks[2]))</span>
-<span class="org-comment-delimiter">## </span><span class="org-comment">...</span>
-<span class="org-comment-delimiter">## </span><span class="org-comment">download.file(dataLinks[n], basename(dataLinks[3]))</span>
-</pre>
-</div>
-<p>
-but that is too much typing. First, it would be more convenient if the <code>download.file</code> function defaulted to <code>destfile = basename(url)</code>. Fortunately it is very easy to write your own functions in R. We can write a wrapper around the <code>download.file</code> function like this:
-</p>
 
 <div class="org-src-container">
 
-<pre class="src src-R"><span class="org-comment-delimiter">## </span><span class="org-comment">a simple function to make downloading files easier</span>
-<span class="org-function-name">downloadFile</span> <span class="org-constant">&lt;-</span> <span class="org-keyword">function</span>(url, <span class="org-comment-delimiter"># </span><span class="org-comment">url to download</span>
-                         destfile = basename(url), <span class="org-comment-delimiter"># </span><span class="org-comment">default name to save to</span>
-                         outdir = <span class="org-string">"./dataSets/"</span>, <span class="org-comment-delimiter"># </span><span class="org-comment">default directory to save in</span>
-                         ... <span class="org-comment-delimiter"># </span><span class="org-comment">other named arguments passed to download.file</span>
-                         ){
-  <span class="org-comment-delimiter">## </span><span class="org-comment">create output directory if it doesn't exist</span>
-  <span class="org-keyword">if</span>(!dir.exists(outdir)) {
-    dir.create(outdir)
-  }
-  <span class="org-comment-delimiter">## </span><span class="org-comment">download the file using the specified url, output directory, and file name</span>
-  download.file(url = url, destfile = paste(outdir, destfile, sep = <span class="org-string">""</span>), ...)
-}
+<pre class="src src-R">example.list.1 <span style="color: #4e3163;">&lt;-</span> list(a1 = c(a = <span style="color: #4e3163;">1</span>, b = <span style="color: #4e3163;">2</span>, c = <span style="color: #4e3163;">3</span>),
+                     a2 = c(<span style="color: #4e3163;">4</span>, <span style="color: #4e3163;">5</span>, <span style="color: #4e3163;">6</span>),
+                     b1 = c(<span style="color: #2d9574;">"a"</span>, <span style="color: #2d9574;">"b"</span>, <span style="color: #2d9574;">"c"</span>, <span style="color: #2d9574;">"d"</span>),
+                     b2 = c(<span style="color: #2d9574;">"e"</span>, <span style="color: #2d9574;">"f"</span>, <span style="color: #2d9574;">"g"</span>, <span style="color: #2d9574;">"h"</span>))
+str(example.list.1)
+<span style="color: #2aa1ae;">## </span><span style="color: #2aa1ae;">extract by position</span>
+str(example.list.1[<span style="color: #4e3163;">1</span>])
+str(example.list.1[[<span style="color: #4e3163;">1</span>]]) <span style="color: #2aa1ae;"># </span><span style="color: #2aa1ae;">note the difference between [ and [[</span>
+<span style="color: #2aa1ae;">## </span><span style="color: #2aa1ae;">extract by name</span>
+str(example.list.1[c(<span style="color: #2d9574;">"a1"</span>, <span style="color: #2d9574;">"a2"</span>)])
+(a.names <span style="color: #4e3163;">&lt;-</span> str_detect(names(example.list.1), <span style="color: #2d9574;">"a"</span>))
+str(example.list.1[a.names])
+<span style="color: #2aa1ae;">## </span><span style="color: #2aa1ae;">chained bracket extraction</span>
+str(example.list.1[[<span style="color: #2d9574;">"a1"</span>]][c(<span style="color: #2d9574;">"a"</span>, <span style="color: #2d9574;">"c"</span>)])
+<span style="color: #2aa1ae;">## </span><span style="color: #2aa1ae;">logical extraction</span>
+(el.length <span style="color: #4e3163;">&lt;-</span> map_int(example.list.1, length))
+(el.length4 <span style="color: #4e3163;">&lt;-</span> el.length == <span style="color: #4e3163;">4</span>)
+str(example.list.1[el.length4])
+<span style="color: #2aa1ae;">## </span><span style="color: #2aa1ae;">more logical extraction</span>
+(a1.lt.3 <span style="color: #4e3163;">&lt;-</span> example.list.1[[<span style="color: #2d9574;">"a1"</span>]] &lt; <span style="color: #4e3163;">3</span>)
+str(example.list.1[[<span style="color: #2d9574;">"a1"</span>]][a1.lt.3])
+<span style="color: #2aa1ae;">## </span><span style="color: #2aa1ae;">extract non-existent element</span>
+example.list.1[[<span style="color: #2d9574;">"z"</span>]]
 </pre>
 </div>
 
+<pre class="example">
+&gt; example.list.1 &lt;- list(a1 = c(a = 1, b = 2, c = 3),
++                      a2 = c(4, 5, 6),
++                      b1 = c("a", "b", "c", "d"),
++                      b2 = c("e", "f", "g", "h"))
+&gt; str(example.list.1)
+List of 4
+ $ a1: Named num [1:3] 1 2 3
+  ..- attr(*, "names")= chr [1:3] "a" "b" "c"
+ $ a2: num [1:3] 4 5 6
+ $ b1: chr [1:4] "a" "b" "c" "d"
+ $ b2: chr [1:4] "e" "f" "g" "h"
+&gt; ## extract by position
+&gt; str(example.list.1[1])
+List of 1
+ $ a1: Named num [1:3] 1 2 3
+  ..- attr(*, "names")= chr [1:3] "a" "b" "c"
+&gt; str(example.list.1[[1]]) # note the difference between [ and [[
+ Named num [1:3] 1 2 3
+ - attr(*, "names")= chr [1:3] "a" "b" "c"
+&gt; ## extract by name
+&gt; str(example.list.1[c("a1", "a2")])
+List of 2
+ $ a1: Named num [1:3] 1 2 3
+  ..- attr(*, "names")= chr [1:3] "a" "b" "c"
+ $ a2: num [1:3] 4 5 6
+&gt; (a.names &lt;- str_detect(names(example.list.1), "a"))
+[1]  TRUE  TRUE FALSE FALSE
+&gt; str(example.list.1[a.names])
+List of 2
+ $ a1: Named num [1:3] 1 2 3
+  ..- attr(*, "names")= chr [1:3] "a" "b" "c"
+ $ a2: num [1:3] 4 5 6
+&gt; ## chained bracket extraction
+&gt; str(example.list.1[["a1"]][c("a", "c")])
+ Named num [1:2] 1 3
+ - attr(*, "names")= chr [1:2] "a" "c"
+&gt; ## logical extraction
+&gt; (el.length &lt;- map_int(example.list.1, length))
+a1 a2 b1 b2 
+ 3  3  4  4 
+&gt; (el.length4 &lt;- el.length == 4)
+   a1    a2    b1    b2 
+FALSE FALSE  TRUE  TRUE 
+&gt; str(example.list.1[el.length4])
+List of 2
+ $ b1: chr [1:4] "a" "b" "c" "d"
+ $ b2: chr [1:4] "e" "f" "g" "h"
+&gt; ## more logical extraction
+&gt; (a1.lt.3 &lt;- example.list.1[["a1"]] &lt; 3)
+    a     b     c 
+ TRUE  TRUE FALSE 
+&gt; str(example.list.1[["a1"]][a1.lt.3])
+ Named num [1:2] 1 2
+ - attr(*, "names")= chr [1:2] "a" "b"
+&gt; ## extract non-existent element
+&gt; example.list.1[["z"]]
+NULL
+&gt;
+</pre>
+
 <p>
-Using this function we can download the data files more conveniently, but we haven't yet addressed how to avoid typing out separate function calls for each file we need to download. For that we need iteration.
+Replacement works by assigning a value to an extraction. 
 </p>
-</div>
+
+<div class="org-src-container">
+
+<pre class="src src-R">example.list.2 <span style="color: #4e3163;">&lt;-</span> example.list.1
+
+<span style="color: #2aa1ae;">## </span><span style="color: #2aa1ae;">replace by position</span>
+example.list.2[[<span style="color: #4e3163;">1</span>]] <span style="color: #4e3163;">&lt;-</span> c(a = <span style="color: #4e3163;">11</span>, b = <span style="color: #4e3163;">12</span>, c = <span style="color: #4e3163;">13</span>)
+<span style="color: #2aa1ae;">## </span><span style="color: #2aa1ae;">replace by name</span>
+example.list.2[[<span style="color: #2d9574;">"a2"</span>]] <span style="color: #4e3163;">&lt;-</span> c(<span style="color: #4e3163;">10</span>, <span style="color: #4e3163;">20</span>, <span style="color: #4e3163;">30</span>)
+<span style="color: #2aa1ae;">## </span><span style="color: #2aa1ae;">iterate and replace by name</span>
+example.list.2[c(<span style="color: #2d9574;">"a1"</span>, <span style="color: #2d9574;">"a2"</span>)] <span style="color: #4e3163;">&lt;-</span> map(example.list.2[c(<span style="color: #2d9574;">"a1"</span>, <span style="color: #2d9574;">"a2"</span>)],
+                                        <span style="color: #3a81c3; font-weight: bold;">function</span>(x) x * <span style="color: #4e3163;">100</span>)
+<span style="color: #2aa1ae;">## </span><span style="color: #2aa1ae;">logical replacement with iteration</span>
+(el.length <span style="color: #4e3163;">&lt;-</span> map(example.list.2, length))
+(el.length4 <span style="color: #4e3163;">&lt;-</span> el.length == <span style="color: #4e3163;">4</span>)
+example.list.2[el.length4] <span style="color: #4e3163;">&lt;-</span> map(example.list.2[el.length4],
+                                     <span style="color: #3a81c3; font-weight: bold;">function</span>(x) str_c(<span style="color: #2d9574;">"letter"</span>, x, sep = <span style="color: #2d9574;">"_"</span>))
+<span style="color: #2aa1ae;">## </span><span style="color: #2aa1ae;">"replace" non-existing element</span>
+example.list.2[[<span style="color: #2d9574;">"c"</span>]] <span style="color: #4e3163;">&lt;-</span> list(x = letters[<span style="color: #4e3163;">1</span>:<span style="color: #4e3163;">5</span>], y = <span style="color: #4e3163;">1</span>:<span style="color: #4e3163;">5</span>)
+
+<span style="color: #2aa1ae;">## </span><span style="color: #2aa1ae;">compare lists to see the changes we made</span>
+str(example.list.1)
+str(example.list.2)
+</pre>
 </div>
 
-<div id="outline-container-orgheadline13" class="outline-2">
-<h2 id="orgheadline13">Downloading all the files</h2>
-<div class="outline-text-2" id="text-orgheadline13">
-<p>
-To download all the files conveniently we want to iterate over the vector of URLs and download each one. We can carry out this iteration in several ways, including using a <code>for</code> loop, or using one of the <code>apply</code> family of functions.
-</p>
+<pre class="example">
+&gt; example.list.2 &lt;- example.list.1
+&gt; 
+&gt; ## replace by position
+&gt; example.list.2[[1]] &lt;- c(a = 11, b = 12, c = 13)
+&gt; ## replace by name
+&gt; example.list.2[["a2"]] &lt;- c(10, 20, 30)
+&gt; ## iterate and replace by name
+&gt; example.list.2[c("a1", "a2")] &lt;- map(example.list.2[c("a1", "a2")],
++                                         function(x) x * 100)
+&gt; ## logical replacement with iteration
+&gt; (el.length &lt;- map(example.list.2, length))
+$a1
+[1] 3
+
+$a2
+[1] 3
+
+$b1
+[1] 4
+
+$b2
+[1] 4
+
+&gt; (el.length4 &lt;- el.length == 4)
+   a1    a2    b1    b2 
+FALSE FALSE  TRUE  TRUE 
+&gt; example.list.2[el.length4] &lt;- map(example.list.2[el.length4],
++                                      function(x) str_c("letter", x, sep = "_"))
+&gt; ## "replace" non-existing element
+&gt; example.list.2[["c"]] &lt;- list(x = letters[1:5], y = 1:5)
+&gt; 
+&gt; ## compare lists to see the changes we made
+&gt; str(example.list.1)
+List of 4
+ $ a1: Named num [1:3] 1 2 3
+  ..- attr(*, "names")= chr [1:3] "a" "b" "c"
+ $ a2: num [1:3] 4 5 6
+ $ b1: chr [1:4] "a" "b" "c" "d"
+ $ b2: chr [1:4] "e" "f" "g" "h"
+&gt; str(example.list.2)
+List of 5
+ $ a1: Named num [1:3] 1100 1200 1300
+  ..- attr(*, "names")= chr [1:3] "a" "b" "c"
+ $ a2: num [1:3] 1000 2000 3000
+ $ b1: chr [1:4] "letter_a" "letter_b" "letter_c" "letter_d"
+ $ b2: chr [1:4] "letter_e" "letter_f" "letter_g" "letter_h"
+ $ c :List of 2
+  ..$ x: chr [1:5] "a" "b" "c" "d" ...
+  ..$ y: int [1:5] 1 2 3 4 5
+&gt;
+</pre>
+
 
 <p>
-<code>for</code> and <code>while</code> loops in R work much the same as they do in other programming languages. The <code>apply</code> family of functions apply a function to each element of an object.
+Using our knowledge of bracket extraction we could start reading in the data files like this:
 </p>
+
+<div class="org-src-container">
+
+<pre class="src src-R">boys <span style="color: #4e3163;">&lt;-</span> list()
+girls <span style="color: #4e3163;">&lt;-</span> list()
+
+boys[[<span style="color: #4e3163;">1</span>]] <span style="color: #4e3163;">&lt;-</span> read_csv(boy.file.names[<span style="color: #4e3163;">1</span>], na = <span style="color: #2d9574;">""</span>)
+boys[[<span style="color: #4e3163;">2</span>]] <span style="color: #4e3163;">&lt;-</span> read_csv(boy.file.names[<span style="color: #4e3163;">2</span>], na = <span style="color: #2d9574;">""</span>)
+<span style="color: #2aa1ae;">## </span><span style="color: #2aa1ae;">...</span>
+girls[[<span style="color: #4e3163;">1</span>]] <span style="color: #4e3163;">&lt;-</span> read_csv(girl.file.names[<span style="color: #4e3163;">1</span>], na = <span style="color: #2d9574;">""</span>)
+girls[[<span style="color: #4e3163;">2</span>]] <span style="color: #4e3163;">&lt;-</span> read_csv(girl.file.names[<span style="color: #4e3163;">2</span>], na = <span style="color: #2d9574;">""</span>)
+<span style="color: #2aa1ae;">## </span><span style="color: #2aa1ae;">...</span>
+</pre>
+</div>
+
+<pre class="example">
+&gt; boys &lt;- list()
+&gt; girls &lt;- list()
+&gt; 
+&gt; boys[[1]] &lt;- read_csv(boy.file.names[1], na = "")
+&gt; boys[[2]] &lt;- read_csv(boy.file.names[2], na = "")
+&gt; ## ...
+&gt; girls[[1]] &lt;- read_csv(girl.file.names[1], na = "")
+&gt; girls[[2]] &lt;- read_csv(girl.file.names[2], na = "")
+&gt; ## ...
+&gt;
+</pre>
+</div>
 </div>
 
 <div id="outline-container-orgheadline14" class="outline-3">
-<h3 id="orgheadline14">Iterating using for-loop</h3>
+<h3 id="orgheadline14">Exercise 2: String manipulation, extraction and replacement</h3>
 <div class="outline-text-3" id="text-orgheadline14">
 <p>
-One way to download the data files is to use a for-loop to iterate over the contents of our vector of URLs. Some people will tell you to avoid for-loops in R but this is nonsense. Loops are convenient and useful, and while they are not the best tool for all situations calling for iteration they are perfectly appropriate for downloading a series of files. If you've used a for loop in any other language you will probably find the R implementation to be very similar.
+We saw in the previous example one way to start reading the baby name data, using positional bracket extraction and replacement. In this exercise we will improve on this method by doing the same thing using named extraction and replacement. The first step is to extract the years from <code>boy.file.names</code> and <code>girl.file.names</code> and assign then to the <code>names</code> attribute of our <code>boys</code> and <code>girls</code> lists.
 </p>
 
-<p>
-For loops in R have the following general structure:
-<code>for(&lt;placeholder&gt; in &lt;thing to iterate over&gt;) {do stuff with placeholder}</code>. In our case we want to iterate over <code>dataLinks</code> and download each one, so this becomes
-</p>
-<div class="org-src-container">
-
-<pre class="src src-R">str(dataLinks)
-
-<span class="org-comment-delimiter">## </span><span class="org-comment">make a directory to store the data</span>
-dir.create(<span class="org-string">"dataSets"</span>)
-
-<span class="org-keyword">for</span>(link <span class="org-keyword">in</span> dataLinks) {
-    downloadFile(link, outdir = <span class="org-string">"dataSets/"</span>)
-}
-</pre>
-</div>
+<ol class="org-ol">
+<li>Create empty lists named <code>boys</code> and <code>girls</code>.</li>
+<li>Write a regular expression that matches digits 0-9 repeated any number of times and use it to extract the years from <code>boy.file.names</code> and <code>girl.file.names</code> (use <code>str_extract</code>).</li>
+<li>Assign the years vectors from step one to the names of <code>boy.file.names</code> and <code>girl.file.names</code> respectively.</li>
+<li>Extract the element named "2015" from <code>girl.file.names</code> and pass it as the argument to <code>read_csv</code>, assigning the result to a new element of the <code>girls</code> list named "2015". Repeat for elements "2014" and "2013".</li>
+<li>Repeat step three using <code>boy.file.names</code> and the <code>boys</code> list.</li>
+</ol>
 </div>
 </div>
 
 <div id="outline-container-orgheadline15" class="outline-3">
-<h3 id="orgheadline15">Iterating over vectors and lists with the <code>sapply</code> function</h3>
+<h3 id="orgheadline15">Exercise 2 prototype&#xa0;&#xa0;&#xa0;<span class="tag"><span class="prototype">prototype</span></span></h3>
 <div class="outline-text-3" id="text-orgheadline15">
-<p>
-The <code>sapply</code> function iterates over a vector or list and applies a function to each element. To start, let's use <code>sapply</code> do download all the displaced worker survey data files:
-</p>
 <div class="org-src-container">
 
-<pre class="src src-R"><span class="org-comment-delimiter">## </span><span class="org-comment">download all the dws data</span>
-sapply(dataLinks,
-       downloadFile,
-       outdir = <span class="org-string">"dataSets/"</span>)
+<pre class="src src-R"><span style="color: #2aa1ae;">## </span><span style="color: #2aa1ae;">create lists to store the data</span>
+boys <span style="color: #4e3163;">&lt;-</span> list()
+girls <span style="color: #4e3163;">&lt;-</span> list()
+
+<span style="color: #2aa1ae;">## </span><span style="color: #2aa1ae;">extract years and assign to names</span>
+boy.years <span style="color: #4e3163;">&lt;-</span> str_extract(boy.file.names, <span style="color: #2d9574;">"[0-9]+"</span>)
+girl.years <span style="color: #4e3163;">&lt;-</span> str_extract(girl.file.names, <span style="color: #2d9574;">"[0-9]+"</span>)
+names(girl.file.names) <span style="color: #4e3163;">&lt;-</span> girl.years
+names(boy.file.names) <span style="color: #4e3163;">&lt;-</span> boy.years
+
+<span style="color: #2aa1ae;">## </span><span style="color: #2aa1ae;">read first three years of girls names</span>
+girls[[<span style="color: #2d9574;">"2015"</span>]] <span style="color: #4e3163;">&lt;-</span> read_csv(girl.file.names[<span style="color: #2d9574;">"2015"</span>], na = <span style="color: #2d9574;">""</span>)
+girls[[<span style="color: #2d9574;">"2014"</span>]] <span style="color: #4e3163;">&lt;-</span> read_csv(girl.file.names[<span style="color: #2d9574;">"2014"</span>], na = <span style="color: #2d9574;">""</span>)
+girls[[<span style="color: #2d9574;">"2013"</span>]] <span style="color: #4e3163;">&lt;-</span> read_csv(girl.file.names[<span style="color: #2d9574;">"2013"</span>], na = <span style="color: #2d9574;">""</span>)
+
+<span style="color: #2aa1ae;">## </span><span style="color: #2aa1ae;">read first three years of boys names</span>
+boys[[<span style="color: #2d9574;">"2015"</span>]] <span style="color: #4e3163;">&lt;-</span> read_csv(boy.file.names[<span style="color: #2d9574;">"2015"</span>], na = <span style="color: #2d9574;">""</span>)
+boys[[<span style="color: #2d9574;">"2014"</span>]] <span style="color: #4e3163;">&lt;-</span> read_csv(boy.file.names[<span style="color: #2d9574;">"2014"</span>], na = <span style="color: #2d9574;">""</span>)
+boys[[<span style="color: #2d9574;">"2013"</span>]] <span style="color: #4e3163;">&lt;-</span> read_csv(boy.file.names[<span style="color: #2d9574;">"2013"</span>], na = <span style="color: #2d9574;">""</span>)
+
+<span style="color: #2aa1ae;">## </span><span style="color: #2aa1ae;">examine the result</span>
+str(boys, max.level = <span style="color: #4e3163;">2</span>)
+str(girls, max.level = <span style="color: #4e3163;">2</span>)
+</pre>
+</div>
+
+<pre class="example">
+&gt; ## create lists to store the data
+&gt; boys &lt;- list()
+&gt; girls &lt;- list()
+&gt; 
+&gt; ## extract years and assign to names
+&gt; boy.years &lt;- str_extract(boy.file.names, "[0-9]+")
+&gt; girl.years &lt;- str_extract(girl.file.names, "[0-9]+")
+&gt; names(girl.file.names) &lt;- girl.years
+&gt; names(boy.file.names) &lt;- boy.years
+&gt; 
+&gt; ## read first three years of girls names
+&gt; girls[["2015"]] &lt;- read_csv(girl.file.names["2015"], na = "")
+&gt; girls[["2014"]] &lt;- read_csv(girl.file.names["2014"], na = "")
+&gt; girls[["2013"]] &lt;- read_csv(girl.file.names["2013"], na = "")
+&gt; 
+&gt; ## read first three years of boys names
+&gt; boys[["2015"]] &lt;- read_csv(boy.file.names["2015"], na = "")
+&gt; boys[["2014"]] &lt;- read_csv(boy.file.names["2014"], na = "")
+&gt; boys[["2013"]] &lt;- read_csv(boy.file.names["2013"], na = "")
+&gt;  
+&gt; ## examine the result
+&gt; str(boys, max.level = 2)
+List of 3
+ $ 2015:Classes ‘tbl_df’, ‘tbl’ and 'data.frame':	6079 obs. of  3 variables:
+  ..$ Rank : num [1:6079] 1 2 3 4 5 6 7 8 9 10 ...
+  ..$ Name : chr [1:6079] "OLIVER" "JACK" "HARRY" "GEORGE" ...
+  ..$ Count: num [1:6079] 6941 5371 5308 4869 4850 ...
+  ..- attr(*, "spec")=List of 2
+  .. ..- attr(*, "class")= chr "col_spec"
+ $ 2014:Classes ‘tbl_df’, ‘tbl’ and 'data.frame':	6035 obs. of  3 variables:
+  ..$ Rank : num [1:6035] 1 2 3 4 5 6 7 8 9 10 ...
+  ..$ Name : chr [1:6035] "OLIVER" "JACK" "HARRY" "JACOB" ...
+  ..$ Count: num [1:6035] 6649 5804 5379 5050 4642 ...
+  ..- attr(*, "spec")=List of 2
+  .. ..- attr(*, "class")= chr "col_spec"
+ $ 2013:Classes ‘tbl_df’, ‘tbl’ and 'data.frame':	6054 obs. of  3 variables:
+  ..$ Rank : num [1:6054] 1 2 3 4 5 6 7 8 9 10 ...
+  ..$ Name : chr [1:6054] "OLIVER" "JACK" "HARRY" "JACOB" ...
+  ..$ Count: num [1:6054] 6949 6212 5888 5126 5039 ...
+  ..- attr(*, "spec")=List of 2
+  .. ..- attr(*, "class")= chr "col_spec"
+&gt; str(girls, max.level = 2)
+List of 3
+ $ 2015:Classes ‘tbl_df’, ‘tbl’ and 'data.frame':	7469 obs. of  3 variables:
+  ..$ Rank : num [1:7469] 1 2 3 4 5 6 7 8 9 10 ...
+  ..$ Name : chr [1:7469] "AMELIA" "OLIVIA" "EMILY" "ISLA" ...
+  ..$ Count: num [1:7469] 5158 4853 3893 3474 3414 ...
+  ..- attr(*, "spec")=List of 2
+  .. ..- attr(*, "class")= chr "col_spec"
+ $ 2014:Classes ‘tbl_df’, ‘tbl’ and 'data.frame':	7437 obs. of  3 variables:
+  ..$ Rank : num [1:7437] 1 2 3 4 5 6 7 8 9 10 ...
+  ..$ Name : chr [1:7437] "AMELIA" "OLIVIA" "ISLA" "EMILY" ...
+  ..$ Count: num [1:7437] 5327 4724 4012 3991 3273 ...
+  ..- attr(*, "spec")=List of 2
+  .. ..- attr(*, "class")= chr "col_spec"
+ $ 2013:Classes ‘tbl_df’, ‘tbl’ and 'data.frame':	7538 obs. of  3 variables:
+  ..$ Rank : num [1:7538] 1 2 3 4 5 6 7 8 9 10 ...
+  ..$ Name : chr [1:7538] "AMELIA" "OLIVIA" "EMILY" "AVA" ...
+  ..$ Count: num [1:7538] 5570 4598 4049 3575 3526 ...
+  ..- attr(*, "spec")=List of 2
+  .. ..- attr(*, "class")= chr "col_spec"
+&gt;
 </pre>
 </div>
 </div>
-</div>
-
 
 <div id="outline-container-orgheadline16" class="outline-3">
-<h3 id="orgheadline16">Iterating in parallel with the <code>mclapply</code> function</h3>
+<h3 id="orgheadline16">Iterating using the map function</h3>
 <div class="outline-text-3" id="text-orgheadline16">
 <p>
-The <code>mclapply</code> function iterates over a vector or list and applies a function to each element using multiple CPU cores (where available). Let's use <code>mclapply</code> do download all the displaced worker survey data files:
+With a small number of files reading each one separately isn't too bad, but it obviously doesn't scale well. To read all the files conveniently we instead want to instruct R to iterate over the vector of URLs for us and download each one. We can carry out this iteration in several ways, including using one of the <code>map*</code> functions in the purrr package. Here is how it works.
 </p>
+
 <div class="org-src-container">
 
-<pre class="src src-R"><span class="org-comment-delimiter">## </span><span class="org-comment">download all the dws data</span>
-<span class="org-constant">library</span>(parallel)
-mclapply(dataLinks,
-       downloadFile,
-       outdir = <span class="org-string">"dataSets/"</span>,
-       mc.cores = detectCores())
-</pre>
-</div>
+<pre class="src src-R">list.1 <span style="color: #4e3163;">&lt;-</span> list(a = sample(<span style="color: #4e3163;">1</span>:<span style="color: #4e3163;">5</span>, <span style="color: #4e3163;">20</span>, replace = <span style="color: #ba2f59; font-weight: bold;">TRUE</span>),
+               b = sample(<span style="color: #4e3163;">1</span>:<span style="color: #4e3163;">10</span>, <span style="color: #4e3163;">20</span>, replace = <span style="color: #ba2f59; font-weight: bold;">TRUE</span>),
+               c = sample(<span style="color: #4e3163;">10</span>:<span style="color: #4e3163;">15</span>, <span style="color: #4e3163;">20</span>, replace = <span style="color: #ba2f59; font-weight: bold;">TRUE</span>))
 
-
-
-<p>
-We can now use what we've learned about iteration to unzip all the files in the <code>dataSets</code> directory, a task I leave to you.
-</p>
-</div>
-</div>
-</div>
-
-<div id="outline-container-orgheadline17" class="outline-2">
-<h2 id="orgheadline17">Exercise 1: Iterate and extract</h2>
-<div class="outline-text-2" id="text-orgheadline17">
-<p>
-Use a <code>for</code> loop or <code>*apply</code> function to unzip each of the <code>.zip</code> files in the <code>dataSets</code> directory.
-</p>
-
-<p>
-BONUS (optional): calculate the size of each extracted file and calculate the difference in size between each <code>.dta</code> file and the <code>.zip</code> file it was extracted from.
-</p>
-</div>
-</div>
-<div id="outline-container-orgheadline18" class="outline-2">
-<h2 id="orgheadline18">Exercise 1 prototype&#xa0;&#xa0;&#xa0;<span class="tag"><span class="prototype">prototype</span></span></h2>
-<div class="outline-text-2" id="text-orgheadline18">
-<div class="org-src-container">
-
-<pre class="src src-R">zipFiles <span class="org-constant">&lt;-</span> list.files(<span class="org-string">"dataSets"</span>, pattern = <span class="org-string">"\\.zip$"</span>, full.names=<span class="org-type">TRUE</span>)
-
-<span class="org-comment-delimiter">## </span><span class="org-comment">using sapply</span>
-sapply(zipFiles, unzip, exdir = <span class="org-string">"dataSets"</span>)
-<span class="org-comment-delimiter">## </span><span class="org-comment">using a for loop</span>
-<span class="org-keyword">for</span>(f <span class="org-keyword">in</span> zipFiles) unzip(f, exdir = <span class="org-string">"dataSets"</span>)
-
-<span class="org-comment-delimiter">## </span><span class="org-comment">Calculating compression ratios</span>
-dataFiles <span class="org-constant">&lt;-</span> list.files(<span class="org-string">"dataSets"</span>, pattern = <span class="org-string">"\\.dta$"</span>, full.names = <span class="org-type">TRUE</span>)
-
-uncompSize <span class="org-constant">&lt;-</span> round(file.size(dataFiles) / <span class="org-highlight-numbers-number">1024</span>^<span class="org-highlight-numbers-number">2</span>)
-compSize <span class="org-constant">&lt;-</span> round(file.size(zipFiles) / <span class="org-highlight-numbers-number">1024</span>^<span class="org-highlight-numbers-number">2</span>)
-
-cbind(zipFile = paste0(basename(zipFiles), <span class="org-string">": "</span>, compSize, <span class="org-string">"Mb"</span>),
-      dtaFile = paste0(basename(dataFiles), <span class="org-string">": "</span>, uncompSize, <span class="org-string">"Mb"</span>),
-      diff = paste0(round(uncompSize - compSize), <span class="org-string">"Mb"</span>),
-      compression_ratio = round(uncompSize / compSize, digits = <span class="org-highlight-numbers-number">3</span>))
+<span style="color: #2aa1ae;">## </span><span style="color: #2aa1ae;">calculate the mean of every entry</span>
+map.1 <span style="color: #4e3163;">&lt;-</span> map(list.1, mean)
+str(map.1)
+<span style="color: #2aa1ae;">## </span><span style="color: #2aa1ae;">calculate the mean of every entry, returning a numberic vector instead of a list</span>
+map.2 <span style="color: #4e3163;">&lt;-</span> map_dbl(list.1, mean)
+str(map.2)
+<span style="color: #2aa1ae;">## </span><span style="color: #2aa1ae;">calculate the mean of every entry, returning a character vector</span>
+map.3 <span style="color: #4e3163;">&lt;-</span> map_chr(list.1, mean)
+<span style="color: #2aa1ae;">## </span><span style="color: #2aa1ae;">calculate summaries (map returns a list)</span>
+map.4 <span style="color: #4e3163;">&lt;-</span> map(list.1, summary)
+str(map.4)
 </pre>
 </div>
 
 <pre class="example">
-&gt; zipFiles &lt;- list.files("dataSets", pattern = "\\.zip$", full.names=TRUE)
+&gt; list.1 &lt;- list(a = sample(1:5, 20, replace = TRUE),
++                b = sample(1:10, 20, replace = TRUE),
++                c = sample(10:15, 20, replace = TRUE))
 &gt; 
-&gt; ## using sapply
-&gt; sapply(zipFiles, unzip, exdir = "dataSets")
-dataSets/cepr_dws_1994_dta.zip dataSets/cepr_dws_1996_dta.zip 
-  "dataSets/cepr_dws_1994.dta"   "dataSets/cepr_dws_1996.dta" 
-dataSets/cepr_dws_1998_dta.zip dataSets/cepr_dws_2000_dta.zip 
-  "dataSets/cepr_dws_1998.dta"   "dataSets/cepr_dws_2000.dta" 
-dataSets/cepr_dws_2002_dta.zip dataSets/cepr_dws_2004_dta.zip 
-  "dataSets/cepr_dws_2002.dta"   "dataSets/cepr_dws_2004.dta" 
-dataSets/cepr_dws_2006_dta.zip dataSets/cepr_dws_2008_dta.zip 
-  "dataSets/cepr_dws_2006.dta"   "dataSets/cepr_dws_2008.dta" 
-dataSets/cepr_dws_2010_dta.zip 
-  "dataSets/cepr_dws_2010.dta" 
-&gt; ## using a for loop
-&gt; for(f in zipFiles) unzip(f, exdir = "dataSets")
-&gt; 
-&gt; ## Calculating compression ratios
-&gt; dataFiles &lt;- list.files("dataSets", pattern = "\\.dta$", full.names = TRUE)
-&gt; 
-&gt; uncompSize &lt;- round(file.size(dataFiles) / 1024^2)
-&gt; compSize &lt;- round(file.size(zipFiles) / 1024^2)
-&gt; 
-&gt; cbind(zipFile = paste0(basename(zipFiles), ": ", compSize, "Mb"),
-+       dtaFile = paste0(basename(dataFiles), ": ", uncompSize, "Mb"),
-+       diff = paste0(round(uncompSize - compSize), "Mb"),
-+       compression_ratio = round(uncompSize / compSize, digits = 3))
-      zipFile                      dtaFile                   diff   compression_ratio
- [1,] "cepr_dws_1994_dta.zip: 5Mb" "cepr_dws_1994.dta: 35Mb" "30Mb" "7"              
- [2,] "cepr_dws_1996_dta.zip: 4Mb" "cepr_dws_1996.dta: 31Mb" "27Mb" "7.75"           
- [3,] "cepr_dws_1998_dta.zip: 4Mb" "cepr_dws_1998.dta: 31Mb" "27Mb" "7.75"           
- [4,] "cepr_dws_2000_dta.zip: 4Mb" "cepr_dws_2000.dta: 31Mb" "27Mb" "7.75"           
- [5,] "cepr_dws_2002_dta.zip: 5Mb" "cepr_dws_2002.dta: 40Mb" "35Mb" "8"              
- [6,] "cepr_dws_2004_dta.zip: 5Mb" "cepr_dws_2004.dta: 39Mb" "34Mb" "7.8"            
- [7,] "cepr_dws_2006_dta.zip: 5Mb" "cepr_dws_2006.dta: 39Mb" "34Mb" "7.8"            
- [8,] "cepr_dws_2008_dta.zip: 5Mb" "cepr_dws_2008.dta: 39Mb" "34Mb" "7.8"            
- [9,] "cepr_dws_2010_dta.zip: 5Mb" "cepr_dws_2010.dta: 39Mb" "34Mb" "7.8"            
+&gt; ## calculate the mean of every entry
+&gt; map.1 &lt;- map(list.1, mean)
+&gt; str(map.1)
+List of 3
+ $ a: num 3.45
+ $ b: num 4.35
+ $ c: num 12
+&gt; ## calculate the mean of every entry, returning a numberic vector instead of a list
+&gt; map.2 &lt;- map_dbl(list.1, mean)
+&gt; str(map.2)
+ Named num [1:3] 3.45 4.35 12
+ - attr(*, "names")= chr [1:3] "a" "b" "c"
+&gt; ## calculate the mean of every entry, returning a character vector
+&gt; map.3 &lt;- map_chr(list.1, mean)
+&gt; ## calculate summaries (map returns a list)
+&gt; map.4 &lt;- map(list.1, summary)
+&gt; str(map.4)
+List of 3
+ $ a:Classes 'summaryDefault', 'table'  Named num [1:6] 1 2.75 4 3.45 4.25 5
+  .. ..- attr(*, "names")= chr [1:6] "Min." "1st Qu." "Median" "Mean" ...
+ $ b:Classes 'summaryDefault', 'table'  Named num [1:6] 1 2.75 4 4.35 5.25 10
+  .. ..- attr(*, "names")= chr [1:6] "Min." "1st Qu." "Median" "Mean" ...
+ $ c:Classes 'summaryDefault', 'table'  Named num [1:6] 10 10.8 12 12 13 ...
+  .. ..- attr(*, "names")= chr [1:6] "Min." "1st Qu." "Median" "Mean" ...
 &gt;
 </pre>
 </div>
 </div>
 
-<div id="outline-container-orgheadline19" class="outline-2">
-<h2 id="orgheadline19">Importing and inspecting data and meta-data</h2>
-<div class="outline-text-2" id="text-orgheadline19">
+<div id="outline-container-orgheadline17" class="outline-3">
+<h3 id="orgheadline17">Writing your own functions</h3>
+<div class="outline-text-3" id="text-orgheadline17">
 <p>
-Our next goal is to read in the data that we downloaded and extracted earlier. The data are stored as Stata data sets, which can be imported using the <code>read.dta</code> function in the <code>foreign</code> package. Let's start by reading just the first data set.
-</p>
-
-<div class="org-src-container">
-
-<pre class="src src-R"><span class="org-comment-delimiter">## </span><span class="org-comment">attach the foreign packge so we can read stata files</span>
-<span class="org-constant">library</span>(foreign)
-
-<span class="org-comment-delimiter">## </span><span class="org-comment">get a list of all the stata files in the dataSets directory</span>
-dataFiles <span class="org-constant">&lt;-</span> list.files(<span class="org-string">"dataSets"</span>, pattern = <span class="org-string">"\\.dta$"</span>, full.names=<span class="org-type">TRUE</span>)
-
-<span class="org-comment-delimiter">## </span><span class="org-comment">read in the first one</span>
-ceprData1 <span class="org-constant">&lt;-</span> read.dta(dataFiles[<span class="org-highlight-numbers-number">1</span>])
-</pre>
-</div>
-
-<p>
-Now that we've read in some of the data we want to get some more information about it. 
-</p>
-</div>
-
-<div id="outline-container-orgheadline20" class="outline-3">
-<h3 id="orgheadline20">Mode and length</h3>
-<div class="outline-text-3" id="text-orgheadline20">
-<p>
-Information about objects in R are stored as <i>attributes</i> of the object. All R objects have a storage <i>mode</i> and a <i>length</i>. Since all objects in R have these attributes we refer to them as <i>intrinsic attributes</i>. We can get the value of these intrinsic attributes using the <code>mode</code> and <code>length</code> functions respecively. For example, what is the mode and length of our <code>ceprData1</code> object?
+The <code>map*</code> functions are useful when you want to apply a function to a list or vector of inputs and obtain the return values. This is very convenient when a function already exists that does exactly what you want. In the examples above we mapped <code>mean</code> and <code>summary</code> to the elements of a list. But what if there is no existing function that does exactly what we want? Suppose that rather than the set of statistics reported by the <code>summary</code> function we want to summarize each element in the list by calculating the <i>length</i>, <i>mean</i>, and <i>standard deviation</i>? In that case we will need to write a function that does what we want. Fortunately, writing functions in R is easy.
 </p>
 <div class="org-src-container">
 
-<pre class="src src-R">mode(ceprData1)
-length(ceprData1)
+<pre class="src src-R"><span style="color: #6c3163; font-weight: bold;">my.summary</span> <span style="color: #4e3163;">&lt;-</span> <span style="color: #3a81c3; font-weight: bold;">function</span>(x) {
+  n <span style="color: #4e3163;">&lt;-</span> length(x)
+  avg <span style="color: #4e3163;">&lt;-</span> mean(x)
+  std.dev <span style="color: #4e3163;">&lt;-</span> sd(x)
+  <span style="color: #3a81c3; font-weight: bold;">return</span>(c(N = n, Mean = avg, Standard.Deviation = std.dev))
+}
+my.summary(list.1[[<span style="color: #4e3163;">1</span>]])
+map(list.1, my.summary)
 </pre>
 </div>
 
 <pre class="example">
-&gt; mode(ceprData1)
+&gt; my.summary &lt;- function(x) {
++   n &lt;- length(x)
++   avg &lt;- mean(x)
++   std.dev &lt;- sd(x)
++   return(c(N = n, Mean = avg, Standard.Deviation = std.dev))
++ }
+&gt; my.summary(list.1[[1]])
+                 N               Mean Standard.Deviation 
+         20.000000           3.450000           1.316894 
+&gt; map(list.1, my.summary)
+$a
+                 N               Mean Standard.Deviation 
+         20.000000           3.450000           1.316894 
+
+$b
+                 N               Mean Standard.Deviation 
+         20.000000           4.350000           2.518876 
+
+$c
+                 N               Mean Standard.Deviation 
+         20.000000          12.000000           1.622214 
+
+&gt;
+</pre>
+
+<p>
+OK, back to the problem at hand. We want to read each file in the <code>girl.file.names</code> and <code>boy.file.names</code> vectors. The files contain columns "Rank", "Name", and "Count". The year each file contains data for is not included as a column in the data, but it is encoded in the file names.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgheadline18" class="outline-3">
+<h3 id="orgheadline18">Exercise 3: Iteration, file IO, functions</h3>
+<div class="outline-text-3" id="text-orgheadline18">
+<p>
+We know how to read csv files using <code>read_csv</code>. We know how to iterate using <code>map</code>. All we need to do now is put the two things together.
+</p>
+
+<ol class="org-ol">
+<li>Use the <code>map</code> and <code>read_csv</code> functions to read all the girls data into an object named <code>girls.data</code>.</li>
+<li>Do the same thing for the boys data (name the object <code>boys.data</code>).</li>
+<li>Inspect the boys and girls data lists. How many elements do they have? What class are they?</li>
+<li>Write a function that returns the <code>class</code>, <code>mode</code>, and <code>length</code> of its argument. <code>map</code> this function to <code>girls.data</code> and <code>boys.data</code>.</li>
+</ol>
+</div>
+</div>
+
+<div id="outline-container-orgheadline19" class="outline-3">
+<h3 id="orgheadline19">Exercise 3 prototype&#xa0;&#xa0;&#xa0;<span class="tag"><span class="prototype">prototype</span></span></h3>
+<div class="outline-text-3" id="text-orgheadline19">
+<div class="org-src-container">
+
+<pre class="src src-R">girls.data <span style="color: #4e3163;">&lt;-</span> map(girl.file.names, read_csv, na = <span style="color: #2d9574;">""</span>)
+boys.data <span style="color: #4e3163;">&lt;-</span> map(boy.file.names, read_csv, na = <span style="color: #2d9574;">""</span>)
+length(boys.data)
+length(girls.data)
+class(girls.data)
+class(boys.data)
+
+<span style="color: #6c3163; font-weight: bold;">list.info</span> <span style="color: #4e3163;">&lt;-</span> <span style="color: #3a81c3; font-weight: bold;">function</span>(x) <span style="color: #3a81c3; font-weight: bold;">return</span>(c(class = class(x), mode = mode(x), n = length(x)))
+unique(map(girls.data, list.info))
+unique(map(boys.data, list.info))
+</pre>
+</div>
+
+<pre class="example">
+&gt; girls.data &lt;- map(girl.file.names, read_csv, na = "")
+&gt; boys.data &lt;- map(boy.file.names, read_csv, na = "")
+&gt; length(boys.data)
+[1] 20
+&gt; length(girls.data)
+[1] 20
+&gt; class(girls.data)
 [1] "list"
-&gt; length(ceprData1)
-[1] 178
+&gt; class(boys.data)
+[1] "list"
+&gt; 
+&gt; list.info &lt;- function(x) return(c(class = class(x), mode = mode(x), n = length(x)))
+&gt; unique(map(girls.data, list.info))
+[[1]]
+      class1       class2       class3         mode            n 
+    "tbl_df"        "tbl" "data.frame"       "list"          "3" 
+
+&gt; unique(map(boys.data, list.info))
+[[1]]
+      class1       class2       class3         mode            n 
+    "tbl_df"        "tbl" "data.frame"       "list"          "3" 
+
 &gt;
 </pre>
 </div>
 </div>
+</div>
 
-<div id="outline-container-orgheadline21" class="outline-3">
-<h3 id="orgheadline21">Other properties of data.frames</h3>
-<div class="outline-text-3" id="text-orgheadline21">
+<div id="outline-container-orgheadline21" class="outline-2">
+<h2 id="orgheadline21">Adding a Year column (data structures, indexing)</h2>
+<div class="outline-text-2" id="text-orgheadline21">
 <p>
-So far we've seen that <code>ceprData1</code> is a list of length 178. Actually <code>ceprData1</code> is a special kind of list called a <code>data.frame</code>. We can see that by asking R what the <code>class</code> of the object is.
+OK, at this point we have read in all the data. That is a good start! Lets take a closer look at what we are working with.
 </p>
+
 <div class="org-src-container">
 
-<pre class="src src-R">class(ceprData1)
+<pre class="src src-R">str(girls.data, max.level = <span style="color: #4e3163;">1</span>)
 </pre>
 </div>
 
 <pre class="example">
-&gt; class(ceprData1)
-[1] "data.frame"
+&gt; str(girls.data, max.level = 1)
+List of 20
+ $ 1996:Classes ‘tbl_df’, ‘tbl’ and 'data.frame':	4957 obs. of  3 variables:
+  ..- attr(*, "spec")=List of 2
+  .. ..- attr(*, "class")= chr "col_spec"
+ $ 1997:Classes ‘tbl_df’, ‘tbl’ and 'data.frame':	4968 obs. of  3 variables:
+  ..- attr(*, "spec")=List of 2
+  .. ..- attr(*, "class")= chr "col_spec"
+ $ 1998:Classes ‘tbl_df’, ‘tbl’ and 'data.frame':	5003 obs. of  3 variables:
+  ..- attr(*, "spec")=List of 2
+  .. ..- attr(*, "class")= chr "col_spec"
+ $ 1999:Classes ‘tbl_df’, ‘tbl’ and 'data.frame':	5057 obs. of  3 variables:
+  ..- attr(*, "spec")=List of 2
+  .. ..- attr(*, "class")= chr "col_spec"
+ $ 2000:Classes ‘tbl_df’, ‘tbl’ and 'data.frame':	5154 obs. of  3 variables:
+  ..- attr(*, "spec")=List of 2
+  .. ..- attr(*, "class")= chr "col_spec"
+ $ 2001:Classes ‘tbl_df’, ‘tbl’ and 'data.frame':	5236 obs. of  3 variables:
+  ..- attr(*, "spec")=List of 2
+  .. ..- attr(*, "class")= chr "col_spec"
+ $ 2002:Classes ‘tbl_df’, ‘tbl’ and 'data.frame':	5420 obs. of  3 variables:
+  ..- attr(*, "spec")=List of 2
+  .. ..- attr(*, "class")= chr "col_spec"
+ $ 2003:Classes ‘tbl_df’, ‘tbl’ and 'data.frame':	5742 obs. of  3 variables:
+  ..- attr(*, "spec")=List of 2
+  .. ..- attr(*, "class")= chr "col_spec"
+ $ 2004:Classes ‘tbl_df’, ‘tbl’ and 'data.frame':	6044 obs. of  3 variables:
+  ..- attr(*, "spec")=List of 2
+  .. ..- attr(*, "class")= chr "col_spec"
+ $ 2005:Classes ‘tbl_df’, ‘tbl’ and 'data.frame':	6219 obs. of  3 variables:
+  ..- attr(*, "spec")=List of 2
+  .. ..- attr(*, "class")= chr "col_spec"
+ $ 2006:Classes ‘tbl_df’, ‘tbl’ and 'data.frame':	6569 obs. of  3 variables:
+  ..- attr(*, "spec")=List of 2
+  .. ..- attr(*, "class")= chr "col_spec"
+ $ 2007:Classes ‘tbl_df’, ‘tbl’ and 'data.frame':	6870 obs. of  3 variables:
+  ..- attr(*, "spec")=List of 2
+  .. ..- attr(*, "class")= chr "col_spec"
+ $ 2008:Classes ‘tbl_df’, ‘tbl’ and 'data.frame':	7250 obs. of  3 variables:
+  ..- attr(*, "spec")=List of 2
+  .. ..- attr(*, "class")= chr "col_spec"
+ $ 2009:Classes ‘tbl_df’, ‘tbl’ and 'data.frame':	7231 obs. of  3 variables:
+  ..- attr(*, "spec")=List of 2
+  .. ..- attr(*, "class")= chr "col_spec"
+ $ 2010:Classes ‘tbl_df’, ‘tbl’ and 'data.frame':	7388 obs. of  3 variables:
+  ..- attr(*, "spec")=List of 2
+  .. ..- attr(*, "class")= chr "col_spec"
+ $ 2011:Classes ‘tbl_df’, ‘tbl’ and 'data.frame':	7575 obs. of  3 variables:
+  ..- attr(*, "spec")=List of 2
+  .. ..- attr(*, "class")= chr "col_spec"
+ $ 2012:Classes ‘tbl_df’, ‘tbl’ and 'data.frame':	7729 obs. of  3 variables:
+  ..- attr(*, "spec")=List of 2
+  .. ..- attr(*, "class")= chr "col_spec"
+ $ 2013:Classes ‘tbl_df’, ‘tbl’ and 'data.frame':	7538 obs. of  3 variables:
+  ..- attr(*, "spec")=List of 2
+  .. ..- attr(*, "class")= chr "col_spec"
+ $ 2014:Classes ‘tbl_df’, ‘tbl’ and 'data.frame':	7437 obs. of  3 variables:
+  ..- attr(*, "spec")=List of 2
+  .. ..- attr(*, "class")= chr "col_spec"
+ $ 2015:Classes ‘tbl_df’, ‘tbl’ and 'data.frame':	7469 obs. of  3 variables:
+  ..- attr(*, "spec")=List of 2
+  .. ..- attr(*, "class")= chr "col_spec"
 &gt;
 </pre>
 
 <p>
-A <i>data.frame</i> in R is a list with elements of equal length. It is a rectangular structure with rows and columns. In addition to the <i>mode</i> and <i>length</i> that all object in R have, <i>data.frames</i> also have dimension, (col)names, and =rownames.
+OK, so we have a <i>list</i> with 20 elements. A list in R is a very flexible data structure that can hold just about anything (including other lists). Our <code>girls.data</code> is a list that happens to contain <i>data.frames</i>.
 </p>
+
+<p>
+A data.frame in R is a special type of list in which each element is the same length. Elements of data.frames are often <i>atomic vectors</i> ("logical", "integer", "numeric (double)" etc. as discussed above), though elements of a data.frame can be anything you can store in other lists, provided only that each element is the same length. 
+</p>
+
+<p>
+There are many useful things we can do with data.frames: (But remember that this list of methods is not all you can do with data.frames.)
+</p>
+
 <div class="org-src-container">
 
-<pre class="src src-R">dim(ceprData1)
-names(ceprData1)
-c(head(rownames(ceprData1)), <span class="org-string">"..."</span>, tail(rownames(ceprData1)))
+<pre class="src src-R">girls.data.1 <span style="color: #4e3163;">&lt;-</span> girls.data[[<span style="color: #4e3163;">1</span>]]
+class(girls.data.1)
+methods(class = <span style="color: #2d9574;">"data.frame"</span>)
+dim(girls.data.1)
+nrow(girls.data.1)
+ncol(girls.data.1)
+names(girls.data.1)
+summary(girls.data.1)
 </pre>
 </div>
 
 <pre class="example">
-&gt; dim(ceprData1)
-[1] 156246    178
-&gt; names(ceprData1)
-  [1] "year"      "indws"     "dw_stat"   "dwswgt"    "dw"        "dw_bls"   
-  [7] "dw_why"    "dw_when"   "xrecall"   "notice"    "not_when"  "ljten"    
- [13] "ljtenr"    "uibens"    "uiended"   "moved"     "movedec"   "worked"   
- [19] "wkswo"     "numjobs"   "ljcowd"    "ljcow"     "ljindd94"  "ljindd04" 
- [25] "ljind94"   "ljind04"   "ljagric"   "ljmanuf"   "ljservs"   "ljconstr" 
- [31] "ljrwtrade" "ljfire"    "ljoccd94"  "ljoccd04"  "ljocc94"   "ljunion"  
- [37] "ljhealth"  "hi_now"    "ljft"      "ljhv"      "cjftcps"   "cjhvcps"  
- [43] "ljpayper"  "ljot"      "ljwage"    "ljwagetc"  "ljhours"   "ljwkot"   
- [49] "ljottc"    "ljothrs"   "ljwktc"    "ljwkpay"   "ljweeks"   "ljpayr"   
- [55] "cjppdws"   "cjpporg"   "cjpayper"  "cjhr_dws"  "cjhr_org"  "cjhrly"   
- [61] "cjot_dws"  "cjot_org"  "cjot"      "cjw_dws"   "cjw_org"   "cjwage"   
- [67] "cjwdwstc"  "cjworgtc"  "cjw_tc"    "cjh_dws"   "cjh_org"   "cjhours"  
- [73] "cjotadws"  "cjotaorg"  "cjotamt"   "cjottcd"   "cjottco"   "cjottc"   
- [79] "cjothrd"   "cjwtcdws"  "cjwtcorg"  "cjwtc"     "cjwpdws"   "cjwporg"  
- [85] "cjwkpay"   "cjwk_dws"  "cjwk_cps"  "cjweeks"   "cjpayorg"  "cjpayr"   
- [91] "month"     "minsamp"   "hhid"      "hhnum"     "hrlonglk"  "lineno"   
- [97] "fnlwgt"    "orgwgt"    "lonwgt"    "famwgt"    "age"       "female"   
-[103] "wbho"      "forborn"   "citizen"   "prcitshp"  "penatvty"  "pemntvty" 
-[109] "pefntvty"  "prinusyr"  "arrived"   "vet"       "married"   "ownchild" 
-[115] "ch02"      "ch05"      "ch35"      "ch613"     "ch1417"    "famrel84" 
-[121] "famrel94"  "faminc"    "lfstat"    "empl"      "unem"      "nilf"     
-[127] "selfemp"   "selfinc"   "pubsect"   "pubfed"    "pubst"     "publoc"   
-[133] "unmem"     "uncov"     "union"     "student"   "studpt"    "state"    
-[139] "metro"     "centcity"  "suburb"    "rural"     "educ"      "ind_nber" 
-[145] "ind_2d"    "ind70"     "ind80"     "ind03"     "agric"     "manuf"    
-[151] "servs"     "constr"    "rwtrade"   "fire"      "docc70"    "docc80"   
-[157] "docc03"    "occ70"     "occ80"     "occ03"     "manag83"   "manag03"  
-[163] "hourslw"   "reason94"  "absent94"  "uhourse"   "ptecon"    "unempt"   
-[169] "prhrusl"   "pehrusl1"  "pehrusl2"  "pehruslt"  "peernhro"  "imphrs"   
-[175] "hrsimptd"  "hrernhr"   "uhoursi"   "blsimpt"  
-&gt; c(head(rownames(ceprData1)), "...", tail(rownames(ceprData1)))
- [1] "1"      "2"      "3"      "4"      "5"      "6"      "..."    "156241" "156242"
-[10] "156243" "156244" "156245" "156246"
+&gt; girls.data.1 &lt;- girls.data[[1]]
+&gt; class(girls.data.1)
+[1] "tbl_df"     "tbl"        "data.frame"
+&gt; methods(class = "data.frame")
+  [1] aggregate      anti_join      anyDuplicated  arrange_       as_data_frame 
+  [6] as.data.frame  as.list        as.matrix      as.tbl_cube    as.tbl        
+ [11] as_tibble      by             cbind          coerce         collapse      
+ [16] collect        complete_      compute        [&lt;-            [             
+ [21] [[&lt;-           [[             $&lt;-            $              dim           
+ [26] dimnames&lt;-     dimnames       distinct_      do_            droplevels    
+ [31] drop_na_       duplicated     edit           expand_        extract_      
+ [36] fill_          filter_        format         formula        fortify       
+ [41] full_join      gather_        ggplot         glimpse        group_by_     
+ [46] group_indices_ groups         group_size     head           initialize    
+ [51] inner_join     intersect      is.na          is_vector_s3   left_join     
+ [56] Math           merge          mutate_        na.exclude     na.omit       
+ [61] nest_          n_groups       Ops            plot           print         
+ [66] prompt         rbind          rename_        replace_na     right_join    
+ [71] row.names&lt;-    row.names      rowsum         same_src       sample_frac   
+ [76] sample_n       select_        semi_join      separate_      separate_rows_
+ [81] setdiff        setequal       show           slice_         slotsFromS3   
+ [86] split&lt;-        split          spread_        stack          str           
+ [91] subset         summarise_     summary        Summary        tail          
+ [96] tbl_vars       t              transform      type_sum       ungroup       
+[101] union_all      union          unique         unite_         unnest_       
+[106] unstack        within        
+see '?methods' for accessing help and source code
+&gt; dim(girls.data.1)
+[1] 4957    3
+&gt; nrow(girls.data.1)
+[1] 4957
+&gt; ncol(girls.data.1)
+[1] 3
+&gt; names(girls.data.1)
+[1] "Rank"  "Name"  "Count"
+&gt; summary(girls.data.1)
+      Rank          Name               Count        
+ Min.   :   1   Length:4957        Min.   :   3.00  
+ 1st Qu.:1222   Class :character   1st Qu.:   4.00  
+ Median :2350   Mode  :character   Median :   6.00  
+ Mean   :2247                      Mean   :  59.71  
+ 3rd Qu.:3126                      3rd Qu.:  15.00  
+ Max.   :3795                      Max.   :7087.00  
 &gt;
 </pre>
-</div>
 </div>
 
 <div id="outline-container-orgheadline22" class="outline-3">
-<h3 id="orgheadline22">Additional attributes</h3>
+<h3 id="orgheadline22">Adding a year column using bracket extraction/replacement</h3>
 <div class="outline-text-3" id="text-orgheadline22">
 <p>
-OK, so far we know the ceprData1 is a <i>data.frame</i> with 156246 rows and 178 columns, and that the variables have terrible cryptic names like <code>cjpporg</code> and <code>ljagric</code>. What do we actually have here? One way to answer the question is
-</p>
-<div class="org-src-container">
-
-<pre class="src src-R">browseURL(ceprCodeBookLinks[<span class="org-highlight-numbers-number">1</span>])
-</pre>
-</div>
-<p>
-and that is a good answer actually. In our case the meta-data has also been embedded in the <code>.dta</code> files by our friends at <a href="http://ceprdata.org/">ceprdata.org</a>. This meta-data has been attached to the <code>ceprData1</code> data.frame in the form of additional attributes. 
+The data.frames in <code>girls.data</code> all have three elements (columns): Rank (a number), Name (a character), and Count (a number). That is a problem, because we need to have a column that records the year! Year was stored in the file names rather than in the contents of the files, and so it appears as the names of the list elements rather than as a column in each data.frame. 
 </p>
 
 <p>
-The system used by R for storing attributes of this kind is simple. Arbitrary attributes can be set using the <code>attr</code> function, and retrieved using either <code>attr</code> or the <code>attributes</code> function. Let's take a quick look a this system before using it to access the ceprData1 meta-data.
+How can we insert the year information into each corresponding data.frame? Recall that a data.frame <span class="underline">is</span> a list, so we can use bracket extraction just as we would for other kinds of lists. That is, we can add a year column to the data.frame in position 1 of <code>girls.data</code> like this:
 </p>
-
 <div class="org-src-container">
 
-<pre class="src src-R">x <span class="org-constant">&lt;-</span> <span class="org-highlight-numbers-number">1:10</span>
-attributes(x)
-attr(x, <span class="org-string">"description"</span>) <span class="org-constant">&lt;-</span> <span class="org-string">"This is vector of integers from 1 to 10"</span>
-attributes(x)
-attr(x, <span class="org-string">"how_many"</span>) <span class="org-constant">&lt;-</span> <span class="org-string">"There are ten things in this vector"</span>
-attributes(x)
-attr(x, <span class="org-string">"description"</span>)
+<pre class="src src-R">str(girls.data[[<span style="color: #4e3163;">1</span>]])
+girls.data[[<span style="color: #4e3163;">1</span>]][[<span style="color: #2d9574;">"Year"</span>]] <span style="color: #4e3163;">&lt;-</span> names(girls.data[<span style="color: #4e3163;">1</span>])
+<span style="color: #2aa1ae;">##        </span><span style="color: #2aa1ae;">^                                  ^ </span>
+<span style="color: #2aa1ae;">## </span><span style="color: #2aa1ae;">double brackets to extract data.frame   single brackets to extract a list containing a data.frame</span>
+str(girls.data[[<span style="color: #4e3163;">1</span>]])
+girls.data[[<span style="color: #4e3163;">1</span>]][[<span style="color: #2d9574;">"Year"</span>]] <span style="color: #4e3163;">&lt;-</span> as.integer(names(girls.data[<span style="color: #4e3163;">1</span>]))
+str(girls.data[[<span style="color: #4e3163;">1</span>]])
 </pre>
 </div>
 
 <pre class="example">
-&gt; x &lt;- 1:10
-&gt; attributes(x)
-NULL
-&gt; attr(x, "description") &lt;- "This is vector of integers from 1 to 10"
-&gt; attributes(x)
-$description
-[1] "This is vector of integers from 1 to 10"
-
-&gt; attr(x, "how_many") &lt;- "There are ten things in this vector"
-&gt; attributes(x)
-$description
-[1] "This is vector of integers from 1 to 10"
-
-$how_many
-[1] "There are ten things in this vector"
-
-&gt; attr(x, "description")
-[1] "This is vector of integers from 1 to 10"
+&gt; str(girls.data[[1]])
+Classes ‘tbl_df’, ‘tbl’ and 'data.frame':	4957 obs. of  3 variables:
+ $ Rank : num  1 2 3 4 5 6 7 8 9 10 ...
+ $ Name : chr  "SOPHIE" "CHLOE" "JESSICA" "EMILY" ...
+ $ Count: num  7087 6824 6711 6415 6299 ...
+ - attr(*, "spec")=List of 2
+  ..$ cols   :List of 3
+  .. ..$ Rank : list()
+  .. .. ..- attr(*, "class")= chr  "collector_double" "collector"
+  .. ..$ Name : list()
+  .. .. ..- attr(*, "class")= chr  "collector_character" "collector"
+  .. ..$ Count: list()
+  .. .. ..- attr(*, "class")= chr  "collector_double" "collector"
+  ..$ default: list()
+  .. ..- attr(*, "class")= chr  "collector_guess" "collector"
+  ..- attr(*, "class")= chr "col_spec"
+&gt; girls.data[[1]][["Year"]] &lt;- names(girls.data[1])
+&gt; ##        ^                                  ^ 
+&gt; ## double brackets to extract data.frame   single brackets to extract a list containing a data.frame
+&gt; str(girls.data[[1]])
+Classes ‘tbl_df’, ‘tbl’ and 'data.frame':	4957 obs. of  4 variables:
+ $ Rank : num  1 2 3 4 5 6 7 8 9 10 ...
+ $ Name : chr  "SOPHIE" "CHLOE" "JESSICA" "EMILY" ...
+ $ Count: num  7087 6824 6711 6415 6299 ...
+ $ Year : chr  "1996" "1996" "1996" "1996" ...
+ - attr(*, "spec")=List of 2
+  ..$ cols   :List of 3
+  .. ..$ Rank : list()
+  .. .. ..- attr(*, "class")= chr  "collector_double" "collector"
+  .. ..$ Name : list()
+  .. .. ..- attr(*, "class")= chr  "collector_character" "collector"
+  .. ..$ Count: list()
+  .. .. ..- attr(*, "class")= chr  "collector_double" "collector"
+  ..$ default: list()
+  .. ..- attr(*, "class")= chr  "collector_guess" "collector"
+  ..- attr(*, "class")= chr "col_spec"
+&gt; girls.data[[1]][["Year"]] &lt;- as.integer(names(girls.data[1]))
+&gt; str(girls.data[[1]])
+Classes ‘tbl_df’, ‘tbl’ and 'data.frame':	4957 obs. of  4 variables:
+ $ Rank : num  1 2 3 4 5 6 7 8 9 10 ...
+ $ Name : chr  "SOPHIE" "CHLOE" "JESSICA" "EMILY" ...
+ $ Count: num  7087 6824 6711 6415 6299 ...
+ $ Year : int  1996 1996 1996 1996 1996 1996 1996 1996 1996 1996 ...
+ - attr(*, "spec")=List of 2
+  ..$ cols   :List of 3
+  .. ..$ Rank : list()
+  .. .. ..- attr(*, "class")= chr  "collector_double" "collector"
+  .. ..$ Name : list()
+  .. .. ..- attr(*, "class")= chr  "collector_character" "collector"
+  .. ..$ Count: list()
+  .. .. ..- attr(*, "class")= chr  "collector_double" "collector"
+  ..$ default: list()
+  .. ..- attr(*, "class")= chr  "collector_guess" "collector"
+  ..- attr(*, "class")= chr "col_spec"
 &gt;
 </pre>
 
-
 <p>
-As we've seen, additional attributes and be accessed vie the <code>attributes</code> function. Let's see what other attributes our <code>ceprData</code> object has.
+Now we want to repeat that for each element in the list. We previously learned how to iterate using the <code>map</code> function, but that won't work here because we need a function with two arguments: the list element to modify, and the year value to insert. For that we can use the <code>map2</code> function, which works just like <code>map</code> except that we iterate over two things with a function that takes two arguments. It works like this:
 </p>
 <div class="org-src-container">
 
-<pre class="src src-R">ceprDataInfo <span class="org-constant">&lt;-</span> attributes(ceprData1)
-mode(ceprDataInfo)
-class(ceprDataInfo)
-length(ceprDataInfo)
-names(ceprDataInfo)
+<pre class="src src-R">example.list.3 <span style="color: #4e3163;">&lt;-</span> list(a = <span style="color: #4e3163;">1</span>:<span style="color: #4e3163;">3</span>,
+                       b = <span style="color: #4e3163;">4</span>:<span style="color: #4e3163;">6</span>,
+                       c = <span style="color: #4e3163;">7</span>:<span style="color: #4e3163;">9</span>)
+<span style="color: #6c3163; font-weight: bold;">upper.name</span> <span style="color: #4e3163;">&lt;-</span> <span style="color: #3a81c3; font-weight: bold;">function</span>(x, y) {
+  x.upper <span style="color: #4e3163;">&lt;-</span> str_to_upper(x)
+  <span style="color: #3a81c3; font-weight: bold;">return</span>(str_c(y, x.upper, sep = <span style="color: #2d9574;">": "</span>))
+}
+
+example.list.4 <span style="color: #4e3163;">&lt;-</span> map2(example.list.3, names(example.list.3), upper.name)
+str(example.list.3)
+str(example.list.4)
 </pre>
 </div>
 
 <pre class="example">
-&gt; ceprDataInfo &lt;- attributes(ceprData1)
-&gt; mode(ceprDataInfo)
-[1] "list"
-&gt; class(ceprDataInfo)
-[1] "list"
-&gt; length(ceprDataInfo)
-[1] 12
-&gt; names(ceprDataInfo)
- [1] "datalabel"        "time.stamp"       "names"            "formats"         
- [5] "types"            "val.labels"       "var.labels"       "expansion.fields"
- [9] "row.names"        "version"          "label.table"      "class"           
-&gt;
-</pre>
-
-<p>
-Let's iterate over the attributes of =ceprData1- and get some more information about the available meta-data
-</p>
-<div class="org-src-container">
-
-<pre class="src src-R">t(sapply(attributes(ceprData1),
-         <span class="org-keyword">function</span>(x) {
-           c(mode = mode(x), class = class(x), length = length(x))
-         })
-  )
-</pre>
-</div>
-
-<pre class="example">
-&gt; t(sapply(attributes(ceprData1),
-+          function(x) {
-+            c(mode = mode(x), class = class(x), length = length(x))
-+          })
-+   )
-                 mode        class       length  
-datalabel        "character" "character" "1"     
-time.stamp       "character" "character" "1"     
-names            "character" "character" "178"   
-formats          "character" "character" "178"   
-types            "numeric"   "integer"   "178"   
-val.labels       "character" "character" "178"   
-var.labels       "character" "character" "178"   
-expansion.fields "list"      "list"      "525"   
-row.names        "character" "character" "156246"
-version          "numeric"   "integer"   "1"     
-label.table      "list"      "list"      "30"    
-class            "character" "character" "1"     
+&gt; example.list.3 &lt;- list(a = 1:3,
++                        b = 4:6,
++                        c = 7:9)
+&gt; upper.name &lt;- function(x, y) {
++   x.upper &lt;- str_to_upper(x)
++   return(str_c(y, x.upper, sep = ": "))
++ }
+&gt; 
+&gt; example.list.4 &lt;- map2(example.list.3, names(example.list.3), upper.name)
+&gt; str(example.list.3)
+List of 3
+ $ a: int [1:3] 1 2 3
+ $ b: int [1:3] 4 5 6
+ $ c: int [1:3] 7 8 9
+&gt; str(example.list.4)
+List of 3
+ $ a: chr [1:3] "a: 1" "a: 2" "a: 3"
+ $ b: chr [1:3] "b: 4" "b: 5" "b: 6"
+ $ c: chr [1:3] "c: 7" "c: 8" "c: 9"
 &gt;
 </pre>
 </div>
 </div>
+
 
 <div id="outline-container-orgheadline23" class="outline-3">
-<h3 id="orgheadline23">Extracting useful meta-data</h3>
+<h3 id="orgheadline23">Exercise 4: Iteration, data.frame manipulation</h3>
 <div class="outline-text-3" id="text-orgheadline23">
 <p>
-We can extract elements from lists in a few different ways:
+We know how to read add a Year column. We know how to iterate using <code>map2</code>. All we need to do now is put the two things together.
 </p>
+
+<ol class="org-ol">
+<li>Write a function named <code>add.year</code> that takes a data.frame and a vector as arguments and returns a data.frame with the vector included as a column.</li>
+<li>Test your function on the first elements of <code>girls.data</code> and <code>names(girls.data)</code> from step 1.</li>
+<li>Use the <code>map2</code> function to iterate over <code>girls.data</code> and insert the corresponding year from <code>names(girls.data)</code> using the function you wrote in step 1. Do the same for <code>boys.data</code>.</li>
+</ol>
+</div>
+</div>
+
+<div id="outline-container-orgheadline24" class="outline-3">
+<h3 id="orgheadline24">Exercise 4 prototype&#xa0;&#xa0;&#xa0;<span class="tag"><span class="prototype">prototype</span></span></h3>
+<div class="outline-text-3" id="text-orgheadline24">
 <div class="org-src-container">
 
-<pre class="src src-R"><span class="org-comment-delimiter">## </span><span class="org-comment">extract by name</span>
-ceprDataInfo$datalabel <span class="org-comment-delimiter">#</span><span class="org-comment">using $</span>
-ceprDataInfo[<span class="org-string">"datalabel"</span>] <span class="org-comment-delimiter">#</span><span class="org-comment">using [</span>
-ceprDataInfo[[<span class="org-string">"datalabel"</span>]] <span class="org-comment-delimiter">#</span><span class="org-comment">using [[, note the difference</span>
+<pre class="src src-R"><span style="color: #2aa1ae;">## </span><span style="color: #2aa1ae;">write function to add year column</span>
+<span style="color: #6c3163; font-weight: bold;">add.column</span> <span style="color: #4e3163;">&lt;-</span> <span style="color: #3a81c3; font-weight: bold;">function</span>(data, value, col.name = <span style="color: #2d9574;">"xxxxx"</span>) {
+  data[[col.name]] <span style="color: #4e3163;">&lt;-</span> value
+  <span style="color: #3a81c3; font-weight: bold;">return</span>(data)
+}
 
-<span class="org-comment-delimiter">## </span><span class="org-comment">by position</span>
-ceprDataInfo[<span class="org-highlight-numbers-number">1</span>]; ceprDataInfo[[<span class="org-highlight-numbers-number">1</span>]] <span class="org-comment-delimiter"># </span><span class="org-comment">note the difference</span>
+<span style="color: #2aa1ae;">## </span><span style="color: #2aa1ae;">test out the function</span>
+str(add.column(girls.data[[<span style="color: #4e3163;">1</span>]], value = names(girls.data[<span style="color: #4e3163;">1</span>]), col.name = <span style="color: #2d9574;">"Year"</span>), max.level = <span style="color: #4e3163;">1</span>)
 
-<span class="org-comment-delimiter">## </span><span class="org-comment">by logical index</span>
-ceprDataInfo[c(<span class="org-type">TRUE</span>, <span class="org-type">TRUE</span>, rep(<span class="org-type">FALSE</span>, <span class="org-highlight-numbers-number">10</span>))]
-ceprDataInfo[sapply(ceprDataInfo, length) == <span class="org-highlight-numbers-number">1</span>]
+<span style="color: #2aa1ae;">## </span><span style="color: #2aa1ae;">map the function to each element of our lists of data.frames</span>
+girls.data <span style="color: #4e3163;">&lt;-</span> map2(girls.data, names(girls.data), add.column, col.name = <span style="color: #2d9574;">"Year"</span>)
+boys.data <span style="color: #4e3163;">&lt;-</span> map2(boys.data, names(boys.data), add.column, col.name = <span style="color: #2d9574;">"Year"</span>)
 </pre>
 </div>
 
 <pre class="example">
-&gt; ## extract by name
-&gt; ceprDataInfo$datalabel #using $
-[1] "CEPR DWS Extract, Version 1.01, 1994"
-&gt; ceprDataInfo["datalabel"] #using [
-$datalabel
-[1] "CEPR DWS Extract, Version 1.01, 1994"
-
-&gt; ceprDataInfo[["datalabel"]] #using [[, note the difference
-[1] "CEPR DWS Extract, Version 1.01, 1994"
+&gt; ## write function to add year column
+&gt; add.column &lt;- function(data, value, col.name = "xxxxx") {
++   data[[col.name]] &lt;- value
++   return(data)
++ }
 &gt; 
-&gt; ## by position
-&gt; ceprDataInfo[1]; ceprDataInfo[[1]] # note the difference
-$datalabel
-[1] "CEPR DWS Extract, Version 1.01, 1994"
-
-[1] "CEPR DWS Extract, Version 1.01, 1994"
+&gt; ## test out the function
+&gt; str(add.column(girls.data[[1]], value = names(girls.data[1]), col.name = "Year"), max.level = 1)
+Classes ‘tbl_df’, ‘tbl’ and 'data.frame':	4957 obs. of  4 variables:
+ $ Rank : num  1 2 3 4 5 6 7 8 9 10 ...
+ $ Name : chr  "SOPHIE" "CHLOE" "JESSICA" "EMILY" ...
+ $ Count: num  7087 6824 6711 6415 6299 ...
+ $ Year : chr  "1996" "1996" "1996" "1996" ...
+ - attr(*, "spec")=List of 2
+  ..- attr(*, "class")= chr "col_spec"
 &gt; 
-&gt; ## by logical index
-&gt; ceprDataInfo[c(TRUE, TRUE, rep(FALSE, 10))]
-$datalabel
-[1] "CEPR DWS Extract, Version 1.01, 1994"
+&gt; ## map the function to each element of our lists of data.frames
+&gt; girls.data &lt;- map2(girls.data, names(girls.data), add.column, col.name = "Year")
+&gt; boys.data &lt;- map2(boys.data, names(boys.data), add.column, col.name = "Year")
+&gt;
+</pre>
+</div>
+</div>
+</div>
 
-$time.stamp
-[1] "17 Feb 2011 18:18"
 
-&gt; ceprDataInfo[sapply(ceprDataInfo, length) == 1]
-$datalabel
-[1] "CEPR DWS Extract, Version 1.01, 1994"
+<div id="outline-container-orgheadline25" class="outline-2">
+<h2 id="orgheadline25">Final data cleanup</h2>
+<div class="outline-text-2" id="text-orgheadline25">
+<p>
+Our next step to is to collapse each list of data.frames into a single list. We can do that using the <code>bind_rows</code> function.
+</p>
 
-$time.stamp
-[1] "17 Feb 2011 18:18"
+<div class="org-src-container">
 
-$version
-[1] 8
+<pre class="src src-R">boys.data <span style="color: #4e3163;">&lt;-</span> bind_rows(boys.data)
+girls.data <span style="color: #4e3163;">&lt;-</span> bind_rows(girls.data)
+str(boys.data)
+str(girls.data)
+</pre>
+</div>
 
-$class
-[1] "data.frame"
-
+<pre class="example">
+&gt; boys.data &lt;- bind_rows(boys.data)
+&gt; girls.data &lt;- bind_rows(girls.data)
+&gt; str(boys.data)
+Classes ‘tbl_df’, ‘tbl’ and 'data.frame':	100593 obs. of  4 variables:
+ $ Rank : num  1 2 3 4 5 6 7 8 9 10 ...
+ $ Name : chr  "JACK" "DANIEL" "THOMAS" "JAMES" ...
+ $ Count: num  10779 10338 9603 9385 7887 ...
+ $ Year : chr  "1996" "1996" "1996" "1996" ...
+&gt; str(girls.data)
+Classes ‘tbl_df’, ‘tbl’ and 'data.frame':	126856 obs. of  4 variables:
+ $ Rank : num  1 2 3 4 5 6 7 8 9 10 ...
+ $ Name : chr  "SOPHIE" "CHLOE" "JESSICA" "EMILY" ...
+ $ Count: num  7087 6824 6711 6415 6299 ...
+ $ Year : chr  "1996" "1996" "1996" "1996" ...
 &gt;
 </pre>
 
 <p>
-Note that <code>[</code> indexing on a list returns a list, and <code>[[</code> indexing returns whatever contained in a single element of the list. This visual explanation may help: 
-<img src="images/HadleyWickham_index_list.png" alt="HadleyWickham_index_list.png" /><sup><a id="fnr.2" class="footref" href="#fn.2">2</a></sup>
+Finally, we want to insert columns indicating sex, combine the boys and girls baby names, and convert the "Year" column to integer.
 </p>
 
-<p>
-You may have noticed during our earlier investigation of <code>ceprDataInfo</code> that many of the elements have length 178. That number might be familiar:
-</p>
 <div class="org-src-container">
 
-<pre class="src src-R">dim(ceprData1)
+<pre class="src src-R">girls.data[[<span style="color: #2d9574;">"Sex"</span>]] <span style="color: #4e3163;">&lt;-</span> <span style="color: #2d9574;">"girl"</span>
+boys.data[[<span style="color: #2d9574;">"Sex"</span>]] <span style="color: #4e3163;">&lt;-</span> <span style="color: #2d9574;">"boy"</span>
+baby.names <span style="color: #4e3163;">&lt;-</span> bind_rows(girls.data, boys.data)
+baby.names$Year <span style="color: #4e3163;">&lt;-</span> as.integer(baby.names$Year)
 </pre>
 </div>
 
-<p>
-it's the number of columns in the data set. It is therefor a good guess that those elements record information about each of the columns in the data set. 
-</p>
-</div>
-
-<div id="outline-container-orgheadline24" class="outline-4">
-<h4 id="orgheadline24">Exercise 2</h4>
-<div class="outline-text-4" id="text-orgheadline24">
-<p>
-Extract elements from <code>ceprDataInfo</code> that will help you understand what each column in <code>deprData</code> contains. Include at least the variable <code>names</code> and <code>var.labels</code> as well as any other information that you think will be useful.
-</p>
-
-<p>
-Bonus (optional): supplement the <code>ceprDataInfo</code> you extracted in step one with the mode, class, etc. of each column in <code>ceprData1</code> 
-</p>
-</div>
-</div>
-
-<div id="outline-container-orgheadline25" class="outline-4">
-<h4 id="orgheadline25">Exercise 2 prototype&#xa0;&#xa0;&#xa0;<span class="tag"><span class="prototype">prototype</span></span></h4>
-<div class="outline-text-4" id="text-orgheadline25">
-<div class="org-src-container">
-
-<pre class="src src-R">ceprCodebook <span class="org-constant">&lt;-</span> data.frame(
-  ceprDataInfo[
-    sapply(ceprDataInfo, length) == ncol(ceprData1)
-  ])
-
-ceprCodebook$mode <span class="org-constant">&lt;-</span> sapply(ceprData1, mode)
-ceprCodebook$class <span class="org-constant">&lt;-</span> sapply(ceprData1, class)
-ceprCodebook$n_distinct = sapply(ceprData1, <span class="org-keyword">function</span>(x) length(unique(x)))
-
-rbind(head(ceprCodebook), tail(ceprCodebook))
+<pre class="example">
+&gt; girls.data[["Sex"]] &lt;- "girl"
+&gt; boys.data[["Sex"]] &lt;- "boy"
+&gt; baby.names &lt;- bind_rows(girls.data, boys.data)
+&gt; baby.names$Year &lt;- as.integer(baby.names$Year)
+&gt;
 </pre>
-</div>
-</div>
-</div>
 </div>
 </div>
 
 <div id="outline-container-orgheadline26" class="outline-2">
-<h2 id="orgheadline26">Aggregation</h2>
+<h2 id="orgheadline26">What can we learn about baby names?</h2>
 <div class="outline-text-2" id="text-orgheadline26">
 <p>
-Now that we have the data read in, and we know what is in each column, I want to calculate the proportion displaced by year/rural/gender. I can do that using the <code>aggregate</code> function (the <code>data.table</code> and <code>dplyr</code> packages provide advanced aggregation capabilities, but <code>aggregate</code> is available in base R and works well for many things).
+Now that we have the data loaded and cleaned up we can use it to answer interesting questions. For example:
+</p>
+
+<ul class="org-ul">
+<li>How many children were born each year?</li>
+<li>What are the most popular names overall?</li>
+<li>How has the popularity of the most popular names changed over time?</li>
+<li>Has the number of names changed over time?</li>
+<li>Has the average length of names changed over time?</li>
+<li>What are the most popular first letters in baby names? Has this changed over time?</li>
+<li>What were the most popular names in 2015 (the last year for which we have data)?</li>
+<li>How has the popularity of the most popular names in 2015 changed over time?</li>
+</ul>
+
+<p>
+Earlier I mentioned that data.frames are a special kind of list in which each element must be of the same length. What I perhaps did not emphasize enough is how important the data.frame concept is in R programming. Because of the centrality of the data.frame in many R workflows there are many functions available specifically for manipulating data.frames. In particular, the <i>dplyr</i> and <i>tidyr</i> packages provides many useful functions for working with data.frames. In this section we will use the <i>dplyr</i> package answer some of our questions about baby names.
+</p>
+</div>
+
+<div id="outline-container-orgheadline27" class="outline-3">
+<h3 id="orgheadline27">Number of children born each year</h3>
+<div class="outline-text-3" id="text-orgheadline27">
+<p>
+Now that we have the data read in and we know what is in each column, I want to know how many children were born each year. To one way to do that is to use the <code>group_by</code> and <code>summarize</code> functions from the <i>dplyr</i> package. It works like this:
 </p>
 
 <div class="org-src-container">
 
-<pre class="src src-R">ceprData1 <span class="org-constant">&lt;-</span> aggregate(ceprData1[<span class="org-string">"dw"</span>],
-                       by = ceprData1[c(<span class="org-string">"year"</span>, <span class="org-string">"rural"</span>, <span class="org-string">"female"</span>)],
-                       FUN = mean, na.rm = <span class="org-type">TRUE</span>)
-ceprData1
+<pre class="src src-R"><span style="color: #2aa1ae;">## </span><span style="color: #2aa1ae;">make up some example data</span>
+(example.df <span style="color: #4e3163;">&lt;-</span> data.frame(id  = rep(letters[<span style="color: #4e3163;">1</span>:<span style="color: #4e3163;">4</span>], each = <span style="color: #4e3163;">4</span>),
+                          t   = rep(<span style="color: #4e3163;">1</span>:<span style="color: #4e3163;">4</span>, times = <span style="color: #4e3163;">4</span>),
+                          var1 = runif(<span style="color: #4e3163;">16</span>),
+                          var2 = sample(letters[<span style="color: #4e3163;">1</span>:<span style="color: #4e3163;">3</span>], <span style="color: #4e3163;">16</span>, replace = <span style="color: #ba2f59; font-weight: bold;">TRUE</span>)))
+
+<span style="color: #2aa1ae;">## </span><span style="color: #2aa1ae;">summarize</span>
+summarize(example.df,
+          var1 = sum(var1))
+
+<span style="color: #2aa1ae;">## </span><span style="color: #2aa1ae;">summarize by id</span>
+example.df <span style="color: #4e3163;">%&gt;%</span>
+  group_by(id) <span style="color: #4e3163;">%&gt;%</span>
+  summarize(var1 = sum(var1))
+
+<span style="color: #2aa1ae;">## </span><span style="color: #2aa1ae;">summarize by id and var2</span>
+example.df <span style="color: #4e3163;">%&gt;%</span>
+  group_by(id, var2) <span style="color: #4e3163;">%&gt;%</span>
+  summarize(var1 = sum(var1))
 </pre>
 </div>
 
 <pre class="example">
-&gt; ceprData1 &lt;- aggregate(ceprData1["dw"],
-+                        by = ceprData1[c("year", "rural", "female")],
-+                        FUN = mean, na.rm = TRUE)
-&gt; ceprData1
-  year rural female         dw
-1 1994     0      0 0.09201620
-2 1994     1      0 0.07094765
-3 1994     0      1 0.06059583
-4 1994     1      1 0.04579923
+&gt; ## make up some example data
+&gt; (example.df &lt;- data.frame(id  = rep(letters[1:4], each = 4),
++                           t   = rep(1:4, times = 4),
++                           var1 = runif(16),
++                           var2 = sample(letters[1:3], 16, replace = TRUE)))
+   id t       var1 var2
+1   a 1 0.86138244    a
+2   a 2 0.46439198    b
+3   a 3 0.22286743    c
+4   a 4 0.62354960    a
+5   b 1 0.20364770    b
+6   b 2 0.01967341    a
+7   b 3 0.79799301    b
+8   b 4 0.27431890    b
+9   c 1 0.16660910    c
+10  c 2 0.17015172    c
+11  c 3 0.48850594    c
+12  c 4 0.71140908    b
+13  d 1 0.59193492    c
+14  d 2 0.51715688    b
+15  d 3 0.38162769    c
+16  d 4 0.83477833    c
+&gt; 
+&gt; ## summarize
+&gt; summarize(example.df,
++           var1 = sum(var1))
+      var1
+1 7.329998
+&gt; 
+&gt; ## summarize by id
+&gt; example.df %&gt;%
++   group_by(id) %&gt;%
++   summarize(var1 = sum(var1))
+# A tibble: 4 × 2
+      id     var1
+  &lt;fctr&gt;    &lt;dbl&gt;
+1      a 2.172191
+2      b 1.295633
+3      c 1.536676
+4      d 2.325498
+&gt; 
+&gt; ## summarize by id and var2
+&gt; example.df %&gt;%
++   group_by(id, var2) %&gt;%
++   summarize(var1 = sum(var1))
+Source: local data frame [9 x 3]
+Groups: id [?]
+
+      id   var2       var1
+  &lt;fctr&gt; &lt;fctr&gt;      &lt;dbl&gt;
+1      a      a 1.48493204
+2      a      b 0.46439198
+3      a      c 0.22286743
+4      b      a 0.01967341
+5      b      b 1.27595960
+6      c      b 0.71140908
+7      c      c 0.82526676
+8      d      b 0.51715688
+9      d      c 1.80834094
 &gt;
 </pre>
 </div>
 </div>
 
-<div id="outline-container-orgheadline27" class="outline-2">
-<h2 id="orgheadline27">Exercise 3</h2>
-<div class="outline-text-2" id="text-orgheadline27">
+<div id="outline-container-orgheadline28" class="outline-3">
+<h3 id="orgheadline28">Exercise 5: Group and Summarize</h3>
+<div class="outline-text-3" id="text-orgheadline28">
 <p>
-Now that we have a process for importing and aggregating the data we can apply it to all the data files we downloaded earlier. We can do that by wrapping the <code>read.dta</code> and <code>aggregate</code> code in a function and applying that function to each element of <code>dataFiles</code> using the <code>sapply</code> function, or using a <code>for</code> loop. Go ahead and give it a try! Note that this exercise is intentionally challenging; read the documentation, search stackoverflow.com, and use any other resources at your disposal as you attempt it.
+Now that we know how to group and summarize, we can use these tools to calculate the number of babies born each year.
 </p>
+
+<ol class="org-ol">
+<li>Calculate the total number of babies born between 1996 and 2015.</li>
+<li>Calculate the total number of boys and the total number of girls born between 1996 and 2015.</li>
+<li>Calculate the number of children born each year between 1996 and 2015.</li>
+<li>Calculate the number of girls and the number of boys born each year between 1996 and 2015, assigning the result to the name 'name.totals.by.year'.</li>
+</ol>
 </div>
 </div>
 
-<div id="outline-container-orgheadline28" class="outline-2">
-<h2 id="orgheadline28">Exercise 3 prototype&#xa0;&#xa0;&#xa0;<span class="tag"><span class="prototype">prototype</span></span></h2>
-<div class="outline-text-2" id="text-orgheadline28">
+<div id="outline-container-orgheadline29" class="outline-3">
+<h3 id="orgheadline29">Exercise 5 prototype&#xa0;&#xa0;&#xa0;<span class="tag"><span class="prototype">prototype</span></span></h3>
+<div class="outline-text-3" id="text-orgheadline29">
 <div class="org-src-container">
 
-<pre class="src src-R"><span class="org-constant">library</span>(foreign)
+<pre class="src src-R"><span style="color: #2aa1ae;">## </span><span style="color: #2aa1ae;">total babies born</span>
+baby.names <span style="color: #4e3163;">&lt;-</span> ungroup(baby.names)
+summarize(baby.names, total = sum(Count))
 
-ceprData <span class="org-constant">&lt;-</span> mclapply(dataFiles, <span class="org-keyword">function</span>(x) {
-  tmp <span class="org-constant">&lt;-</span> read.dta(x)
-  <span class="org-keyword">return</span>(aggregate(tmp[<span class="org-string">"dw"</span>],
-                   by = tmp[c(<span class="org-string">"year"</span>, <span class="org-string">"rural"</span>, <span class="org-string">"female"</span>)],
-                   FUN = mean, na.rm = <span class="org-type">TRUE</span>))})
-</pre>
-</div>
-</div>
-</div>
+<span style="color: #2aa1ae;">## </span><span style="color: #2aa1ae;">total boys and girls</span>
+group_by(baby.names, Sex) <span style="color: #4e3163;">%&gt;%</span>
+  summarize(total = sum(Count))
 
-<div id="outline-container-orgheadline29" class="outline-2">
-<h2 id="orgheadline29">Finishing touches</h2>
-<div class="outline-text-2" id="text-orgheadline29">
-<p>
-We now have a list of aggregated data.frames. The next step is to stack each element of the list so that we end up with one big data.frame instead of a list of small ones. We can stack two data.frames using the <code>rbind</code> function:
-</p>
-<div class="org-src-container">
+<span style="color: #2aa1ae;">## </span><span style="color: #2aa1ae;">sum for each year</span>
+group_by(baby.names, Year) <span style="color: #4e3163;">%&gt;%</span>
+  summarize(totol = sum(Count))
 
-<pre class="src src-R">ceprData[[<span class="org-highlight-numbers-number">1</span>]]; ceprData[[<span class="org-highlight-numbers-number">2</span>]]
-rbind(ceprData[[<span class="org-highlight-numbers-number">1</span>]], ceprData[[<span class="org-highlight-numbers-number">2</span>]])
+<span style="color: #2aa1ae;">## </span><span style="color: #2aa1ae;">sum boys and girls each year</span>
+name.totals.by.year <span style="color: #4e3163;">&lt;-</span> group_by(baby.names, Sex, Year) <span style="color: #4e3163;">%&gt;%</span>
+  summarize(total = sum(Count))
 </pre>
 </div>
 
 <pre class="example">
-&gt; ceprData[[1]]; ceprData[[2]]
-  year rural female         dw
-1 1994     0      0 0.09201620
-2 1994     1      0 0.07094765
-3 1994     0      1 0.06059583
-4 1994     1      1 0.04579923
-  year rural female         dw
-1 1996     0      0 0.10207612
-2 1996     1      0 0.09333333
-3 1996     0      1 0.07761280
-4 1996     1      1 0.06870622
-&gt; rbind(ceprData[[1]], ceprData[[2]])
-  year rural female         dw
-1 1994     0      0 0.09201620
-2 1994     1      0 0.07094765
-3 1994     0      1 0.06059583
-4 1994     1      1 0.04579923
-5 1996     0      0 0.10207612
-6 1996     1      0 0.09333333
-7 1996     0      1 0.07761280
-8 1996     1      1 0.06870622
+&gt; 
+&gt; ## total babies born
+&gt; baby.names &lt;- ungroup(baby.names)
+&gt; summarize(baby.names, total = sum(Count))
+# A tibble: 1 × 1
+     total
+     &lt;dbl&gt;
+1 12346022
+&gt; 
+&gt; ## total boys and girls
+&gt; group_by(baby.names, Sex) %&gt;%
++   summarize(total = sum(Count))
+# A tibble: 2 × 2
+    Sex   total
+  &lt;chr&gt;   &lt;dbl&gt;
+1   boy 6402657
+2  girl 5943365
+&gt; 
+&gt; ## sum for each year
+&gt; group_by(baby.names, Year) %&gt;%
++   summarize(totol = sum(Count))
+# A tibble: 20 × 2
+    Year  totol
+   &lt;int&gt;  &lt;dbl&gt;
+1   1996 614515
+2   1997 607636
+3   1998 599658
+4   1999 584938
+5   2000 566359
+6   2001 555831
+7   2002 555680
+8   2003 578230
+9   2004 594375
+10  2005 597737
+11  2006 619598
+12  2007 637496
+13  2008 655171
+14  2009 651553
+15  2010 667340
+16  2011 667230
+17  2012 670522
+18  2013 642085
+19  2014 638852
+20  2015 641216
+&gt; 
+&gt; ## sum boys and girls each year
+&gt; name.totals.by.year &lt;- group_by(baby.names, Sex, Year) %&gt;%
++   summarize(total = sum(Count))
 &gt;
-</pre>
-<p>
-and we can apply this operation to every element in the list using the <code>do.call</code> function.
-</p>
-<div class="org-src-container">
-
-<pre class="src src-R">str(ceprData <span class="org-constant">&lt;-</span> do.call(<span class="org-string">"rbind"</span>, ceprData))
 </pre>
 </div>
-
-<pre class="example">
-&gt; str(ceprData &lt;- do.call("rbind", ceprData))
-'data.frame':	36 obs. of  4 variables:
- $ year  : int  1994 1994 1994 1994 1996 1996 1996 1996 1998 1998 ...
- $ rural : int  0 1 0 1 0 1 0 1 0 1 ...
- $ female: int  0 0 1 1 0 0 1 1 0 0 ...
- $ dw    : num  0.092 0.0709 0.0606 0.0458 0.1021 ...
-&gt;
-</pre>
 </div>
 
 <div id="outline-container-orgheadline30" class="outline-3">
-<h3 id="orgheadline30">Data formatting</h3>
+<h3 id="orgheadline30">Most popular names overall</h3>
 <div class="outline-text-3" id="text-orgheadline30">
 <p>
-Our final step before plotting our data is to format the values for <code>rural</code> and <code>female</code>. Currently these values are stored as 0/1 dummy codes, but I would like for the values to be spelled out. 
+Next I want to find the five most popular girl and boy names overall. 
 </p>
 
 <p>
-Earlier we saw how to extract elements of R objects using bracket notation. To replace elements we using the replacement form, which looks like this:
+Specifically I want to:
+</p>
+<ol class="org-ol">
+<li>Sum the counts for each name by sex using <code>group_by</code> and <code>summarize</code>.</li>
+<li>Sort names by the summed counts using <code>arrange</code>.</li>
+<li>Select the top 10 using <code>slice</code>.</li>
+</ol>
+
+<p>
+You already know how <code>group_by</code> and <code>summarize</code> work. The following example shows how <code>arrange</code> and <code>slice</code> work.
 </p>
 <div class="org-src-container">
 
-<pre class="src src-R"> ceprData[[<span class="org-string">"rural"</span>]] <span class="org-constant">&lt;-</span> factor(ceprData[[<span class="org-string">"rural"</span>]],
-                               levels = c(<span class="org-highlight-numbers-number">0</span>, <span class="org-highlight-numbers-number">1</span>),
-                               labels = c(<span class="org-string">"Non-rural"</span>, <span class="org-string">"Rural"</span>))
+<pre class="src src-R"><span style="color: #2aa1ae;">## </span><span style="color: #2aa1ae;">summarize by id and var2</span>
+(example.df.2 <span style="color: #4e3163;">&lt;-</span> example.df <span style="color: #4e3163;">%&gt;%</span>
+   group_by(id, var2) <span style="color: #4e3163;">%&gt;%</span>
+   summarize(var1 = sum(var1)))
 
- ceprData[[<span class="org-string">"gender"</span>]] <span class="org-constant">&lt;-</span> factor(ceprData[[<span class="org-string">"female"</span>]],
-                               levels = c(<span class="org-highlight-numbers-number">1</span>, <span class="org-highlight-numbers-number">0</span>),
-                               labels = c(<span class="org-string">"Female"</span>, <span class="org-string">"Male"</span>))
+<span style="color: #2aa1ae;">## </span><span style="color: #2aa1ae;">sort by var1</span>
+example.df.2 <span style="color: #4e3163;">%&gt;%</span>
+  arrange(var1)
 
-ceprData$displaced_percent <span class="org-constant">&lt;-</span> ceprData$dw * <span class="org-highlight-numbers-number">100</span>
+example.df.2 <span style="color: #4e3163;">%&gt;%</span>
+  arrange(desc(var1))
 
-str(ceprData)
+<span style="color: #2aa1ae;">## </span><span style="color: #2aa1ae;">sort by var1 within id</span>
+(example.df.2 <span style="color: #4e3163;">&lt;-</span> example.df.2 <span style="color: #4e3163;">%&gt;%</span>
+   arrange(id, desc(var1)))
+
+<span style="color: #2aa1ae;">## </span><span style="color: #2aa1ae;">select the top 2 var1's within each id group</span>
+example.df.2 <span style="color: #4e3163;">%&gt;%</span>
+  group_by(id) <span style="color: #4e3163;">%&gt;%</span>
+  slice(<span style="color: #4e3163;">1</span>:<span style="color: #4e3163;">2</span>)
 </pre>
 </div>
 
 <pre class="example">
-&gt;  ceprData[["rural"]] &lt;- factor(ceprData[["rural"]],
-+                                levels = c(0, 1),
-+                                labels = c("Non-rural", "Rural"))
+&gt; ## summarize by id and var2
+&gt; (example.df.2 &lt;- example.df %&gt;%
++    group_by(id, var2) %&gt;%
++    summarize(var1 = sum(var1)))
+Source: local data frame [9 x 3]
+Groups: id [?]
+
+      id   var2       var1
+  &lt;fctr&gt; &lt;fctr&gt;      &lt;dbl&gt;
+1      a      a 1.48493204
+2      a      b 0.46439198
+3      a      c 0.22286743
+4      b      a 0.01967341
+5      b      b 1.27595960
+6      c      b 0.71140908
+7      c      c 0.82526676
+8      d      b 0.51715688
+9      d      c 1.80834094
 &gt; 
-&gt;  ceprData[["gender"]] &lt;- factor(ceprData[["female"]],
-+                                levels = c(1, 0),
-+                                labels = c("Female", "Male"))
+&gt; ## sort by var1
+&gt; example.df.2 %&gt;%
++   arrange(var1)
+Source: local data frame [9 x 3]
+Groups: id [4]
+
+      id   var2       var1
+  &lt;fctr&gt; &lt;fctr&gt;      &lt;dbl&gt;
+1      b      a 0.01967341
+2      a      c 0.22286743
+3      a      b 0.46439198
+4      d      b 0.51715688
+5      c      b 0.71140908
+6      c      c 0.82526676
+7      b      b 1.27595960
+8      a      a 1.48493204
+9      d      c 1.80834094
 &gt; 
-&gt; ceprData$displaced_percent &lt;- ceprData$dw * 100
+&gt; example.df.2 %&gt;%
++   arrange(desc(var1))
+Source: local data frame [9 x 3]
+Groups: id [4]
+
+      id   var2       var1
+  &lt;fctr&gt; &lt;fctr&gt;      &lt;dbl&gt;
+1      d      c 1.80834094
+2      a      a 1.48493204
+3      b      b 1.27595960
+4      c      c 0.82526676
+5      c      b 0.71140908
+6      d      b 0.51715688
+7      a      b 0.46439198
+8      a      c 0.22286743
+9      b      a 0.01967341
 &gt; 
-&gt; str(ceprData)
-'data.frame':	36 obs. of  6 variables:
- $ year             : int  1994 1994 1994 1994 1996 1996 1996 1996 1998 1998 ...
- $ rural            : Factor w/ 2 levels "Non-rural","Rural": 1 2 1 2 1 2 1 2 1 2 ...
- $ female           : int  0 0 1 1 0 0 1 1 0 0 ...
- $ dw               : num  0.092 0.0709 0.0606 0.0458 0.1021 ...
- $ gender           : Factor w/ 2 levels "Female","Male": 2 2 1 1 2 2 1 1 2 2 ...
- $ displaced_percent: num  9.2 7.09 6.06 4.58 10.21 ...
+&gt; ## sort by var1 within id
+&gt; (example.df.2 &lt;- example.df.2 %&gt;%
++    arrange(id, desc(var1)))
+Source: local data frame [9 x 3]
+Groups: id [4]
+
+      id   var2       var1
+  &lt;fctr&gt; &lt;fctr&gt;      &lt;dbl&gt;
+1      a      a 1.48493204
+2      a      b 0.46439198
+3      a      c 0.22286743
+4      b      b 1.27595960
+5      b      a 0.01967341
+6      c      c 0.82526676
+7      c      b 0.71140908
+8      d      c 1.80834094
+9      d      b 0.51715688
+&gt; 
+&gt; ## select the top 2 var1's within each id group
+&gt; example.df.2 %&gt;%
++   group_by(id) %&gt;%
++   slice(1:2)
+Source: local data frame [8 x 3]
+Groups: id [4]
+
+      id   var2       var1
+  &lt;fctr&gt; &lt;fctr&gt;      &lt;dbl&gt;
+1      a      a 1.48493204
+2      a      b 0.46439198
+3      b      b 1.27595960
+4      b      a 0.01967341
+5      c      c 0.82526676
+6      c      b 0.71140908
+7      d      c 1.80834094
+8      d      b 0.51715688
 &gt;
 </pre>
 </div>
 </div>
 
 <div id="outline-container-orgheadline31" class="outline-3">
-<h3 id="orgheadline31">Plotting</h3>
+<h3 id="orgheadline31">Exercise 6: Summarize, arrange, and slice</h3>
 <div class="outline-text-3" id="text-orgheadline31">
 <p>
-Now we can take a look at the trends in worker displacement over the last few years.
+Now that we know how to group, summarize, arrange, and slice we can use these tools to identify the most popular boy and girl names.
 </p>
+
+<ol class="org-ol">
+<li>Sum the counts for each name by sex using <code>group_by</code> and <code>summarize</code>.</li>
+<li>Sort names by the summed counts using <code>arrange</code>.</li>
+<li>Select the top 10 using <code>slice</code> and assign the result to a data.frame named 'top.names.overall'.</li>
+</ol>
+</div>
+</div>
+
+<div id="outline-container-orgheadline32" class="outline-3">
+<h3 id="orgheadline32">Exercise 6 prototype&#xa0;&#xa0;&#xa0;<span class="tag"><span class="prototype">prototype</span></span></h3>
+<div class="outline-text-3" id="text-orgheadline32">
 <div class="org-src-container">
 
-<pre class="src src-R"><span class="org-constant">library</span>(ggplot2)
-<span class="org-constant">library</span>(directlabels)
-ceprPlot <span class="org-constant">&lt;-</span> ggplot(ceprData, aes(x = year, y = displaced_percent, color = gender)) +
+<pre class="src src-R"><span style="color: #2aa1ae;">## </span><span style="color: #2aa1ae;">collapse across years to get the sum for each baby name across time</span>
+ baby.names.totals <span style="color: #4e3163;">&lt;-</span> baby.names <span style="color: #4e3163;">%&gt;%</span>
+   group_by(Sex, Name) <span style="color: #4e3163;">%&gt;%</span>
+   summarize(Count = sum(Count))
+
+<span style="color: #2aa1ae;">## </span><span style="color: #2aa1ae;">arrange the data with the highest counts first, and select the top 10</span>
+(top.names.overall <span style="color: #4e3163;">&lt;-</span> baby.names.totals <span style="color: #4e3163;">%&gt;%</span>
+   arrange(Sex, desc(Count)) <span style="color: #4e3163;">%&gt;%</span>
+   group_by(Sex) <span style="color: #4e3163;">%&gt;%</span>
+   slice(<span style="color: #4e3163;">1</span>:<span style="color: #4e3163;">5</span>))
+</pre>
+</div>
+
+<pre class="example">
+&gt; ## collapse across years to get the sum for each baby name across time
+&gt;  baby.names.totals &lt;- baby.names %&gt;%
++    group_by(Sex, Name) %&gt;%
++    summarize(Count = sum(Count))
+&gt; 
+&gt; ## arrange the data with the highest counts first, and select the top 10
+&gt; (top.names.overall &lt;- baby.names.totals %&gt;%
++    arrange(Sex, desc(Count)) %&gt;%
++    group_by(Sex) %&gt;%
++    slice(1:5))
+Source: local data frame [10 x 3]
+Groups: Sex [2]
+
+     Sex    Name  Count
+   &lt;chr&gt;   &lt;chr&gt;  &lt;dbl&gt;
+1    boy    JACK 160586
+2    boy  THOMAS 137103
+3    boy  JOSHUA 125586
+4    boy   JAMES 122536
+5    boy  OLIVER 114862
+6   girl   EMILY 102250
+7   girl   CHLOE 100980
+8   girl JESSICA  93032
+9   girl  SOPHIE  89581
+10  girl  OLIVIA  87959
+&gt;
+</pre>
+</div>
+</div>
+
+<div id="outline-container-orgheadline33" class="outline-3">
+<h3 id="orgheadline33">Changes in most frequent names over time</h3>
+<div class="outline-text-3" id="text-orgheadline33">
+<p>
+Next I want to see how these most popular names have changed over time. In other words, I want to filter <code>baby.names</code> to include only those names in <code>top.names.overall</code>. An easy way to do it is to join the two data.frames:
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-R">str(baby.names)
+
+top.names.over.time <span style="color: #4e3163;">&lt;-</span> top.names.overall <span style="color: #4e3163;">%&gt;%</span>
+  select(Sex, Name) <span style="color: #4e3163;">%&gt;%</span>
+  inner_join(baby.names) <span style="color: #4e3163;">%&gt;%</span>
+  ungroup()
+
+str(top.names.over.time)
+</pre>
+</div>
+
+<pre class="example">
+&gt; str(baby.names)
+Classes ‘tbl_df’, ‘tbl’ and 'data.frame':	227449 obs. of  5 variables:
+ $ Rank : num  1 2 3 4 5 6 7 8 9 10 ...
+ $ Name : chr  "SOPHIE" "CHLOE" "JESSICA" "EMILY" ...
+ $ Count: num  7087 6824 6711 6415 6299 ...
+ $ Year : int  1996 1996 1996 1996 1996 1996 1996 1996 1996 1996 ...
+ $ Sex  : chr  "girl" "girl" "girl" "girl" ...
+&gt; 
+&gt; top.names.over.time &lt;- top.names.overall %&gt;%
++   select(Sex, Name) %&gt;%
++   inner_join(baby.names) %&gt;%
++   ungroup()
+&gt; 
+&gt; str(top.names.over.time)
+Classes ‘tbl_df’, ‘tbl’ and 'data.frame':	200 obs. of  5 variables:
+ $ Sex  : chr  "boy" "boy" "boy" "boy" ...
+ $ Name : chr  "JACK" "JACK" "JACK" "JACK" ...
+ $ Rank : num  1 1 1 1 1 1 1 1 1 1 ...
+ $ Count: num  10779 10145 9845 9785 9079 ...
+ $ Year : int  1996 1997 1998 1999 2000 2001 2002 2003 2004 2005 ...
+&gt;
+</pre>
+
+<div class="org-src-container">
+
+<pre class="src src-R">ggplot(top.names.over.time,
+       aes(x = Year, y = Count)) +
   geom_line() +
   geom_point() +
-  facet_wrap(~rural)
-direct.label(ceprPlot)
+  facet_wrap(Sex ~ Name, ncol = <span style="color: #4e3163;">5</span>)
 </pre>
 </div>
 
 
 <div class="figure">
-<p><img src="images/out.png" alt="out.png" />
+<p><img src="images/popular_names.png" alt="popular_names.png" />
+</p>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-orgheadline34" class="outline-3">
+<h3 id="orgheadline34">Exercise 7: join, mutate, graphing</h3>
+<div class="outline-text-3" id="text-orgheadline34">
+<p>
+In order to calculate the percent of boys and girls with each name in each year we need to know a) The number of girls(boys) with each name in each year, and b the total number of girls(boys) in each year. The first number is already there in the "Count" variable, and we already calculated the second number (the "total" column in the <code>name.totals.by.year</code> data.frame). Once we have these numbers we can calculate the percent as <code>(Count/total) * 100</code>.
+</p>
+
+<ol class="org-ol">
+<li>Use the <code>inner_join</code> function to add the yearly totals from <code>name.totals.by.year</code> to <code>top.names.over.time</code>.</li>
+<li>Use <code>[[</code> to add a "Percent" column to <code>top.names.over.time</code>.</li>
+<li>Use the <code>mutate</code> function to add a "Percent.check" column to top.names.over.time.</li>
+<li>Use the <code>all.equal</code> function to check that the "Percent" column computed in step 2 is the same as the "Percent.check" column computed in step 3.</li>
+<li>Re-do the popularity over time graph using Percent instead of Count. Fee free to copy the <code>ggplot</code> code from the example and modify it.</li>
+</ol>
+</div>
+</div>
+
+<div id="outline-container-orgheadline35" class="outline-3">
+<h3 id="orgheadline35">Exercise 7 prototype&#xa0;&#xa0;&#xa0;<span class="tag"><span class="prototype">prototype</span></span></h3>
+<div class="outline-text-3" id="text-orgheadline35">
+<div class="org-src-container">
+
+<pre class="src src-R"><span style="color: #2aa1ae;">## </span><span style="color: #2aa1ae;">add total column</span>
+top.names.over.time <span style="color: #4e3163;">&lt;-</span> inner_join(top.names.over.time,
+                                  name.totals.by.year)
+
+<span style="color: #2aa1ae;">## </span><span style="color: #2aa1ae;">add Percent column using bracket extraction</span>
+top.names.over.time[[<span style="color: #2d9574;">"Percent"</span>]] <span style="color: #4e3163;">&lt;-</span> (top.names.over.time[[<span style="color: #2d9574;">"Count"</span>]]/top.names.over.time[[<span style="color: #2d9574;">"total"</span>]]) * <span style="color: #4e3163;">100</span>
+
+<span style="color: #2aa1ae;">## </span><span style="color: #2aa1ae;">add Percent column using mutate</span>
+top.names.over.time <span style="color: #4e3163;">&lt;-</span> mutate(top.names.over.time,
+                              Percent.check = (Count/n()) * <span style="color: #4e3163;">100</span>)
+
+<span style="color: #2aa1ae;">## </span><span style="color: #2aa1ae;">check that the two methods produced the same result</span>
+all.equal(top.names.over.time$Count, top.names.over.time$Percent)
+
+<span style="color: #2aa1ae;">## </span><span style="color: #2aa1ae;">re-do the graph</span>
+ggplot(top.names.over.time,
+       aes(x = Year, y = Percent)) +
+  geom_line() +
+  geom_point() +
+  facet_wrap(Sex ~ Name, ncol = <span style="color: #4e3163;">5</span>)
+</pre>
+</div>
+
+
+<div class="figure">
+<p><img src="images/ex7.png" alt="ex7.png" />
+</p>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-orgheadline36" class="outline-3">
+<h3 id="orgheadline36">Combining similar names</h3>
+<div class="outline-text-3" id="text-orgheadline36">
+<p>
+Similar names with different spellings have been intentionally left alone in these data. If our goals is to examine changes in name popularity (rather than changing spelling preferences) it might be useful to combine them. There are several different algorithms for detecting words that sound alike; many of them (including the <i>nysiis</i> and <i>metaphone</i> algorithms) are provided in R by the <i>phonics</i> package. Here is how it works:
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-R"><span style="color: #2aa1ae;">##</span><span style="color: #2aa1ae;">install.packages("phonics")</span>
+<span style="color: #4e3163;">library</span>(phonics)
+spelling <span style="color: #4e3163;">&lt;-</span> c(
+<span style="color: #2d9574;">"colour"</span>,   <span style="color: #2d9574;">"color"</span>,       
+<span style="color: #2d9574;">"flavour"</span>,   <span style="color: #2d9574;">"flavor"</span>,   
+<span style="color: #2d9574;">"behaviour"</span>, <span style="color: #2d9574;">"behavior"</span>, 
+<span style="color: #2d9574;">"harbour"</span>,   <span style="color: #2d9574;">"harbor"</span>,   
+<span style="color: #2d9574;">"honour"</span>,    <span style="color: #2d9574;">"honor"</span>,    
+<span style="color: #2d9574;">"humour"</span>,    <span style="color: #2d9574;">"humor"</span>,    
+<span style="color: #2d9574;">"labour"</span>,    <span style="color: #2d9574;">"labor"</span>,    
+<span style="color: #2d9574;">"neighbour"</span>, <span style="color: #2d9574;">"neighbor"</span>, 
+<span style="color: #2d9574;">"rumour"</span>,    <span style="color: #2d9574;">"rumor"</span>)
+
+(spelling.data <span style="color: #4e3163;">&lt;-</span> data.frame(original = spelling, Sounds.like = nysiis(spelling, maxCodeLen = <span style="color: #4e3163;">15</span>)))
+</pre>
+</div>
+
+<pre class="example">
+&gt; ##install.packages("phonics")
+&gt; library(phonics)
+&gt; spelling &lt;- c(
++ "colour",   "color",       
++ "flavour",   "flavor",   
++ "behaviour", "behavior", 
++ "harbour",   "harbor",   
++ "honour",    "honor",    
++ "humour",    "humor",    
++ "labour",    "labor",    
++ "neighbour", "neighbor", 
++ "rumour",    "rumor")
+&gt; 
+&gt; (spelling.data &lt;- data.frame(original = spelling, Sounds.like = nysiis(spelling, maxCodeLen = 15)))
+    original Sounds.like
+1     colour       CALAR
+2      color       CALAR
+3    flavour      FLAVAR
+4     flavor      FLAVAR
+5  behaviour     BAHAVAR
+6   behavior     BAHAVAR
+7    harbour      HARBAR
+8     harbor      HARBAR
+9     honour       HANAR
+10     honor       HANAR
+11    humour       HANAR
+12     humor       HANAR
+13    labour       LABAR
+14     labor       LABAR
+15 neighbour      NAGBAR
+16  neighbor      NAGBAR
+17    rumour       RANAR
+18     rumor       RANAR
+&gt;
+</pre>
+
+<p>
+Once we have identified which words are the same (but spelled differently) we can combine those words.
+</p>
+<div class="org-src-container">
+
+<pre class="src src-R">(spelling.data <span style="color: #4e3163;">&lt;-</span> spelling.data <span style="color: #4e3163;">%&gt;%</span>
+   group_by(Sounds.like) <span style="color: #4e3163;">%&gt;%</span>
+   mutate(Alternative.spellings = str_c(sort(original), collapse = <span style="color: #2d9574;">"/"</span>)))
+</pre>
+</div>
+
+<pre class="example">
+&gt; (spelling.data &lt;- spelling.data %&gt;%
++    group_by(Sounds.like) %&gt;%
++    mutate(Alternative.spellings = str_c(sort(original), collapse = "/")))
+Source: local data frame [18 x 3]
+Groups: Sounds.like [8]
+
+    original Sounds.like     Alternative.spellings
+      &lt;fctr&gt;      &lt;fctr&gt;                     &lt;chr&gt;
+1     colour       CALAR              color/colour
+2      color       CALAR              color/colour
+3    flavour      FLAVAR            flavor/flavour
+4     flavor      FLAVAR            flavor/flavour
+5  behaviour     BAHAVAR        behavior/behaviour
+6   behavior     BAHAVAR        behavior/behaviour
+7    harbour      HARBAR            harbor/harbour
+8     harbor      HARBAR            harbor/harbour
+9     honour       HANAR honor/honour/humor/humour
+10     honor       HANAR honor/honour/humor/humour
+11    humour       HANAR honor/honour/humor/humour
+12     humor       HANAR honor/honour/humor/humour
+13    labour       LABAR              labor/labour
+14     labor       LABAR              labor/labour
+15 neighbour      NAGBAR        neighbor/neighbour
+16  neighbor      NAGBAR        neighbor/neighbour
+17    rumour       RANAR              rumor/rumour
+18     rumor       RANAR              rumor/rumour
+&gt;
+</pre>
+
+<p>
+We can use this technique to identify and group names with alternative spellings. Since any one algorithm tends to group two aggressively we'll require multiple algorithms to agree.
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-R"><span style="color: #4e3163;">library</span>(phonics)
+baby.names <span style="color: #4e3163;">&lt;-</span> baby.names <span style="color: #4e3163;">%&gt;%</span>
+  group_by(Sex) <span style="color: #4e3163;">%&gt;%</span>
+  mutate(Sounds.like = str_c(nysiis(Name, maxCodeLen = <span style="color: #4e3163;">10</span>),
+                             metaphone(Name, maxCodeLen = <span style="color: #4e3163;">10</span>),
+                             sep = <span style="color: #2d9574;">"/"</span>)) <span style="color: #4e3163;">%&gt;%</span>
+  group_by(Sex, Sounds.like) <span style="color: #4e3163;">%&gt;%</span>
+  mutate(Alternative.spellings = str_c(sort(unique(Name)), collapse = <span style="color: #2d9574;">"/"</span>)) <span style="color: #4e3163;">%&gt;%</span>
+  ungroup()
+
+  str(baby.names)
+</pre>
+</div>
+
+<pre class="example">
+&gt; library(phonics)
+&gt; baby.names &lt;- baby.names %&gt;%
++   group_by(Sex) %&gt;%
++   mutate(Sounds.like = str_c(nysiis(Name, maxCodeLen = 10),
++                              metaphone(Name, maxCodeLen = 10),
++                              sep = "/")) %&gt;%
++   group_by(Sex, Sounds.like) %&gt;%
++   mutate(Alternative.spellings = str_c(sort(unique(Name)), collapse = "/")) %&gt;%
++   ungroup()
+&gt; 
+&gt;   str(baby.names)
+Classes ‘tbl_df’, ‘tbl’ and 'data.frame':	227449 obs. of  7 variables:
+ $ Rank                 : num  1 2 3 4 5 6 7 8 9 10 ...
+ $ Name                 : chr  "SOPHIE" "CHLOE" "JESSICA" "EMILY" ...
+ $ Count                : num  7087 6824 6711 6415 6299 ...
+ $ Year                 : int  1996 1996 1996 1996 1996 1996 1996 1996 1996 1996 ...
+ $ Sex                  : chr  "girl" "girl" "girl" "girl" ...
+ $ Sounds.like          : chr  "SAFY/SF" "CHL/XL" "JASAC/JSK" "ENALY/EML" ...
+ $ Alternative.spellings: chr  "SAFFIE/SOFIE/SOPHIE/SOPHIE-/SOPHY" "CHLOE/CHLOE-" "JASIKA/JASSICA/JESICA/JESIKA/JESSECA/JESSICA/JESSICA-/JESSIKA" "EMALEE/EMALIE/EMELIE/EMELY/EMILEE/EMILEY/EMILIE/EMILLIE/EMILLY/EMILY/EMILY-/EMMALEE/EMMA-LEE/EMMILY" ...
+&gt;
+</pre>
+</div>
+</div>
+
+<div id="outline-container-orgheadline37" class="outline-3">
+<h3 id="orgheadline37">Exercise 8: More data frame manipulation practice</h3>
+<div class="outline-text-3" id="text-orgheadline37">
+<p>
+Now that we've combined names with different spellings lets re-do the "most popular overall" graph using combined names.
+</p>
+
+<ol class="org-ol">
+<li>Sum the Count column by Sex, Alternative.spellings, and Year</li>
+<li>Take the result from step 1 and
+<ol class="org-ol">
+<li><code>group_by</code> Sex and alternative spellings</li>
+<li><code>summarize</code> by taking the <code>sum</code> of the Count variable</li>
+<li><code>group_by</code> Sex</li>
+<li><code>arrange</code> by count</li>
+<li><code>select</code> Sex and Alternative.spellings</li>
+<li><code>slice</code> rows 1:5</li>
+<li><code>inner_join</code> with the result from step 1.</li>
+</ol></li>
+<li>Graph the prevalence of the most popular combined names over time.</li>
+</ol>
+</div>
+</div>
+
+<div id="outline-container-orgheadline38" class="outline-3">
+<h3 id="orgheadline38">Exercise 8 prototype&#xa0;&#xa0;&#xa0;<span class="tag"><span class="prototype">prototype</span></span></h3>
+<div class="outline-text-3" id="text-orgheadline38">
+<div class="org-src-container">
+
+<pre class="src src-R">baby.names.combined <span style="color: #4e3163;">&lt;-</span> baby.names <span style="color: #4e3163;">%&gt;%</span>
+  group_by(Sex, Alternative.spellings, Year) <span style="color: #4e3163;">%&gt;%</span>
+  summarize(Count = sum(Count))
+
+top.names.combined.over.time <span style="color: #4e3163;">&lt;-</span> baby.names.combined <span style="color: #4e3163;">%&gt;%</span>
+  group_by(Sex, Alternative.spellings) <span style="color: #4e3163;">%&gt;%</span>
+  summarize(Count = sum(Count)) <span style="color: #4e3163;">%&gt;%</span>
+  group_by(Sex) <span style="color: #4e3163;">%&gt;%</span>
+  arrange(desc(Count)) <span style="color: #4e3163;">%&gt;%</span>
+  select(Sex, Alternative.spellings) <span style="color: #4e3163;">%&gt;%</span>
+  slice(<span style="color: #4e3163;">1</span>:<span style="color: #4e3163;">5</span>) <span style="color: #4e3163;">%&gt;%</span>
+  inner_join(baby.names.combined)
+
+ggplot(top.names.combined.over.time,
+       aes(x = Year, y = Count)) +
+  geom_line() +
+  geom_point() +
+  facet_wrap(Sex ~ Alternative.spellings, ncol = <span style="color: #4e3163;">5</span>)
+</pre>
+</div>
+
+
+<div class="figure">
+<p><img src="images/ex8.png" alt="ex8.png" />
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgheadline39" class="outline-3">
+<h3 id="orgheadline39">Most popular "starts with" and "ends with"</h3>
+<div class="outline-text-3" id="text-orgheadline39">
+<p>
+Not only do the most popular names change over time, but the most popular first and last letters also display temporal trends. We can extract the first/last n letters using <code>str_sub</code>, like this:
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-R">month.name
+str_sub(month.name, <span style="color: #4e3163;">1</span>, <span style="color: #4e3163;">1</span>)
+str_sub(month.name, <span style="color: #4e3163;">1</span>, <span style="color: #4e3163;">3</span>)
+str_sub(month.name, -<span style="color: #4e3163;">1</span>, -<span style="color: #4e3163;">1</span>)
+str_sub(month.name, -<span style="color: #4e3163;">3</span>, -<span style="color: #4e3163;">1</span>)
+</pre>
+</div>
+
+<pre class="example">
+&gt; month.name
+ [1] "January"   "February"  "March"     "April"     "May"       "June"     
+ [7] "July"      "August"    "September" "October"   "November"  "December" 
+&gt; str_sub(month.name, 1, 1)
+ [1] "J" "F" "M" "A" "M" "J" "J" "A" "S" "O" "N" "D"
+&gt; str_sub(month.name, 1, 3)
+ [1] "Jan" "Feb" "Mar" "Apr" "May" "Jun" "Jul" "Aug" "Sep" "Oct" "Nov" "Dec"
+&gt; str_sub(month.name, -1, -1)
+ [1] "y" "y" "h" "l" "y" "e" "y" "t" "r" "r" "r" "r"
+&gt; str_sub(month.name, -3, -1)
+ [1] "ary" "ary" "rch" "ril" "May" "une" "uly" "ust" "ber" "ber" "ber" "ber"
+&gt;
+</pre>
+</div>
+</div>
+
+<div id="outline-container-orgheadline40" class="outline-3">
+<h3 id="orgheadline40">Exercise 9: string manipulation, data.frame manipulation</h3>
+<div class="outline-text-3" id="text-orgheadline40">
+<p>
+In order to examine trends in name beginnings and endings we need to create new columns with just the first/last n letters of each name, and then summarize the data to the level of the first n letters.
+</p>
+
+<ol class="org-ol">
+<li>Create a new column named "First.1", containing just the first letter of the "Name" column.</li>
+<li>Create a new column named "First.2", containing just the first two letters of the "Name" column.</li>
+<li>Create a new column named "Last.1", containing just the last letter of the "Name" column.</li>
+<li>Create a new column named "Last.2", containing just the last two letters of the "Name" column.</li>
+<li>Construct a graph showing changes over time in the 5 most popular last letter for boys and girls. Feel free to copy/paste/modify the code from the previous exercise.</li>
+</ol>
+</div>
+</div>
+
+<div id="outline-container-orgheadline41" class="outline-3">
+<h3 id="orgheadline41">Exercise 9 prototype&#xa0;&#xa0;&#xa0;<span class="tag"><span class="prototype">prototype</span></span></h3>
+<div class="outline-text-3" id="text-orgheadline41">
+<div class="org-src-container">
+
+<pre class="src src-R">baby.names[[<span style="color: #2d9574;">"First.1"</span>]] <span style="color: #4e3163;">&lt;-</span> str_sub(baby.names[[<span style="color: #2d9574;">"Name"</span>]], <span style="color: #4e3163;">1</span>, <span style="color: #4e3163;">1</span>)
+baby.names[[<span style="color: #2d9574;">"First.2"</span>]] <span style="color: #4e3163;">&lt;-</span> str_sub(baby.names[[<span style="color: #2d9574;">"Name"</span>]], <span style="color: #4e3163;">1</span>, <span style="color: #4e3163;">2</span>)
+baby.names[[<span style="color: #2d9574;">"First.3"</span>]] <span style="color: #4e3163;">&lt;-</span> str_sub(baby.names[[<span style="color: #2d9574;">"Name"</span>]], <span style="color: #4e3163;">1</span>, <span style="color: #4e3163;">3</span>)
+baby.names[[<span style="color: #2d9574;">"Last.1"</span>]] <span style="color: #4e3163;">&lt;-</span> str_sub(baby.names[[<span style="color: #2d9574;">"Name"</span>]], -<span style="color: #4e3163;">1</span>, -<span style="color: #4e3163;">1</span>)
+baby.names[[<span style="color: #2d9574;">"Last.2"</span>]] <span style="color: #4e3163;">&lt;-</span> str_sub(baby.names[[<span style="color: #2d9574;">"Name"</span>]], -<span style="color: #4e3163;">2</span>, -<span style="color: #4e3163;">1</span>)
+baby.names[[<span style="color: #2d9574;">"Last.3"</span>]] <span style="color: #4e3163;">&lt;-</span> str_sub(baby.names[[<span style="color: #2d9574;">"Name"</span>]], -<span style="color: #4e3163;">3</span>, -<span style="color: #4e3163;">1</span>)
+
+baby.names.first.letter <span style="color: #4e3163;">&lt;-</span> baby.names <span style="color: #4e3163;">%&gt;%</span>
+  group_by(Sex, Year, Last.1) <span style="color: #4e3163;">%&gt;%</span>
+  summarize(Count = sum(Count), Percent = (Count/n()) * <span style="color: #4e3163;">100</span>)
+
+top.first.letter.over.time <span style="color: #4e3163;">&lt;-</span> baby.names.first.letter <span style="color: #4e3163;">%&gt;%</span>
+  group_by(Sex, Last.1) <span style="color: #4e3163;">%&gt;%</span>
+  summarize(Count = sum(Count), Percent = (Count/n()) * <span style="color: #4e3163;">100</span>) <span style="color: #4e3163;">%&gt;%</span>
+  arrange(desc(Percent)) <span style="color: #4e3163;">%&gt;%</span>
+  slice(<span style="color: #4e3163;">1</span>:<span style="color: #4e3163;">5</span>) <span style="color: #4e3163;">%&gt;%</span>
+  select(Last.1, Sex) <span style="color: #4e3163;">%&gt;%</span>
+  inner_join(baby.names.first.letter)
+
+ggplot(top.first.letter.over.time,
+       aes(x = Year, y = Percent)) +
+  geom_line() +
+  geom_point() +
+  facet_wrap(Sex ~ Last.1, ncol = <span style="color: #4e3163;">5</span>)
+</pre>
+</div>
+
+
+<div class="figure">
+<p><img src="images/ex9.png" alt="ex9.png" />
 </p>
 </div>
 </div>
 </div>
 </div>
 
-<div id="outline-container-orgheadline32" class="outline-2">
-<h2 id="orgheadline32">What else?</h2>
-<div class="outline-text-2" id="text-orgheadline32">
+
+<div id="outline-container-orgheadline42" class="outline-2">
+<h2 id="orgheadline42">What else?</h2>
+<div class="outline-text-2" id="text-orgheadline42">
 <p>
 If there is anything else you want to learn how to do, now is the time to ask!
 </p>
@@ -1241,21 +2474,20 @@ If there is anything else you want to learn how to do, now is the time to ask!
 </div>
 
 
-<div id="outline-container-orgheadline33" class="outline-2">
-<h2 id="orgheadline33">Go forth and code!</h2>
-<div class="outline-text-2" id="text-orgheadline33">
+<div id="outline-container-orgheadline43" class="outline-2">
+<h2 id="orgheadline43">Go forth and code!</h2>
+<div class="outline-text-2" id="text-orgheadline43">
 <p>
-You now know everything you could possibly want to know about R. OK maybe not! But you do know how to manipulate character strings with regular expressions, write your own functions, execute code conditionally, iterate using <code>for</code> or <code>sapply</code>, inspect and modify attributes, and extract and replace object elements. There's a lot more to learn, but that's a pretty good start. As you go forth and write your own R code here are some resources that may be helpful.
+You now know everything you could possibly want to know about R. OK maybe not! But you do know how to manipulate character strings with regular expressions, write your own functions, iterate, inspect and modify attributes, and extract and replace object elements. There's a lot more to learn, but that's a pretty good start. As you go forth and write your own R code here are some resources that may be helpful.
 </p>
 </div>
+</div>
 
-<div id="outline-container-orgheadline34" class="outline-3">
-<h3 id="orgheadline34">Additional reading and resources</h3>
-<div class="outline-text-3" id="text-orgheadline34">
+<div id="outline-container-orgheadline44" class="outline-2">
+<h2 id="orgheadline44">Additional reading and resources</h2>
+<div class="outline-text-2" id="text-orgheadline44">
 <ul class="org-ul">
-<li>Learn from the best: <a href="http://adv-r.had.co.nz/">http://adv-r.had.co.nz/</a></li>
-<li>S3 system overview: <a href="https://github.com/hadley/devtools/wiki/S3">https://github.com/hadley/devtools/wiki/S3</a></li>
-<li>S4 system overview: <a href="https://github.com/hadley/devtools/wiki/S4">https://github.com/hadley/devtools/wiki/S4</a></li>
+<li>Learn from the best: <a href="http://adv-r.had.co.nz/">http://adv-r.had.co.nz/</a>; <a href="http://r4ds.had.co.nz/">http://r4ds.had.co.nz/</a></li>
 <li>R documentation: <a href="http://cran.r-project.org/manuals.html">http://cran.r-project.org/manuals.html</a></li>
 <li>Collection of R tutorials: <a href="http://cran.r-project.org/other-docs.html">http://cran.r-project.org/other-docs.html</a></li>
 
@@ -1278,30 +2510,30 @@ You now know everything you could possibly want to know about R. OK maybe not! B
 </p>
 
 <ul class="org-ul">
-<li>Institute for Quantitative Social Science: <a href="http://iq.harvard.edu/">http://iq.harvard.edu/</a></li>
+<li>Institute for Quantitative Social Science: <a href="http://iq.harvard.edu">http://iq.harvard.edu</a></li>
 <li>Research technology consulting: <a href="http://projects.iq.harvard.edu/rtc">http://projects.iq.harvard.edu/rtc</a></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-orgheadline35" class="outline-3">
-<h3 id="orgheadline35">Things that may surprise you</h3>
-<div class="outline-text-3" id="text-orgheadline35">
+<div id="outline-container-orgheadline45" class="outline-2">
+<h2 id="orgheadline45">Epilogue: Things that may surprise you</h2>
+<div class="outline-text-2" id="text-orgheadline45">
 <p>
 There are an unfortunately large number of surprises in R programming. Some of these "gotcha's" are common problems in other languages, many are unique to R. We will only cover a few &#x2013; for a more comprehensive discussion please see <a href="http://www.burns-stat.com/pages/Tutor/R_inferno.pdf">http://www.burns-stat.com/pages/Tutor/R_inferno.pdf</a>
 </p>
 </div>
 
 
-<div id="outline-container-orgheadline36" class="outline-4">
-<h4 id="orgheadline36">Floating point comparison</h4>
-<div class="outline-text-4" id="text-orgheadline36">
+<div id="outline-container-orgheadline46" class="outline-4">
+<h4 id="orgheadline46">Floating point comparison</h4>
+<div class="outline-text-4" id="text-orgheadline46">
 <p>
 Floating point arithmetic is not exact:
 </p>
 <div class="org-src-container">
 
-<pre class="src src-R" id="orgsrcblock1">.1 == .3/<span class="org-highlight-numbers-number">3</span>
+<pre class="src src-R" id="orgsrcblock1">.1 == .3/<span style="color: #4e3163;">3</span>
 </pre>
 </div>
 
@@ -1316,7 +2548,7 @@ Solution: <code>use all.equal()</code>:
 </p>
 <div class="org-src-container">
 
-<pre class="src src-R" id="orgsrcblock2">all.equal(.1, .3/<span class="org-highlight-numbers-number">3</span>)
+<pre class="src src-R" id="orgsrcblock2">all.equal(.1, .3/<span style="color: #4e3163;">3</span>)
 </pre>
 </div>
 
@@ -1328,15 +2560,15 @@ Solution: <code>use all.equal()</code>:
 </div>
 </div>
 
-<div id="outline-container-orgheadline37" class="outline-4">
-<h4 id="orgheadline37">Missing values</h4>
-<div class="outline-text-4" id="text-orgheadline37">
+<div id="outline-container-orgheadline47" class="outline-4">
+<h4 id="orgheadline47">Missing values</h4>
+<div class="outline-text-4" id="text-orgheadline47">
 <p>
 R does not exclude missing values by default &#x2013; a single missing value in a vector means that many thing are unknown:
 </p>
 <div class="org-src-container">
 
-<pre class="src src-R" id="orgsrcblock3">x <span class="org-constant">&lt;-</span> c(<span class="org-highlight-numbers-number">1:10</span>, <span class="org-type">NA</span>, <span class="org-highlight-numbers-number">12:20</span>)
+<pre class="src src-R" id="orgsrcblock3">x <span style="color: #4e3163;">&lt;-</span> c(<span style="color: #4e3163;">1</span>:<span style="color: #4e3163;">10</span>, <span style="color: #ba2f59; font-weight: bold;">NA</span>, <span style="color: #4e3163;">12</span>:<span style="color: #4e3163;">20</span>)
 c(mean(x), sd(x), median(x), min(x), sd(x))
 </pre>
 </div>
@@ -1353,7 +2585,7 @@ NA is not equal to anything, not even NA
 </p>
 <div class="org-src-container">
 
-<pre class="src src-R" id="orgsrcblock4"><span class="org-type">NA</span> == <span class="org-type">NA</span>
+<pre class="src src-R" id="orgsrcblock4"><span style="color: #ba2f59; font-weight: bold;">NA</span> == <span style="color: #ba2f59; font-weight: bold;">NA</span>
 </pre>
 </div>
 
@@ -1369,21 +2601,21 @@ Solutions: use <code>na.rm = TRUE</code> option when calculating, and is.na to t
 </div>
 </div>
 
-<div id="outline-container-orgheadline38" class="outline-4">
-<h4 id="orgheadline38">Automatic type conversion</h4>
-<div class="outline-text-4" id="text-orgheadline38">
+<div id="outline-container-orgheadline48" class="outline-4">
+<h4 id="orgheadline48">Automatic type conversion</h4>
+<div class="outline-text-4" id="text-orgheadline48">
 <p>
 Automatic type conversion happens a lot which is often useful, but makes it easy to miss mistakes
 </p>
 
 <div class="org-src-container">
 
-<pre class="src src-R" id="orgsrcblock5"><span class="org-comment-delimiter"># </span><span class="org-comment">combining values coereces them to the most general type</span>
-(x <span class="org-constant">&lt;-</span> c(<span class="org-type">TRUE</span>, <span class="org-type">FALSE</span>, <span class="org-highlight-numbers-number">1</span>, <span class="org-highlight-numbers-number">2</span>, <span class="org-string">"a"</span>, <span class="org-string">"b"</span>))
+<pre class="src src-R" id="orgsrcblock5"><span style="color: #2aa1ae;"># </span><span style="color: #2aa1ae;">combining values coereces them to the most general type</span>
+(x <span style="color: #4e3163;">&lt;-</span> c(<span style="color: #ba2f59; font-weight: bold;">TRUE</span>, <span style="color: #ba2f59; font-weight: bold;">FALSE</span>, <span style="color: #4e3163;">1</span>, <span style="color: #4e3163;">2</span>, <span style="color: #2d9574;">"a"</span>, <span style="color: #2d9574;">"b"</span>))
 str(x)
 
-<span class="org-comment-delimiter"># </span><span class="org-comment">comparisons convert arguments to most general type</span>
-<span class="org-highlight-numbers-number">1</span> &gt; <span class="org-string">"a"</span>
+<span style="color: #2aa1ae;"># </span><span style="color: #2aa1ae;">comparisons convert arguments to most general type</span>
+<span style="color: #4e3163;">1</span> &gt; <span style="color: #2d9574;">"a"</span>
 </pre>
 </div>
 
@@ -1406,17 +2638,17 @@ Maybe this is what you expect&#x2026; I would like to at least get a warning!
 </div>
 </div>
 
-<div id="outline-container-orgheadline39" class="outline-4">
-<h4 id="orgheadline39">Optional argument inconsistencies</h4>
-<div class="outline-text-4" id="text-orgheadline39">
+<div id="outline-container-orgheadline49" class="outline-4">
+<h4 id="orgheadline49">Optional argument inconsistencies</h4>
+<div class="outline-text-4" id="text-orgheadline49">
 <p>
 Functions you might expect to work similarly don't always:
 </p>
 
 <div class="org-src-container">
 
-<pre class="src src-R" id="orgsrcblock6">mean(<span class="org-highlight-numbers-number">1</span>, <span class="org-highlight-numbers-number">2</span>, <span class="org-highlight-numbers-number">3</span>, <span class="org-highlight-numbers-number">4</span>, <span class="org-highlight-numbers-number">5</span>)*<span class="org-highlight-numbers-number">5</span>
-sum(<span class="org-highlight-numbers-number">1</span>, <span class="org-highlight-numbers-number">2</span>, <span class="org-highlight-numbers-number">3</span>, <span class="org-highlight-numbers-number">4</span>, <span class="org-highlight-numbers-number">5</span>)
+<pre class="src src-R" id="orgsrcblock6">mean(<span style="color: #4e3163;">1</span>, <span style="color: #4e3163;">2</span>, <span style="color: #4e3163;">3</span>, <span style="color: #4e3163;">4</span>, <span style="color: #4e3163;">5</span>)*<span style="color: #4e3163;">5</span>
+sum(<span style="color: #4e3163;">1</span>, <span style="color: #4e3163;">2</span>, <span style="color: #4e3163;">3</span>, <span style="color: #4e3163;">4</span>, <span style="color: #4e3163;">5</span>)
 </pre>
 </div>
 
@@ -1454,23 +2686,23 @@ Ouch. That is not nice at all!
 </div>
 </div>
 
-<div id="outline-container-orgheadline40" class="outline-4">
-<h4 id="orgheadline40">Trouble with Factors</h4>
-<div class="outline-text-4" id="text-orgheadline40">
+<div id="outline-container-orgheadline50" class="outline-4">
+<h4 id="orgheadline50">Trouble with Factors</h4>
+<div class="outline-text-4" id="text-orgheadline50">
 <p>
 Factors sometimes behave as numbers, and sometimes as characters, which can be confusing!
 </p>
 
 <div class="org-src-container">
 
-<pre class="src src-R" id="orgsrcblock8">(x <span class="org-constant">&lt;-</span> factor(c(<span class="org-highlight-numbers-number">5</span>, <span class="org-highlight-numbers-number">5</span>, <span class="org-highlight-numbers-number">6</span>, <span class="org-highlight-numbers-number">6</span>), levels = c(<span class="org-highlight-numbers-number">6</span>, <span class="org-highlight-numbers-number">5</span>)))
+<pre class="src src-R" id="orgsrcblock8">(x <span style="color: #4e3163;">&lt;-</span> factor(c(<span style="color: #4e3163;">5</span>, <span style="color: #4e3163;">5</span>, <span style="color: #4e3163;">6</span>, <span style="color: #4e3163;">6</span>), levels = c(<span style="color: #4e3163;">6</span>, <span style="color: #4e3163;">5</span>)))
 
 str(x)
 
 as.character(x)
-<span class="org-comment-delimiter"># </span><span class="org-comment">here is where people sometimes get lost...</span>
+<span style="color: #2aa1ae;"># </span><span style="color: #2aa1ae;">here is where people sometimes get lost...</span>
 as.numeric(x)
-<span class="org-comment-delimiter"># </span><span class="org-comment">you probably want</span>
+<span style="color: #2aa1ae;"># </span><span style="color: #2aa1ae;">you probably want</span>
 as.numeric(as.character(x))
 </pre>
 </div>
@@ -1495,12 +2727,11 @@ Levels: 6 5
 </pre>
 </div>
 </div>
-</div>
 
 
-<div id="outline-container-orgheadline41" class="outline-3">
-<h3 id="orgheadline41">Feedback</h3>
-<div class="outline-text-3" id="text-orgheadline41">
+<div id="outline-container-orgheadline51" class="outline-3">
+<h3 id="orgheadline51">Feedback</h3>
+<div class="outline-text-3" id="text-orgheadline51">
 <ul class="org-ul">
 <li>Help Us Make This Workshop Better!</li>
 <li>Please take a moment to fill out a very short feedback form</li>
@@ -1515,11 +2746,7 @@ Levels: 6 5
 <div id="text-footnotes">
 
 <div class="footdef"><sup><a id="fn.1" class="footnum" href="#fnr.1">1</a></sup> <div class="footpara"><p class="footpara">
-Center for Economic and Policy Research. 2012. CPS Displaced Worker Uniform Extracts, Version 1.02. Washington, DC.
-</p></div></div>
-
-<div class="footdef"><sup><a id="fn.2" class="footnum" href="#fnr.2">2</a></sup> <div class="footpara"><p class="footpara">
-Photo by Hadley Wickham via <a href="https://twitter.com/hadleywickham/status/643381054758363136/photo/1">https://twitter.com/hadleywickham/status/643381054758363136/photo/1</a>. Used by permission.
+In general you <a href="http://stackoverflow.com/questions/1732348/regex-match-open-tags-except-xhtml-self-contained-tags/1732454#1732454">should not use string manipulation tools to parse html</a>, but in this case the html is simple enough that a regular expression based approach is fine.
 </p></div></div>
 
 

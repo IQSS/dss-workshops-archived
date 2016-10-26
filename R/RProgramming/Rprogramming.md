@@ -1,524 +1,959 @@
+---
+date: '""'
+exclude_tags: noexport mitsetup prototype
+html: |
+    &lt;a class="github-fork-ribbon right-top"
+    href="<https://github.com/izahn/workshops>" title="Fork me on
+    GitHub"&gt;Fork me on GitHub&lt;/a&gt;
+property: exports code
+setupfile: '../workshopPreamble.org'
+startup: showeverything
+title: Introduction To Programming In R
+---
+
 Workshop overview and materials
 ===============================
 
 Workshop description
 --------------------
 
-This is an intermediate/advanced R course appropriate for those with basic knowledge of R. It is intended for those already comfortable with using R for data analysis who wish to move on to writing their own functions. To the extent possible this workshop uses real-world examples. That is to say that concepts are introduced as they are needed for a realistic analysis task. In the course of working through a realistic project we will lean about interacting with web services, regular expressions, iteration, functions, control flow and more.
+This is an intermediate/advanced R course appropriate for those with
+basic knowledge of R. It is intended for those already comfortable with
+using R for data analysis who wish to move on to writing their own
+functions. To the extent possible this workshop uses real-world
+examples. That is to say that concepts are introduced as they are needed
+for a realistic analysis task. In the course of working through a
+realistic project we will lean about interacting with web services,
+regular expressions, iteration, functions, control flow and more.
 
-Prerequisite: basic familiarity with R, such as acquired from an introductory R workshop.
+This workshop uses the
+[tidyverse](https://cran.r-project.org/web/packages/tidyverse/index.html)
+package which provides more consistent file IO
+([readr](https://cran.r-project.org/web/packages/readr/index.html)),
+data manipulation
+([dplyr](https://cran.r-project.org/web/packages/dplyr/index.html),
+[tidyr](https://cran.r-project.org/web/packages/tidyr/index.html)) and
+functional programming
+([purrr](https://cran.r-project.org/web/packages/purrr/index.html))
+tools for R.
 
-<div class="materials-no-ipynb">
+Prerequisite: basic familiarity with R, such as acquired from an
+introductory R workshop.
 
 Materials and setup
 -------------------
 
 Everyone should have R installed -- if not:
 
--   Open a web browser and go to <http://cran.r-project.org> and download and install it
+-   Open a web browser and go to <http://cran.r-project.org> and
+    download and install it
 -   Also helpful to install RStudio (download from <http://rstudio.com>)
 
-Materials for this workshop include slides, example data sets, and example code.
+Materials for this workshop include slides, example data sets, and
+example code.
 
--   Download materials from <http://tutorials.iq.harvard.edu/R/RProgramming.zip>
+-   Download materials from
+    <http://tutorials.iq.harvard.edu/R/RProgramming.zip>
 -   Extract the zip file containing the materials to your desktop
-
-<div class="materials-no-ipynb">
 
 Example project overview
 ------------------------
 
-Throughout this workshop we will return to a running example that involves acquiring, processing, and analyzing data from the [Displaced Worker Survery](http://ceprdata.org/cps-uniform-data-extracts/cps-displaced-worker-survey/cps-dws-data/) (DWS). In this context we will learn about finding and using R packages, importing and manipulating data, writing functions, and more. The web page has been mirrored at <http://tutorials.iq.harvard.edu/cps-uniform-data-extracts/cps-displaced-worker-survey/cps-dws-data> for convenience.
+Throughout this workshop we will return to a running example that
+involves acquiring, processing, and analyzing UK baby names statistics.
+In this context we will learn about data types, iteration, file IO,
+writing functions, and more.
 
-Extracting elements from html
-=============================
+Extracting information from a text file (string manipulation)
+=============================================================
 
-It is common for data to be made available on a website somewhere, either by a government agency, research group, or other organizations and entities. Often the data you want is spread over many files, and retrieving it all one file at a time is tedious and time consuming. Such is the case with the CPS data we will be using today.
+It is common for data to be made available on a website somewhere,
+either by a government agency, research group, or other organizations
+and entities. Often the data you want is spread over many files, and
+retrieving it all one file at a time is tedious and time consuming. Such
+is the case with the baby names data we will be using today.
 
-The Center for Economic and Policy Research has helpfully [compiled DWS data going back to 1994](http://ceprdata.org/cps-uniform-data-extracts/cps-displaced-worker-survey/cps-dws-data/)[1]. Although we could open a web browser and download these files one at a time, it will be faster and easier to instruct R to do that for us. Doing it this way will also give us an excuse to talk about html parsing, regular expressions, package management, and other useful techniques.
+The UK [Office for National Statistics](https://www.ons.gov.uk) provides
+yearly data on the most popular baby names going back to 1996. The data
+is provided separately for boys and girls. These data have been cleaned
+up and copied to
+<http://tutorials/iq/harvard.edu/exampel_data/baby_names>. Although we
+could open a web browser and download files one at a time, it will be
+faster and easier to instruct R to do that for us. Doing it this way
+will also give us an excuse to talk about iteration, text processing,
+and other useful techniques.
 
-Our goal is to download all the Stata data sets from <http://tutorials.iq.harvard.edu/cps-uniform-data-extracts/cps-displaced-worker-survey/cps-dws-data/>. In order to do that we need a list of the Uniform Resource Locators (URLs) of those files. The URLs we need are right there as links in the ceprdata.org webpage. All we have to do is read that data in a way R can understand.
+Our first goal is to download all the .csv files from
+<http://tutorials/iq/harvard.edu/exampel_data/baby_names>.
 
-Packages for parsing html
--------------------------
+In order to do that we need a list of the Uniform Resource Locators
+(URLs) of those files. The URLs we need are right there as links in the
+web page. All we need to do is extract them.
 
-In order extract the data URls from the ceprdata.org website we need a package for parsing XML and HTML. How do we find such a package?
+Introduction to the tidyverse
+-----------------------------
 
-Task views  
-<https://cran.r-project.org/web/views/WebTechnologies.html>
+In order extract the data URls from the website we will use functions
+for manipulating strings[^1]. What functions or packages should we use?
+Here are some tools to help us decide.
 
-R package search  
-<http://www.r-pkg.org/search.html?q=html+xml>
+Task views
+:   <https://cran.r-project.org/web/views/NaturalLanguageProcessing.html>
 
-Web search  
-<https://www.google.com/search?q=R+parse+html+xml&ie=utf-8&oe=utf-8>
+R package search
+:   <http://www.r-pkg.org/search.html?q=string>
 
-For parsing html in R I recommend either the `xml2` package or the `rvest` package, with the former being more flexible and the later being more user friendly. Let's use the friendlier one.
+Web search
+:   <https://www.google.com/search?q=R+string+manipulation&ie=utf-8&oe=utf-8>
 
-Extracting information from web pages with the `rvest` package
---------------------------------------------------------------
+Base R provides some string manipulation capabilities (see `?regex`,
+`?sub` and `?grep`), but I recommend either the
+[stringr](https://cran.r-project.org/web/packages/stringr/index.html) or
+[stringi](https://cran.r-project.org/web/packages/stringi/index.html)
+packages. The stringr package is more user-friendly, and the stringi
+package is more powerful and complex. Let's use the friendlier one.
+While we're attaching packages we'll also attach the
+[tidyverse](https://cran.r-project.org/web/packages/tidyverse/index.html)
+package which provides more modern versions of many basic functions in
+R.
 
-Our first task is to read the web page into R. We can do that using the `read_html` function. Next we want to find all the links (the `<a>` tags) and extract their `href` attributes. To give a better sense of this here is what the html for the 2010 data file link looks like:
-
-``` example
-<a onclick="_gaq.push(['_trackEvent', 'File','Download', 'cepr_dws_2010_dta']);"
-   href="/wp-content/cps/data/cepr_dws_2010_dta.zip">cepr_dws_2010_dta.zip</a>
+``` {.r}
+## install.packages("tidyverse")
+library(tidyverse)
+library(stringr)
 ```
 
-We want the `href` part, i.e., "/wp-content/cps/data/cepr<sub>dws2010dta</sub>.zip".
+Packages in the tidyverse are often more convenient to use with pipes
+rather than nested function calls. The pipe operator looks like `%>%`
+and it works like this:
 
-We can get all the `<a>` elements using the `html_nodes` function, and then extract the `href` attributes usig the `html_attr` function, like this:
+``` {.r}
+## nested function calls to sample letters, convert to uppercase, sort, and append numbers
+set.seed(10)
+str_c(
+  sort(
+    str_to_upper(
+      sample(letters[1:5],
+             20,
+             replace = TRUE))),
+  1:20)
 
-``` r
-  ## install.packages("rvest")
-  library(rvest)
-
-  ## read the web page into R
-  dataPage <- read_html("http://tutorials.iq.harvard.edu/cps-uniform-data-extracts/cps-displaced-worker-survey/cps-dws-data/")
-
-  ## find the link ("a") elements.
-  allAnchors <- html_nodes(dataPage, "a")
-  head(allAnchors, 15)
-
-  ## extract the link ("href") attributes
-  allLinks <- html_attr(allAnchors, "href")
-  head(allLinks, 15)
+## pipeline that does the same thing:
+set.seed(10)
+letters[1:5] %>%
+  sample(20, replace = TRUE) %>%
+  str_to_upper() %>%
+  sort() %>%
+  str_c(1:20)
 ```
 
-Just the data please -- regular expressions to the rescue
----------------------------------------------------------
+The examples in this workshop use the pipe when it makes examples easier
+to follow.
 
-Looking at the output from the previous example you might notice a problem; we've matched **all** the URLs on the web page. Some of those (the ones that end in .zip) are the ones we want, others are menu links that we don't want. How can we separate the data links from the other links on the page?
+Reading text over http
+----------------------
 
-One answer is to use regular expressions to idenfify the links we want. Regular expressions are useful in general (not just in R!) and it is a good idea to be familiar with at least the basics. For our present purpose it will be more than enough to use regular expression that matches strings starting with `/wp` and ending with `.zip`.
+Our first task is to read the web page into R. Most of the file IO
+functions in R can read either from a local path or from internet URLS.
+We can read text into R line-by-line using the `read_lines` function.
 
-In regulars expression `^`, `.`, `*`, and `$` are special characters with the following meanings:
+``` {.r}
+base.url <- "http://tutorials.iq.harvard.edu"
+baby.names.path <- "example_data/baby_names" 
+baby.names.url <- str_c(base.url, baby.names.path, sep = "/")
 
-^  
-matches the beginning of the string
-
-.  
-matches any character
-
-\*  
-repeates the last caracter zero or more times
-
-$  
-matches the end of the string
-
-If you have not been introduced to regular expressions yet a nice interactive regex tester is available at <http://www.regexr.com/> and an interactive tutorial is available at <http://www.regexone.com/>.
-
-R comes with a `grep` function that can be used to search for patterns in strings, but for more sophisticated string manipulation I recommend the `stringi` package. The function names are more verbose, but it provides much more complete and robust string handling than is available in base R. For our relatively simple needs `grep` will suffice, but if you need to do extensive string manipulation in R the `stringi` package is the way to go.
-
-``` r
-  dataLinks <- grep("^/wp.*\\.zip$", allLinks, value = TRUE)
-  head(dataLinks)
+baby.names.page <- read_lines(baby.names.url)
 ```
 
-(Note that the backslashes in the above example are used to escape the `.` so that it is matched literally instead of matching any characters as it normallly would in a regular expression.)
+What did we just do? We assigned character vectors of length 1 to
+`base.url` and `baby.names.path`, and we assigned whatever `read_lines`
+returns. Lets look closer. What are these things?
 
-Finally, the data links we've extracted are relative to the ceprdata website. To make them valid we need to prepend `http://tutorials.iq.harvard.edu/` to each one. We can do that using the `paste` function.
+``` {.r}
+## whate is base.url?
+mode(base.url)
+length(base.url)
+class(base.url)
+str(base.url)
 
-``` r
-  dataLinks <- paste("http://tutorials.iq.harvard.edu", dataLinks, sep = "")
-  head(dataLinks)
+## what is baby.names.url?
+mode(baby.names.url)
+length(baby.names.url)
+class(baby.names.url)
+str(baby.names.url)
+
+## what is baby.names.page?
+mode(baby.names.page)
+length(baby.names.page)
+class(baby.names.page)
+str(baby.names.page)
 ```
 
-Getting the list of data links the easy way
--------------------------------------------
+What can we do with them?
 
-If you look at the result from the previous two methods you might notice that the URLs are all the same save for the year number. This suggests an even easier way to construct the list of URLs:
-
-``` r
-  (dataLinks <- paste("http://tutorials.iq.harvard.edu/wp-content/cps/data/cepr_dws_",
-                      seq(1994, 2010, by = 2),
-                      "_dta.zip",
-                      sep = ""))
+``` {.r}
+methods(class = class(base.url))
 ```
 
-Wow, that was a **lot** easier. Why oh why didn't we just do that in the first place? Well, it works for this specific case, but it is much less general than the html parsing methods we discussed previously. Those methods will work in the general case, while pasting the year number into the URLs only works because the URLs we want have a very regular and consistent form.
+Note that these methods are not exhaustive -- we can do other things
+with these objects as well. `methods(class = )` just tells you which
+functions have specific methods for working with objects of that class.
 
-Exercise 0: html parsing
-========================
+The `mode` function tells us how the object is stored in memory.
+"Character" is one of the six *atomic* modes in R. The others are
+"logical", "integer", "numeric (double)", "complex", and "raw". Objects
+reporting their `mode` as one of these are *atomic vectors*; they are
+the building blocks of most data structures in R.
 
-The <http://ceprdata.org/> website provides code books for the DWS data in `.pdf` format. Links to these code books are available on the documentation page at <http://ceprdata.org/cps-uniform-data-extracts/cps-displaced-worker-survey/cps-dws-documentation/>. Parse this page and extract the links to the code books.
+Now that we know what we're working with we can proceed to find and
+extract all the links in the page. Lets start by printing the last few
+lines of `baby.names.page`.
 
-Exercise 0 prototype<span class="tag" data-tag-name="prototype"></span>
-=======================================================================
-
-``` r
-  ## read in the html page
-  ceprDoc <- read_html(
-    "http://ceprdata.org/cps-uniform-data-extracts/cps-displaced-worker-survey/cps-dws-documentation/"
-  )
-  ## get the codebook links
-  ceprCodeBookLinks <- html_attr(#extract attributes
-    html_nodes(#from nodes  
-      ceprDoc,#in ceprDoc
-      ## This uses an xpath expression to select just the codebook links.
-      ## You could alternatively download all the links and filter them
-      ## with a regular expression. Use whatever works and is comfortable!
-      ## There is more than one right way.
-      xpath = '//*[@id="content"]/article/div/ul[1]//a'),#matching this xpath
-    'href' #extract href attributes
-  )
+``` {.r}
+cat(tail(baby.names.page), sep = "\n")
 ```
 
-Downloading files in R
-======================
+We want to extract the "href" attributes, i.e., "girls~2014~.csv" and
+"girls~2015~.csv" in the above snippet. We can do that using the
+`str_extract` function, but in order to use it effectively we need to
+know something about regular expressions.
 
-Now that we have a vector of URLs pointing to the data files we want to download, we want to iterate over the elements and download each file. We can use the `download.file` function to download the data files.
+String manipulation with the stringr package
+--------------------------------------------
 
-The `download.file` function requires a URL as the first argument, and a file name as the second argument. We can use the `basename` function to strip of the location part of the URL, leaving only the file name. We could do this verbosely by writing one line for each file:
+Regular expressions are useful in general (not just in R!) and it is a
+good idea to be familiar with at least the basics.
 
-``` r
-  ## download.file(dataLinks[1], basename(dataLinks[1]))
-  ## download.file(dataLinks[2], basename(dataLinks[2]))
-  ## ...
-  ## download.file(dataLinks[n], basename(dataLinks[3]))
+In regulars expression `^`, `.`, `*`, `$` and `\` are special characters
+with the following meanings:
+
+\^
+:   matches the beginning of the string
+
+.
+:   matches any character
+
+\*
+:   repeates the last caracter zero or more times
+
+\$
+:   matches the end of the string
+
+\[\]
+:   specifies ranges of characters: \[a-z\] matches lower case letters
+
+\
+
+:   escapes special meaning: '.' means "anything", '.' means "."
+
+Here's how it works in R using the stringr package.
+
+``` {.r}
+user.info <- c("Dexter Bacon dbacon@gmail.com 32",
+               "Angelica Sampson not available 28",
+               "Roberta Modela roberta.modela@harvard.edu 26"
+               )
+email.regex <- "([a-z0-9_\\.-]+@[a-z0-9\\.-]+\\.[a-z\\.]+)"
+str_detect(user.info, email.regex)
+str_subset(user.info, email.regex)
+str_extract(user.info, email.regex)
+str_replace(user.info, email.regex, "<a href='\\1'>\\1</a>")
 ```
 
-but that is too much typing. First, it would be more convenient if the `download.file` function defaulted to `destfile ` basename(url)=. Fortunately it is very easy to write your own functions in R. We can write a wrapper around the `download.file` function like this:
+If you have not been introduced to regular expressions yet a nice
+interactive regex tester is available at <http://www.regexr.com/> and an
+interactive tutorial is available at <http://www.regexone.com/>.
 
-``` r
-  ## a simple function to make downloading files easier
-  downloadFile <- function(url, # url to download
-                           destfile = basename(url), # default name to save to
-                           outdir = "./dataSets/", # default directory to save in
-                           ... # other named arguments passed to download.file
-                           ){
-    ## create output directory if it doesn't exist
-    if(!dir.exists(outdir)) {
-      dir.create(outdir)
-    }
-    ## download the file using the specified url, output directory, and file name
-    download.file(url = url, destfile = paste(outdir, destfile, sep = ""), ...)
-  }
+Exercise 1: string manipulation and regular expressions
+-------------------------------------------------------
+
+Our job now is to match the file names using regular expressions. To get
+started lets copy an example string into the interactive regex tester at
+<http://www.regexr.com/> and work with it until we find a regular
+expression that works.
+
+1.  Open <http://www.regexr.com/> in your web browser and paste in this
+    string:
+
+&lt;tr&gt;&lt;td valign="top"&gt;&lt;img src="/icons/unknown.gif"
+alt="\[ \]"&gt;&lt;/td&gt;&lt;td&gt;&lt;a
+href="girls~2014~.csv"&gt;girls~2014~.csv&lt;/a&gt;&lt;/td&gt;&lt;td
+align="right"&gt;06-Oct-2016 13:12 &lt;/td&gt;&lt;td
+align="right"&gt;144K&lt;/td&gt;&lt;/tr&gt;
+
+1.  [@2] Find a regular expression that matches 'girls~2014~.csv' and
+    nothing else.
+2.  [@3] Assign the regular expression you found to the name
+    'girl.file.regex' in R. Replace any backslashes with a
+    double backslash.
+3.  [@4] Extract the girl file names from `baby.names.page` and assign
+    the values to the name 'girl.file.names'
+4.  [@5] Repeat steps 1:4 for boys.
+5.  [@6] Use the `str_c` function to prepend
+    "<http://tutorials.iq.harvard.edu/example_data/baby_names/>" to
+    `girl.file.names` and `boy.file.names`.
+
+Reading all the files (iteration, functions)
+============================================
+
+Reading .csv files
+------------------
+
+As mentioned earlier, we can read files directly from the internet. For
+example, we can read the first girls names file like this:
+
+``` {.r}
+girl.names.1 <- read_csv(girl.file.names[1], na = "")
+head(girl.names.1)
 ```
 
-Using this function we can download the data files more conveniently, but we haven't yet addressed how to avoid typing out separate function calls for each file we need to download. For that we need iteration.
+Notice that we selected the first element of `girl.file.names` using
+`[`. This is called *bracket extraction* and it is a very useful feature
+of the R language.
 
-Downloading all the files
-=========================
+Extracting and replacing vector elements
+----------------------------------------
 
-To download all the files conveniently we want to iterate over the vector of URLs and download each one. We can carry out this iteration in several ways, including using a `for` loop, or using one of the `apply` family of functions.
+Elements of R objects can be extracted and replaced using bracket
+notation. Bracket extraction comes in a few different flavors. We can
+index atomic vectors in several different ways.
 
-`for` and `while` loops in R work much the same as they do in other programming languages. The `apply` family of functions apply a function to each element of an object.
+``` {.r}
+example.int.1 <- c(10, 11, 12, 13, 14, 15)
+names(example.int.1) <- c("a1", "a2", "b1", "b2", "c1", "c2")
+str(example.int.1)
 
-Iterating using for-loop
-------------------------
+## extract by position
+example.int.1[1]
+example.int.1[c(1, 3, 5)]
 
-One way to download the data files is to use a for-loop to iterate over the contents of our vector of URLs. Some people will tell you to avoid for-loops in R but this is nonsense. Loops are convenient and useful, and while they are not the best tool for all situations calling for iteration they are perfectly appropriate for downloading a series of files. If you've used a for loop in any other language you will probably find the R implementation to be very similar.
+## extract by name
+example.int.1[c("c2", "a1")]
 
-For loops in R have the following general structure: `for(<placeholder> in <thing to iterate over>) {do stuff with placeholder}`. In our case we want to iterate over `dataLinks` and download each one, so this becomes
+## logical extraction 
+(one.names <- str_detect(names(example.int.1), "1"))
+example.int.1[one.names]
+example.int.1[example.int.1 > 12]
 
-``` r
-  str(dataLinks)
-
-  ## make a directory to store the data
-  dir.create("dataSets")
-
-  for(link in dataLinks) {
-      downloadFile(link, outdir = "dataSets/")
-  }
+## extract non-existent element
+example.int.1["z1"]
 ```
 
-Iterating over vectors and lists with the `sapply` function
+Replacement works by assigning a value to an extraction.
+
+``` {.r}
+example.int.2 <- example.int.1
+
+## replace by position
+example.int.2[1] <- 100
+
+## replace by name
+example.int.2["a2"] <- 200
+example.int.2
+
+## logical replacement
+(lt14 <- example.int.2 < 14)
+example.int.2[lt14] <- 0
+example.int.2
+## "replace" non-existing element
+example.int.2[c("z1", "z2")] <- -10 
+
+## compare lists to see the changes we made
+example.int.1
+example.int.2
+```
+
+Extracting and replacing list elements
+--------------------------------------
+
+List elements can be extracted and replaced in the same way as elements
+of atomic vectors. In addition, `[[` can be used to extract or replace
+the contents of a list element. Here is how it works:
+
+``` {.r}
+example.list.1 <- list(a1 = c(a = 1, b = 2, c = 3),
+                     a2 = c(4, 5, 6),
+                     b1 = c("a", "b", "c", "d"),
+                     b2 = c("e", "f", "g", "h"))
+str(example.list.1)
+## extract by position
+str(example.list.1[1])
+str(example.list.1[[1]]) # note the difference between [ and [[
+## extract by name
+str(example.list.1[c("a1", "a2")])
+(a.names <- str_detect(names(example.list.1), "a"))
+str(example.list.1[a.names])
+## chained bracket extraction
+str(example.list.1[["a1"]][c("a", "c")])
+## logical extraction
+(el.length <- map_int(example.list.1, length))
+(el.length4 <- el.length == 4)
+str(example.list.1[el.length4])
+## more logical extraction
+(a1.lt.3 <- example.list.1[["a1"]] < 3)
+str(example.list.1[["a1"]][a1.lt.3])
+## extract non-existent element
+example.list.1[["z"]]
+```
+
+Replacement works by assigning a value to an extraction.
+
+``` {.r}
+example.list.2 <- example.list.1
+
+## replace by position
+example.list.2[[1]] <- c(a = 11, b = 12, c = 13)
+## replace by name
+example.list.2[["a2"]] <- c(10, 20, 30)
+## iterate and replace by name
+example.list.2[c("a1", "a2")] <- map(example.list.2[c("a1", "a2")],
+                                        function(x) x * 100)
+## logical replacement with iteration
+(el.length <- map(example.list.2, length))
+(el.length4 <- el.length == 4)
+example.list.2[el.length4] <- map(example.list.2[el.length4],
+                                     function(x) str_c("letter", x, sep = "_"))
+## "replace" non-existing element
+example.list.2[["c"]] <- list(x = letters[1:5], y = 1:5)
+
+## compare lists to see the changes we made
+str(example.list.1)
+str(example.list.2)
+```
+
+Using our knowledge of bracket extraction we could start reading in the
+data files like this:
+
+``` {.r}
+boys <- list()
+girls <- list()
+
+boys[[1]] <- read_csv(boy.file.names[1], na = "")
+boys[[2]] <- read_csv(boy.file.names[2], na = "")
+## ...
+girls[[1]] <- read_csv(girl.file.names[1], na = "")
+girls[[2]] <- read_csv(girl.file.names[2], na = "")
+## ...
+```
+
+Exercise 2: String manipulation, extraction and replacement
 -----------------------------------------------------------
 
-The `sapply` function iterates over a vector or list and applies a function to each element. To start, let's use `sapply` do download all the displaced worker survey data files:
+We saw in the previous example one way to start reading the baby name
+data, using positional bracket extraction and replacement. In this
+exercise we will improve on this method by doing the same thing using
+named extraction and replacement. The first step is to extract the years
+from `boy.file.names` and `girl.file.names` and assign then to the
+`names` attribute of our `boys` and `girls` lists.
 
-``` r
-  ## download all the dws data
-  sapply(dataLinks,
-         downloadFile,
-         outdir = "dataSets/")
+1.  Create empty lists named `boys` and `girls`.
+2.  Write a regular expression that matches digits 0-9 repeated any
+    number of times and use it to extract the years from
+    `boy.file.names` and `girl.file.names` (use `str_extract`).
+3.  Assign the years vectors from step one to the names of
+    `boy.file.names` and `girl.file.names` respectively.
+4.  Extract the element named "2015" from `girl.file.names` and pass it
+    as the argument to `read_csv`, assigning the result to a new element
+    of the `girls` list named "2015". Repeat for elements "2014"
+    and "2013".
+5.  Repeat step three using `boy.file.names` and the `boys` list.
+
+Iterating using the map function
+--------------------------------
+
+With a small number of files reading each one separately isn't too bad,
+but it obviously doesn't scale well. To read all the files conveniently
+we instead want to instruct R to iterate over the vector of URLs for us
+and download each one. We can carry out this iteration in several ways,
+including using one of the `map*` functions in the purrr package. Here
+is how it works.
+
+``` {.r}
+list.1 <- list(a = sample(1:5, 20, replace = TRUE),
+               b = sample(1:10, 20, replace = TRUE),
+               c = sample(10:15, 20, replace = TRUE))
+
+## calculate the mean of every entry
+map.1 <- map(list.1, mean)
+str(map.1)
+## calculate the mean of every entry, returning a numberic vector instead of a list
+map.2 <- map_dbl(list.1, mean)
+str(map.2)
+## calculate the mean of every entry, returning a character vector
+map.3 <- map_chr(list.1, mean)
+## calculate summaries (map returns a list)
+map.4 <- map(list.1, summary)
+str(map.4)
 ```
 
-Iterating in parallel with the `mclapply` function
---------------------------------------------------
+Writing your own functions
+--------------------------
 
-The `mclapply` function iterates over a vector or list and applies a function to each element using multiple CPU cores (where available). Let's use `mclapply` do download all the displaced worker survey data files:
+The `map*` functions are useful when you want to apply a function to a
+list or vector of inputs and obtain the return values. This is very
+convenient when a function already exists that does exactly what you
+want. In the examples above we mapped `mean` and `summary` to the
+elements of a list. But what if there is no existing function that does
+exactly what we want? Suppose that rather than the set of statistics
+reported by the `summary` function we want to summarize each element in
+the list by calculating the *length*, *mean*, and *standard deviation*?
+In that case we will need to write a function that does what we want.
+Fortunately, writing functions in R is easy.
 
-``` r
-  ## download all the dws data
-  library(parallel)
-  mclapply(dataLinks,
-         downloadFile,
-         outdir = "dataSets/",
-         mc.cores = detectCores())
+``` {.r}
+my.summary <- function(x) {
+  n <- length(x)
+  avg <- mean(x)
+  std.dev <- sd(x)
+  return(c(N = n, Mean = avg, Standard.Deviation = std.dev))
+}
+my.summary(list.1[[1]])
+map(list.1, my.summary)
 ```
 
-We can now use what we've learned about iteration to unzip all the files in the `dataSets` directory, a task I leave to you.
+OK, back to the problem at hand. We want to read each file in the
+`girl.file.names` and `boy.file.names` vectors. The files contain
+columns "Rank", "Name", and "Count". The year each file contains data
+for is not included as a column in the data, but it is encoded in the
+file names.
 
-Exercise 1: Iterate and extract
-===============================
+Exercise 3: Iteration, file IO, functions
+-----------------------------------------
 
-Use a `for` loop or `*apply` function to unzip each of the `.zip` files in the `dataSets` directory.
+We know how to read csv files using `read_csv`. We know how to iterate
+using `map`. All we need to do now is put the two things together.
 
-BONUS (optional): calculate the size of each extracted file and calculate the difference in size between each `.dta` file and the `.zip` file it was extracted from.
+1.  Use the `map` and `read_csv` functions to read all the girls data
+    into an object named `girls.data`.
+2.  Do the same thing for the boys data (name the object `boys.data`).
+3.  Inspect the boys and girls data lists. How many elements do they
+    have? What class are they?
+4.  Write a function that returns the `class`, `mode`, and `length` of
+    its argument. `map` this function to `girls.data` and `boys.data`.
 
-Exercise 1 prototype<span class="tag" data-tag-name="prototype"></span>
-=======================================================================
+Adding a Year column (data structures, indexing)
+================================================
 
-``` r
-  zipFiles <- list.files("dataSets", pattern = "\\.zip$", full.names=TRUE)
+OK, at this point we have read in all the data. That is a good start!
+Lets take a closer look at what we are working with.
 
-  ## using sapply
-  sapply(zipFiles, unzip, exdir = "dataSets")
-  ## using a for loop
-  for(f in zipFiles) unzip(f, exdir = "dataSets")
-
-  ## Calculating compression ratios
-  dataFiles <- list.files("dataSets", pattern = "\\.dta$", full.names = TRUE)
-
-  uncompSize <- round(file.size(dataFiles) / 1024^2)
-  compSize <- round(file.size(zipFiles) / 1024^2)
-
-  cbind(zipFile = paste0(basename(zipFiles), ": ", compSize, "Mb"),
-        dtaFile = paste0(basename(dataFiles), ": ", uncompSize, "Mb"),
-        diff = paste0(round(uncompSize - compSize), "Mb"),
-        compression_ratio = round(uncompSize / compSize, digits = 3))
+``` {.r}
+str(girls.data, max.level = 1)
 ```
 
-Importing and inspecting data and meta-data
-===========================================
+OK, so we have a *list* with 20 elements. A list in R is a very flexible
+data structure that can hold just about anything (including other
+lists). Our `girls.data` is a list that happens to contain
+*data.frames*.
 
-Our next goal is to read in the data that we downloaded and extracted earlier. The data are stored as Stata data sets, which can be imported using the `read.dta` function in the `foreign` package. Let's start by reading just the first data set.
+A data.frame in R is a special type of list in which each element is the
+same length. Elements of data.frames are often *atomic vectors*
+("logical", "integer", "numeric (double)" etc. as discussed above),
+though elements of a data.frame can be anything you can store in other
+lists, provided only that each element is the same length.
 
-``` r
-  ## attach the foreign packge so we can read stata files
-  library(foreign)
+There are many useful things we can do with data.frames: (But remember
+that this list of methods is not all you can do with data.frames.)
 
-  ## get a list of all the stata files in the dataSets directory
-  dataFiles <- list.files("dataSets", pattern = "\\.dta$", full.names=TRUE)
-
-  ## read in the first one
-  ceprData1 <- read.dta(dataFiles[1])
+``` {.r}
+girls.data.1 <- girls.data[[1]]
+class(girls.data.1)
+methods(class = "data.frame")
+dim(girls.data.1)
+nrow(girls.data.1)
+ncol(girls.data.1)
+names(girls.data.1)
+summary(girls.data.1)
 ```
 
-Now that we've read in some of the data we want to get some more information about it.
+Adding a year column using bracket extraction/replacement
+---------------------------------------------------------
 
-Mode and length
----------------
+The data.frames in `girls.data` all have three elements (columns): Rank
+(a number), Name (a character), and Count (a number). That is a problem,
+because we need to have a column that records the year! Year was stored
+in the file names rather than in the contents of the files, and so it
+appears as the names of the list elements rather than as a column in
+each data.frame.
 
-Information about objects in R are stored as *attributes* of the object. All R objects have a storage *mode* and a *length*. Since all objects in R have these attributes we refer to them as *intrinsic attributes*. We can get the value of these intrinsic attributes using the `mode` and `length` functions respecively. For example, what is the mode and length of our `ceprData1` object?
+How can we insert the year information into each corresponding
+data.frame? Recall that a data.frame **is** a list, so we can use
+bracket extraction just as we would for other kinds of lists. That is,
+we can add a year column to the data.frame in position 1 of `girls.data`
+like this:
 
-``` r
-  mode(ceprData1)
-  length(ceprData1)
+``` {.r}
+str(girls.data[[1]])
+girls.data[[1]][["Year"]] <- names(girls.data[1])
+##        ^                                  ^ 
+## double brackets to extract data.frame   single brackets to extract a list containing a data.frame
+str(girls.data[[1]])
+girls.data[[1]][["Year"]] <- as.integer(names(girls.data[1]))
+str(girls.data[[1]])
 ```
 
-Other properties of data.frames
+Now we want to repeat that for each element in the list. We previously
+learned how to iterate using the `map` function, but that won't work
+here because we need a function with two arguments: the list element to
+modify, and the year value to insert. For that we can use the `map2`
+function, which works just like `map` except that we iterate over two
+things with a function that takes two arguments. It works like this:
+
+``` {.r}
+example.list.3 <- list(a = 1:3,
+                       b = 4:6,
+                       c = 7:9)
+upper.name <- function(x, y) {
+  x.upper <- str_to_upper(x)
+  return(str_c(y, x.upper, sep = ": "))
+}
+
+example.list.4 <- map2(example.list.3, names(example.list.3), upper.name)
+str(example.list.3)
+str(example.list.4)
+```
+
+Exercise 4: Iteration, data.frame manipulation
+----------------------------------------------
+
+We know how to read add a Year column. We know how to iterate using
+`map2`. All we need to do now is put the two things together.
+
+1.  Write a function named `add.year` that takes a data.frame and a
+    vector as arguments and returns a data.frame with the vector
+    included as a column.
+2.  Test your function on the first elements of `girls.data` and
+    `names(girls.data)` from step 1.
+3.  Use the `map2` function to iterate over `girls.data` and insert the
+    corresponding year from `names(girls.data)` using the function you
+    wrote in step 1. Do the same for `boys.data`.
+
+Final data cleanup
+==================
+
+Our next step to is to collapse each list of data.frames into a single
+list. We can do that using the `bind_rows` function.
+
+``` {.r}
+boys.data <- bind_rows(boys.data)
+girls.data <- bind_rows(girls.data)
+str(boys.data)
+str(girls.data)
+```
+
+Finally, we want to insert columns indicating sex, combine the boys and
+girls baby names, and convert the "Year" column to integer.
+
+``` {.r}
+girls.data[["Sex"]] <- "girl"
+boys.data[["Sex"]] <- "boy"
+baby.names <- bind_rows(girls.data, boys.data)
+baby.names$Year <- as.integer(baby.names$Year)
+```
+
+What can we learn about baby names?
+===================================
+
+Now that we have the data loaded and cleaned up we can use it to answer
+interesting questions. For example:
+
+-   How many children were born each year?
+-   What are the most popular names overall?
+-   How has the popularity of the most popular names changed over time?
+-   Has the number of names changed over time?
+-   Has the average length of names changed over time?
+-   What are the most popular first letters in baby names? Has this
+    changed over time?
+-   What were the most popular names in 2015 (the last year for which we
+    have data)?
+-   How has the popularity of the most popular names in 2015 changed
+    over time?
+
+Earlier I mentioned that data.frames are a special kind of list in which
+each element must be of the same length. What I perhaps did not
+emphasize enough is how important the data.frame concept is in R
+programming. Because of the centrality of the data.frame in many R
+workflows there are many functions available specifically for
+manipulating data.frames. In particular, the *dplyr* and *tidyr*
+packages provides many useful functions for working with data.frames. In
+this section we will use the *dplyr* package answer some of our
+questions about baby names.
+
+Number of children born each year
+---------------------------------
+
+Now that we have the data read in and we know what is in each column, I
+want to know how many children were born each year. To one way to do
+that is to use the `group_by` and `summarize` functions from the *dplyr*
+package. It works like this:
+
+``` {.r}
+## make up some example data
+(example.df <- data.frame(id  = rep(letters[1:4], each = 4),
+                          t   = rep(1:4, times = 4),
+                          var1 = runif(16),
+                          var2 = sample(letters[1:3], 16, replace = TRUE)))
+
+## summarize
+summarize(example.df,
+          var1 = sum(var1))
+
+## summarize by id
+example.df %>%
+  group_by(id) %>%
+  summarize(var1 = sum(var1))
+
+## summarize by id and var2
+example.df %>%
+  group_by(id, var2) %>%
+  summarize(var1 = sum(var1))
+```
+
+Exercise 5: Group and Summarize
 -------------------------------
 
-So far we've seen that `ceprData1` is a list of length 178. Actually `ceprData1` is a special kind of list called a `data.frame`. We can see that by asking R what the `class` of the object is.
+Now that we know how to group and summarize, we can use these tools to
+calculate the number of babies born each year.
 
-``` r
-  class(ceprData1)
+1.  Calculate the total number of babies born between 1996 and 2015.
+2.  Calculate the total number of boys and the total number of girls
+    born between 1996 and 2015.
+3.  Calculate the number of children born each year between 1996
+    and 2015.
+4.  Calculate the number of girls and the number of boys born each year
+    between 1996 and 2015, assigning the result to the
+    name 'name.totals.by.year'.
+
+Most popular names overall
+--------------------------
+
+Next I want to find the five most popular girl and boy names overall.
+
+Specifically I want to:
+
+1.  Sum the counts for each name by sex using `group_by` and
+    `summarize`.
+2.  Sort names by the summed counts using `arrange`.
+3.  Select the top 10 using `slice`.
+
+You already know how `group_by` and `summarize` work. The following
+example shows how `arrange` and `slice` work.
+
+``` {.r}
+## summarize by id and var2
+(example.df.2 <- example.df %>%
+   group_by(id, var2) %>%
+   summarize(var1 = sum(var1)))
+
+## sort by var1
+example.df.2 %>%
+  arrange(var1)
+
+example.df.2 %>%
+  arrange(desc(var1))
+
+## sort by var1 within id
+(example.df.2 <- example.df.2 %>%
+   arrange(id, desc(var1)))
+
+## select the top 2 var1's within each id group
+example.df.2 %>%
+  group_by(id) %>%
+  slice(1:2)
 ```
 
-A *data.frame* in R is a list with elements of equal length. It is a rectangular structure with rows and columns. In addition to the *mode* and *length* that all object in R have, *data.frames* also have dimension, (col)names, and =rownames.
+Exercise 6: Summarize, arrange, and slice
+-----------------------------------------
 
-``` r
-  dim(ceprData1)
-  names(ceprData1)
-  c(head(rownames(ceprData1)), "...", tail(rownames(ceprData1)))
+Now that we know how to group, summarize, arrange, and slice we can use
+these tools to identify the most popular boy and girl names.
+
+1.  Sum the counts for each name by sex using `group_by` and
+    `summarize`.
+2.  Sort names by the summed counts using `arrange`.
+3.  Select the top 10 using `slice` and assign the result to a
+    data.frame named 'top.names.overall'.
+
+Changes in most frequent names over time
+----------------------------------------
+
+Next I want to see how these most popular names have changed over time.
+In other words, I want to filter `baby.names` to include only those
+names in `top.names.overall`. An easy way to do it is to join the two
+data.frames:
+
+``` {.r}
+str(baby.names)
+
+top.names.over.time <- top.names.overall %>%
+  select(Sex, Name) %>%
+  inner_join(baby.names) %>%
+  ungroup()
+
+str(top.names.over.time)
 ```
 
-Additional attributes
----------------------
-
-OK, so far we know the ceprData1 is a *data.frame* with 156246 rows and 178 columns, and that the variables have terrible cryptic names like `cjpporg` and `ljagric`. What do we actually have here? One way to answer the question is
-
-``` r
-  browseURL(ceprCodeBookLinks[1])
+``` {.r}
+ggplot(top.names.over.time,
+       aes(x = Year, y = Count)) +
+  geom_line() +
+  geom_point() +
+  facet_wrap(Sex ~ Name, ncol = 5)
 ```
 
-and that is a good answer actually. In our case the meta-data has also been embedded in the `.dta` files by our friends at [ceprdata.org](http://ceprdata.org). This meta-data has been attached to the `ceprData1` data.frame in the form of additional attributes.
+Exercise 7: join, mutate, graphing
+----------------------------------
 
-The system used by R for storing attributes of this kind is simple. Arbitrary attributes can be set using the `attr` function, and retrieved using either `attr` or the `attributes` function. Let's take a quick look a this system before using it to access the ceprData1 meta-data.
+In order to calculate the percent of boys and girls with each name in
+each year we need to know a) The number of girls(boys) with each name in
+each year, and b the total number of girls(boys) in each year. The first
+number is already there in the "Count" variable, and we already
+calculated the second number (the "total" column in the
+`name.totals.by.year` data.frame). Once we have these numbers we can
+calculate the percent as `(Count/total) * 100`.
 
-``` r
-  x <- 1:10
-  attributes(x)
-  attr(x, "description") <- "This is vector of integers from 1 to 10"
-  attributes(x)
-  attr(x, "how_many") <- "There are ten things in this vector"
-  attributes(x)
-  attr(x, "description")
+1.  Use the `inner_join` function to add the yearly totals from
+    `name.totals.by.year` to `top.names.over.time`.
+2.  Use `[[` to add a "Percent" column to `top.names.over.time`.
+3.  Use the `mutate` function to add a "Percent.check" column
+    to top.names.over.time.
+4.  Use the `all.equal` function to check that the "Percent" column
+    computed in step 2 is the same as the "Percent.check" column
+    computed in step 3.
+5.  Re-do the popularity over time graph using Percent instead of Count.
+    Fee free to copy the `ggplot` code from the example and modify it.
+
+Combining similar names
+-----------------------
+
+Similar names with different spellings have been intentionally left
+alone in these data. If our goals is to examine changes in name
+popularity (rather than changing spelling preferences) it might be
+useful to combine them. There are several different algorithms for
+detecting words that sound alike; many of them (including the *nysiis*
+and *metaphone* algorithms) are provided in R by the *phonics* package.
+Here is how it works:
+
+``` {.r}
+##install.packages("phonics")
+library(phonics)
+spelling <- c(
+"colour",   "color",       
+"flavour",   "flavor",   
+"behaviour", "behavior", 
+"harbour",   "harbor",   
+"honour",    "honor",    
+"humour",    "humor",    
+"labour",    "labor",    
+"neighbour", "neighbor", 
+"rumour",    "rumor")
+
+(spelling.data <- data.frame(original = spelling, Sounds.like = nysiis(spelling, maxCodeLen = 15)))
 ```
 
-As we've seen, additional attributes and be accessed vie the `attributes` function. Let's see what other attributes our `ceprData` object has.
+Once we have identified which words are the same (but spelled
+differently) we can combine those words.
 
-``` r
-  ceprDataInfo <- attributes(ceprData1)
-  mode(ceprDataInfo)
-  class(ceprDataInfo)
-  length(ceprDataInfo)
-  names(ceprDataInfo)
+``` {.r}
+(spelling.data <- spelling.data %>%
+   group_by(Sounds.like) %>%
+   mutate(Alternative.spellings = str_c(sort(original), collapse = "/")))
 ```
 
-Let's iterate over the attributes of =ceprData1- and get some more information about the available meta-data
+We can use this technique to identify and group names with alternative
+spellings. Since any one algorithm tends to group two aggressively we'll
+require multiple algorithms to agree.
 
-``` r
-  t(sapply(attributes(ceprData1),
-           function(x) {
-             c(mode = mode(x), class = class(x), length = length(x))
-           })
-    )
+``` {.r}
+library(phonics)
+baby.names <- baby.names %>%
+  group_by(Sex) %>%
+  mutate(Sounds.like = str_c(nysiis(Name, maxCodeLen = 10),
+                             metaphone(Name, maxCodeLen = 10),
+                             sep = "/")) %>%
+  group_by(Sex, Sounds.like) %>%
+  mutate(Alternative.spellings = str_c(sort(unique(Name)), collapse = "/")) %>%
+  ungroup()
+
+  str(baby.names)
 ```
 
-Extracting useful meta-data
----------------------------
+Exercise 8: More data frame manipulation practice
+-------------------------------------------------
 
-We can extract elements from lists in a few different ways:
+Now that we've combined names with different spellings lets re-do the
+"most popular overall" graph using combined names.
 
-``` r
-  ## extract by name
-  ceprDataInfo$datalabel #using $
-  ceprDataInfo["datalabel"] #using [
-  ceprDataInfo[["datalabel"]] #using [[, note the difference
+1.  Sum the Count column by Sex, Alternative.spellings, and Year
+2.  Take the result from step 1 and
+    1.  `group_by` Sex and alternative spellings
+    2.  `summarize` by taking the `sum` of the Count variable
+    3.  `group_by` Sex
+    4.  `arrange` by count
+    5.  `select` Sex and Alternative.spellings
+    6.  `slice` rows 1:5
+    7.  `inner_join` with the result from step 1.
 
-  ## by position
-  ceprDataInfo[1]; ceprDataInfo[[1]] # note the difference
+3.  Graph the prevalence of the most popular combined names over time.
 
-  ## by logical index
-  ceprDataInfo[c(TRUE, TRUE, rep(FALSE, 10))]
-  ceprDataInfo[sapply(ceprDataInfo, length) == 1]
+Most popular "starts with" and "ends with"
+------------------------------------------
+
+Not only do the most popular names change over time, but the most
+popular first and last letters also display temporal trends. We can
+extract the first/last n letters using `str_sub`, like this:
+
+``` {.r}
+month.name
+str_sub(month.name, 1, 1)
+str_sub(month.name, 1, 3)
+str_sub(month.name, -1, -1)
+str_sub(month.name, -3, -1)
 ```
 
-Note that `[` indexing on a list returns a list, and `[[` indexing returns whatever contained in a single element of the list. This visual explanation may help: ![](images/HadleyWickham_index_list.png)[2]
+Exercise 9: string manipulation, data.frame manipulation
+--------------------------------------------------------
 
-You may have noticed during our earlier investigation of `ceprDataInfo` that many of the elements have length 178. That number might be familiar:
+In order to examine trends in name beginnings and endings we need to
+create new columns with just the first/last n letters of each name, and
+then summarize the data to the level of the first n letters.
 
-``` r
-  dim(ceprData1)
-```
-
-it's the number of columns in the data set. It is therefor a good guess that those elements record information about each of the columns in the data set.
-
-### Exercise 2
-
-Extract elements from `ceprDataInfo` that will help you understand what each column in `deprData` contains. Include at least the variable `names` and `var.labels` as well as any other information that you think will be useful.
-
-Bonus (optional): supplement the `ceprDataInfo` you extracted in step one with the mode, class, etc. of each column in `ceprData1`
-
-### Exercise 2 prototype<span class="tag" data-tag-name="prototype"></span>
-
-``` r
-  ceprCodebook <- data.frame(
-    ceprDataInfo[
-      sapply(ceprDataInfo, length) == ncol(ceprData1)
-    ])
-
-  ceprCodebook$mode <- sapply(ceprData1, mode)
-  ceprCodebook$class <- sapply(ceprData1, class)
-  ceprCodebook$n_distinct = sapply(ceprData1, function(x) length(unique(x)))
-
-  rbind(head(ceprCodebook), tail(ceprCodebook))
-```
-
-Aggregation
-===========
-
-Now that we have the data read in, and we know what is in each column, I want to calculate the proportion displaced by year/rural/gender. I can do that using the `aggregate` function (the `data.table` and `dplyr` packages provide advanced aggregation capabilities, but `aggregate` is available in base R and works well for many things).
-
-``` r
-  ceprData1 <- aggregate(ceprData1["dw"],
-                         by = ceprData1[c("year", "rural", "female")],
-                         FUN = mean, na.rm = TRUE)
-  ceprData1
-```
-
-Exercise 3
-==========
-
-Now that we have a process for importing and aggregating the data we can apply it to all the data files we downloaded earlier. We can do that by wrapping the `read.dta` and `aggregate` code in a function and applying that function to each element of `dataFiles` using the `sapply` function, or using a `for` loop. Go ahead and give it a try! Note that this exercise is intentionally challenging; read the documentation, search stackoverflow.com, and use any other resources at your disposal as you attempt it.
-
-Exercise 3 prototype<span class="tag" data-tag-name="prototype"></span>
-=======================================================================
-
-``` r
-  library(foreign)
-
-  ceprData <- mclapply(dataFiles, function(x) {
-    tmp <- read.dta(x)
-    return(aggregate(tmp["dw"],
-                     by = tmp[c("year", "rural", "female")],
-                     FUN = mean, na.rm = TRUE))})
-```
-
-Finishing touches
-=================
-
-We now have a list of aggregated data.frames. The next step is to stack each element of the list so that we end up with one big data.frame instead of a list of small ones. We can stack two data.frames using the `rbind` function:
-
-``` r
-  ceprData[[1]]; ceprData[[2]]
-  rbind(ceprData[[1]], ceprData[[2]])
-```
-
-and we can apply this operation to every element in the list using the `do.call` function.
-
-``` r
-  str(ceprData <- do.call("rbind", ceprData))
-```
-
-Data formatting
----------------
-
-Our final step before plotting our data is to format the values for `rural` and `female`. Currently these values are stored as 0/1 dummy codes, but I would like for the values to be spelled out.
-
-Earlier we saw how to extract elements of R objects using bracket notation. To replace elements we using the replacement form, which looks like this:
-
-``` r
-   ceprData[["rural"]] <- factor(ceprData[["rural"]],
-                                 levels = c(0, 1),
-                                 labels = c("Non-rural", "Rural"))
-
-   ceprData[["gender"]] <- factor(ceprData[["female"]],
-                                 levels = c(1, 0),
-                                 labels = c("Female", "Male"))
-
-  ceprData$displaced_percent <- ceprData$dw * 100
-
-  str(ceprData)
-```
-
-Plotting
---------
-
-Now we can take a look at the trends in worker displacement over the last few years.
-
-``` r
-  library(ggplot2)
-  library(directlabels)
-  ceprPlot <- ggplot(ceprData, aes(x = year, y = displaced_percent, color = gender)) +
-    geom_line() +
-    geom_point() +
-    facet_wrap(~rural)
-  direct.label(ceprPlot)
-```
+1.  Create a new column named "First.1", containing just the first
+    letter of the "Name" column.
+2.  Create a new column named "First.2", containing just the first two
+    letters of the "Name" column.
+3.  Create a new column named "Last.1", containing just the last letter
+    of the "Name" column.
+4.  Create a new column named "Last.2", containing just the last two
+    letters of the "Name" column.
+5.  Construct a graph showing changes over time in the 5 most popular
+    last letter for boys and girls. Feel free to copy/paste/modify the
+    code from the previous exercise.
 
 What else?
 ==========
 
-If there is anything else you want to learn how to do, now is the time to ask!
+If there is anything else you want to learn how to do, now is the time
+to ask!
 
 Go forth and code!
 ==================
 
-You now know everything you could possibly want to know about R. OK maybe not! But you do know how to manipulate character strings with regular expressions, write your own functions, execute code conditionally, iterate using `for` or `sapply`, inspect and modify attributes, and extract and replace object elements. There's a lot more to learn, but that's a pretty good start. As you go forth and write your own R code here are some resources that may be helpful.
+You now know everything you could possibly want to know about R. OK
+maybe not! But you do know how to manipulate character strings with
+regular expressions, write your own functions, iterate, inspect and
+modify attributes, and extract and replace object elements. There's a
+lot more to learn, but that's a pretty good start. As you go forth and
+write your own R code here are some resources that may be helpful.
 
 Additional reading and resources
---------------------------------
+================================
 
--   Learn from the best: <http://adv-r.had.co.nz/>
--   S3 system overview: <https://github.com/hadley/devtools/wiki/S3>
--   S4 system overview: <https://github.com/hadley/devtools/wiki/S4>
+-   Learn from the best: <http://adv-r.had.co.nz/>;
+    <http://r4ds.had.co.nz/>
 -   R documentation: <http://cran.r-project.org/manuals.html>
--   Collection of R tutorials: <http://cran.r-project.org/other-docs.html>
+-   Collection of R tutorials:
+    <http://cran.r-project.org/other-docs.html>
 
 -   R for Programmers (by Norman Matloff, UC--Davis)
 
@@ -535,53 +970,60 @@ Additional reading and resources
 -   Institute for Quantitative Social Science: <http://iq.harvard.edu>
 -   Research technology consulting: <http://projects.iq.harvard.edu/rtc>
 
-Things that may surprise you
-----------------------------
+Epilogue: Things that may surprise you
+======================================
 
-There are an unfortunately large number of surprises in R programming. Some of these "gotcha's" are common problems in other languages, many are unique to R. We will only cover a few -- for a more comprehensive discussion please see <http://www.burns-stat.com/pages/Tutor/R_inferno.pdf>
+There are an unfortunately large number of surprises in R programming.
+Some of these "gotcha's" are common problems in other languages, many
+are unique to R. We will only cover a few -- for a more comprehensive
+discussion please see
+<http://www.burns-stat.com/pages/Tutor/R_inferno.pdf>
 
 ### Floating point comparison
 
 Floating point arithmetic is not exact:
 
-``` r
-  .1 == .3/3
+``` {#floatingPointExample .r}
+.1 == .3/3
 ```
 
 Solution: `use all.equal()`:
 
-``` r
-  all.equal(.1, .3/3)
+``` {#floatingPointExampleSolution .r}
+all.equal(.1, .3/3)
 ```
 
 ### Missing values
 
-R does not exclude missing values by default -- a single missing value in a vector means that many thing are unknown:
+R does not exclude missing values by default -- a single missing value
+in a vector means that many thing are unknown:
 
-``` r
-  x <- c(1:10, NA, 12:20)
-  c(mean(x), sd(x), median(x), min(x), sd(x))
+``` {#MissingDataExample .r}
+x <- c(1:10, NA, 12:20)
+c(mean(x), sd(x), median(x), min(x), sd(x))
 ```
 
 NA is not equal to anything, not even NA
 
-``` r
-  NA == NA
+``` {#NAcomp .r}
+NA == NA
 ```
 
-Solutions: use `na.rm = TRUE` option when calculating, and is.na to test for missing
+Solutions: use `na.rm = TRUE` option when calculating, and is.na to test
+for missing
 
 ### Automatic type conversion
 
-Automatic type conversion happens a lot which is often useful, but makes it easy to miss mistakes
+Automatic type conversion happens a lot which is often useful, but makes
+it easy to miss mistakes
 
-``` r
-  # combining values coereces them to the most general type
-  (x <- c(TRUE, FALSE, 1, 2, "a", "b"))
-  str(x)
+``` {#typeConversion .r}
+# combining values coereces them to the most general type
+(x <- c(TRUE, FALSE, 1, 2, "a", "b"))
+str(x)
 
-  # comparisons convert arguments to most general type
-  1 > "a"
+# comparisons convert arguments to most general type
+1 > "a"
 ```
 
 Maybe this is what you expect... I would like to at least get a warning!
@@ -590,34 +1032,35 @@ Maybe this is what you expect... I would like to at least get a warning!
 
 Functions you might expect to work similarly don't always:
 
-``` r
-  mean(1, 2, 3, 4, 5)*5
-  sum(1, 2, 3, 4, 5)
+``` {#MeanVSsd .r}
+mean(1, 2, 3, 4, 5)*5
+sum(1, 2, 3, 4, 5)
 ```
 
 Why are these different?!?
 
-``` r
-  args(mean)
-  args(sum)
+``` {#MeanVSsdExplained .r}
+args(mean)
+args(sum)
 ```
 
 Ouch. That is not nice at all!
 
 ### Trouble with Factors
 
-Factors sometimes behave as numbers, and sometimes as characters, which can be confusing!
+Factors sometimes behave as numbers, and sometimes as characters, which
+can be confusing!
 
-``` r
-  (x <- factor(c(5, 5, 6, 6), levels = c(6, 5)))
+``` {#factorTrouble .r}
+(x <- factor(c(5, 5, 6, 6), levels = c(6, 5)))
 
-  str(x)
+str(x)
 
-  as.character(x)
-  # here is where people sometimes get lost...
-  as.numeric(x)
-  # you probably want
-  as.numeric(as.character(x))
+as.character(x)
+# here is where people sometimes get lost...
+as.numeric(x)
+# you probably want
+as.numeric(as.character(x))
 ```
 
 Feedback
@@ -628,6 +1071,7 @@ Feedback
 -   These workshops exist for you -- tell us what you need!
 -   <http://tinyurl.com/RprogrammingFeedback>
 
-[1] Center for Economic and Policy Research. 2012. CPS Displaced Worker Uniform Extracts, Version 1.02. Washington, DC.
-
-[2] Photo by Hadley Wickham via <https://twitter.com/hadleywickham/status/643381054758363136/photo/1>. Used by permission.
+[^1]: In general you [should not use string manipulation tools to parse
+    html](http://stackoverflow.com/questions/1732348/regex-match-open-tags-except-xhtml-self-contained-tags/1732454#1732454),
+    but in this case the html is simple enough that a regular expression
+    based approach is fine.
