@@ -24,8 +24,9 @@
 
 ;; do not re-evaluate source code on export
 (setq-local org-babel-default-header-args
-       (cons '(:eval . "never-export")
-             (assq-delete-all :noweb org-babel-default-header-args)))
+            (cons '(:results . "output replace")
+                  (cons '(:eval . "never-export")
+                        (assq-delete-all :noweb org-babel-default-header-args))))
 
 ;; enable source code support in orgmode
 (org-babel-do-load-languages

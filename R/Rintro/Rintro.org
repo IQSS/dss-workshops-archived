@@ -12,9 +12,10 @@
 # property and/or the EXCLUDE_TAGS, place the curser on the poperty line 
 # and press C-c C-c
 
-#+PROPERTY: exports code
-#+EXCLUDE_TAGS: noexport mitsetup
+#+PROPERTY: header-args :exports code
+#+PROPERTY: header-args:R :tangle Rintro_all_code.R
 
+#+EXCLUDE_TAGS: noexport mitsetup
 
 #+SETUPFILE: ../workshopPreamble.org
 
@@ -22,12 +23,13 @@
 #+begin_src R :exports none :tangle no :results silent
   rm(list=ls())
   .First <- function() {
-    require(foreign)
-    require(rio)
+    require(tidyverse)
+    require(haven)
     options(width=70)
     options(useFancyQuotes=FALSE)
     options(show.signif.stars=FALSE)
   }
+  filter <- dplyr::filter
 #+end_src
 
 #+name: workshopPreamble
@@ -39,9 +41,9 @@
 
 * Workshop Materials and Introduction
 
-#+BEGIN_HTML
+#+BEGIN_EXPORT HTML
   <div class="materials-no-ipynb">
-#+END_HTML
+#+END_EXPORT
 
 ** Materials and setup
 # Lab computer users: Log in using the user name and password on the board to your left.
@@ -53,9 +55,9 @@ Download workshop materials:
   - Download materials from [[http://tutorials.iq.harvard.edu/R/Rintro.zip]]
   - Extract the zip file containing the materials to your desktop
 
-#+BEGIN_HTML
+#+BEGIN_EXPORT HTML
   </div>
-#+END_HTML
+#+END_EXPORT
 
 ** What is R?
 R is a /programming language designed for statistical computing/. Notable characteristics include:
@@ -71,19 +73,8 @@ OK, it's free and popular, but what makes R worth learning? In a word,
 "packages". If you have a data manipulation, analysis or visualization
 task, chances are good that there is an R package for that. For example:
 
-- Want to interactively explore the shape of the Churyumov–Gerasimenko comet?
-#+BEGIN_SRC R :results silent
-  library(rgl)
-  open3d()
-  comet <- readOBJ(url("http://sci.esa.int/science-e/www/object/doc.cfm?fobjectid=54726"))
-  shade3d(comet, col="gray")
-  writeWebGL(dir="images", filename = "images/comet.html")
-#+END_SRC
-
-#+HTML: <iframe src="images/comet.html" width=600 height=350 scrolling=no seamless></iframe>
-
 - Want to find out where we are?
-#+BEGIN_SRC R :results output graphics :width 600 :height 600 :file images/hereweare.png
+#+BEGIN_SRC R :exports both :results output graphics :width 600 :height 600 :file images/hereweare.png
   library(ggmap)
   nwbuilding <- geocode("1737 Cambridge Street Cambridge, MA 02138", source = "google") 
   ggmap(get_map("Cambridge, MA", zoom = 15)) +
@@ -103,6 +94,29 @@ task, chances are good that there is an R package for that. For example:
 
 #+RESULTS:
 [[file:images/austop.png]]
+
+
+- Want to interactively explore the shape of the Churyumov–Gerasimenko comet?
+#+BEGIN_SRC R :results silent
+  library(plotly)
+  comet <- rgl::readOBJ(url("http://sci.esa.int/science-e/www/object/doc.cfm?fobjectid=54726"))
+
+  comet.plot <- plot_ly(x = comet$vb[1,],
+                        y = comet$vb[2,],
+                        z = comet$vb[3,],
+                        i = comet$it[1,]-1,
+                        j= comet$it[2,]-1,
+                        k = comet$it[3,]-1,
+                        type = "mesh3d")
+
+  setwd("images")
+  htmlwidgets::saveWidget(comet.plot, file = "comet.html")
+  setwd("..")
+
+  comet.plot
+#+END_SRC
+
+#+HTML: <iframe src="images/comet.html" width=600 height=350 scrolling=no seamless></iframe>
 
 Whatever you're trying to do, you're probably not the first to try doing it R. Chances are good that someone has already written a package for that.
 
@@ -146,7 +160,7 @@ Emacs + ESS is a very powerful combination, but can be difficult to set up.
 #+attr_html: :width 95%
 [[file:images/Jupyter.png]]
 
-Jupyter is a notebook interface that runs in your web browser. A lot of people like it.
+Jupyter is a notebook interface that runs in your web browser. A lot of people like it. You can access these workshop notes as a Jupyter notebook at http://tutorials-live.iq.harvard.edu:8000/notebooks/workshops/R/Rintro/Rintro.ipynb
 
 ** Launch RStudio on Athena					   :mitsetup:
 
@@ -179,7 +193,52 @@ Also keep in mind that we are living in a golden age of tab completion. If you d
 2. Try to calculate the square root of 10.
 3. There is an R package named =car= (Companion to Applied Regression). Try to install this package.
 4. R includes extensive documentation, including a file named "An introduction to R". Try to find this help file.
-5. Go to [[http://cran.r-project.org/web/views/]] and skim the topic closest to your field/interests.
+5. Open a web browser, go to [[http://cran.r-project.org/web/views/]] and skim the topic closest to your field/interests.
+
+** Exercise 0 solution                                            :prototype:
+1) [@1]] Add 2 plus 2.
+#+BEGIN_SRC R :results output replace
+  2 + 2
+  sum(2, 2)
+
+#+END_SRC
+
+#+RESULTS:
+#+begin_example
+> 2 + 2
+[1] 4
+> sum(2, 2)
+[1] 4
+> 
+#+end_example
+
+2) [@2] Calculate the square root of 10:
+
+#+BEGIN_SRC R
+  sqrt(10)
+  10^(1/2)
+#+END_SRC
+
+#+RESULTS:
+#+begin_example
+> sqrt(10)
+[1] 3.162278
+> 10^(1/2)
+[1] 3.162278
+> 
+#+end_example
+
+3) [@3] Install the "car" package:
+
+=In Rstudio, go to the "Packages" tab and click the "Istall" button. Search in the pop-up window and click "Install".=
+
+4) [@4] Find "An Introduction to R".
+
+=Go to the main help page by running 'help.start() or using the GUI menu, find and click on the link to "An Introduction to R".=
+
+4) [@4] Go to [[http://cran.r-project.org/web/views/]] and skim the topic closest to your field/interests.
+
+=I like the machine learning topic=
 
 * Data and Functions
 
@@ -193,17 +252,26 @@ Values can be assigned names and used in subsequent operations
 #+begin_src R 
   x <- 10 # Assign the value 10 to a variable named x
   x + 1 # Add 1 to x
+  x # note that x is unchanged
   y <- x + 1 # Assign y the value x + 1
   y
+  x <- x + 100 # change the value of x
+  y ## note that y is unchanged.
 #+end_src
+
 
 #+RESULTS: firstRExample
 #+begin_example
 > x <- 10 # Assign the value 10 to a variable named x
 > x + 1 # Add 1 to x
 [1] 11
+> x # note that x is unchanged
+[1] 10
 > y <- x + 1 # Assign y the value x + 1
 > y
+[1] 11
+> x <- x + 100 # change the value of x
+> y ## note that y is unchanged.
 [1] 11
 > 
 #+end_example
@@ -223,15 +291,108 @@ Saved variables can be listed, overwritten and deleted
 #+RESULTS: listOverwriteDelete
 #+begin_example
 > ls() # List variables in workspace
-[1] "comet" "fit"   "x"     "y"    
+[1] "comet"      "comet.plot" "filter"     "fit"        "nwbuilding"
+[6] "x"          "y"         
 > x # Print the value of x
-[1] 10
+[1] 110
 > x <- 100 # Overwrite x. Note that no warning is given!
 > x
 [1] 100
 > rm(x) # Delete x
 > ls()
-[1] "comet" "fit"   "y"    
+[1] "comet"      "comet.plot" "filter"     "fit"        "nwbuilding"
+[6] "y"         
+> 
+#+end_example
+
+** Data types and conversion
+The =x= and =y= data objects we created are numeric /vectors/ of length one. Vectors are the simplest data structure in R, and are the building blocks used to make more complex data structures. Here are some more vector examples.
+
+#+BEGIN_SRC R
+  x <- c(10, 11, 12)
+  X <- c("10", "11", "12")
+  y <- c("h", "e", "l", "l", "o")
+  Y <- "hello"
+  z <- c(1, 0, 1, 1)
+  Z <- c(TRUE, FALSE, TRUE, TRUE)
+#+END_SRC
+
+#+RESULTS:
+#+begin_example
+> x <- c(10, 11, 12)
+> X <- c("10", "11", "12")
+> y <- c("h", "e", "l", "l", "o")
+> Y <- "hello"
+> z <- c(1, 0, 1, 1)
+> Z <- c(TRUE, FALSE, TRUE, TRUE)
+> 
+#+end_example
+
+Notice that the =c= function combines its arguments into a vector.
+
+All R objects have a /mode/ and /length/. Since it is impossible for an object not to have these attributes they are called /intrinsic attributes/.
+#+BEGIN_SRC R
+  print(x)
+  mode(x)
+  length(x)
+  
+  print(X)
+  mode(X)
+  length(X)
+
+  length(y)
+  length(Y)
+  
+  mode(z)
+  mode(Z)
+#+END_SRC
+
+#+RESULTS:
+#+begin_example
+> print(x)
+[1] 10 11 12
+> mode(x)
+[1] "numeric"
+> length(x)
+[1] 3
+> 
+> print(X)
+[1] "10" "11" "12"
+> mode(X)
+[1] "character"
+> length(X)
+[1] 3
+> 
+> length(y)
+[1] 5
+> length(Y)
+[1] 1
+> 
+> mode(z)
+[1] "numeric"
+> mode(Z)
+[1] "logical"
+> 
+#+end_example
+
+Data structures in R can be converted from one type to another using one of the many functions beginning with =as.=. For example:
+#+BEGIN_SRC R
+  mode(x)
+  mode(as.character(x))
+  mode(X)
+  mode(as.numeric(X))
+#+END_SRC
+
+#+RESULTS:
+#+begin_example
+> mode(x)
+[1] "numeric"
+> mode(as.character(x))
+[1] "character"
+> mode(X)
+[1] "character"
+> mode(as.numeric(X))
+[1] "numeric"
 > 
 #+end_example
 
@@ -244,7 +405,9 @@ Using R is mostly about applying *functions* to *variables*. Functions
   - optionally perform side-effects such as writing a file to disk or opening a graphics window
 
 The general form for calling R functions is 
-src_R[:exports code :eval no]{FunctionName(arg.1, arg.2, ... arg.n)}
+#+BEGIN_SRC R :eval no
+  ## FunctionName(arg.1, arg.2, ..., arg.n)
+#+END_SRC
 
 Arguments can be matched by position or name
 
@@ -252,88 +415,272 @@ Examples:
 #+name: functionExamples
 #+begin_src R
   #?sqrt
-  a <- sqrt(y) # Call the sqrt function with argument x=y
+  a <- sqrt(z) # Call the sqrt function with argument x=z
+  
+## look at the arguments to the round function
+  args(round) # use ?round if you need more information
+
   round(a, digits = 2) # Call round() with arguments x=x and digits=2
+
+  ## since matching by name takes precedence these are all equivalent:
+  round(a, 2)
+  round(x = a, 2)
+  round(digits = 2, x = a)
+
+  ## the only way we can go wrong is by omiting the names and mixing up the order
+  round(2, x)
+
   # Functions can be nested so an alternative is
-  round(sqrt(y), digits = 5) # Take sqrt of a and round
+  round(sqrt(z), digits = 2) # Take sqrt of a and round
 #+end_src
 
 #+RESULTS: functionExamples
 #+begin_example
-> #?sqrt
-> a <- sqrt(y) # Call the sqrt function with argument x=y
-> round(a, digits = 2) # Call round() with arguments x=x and digits=2
-[1] 3.32
-> # Functions can be nested so an alternative is
-> round(sqrt(y), digits = 5) # Take sqrt of a and round
-[1] 3.31662
+>   #?sqrt
+>   a <- sqrt(z) # Call the sqrt function with argument x=z
+>   
+> ## look at the arguments to the round function
+>   args(round) # use ?round if you need more information
+function (x, digits = 0) 
+NULL
+> 
+>   round(a, digits = 2) # Call round() with arguments x=x and digits=2
+[1] 1 0 1 1
+> 
+>   ## since matching by name takes precedence these are all equivalent:
+>   round(a, 2)
+[1] 1 0 1 1
+>   round(x = a, 2)
+[1] 1 0 1 1
+>   round(digits = 2, x = a)
+[1] 1 0 1 1
+> 
+>   ## the only way we can go wrong is by omiting the names and mixing up the order
+>   round(2, x)
+[1] 2 2 2
+> 
+>   # Functions can be nested so an alternative is
+>   round(sqrt(z), digits = 2) # Take sqrt of a and round
+[1] 1 0 1 1
 > 
 #+end_example
   
 * Asking R for help
 R has extensive built-in documentation that can be accessed through R commands or through the GUI.
-- Start html help, search/browse using web browser
-  - at the R console:
-src_R[:exports code :eval no]{help.start()}
-  - or use the help menu from you GUI
-- Look up the documentation for a function
-src_R[:exports code :eval no]{help(plot)}
-src_R[:exports code :eval no]{?kmeans}
-- Look up documentation for a package
-src_R[:exports code :eval no]{help(package="stats")}
-- Search documentation from R (not always the best way... google often works better)
-src_R[:exports code :eval no]{help.search("classification")}
+
+#+BEGIN_SRC R :eval no
+  ## Start html help, search/browse using web browser
+  help.start() # or use the help menu from you GUI
+  ## Look up the documentation for a function
+  help(plot) ## or use the shortcut: ?plot
+  ## Look up documentation for a package
+  help(package="stats")
+  ## Search documentation from R (not always the best way... google often works better)
+  help.search("classification")
+
+#+END_SRC
 
 
 * R packages
 
-There are thousands of R packages that extend R's capabilities.
+There are thousands of R packages that extend R's capabilities. Some packages are distributed with R, and some of these are attached to the search path by default. Many more are available in package repositories.
 
-- To see what packages are loaded: 
-src_R[:exports code :eval no]{search()}
+#+BEGIN_SRC R :eval no
+  ##To see what packages are loaded: 
+  search()
 
-- To view available packages: 
-src_R[:exports code :eval no]{library()}
+  ## To view available packages: 
+  library()
 
-- To load a package: 
-src_R[:exports code :eval no]{library("car")}
+  ## To load a package: 
+  library("MASS")
 
-- Install new package: 
-src_R[:exports code :eval no]{install.packages("stringdist")}
+  ## Install new package: 
+  install.packages("stringdist")
+
+#+END_SRC
+
+In this workshop we will use the /tidyverse/ package. /tidyverse/ is a meta package that loads the /dplyr/ package for easier data manipulation the /readr/ package for easier data import/export, and several other useful packages.
+
+** Exercise 1
+The purpose of this exercise is to practice using the package management and help facilities. 
+
+1. Use the =search= function to inspect the current search path. Assign the result to the name =orig.search.path=.
+2. What are the =mode= and =length= of =orig.search.path=?
+3. Install the /tidyverse/ package. Compare the output of =search()= to the value you've saved in =orig.search.path=. Has it changed?
+4. Use the =library= function to attach the /tidyverse/ package. Compare the output of =search()= to the value you've saved in =orig.search.path=. Has it changed?
+5. Look up the help page for the /readr/ package. Which function would you use to read a tab delimited file?
+
+** Exercise 1 solution                                            :prototype:
+
+#+BEGIN_SRC R
+  ## inspect search path
+  search()
+  orig.search.path <- search()
+  
+  ## install the tidyverse package and check search path
+  # install.pacakges("tidyverse")
+  search() ## unchanged
+
+  ## attach the tidyverse pacakge
+  library("tidyverse")
+  print(orig.search.path)
+  search() ## different now that we have attached the package using the library function
+
+  ## look up the readr package documentation
+  help(package = "readr")
+  ## I would use read_tsv to read a tab delimited file.
+#+END_SRC
+
+#+RESULTS:
+#+begin_example
+> ## inspect search path
+> search()
+ [1] ".GlobalEnv"        "package:stats"     "package:graphics" 
+ [4] "package:grDevices" "package:utils"     "package:datasets" 
+ [7] "package:haven"     "package:dplyr"     "package:purrr"    
+[10] "package:readr"     "package:tidyr"     "package:tibble"   
+[13] "package:ggplot2"   "package:tidyverse" "package:methods"  
+[16] "Autoloads"         "package:base"     
+> orig.search.path <- search()
+> 
+> ## install the tidyverse package and check search path
+> # install.pacakges("tidyverse")
+> search() ## unchanged
+ [1] ".GlobalEnv"        "package:stats"     "package:graphics" 
+ [4] "package:grDevices" "package:utils"     "package:datasets" 
+ [7] "package:haven"     "package:dplyr"     "package:purrr"    
+[10] "package:readr"     "package:tidyr"     "package:tibble"   
+[13] "package:ggplot2"   "package:tidyverse" "package:methods"  
+[16] "Autoloads"         "package:base"     
+> 
+> ## attach the tidyverse pacakge
+> library("tidyverse")
+> print(orig.search.path)
+ [1] ".GlobalEnv"        "package:stats"     "package:graphics" 
+ [4] "package:grDevices" "package:utils"     "package:datasets" 
+ [7] "package:haven"     "package:dplyr"     "package:purrr"    
+[10] "package:readr"     "package:tidyr"     "package:tibble"   
+[13] "package:ggplot2"   "package:tidyverse" "package:methods"  
+[16] "Autoloads"         "package:base"     
+> search() ## different now that we have attached the package using the library function
+ [1] ".GlobalEnv"        "package:stats"     "package:graphics" 
+ [4] "package:grDevices" "package:utils"     "package:datasets" 
+ [7] "package:haven"     "package:dplyr"     "package:purrr"    
+[10] "package:readr"     "package:tidyr"     "package:tibble"   
+[13] "package:ggplot2"   "package:tidyverse" "package:methods"  
+[16] "Autoloads"         "package:base"     
+> 
+> ## look up the readr package documentation
+> help(package = "readr")
+
+		Information on package 'readr'
+
+Description:
+
+Package:            readr
+Version:            1.0.0
+Title:              Read Tabular Data
+Description:        Read flat/tabular text files from disk (or
+                    a connection).
+Authors@R:          c( person("Hadley", "Wickham", ,
+                    "hadley@rstudio.com", c("aut", "cre")),
+                    person("Jim", "Hester", ,
+                    "jim.hester@rstudio.com", "aut"),
+                    person("Romain", "Francois", role =
+                    "aut"), person("R Core Team", role =
+                    "ctb", comment = "Date time code adapted
+                    from R"), person("RStudio", role = "cph"),
+                    person("Jukka", "Jäylnki", role = c("ctb",
+                    "cph"), comment = "grisu3
+                    implementation"), person("Mikkel",
+                    "Jørgensen", role = c("ctb", "cph"),
+                    comment = "grisu3 implementation"))
+Encoding:           UTF-8
+Depends:            R (>= 3.0.2)
+LinkingTo:          Rcpp, BH
+Imports:            Rcpp (>= 0.11.5), curl, tibble, hms, R6
+Suggests:           testthat, knitr, rmarkdown, stringi, covr
+License:            GPL (>= 2) | file LICENSE
+BugReports:         https://github.com/hadley/readr/issues
+URL:                https://github.com/hadley/readr
+VignetteBuilder:    knitr
+RoxygenNote:        5.0.1
+NeedsCompilation:   yes
+Packaged:           2016-08-03 15:26:00 UTC; hadley
+Author:             Hadley Wickham [aut, cre], Jim Hester
+                    [aut], Romain Francois [aut], R Core Team
+                    [ctb] (Date time code adapted from R),
+                    RStudio [cph], Jukka Jäylnki [ctb, cph]
+                    (grisu3 implementation), Mikkel Jørgensen
+                    [ctb, cph] (grisu3 implementation)
+Maintainer:         Hadley Wickham <hadley@rstudio.com>
+Repository:         CRAN
+Date/Publication:   2016-08-03 17:55:25
+Built:              R 3.3.1; x86_64-pc-linux-gnu; 2016-09-06
+                    14:30:00 UTC; unix
+
+Index:
+
+cols                    Create column specification
+cols_condense           Examine the column specifications for a data
+                        frame
+count_fields            Count the number of fields in each line of a
+                        file.
+date_names              Create or retrieve date names
+guess_encoding          Guess encoding of file.
+locale                  Create locales
+parse_atomic            Parse character vector in an atomic vector.
+parse_datetime          Parse a character vector of dates or date
+                        times.
+parse_factor            Parse a character vector into a factor
+parse_guess             Parse a character vector into the "best" type.
+parse_number            Extract numbers out of an atomic vector
+problems                Retrieve parsing problems.
+read_delim              Read a delimited file into a data frame.
+read_file               Read a file into a string.
+read_fwf                Read a fixed width file.
+read_lines              Read lines from a file or string.
+read_log                Read common/combined log file.
+read_rds                Read object from RDS file.
+read_table              Read text file where columns are separated by
+                        whitespace.
+readr_example           Get path to readr example
+spec_delim              Retrieve the column specification of a file.
+type_convert            Re-convert character columns in existing data
+                        frame.
+write_delim             Save a data frame to a delimited file.
+write_lines             Write lines/ a file
+write_rds               Write a single R object to file
+
+Further information is available in the following vignettes in
+directory
+'/home/izahn/R/x86_64-pc-linux-gnu-library/3.3/readr/doc':
+
+column-types: Column types (source, pdf)
+locales: Locales (source, pdf)
+
+> ## I would use read_tsv to read a tab delimited file.
+> 
+#+end_example
 
 * Getting data into R
   
-
-** The gss dataset
-  The next few examples use a subset of the General Social Survey data set. The variables in this subset include those described below.
-#+name: GSSinfo
-#+begin_src R :results value org table :colnames yes :exports results
-  read.csv("dataSets/gssInfo.csv")
-  #see gssInfo.csv for rest of the variable descriptions
-#+end_src
-
-#+RESULTS: GSSinfo
-#+BEGIN_SRC org
-| var     | description                      |
-|---------+----------------------------------|
-| marital | marital status                   |
-| age     | age of respondent                |
-| educ    | highest year of school completed |
-| sex     | respondents sex                  |
-| inc     | respondents income               |
-| happy   | general happiness                |
-| region  |                                  |
-#+END_SRC
-
+** The baby names data set 
+The examples in this workshop use the baby names data provided by the governments of the United States and the United Kingdom. A cleaned and merged version of these data is in =dataSets/babyNames.csv=.
 
 ** The "working directory" and listing files
- R knows the directory it was started in, and refers to this as the "working directory". Since our workshop examples are in the Rintro folder on the desktop, we should all take a moment to set that as our working directory:
+ R knows the directory it was started in, and refers to this as the "working directory". Since our workshop examples are in the Rintro folder in your Downloads folder, we should all take a moment to set that as our working directory.
+
 #+name: SetDesktopWorkingDirectory
 #+begin_src R :eval no
-  setwd("~/Desktop/Rintro")
+  getwd() # what is my current working directory?
+  # setwd("~/Desktop/Rintro") # change directory
 #+end_src
 
-We can also set the working directory using paths relative to the current working directory:
+Note that "=~=" means "my home directory" but that this can mean different things on different operating systems. You can also use the Files tab in Rstudio to navigate to a directory, then click "More -> Set as working directory".
+
+We can a set the working directory using paths relative to the current working directory. Once we are in the "Rintro" folder we can navigate to the "dataSets" folder like this:
 
 #+name: getWD
 #+begin_src R
@@ -346,10 +693,10 @@ We can also set the working directory using paths relative to the current workin
 #+RESULTS: getWD
 #+begin_example
 > getwd() # get the current working directory
-[1] "/home/izahn/Documents/Work/IQSS/Classes/IQSS_Stats_Workshops/R/Rintro"
+[1] "/home/izahn/Documents/Work/Classes/IQSS_Stats_Workshops/R/Rintro"
 > setwd("dataSets") # set wd to the dataSets folder
 > getwd()
-[1] "/home/izahn/Documents/Work/IQSS/Classes/IQSS_Stats_Workshops/R/Rintro/dataSets"
+[1] "/home/izahn/Documents/Work/Classes/IQSS_Stats_Workshops/R/Rintro/dataSets"
 > setwd("..") # set wd to enclosing folder ("up")
 > 
 #+end_example
@@ -358,142 +705,445 @@ We can also set the working directory using paths relative to the current workin
 #+name: listFilesExample
 #+begin_src R
   list.files("dataSets") # list files in the dataSets folder
-  # list.files("dataSets", pattern = ".csv") # restrict to .csv files  
 #+end_src
 
 #+RESULTS: listFilesExample
 #+begin_example
 > list.files("dataSets") # list files in the dataSets folder
-[1] "gss.csv"      "gss.dta"      "gssInfo.csv"  "gss.rds"     
-[5] "gss.sas7bdat" "gss.sav"      "gss.xlsx"    
-> # list.files("dataSets", pattern = ".csv") # restrict to .csv files  
+[1] "babyNames.csv"
 > 
 #+end_example
 
-** Importing data from files the easy way
-In order to read data from a file, you usually have to know what kind of file it is. The table below lists some common data types.
+** Readers for common file types
 
-| Common data types      |
-|------------------------|
-| comma separated (.csv) |
-| Stata (.dta)           |
-| SPSS (.sav)            |
-| SAS (.sas7bdat)        |
-| Excel (.xls, .xlsx)    |
-|------------------------|
-
-R is smart enough to recognize most common file formats for us using the =import()= function. To use this functionality we first need to install and attache the =rio= package.
-#+name: install_rio
-#+begin_src R
-  ## install and load the rio package
-  # install.packages("rio")
-  library(rio)
-  ## import data from a variety of formats
-  # read gss data from the gss.rds R file
-  datGSS <- import("dataSets/gss.rds")
-  # read gss data from the gss.csv comma separated file
-  datGSS <- import("dataSets/gss.csv")
-  # read a Stata dataset from gss.dta 
-  datGSS <- import("dataSets/gss.dta")
-#+end_src
-
-#+RESULTS: install_rio
-#+begin_example
-> ## install and load the rio package
-> # install.packages("rio")
-> library(rio)
-> ## import data from a variety of formats
-> # read gss data from the gss.rds R file
-> datGSS <- import("dataSets/gss.rds")
-> # read gss data from the gss.csv comma separated file
-> datGSS <- import("dataSets/gss.csv")
-> # read a Stata dataset from gss.dta 
-> datGSS <- import("dataSets/gss.dta")
-> 
-#+end_example
-
-** Importing data from files the hard way
 In order to read data from a file, you have to know what kind of file it is. The table below lists the functions that can import data from common file formats.
 
-| data type                  | function                | package         |
-|----------------------------+-------------------------+-----------------|
-| comma separated (.csv)     | read.csv()              | utils (default) |
-| other delimited formats    | read.table()            | utils (default) |
-| Stata version 7-12 (.dta)  | read.dta()              | foreign         |
-| Stata version 13-14 (.dta) | read_dta()              | haven           |
-| SPSS (.sav)                | read.spss()             | foreign         |
-| SAS (.sas7bdat)            | read.sas7bdat()         | sas7bdat        |
-| Excel (.xls, .xlsx)        | read_excel              | readxl          |
-|----------------------------+-------------------------+-----------------|
+| data type               | function     | package                                             |
+|-------------------------+--------------+-----------------------------------------------------|
+| comma separated (.csv)  | read_csv()   | readr (tidyverse)                                   |
+| other delimited formats | read_delim() | readr (tidyverse)                                   |
+| R (.Rds)                | read_rds()   | readr (tidyverse)                                                    |
+| Stata (.dta)            | read_stata() | haven (tidyverse, needs to be attached separately)  |
+| SPSS (.sav)             | read_spss()  | haven (tidyverse, needs to be attached separately)  |
+| SAS (.sas7bdat)         | read_sas()   | haven (tidyverse, needs to be attached separately)  |
+| Excel (.xls, .xlsx)     | read_excel   | readxl (tidyverse, needs to be attached separately) |
+|-------------------------+--------------+-----------------------------------------------------|
 
-Examples:
-#+name: readRDS
-#+begin_src R
-  # read gss data from the gss.rds R file
-  datGSS <- readRDS("dataSets/gss.rds")
-  # read gss data from the gss.csv comma separated file
-  datGSS <- read.csv("dataSets/gss.csv") # read gss data
-  # read a Stata dataset from gss.dta 
-  library(foreign) # load foreign data functions
-  datGSS <- read.dta(file="dataSets/gss.dta")
-#+end_src
 
-#+RESULTS: readRDS
+** Exercise 2
+The purpose of this exercise is to practice reading data into R. The data in "=dataSets/babyNames.csv=" is moderately tricky to read, making it a good data set to practice on. 
+
+1. Open the help page for the =read_csv= function. How can you limit the number of rows to be read in?
+2. Read just the first 10 rows of "=dataSets/babyNames.csv=". Notice that the "Sex" column has been read as a logical (TRUE/FALSE).
+3. Read the =read_csv= help page to figure out how to make it read the "Sex" column as a character. Make adjustments to your code until you have read in the first 10 rows with the correct column types. "Year" and "Name.length" should be integer (int), "Count" and "Percent" should be double (dbl) and everything else should be character (chr).
+4. Once you have successfully read in the first 10 rows, read the whole file, assigning the result to the name =baby.names=.
+
+** Exercise 2 solution                                            :prototype:
+
+#+BEGIN_SRC R
+  ## read ?read_csv
+  ## limit rows with n_max argument
+  read_csv("dataSets/babyNames.csv", n_max = 10)
+  
+  ## specify column types in the col_types argument
+  read_csv("dataSets/babyNames.csv", n_max = 10, col_types = "??c????")
+  
+  ## read all the data
+  baby.names <- read_csv("dataSets/babyNames.csv", col_types = "??c????")
+#+END_SRC
+
+#+RESULTS:
 #+begin_example
-> # read gss data from the gss.rds R file
-> datGSS <- readRDS("dataSets/gss.rds")
-> # read gss data from the gss.csv comma separated file
-> datGSS <- read.csv("dataSets/gss.csv") # read gss data
-> # read a Stata dataset from gss.dta 
-> library(foreign) # load foreign data functions
-> datGSS <- read.dta(file="dataSets/gss.dta")
+> ## read ?read_csv
+> ## limit rows with n_max argument
+> read_csv("dataSets/babyNames.csv", n_max = 10)
+# A tibble: 10 × 7
+            Location  Year   Sex      Name Count  Percent Name.length
+               <chr> <int> <lgl>     <chr> <dbl>    <dbl>       <int>
+1  England and Wales  1996 FALSE    sophie  7087 2.394273           6
+2  England and Wales  1996 FALSE     chloe  6824 2.305421           5
+3  England and Wales  1996 FALSE   jessica  6711 2.267245           7
+4  England and Wales  1996 FALSE     emily  6415 2.167244           5
+5  England and Wales  1996 FALSE    lauren  6299 2.128055           6
+6  England and Wales  1996 FALSE    hannah  5916 1.998662           6
+7  England and Wales  1996 FALSE charlotte  5866 1.981770           9
+8  England and Wales  1996 FALSE   rebecca  5828 1.968932           7
+9  England and Wales  1996 FALSE       amy  5206 1.758796           3
+10 England and Wales  1996 FALSE     megan  4948 1.671633           5
+> 
+> ## specify column types in the col_types argument
+> read_csv("dataSets/babyNames.csv", n_max = 10, col_types = "??c????")
+# A tibble: 10 × 7
+            Location  Year   Sex      Name Count  Percent Name.length
+               <chr> <int> <chr>     <chr> <dbl>    <dbl>       <int>
+1  England and Wales  1996     F    sophie  7087 2.394273           6
+2  England and Wales  1996     F     chloe  6824 2.305421           5
+3  England and Wales  1996     F   jessica  6711 2.267245           7
+4  England and Wales  1996     F     emily  6415 2.167244           5
+5  England and Wales  1996     F    lauren  6299 2.128055           6
+6  England and Wales  1996     F    hannah  5916 1.998662           6
+7  England and Wales  1996     F charlotte  5866 1.981770           9
+8  England and Wales  1996     F   rebecca  5828 1.968932           7
+9  England and Wales  1996     F       amy  5206 1.758796           3
+10 England and Wales  1996     F     megan  4948 1.671633           5
+> 
+> ## read all the data
+> baby.names <- read_csv("dataSets/babyNames.csv", col_types = "??c????")
 > 
 #+end_example
-
 
 ** Checking imported data
 
- Always a good idea  to examine the imported data set--usually we want the results to be a ~data.frame~
+ It is always a good idea  to examine the imported data set--usually we want the results to be a ~data.frame~
 #+name: ExamineStataData
 #+begin_src R
-  class(datGSS) # check to see that test is what we expect it to be
-  dim(datGSS) # how many rows and columns?
-  names(datGSS) # or colnames(datGSS)
-  str(datGSS[1:10]) # more details about the first 10 columns
+  ## we know that this object will have mode and length, because all R objects do.
+  mode(baby.names)
+  length(baby.names) # number of columns
+
+  ## additional information about this data object
+  class(baby.names) # check to see that test is a data.frame
+  dim(baby.names) # how many rows and columns?
+  names(baby.names) # or colnames(baby.names)
+  str(baby.names) # more details
+  glimpse(baby.names) # details, more compactly
 #+end_src
 
 #+RESULTS: ExamineStataData
 #+begin_example
-> class(datGSS) # check to see that test is what we expect it to be
-[1] "data.frame"
-> dim(datGSS) # how many rows and columns?
-[1] 1419   35
-> names(datGSS) # or colnames(datGSS)
- [1] "age"      "educ"     "emailhrs" "hrs1"     "sex"      "usecomp" 
- [7] "usemail"  "useweb"   "webhrs"   "hapmar"   "happy"    "speduc"  
-[13] "rincome"  "income"   "marital"  "postlife" "pres96"   "richwork"
-[19] "satjob"   "sibs"     "spdeg"    "spwrksta" "vote96"   "wrkstat" 
-[25] "zodiac"   "incomdol" "rincdol"  "husbeduc" "wifeduc"  "husbhr"  
-[31] "wifehr"   "husbft"   "wifeft"   "wkftwife" "wkfthusb"
-> str(datGSS[1:10]) # more details about the first 10 columns
-'data.frame':	1419 obs. of  10 variables:
- $ age     : num  69 27 19 21 19 87 42 19 78 70 ...
- $ educ    : num  12 10 11 9 11 8 11 11 7 9 ...
- $ emailhrs: num  -1 -1 0 -1 50 -1 3 -1 -1 -1 ...
- $ hrs1    : num  -1 60 32 20 -1 -1 -1 -1 -1 22 ...
- $ sex     : Factor w/ 2 levels "Male","Female": 1 1 1 1 1 2 1 2 2 2 ...
- $ usecomp : Factor w/ 3 levels "No","Yes","No answer": 1 1 2 1 2 1 2 2 1 1 ...
- $ usemail : Factor w/ 3 levels "No","Yes","No answer": 1 1 1 1 2 1 2 1 1 1 ...
- $ useweb  : Factor w/ 3 levels "No","Yes","No answer": 1 1 2 1 2 1 1 1 1 1 ...
- $ webhrs  : num  -1 -1 36 -1 20 -1 0 -1 -1 -1 ...
- $ hapmar  : Factor w/ 6 levels "NAP","VERY HAPPY",..: 1 2 1 1 1 1 2 1 1 1 ...
+> ## we know that this object will have mode and length, because all R objects do.
+> mode(baby.names)
+[1] "list"
+> length(baby.names) # number of columns
+[1] 7
+> 
+> ## additional information about this data object
+> class(baby.names) # check to see that test is a data.frame
+[1] "tbl_df"     "tbl"        "data.frame"
+> dim(baby.names) # how many rows and columns?
+[1] 1966001       7
+> names(baby.names) # or colnames(baby.names)
+[1] "Location"    "Year"        "Sex"         "Name"       
+[5] "Count"       "Percent"     "Name.length"
+> str(baby.names) # more details
+Classes 'tbl_df', 'tbl' and 'data.frame':	1966001 obs. of  7 variables:
+ $ Location   : chr  "England and Wales" "England and Wales" "England and Wales" "England and Wales" ...
+ $ Year       : int  1996 1996 1996 1996 1996 1996 1996 1996 1996 1996 ...
+ $ Sex        : chr  "F" "F" "F" "F" ...
+ $ Name       : chr  "sophie" "chloe" "jessica" "emily" ...
+ $ Count      : num  7087 6824 6711 6415 6299 ...
+ $ Percent    : num  2.39 2.31 2.27 2.17 2.13 ...
+ $ Name.length: int  6 5 7 5 6 6 9 7 3 5 ...
+ - attr(*, "spec")=List of 2
+  ..$ cols   :List of 7
+  .. ..$ Location   : list()
+  .. .. ..- attr(*, "class")= chr  "collector_character" "collector"
+  .. ..$ Year       : list()
+  .. .. ..- attr(*, "class")= chr  "collector_integer" "collector"
+  .. ..$ Sex        : list()
+  .. .. ..- attr(*, "class")= chr  "collector_character" "collector"
+  .. ..$ Name       : list()
+  .. .. ..- attr(*, "class")= chr  "collector_character" "collector"
+  .. ..$ Count      : list()
+  .. .. ..- attr(*, "class")= chr  "collector_double" "collector"
+  .. ..$ Percent    : list()
+  .. .. ..- attr(*, "class")= chr  "collector_double" "collector"
+  .. ..$ Name.length: list()
+  .. .. ..- attr(*, "class")= chr  "collector_integer" "collector"
+  ..$ default: list()
+  .. ..- attr(*, "class")= chr  "collector_guess" "collector"
+  ..- attr(*, "class")= chr "col_spec"
+> glimpse(baby.names) # details, more compactly
+Observations: 1,966,001
+Variables: 7
+$ Location    <chr> "England and Wales", "England and Wales", "En...
+$ Year        <int> 1996, 1996, 1996, 1996, 1996, 1996, 1996, 199...
+$ Sex         <chr> "F", "F", "F", "F", "F", "F", "F", "F", "F", ...
+$ Name        <chr> "sophie", "chloe", "jessica", "emily", "laure...
+$ Count       <dbl> 7087, 6824, 6711, 6415, 6299, 5916, 5866, 582...
+$ Percent     <dbl> 2.3942729, 2.3054210, 2.2672450, 2.1672444, 2...
+$ Name.length <int> 6, 5, 7, 5, 6, 6, 9, 7, 3, 5, 7, 5, 7, 4, 4, ...
 > 
 #+end_example
 
 
+* Data Manipulation
+
+** data.frame objects
+Usually data read into R will be stored as a *data.frame*
+
+- A data.frame is a list of vectors of equal length
+  - Each vector in the list forms a column
+  - Each column can be a differnt type of vector
+  - Typically columns are variables and the rows are observations
+
+A data.frame has two dimensions corresponding the number of rows and the number of columns (in that order)
+
+** Slice and Filter data.frames rows
+
+You can extract subsets of data.frames using =slice= to select rows by number and =filter= to select rows that match some condition. It works like this:
+
+#+name: indexingDataFrame
+#+begin_src R 
+  ## make up some example data
+  (example.df <- data.frame(id  = rep(letters[1:4], each = 4),
+                            t   = rep(1:4, times = 4),
+                            var1 = runif(16),
+                            var2 = sample(letters[1:3], 16, replace = TRUE)))
+
+  ## rows 2 and 4
+  slice(example.df, c(2, 4))
+
+  ## rows where id == "a"
+  filter(example.df, id == "a")
+
+  ## rows where id is either "a" or "b"
+  filter(example.df, id %in% c("a", "b"))
+
+#+end_src
+
+#+RESULTS: indexingDataFrame
+#+begin_example
+> ## make up some example data
+> (example.df <- data.frame(id  = rep(letters[1:4], each = 4),
++                           t   = rep(1:4, times = 4),
++                           var1 = runif(16),
++                           var2 = sample(letters[1:3], 16, replace = TRUE)))
+   id t       var1 var2
+1   a 1 0.19158254    c
+2   a 2 0.46921828    c
+3   a 3 0.71092483    c
+4   a 4 0.81892913    c
+5   b 1 0.17894751    b
+6   b 2 0.94742350    c
+7   b 3 0.24051714    c
+8   b 4 0.41236477    c
+9   c 1 0.66573374    c
+10  c 2 0.72515137    b
+11  c 3 0.66923824    b
+12  c 4 0.41101666    b
+13  d 1 0.06401198    c
+14  d 2 0.34580213    b
+15  d 3 0.44477036    c
+16  d 4 0.12253790    b
+> 
+> ## rows 2 and 4
+> slice(example.df, c(2, 4))
+  id t      var1 var2
+1  a 2 0.4692183    c
+2  a 4 0.8189291    c
+> 
+> ## rows where id == "a"
+> filter(example.df, id == "a")
+  id t      var1 var2
+1  a 1 0.1915825    c
+2  a 2 0.4692183    c
+3  a 3 0.7109248    c
+4  a 4 0.8189291    c
+> 
+> ## rows where id is either "a" or "b"
+> filter(example.df, id %in% c("a", "b"))
+  id t      var1 var2
+1  a 1 0.1915825    c
+2  a 2 0.4692183    c
+3  a 3 0.7109248    c
+4  a 4 0.8189291    c
+5  b 1 0.1789475    b
+6  b 2 0.9474235    c
+7  b 3 0.2405171    c
+8  b 4 0.4123648    c
+> 
+#+end_example
+
+** Select data.frame columns
+
+=slice= and =filter= are used to extract rows. =select= is used to extract columns
+#+begin_src R                                          
+  select(example.df, id, var1)
+  select(example.df, id, t, var1)
+#+end_src
+
+#+RESULTS:
+#+begin_example
+> select(example.df, id, var1)
+   id       var1
+1   a 0.19158254
+2   a 0.46921828
+3   a 0.71092483
+4   a 0.81892913
+5   b 0.17894751
+6   b 0.94742350
+7   b 0.24051714
+8   b 0.41236477
+9   c 0.66573374
+10  c 0.72515137
+11  c 0.66923824
+12  c 0.41101666
+13  d 0.06401198
+14  d 0.34580213
+15  d 0.44477036
+16  d 0.12253790
+> select(example.df, id, t, var1)
+   id t       var1
+1   a 1 0.19158254
+2   a 2 0.46921828
+3   a 3 0.71092483
+4   a 4 0.81892913
+5   b 1 0.17894751
+6   b 2 0.94742350
+7   b 3 0.24051714
+8   b 4 0.41236477
+9   c 1 0.66573374
+10  c 2 0.72515137
+11  c 3 0.66923824
+12  c 4 0.41101666
+13  d 1 0.06401198
+14  d 2 0.34580213
+15  d 3 0.44477036
+16  d 4 0.12253790
+> 
+#+end_example
+
+You can also conveniently select a single column using =$=, like this:
+#+BEGIN_SRC R
+  example.df$t
+#+END_SRC
+
+#+RESULTS:
+#+begin_example
+> example.df$t
+ [1] 1 2 3 4 1 2 3 4 1 2 3 4 1 2 3 4
+> 
+#+end_example
+
+Data manipulation commands can be combined:
+
+#+BEGIN_SRC R 
+  filter(select(example.df,
+                id,
+                var1),
+         id == "a")
+#+END_SRC
+
+#+RESULTS:
+#+begin_example
+> filter(select(example.df,
++               id,
++               var1),
++        id == "a")
+  id      var1
+1  a 0.1915825
+2  a 0.4692183
+3  a 0.7109248
+4  a 0.8189291
+> 
+#+end_example
+
+In the previous example we used == to filter rows where id was "a". Other relational and logical operators are listed below.
+
+| Operator | Meaning                  |
+|----------+--------------------------|
+| ==       | equal to                 |
+| !=       | not equal to             |
+| >        | greater than             |
+| >=       | greater than or equal to |
+| <        | less than                |
+| <=       | less than or equal to    |
+| %in%     | contained in             |
+| &        | and                      |
+| \vert    | or                       |
+
+** Adding, removing, and modifying data.frame columns
+
+You can modify data.frames using the =mutate()= function. It works like this:
+
+#+name: replaceDataFrame
+#+begin_src R 
+  example.df
+
+  ## modify example.df and assign the modified data.frame the name example.df
+  example.df <- mutate(example.df,
+         var2 = var1/t, # replace the values in var2
+         var3 = 1:length(t), # create a new column named var3
+         var4 = factor(letters[t]),
+         t = NULL # delete the column named t
+         )
+
+  ## examine our changes
+  example.df
+
+#+end_src
+
+#+RESULTS: replaceDataFrame
+#+begin_example
+> example.df
+   id t       var1 var2
+1   a 1 0.19158254    c
+2   a 2 0.46921828    c
+3   a 3 0.71092483    c
+4   a 4 0.81892913    c
+5   b 1 0.17894751    b
+6   b 2 0.94742350    c
+7   b 3 0.24051714    c
+8   b 4 0.41236477    c
+9   c 1 0.66573374    c
+10  c 2 0.72515137    b
+11  c 3 0.66923824    b
+12  c 4 0.41101666    b
+13  d 1 0.06401198    c
+14  d 2 0.34580213    b
+15  d 3 0.44477036    c
+16  d 4 0.12253790    b
+> 
+> ## modify example.df and assign the modified data.frame the name example.df
+> example.df <- mutate(example.df,
++        var2 = var1/t, # replace the values in var2
++        var3 = 1:length(t), # create a new column named var3
++        var4 = factor(letters[t]),
++        t = NULL # delete the column named t
++        )
+> 
+> ## examine our changes
+> example.df
+   id       var1       var2 var3 var4
+1   a 0.19158254 0.19158254    1    a
+2   a 0.46921828 0.23460914    2    b
+3   a 0.71092483 0.23697494    3    c
+4   a 0.81892913 0.20473228    4    d
+5   b 0.17894751 0.17894751    5    a
+6   b 0.94742350 0.47371175    6    b
+7   b 0.24051714 0.08017238    7    c
+8   b 0.41236477 0.10309119    8    d
+9   c 0.66573374 0.66573374    9    a
+10  c 0.72515137 0.36257569   10    b
+11  c 0.66923824 0.22307941   11    c
+12  c 0.41101666 0.10275416   12    d
+13  d 0.06401198 0.06401198   13    a
+14  d 0.34580213 0.17290107   14    b
+15  d 0.44477036 0.14825679   15    c
+16  d 0.12253790 0.03063448   16    d
+> 
+#+end_example
+
+** Exporting Data
+Now that we have made some changes to our data set, we might want to save those changes to a file.
+#+name: dataExportExamples
+#+begin_src R :results silent
+  # write data to a .csv file
+  write_csv(example.df, path = "example.csv")
+
+  # write data to an R file
+  write_rds(example.df, path = "example.rds")
+
+  # write data to a Stata file
+  library(haven)
+  write_dta(example.df, path = "example.dta")
+#+end_src
+
+#+RESULTS: dataExportExamples
+
 ** Saving and loading R  workspaces
 In addition to importing individual datasets, R can save and load entire workspaces
-- Save our entire workspace
 #+name: saveDelete
 #+begin_src R 
   ls() # list objects in our workspace
@@ -506,7 +1156,11 @@ In addition to importing individual datasets, R can save and load entire workspa
 #+RESULTS: saveDelete
 #+begin_example
 > ls() # list objects in our workspace
-[1] "a"        "comet"    "datGSS"   "fit"      "gss.data" "y"       
+ [1] "a"                "baby.names"       "comet"           
+ [4] "comet.plot"       "example.df"       "filter"          
+ [7] "fit"              "nwbuilding"       "orig.search.path"
+[10] "x"                "X"                "y"               
+[13] "Y"                "z"                "Z"               
 > save.image(file="myWorkspace.RData") # save workspace 
 > rm(list=ls()) # remove all objects from our workspace 
 > ls() # list stored objects to make sure they are deleted
@@ -514,7 +1168,7 @@ character(0)
 > 
 #+end_example
 
-- Load the "myWorkspace.RData" file and check that it is restored
+Load the "myWorkspace.RData" file and check that it is restored
 
 #+name: loadList
 #+begin_src R
@@ -526,210 +1180,59 @@ character(0)
 #+begin_example
 > load("myWorkspace.RData") # load myWorkspace.RData
 > ls() # list objects
-[1] "a"        "comet"    "datGSS"   "fit"      "gss.data" "y"       
+ [1] "a"                "baby.names"       "comet"           
+ [4] "comet.plot"       "example.df"       "filter"          
+ [7] "fit"              "nwbuilding"       "orig.search.path"
+[10] "x"                "X"                "y"               
+[13] "Y"                "z"                "Z"               
 > 
 #+end_example
 
-When you close R you will be asked if you want to save your workspace -- if you choose yes then your workspace will be restored next time you start R
 
+** Exercise 3: Data manipulation
+Read in the "babyNames.csv" file if you have not already done so, assigning the result to =baby.names=.
 
-** Exercise 1
+1. Filter =baby.names= to show only names given to at least 3 percent of boys.
+2. Create a column named "Proportion" equal to Percent divided by 100.
+3. Filter =baby.names= to include only names given to at least 3 percent of Girls. Save this to a Stata data set named "popularGirlNames.dta")
 
-Install and attach the =rio= package if you haven't already done so.
+** Exercise 3 solution :prototype:
 
-1. Read the Excel data set in dataSets/gss.xlsx and assign the result to an R object named GSS.xl
+#+BEGIN_SRC R
+  filter(baby.names, Sex == "M" & Percent >= 3)
+  
+  baby.names <- mutate(baby.names, Proportion = Percent/100)
 
-2. Read the SPSS data set in dataSets/gss.sav and assign the result to an R data object named GSS.sav
+  popular.girl.names <- filter(baby.names, Sex == "F" & Percent >= 3)
 
-3. Make sure that the data loaded in step 2 is a data.frame
-
-4. Display the dimensions of GSS.sav
-
-5. Assign the dimensions of GSS.sav to the name 'gss.dim'
-
-6. Check if the dimensions of GSS.xl are equal to the values you stored in gss.dim
-
-
-* Data Manipulation
-
-** data.frame objects
-- Usually data read into R will be stored as a *data.frame*
-
-- A data.frame is a list of vectors of equal length
-  - Each vector in the list forms a column
-  - Each column can be a differnt type of vector
-  - Often the columns are variables and the rows are observations
-
-- A data.frame has two dimensions corresponding the number of rows and the number of columns (in that order)
-
-
-** Extracting subsets of data.frames
-
-You can extract subsets of data.frames using the =subset()= function[fn:1]. Use the =select= argument to select columns:
-#+name: indexingDataFrame
-#+begin_src R 
-  # selecting specifig columns
-  gss_1.4 <- subset(datGSS,            
-                    select = 1:4 # column 1 to 4
-                    )
-  str(gss_1.4)
-#+end_src
-
-#+RESULTS: indexingDataFrame
-#+begin_example
-> # selecting specifig columns
-> gss_1.4 <- subset(datGSS,            
-+                   select = 1:4 # column 1 to 4
-+                   )
-> str(gss_1.4)
-'data.frame':	1419 obs. of  4 variables:
- $ age     : num  69 27 19 21 19 87 42 19 78 70 ...
- $ educ    : num  12 10 11 9 11 8 11 11 7 9 ...
- $ emailhrs: num  -1 -1 0 -1 50 -1 3 -1 -1 -1 ...
- $ hrs1    : num  -1 60 32 20 -1 -1 -1 -1 -1 22 ...
-> 
-#+end_example
-
-and the =subset= argument to select rows:
-#+begin_src R                                          
-  gss_gt90 <- subset(datGSS,
-                     ## rows where age > 90
-                     subset = age > 90,
-                     ## sex and age columns
-                     select = c("sex", "age"))
-  str(gss_gt90)
-  ## the $ operator can be used to extract a single column
-  str(gss_gt90$age)
-#+end_src
+  write_csv(popular.girl.names, path = "popularGirlNames.dta")
+#+END_SRC
 
 #+RESULTS:
 #+begin_example
-> gss_gt90 <- subset(datGSS,
-+                    ## rows where age > 90
-+                    subset = age > 90,
-+                    ## sex and age columns
-+                    select = c("sex", "age"))
-> str(gss_gt90)
-'data.frame':	2 obs. of  2 variables:
- $ sex: Factor w/ 2 levels "Male","Female": 2 1
- $ age: num  99 99
-> ## the $ operator can be used to extract a single column
-> str(gss_gt90$age)
- num [1:2] 99 99
+> filter(baby.names, Sex == "M" & Percent >= 3)
+# A tibble: 111 × 7
+            Location  Year   Sex   Name Count  Percent Name.length
+               <chr> <int> <chr>  <chr> <dbl>    <dbl>       <int>
+1  England and Wales  1996     M   jack 10779 3.384121           4
+2  England and Wales  1996     M daniel 10338 3.245667           6
+3  England and Wales  1996     M thomas  9603 3.014910           6
+4  England and Wales  1997     M   jack 10145 3.226227           4
+5  England and Wales  1997     M  james  9853 3.133368           5
+6  England and Wales  1997     M thomas  9479 3.014431           6
+7  England and Wales  1998     M   jack  9845 3.170958           4
+8  England and Wales  1998     M thomas  9468 3.049531           6
+9  England and Wales  1999     M   jack  9785 3.226806           4
+10 England and Wales  1999     M thomas  9454 3.117652           6
+# ... with 101 more rows
+> 
+> baby.names <- mutate(baby.names, Proportion = Percent/100)
+> 
+> popular.girl.names <- filter(baby.names, Sex == "F" & Percent >= 3)
+> 
+> write_csv(popular.girl.names, path = "popularGirlNames.dta")
 > 
 #+end_example
-
-
-In the previous example we used =>= to select rows where age was greater than 90. Other relational and logical operators are listed below.
-
-| Operator | Meaning                  |
-|----------+--------------------------|
-| ==       | equal to                 |
-| !=       | not equal to             |
-| >        | greater than             |
-| >=       | greater than or equal to |
-| <        | less than                |
-| <=       | less than or equal to    |
-| &        | and                      |
-| \vert    | or                       |
-
-** Transforming data.frames
-
-You can modify data.frames using the =transform()= function. 
-
-#+name: replaceDataFrame
-#+begin_src R 
-  # creating new variable mean centered age
-  datGSS <- transform(datGSS,
-                      ageC = age - mean(age))
-
-   #education difference between wifes and husbands
-  datGSS <- transform(datGSS,
-                      educ.diff = wifeduc - husbeduc)
-
-  datGSS$wifeduc_comp <- ifelse(
-                           is.na(datGSS$wifeduc), #condition
-                           mean(datGSS$wifeduc, na.rm=TRUE), # value if condition met
-                           datGSS$wifeduc) # value otherwise
-
-    ## examine our newly created variables
-  head(subset(datGSS,
-              select = c("age", "ageC", "wifeduc", "wifeduc_comp",
-                         "husbeduc", "educ.diff")), n = 8)
-
-#+end_src
-
-#+RESULTS: replaceDataFrame
-#+begin_example
-> # creating new variable mean centered age
-> datGSS <- transform(datGSS,
-+                     ageC = age - mean(age))
-> 
->  #education difference between wifes and husbands
-> datGSS <- transform(datGSS,
-+                     educ.diff = wifeduc - husbeduc)
-> 
-> datGSS$wifeduc_comp <- ifelse(
-+                          is.na(datGSS$wifeduc), #condition
-+                          mean(datGSS$wifeduc, na.rm=TRUE), # value if condition met
-+                          datGSS$wifeduc) # value otherwise
-> 
->   ## examine our newly created variables
-> head(subset(datGSS,
-+             select = c("age", "ageC", "wifeduc", "wifeduc_comp",
-+                        "husbeduc", "educ.diff")), n = 8)
-  age       ageC wifeduc wifeduc_comp husbeduc educ.diff
-1  69  22.363636      NA     13.28457       NA        NA
-2  27 -19.636364      13     13.00000       10         3
-3  19 -27.636364      NA     13.28457       NA        NA
-4  21 -25.636364      NA     13.28457       NA        NA
-5  19 -27.636364      NA     13.28457       NA        NA
-6  87  40.363636      NA     13.28457       NA        NA
-7  42  -4.636364      10     10.00000       11        -1
-8  19 -27.636364      NA     13.28457       NA        NA
-> 
-#+end_example
-
-Note that =transform= is a convenience function; see =?Extract= for a more powerful way to modify data.frames.
-
-** Exporting Data
-Now that we have made some changes to our GSS data set, we might want to save those changes to a file. Everything we have done so far has only modified the data in R; the files have remained unchanged. 
-
-#+name: dataExportExamples
-#+begin_src R
-  # write data to a .csv file
-  write.csv(datGSS, file = "gss.csv")
-  # write data to a Stata file
-  write.dta(datGSS, file = "gss.dta")
-  # write data to an R file
-  saveRDS(datGSS, file = "gss.rds")
-#+end_src
-
-#+RESULTS: dataExportExamples
-#+begin_example
-> # write data to a .csv file
-> write.csv(datGSS, file = "gss.csv")
-> # write data to a Stata file
-> write.dta(datGSS, file = "gss.dta")
-> # write data to an R file
-> saveRDS(datGSS, file = "gss.rds")
-> 
-#+end_example
-
-
-** Exercise 2: Data manipulation
-Use the gss.rds data set
-
-1. Generate the following variables:
-   - "rich" equal to 0 if rincdol is less than 100000, and 1 otherwise
-   - "sinc" equal to incomdol - rincdol
-2. Generate a variable named "dual.earn" equal to 1 if both wkftwife = 1 and wkfthusb = 1, and zero otherwise. How many dual earners are there?
-3. Create a subset of the data containing only rows where "usecomp" = "Yes"
-4. Examine the data.frame created in step 2, and answer the following questions:
-   - How many computer users are there?
-   - How many non computer users are there?
-
-
 
 * Basic Statistics and Graphs
 
@@ -738,230 +1241,194 @@ Use the gss.rds data set
 Descriptive statistics of single variables are straightforward:
 #+name: descriptiveStats1
 #+begin_src R
-  mean(datGSS$educ) # calculate mean value of education
-  sd(datGSS$educ) # calculate standard deviation of x
-  # calculate min, max, quantiles, mean of educ, age, and ageC
-  summary(subset(datGSS, select = c("educ", "age", "ageC")))
+ 
+  sum(example.df$var1) # calculate sum of var 1
+  mean(example.df$var1)
+  median(example.df$var1)
+  sd(example.df$var1) # calculate standard deviation of var1
+  var(example.df$var1)
+
+  ## summaries of individual columns
+  summary(example.df$var1)
+  summary(example.df$var2)
+
+  ## summary of whole data.frame
+  summary(example.df)
 #+end_src
 
 #+RESULTS: descriptiveStats1
 #+begin_example
-> mean(datGSS$educ) # calculate mean value of education
-[1] 13.47498
-> sd(datGSS$educ) # calculate standard deviation of x
-[1] 5.389476
-> # calculate min, max, quantiles, mean of educ, age, and ageC
-> summary(subset(datGSS, select = c("educ", "age", "ageC")))
-      educ            age             ageC        
- Min.   : 0.00   Min.   :18.00   Min.   :-28.636  
- 1st Qu.:12.00   1st Qu.:32.00   1st Qu.:-14.636  
- Median :13.00   Median :44.00   Median : -2.636  
- Mean   :13.47   Mean   :46.64   Mean   :  0.000  
- 3rd Qu.:16.00   3rd Qu.:59.00   3rd Qu.: 12.364  
- Max.   :99.00   Max.   :99.00   Max.   : 52.364  
+> 
+> sum(example.df$var1) # calculate sum of var 1
+[1] 7.41817
+> mean(example.df$var1)
+[1] 0.4636356
+> median(example.df$var1)
+[1] 0.4285676
+> sd(example.df$var1) # calculate standard deviation of var1
+[1] 0.2675196
+> var(example.df$var1)
+[1] 0.07156672
+> 
+> ## summaries of individual columns
+> summary(example.df$var1)
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+0.06401 0.22830 0.42860 0.46360 0.67970 0.94740 
+> summary(example.df$var2)
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+0.03063 0.10300 0.18530 0.21710 0.23520 0.66570 
+> 
+> ## summary of whole data.frame
+> summary(example.df)
+ id         var1              var2              var3       var4 
+ a:4   Min.   :0.06401   Min.   :0.03063   Min.   : 1.00   a:4  
+ b:4   1st Qu.:0.22828   1st Qu.:0.10301   1st Qu.: 4.75   b:4  
+ c:4   Median :0.42857   Median :0.18527   Median : 8.50   c:4  
+ d:4   Mean   :0.46364   Mean   :0.21711   Mean   : 8.50   d:4  
+       3rd Qu.:0.67966   3rd Qu.:0.23520   3rd Qu.:12.25        
+       Max.   :0.94742   Max.   :0.66573   Max.   :16.00        
 > 
 #+end_example
-
 
 Some of these functions (e.g., summary) will also work with data.frames and other types of objects, others (such as =sd=) will not.
 
-** Counts and proportions
-Start by using the ~table()~ function to tabulate counts, then perform additional computations if needed
-#+name: tableExample
-#+begin_src R
-  sex.counts <- table(datGSS$sex) # tabulate sex categories
-  sex.counts
-  prop.table(sex.counts) # convert to proportions
-#+end_src
+** Statistics by grouping variable(s)
 
-#+RESULTS: tableExample
+The =summarize= function can be used to calculate statistics by grouping variable. Here is how it works.
+
+#+BEGIN_SRC R 
+  summarize(group_by(example.df, id), mean(var1), sd(var1))
+#+END_SRC
+
+#+RESULTS:
 #+begin_example
-> sex.counts <- table(datGSS$sex) # tabulate sex categories
-> sex.counts
-
-  Male Female 
-   622    797 
-> prop.table(sex.counts) # convert to proportions
-
-     Male    Female 
-0.4383369 0.5616631 
+> summarize(group_by(example.df, id), mean(var1), sd(var1))
+# A tibble: 4 × 3
+      id `mean(var1)` `sd(var1)`
+  <fctr>        <dbl>      <dbl>
+1      a    0.5476637  0.2787990
+2      b    0.4448132  0.3493286
+3      c    0.6177850  0.1405077
+4      d    0.2442806  0.1805739
 > 
 #+end_example
 
-Add variables for crosstabs
+You can group by multiple variables:
 
-#+name: crosstabExample
-#+begin_src R
-  table(subset(datGSS, select = c("sex", "happy"))) # crosstab marital X happy
-#+end_src
+#+BEGIN_SRC R 
+  summarize(group_by(example.df, id, var3), mean(var1), sd(var1))
+#+END_SRC
 
-#+RESULTS: crosstabExample
+#+RESULTS:
 #+begin_example
-> table(subset(datGSS, select = c("sex", "happy"))) # crosstab marital X happy
-        happy
-sex      NAP VERY HAPPY PRETTY HAPPY NOT TOO HAPPY  DK  NA
-  Male     0        189          350            73   0  10
-  Female   0        246          447            84   1  19
+> summarize(group_by(example.df, id, var3), mean(var1), sd(var1))
+Source: local data frame [16 x 4]
+Groups: id [?]
+
+       id  var3 `mean(var1)` `sd(var1)`
+   <fctr> <int>        <dbl>      <dbl>
+1       a     1   0.19158254         NA
+2       a     2   0.46921828         NA
+3       a     3   0.71092483         NA
+4       a     4   0.81892913         NA
+5       b     5   0.17894751         NA
+6       b     6   0.94742350         NA
+7       b     7   0.24051714         NA
+8       b     8   0.41236477         NA
+9       c     9   0.66573374         NA
+10      c    10   0.72515137         NA
+11      c    11   0.66923824         NA
+12      c    12   0.41101666         NA
+13      d    13   0.06401198         NA
+14      d    14   0.34580213         NA
+15      d    15   0.44477036         NA
+16      d    16   0.12253790         NA
 > 
 #+end_example
 
-
-
-** Statistics by classification factors
-The ~by()~ function can be used to perform a calculation separately for each level of a classifying variable
-#+name: byExample
-#+begin_src R 
-  by(subset(datGSS, select = c("income", "educ")),
-     INDICES=datGSS["sex"],
-     FUN=summary)
-#+end_src
-
-#+RESULTS: byExample
-#+begin_example
-> by(subset(datGSS, select = c("income", "educ")),
-+    INDICES=datGSS["sex"],
-+    FUN=summary)
-sex: Male
-             income         educ      
- $40000 TO 49999: 59   Min.   : 4.00  
- $50000 TO 59999: 56   1st Qu.:12.00  
- $60000 TO 74999: 49   Median :13.00  
- $35000 TO 39999: 48   Mean   :13.68  
- REFUSED        : 48   3rd Qu.:16.00  
- $110000 OR OVER: 43   Max.   :99.00  
- (Other)        :319                  
----------------------------------------------------- 
-sex: Female
-             income         educ      
- REFUSED        : 76   Min.   : 0.00  
- $60000 TO 74999: 62   1st Qu.:12.00  
- $40000 TO 49999: 60   Median :12.00  
- $50000 TO 59999: 52   Mean   :13.32  
- $30000 TO 34999: 49   3rd Qu.:15.00  
- $25000 TO 29999: 42   Max.   :99.00  
- (Other)        :456                  
-> 
-#+end_example
-
-** Correlations
-
-Let's look at correlations among between age, income, and education
-#+name: corEx
-#+begin_src R 
-  cor(subset(datGSS, select =  c("age", "incomdol", "educ")))
-#+end_src
-
-#+RESULTS: corEx
-#+begin_example
-> cor(subset(datGSS, select =  c("age", "incomdol", "educ")))
-                 age   incomdol        educ
-age       1.00000000 -0.1186564 -0.07362454
-incomdol -0.11865641  1.0000000  0.21013267
-educ     -0.07362454  0.2101327  1.00000000
-> 
-#+end_example
-
-
-For significance tests, use cor.test()
-#+name: corTest
-#+begin_src R 
-  with(datGSS,
-       cor.test(age, educ))
-#+end_src
-
-#+RESULTS: corTest
-#+begin_example
-> with(datGSS,
-+      cor.test(age, educ))
-
-	Pearson's product-moment correlation
-
-data:  age and educ
-t = -2.779, df = 1417, p-value = 0.005525
-alternative hypothesis: true correlation is not equal to 0
-95 percent confidence interval:
- -0.12518333 -0.02166916
-sample estimates:
-        cor 
--0.07362454 
-
-> 
-#+end_example
-
-** Multiple regression
-
-Modeling functions generally use the /formula/ interface whith DV on left followed by "~" followed by predictors--for details see
-src_R[:exports code :eval no]{help("formula")}
-
-- Predict the number of hours individuals spend on email (emailhrs)
-#+name: regression
-#+begin_src R 
-  m1 <- lm(educ ~ sex + age, data = datGSS)
-  summary(m1)
-#+end_src
-
-#+RESULTS: regression
-#+begin_example
-> m1 <- lm(educ ~ sex + age, data = datGSS)
-> summary(m1)
-
-Call:
-lm(formula = educ ~ sex + age, data = datGSS)
-
-Residuals:
-    Min      1Q  Median      3Q     Max 
--13.434  -1.785  -0.688   1.955  86.049 
-
-Coefficients:
-             Estimate Std. Error t value Pr(>|t|)
-(Intercept) 14.652702   0.425691  34.421  < 2e-16
-sexFemale   -0.275235   0.289290  -0.951  0.34156
-age         -0.021938   0.008238  -2.663  0.00783
-
-Residual standard error: 5.377 on 1416 degrees of freedom
-Multiple R-squared:  0.006056,	Adjusted R-squared:  0.004652 
-F-statistic: 4.314 on 2 and 1416 DF,  p-value: 0.01356
-
-> 
-#+end_example
-
-
+#+END_SRC
 ** Save R output to a file
-Earlier we learned how to write a data set to a file. But what if we want to write something that isn't in a nice rectangular format, like the results of our regression model? For that we can use the ~sink()~ function:
+Earlier we learned how to write a data set to a file. But what if we want to write something that isn't in a nice rectangular format, like the output of =summary=? For that we can use the ~sink()~ function:
 
 #+name: sinkExample
 #+begin_src R
   sink(file="output.txt", split=TRUE) # start logging
-  print("This is the result from model 1\n")
-  print(summary(m1))
+  print("This is the summary of example.df \n")
+  print(summary(example.df))
   sink() ## sink with no arguments turns logging off
 #+end_src
 
 #+RESULTS: sinkExample
 #+begin_example
 > sink(file="output.txt", split=TRUE) # start logging
-> print("This is the result from model 1\n")
-[1] "This is the result from model 1\n"
-> print(summary(m1))
-
-Call:
-lm(formula = educ ~ sex + age, data = datGSS)
-
-Residuals:
-    Min      1Q  Median      3Q     Max 
--13.434  -1.785  -0.688   1.955  86.049 
-
-Coefficients:
-             Estimate Std. Error t value Pr(>|t|)
-(Intercept) 14.652702   0.425691  34.421  < 2e-16
-sexFemale   -0.275235   0.289290  -0.951  0.34156
-age         -0.021938   0.008238  -2.663  0.00783
-
-Residual standard error: 5.377 on 1416 degrees of freedom
-Multiple R-squared:  0.006056,	Adjusted R-squared:  0.004652 
-F-statistic: 4.314 on 2 and 1416 DF,  p-value: 0.01356
-
+> print("This is the summary of example.df \n")
+[1] "This is the summary of example.df \n"
+> print(summary(example.df))
+ id         var1              var2              var3       var4 
+ a:4   Min.   :0.06401   Min.   :0.03063   Min.   : 1.00   a:4  
+ b:4   1st Qu.:0.22828   1st Qu.:0.10301   1st Qu.: 4.75   b:4  
+ c:4   Median :0.42857   Median :0.18527   Median : 8.50   c:4  
+ d:4   Mean   :0.46364   Mean   :0.21711   Mean   : 8.50   d:4  
+       3rd Qu.:0.67966   3rd Qu.:0.23520   3rd Qu.:12.25        
+       Max.   :0.94742   Max.   :0.66573   Max.   :16.00        
 > sink() ## sink with no arguments turns logging off
+> 
+#+end_example
+
+** Exercise 4
+
+1. Calculate the total number of children born.
+2. Filter the data to extract only Massachusetts (Location "MA"), and calculate the total number of children born in Massachusetts.
+3. Group and summarize the data to calculate the number of children born each year.
+4. Calculate the average number of characters in baby names (using the "Name.length" column).
+5. Group and summarize to calculate the average number of characters in baby names for each location.
+
+** Exercise 4 solution  :prototype:
+
+#+BEGIN_SRC R
+  sum(baby.names$Count)
+  
+  sum(filter(baby.names, Location == "MA")$Count)
+
+  summarize(group_by(baby.names, "Year"), sum(Count))
+
+  mean(baby.names$Name.length)
+
+  summarize(group_by(baby.names, Location), mean(Name.length))
+#+END_SRC
+
+#+RESULTS:
+#+begin_example
+> sum(baby.names$Count)
+[1] 76865321
+> 
+> sum(filter(baby.names, Location == "MA")$Count)
+[1] 1232841
+> 
+> summarize(group_by(baby.names, "Year"), sum(Count))
+# A tibble: 1 × 2
+  `"Year"` `sum(Count)`
+     <chr>        <dbl>
+1     Year     76865321
+> 
+> mean(baby.names$Name.length)
+[1] 5.978752
+> 
+> summarize(group_by(baby.names, Location), mean(Name.length))
+# A tibble: 52 × 2
+            Location `mean(Name.length)`
+               <chr>               <dbl>
+1                 AK            5.897870
+2                 AL            6.036649
+3                 AR            5.951802
+4                 AZ            6.005845
+5                 CA            6.002446
+6                 CO            5.929564
+7                 CT            5.941373
+8                 DC            5.860574
+9                 DE            5.948870
+10 England and Wales            6.152505
+# ... with 42 more rows
 > 
 #+end_example
 
@@ -972,7 +1439,7 @@ Thanks to classes and methods, you can ~plot()~ many  kinds of objects:
 
 #+name: plotExample
 #+begin_src R :results output graphics :exports both :no-expand :file images/examplePlot1.png :width 800 :height 500 :R-dev-args res=120 
-  plot(datGSS$marital) # Plot a factor
+  plot(example.df$var4)
 #+end_src
 
 
@@ -986,8 +1453,7 @@ Thanks to classes and methods, you can ~plot()~ many  kinds of objects:
 Thanks to classes and methods, you can ~plot()~ many kinds of objects:
 #+name: plotExample2
 #+begin_src R :results output graphics :exports both :no-expand :file images/examplePlot2.png :width 800 :height 500 :R-dev-args res=120 
-  with(datGSS,
-       plot(marital, educ)) # Plot ordinal by numeric
+  plot(select(example.df, id, var1))
 #+end_src
 
 #+attr_html: width="50%" style="display:block;margin-left:auto;margin-right:auto;"
@@ -1000,8 +1466,7 @@ Thanks to classes and methods, you can ~plot()~ many kinds of objects:
 Thanks to classes and methods, you can ~plot()~ many kinds of objects:
 #+name: plotExample3
 #+begin_src R :results output graphics :exports both :no-expand :file images/examplePlot3.png :width 800 :height 500 :R-dev-args res=120 
-  with(datGSS, # Plot factor X factor
-       plot(marital, happy))
+  plot(select(example.df, id, var4))
 #+end_src
 
 #+attr_html: width="50%" style="display:block;margin-left:auto;margin-right:auto;"
@@ -1009,13 +1474,17 @@ Thanks to classes and methods, you can ~plot()~ many kinds of objects:
 [[file:images/examplePlot3.png]]
 
 
-** Exercise 3
-Using the datGSS data.frame
+** Basic graphics: scatter plot
 
-1. Cross-tabulate sex and educ
-2. Calculate the mean and standard deviation of incomdol by sex
-3. Save the results of the previous two calculations to a file
-4. Create a scatter plot with educ on the x-axis and incomdol on the y-axis
+#+name: plotExample4
+#+begin_src R :results output graphics :exports both :no-expand :file images/examplePlot4.png :width 800 :height 500 :R-dev-args res=120 
+  plot(select(example.df, var1, var2))
+#+end_src
+
+#+RESULTS: plotExample4
+[[file:images/examplePlot4.png]]
+
+** Exercise 5 TBD
 
 
 * Wrap-up
@@ -1045,308 +1514,17 @@ Using the datGSS data.frame
   - Mailing list: https://stat.ethz.ch/mailman/listinfo/r-help
   - StackOverflow: http://stackoverflow.com/questions/tagged/r
 
-
-* Exercise solutions
-  :PROPERTIES:
-  :exports:  code
-  :END:
-
-** Exercise 0 solution                                            :prototype:
-1) [@1]] Try to get R to add 2 plus 2.
-#+BEGIN_SRC R
-  2 + 2
-#+END_SRC
-
-#+RESULTS:
-#+begin_example
-> 2 + 2
-[1] 4
-> 
-#+end_example
-
-2) [@2] Try to figure out how evaluate lines directly from your R script.
-
-=In Rstudo this is 'Control-Enter'; may be different in another GUI=
-
-3) [@3] R includes extensive documentation, including a file named "An introduction to R". Try to find this help file.
-
-=Go to the main help page by running 'help.start() or using the GUI menu, find and click on the link to "An Introduction to R".=
-
-4) [@4] Go to [[http://cran.r-project.org/web/views/]] and skim the topic closest to your field/interests.
-
-=I like the machine learning topic=
-
-** Exercise 1 solution                                            :prototype:
-
-1) [@1] Attach the =rio= package if you haven't already done so
-#+BEGIN_SRC R :results silent
-  ## install.packages("rio")
-  library(rio)
-  GSS.xlsx <- read.dta("dataSets/gss.xlsx")
-#+END_SRC
-
-2) [@2] Read the SPSS data set in dataSets/gss.sav and assign the result to an R data object named GSS.sav
-#+BEGIN_SRC R :results silent
-  GSS.sav <- import("dataSets/gss.sav")
-#+END_SRC
-
-3) [@3] Make sure that the data loaded in step 2 is a data.frame
-#+BEGIN_SRC R
-  class(GSS.sav)
-#+END_SRC
-
-#+RESULTS:
-#+begin_example
-> class(GSS.sav)
-[1] "data.frame"
-> 
-#+end_example
-
-4) [@4] Display the dimensions of the GSS.sav. 
-#+BEGIN_SRC R
-  dim(GSS.sav)
-  nrow(GSS.sav)
-  ncol(GSS.sav)
-#+END_SRC
-
-#+RESULTS:
-#+begin_example
-> dim(GSS.sav)
-[1] 217   7
-> nrow(GSS.sav)
-[1] 217
-> ncol(GSS.sav)
-[1] 7
-> 
-#+end_example
-
-
-5) [@5] Save the dimensions of GSS.sav to an object named gss.dim
-
-#+BEGIN_SRC R
-  gss.dim <- dim(GSS.sav)
-#+END_SRC
-
-#+RESULTS:
-#+begin_example
-> gss.dim <- dim(GSS.sav)
-> 
-#+end_example
-
-
-7) [@7] Check if the dimensions of GSS.xl are equal to the values you stored in gss.dim
-#+BEGIN_SRC R
-  dim(GSS.xl)
-  gss.dim
-  gss.dim == dim(GSS.xl)
-#+END_SRC
-
-#+RESULTS:
-#+begin_example
-> dim(GSS.xl)
-[1] 1419   47
-> gss.dim
-[1] 217   7
-> gss.dim == dim(GSS.xl)
-[1] FALSE FALSE
-> 
-#+end_example
-
-
-** Exercise 2 solution                                            :prototype:
-Use the gss.rds data set
-#+BEGIN_SRC R :results silent
-  gss <- import("dataSets/gss.rds")
-#+END_SRC
-
-1) [@1] Generate the following variables:
-   - "rich" equal to 0 if rincdol is less than 100000, and 1 otherwise
-   - "sinc" equal to incomdol - rincdol
-#+BEGIN_SRC R
-  gss <- transform(gss,
-                   rich = ifelse(rincdol < 100000, 0, 1),
-                   sinc = incomdol - rincdol)
-  head(subset(gss, select = c("rincdol", "incomdol", "rich", "sinc")))
-#+END_SRC
-
-#+RESULTS:
-#+begin_example
-> gss <- transform(gss,
-+                  rich = ifelse(rincdol < 100000, 0, 1),
-+                  sinc = incomdol - rincdol)
-> head(subset(gss, select = c("rincdol", "incomdol", "rich", "sinc")))
-  rincdol incomdol rich   sinc
-1      -2    18750    0  18752
-2   32500    45000    0  12500
-3   11250       -2    0 -11252
-4     500     2000    0   1500
-5      -2       -2    0      0
-6      -2       -2    0      0
-> 
-#+end_example
-
-
-2) [@2] Generate a variable named "dual.earn" equal to 1 if both wkftwife = 1 and wkfthusb = 1, and zero otherwise.
-#+BEGIN_SRC R
-  gss$dual.earn <- ifelse(gss$wkftwife == 1 & gss$wkfthusb == 1, 1, 0)
-  nrow(subset(gss, dual.earn == 1))
-#+END_SRC
-
-#+RESULTS:
-#+begin_example
-> gss$dual.earn <- ifelse(gss$wkftwife == 1 & gss$wkfthusb == 1, 1, 0)
-> nrow(subset(gss, dual.earn == 1))
-[1] 235
-> 
-#+end_example
-
-
-3) [@3] Create a subset of the data containing only rows where "usecomp" = "Yes".
-#+BEGIN_SRC R
-  gss.usecomp <- subset(gss, usecomp == "Yes")
-#+END_SRC
-
-#+RESULTS:
-#+begin_example
-> gss.usecomp <- subset(gss, usecomp == "Yes")
-> 
-#+end_example
-
-4) [@4] How many computer and non computer users?
-#+BEGIN_SRC R
-  ## how many computer users?
-  nrow(gss.usecomp)
-  ## how many non computer users?
-  nrow(gss) - nrow(gss.usecomp)
-  ## how many non computer users really?
-  nrow(subset(gss, usecomp == "No"))
-#+END_SRC
-#+RESULTS:
-#+begin_example
-> ## how many computer users?
-> nrow(gss.usecomp)
-[1] 789
-> ## how many non computer users?
-> nrow(gss) - nrow(gss.usecomp)
-[1] 630
-> ## how many non computer users really?
-> nrow(subset(gss, usecomp == "No"))
-[1] 623
-> 
-#+end_example
-
-** Exercise 3 solution                                            :prototype:
-Using the datGSS data.frame
-
-1) [@1] Cross-tabulate sex and emailhrs
-#+BEGIN_SRC R
-  with(datGSS, table(educ, sex))
-#+END_SRC
-
-#+RESULTS:
-#+begin_example
-> with(datGSS, table(educ, sex))
-    sex
-educ Male Female
-  0     0      1
-  2     0      2
-  3     0      2
-  4     1      2
-  5     3      2
-  6     4      2
-  7     4      8
-  8    23     31
-  9    12     24
-  10   25     35
-  11   36     52
-  12  164    245
-  13   56     81
-  14   78     91
-  15   30     36
-  16  101    112
-  17   23     20
-  18   25     29
-  19   17      5
-  20   19     14
-  99    1      3
-> 
-#+end_example
-
-2) [@2] Calculate the mean and standard deviation of incomdol by sex
-#+BEGIN_SRC R
-   by(datGSS$incomdol, datGSS$sex, mean)
-   by(datGSS$incomdol, datGSS$sex, sd)
-#+END_SRC
-
-#+RESULTS:
-#+begin_example
-> by(datGSS$incomdol, datGSS$sex, mean)
-datGSS$sex: Male
-[1] 41142.92
----------------------------------------------------- 
-datGSS$sex: Female
-[1] 32463.11
-> by(datGSS$incomdol, datGSS$sex, sd)
-datGSS$sex: Male
-[1] 32342.16
----------------------------------------------------- 
-datGSS$sex: Female
-[1] 30154.99
-> 
-#+end_example
-
-3) [@3]
-#+BEGIN_SRC R
-  sink(file = "bysex.txt")
-  with(datGSS, table(educ, sex))
-  by(datGSS$incomdol, datGSS$sex, mean)
-  by(datGSS$incomdol, datGSS$sex, sd)
-  sink()
-#+END_SRC
-
-#+RESULTS:
-#+begin_example
-> sink(file = "bysex.txt")
-> with(datGSS, table(educ, sex))
-> by(datGSS$incomdol, datGSS$sex, mean)
-> by(datGSS$incomdol, datGSS$sex, sd)
-> sink()
-> 
-#+end_example
-
-4) [@4] Create a scatter plot with educ on the x-axis and incomdol on the y-axis
-#+BEGIN_SRC R :results output graphics :file images/ex3.png :height 300
-  plot(subset(datGSS, select = c("educ", "incomdol")))
-#+END_SRC
-
-#+RESULTS:
-[[file:images/ex3.png]]
-
-=That first attempt is pretty ugly, let's clean it up.=
-#+BEGIN_SRC R :results output graphics :file images/ex3_1.png :height 300
-  plot(log(incomdol) ~ jitter(educ, 8), # formula interface with log an jitter
-       data = subset(datGSS, # subsetting data as part of the plot call
-                     subset = educ < 97),
-       cex = .6 # make points smaller
-       )
-#+END_SRC
-
-#+RESULTS:
-[[file:images/ex3_1.png]]
-
-
-
 * Cleanup                                                          :noexport:
 #+name: cleanup
 #+begin_src R :exports none
   system("rm dataSets/myWorkspace.RData")
-  system("rm dataSets/NewGSS.csv")
+  system("rm example*")
 #+end_src
 
 #+RESULTS: cleanup
 #+begin_example
 > system("rm dataSets/myWorkspace.RData")
-> system("rm dataSets/NewGSS.csv")
+> system("rm example*")
 > 
 #+end_example
 
