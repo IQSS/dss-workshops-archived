@@ -12,7 +12,7 @@
 # property and/or the EXCLUDE_TAGS, place the curser on the poperty line 
 # and press C-c C-c
 
-#+PROPERTY: header-args :exports code
+#+PROPERTY: header-args :exports both
 #+PROPERTY: header-args:R :tangle Rintro_all_code.R
 
 #+EXCLUDE_TAGS: noexport mitsetup
@@ -415,6 +415,7 @@ Examples:
 #+name: functionExamples
 #+begin_src R
   #?sqrt
+  z <- c(10, 11, 12)
   a <- sqrt(z) # Call the sqrt function with argument x=z
   
 ## look at the arguments to the round function
@@ -428,7 +429,7 @@ Examples:
   round(digits = 2, x = a)
 
   ## the only way we can go wrong is by omiting the names and mixing up the order
-  round(2, x)
+  round(2, z)
 
   # Functions can be nested so an alternative is
   round(sqrt(z), digits = 2) # Take sqrt of a and round
@@ -437,6 +438,7 @@ Examples:
 #+RESULTS: functionExamples
 #+begin_example
 >   #?sqrt
+>   z <- c(10, 11, 12)
 >   a <- sqrt(z) # Call the sqrt function with argument x=z
 >   
 > ## look at the arguments to the round function
@@ -445,23 +447,23 @@ function (x, digits = 0)
 NULL
 > 
 >   round(a, digits = 2) # Call round() with arguments x=x and digits=2
-[1] 1 0 1 1
+[1] 3.16 3.32 3.46
 > 
 >   ## since matching by name takes precedence these are all equivalent:
 >   round(a, 2)
-[1] 1 0 1 1
+[1] 3.16 3.32 3.46
 >   round(x = a, 2)
-[1] 1 0 1 1
+[1] 3.16 3.32 3.46
 >   round(digits = 2, x = a)
-[1] 1 0 1 1
+[1] 3.16 3.32 3.46
 > 
 >   ## the only way we can go wrong is by omiting the names and mixing up the order
->   round(2, x)
+>   round(2, z)
 [1] 2 2 2
 > 
 >   # Functions can be nested so an alternative is
 >   round(sqrt(z), digits = 2) # Take sqrt of a and round
-[1] 1 0 1 1
+[1] 3.16 3.32 3.46
 > 
 #+end_example
   

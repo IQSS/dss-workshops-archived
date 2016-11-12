@@ -271,6 +271,7 @@ mode(as.numeric(X))
 
 ##   Examples:
   #?sqrt
+  z <- c(10, 11, 12)
   a <- sqrt(z) # Call the sqrt function with argument x=z
 
 ## look at the arguments to the round function
@@ -284,7 +285,7 @@ mode(as.numeric(X))
   round(digits = 2, x = a)
 
   ## the only way we can go wrong is by omiting the names and mixing up the order
-  round(2, x)
+  round(2, z)
 
   # Functions can be nested so an alternative is
   round(sqrt(z), digits = 2) # Take sqrt of a and round
