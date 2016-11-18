@@ -51,7 +51,7 @@ OK, it's free and popular, but what makes R worth learning? In a word,
 chances are good that there is an R package for that. Lets install some packages
 and look at some examples.
 
-```{R, include=FALSE}
+```{R, results = 'hide'}
 ## install.packages(c("ggmap", "plotly", "rgl", "forecast"))
 ```
 
@@ -217,39 +217,35 @@ Exercise 0 solution<span class="tag" data-tag-name="prototype"></span>
 
 1. Add 2 plus 2.
 
-```{R}
+```{R, purl = FALSE}
+## 1. 2 plus 2
 2 + 2
+## or
 sum(2, 2)
-```
 
-2. Calculate the square root of 10:
-
-```{R}
+## 2. square root of 10:
 sqrt(10)
+## or
 10^(1/2)
-```
 
-2. Install the "car" package:
+## 3. Install the "car" package:
 
-In Rstudio, go to the "Packages" tab and click the "Istall" button.
-Search in the pop-up window and click "Install".
+## In Rstudio, go to the "Packages" tab and click the "Istall" button.
+## Search in the pop-up window and click "Install".
 
-Alternatively, use the `install.packages` function like this:
-
-```{R, results='hide'}
+## Alternatively, use the `install.packages` function like this:
 install.packages("car")
+
+## 4. Find "An Introduction to R".
+
+## Go to the main help page by running 'help.start() or using the GUI
+## menu, find and click on the link to "An Introduction to R".
+
+## 5. Go to <http://cran.r-project.org/web/views/> and skim the topic
+##     closest to your field/interests.
+
+## I like the machine learning topic.
 ```
-
-4. Find "An Introduction to R".
-
-=Go to the main help page by running 'help.start() or using the GUI
-menu, find and click on the link to "An Introduction to R".=
-
-5. Go to <http://cran.r-project.org/web/views/> and skim the topic
-    closest to your field/interests.
-
-I like the machine learning topic.
-
 
 Example project overview: baby names!
 ------------------------
@@ -314,7 +310,7 @@ OK, lets install the "car" package from the repo at
 "https://cran.rstudio.com". 
 
 ```{R}
-install.packages("", repos = "https://cran.rstudio.com")
+install.packages("car", repos = "https://cran.rstudio.com")
 ```
 
 **Installing a package** puts a copy of the package on your local computer, but
@@ -360,17 +356,13 @@ and help facilities.
 Exercise 1 solution<span class="tag" data-tag-name="prototype"></span>
 ----------------------------------------------------------------------
 
-```{R}
+```{R, purl = FALSE}
 ## 1. install the tidyverse pacakge
 install.packages("tidyverse")
-```
 
-```{R}
 ## 2. attach the tidyverse pacakge
 library("tidyverse")
-```
 
-```{R}
 ## 3. look up the readr package documentation
 help(package = "readr")
 ## I would use read_tsv to read a tab delimited file.
@@ -395,9 +387,6 @@ Values can be assigned names and used in subsequent operations
 
 ```{R}
 x <- 10 # Assign the value 10 to a variable named x
-```
-
-```{R}
 x + 1 # Add 1 to x
 ```
 
@@ -425,61 +414,46 @@ vector examples.
 
 ```{R}
 x <- c(10, 11, 12)
-X <- c("10", "11", "12")
-y <- c("h", "e", "l", "l", "o")
-Y <- "hello"
+y <- c("10", "11", "12")
 z <- c(TRUE, FALSE, TRUE, TRUE)
 ```
 
 Notice that the `c` function combines its arguments into a vector.
 
-All R objects have a *type* (aka *mode*) and *length*. Since it is impossible for an
-object not to have these attributes they are called *intrinsic
-attributes*.
+All R objects have a *type* (aka *mode*) and *length*. Since it is impossible
+for an object not to have these attributes they are called *intrinsic
+attributes*. They can be retrieved using the `typeof` and `length` functions.
 
 ```{R}
-print(x)
-typeof(x)
-length(x)
-```
+c(x = x, type = typeof(x), length = length(x))
 
+c(y = y, type = typeof(y), length = length(y))
 
-```{R}
-print(X)
-typeof(X)
-length(X)
-```
-
-
-```{R}
-print(y)
-length(y)
-```
-
-```{R}
-print(Y)
-length(Y)
-```
-
-```{R}
-print(z)
-typeof(z)
+c(z = z, type = typeof(z), length = length(z))
 ```
 
 Data structures in R can be converted from one type to another using one
 of the many functions beginning with `as.`. For example:
 
 ```{R}
-print(x)
-mode(x)
-mode(as.character(x))
+typeof(x)
+typeof(as.character(x))
 ```
 
 ```{R}
-print(X)
-mode(X)
-mode(as.numeric(X))
+typeof(y)
+typeof(as.numeric(y))
 ```
+
+These vectors (*double*, *character*, *logical*) are called *atomic vectors*
+because each element must be of the same type. Given inputs with conflicting
+types R will convert them for you.
+
+```{R}
+typeof(c(1, 2))
+typeof(c(1, "2"))
+```
+
 
 Now that we know how to do assignment using `<-` and how to understand basic
 data types in R we are finally ready to read in the baby names data.
@@ -516,9 +490,7 @@ getwd() # get the current working directory
 ```{R}
 setwd("dataSets") # set wd to the dataSets folder
 getwd()
-```
 
-```{R}
 setwd("..") # set wd to enclosing folder ("up")
 getwd()
 ```
@@ -569,7 +541,7 @@ it a good data set to practice on.
 Exercise 2 solution<span class="tag" data-tag-name="prototype"></span>
 ----------------------------------------------------------------------
 
-```{R, results = 'hide'}
+```{R, results = 'hide', purl = FALSE}
 ## read ?read_csv
 ## limit rows with n_max argument
 read_csv("dataSets/babyNames.csv", n_max = 10)
@@ -783,7 +755,7 @@ assigning the result to `baby.names`.
 Exercise 3 solution<span class="tag" data-tag-name="prototype"></span>
 ----------------------------------------------------------------------
 
-```{R}
+```{R, purl = FALSE}
 filter(baby.names, Sex == "M" & Percent >= 5)
 
 baby.names <- mutate(baby.names, Proportion = Percent/100)
@@ -875,7 +847,7 @@ Exercise 4
 Exercise 4 solution<span class="tag" data-tag-name="prototype"></span>
 ----------------------------------------------------------------------
 
-```{R}
+```{R, purl = FALSE}
 sum(baby.names$Count)
 
 sum(filter(baby.names, Location == "MA")$Count)
@@ -896,8 +868,6 @@ Thanks to classes and methods, you can `plot()` many kinds of objects:
 plot(example.df$var4)
 ```
 
-![](images/examplePlot1.png)
-
 Basic graphics: Boxplots by group
 ---------------------------------
 
@@ -906,8 +876,6 @@ Thanks to classes and methods, you can `plot()` many kinds of objects:
 ```{R}
 plot(select(example.df, id, var1))
 ```
-
-![](images/examplePlot2.png)
 
 Basic graphics: Mosaic chart
 ----------------------------
@@ -918,16 +886,12 @@ Thanks to classes and methods, you can `plot()` many kinds of objects:
 plot(select(example.df, id, var4))
 ```
 
-![](images/examplePlot3.png)
-
 Basic graphics: scatter plot
 ----------------------------
 
 ```{R}
 plot(select(example.df, var1, var2))
 ```
-
-![](images/examplePlot4.png)
 
 Exercise 5 TBD
 --------------

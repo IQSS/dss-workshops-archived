@@ -51,7 +51,7 @@
 #' chances are good that there is an R package for that. Lets install some packages
 #' and look at some examples.
 #' 
-## ---- include=FALSE------------------------------------------------------
+## ---- results = 'hide'---------------------------------------------------
 ## install.packages(c("ggmap", "plotly", "rgl", "forecast"))
 
 #' 
@@ -217,39 +217,6 @@ plot_ly(x = comet$vb[1,],
 #' 
 #' 1. Add 2 plus 2.
 #' 
-## ------------------------------------------------------------------------
-2 + 2
-sum(2, 2)
-
-#' 
-#' 2. Calculate the square root of 10:
-#' 
-## ------------------------------------------------------------------------
-sqrt(10)
-10^(1/2)
-
-#' 
-#' 2. Install the "car" package:
-#' 
-#' In Rstudio, go to the "Packages" tab and click the "Istall" button.
-#' Search in the pop-up window and click "Install".
-#' 
-#' Alternatively, use the `install.packages` function like this:
-#' 
-## ---- results='hide'-----------------------------------------------------
-install.packages("car")
-
-#' 
-#' 4. Find "An Introduction to R".
-#' 
-#' =Go to the main help page by running 'help.start() or using the GUI
-#' menu, find and click on the link to "An Introduction to R".=
-#' 
-#' 5. Go to <http://cran.r-project.org/web/views/> and skim the topic
-#'     closest to your field/interests.
-#' 
-#' I like the machine learning topic.
-#' 
 #' 
 #' Example project overview: baby names!
 #' ------------------------
@@ -314,7 +281,7 @@ install.packages("car")
 #' "https://cran.rstudio.com". 
 #' 
 ## ------------------------------------------------------------------------
-install.packages("", repos = "https://cran.rstudio.com")
+install.packages("car", repos = "https://cran.rstudio.com")
 
 #' 
 #' **Installing a package** puts a copy of the package on your local computer, but
@@ -360,21 +327,6 @@ help(help)
 #' Exercise 1 solution<span class="tag" data-tag-name="prototype"></span>
 #' ----------------------------------------------------------------------
 #' 
-## ------------------------------------------------------------------------
-## 1. install the tidyverse pacakge
-install.packages("tidyverse")
-
-#' 
-## ------------------------------------------------------------------------
-## 2. attach the tidyverse pacakge
-library("tidyverse")
-
-#' 
-## ------------------------------------------------------------------------
-## 3. look up the readr package documentation
-help(package = "readr")
-## I would use read_tsv to read a tab delimited file.
-
 #' 
 #' Now that we have installed and attached the `tidyverse` (and `readr`) packages,
 #' and know which function to use to read our data (`read_csv`) we are almost ready
@@ -395,9 +347,6 @@ help(package = "readr")
 #' 
 ## ------------------------------------------------------------------------
 x <- 10 # Assign the value 10 to a variable named x
-
-#' 
-## ------------------------------------------------------------------------
 x + 1 # Add 1 to x
 
 #' 
@@ -425,61 +374,46 @@ y ## note that y is unchanged.
 #' 
 ## ------------------------------------------------------------------------
 x <- c(10, 11, 12)
-X <- c("10", "11", "12")
-y <- c("h", "e", "l", "l", "o")
-Y <- "hello"
+y <- c("10", "11", "12")
 z <- c(TRUE, FALSE, TRUE, TRUE)
 
 #' 
 #' Notice that the `c` function combines its arguments into a vector.
 #' 
-#' All R objects have a *type* (aka *mode*) and *length*. Since it is impossible for an
-#' object not to have these attributes they are called *intrinsic
-#' attributes*.
+#' All R objects have a *type* (aka *mode*) and *length*. Since it is impossible
+#' for an object not to have these attributes they are called *intrinsic
+#' attributes*. They can be retrieved using the `typeof` and `length` functions.
 #' 
 ## ------------------------------------------------------------------------
-print(x)
-typeof(x)
-length(x)
+c(x = x, type = typeof(x), length = length(x))
 
-#' 
-#' 
-## ------------------------------------------------------------------------
-print(X)
-typeof(X)
-length(X)
+c(y = y, type = typeof(y), length = length(y))
 
-#' 
-#' 
-## ------------------------------------------------------------------------
-print(y)
-length(y)
-
-#' 
-## ------------------------------------------------------------------------
-print(Y)
-length(Y)
-
-#' 
-## ------------------------------------------------------------------------
-print(z)
-typeof(z)
+c(z = z, type = typeof(z), length = length(z))
 
 #' 
 #' Data structures in R can be converted from one type to another using one
 #' of the many functions beginning with `as.`. For example:
 #' 
 ## ------------------------------------------------------------------------
-print(x)
-mode(x)
-mode(as.character(x))
+typeof(x)
+typeof(as.character(x))
 
 #' 
 ## ------------------------------------------------------------------------
-print(X)
-mode(X)
-mode(as.numeric(X))
+typeof(y)
+typeof(as.numeric(y))
 
+#' 
+#' These vectors (*double*, *character*, *logical*) are called *atomic vectors*
+#' because each element must be of the same type. Given inputs with conflicting
+#' types R will convert them for you.
+#' 
+## ------------------------------------------------------------------------
+typeof(c(1, 2))
+typeof(c(1, "2"))
+
+#' 
 #' 
 #' Now that we know how to do assignment using `<-` and how to understand basic
 #' data types in R we are finally ready to read in the baby names data.
@@ -517,8 +451,6 @@ getwd() # get the current working directory
 setwd("dataSets") # set wd to the dataSets folder
 getwd()
 
-#' 
-## ------------------------------------------------------------------------
 setwd("..") # set wd to enclosing folder ("up")
 getwd()
 
@@ -569,17 +501,6 @@ list.files("dataSets") # list files in the dataSets folder
 #' Exercise 2 solution<span class="tag" data-tag-name="prototype"></span>
 #' ----------------------------------------------------------------------
 #' 
-## ---- results = 'hide'---------------------------------------------------
-## read ?read_csv
-## limit rows with n_max argument
-read_csv("dataSets/babyNames.csv", n_max = 10)
-
-## specify column types in the col_types argument
-read_csv("dataSets/babyNames.csv", n_max = 10, col_types = "??c????")
-
-## read all the data
-baby.names <- read_csv("dataSets/babyNames.csv", col_types = "??c????")
-
 #' 
 #' Checking imported data
 #' ----------------------
@@ -783,15 +704,6 @@ ls() # list objects
 #' Exercise 3 solution<span class="tag" data-tag-name="prototype"></span>
 #' ----------------------------------------------------------------------
 #' 
-## ------------------------------------------------------------------------
-filter(baby.names, Sex == "M" & Percent >= 5)
-
-baby.names <- mutate(baby.names, Proportion = Percent/100)
-
-popular.girl.names <- filter(baby.names, Sex == "F" & Percent >= 3)
-
-write_csv(popular.girl.names, path = "popularGirlNames.dta")
-
 #' 
 #' Basic Statistics and Graphs
 #' ===========================
@@ -875,17 +787,6 @@ sink() ## sink with no arguments turns logging off
 #' Exercise 4 solution<span class="tag" data-tag-name="prototype"></span>
 #' ----------------------------------------------------------------------
 #' 
-## ------------------------------------------------------------------------
-sum(baby.names$Count)
-
-sum(filter(baby.names, Location == "MA")$Count)
-
-births.by.year <- summarize(group_by(baby.names, Year), sum(Count))
-
-mean(baby.names$Name.length)
-
-name.length.by.location <- summarize(group_by(baby.names, Location), mean(Name.length))
-
 #' 
 #' Basic graphics: Frequency bars
 #' ------------------------------
@@ -896,8 +797,6 @@ name.length.by.location <- summarize(group_by(baby.names, Location), mean(Name.l
 plot(example.df$var4)
 
 #' 
-#' ![](images/examplePlot1.png)
-#' 
 #' Basic graphics: Boxplots by group
 #' ---------------------------------
 #' 
@@ -906,8 +805,6 @@ plot(example.df$var4)
 ## ------------------------------------------------------------------------
 plot(select(example.df, id, var1))
 
-#' 
-#' ![](images/examplePlot2.png)
 #' 
 #' Basic graphics: Mosaic chart
 #' ----------------------------
@@ -918,16 +815,12 @@ plot(select(example.df, id, var1))
 plot(select(example.df, id, var4))
 
 #' 
-#' ![](images/examplePlot3.png)
-#' 
 #' Basic graphics: scatter plot
 #' ----------------------------
 #' 
 ## ------------------------------------------------------------------------
 plot(select(example.df, var1, var2))
 
-#' 
-#' ![](images/examplePlot4.png)
 #' 
 #' Exercise 5 TBD
 #' --------------
