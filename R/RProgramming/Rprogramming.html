@@ -256,6 +256,7 @@ div.tocify {
 </div>
 <div id="materials-and-setup" class="section level2">
 <h2>Materials and setup</h2>
+<p><strong>NOTE: skip this section if you are running these examples in your web browser at tutorials-live.iq.harvard.edu</strong></p>
 <p>Everyone should have R installed – if not:</p>
 <ul>
 <li>Open a web browser and go to <a href="http://cran.r-project.org" class="uri">http://cran.r-project.org</a> and download and install it</li>
@@ -293,32 +294,41 @@ div.tocify {
 </dl>
 <p>Base R provides some string manipulation capabilities (see <code>?regex</code>, <code>?sub</code> and <code>?grep</code>), but I recommend either the <a href="https://cran.r-project.org/web/packages/stringr/index.html">stringr</a> or <a href="https://cran.r-project.org/web/packages/stringi/index.html">stringi</a> packages. The <em>stringr</em> package is more user-friendly, and the <em>stringi</em> package is more powerful and complex. Let’s use the friendlier one. While we’re attaching packages we’ll also attach the <a href="https://cran.r-project.org/web/packages/tidyverse/index.html">tidyverse</a> package which provides more modern versions of many basic functions in R.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## install.packages(&quot;tidyverse&quot;)
-<span class="kw">library</span>(tidyverse)
-<span class="kw">library</span>(stringr)</code></pre></div>
+<span class="kw">library</span>(tidyverse)</code></pre></div>
+<pre><code>## Loading tidyverse: ggplot2
+## Loading tidyverse: tibble
+## Loading tidyverse: tidyr
+## Loading tidyverse: readr
+## Loading tidyverse: purrr
+## Loading tidyverse: dplyr</code></pre>
+<pre><code>## Conflicts with tidy packages ----------------------------------------------</code></pre>
+<pre><code>## filter(): dplyr, stats
+## lag():    dplyr, stats</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(stringr)</code></pre></div>
 <p>Packages in the tidyverse are often more convenient to use with pipes rather than nested function calls. The pipe operator looks like <code>%&gt;%</code> and it inserts the value on the left as the first argument to the function on the right. It looks like this:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">(x &lt;-<span class="st"> </span><span class="kw">rnorm</span>(<span class="dv">5</span>)) <span class="co"># extra parens around expression is a shortcut to assign and print</span></code></pre></div>
-<pre><code>## [1]  0.1872363  1.8147403  0.4230747 -0.1722129 -0.7868310</code></pre>
+<pre><code>## [1]  0.3275039 -1.3261635  0.9757538 -1.5788018 -1.5597637</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## nested function calls to sort and round
 <span class="kw">round</span>(<span class="kw">sort</span>(x), <span class="dt">digits =</span> <span class="dv">2</span>)</code></pre></div>
-<pre><code>## [1] -0.79 -0.17  0.19  0.42  1.81</code></pre>
+<pre><code>## [1] -1.58 -1.56 -1.33  0.33  0.98</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## pipeline that does the same thing
 x %&gt;%
 <span class="kw">sort</span>() %&gt;%
 <span class="kw">round</span>(<span class="dt">digits =</span> <span class="dv">2</span>)</code></pre></div>
-<pre><code>## [1] -0.79 -0.17  0.19  0.42  1.81</code></pre>
+<pre><code>## [1] -1.58 -1.56 -1.33  0.33  0.98</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## nested function calls to sample letters, convert to uppercase and sort.
 <span class="kw">sort</span>(
   <span class="kw">str_to_upper</span>(
     <span class="kw">sample</span>(letters,
            <span class="dv">5</span>,
            <span class="dt">replace =</span> <span class="ot">TRUE</span>)))</code></pre></div>
-<pre><code>## [1] &quot;D&quot; &quot;D&quot; &quot;P&quot; &quot;T&quot; &quot;W&quot;</code></pre>
+<pre><code>## [1] &quot;J&quot; &quot;O&quot; &quot;T&quot; &quot;X&quot; &quot;Z&quot;</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## pipeline that does the same thing:
 letters %&gt;%
 <span class="st">  </span><span class="kw">sample</span>(<span class="dv">5</span>, <span class="dt">replace =</span> <span class="ot">TRUE</span>) %&gt;%
 <span class="st">  </span><span class="kw">str_to_upper</span>() %&gt;%
 <span class="st">  </span><span class="kw">sort</span>()</code></pre></div>
-<pre><code>## [1] &quot;E&quot; &quot;F&quot; &quot;N&quot; &quot;N&quot; &quot;T&quot;</code></pre>
+<pre><code>## [1] &quot;J&quot; &quot;K&quot; &quot;M&quot; &quot;Q&quot; &quot;Z&quot;</code></pre>
 <p>The examples in this workshop use the pipe when it makes examples easier to follow.</p>
 </div>
 <div id="reading-text-over-http" class="section level2">
@@ -766,20 +776,20 @@ list<span class="fl">.1</span> &lt;-<span class="st"> </span><span class="kw">li
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">map<span class="fl">.1</span> &lt;-<span class="st"> </span><span class="kw">map</span>(list<span class="fl">.1</span>, mean)
 <span class="kw">str</span>(map<span class="fl">.1</span>)</code></pre></div>
 <pre><code>## List of 3
-##  $ a: num 2.3
+##  $ a: num 2.95
 ##  $ b: num NA
-##  $ c: num 12.9</code></pre>
+##  $ c: num 11.9</code></pre>
 <p>Calculate the mean of every entry, passing <code>na.rm</code> argument.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">map<span class="fl">.1</span> &lt;-<span class="st"> </span><span class="kw">map</span>(list<span class="fl">.1</span>, mean, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)
 <span class="kw">str</span>(map<span class="fl">.1</span>)</code></pre></div>
 <pre><code>## List of 3
-##  $ a: num 2.3
-##  $ b: num 4.75
-##  $ c: num 12.9</code></pre>
+##  $ a: num 2.95
+##  $ b: num 6.5
+##  $ c: num 11.9</code></pre>
 <p>Calculate the mean of every entry, returning a numberic vector instead of a list.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">map<span class="fl">.2</span> &lt;-<span class="st"> </span><span class="kw">map_dbl</span>(list<span class="fl">.1</span>, mean)
 <span class="kw">str</span>(map<span class="fl">.2</span>)</code></pre></div>
-<pre><code>##  Named num [1:3] 2.3 NA 12.9
+<pre><code>##  Named num [1:3] 2.95 NA 11.9
 ##  - attr(*, &quot;names&quot;)= chr [1:3] &quot;a&quot; &quot;b&quot; &quot;c&quot;</code></pre>
 <p>Calculate the mean of every entry, returning a character vector.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">map<span class="fl">.3</span> &lt;-<span class="st"> </span><span class="kw">map_chr</span>(list<span class="fl">.1</span>, mean)</code></pre></div>
@@ -787,11 +797,11 @@ list<span class="fl">.1</span> &lt;-<span class="st"> </span><span class="kw">li
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">map<span class="fl">.4</span> &lt;-<span class="st"> </span><span class="kw">map</span>(list<span class="fl">.1</span>, summary)
 <span class="kw">str</span>(map<span class="fl">.4</span>)</code></pre></div>
 <pre><code>## List of 3
-##  $ a:Classes 'summaryDefault', 'table'  Named num [1:6] 1 1 2 2.3 3 5
+##  $ a:Classes 'summaryDefault', 'table'  Named num [1:6] 1 1.75 3 2.95 4 5
 ##   .. ..- attr(*, &quot;names&quot;)= chr [1:6] &quot;Min.&quot; &quot;1st Qu.&quot; &quot;Median&quot; &quot;Mean&quot; ...
-##  $ b:Classes 'summaryDefault', 'table'  Named num [1:7] 1 2 4 4.75 7.5 10 1
+##  $ b:Classes 'summaryDefault', 'table'  Named num [1:7] 2 5 6.5 6.5 8.25 10 1
 ##   .. ..- attr(*, &quot;names&quot;)= chr [1:7] &quot;Min.&quot; &quot;1st Qu.&quot; &quot;Median&quot; &quot;Mean&quot; ...
-##  $ c:Classes 'summaryDefault', 'table'  Named num [1:6] 11 12 13 12.9 14 ...
+##  $ c:Classes 'summaryDefault', 'table'  Named num [1:6] 10 10.8 12 11.9 13 ...
 ##   .. ..- attr(*, &quot;names&quot;)= chr [1:6] &quot;Min.&quot; &quot;1st Qu.&quot; &quot;Median&quot; &quot;Mean&quot; ...</code></pre>
 </div>
 <div id="writing-your-own-functions" class="section level2">
@@ -808,12 +818,12 @@ my.summary &lt;-<span class="st"> </span>function(x) {
 ## test it out
 <span class="kw">my.summary</span>(list<span class="fl">.1</span>[[<span class="dv">1</span>]])</code></pre></div>
 <pre><code>##                  N               Mean Standard.Deviation 
-##          20.000000           2.300000           1.301821</code></pre>
+##          20.000000           2.950000           1.538112</code></pre>
 <p>Our new function can be used just like any other function in R. For example, we can iterate over <code>list.1</code> and apply our new function to each element.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">map</span>(list<span class="fl">.1</span>, my.summary)</code></pre></div>
 <pre><code>## $a
 ##                  N               Mean Standard.Deviation 
-##          20.000000           2.300000           1.301821 
+##          20.000000           2.950000           1.538112 
 ## 
 ## $b
 ##                  N               Mean Standard.Deviation 
@@ -821,7 +831,7 @@ my.summary &lt;-<span class="st"> </span>function(x) {
 ## 
 ## $c
 ##                  N               Mean Standard.Deviation 
-##          20.000000          12.950000           1.316894</code></pre>
+##          20.000000          11.900000           1.552587</code></pre>
 <p>Note that you can use the special <code>...</code> notation to pass named arguments without needing to define them all. For example:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## improve our function by allowing arbitrary arguments to be passed into the body
 my.summary &lt;-<span class="st"> </span>function(x, ...) {
@@ -833,7 +843,7 @@ my.summary &lt;-<span class="st"> </span>function(x, ...) {
 <p>Now we can try out the new version of our summary function. Calling it without any additional arguments works fine for the first element of the list:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">my.summary</span>(list<span class="fl">.1</span>[[<span class="dv">1</span>]])</code></pre></div>
 <pre><code>##                  N               Mean Standard.Deviation 
-##          20.000000           2.300000           1.301821</code></pre>
+##          20.000000           2.950000           1.538112</code></pre>
 <p>However, it doesn’t work so well on elements containing missing values:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">my.summary</span>(list<span class="fl">.1</span>[[<span class="dv">2</span>]])</code></pre></div>
 <pre><code>##                  N               Mean Standard.Deviation 
@@ -841,7 +851,7 @@ my.summary &lt;-<span class="st"> </span>function(x, ...) {
 <p>Even though our function does not have an na.rm argument we, can pass it to mean and sd via <code>...</code></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">my.summary</span>(list<span class="fl">.1</span>[[<span class="dv">2</span>]], <span class="dt">na.rm =</span> <span class="ot">TRUE</span>) </code></pre></div>
 <pre><code>##                  N               Mean Standard.Deviation 
-##           21.00000            4.75000            3.32257</code></pre>
+##          21.000000           6.500000           2.438723</code></pre>
 <p>Often when writing functions you want to skip some part of the function body under some conditions. For example, we might want omit missing values only if they exist:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## improve our function by removing missing values if they exist.
 my.summary &lt;-<span class="st"> </span>function(x, ...) {
@@ -871,27 +881,27 @@ my.summary &lt;-<span class="st"> </span>function(x, ...) {
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">map</span>(list<span class="fl">.1</span>, my.summary)</code></pre></div>
 <pre><code>## $a
 ##                  N               Mean Standard.Deviation 
-##          20.000000           2.300000           1.301821 
+##          20.000000           2.950000           1.538112 
 ## 
 ## $b
 ##                  N               Mean Standard.Deviation 
-##           20.00000            4.75000            3.32257 
+##          20.000000           6.500000           2.438723 
 ## 
 ## $c
 ##                  N               Mean Standard.Deviation 
-##          20.000000          12.950000           1.316894</code></pre>
+##          20.000000          11.900000           1.552587</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">map</span>(list<span class="fl">.1</span>, my.summary, <span class="dt">mean.only =</span> <span class="ot">TRUE</span>)</code></pre></div>
 <pre><code>## $a
-##    N Mean 
-## 20.0  2.3 
+##     N  Mean 
+## 20.00  2.95 
 ## 
 ## $b
-##     N  Mean 
-## 20.00  4.75 
+##    N Mean 
+## 20.0  6.5 
 ## 
 ## $c
-##     N  Mean 
-## 20.00 12.95</code></pre>
+##    N Mean 
+## 20.0 11.9</code></pre>
 <p>OK, now that we know how to write functions lets get back to the problem at hand. We want to read each file in the <code>girl.file.names</code> and <code>boy.file.names</code> vectors.</p>
 </div>
 <div id="exercise-3-iteration-file-io-functions" class="section level2">
@@ -1151,24 +1161,15 @@ boys.data &lt;-<span class="st"> </span><span class="kw">map</span>(boy.file.nam
 ##   Count = col_double()
 ## )</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## 3. inspect boys and girls names data
-<span class="kw">length</span>(boys.data)</code></pre></div>
-<pre><code>## [1] 20</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">length</span>(girls.data)</code></pre></div>
-<pre><code>## [1] 20</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">class</span>(girls.data)</code></pre></div>
-<pre><code>## [1] &quot;list&quot;</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">class</span>(boys.data)</code></pre></div>
-<pre><code>## [1] &quot;list&quot;</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## 4. Inspect meta data for each set of names data
+<span class="kw">length</span>(boys.data)
+<span class="kw">length</span>(girls.data)
+<span class="kw">class</span>(girls.data)
+<span class="kw">class</span>(boys.data)
+
+## 4. Inspect meta data for each set of names data
 list.info &lt;-<span class="st"> </span>function(x) <span class="kw">return</span>(<span class="kw">c</span>(<span class="dt">class =</span> <span class="kw">class</span>(x), <span class="dt">mode =</span> <span class="kw">mode</span>(x), <span class="dt">n =</span> <span class="kw">length</span>(x)))
-<span class="kw">unique</span>(<span class="kw">map</span>(girls.data, list.info))</code></pre></div>
-<pre><code>## [[1]]
-##       class1       class2       class3         mode            n 
-##     &quot;tbl_df&quot;        &quot;tbl&quot; &quot;data.frame&quot;       &quot;list&quot;          &quot;3&quot;</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">unique</span>(<span class="kw">map</span>(boys.data, list.info))</code></pre></div>
-<pre><code>## [[1]]
-##       class1       class2       class3         mode            n 
-##     &quot;tbl_df&quot;        &quot;tbl&quot; &quot;data.frame&quot;       &quot;list&quot;          &quot;3&quot;</code></pre>
+<span class="kw">unique</span>(<span class="kw">map</span>(girls.data, list.info))
+<span class="kw">unique</span>(<span class="kw">map</span>(boys.data, list.info))</code></pre></div>
 </div>
 </div>
 <div id="adding-a-year-column-data-structures-indexing" class="section level1">
@@ -1490,6 +1491,125 @@ test &lt;-<span class="st"> </span><span class="kw">read.linked.files</span>(<sp
                           <span class="dt">reader.fun =</span> function(x) {
                             <span class="kw">read_csv</span>(x, <span class="dt">col_names =</span> <span class="ot">FALSE</span>, <span class="dt">na =</span> <span class="st">&quot;&quot;</span>, <span class="dt">col_types =</span> <span class="st">&quot;ccici&quot;</span>)
                           })</code></pre></div>
+<pre><code>## 
+|===========                                                                    |  13%           
+|============                                                                   |  15%           
+|==============                                                                 |  17%           
+|===============                                                                |  19%           
+|=================                                                              |  21%           
+|==================                                                             |  23%           
+|====================                                                           |  25%           
+|======================                                                         |  27%           
+|=======================                                                        |  29%           
+|=========================                                                      |  31%           
+|==========================                                                     |  33%           
+|============================                                                   |  35%           
+|==============================                                                 |  37%           
+|===============================                                                |  39%           
+|=================================                                              |  41%           
+|==================================                                             |  43%           
+|====================================                                           |  45%           
+|======================================                                         |  47%           
+|=======================================                                        |  49%           
+|=========================================                                      |  51%    1 MB
+|==========================================                                     |  53%    1 MB
+|============================================                                   |  55%    1 MB
+|==============================================                                 |  57%    1 MB
+|===============================================                                |  59%    1 MB
+|=================================================                              |  61%    1 MB
+|==================================================                             |  63%    1 MB
+|====================================================                           |  65%    1 MB
+|=====================================================                          |  67%    1 MB
+|=======================================================                        |  69%    1 MB
+|========================================================                       |  71%    1 MB
+|==========================================================                     |  73%    1 MB
+|============================================================                   |  75%    1 MB
+|=============================================================                  |  76%    1 MB
+|===============================================================                |  78%    1 MB
+|================================================================               |  80%    1 MB
+|==================================================================             |  82%    1 MB
+|===================================================================            |  84%    1 MB
+|=====================================================================          |  86%    1 MB
+|=======================================================================        |  88%    1 MB
+|========================================================================       |  90%    1 MB
+|==========================================================================     |  92%    1 MB
+|===========================================================================    |  94%    1 MB
+|=============================================================================  |  96%    1 MB
+|============================================================================== |  98%    1 MB
+|================================================================================| 100%    1 MB
+## 
+|==============                                                                 |  18%           
+|===============                                                                |  19%           
+|================                                                               |  20%           
+|=================                                                              |  22%           
+|==================                                                             |  23%           
+|===================                                                            |  24%           
+|====================                                                           |  25%           
+|=====================                                                          |  26%           
+|======================                                                         |  27%           
+|=======================                                                        |  29%           
+|========================                                                       |  30%    1 MB
+|=========================                                                      |  31%    1 MB
+|==========================                                                     |  32%    1 MB
+|===========================                                                    |  33%    1 MB
+|===========================                                                    |  34%    1 MB
+|============================                                                   |  36%    1 MB
+|=============================                                                  |  37%    1 MB
+|==============================                                                 |  38%    1 MB
+|===============================                                                |  39%    1 MB
+|================================                                               |  40%    1 MB
+|=================================                                              |  41%    1 MB
+|==================================                                             |  43%    1 MB
+|===================================                                            |  44%    1 MB
+|====================================                                           |  45%    1 MB
+|=====================================                                          |  46%    1 MB
+|======================================                                         |  47%    1 MB
+|=======================================                                        |  48%    1 MB
+|========================================                                       |  50%    1 MB
+|=========================================                                      |  51%    1 MB
+|=========================================                                      |  52%    1 MB
+|==========================================                                     |  53%    1 MB
+|===========================================                                    |  54%    1 MB
+|============================================                                   |  55%    1 MB
+|=============================================                                  |  57%    1 MB
+|==============================================                                 |  58%    1 MB
+|===============================================                                |  59%    2 MB
+|================================================                               |  60%    2 MB
+|=================================================                              |  61%    2 MB
+|==================================================                             |  62%    2 MB
+|===================================================                            |  63%    2 MB
+|====================================================                           |  65%    2 MB
+|=====================================================                          |  66%    2 MB
+|=====================================================                          |  67%    2 MB
+|======================================================                         |  68%    2 MB
+|=======================================================                        |  69%    2 MB
+|========================================================                       |  70%    2 MB
+|=========================================================                      |  72%    2 MB
+|==========================================================                     |  73%    2 MB
+|===========================================================                    |  74%    2 MB
+|============================================================                   |  75%    2 MB
+|=============================================================                  |  76%    2 MB
+|==============================================================                 |  77%    2 MB
+|===============================================================                |  78%    2 MB
+|================================================================               |  80%    2 MB
+|=================================================================              |  81%    2 MB
+|=================================================================              |  82%    2 MB
+|==================================================================             |  83%    2 MB
+|===================================================================            |  84%    2 MB
+|====================================================================           |  85%    2 MB
+|=====================================================================          |  87%    2 MB
+|======================================================================         |  88%    2 MB
+|=======================================================================        |  89%    3 MB
+|========================================================================       |  90%    3 MB
+|=========================================================================      |  91%    3 MB
+|==========================================================================     |  92%    3 MB
+|===========================================================================    |  94%    3 MB
+|============================================================================   |  95%    3 MB
+|=============================================================================  |  96%    3 MB
+|============================================================================== |  97%    3 MB
+|===============================================================================|  98%    3 MB
+|===============================================================================|  99%    3 MB
+|================================================================================| 100%    3 MB</code></pre>
 </div>
 <div id="final-data-cleanup" class="section level2">
 <h2>Final Data cleanup</h2>
@@ -1526,28 +1646,28 @@ test &lt;-<span class="st"> </span><span class="kw">read.linked.files</span>(<sp
                           <span class="dt">var1 =</span> <span class="kw">runif</span>(<span class="dv">16</span>),
                           <span class="dt">var2 =</span> <span class="kw">sample</span>(letters[<span class="dv">1</span>:<span class="dv">3</span>], <span class="dv">16</span>, <span class="dt">replace =</span> <span class="ot">TRUE</span>)))</code></pre></div>
 <pre><code>##    id t       var1 var2
-## 1   a 1 0.27045606    c
-## 2   a 2 0.81606486    b
-## 3   a 3 0.35580402    c
-## 4   a 4 0.31871057    b
-## 5   b 1 0.50882282    b
-## 6   b 2 0.91339451    a
-## 7   b 3 0.21884646    a
-## 8   b 4 0.04159467    c
-## 9   c 1 0.90200316    a
-## 10  c 2 0.14291576    c
-## 11  c 3 0.63064053    a
-## 12  c 4 0.09716700    c
-## 13  d 1 0.02716678    a
-## 14  d 2 0.39397999    c
-## 15  d 3 0.03336395    a
-## 16  d 4 0.95518181    a</code></pre>
+## 1   a 1 0.13498529    b
+## 2   a 2 0.57841019    b
+## 3   a 3 0.83339049    a
+## 4   a 4 0.80396029    b
+## 5   b 1 0.89180259    a
+## 6   b 2 0.14415730    b
+## 7   b 3 0.11397234    b
+## 8   b 4 0.07508011    a
+## 9   c 1 0.61017718    c
+## 10  c 2 0.81185964    b
+## 11  c 3 0.89021871    c
+## 12  c 4 0.69517671    c
+## 13  d 1 0.35942800    a
+## 14  d 2 0.61437460    c
+## 15  d 3 0.66718698    c
+## 16  d 4 0.68156774    a</code></pre>
 <p>Calculate the total sum of the <code>var1</code> column.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## summarize
 <span class="kw">summarize</span>(example.df,
           <span class="dt">var1 =</span> <span class="kw">sum</span>(var1))</code></pre></div>
 <pre><code>##       var1
-## 1 6.626113</code></pre>
+## 1 8.905748</code></pre>
 <p>Calculate the sum of <code>var1</code> by <code>id</code>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## summarize by id
 example.df %&gt;%
@@ -1556,29 +1676,28 @@ example.df %&gt;%
 <pre><code>## # A tibble: 4 × 2
 ##       id     var1
 ##   &lt;fctr&gt;    &lt;dbl&gt;
-## 1      a 1.761036
-## 2      b 1.682658
-## 3      c 1.772726
-## 4      d 1.409693</code></pre>
+## 1      a 2.350746
+## 2      b 1.225012
+## 3      c 3.007432
+## 4      d 2.322557</code></pre>
 <p>Calculate the sum of <code>var1</code> by <code>id</code> and <code>var2</code>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## summarize by id and var2
 example.df %&gt;%
 <span class="st">  </span><span class="kw">group_by</span>(id, var2) %&gt;%
 <span class="st">  </span><span class="kw">summarize</span>(<span class="dt">var1 =</span> <span class="kw">sum</span>(var1))</code></pre></div>
-<pre><code>## Source: local data frame [9 x 3]
+<pre><code>## Source: local data frame [8 x 3]
 ## Groups: id [?]
 ## 
-##       id   var2       var1
-##   &lt;fctr&gt; &lt;fctr&gt;      &lt;dbl&gt;
-## 1      a      b 1.13477543
-## 2      a      c 0.62626008
-## 3      b      a 1.13224097
-## 4      b      b 0.50882282
-## 5      b      c 0.04159467
-## 6      c      a 1.53264369
-## 7      c      c 0.24008277
-## 8      d      a 1.01571254
-## 9      d      c 0.39397999</code></pre>
+##       id   var2      var1
+##   &lt;fctr&gt; &lt;fctr&gt;     &lt;dbl&gt;
+## 1      a      a 0.8333905
+## 2      a      b 1.5173558
+## 3      b      a 0.9668827
+## 4      b      b 0.2581296
+## 5      c      b 0.8118596
+## 6      c      c 2.1955726
+## 7      d      a 1.0409957
+## 8      d      c 1.2815616</code></pre>
 <p>Now that we know how to group by and summarize we can calculate the number of babies born each year</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">group_by</span>(baby.names, Year) %&gt;%
 <span class="st">  </span><span class="kw">summarize</span>(<span class="dt">Total =</span> <span class="kw">sum</span>(Count))</code></pre></div>
@@ -1633,22 +1752,22 @@ example.df %&gt;%
           <span class="dt">n2 =</span> <span class="kw">length</span>(var1),
           <span class="dt">var3 =</span> var1/n1))</code></pre></div>
 <pre><code>##    id t       var1 var2 n1 n2        var3
-## 1   a 1 0.27045606    c 16 16 0.016903504
-## 2   a 2 0.81606486    b 16 16 0.051004053
-## 3   a 3 0.35580402    c 16 16 0.022237751
-## 4   a 4 0.31871057    b 16 16 0.019919411
-## 5   b 1 0.50882282    b 16 16 0.031801426
-## 6   b 2 0.91339451    a 16 16 0.057087157
-## 7   b 3 0.21884646    a 16 16 0.013677903
-## 8   b 4 0.04159467    c 16 16 0.002599667
-## 9   c 1 0.90200316    a 16 16 0.056375197
-## 10  c 2 0.14291576    c 16 16 0.008932235
-## 11  c 3 0.63064053    a 16 16 0.039415033
-## 12  c 4 0.09716700    c 16 16 0.006072938
-## 13  d 1 0.02716678    a 16 16 0.001697924
-## 14  d 2 0.39397999    c 16 16 0.024623750
-## 15  d 3 0.03336395    a 16 16 0.002085247
-## 16  d 4 0.95518181    a 16 16 0.059698863</code></pre>
+## 1   a 1 0.13498529    b 16 16 0.008436581
+## 2   a 2 0.57841019    b 16 16 0.036150637
+## 3   a 3 0.83339049    a 16 16 0.052086905
+## 4   a 4 0.80396029    b 16 16 0.050247518
+## 5   b 1 0.89180259    a 16 16 0.055737662
+## 6   b 2 0.14415730    b 16 16 0.009009831
+## 7   b 3 0.11397234    b 16 16 0.007123271
+## 8   b 4 0.07508011    a 16 16 0.004692507
+## 9   c 1 0.61017718    c 16 16 0.038136074
+## 10  c 2 0.81185964    b 16 16 0.050741228
+## 11  c 3 0.89021871    c 16 16 0.055638669
+## 12  c 4 0.69517671    c 16 16 0.043448544
+## 13  d 1 0.35942800    a 16 16 0.022464250
+## 14  d 2 0.61437460    c 16 16 0.038398412
+## 15  d 3 0.66718698    c 16 16 0.041699186
+## 16  d 4 0.68156774    a 16 16 0.042597984</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## combine with group_by
 (example.df &lt;-<span class="st"> </span>example.df %&gt;%
 <span class="st">   </span><span class="kw">group_by</span>(id) %&gt;%
@@ -1657,93 +1776,88 @@ example.df %&gt;%
 <pre><code>## Source: local data frame [16 x 9]
 ## Groups: id [4]
 ## 
-##        id     t       var1   var2    n1    n2        var3    n3
-##    &lt;fctr&gt; &lt;int&gt;      &lt;dbl&gt; &lt;fctr&gt; &lt;int&gt; &lt;int&gt;       &lt;dbl&gt; &lt;int&gt;
-## 1       a     1 0.27045606      c    16    16 0.016903504     4
-## 2       a     2 0.81606486      b    16    16 0.051004053     4
-## 3       a     3 0.35580402      c    16    16 0.022237751     4
-## 4       a     4 0.31871057      b    16    16 0.019919411     4
-## 5       b     1 0.50882282      b    16    16 0.031801426     4
-## 6       b     2 0.91339451      a    16    16 0.057087157     4
-## 7       b     3 0.21884646      a    16    16 0.013677903     4
-## 8       b     4 0.04159467      c    16    16 0.002599667     4
-## 9       c     1 0.90200316      a    16    16 0.056375197     4
-## 10      c     2 0.14291576      c    16    16 0.008932235     4
-## 11      c     3 0.63064053      a    16    16 0.039415033     4
-## 12      c     4 0.09716700      c    16    16 0.006072938     4
-## 13      d     1 0.02716678      a    16    16 0.001697924     4
-## 14      d     2 0.39397999      c    16    16 0.024623750     4
-## 15      d     3 0.03336395      a    16    16 0.002085247     4
-## 16      d     4 0.95518181      a    16    16 0.059698863     4
-## # ... with 1 more variables: var4 &lt;dbl&gt;</code></pre>
+##        id     t       var1   var2    n1    n2        var3    n3       var4
+##    &lt;fctr&gt; &lt;int&gt;      &lt;dbl&gt; &lt;fctr&gt; &lt;int&gt; &lt;int&gt;       &lt;dbl&gt; &lt;int&gt;      &lt;dbl&gt;
+## 1       a     1 0.13498529      b    16    16 0.008436581     4 0.03374632
+## 2       a     2 0.57841019      b    16    16 0.036150637     4 0.14460255
+## 3       a     3 0.83339049      a    16    16 0.052086905     4 0.20834762
+## 4       a     4 0.80396029      b    16    16 0.050247518     4 0.20099007
+## 5       b     1 0.89180259      a    16    16 0.055737662     4 0.22295065
+## 6       b     2 0.14415730      b    16    16 0.009009831     4 0.03603933
+## 7       b     3 0.11397234      b    16    16 0.007123271     4 0.02849309
+## 8       b     4 0.07508011      a    16    16 0.004692507     4 0.01877003
+## 9       c     1 0.61017718      c    16    16 0.038136074     4 0.15254429
+## 10      c     2 0.81185964      b    16    16 0.050741228     4 0.20296491
+## 11      c     3 0.89021871      c    16    16 0.055638669     4 0.22255468
+## 12      c     4 0.69517671      c    16    16 0.043448544     4 0.17379418
+## 13      d     1 0.35942800      a    16    16 0.022464250     4 0.08985700
+## 14      d     2 0.61437460      c    16    16 0.038398412     4 0.15359365
+## 15      d     3 0.66718698      c    16    16 0.041699186     4 0.16679675
+## 16      d     4 0.68156774      a    16    16 0.042597984     4 0.17039194</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## summarize by id and var2
 (example.df<span class="fl">.2</span> &lt;-<span class="st"> </span>example.df %&gt;%
 <span class="st">   </span><span class="kw">group_by</span>(id, var2) %&gt;%
 <span class="st">   </span><span class="kw">summarize</span>(<span class="dt">var1 =</span> <span class="kw">sum</span>(var1)))</code></pre></div>
-<pre><code>## Source: local data frame [9 x 3]
+<pre><code>## Source: local data frame [8 x 3]
 ## Groups: id [?]
 ## 
-##       id   var2       var1
-##   &lt;fctr&gt; &lt;fctr&gt;      &lt;dbl&gt;
-## 1      a      b 1.13477543
-## 2      a      c 0.62626008
-## 3      b      a 1.13224097
-## 4      b      b 0.50882282
-## 5      b      c 0.04159467
-## 6      c      a 1.53264369
-## 7      c      c 0.24008277
-## 8      d      a 1.01571254
-## 9      d      c 0.39397999</code></pre>
+##       id   var2      var1
+##   &lt;fctr&gt; &lt;fctr&gt;     &lt;dbl&gt;
+## 1      a      a 0.8333905
+## 2      a      b 1.5173558
+## 3      b      a 0.9668827
+## 4      b      b 0.2581296
+## 5      c      b 0.8118596
+## 6      c      c 2.1955726
+## 7      d      a 1.0409957
+## 8      d      c 1.2815616</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## sort by var1
 example.df<span class="fl">.2</span> %&gt;%
 <span class="st">  </span><span class="kw">arrange</span>(var1)</code></pre></div>
-<pre><code>## Source: local data frame [9 x 3]
+<pre><code>## Source: local data frame [8 x 3]
 ## Groups: id [4]
 ## 
-##       id   var2       var1
-##   &lt;fctr&gt; &lt;fctr&gt;      &lt;dbl&gt;
-## 1      b      c 0.04159467
-## 2      c      c 0.24008277
-## 3      d      c 0.39397999
-## 4      b      b 0.50882282
-## 5      a      c 0.62626008
-## 6      d      a 1.01571254
-## 7      b      a 1.13224097
-## 8      a      b 1.13477543
-## 9      c      a 1.53264369</code></pre>
+##       id   var2      var1
+##   &lt;fctr&gt; &lt;fctr&gt;     &lt;dbl&gt;
+## 1      b      b 0.2581296
+## 2      c      b 0.8118596
+## 3      a      a 0.8333905
+## 4      b      a 0.9668827
+## 5      d      a 1.0409957
+## 6      d      c 1.2815616
+## 7      a      b 1.5173558
+## 8      c      c 2.1955726</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">example.df<span class="fl">.2</span> %&gt;%
 <span class="st">  </span><span class="kw">arrange</span>(<span class="kw">desc</span>(var1))</code></pre></div>
-<pre><code>## Source: local data frame [9 x 3]
+<pre><code>## Source: local data frame [8 x 3]
 ## Groups: id [4]
 ## 
-##       id   var2       var1
-##   &lt;fctr&gt; &lt;fctr&gt;      &lt;dbl&gt;
-## 1      c      a 1.53264369
-## 2      a      b 1.13477543
-## 3      b      a 1.13224097
-## 4      d      a 1.01571254
-## 5      a      c 0.62626008
-## 6      b      b 0.50882282
-## 7      d      c 0.39397999
-## 8      c      c 0.24008277
-## 9      b      c 0.04159467</code></pre>
+##       id   var2      var1
+##   &lt;fctr&gt; &lt;fctr&gt;     &lt;dbl&gt;
+## 1      c      c 2.1955726
+## 2      a      b 1.5173558
+## 3      d      c 1.2815616
+## 4      d      a 1.0409957
+## 5      b      a 0.9668827
+## 6      a      a 0.8333905
+## 7      c      b 0.8118596
+## 8      b      b 0.2581296</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## sort by var1 within id
 (example.df<span class="fl">.2</span> &lt;-<span class="st"> </span>example.df<span class="fl">.2</span> %&gt;%
 <span class="st">   </span><span class="kw">arrange</span>(id, <span class="kw">desc</span>(var1)))</code></pre></div>
-<pre><code>## Source: local data frame [9 x 3]
+<pre><code>## Source: local data frame [8 x 3]
 ## Groups: id [4]
 ## 
-##       id   var2       var1
-##   &lt;fctr&gt; &lt;fctr&gt;      &lt;dbl&gt;
-## 1      a      b 1.13477543
-## 2      a      c 0.62626008
-## 3      b      a 1.13224097
-## 4      b      b 0.50882282
-## 5      b      c 0.04159467
-## 6      c      a 1.53264369
-## 7      c      c 0.24008277
-## 8      d      a 1.01571254
-## 9      d      c 0.39397999</code></pre>
+##       id   var2      var1
+##   &lt;fctr&gt; &lt;fctr&gt;     &lt;dbl&gt;
+## 1      a      b 1.5173558
+## 2      a      a 0.8333905
+## 3      b      a 0.9668827
+## 4      b      b 0.2581296
+## 5      c      c 2.1955726
+## 6      c      b 0.8118596
+## 7      d      c 1.2815616
+## 8      d      a 1.0409957</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## select the top 2 var1's within each id group
 example.df<span class="fl">.2</span> %&gt;%
 <span class="st">  </span><span class="kw">group_by</span>(id) %&gt;%
@@ -1753,14 +1867,14 @@ example.df<span class="fl">.2</span> %&gt;%
 ## 
 ##       id   var2      var1
 ##   &lt;fctr&gt; &lt;fctr&gt;     &lt;dbl&gt;
-## 1      a      b 1.1347754
-## 2      a      c 0.6262601
-## 3      b      a 1.1322410
-## 4      b      b 0.5088228
-## 5      c      a 1.5326437
-## 6      c      c 0.2400828
-## 7      d      a 1.0157125
-## 8      d      c 0.3939800</code></pre>
+## 1      a      b 1.5173558
+## 2      a      a 0.8333905
+## 3      b      a 0.9668827
+## 4      b      b 0.2581296
+## 5      c      c 2.1955726
+## 6      c      b 0.8118596
+## 7      d      c 1.2815616
+## 8      d      a 1.0409957</code></pre>
 <p>Now that we know how to group, mutate, summarize, arrange, and slice we can use these tools to identify the most popular boy and girl names.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## create a percent column
 baby.names &lt;-<span class="st"> </span>baby.names %&gt;%
