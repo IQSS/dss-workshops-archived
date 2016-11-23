@@ -39,6 +39,8 @@
 #' Materials and setup
 #' -------------------
 #' 
+#' **NOTE: skip this section if you are running these examples in your web browser at tutorials-live.iq.harvard.edu**
+#' 
 #' Everyone should have R installed -- if not:
 #' 
 #' -   Open a web browser and go to <http://cran.r-project.org> and download and
@@ -169,7 +171,7 @@ c(type = typeof(base.url),
   class = class(base.url))
 
 #' 
-#' ```{R
+#' ```{r
 #' c(type = typeof(baby.names.page),
 #'   length = length(baby.names.page),
 #'   class = class(baby.names.page))
@@ -302,13 +304,38 @@ str_replace(user.info, email.regex, "<a href='mailto:\\1'>\\1</a>")
 #' 3.  Assign the regular expression you found to the name
 #'     'girl.file.regex' in R. *Replace any backslashes with a double
 #'     backslash*.
+## ------------------------------------------------------------------------
+## write your answer here
+
+
 #' 4.  Extract the girl file names from `baby.names.page` and assign
 #'     the values to the name '`girl.file.names`'
+## ------------------------------------------------------------------------
+## write your answer here
+
+
 #' 5.  Repeat steps 1:4 for boys.
+## ------------------------------------------------------------------------
+## write your answer here
+
+
 #' 6.  Use the `str_c` function to prepend `baby.names.url` to
 #'     `girl.file.names` and `boy.file.names`. Make sure to separate with a
 #'     forward slash ("/").
-#' ```
+## ------------------------------------------------------------------------
+## write your answer here
+
+
+#' 
+#' \
+#' 
+#' \
+#' 
+#' \
+#' 
+#' \
+#' 
+#' \
 #' 
 #' 
 #' Exercise 1 prototype
@@ -448,13 +475,13 @@ str(example.list.1[c(1, 3)])
 str(example.list.1[1])
 
 #' 
-#' ```{R
+#' ```{r
 #' str(example.list.1[[1]]) # note the difference between [ and [[
 #' ```
 #' 
 #' Extract by name.
 #' 
-#' ```{R
+#' ```{r
 #' str(example.list.1[c("a1", "a2")])
 #' ```
 #' 
@@ -547,17 +574,45 @@ girls[[2]] <- read_csv(girl.file.names[2], na = "")
 #' `names` attribute of our `boys` and `girls` lists.
 #' 
 #' 1.  Use the `list` function to create empty lists named `boys` and `girls`.
+## ------------------------------------------------------------------------
+## write your answer here
+
+
 #' 2.  Write a regular expression that matches digits 0-9 repeated one or
 #'     more times and use it to extract the years from `boy.file.names` and
 #'     `girl.file.names` (use `str_extract`).
+## ------------------------------------------------------------------------
+## write your answer here
+
+
 #' 3.  Use the assignment from of the `names` function to assign the years
 #'     vectors from step one to the names of `boy.file.names` and
 #'     `girl.file.names` respectively.
+## ------------------------------------------------------------------------
+## write your answer here
+
+
 #' 4.  Extract the element named "2015" from `girl.file.names` and pass it
 #'     as the argument to `read_csv`, assigning the result to a new element
 #'     of the `girls` list named "2015". Repeat for elements "2014"
 #'     and "2013".
+## ------------------------------------------------------------------------
+## write your answer here
+
+
 #' 5.  Repeat step three using `boy.file.names` and the `boys` list.
+#' 
+#' \
+#' 
+#' \
+#' 
+#' \
+#' 
+#' \
+#' 
+#' \
+#' 
+#' \
 #' 
 #' 
 #' Exercise 2 prototype
@@ -730,11 +785,39 @@ map(list.1, my.summary, mean.only = TRUE)
 #' 
 #' 1.  Use the `map` and `read_csv` functions to read all the girls data
 #'     into an object named `girls.data`.
+## ------------------------------------------------------------------------
+## write your answer here
+
+
 #' 2.  Do the same thing for the boys data (name the object `boys.data`).
+## ------------------------------------------------------------------------
+## write your answer here
+
+
 #' 3.  Inspect the boys and girls data lists. How many elements do they
 #'     have? What class are they?
+## ------------------------------------------------------------------------
+## write your answer here
+
+
 #' 4.  Write a function that returns the `class`, `typeof`, and `length` of
 #'     its argument. `map` this function to `girls.data` and `boys.data`.
+## ------------------------------------------------------------------------
+## write your answer here
+
+
+#' 
+#' \
+#' 
+#' \
+#' 
+#' \
+#' 
+#' \
+#' 
+#' \
+#' 
+#' \ 
 #' 
 #' Exercise 3 prototype
 #' -------------------------
@@ -840,12 +923,33 @@ str(example.list.4)
 #' 
 #' 1.  Write a function named `add.year` that takes a data.frame and a vector as
 #'     arguments and returns a data.frame with the vector included as a column.
+## ------------------------------------------------------------------------
+## write your answer here
+
+
 #' 2.  Test your function on the first elements of `girls.data` and
 #'     `names(girls.data)` from step 1.
+## ------------------------------------------------------------------------
+## write your answer here
+
+
 #' 3.  Use the `map2` function to iterate over `girls.data` and insert the
 #'     corresponding year from `names(girls.data)` using the function you
 #'     wrote in step 1. Do the same for `boys.data`.
+## ------------------------------------------------------------------------
+## write your answer here
+
+
 #' 
+#' \
+#' 
+#' \
+#' 
+#' \
+#' 
+#' \
+#' 
+#' \
 #' 
 #' 
 #' Exercise 4 prototype 
@@ -912,14 +1016,30 @@ baby.names.page <- read_lines(baby.names.url)
 #' 
 #' 1.  Extract the file names from baby.names.page and combine them with
 #'     `baby.names.url` to create a vector of file locations.
+## ------------------------------------------------------------------------
+## write your answer here
+
+
 #' 2.  Iterate over the vector of file names from step one and read each
 #'     file, assigning the result to a list named `us.baby.names`. Note
 #'     that column names are not present in these data files.
+## ------------------------------------------------------------------------
+## write your answer here
+
+
 #' 3.  Use `bind_rows` to combine your list of 51 data.frames into a
 #'     single data.frame.
+## ------------------------------------------------------------------------
+## write your answer here
+
+
 #' 4.  Use the assignment form of the `names` function to name the columns
 #'     in your US baby names data set "Location", "Sex", "Year",
 #'     and "Count".
+## ------------------------------------------------------------------------
+## write your answer here
+
+
 #' 5.  Write a function named `read.linked.files` that wraps steps 1-3.
 #'     Your function should take 3 arguments:
 #' 
@@ -931,6 +1051,17 @@ baby.names.page <- read_lines(baby.names.url)
 #' 
 #'     reader.fun
 #'     :   a function used to read the files
+#' 
+#' \
+#' 
+#' \
+#' 
+#' \
+#' 
+#' \
+#' 
+#' \ 
+#' 
 #' 
 ## ------------------------------------------------------------------------
 ## 1. extract file names
@@ -1218,6 +1349,11 @@ ggplot(baby.names.sex.decade, aes(x = Name, y = Percent, fill = Sex, color = Sex
 #' 
 #' and use the `baby.names` data together with your mastery of R to answer
 #' it.
+#' 
+## ------------------------------------------------------------------------
+## write your answer here
+
+
 #' 
 #' Other stuff
 #' ===========

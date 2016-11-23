@@ -50,9 +50,8 @@
 #' "packages". If you have a data manipulation, analysis or visualization task,
 #' chances are good that there is an R package for that. Lets install some packages
 #' and look at some examples.
-#' 
-## ---- results = 'hide'---------------------------------------------------
-## install.packages(c("ggmap", "plotly", "rgl", "forecast"))
+
+install.packages(c("ggmap", "plotly", "rgl", "forecast"))
 
 #' 
 #' ### Where are we? ###
@@ -66,8 +65,7 @@ ggmap(get_map("Cambridge, MA", zoom = 15)) +
 #' 
 #' ### What will world population be in 2020? ###
 #' 
-#' 
-## ------------------------------------------------------------------------
+
 library(forecast)
 library(plotly)
 
@@ -95,7 +93,6 @@ ggplotly(autoplot(forecast(fit)))
 #' -   Want to interactively explore the shape of the Churyumov–Gerasimenko
 #'     comet?
 #' 
-## ------------------------------------------------------------------------
 comet <- rgl::readOBJ(url("http://sci.esa.int/science-e/www/object/doc.cfm?fobjectid=54726"))
 plot_ly(x = comet$vb[1,],
         y = comet$vb[2,],
@@ -212,11 +209,6 @@ plot_ly(x = comet$vb[1,],
 #' 5.  Open a new web browser or tab, go to <http://cran.r-project.org/web/views/> and
 #'     skim the topic closest to your field/interests.
 #' 
-#' Exercise 0 solution<span class="tag" data-tag-name="prototype"></span>
-#' ----------------------------------------------------------------------
-#' 
-#' 1. Add 2 plus 2.
-#' 
 #' 
 #' Example project overview: baby names!
 #' ------------------------
@@ -254,7 +246,7 @@ plot_ly(x = comet$vb[1,],
 #' 
 #' The general form for calling R functions is
 #' 
-## ----eval=FALSE----------------------------------------------------------
+
 ## ## FunctionName(arg.1 = value.1, arg.2 = value.2, ..., arg.n - value.n)
 
 #' 
@@ -269,7 +261,7 @@ plot_ly(x = comet$vb[1,],
 #' you should do when using a function for the first time. You can look up the help
 #' page for a function like this:
 #' 
-## ------------------------------------------------------------------------
+
 ?install.packages
 
 #' 
@@ -280,7 +272,7 @@ plot_ly(x = comet$vb[1,],
 #' OK, lets install the "car" package from the repo at
 #' "https://cran.rstudio.com". 
 #' 
-## ------------------------------------------------------------------------
+
 install.packages("car", repos = "https://cran.rstudio.com")
 
 #' 
@@ -289,8 +281,7 @@ install.packages("car", repos = "https://cran.rstudio.com")
 #' attach it using the `library` function.
 #' 
 #' 
-## ----eval=FALSE----------------------------------------------------------
-## library("car")
+library("car")
 
 #' 
 #' Asking R for help
@@ -300,7 +291,7 @@ install.packages("car", repos = "https://cran.rstudio.com")
 #' that we can look up the help page using `?`. This is actually a shortcut to the
 #' `help` function:
 #' 
-## ------------------------------------------------------------------------
+
 help(help)
 
 #' 
@@ -322,11 +313,7 @@ help(help)
 #' 2.  Use the `library` function to attach the `tidyverse` package.
 #' 3.  Look up the help page for the *readr* package (*readr* is attached by the
 #'     *tidyverse* package). Which function would you use to read a comma separated
-#'     values (`.csv`) file?
-#' 
-#' Exercise 1 solution<span class="tag" data-tag-name="prototype"></span>
-#' ----------------------------------------------------------------------
-#' 
+#'     values (`.csv`) file? 
 #' 
 #' Now that we have installed and attached the `tidyverse` (and `readr`) packages,
 #' and know which function to use to read our data (`read_csv`) we are almost ready
@@ -345,21 +332,21 @@ help(help)
 #'     values
 #' -   The name on the left gets the value on the right.
 #' 
-## ------------------------------------------------------------------------
+
 x <- 10 # Assign the value 10 to a variable named x
 x + 1 # Add 1 to x
 
 #' 
-## ------------------------------------------------------------------------
+
 x # note that x is unchanged
 
 #' 
-## ------------------------------------------------------------------------
+
 y <- x + 1 # Assign y the value x + 1
 y
 
 #' 
-## ------------------------------------------------------------------------
+
 x <- x + 100 # change the value of x
 y ## note that y is unchanged.
 
@@ -372,7 +359,7 @@ y ## note that y is unchanged.
 #' blocks used to make more complex data structures. Here are some more
 #' vector examples.
 #' 
-## ------------------------------------------------------------------------
+
 x <- c(10, 11, 12)
 y <- c("10", "11", "12")
 z <- c(TRUE, FALSE, TRUE, TRUE)
@@ -384,7 +371,7 @@ z <- c(TRUE, FALSE, TRUE, TRUE)
 #' for an object not to have these attributes they are called *intrinsic
 #' attributes*. They can be retrieved using the `typeof` and `length` functions.
 #' 
-## ------------------------------------------------------------------------
+
 c(x = x, type = typeof(x), length = length(x))
 
 c(y = y, type = typeof(y), length = length(y))
@@ -395,12 +382,12 @@ c(z = z, type = typeof(z), length = length(z))
 #' Data structures in R can be converted from one type to another using one
 #' of the many functions beginning with `as.`. For example:
 #' 
-## ------------------------------------------------------------------------
+
 typeof(x)
 typeof(as.character(x))
 
 #' 
-## ------------------------------------------------------------------------
+
 typeof(y)
 typeof(as.numeric(y))
 
@@ -409,7 +396,7 @@ typeof(as.numeric(y))
 #' because each element must be of the same type. Given inputs with conflicting
 #' types R will convert them for you.
 #' 
-## ------------------------------------------------------------------------
+
 typeof(c(1, 2))
 typeof(c(1, "2"))
 
@@ -443,11 +430,11 @@ typeof(c(1, "2"))
 #' working directory. Once we are in the "Rintro" folder we can navigate to
 #' the "dataSets" folder like this:
 #' 
-## ------------------------------------------------------------------------
+
 getwd() # get the current working directory
 
 #' 
-## ------------------------------------------------------------------------
+
 setwd("dataSets") # set wd to the dataSets folder
 getwd()
 
@@ -457,7 +444,7 @@ getwd()
 #' 
 #' It can be convenient to list files in a directory without leaving R
 #' 
-## ------------------------------------------------------------------------
+
 list.files("dataSets") # list files in the dataSets folder
 
 #' 
@@ -498,9 +485,6 @@ list.files("dataSets") # list files in the dataSets folder
 #' 4.  Once you have successfully read in the first 10 rows, read the whole
 #'     file, assigning the result to the name `baby.names`.
 #' 
-#' Exercise 2 solution<span class="tag" data-tag-name="prototype"></span>
-#' ----------------------------------------------------------------------
-#' 
 #' 
 #' Checking imported data
 #' ----------------------
@@ -508,30 +492,30 @@ list.files("dataSets") # list files in the dataSets folder
 #' It is always a good idea to examine the imported data set--usually we
 #' want the results to be a `data.frame`
 #' 
-## ------------------------------------------------------------------------
+
 ## we know that this object will have type and length, because all R objects do.
 typeof(baby.names)
 length(baby.names) # number of columns
 
 #' 
-## ------------------------------------------------------------------------
+
 ## additional information about this data object
 class(baby.names) # check to see that test is a data.frame
 
 #' 
-## ------------------------------------------------------------------------
+
 dim(baby.names) # how many rows and columns?
 
 #' 
-## ------------------------------------------------------------------------
+
 names(baby.names) # or colnames(baby.names)
 
 #' 
-## ------------------------------------------------------------------------
+
 str(baby.names) # more details
 
 #' 
-## ------------------------------------------------------------------------
+
 glimpse(baby.names) # details, more compactly
 
 #' 
@@ -558,7 +542,7 @@ glimpse(baby.names) # details, more compactly
 #' number and `filter` to select rows that match some condition. It works
 #' like this:
 #' 
-## ------------------------------------------------------------------------
+
 ## make up some example data
 (example.df <- data.frame(id  = rep(letters[1:4], each = 4),
                           t   = rep(1:4, times = 4),
@@ -566,17 +550,17 @@ glimpse(baby.names) # details, more compactly
                           var2 = sample(letters[1:3], 16, replace = TRUE)))
 
 #' 
-## ------------------------------------------------------------------------
+
 ## rows 2 and 4
 slice(example.df, c(2, 4))
 
 #' 
-## ------------------------------------------------------------------------
+
 ## rows where id == "a"
 filter(example.df, id == "a")
 
 #' 
-## ------------------------------------------------------------------------
+
 ## rows where id is either "a" or "b"
 filter(example.df, id %in% c("a", "b"))
 
@@ -587,23 +571,23 @@ filter(example.df, id %in% c("a", "b"))
 #' `slice` and `filter` are used to extract rows. `select` is used to
 #' extract columns
 #' 
-## ------------------------------------------------------------------------
+
 select(example.df, id, var1)
 
 #' 
-## ------------------------------------------------------------------------
+
 select(example.df, id, t, var1)
 
 #' 
 #' You can also conveniently select a single column using `$`, like this:
 #' 
-## ------------------------------------------------------------------------
+
 example.df$t
 
 #' 
 #' Data manipulation commands can be combined:
 #' 
-## ------------------------------------------------------------------------
+
 filter(select(example.df,
               id,
               var1),
@@ -631,11 +615,11 @@ filter(select(example.df,
 #' You can modify data.frames using the `mutate()` function. It works like
 #' this:
 #' 
-## ------------------------------------------------------------------------
+
 example.df
 
 #' 
-## ------------------------------------------------------------------------
+
 ## modify example.df and assign the modified data.frame the name example.df
 example.df <- mutate(example.df,
        var2 = var1/t, # replace the values in var2
@@ -645,7 +629,7 @@ example.df <- mutate(example.df,
        )
 
 #' 
-## ------------------------------------------------------------------------
+
 ## examine our changes
 example.df
 
@@ -656,7 +640,7 @@ example.df
 #' Now that we have made some changes to our data set, we might want to
 #' save those changes to a file.
 #' 
-## ------------------------------------------------------------------------
+
 # write data to a .csv file
 write_csv(example.df, path = "example.csv")
 
@@ -674,7 +658,7 @@ write_dta(example.df, path = "example.dta")
 #' In addition to importing individual datasets, R can save and load entire
 #' workspaces
 #' 
-## ------------------------------------------------------------------------
+
 ls() # list objects in our workspace
 save.image(file="myWorkspace.RData") # save workspace 
 rm(list=ls()) # remove all objects from our workspace 
@@ -683,7 +667,7 @@ ls() # list stored objects to make sure they are deleted
 #' 
 #' Load the "myWorkspace.RData" file and check that it is restored
 #' 
-## ------------------------------------------------------------------------
+
 load("myWorkspace.RData") # load myWorkspace.RData
 ls() # list objects
 
@@ -701,9 +685,6 @@ ls() # list objects
 #'     percent of Girls. Save this to a Stata data set
 #'     named "popularGirlNames.dta")
 #' 
-#' Exercise 3 solution<span class="tag" data-tag-name="prototype"></span>
-#' ----------------------------------------------------------------------
-#' 
 #' 
 #' Basic Statistics and Graphs
 #' ===========================
@@ -713,27 +694,27 @@ ls() # list objects
 #' 
 #' Descriptive statistics of single variables are straightforward:
 #' 
-## ------------------------------------------------------------------------
+
 sum(example.df$var1) # calculate sum of var 1
 mean(example.df$var1)
 median(example.df$var1)
 
 #' 
-## ------------------------------------------------------------------------
+
 sd(example.df$var1) # calculate standard deviation of var1
 var(example.df$var1)
 
 #' 
-## ------------------------------------------------------------------------
+
 ## summaries of individual columns
 summary(example.df$var1)
 
 #' 
-## ------------------------------------------------------------------------
+
 summary(example.df$var2)
 
 #' 
-## ------------------------------------------------------------------------
+
 ## summary of whole data.frame
 summary(example.df)
 
@@ -747,13 +728,13 @@ summary(example.df)
 #' The `summarize` function can be used to calculate statistics by grouping
 #' variable. Here is how it works.
 #' 
-## ------------------------------------------------------------------------
+
 summarize(group_by(example.df, id), mean(var1), sd(var1))
 
 #' 
 #' You can group by multiple variables:
 #' 
-## ------------------------------------------------------------------------
+
 summarize(group_by(example.df, id, var3), mean(var1), sd(var1))
 
 #' 
@@ -764,7 +745,7 @@ summarize(group_by(example.df, id, var3), mean(var1), sd(var1))
 #' want to write something that isn't in a nice rectangular format, like
 #' the output of `summary`? For that we can use the `sink()` function:
 #' 
-## ------------------------------------------------------------------------
+
 sink(file="output.txt", split=TRUE) # start logging
 print("This is the summary of example.df \n")
 print(summary(example.df))
@@ -784,8 +765,6 @@ sink() ## sink with no arguments turns logging off
 #' 5.  Group and summarize to calculate the average number of characters in
 #'     baby names for each location. Assign the result to the name `name.length.by.location`.
 #' 
-#' Exercise 4 solution<span class="tag" data-tag-name="prototype"></span>
-#' ----------------------------------------------------------------------
 #' 
 #' 
 #' Basic graphics: Frequency bars
@@ -793,7 +772,7 @@ sink() ## sink with no arguments turns logging off
 #' 
 #' Thanks to classes and methods, you can `plot()` many kinds of objects:
 #' 
-## ------------------------------------------------------------------------
+
 plot(example.df$var4)
 
 #' 
@@ -802,7 +781,7 @@ plot(example.df$var4)
 #' 
 #' Thanks to classes and methods, you can `plot()` many kinds of objects:
 #' 
-## ------------------------------------------------------------------------
+
 plot(select(example.df, id, var1))
 
 #' 
@@ -811,14 +790,14 @@ plot(select(example.df, id, var1))
 #' 
 #' Thanks to classes and methods, you can `plot()` many kinds of objects:
 #' 
-## ------------------------------------------------------------------------
+
 plot(select(example.df, id, var4))
 
 #' 
 #' Basic graphics: scatter plot
 #' ----------------------------
 #' 
-## ------------------------------------------------------------------------
+
 plot(select(example.df, var1, var2))
 
 #' 
