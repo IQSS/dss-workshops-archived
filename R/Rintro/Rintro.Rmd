@@ -51,13 +51,13 @@ OK, it's free and popular, but what makes R worth learning? In a word,
 chances are good that there is an R package for that. Lets install some packages
 and look at some examples.
 
-```{R, results = 'hide'}
+```{r, results = 'hide'}
 ## install.packages(c("ggmap", "plotly", "rgl", "forecast"))
 ```
 
 ### Where are we? ###
 
-```{R}
+```{r}
 library(ggmap)
 nwbuilding <- geocode("1737 Cambridge Street Cambridge, MA 02138", source = "google") 
 ggmap(get_map("Cambridge, MA", zoom = 15)) +
@@ -67,7 +67,7 @@ ggmap(get_map("Cambridge, MA", zoom = 15)) +
 ### What will world population be in 2020? ###
 
 
-```{R}
+```{r}
 library(forecast)
 library(plotly)
 
@@ -95,7 +95,7 @@ ggplotly(autoplot(forecast(fit)))
 -   Want to interactively explore the shape of the Churyumov–Gerasimenko
     comet?
 
-```{R}
+```{r}
 comet <- rgl::readOBJ(url("http://sci.esa.int/science-e/www/object/doc.cfm?fobjectid=54726"))
 plot_ly(x = comet$vb[1,],
         y = comet$vb[2,],
@@ -217,7 +217,7 @@ Exercise 0 solution<span class="tag" data-tag-name="prototype"></span>
 
 1. Add 2 plus 2.
 
-```{R, purl = FALSE}
+```{r, purl = FALSE}
 ## 1. 2 plus 2
 2 + 2
 ## or
@@ -298,7 +298,7 @@ will start by looking up its help page. This is almost always the first thing
 you should do when using a function for the first time. You can look up the help
 page for a function like this:
 
-```{R}
+```{r}
 ?install.packages
 ```
 
@@ -309,7 +309,7 @@ installed from (`repos`) and to (`lib`) among other things.
 OK, lets install the "car" package from the repo at
 "https://cran.rstudio.com". 
 
-```{R}
+```{r}
 install.packages("car", repos = "https://cran.rstudio.com")
 ```
 
@@ -329,7 +329,7 @@ Now that we've installed the `car` package, how do we use it? We've already seen
 that we can look up the help page using `?`. This is actually a shortcut to the
 `help` function:
 
-```{R}
+```{r}
 help(help)
 ```
 
@@ -337,7 +337,7 @@ The `help` function can be used to look up the documentation for a function, or
 to look up the documentation to a package. We can learn how to use the `car`
 package by reading its documentation like this:
 
-```{R, eval=FALSE}
+```{r, eval=FALSE}
 help(package = "car")
 ```
 
@@ -356,7 +356,7 @@ and help facilities.
 Exercise 1 solution<span class="tag" data-tag-name="prototype"></span>
 ----------------------------------------------------------------------
 
-```{R, purl = FALSE}
+```{r, purl = FALSE}
 ## 1. install the tidyverse pacakge
 install.packages("tidyverse")
 
@@ -385,21 +385,21 @@ Values can be assigned names and used in subsequent operations
     values
 -   The name on the left gets the value on the right.
 
-```{R}
+```{r}
 x <- 10 # Assign the value 10 to a variable named x
 x + 1 # Add 1 to x
 ```
 
-```{R}
+```{r}
 x # note that x is unchanged
 ```
 
-```{R}
+```{r}
 y <- x + 1 # Assign y the value x + 1
 y
 ```
 
-```{R}
+```{r}
 x <- x + 100 # change the value of x
 y ## note that y is unchanged.
 ```
@@ -412,7 +412,7 @@ one. Vectors are the simplest data structure in R, and are the building
 blocks used to make more complex data structures. Here are some more
 vector examples.
 
-```{R}
+```{r}
 x <- c(10, 11, 12)
 y <- c("10", "11", "12")
 z <- c(TRUE, FALSE, TRUE, TRUE)
@@ -424,7 +424,7 @@ All R objects have a *type* (aka *mode*) and *length*. Since it is impossible
 for an object not to have these attributes they are called *intrinsic
 attributes*. They can be retrieved using the `typeof` and `length` functions.
 
-```{R}
+```{r}
 c(x = x, type = typeof(x), length = length(x))
 
 c(y = y, type = typeof(y), length = length(y))
@@ -435,12 +435,12 @@ c(z = z, type = typeof(z), length = length(z))
 Data structures in R can be converted from one type to another using one
 of the many functions beginning with `as.`. For example:
 
-```{R}
+```{r}
 typeof(x)
 typeof(as.character(x))
 ```
 
-```{R}
+```{r}
 typeof(y)
 typeof(as.numeric(y))
 ```
@@ -449,7 +449,7 @@ These vectors (*double*, *character*, *logical*) are called *atomic vectors*
 because each element must be of the same type. Given inputs with conflicting
 types R will convert them for you.
 
-```{R}
+```{r}
 typeof(c(1, 2))
 typeof(c(1, "2"))
 ```
@@ -483,11 +483,11 @@ We can a set the working directory using paths relative to the current
 working directory. Once we are in the "Rintro" folder we can navigate to
 the "dataSets" folder like this:
 
-```{R}
+```{r}
 getwd() # get the current working directory
 ```
 
-```{R}
+```{r}
 setwd("dataSets") # set wd to the dataSets folder
 getwd()
 
@@ -497,7 +497,7 @@ getwd()
 
 It can be convenient to list files in a directory without leaving R
 
-```{R}
+```{r}
 list.files("dataSets") # list files in the dataSets folder
 ```
 
@@ -541,7 +541,7 @@ it a good data set to practice on.
 Exercise 2 solution<span class="tag" data-tag-name="prototype"></span>
 ----------------------------------------------------------------------
 
-```{R, results = 'hide', purl = FALSE}
+```{r, results = 'hide', purl = FALSE}
 ## read ?read_csv
 ## limit rows with n_max argument
 read_csv("dataSets/babyNames.csv", n_max = 10)
@@ -559,30 +559,30 @@ Checking imported data
 It is always a good idea to examine the imported data set--usually we
 want the results to be a `data.frame`
 
-```{R}
+```{r}
 ## we know that this object will have type and length, because all R objects do.
 typeof(baby.names)
 length(baby.names) # number of columns
 ```
 
-```{R}
+```{r}
 ## additional information about this data object
 class(baby.names) # check to see that test is a data.frame
 ```
 
-```{R}
+```{r}
 dim(baby.names) # how many rows and columns?
 ```
 
-```{R}
+```{r}
 names(baby.names) # or colnames(baby.names)
 ```
 
-```{R}
+```{r}
 str(baby.names) # more details
 ```
 
-```{R}
+```{r}
 glimpse(baby.names) # details, more compactly
 ```
 
@@ -609,7 +609,7 @@ You can extract subsets of data.frames using `slice` to select rows by
 number and `filter` to select rows that match some condition. It works
 like this:
 
-```{R}
+```{r}
 ## make up some example data
 (example.df <- data.frame(id  = rep(letters[1:4], each = 4),
                           t   = rep(1:4, times = 4),
@@ -617,17 +617,17 @@ like this:
                           var2 = sample(letters[1:3], 16, replace = TRUE)))
 ```
 
-```{R}
+```{r}
 ## rows 2 and 4
 slice(example.df, c(2, 4))
 ```
 
-```{R}
+```{r}
 ## rows where id == "a"
 filter(example.df, id == "a")
 ```
 
-```{R}
+```{r}
 ## rows where id is either "a" or "b"
 filter(example.df, id %in% c("a", "b"))
 ```
@@ -638,23 +638,23 @@ Select data.frame columns
 `slice` and `filter` are used to extract rows. `select` is used to
 extract columns
 
-```{R}
+```{r}
 select(example.df, id, var1)
 ```
 
-```{R}
+```{r}
 select(example.df, id, t, var1)
 ```
 
 You can also conveniently select a single column using `$`, like this:
 
-```{R}
+```{r}
 example.df$t
 ```
 
 Data manipulation commands can be combined:
 
-```{R}
+```{r}
 filter(select(example.df,
               id,
               var1),
@@ -682,11 +682,11 @@ Adding, removing, and modifying data.frame columns
 You can modify data.frames using the `mutate()` function. It works like
 this:
 
-```{R}
+```{r}
 example.df
 ```
 
-```{R}
+```{r}
 ## modify example.df and assign the modified data.frame the name example.df
 example.df <- mutate(example.df,
        var2 = var1/t, # replace the values in var2
@@ -696,7 +696,7 @@ example.df <- mutate(example.df,
        )
 ```
 
-```{R}
+```{r}
 ## examine our changes
 example.df
 ```
@@ -707,7 +707,7 @@ Exporting Data
 Now that we have made some changes to our data set, we might want to
 save those changes to a file.
 
-```{R}
+```{r}
 # write data to a .csv file
 write_csv(example.df, path = "example.csv")
 
@@ -725,7 +725,7 @@ Saving and loading R workspaces
 In addition to importing individual datasets, R can save and load entire
 workspaces
 
-```{R}
+```{r}
 ls() # list objects in our workspace
 save.image(file="myWorkspace.RData") # save workspace 
 rm(list=ls()) # remove all objects from our workspace 
@@ -734,7 +734,7 @@ ls() # list stored objects to make sure they are deleted
 
 Load the "myWorkspace.RData" file and check that it is restored
 
-```{R}
+```{r}
 load("myWorkspace.RData") # load myWorkspace.RData
 ls() # list objects
 ```
@@ -755,7 +755,7 @@ assigning the result to `baby.names`.
 Exercise 3 solution<span class="tag" data-tag-name="prototype"></span>
 ----------------------------------------------------------------------
 
-```{R, purl = FALSE}
+```{r, purl = FALSE}
 filter(baby.names, Sex == "M" & Percent >= 5)
 
 baby.names <- mutate(baby.names, Proportion = Percent/100)
@@ -773,27 +773,27 @@ Basic statistics
 
 Descriptive statistics of single variables are straightforward:
 
-```{R}
+```{r}
 sum(example.df$var1) # calculate sum of var 1
 mean(example.df$var1)
 median(example.df$var1)
 ```
 
-```{R}
+```{r}
 sd(example.df$var1) # calculate standard deviation of var1
 var(example.df$var1)
 ```
 
-```{R}
+```{r}
 ## summaries of individual columns
 summary(example.df$var1)
 ```
 
-```{R}
+```{r}
 summary(example.df$var2)
 ```
 
-```{R}
+```{r}
 ## summary of whole data.frame
 summary(example.df)
 ```
@@ -807,13 +807,13 @@ Statistics by grouping variable(s)
 The `summarize` function can be used to calculate statistics by grouping
 variable. Here is how it works.
 
-```{R}
+```{r}
 summarize(group_by(example.df, id), mean(var1), sd(var1))
 ```
 
 You can group by multiple variables:
 
-```{R}
+```{r}
 summarize(group_by(example.df, id, var3), mean(var1), sd(var1))
 ```
 
@@ -824,7 +824,7 @@ Earlier we learned how to write a data set to a file. But what if we
 want to write something that isn't in a nice rectangular format, like
 the output of `summary`? For that we can use the `sink()` function:
 
-```{R}
+```{r}
 sink(file="output.txt", split=TRUE) # start logging
 print("This is the summary of example.df \n")
 print(summary(example.df))
@@ -847,7 +847,7 @@ Exercise 4
 Exercise 4 solution<span class="tag" data-tag-name="prototype"></span>
 ----------------------------------------------------------------------
 
-```{R, purl = FALSE}
+```{r, purl = FALSE}
 sum(baby.names$Count)
 
 sum(filter(baby.names, Location == "MA")$Count)
@@ -864,7 +864,7 @@ Basic graphics: Frequency bars
 
 Thanks to classes and methods, you can `plot()` many kinds of objects:
 
-```{R}
+```{r}
 plot(example.df$var4)
 ```
 
@@ -873,7 +873,7 @@ Basic graphics: Boxplots by group
 
 Thanks to classes and methods, you can `plot()` many kinds of objects:
 
-```{R}
+```{r}
 plot(select(example.df, id, var1))
 ```
 
@@ -882,14 +882,14 @@ Basic graphics: Mosaic chart
 
 Thanks to classes and methods, you can `plot()` many kinds of objects:
 
-```{R}
+```{r}
 plot(select(example.df, id, var4))
 ```
 
 Basic graphics: scatter plot
 ----------------------------
 
-```{R}
+```{r}
 plot(select(example.df, var1, var2))
 ```
 

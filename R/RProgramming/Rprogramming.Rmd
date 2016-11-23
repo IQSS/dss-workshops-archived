@@ -106,7 +106,7 @@ attaching packages we'll also attach
 the [tidyverse](https://cran.r-project.org/web/packages/tidyverse/index.html)
 package which provides more modern versions of many basic functions in R.
 
-```{R}
+```{r}
 ## install.packages("tidyverse")
 library(tidyverse)
 library(stringr)
@@ -117,7 +117,7 @@ than nested function calls. The pipe operator looks like `%>%` and it inserts
 the value on the left as the first argument to the function on the right. It
 looks like this:
 
-```{R}
+```{r}
 (x <- rnorm(5)) # extra parens around expression is a shortcut to assign and print
 
 ## nested function calls to sort and round
@@ -152,7 +152,7 @@ Our first task is to read the web page into R. Most of the file IO functions in
 R can read either from a local path or from internet URLS. We can read text into
 R line-by-line using the `read_lines` function.
 
-```{R}
+```{r}
 base.url <- "http://tutorials.iq.harvard.edu"
 baby.names.path <- "example_data/baby_names/EW" 
 baby.names.url <- str_c(base.url, baby.names.path, sep = "/")
@@ -164,14 +164,14 @@ Now that we have some values to play with lets look closer. R has nice tools for
 inspecting the object attributes such as the storage `type`, `length`, and
 `class`.
 
-```{R}
+```{r}
 ## whate is base.url?
 c(type = typeof(base.url),
   length = length(base.url),
   class = class(base.url))
 ```
 
-```{R
+```{r
 c(type = typeof(baby.names.page),
   length = length(baby.names.page),
   class = class(baby.names.page))
@@ -180,7 +180,7 @@ c(type = typeof(baby.names.page),
  The `str` (structure) and `glimpse` function
 gives a nice overview.
 
-```{R}
+```{r}
 str(baby.names.page)
 ```
 
@@ -188,7 +188,7 @@ The *S3* class system in R allows functions to define methods for specific
 classes. If we know the class of an object we can see what functions have
 methods specific to that class.
 
-```{R}
+```{r}
 methods(class = class(base.url))
 ```
 
@@ -206,7 +206,7 @@ Now that we know what we're working with we can proceed to find and extract all
 the links in the page. Lets start by printing the last few lines of
 `baby.names.page`.
 
-```{R}
+```{r}
 cat(tail(baby.names.page), sep = "\n")
 ```
 
@@ -248,7 +248,7 @@ with the following meanings:
 Here's how it works in R using the stringr package. Note that to create
 a backslash you must escape it with anouth backslash.
 
-```{R}
+```{r}
 ## make up some example data
 user.info <- c("Dexter Bacon dbacon@gmail.com 32",
                "Angelica Sampson not available 28",
@@ -260,22 +260,22 @@ email.regex <- "([a-z0-9]+@[a-z0-9]+\\.[a-z]+)"
 ```
 
 Which users have an email address?
-```{R}
+```{r}
 str_detect(user.info, email.regex)
 ```
 
 Keep only users with an email address
-```{R}
+```{r}
 str_subset(user.info, email.regex)
 ```
 
 Extract the email addresses
-```{R}
+```{r}
 str_extract(user.info, email.regex)
 ```
 
 Replace email addresses with an `mailto` link
-```{R}
+```{r}
 str_replace(user.info, email.regex, "<a href='mailto:\\1'>\\1</a>")
 ```
 
@@ -316,7 +316,7 @@ expression that works.
 Exercise 1 prototype
 --------------------
 
-```{R, results = 'hide', purl = FALSE}
+```{r, results = 'hide', purl = FALSE}
 ## 1. Make sure you replace whatever example text was presented in the regexr.com site.
 
 ## 2. regular expression for girl csv files
@@ -347,7 +347,7 @@ Reading .csv files
 As mentioned earlier, we can read files directly from the internet. For example,
 we can read the first girls names file like this:
 
-```{R}
+```{r}
 girl.names.1 <- read_csv(girl.file.names[1], na = "")
 head(girl.names.1)
 ```
@@ -364,7 +364,7 @@ notation. Bracket extraction comes in a few different flavors. We can
 index atomic vectors in several different ways. Let's start by making
 some example data to work with.
 
-```{R}
+```{r}
 example.int.1 <- c(10, 11, 12, 13, 14, 15)
 str(example.int.1)
 ```
@@ -373,18 +373,18 @@ The *names* attribute can be used for indexing if it exists. The names
 attribute and be extracted and set using the `names` function, like
 this:
 
-```{R}
+```{r}
 names(example.int.1) # no names yet, lets add some
 ```
 
-```{R}
+```{r}
 names(example.int.1) <- c("a1", "a2", "b1", "b2", "c1", "c2")
 names(example.int.1)
 ```
 
 Indexing can be done by position.
 
-```{R}
+```{r}
 ## extract by position
 example.int.1[1]
 example.int.1[c(1, 3, 5)]
@@ -392,7 +392,7 @@ example.int.1[c(1, 3, 5)]
 
 If an object has names you can index by name.
 
-```{R}
+```{r}
 ## extract by name
 example.int.1[c("c2", "a1")]
 ```
@@ -400,23 +400,23 @@ example.int.1[c("c2", "a1")]
 Finally, objects can be indexed with a logical vector, extracting only the TRUE
 elements.
 
-```{R}
+```{r}
 ## logical extraction 
 (one.names <- str_detect(names(example.int.1), "1"))
 
 ```
 
-```{R}
+```{r}
 example.int.1[one.names]
 ```
 
-```{R}
+```{r}
 example.int.1[example.int.1 > 12]
 ```
 
 Replacement works by assigning a value to an extraction.
 
-```{R}
+```{r}
 example.int.2 <- example.int.1
 
 ## replace by position
@@ -427,17 +427,17 @@ example.int.2["a2"] <- 200
 example.int.2
 ```
 
-```{R}
+```{r}
 ## logical replacement
 (lt14 <- example.int.2 < 14)
 ```
 
-```{R}
+```{r}
 example.int.2[lt14] <- 0
 example.int.2
 ```
 
-```{R}
+```{r}
 ## "replace" non-existing element
 example.int.2[c("z1", "2")] <- -10 
 
@@ -453,7 +453,7 @@ List elements can be extracted and replaced in the same way as elements of
 atomic vectors. In addition, `[[` can be used to extract or replace the contents
 of a list element. Here is how it works:
 
-```{R}
+```{r}
 ## make up an example list
 example.list.1 <- list(a1 = c(a = 1, b = 2, c = 3),
                      a2 = c(4, 5, 6),
@@ -463,56 +463,56 @@ str(example.list.1)
 ```
 
 Extract by position.
-```{R}
+```{r}
 str(example.list.1[c(1, 3)])
 ```
 
-```{R}
+```{r}
 str(example.list.1[1])
 ```
 
-```{R
+```{r
 str(example.list.1[[1]]) # note the difference between [ and [[
 ```
 
 Extract by name.
 
-```{R
+```{r
 str(example.list.1[c("a1", "a2")])
 ```
 
-```{R}
+```{r}
 (a.names <- str_detect(names(example.list.1), "a"))
 ```
 
-```{R}
+```{r}
 str(example.list.1[a.names])
 ```
 
 Bracket extraction can be chained to extract a nested element.
 
-```{R}
+```{r}
 str(example.list.1[["a1"]][c("a", "c")])
 ```
 
 Logical extraction.
 
-```{R}
+```{r}
 (el.length <- map_int(example.list.1, length))
 ```
 
-```{R}
+```{r}
 (el.length4 <- el.length == 4)
 ```
 
-```{R}
+```{r}
 str(example.list.1[el.length4])
 ```
 
 As with vectors, replacement works by assigning a value to an
 extraction.
 
-```{R}
+```{r}
 example.list.2 <- example.list.1
 
 ## replace by position
@@ -535,7 +535,7 @@ example.list.2[el.length4] <- map(example.list.2[el.length4],
 example.list.2[["c"]] <- list(x = letters[1:5], y = 1:5)
 ```
 
-```{R}
+```{r}
 ## compare lists to see the changes we made
 str(example.list.1)
 str(example.list.2)
@@ -547,7 +547,7 @@ Back to the problem at hand: reading data into a list
 Using our knowledge of bracket extraction we could start reading in the data
 files like this:
 
-```{R}
+```{r}
 boys <- list()
 girls <- list()
 
@@ -587,7 +587,7 @@ Exercise 2 prototype
 -------------------------
 
 
-```{R, results = 'hide', purl = FALSE}
+```{r, results = 'hide', purl = FALSE}
   ## 1. create lists to store the data
   boys <- list()
   girls <- list()
@@ -622,7 +622,7 @@ to instruct R to iterate over the vector of URLs for us and download each one.
 We can carry out this iteration in several ways, including using one of the
 `map*` functions in the purrr package. Here is how it works.
 
-```{R}
+```{r}
 ## make up some example data
 list.1 <- list(a = sample(1:5, 20, replace = TRUE),
                b = c(NA, sample(1:10, 20, replace = TRUE)),
@@ -630,31 +630,31 @@ list.1 <- list(a = sample(1:5, 20, replace = TRUE),
 ```
 
 Calculate the mean of every entry
-```{R}
+```{r}
 map.1 <- map(list.1, mean)
 str(map.1)
 ```
 
 Calculate the mean of every entry, passing `na.rm` argument.
-```{R}
+```{r}
 map.1 <- map(list.1, mean, na.rm = TRUE)
 str(map.1)
 ```
 
 Calculate the mean of every entry, returning a numberic vector instead of a
 list.
-```{R}
+```{r}
 map.2 <- map_dbl(list.1, mean)
 str(map.2)
 ```
 
 Calculate the mean of every entry, returning a character vector.
-```{R}
+```{r}
 map.3 <- map_chr(list.1, mean)
 ```
 
 Calculate summaries (map returns a list).
-```{R}
+```{r}
 map.4 <- map(list.1, summary)
 str(map.4)
 ```
@@ -672,7 +672,7 @@ each element in the list by calculating the *length*, *mean*, and *standard
 deviation*? In that case we will need to write a function that does what we
 want. Fortunately, writing functions in R is easy.
 
-```{R}
+```{r}
 ## define new function that returns the lenght, mean, and standard deviation
 my.summary <- function(x) {
   n <- length(x)
@@ -688,14 +688,14 @@ my.summary(list.1[[1]])
 Our new function can be used just like any other function in R. For example, we
 can iterate over `list.1` and apply our new function to each element.
 
-```{R}
+```{r}
 map(list.1, my.summary)
 ```
 
 Note that you can use the special `...` notation to pass named arguments
 without needing to define them all. For example:
 
-```{R}
+```{r}
 ## improve our function by allowing arbitrary arguments to be passed into the body
 my.summary <- function(x, ...) {
   n <- length(x)
@@ -707,18 +707,18 @@ my.summary <- function(x, ...) {
 
 Now we can try out the new version of our summary function. Calling it without
 any additional arguments works fine for the first element of the list:
-```{R}
+```{r}
 my.summary(list.1[[1]])
 ```
 
 However, it doesn't work so well on elements containing missing values:
-```{R}
+```{r}
 my.summary(list.1[[2]])
 ```
 
 Even though our function does not have an na.rm argument we, can pass it to mean and sd via `...`
 
-```{R}
+```{r}
 my.summary(list.1[[2]], na.rm = TRUE) 
 ```
 
@@ -726,7 +726,7 @@ Often when writing functions you want to skip some part of the function body
 under some conditions. For example, we might want omit missing values only if
 they exist:
 
-```{R}
+```{r}
 ## improve our function by removing missing values if they exist.
 my.summary <- function(x, ...) {
   if(any(is.na(x))) {
@@ -741,7 +741,7 @@ my.summary <- function(x, ...) {
 
 This is often useful for argument checking among other things.
 
-```{R}
+```{r}
 my.summary <- function(x, mean.only = FALSE, ...) {
   if(!is.numeric(x)) {
     stop("x is not numeric.")
@@ -758,11 +758,11 @@ my.summary <- function(x, mean.only = FALSE, ...) {
 }
 ```
 
-```{R}
+```{r}
 map(list.1, my.summary)
 ```
 
-```{R}
+```{r}
 map(list.1, my.summary, mean.only = TRUE)
 ```
 
@@ -787,7 +787,7 @@ using `map`. All we need to do now is put the two things together.
 Exercise 3 prototype
 -------------------------
 
-```{R, results = 'hide', purl = FALSE}
+```{r, results = 'hide', purl = FALSE}
 ## 1. read in the girls names data
 girls.data <- map(girl.file.names, read_csv, na = "")
 
@@ -813,7 +813,7 @@ Adding a Year column (data structures, indexing)
 OK, at this point we have read in all the data. That is a good start! Lets take
 a closer look at what we are working with.
 
-```{R}
+```{r}
 str(girls.data, max.level = 1)
 ```
 
@@ -830,16 +830,16 @@ element is the same length.
 There are many useful things we can do with data.frames: (But remember that this
 list of methods is not all you can do with data.frames.)
 
-```{R}
+```{r}
 girls.data.1 <- girls.data[[1]]
 class(girls.data.1)
 ```
 
-```{R}
+```{r}
 methods(class = "data.frame")
 ```
 
-```{R}
+```{r}
 list(dim = dim(girls.data.1),
      rows = nrow(girls.data.1),
      cols = ncol(girls.data.1),
@@ -861,18 +861,18 @@ Recall that a data.frame **is** a list, so we can use bracket extraction just as
 we would for other kinds of lists. That is, we can add a year column to the
 data.frame in position 1 of `girls.data` like this:
 
-```{R}
+```{r}
 str(girls.data[[1]])
 ```
 
-```{R}
+```{r}
 girls.data[[1]][["Year"]] <- names(girls.data[1])
 ##        ^                                  ^ 
 ## double brackets to extract data.frame   single brackets to extract a list containing a data.frame
 str(girls.data[[1]])
 ```
 
-```{R}
+```{r}
 girls.data[[1]][["Year"]] <- as.integer(names(girls.data[1]))
 str(girls.data[[1]])
 ```
@@ -884,7 +884,7 @@ value to insert. For that we can use the `map2` function, which works just like
 `map` except that we iterate over two things with a function that takes two
 arguments. It works like this:
 
-```{R}
+```{r}
 example.list.3 <- list(a = 1:3,
                        b = 4:6,
                        c = 7:9)
@@ -917,7 +917,7 @@ need to do now is put the two things together.
 Exercise 4 prototype 
 -------------------------
 
-```{R, results = 'hide', purl = FALSE}
+```{r, results = 'hide', purl = FALSE}
 ## 1. write function to add year column
 add.column <- function(data, value, col.name = "xxxxx") {
   data[[col.name]] <- value
@@ -946,7 +946,7 @@ girls.data <- bind_rows(girls.data)
 Finally, we want to insert columns indicating location and sex, combine
 the boys and girls baby names, and convert the "Year" column to integer.
 
-```{R}
+```{r}
 girls.data[["Sex"]] <- "F"
 boys.data[["Sex"]] <- "M"
 baby.names <- bind_rows(girls.data, boys.data)
@@ -957,7 +957,7 @@ baby.names$Location <- "England and Wales"
 Now that our data is cleaned up and formatted, lets take a final look to make
 sure everything looks correct.
 
-```{R}
+```{r}
 str(baby.names)
 ```
 
@@ -978,7 +978,7 @@ discussing with your colleagues, or asking the instructor).
 
 Here is the index page to get you started.
 
-```{R}
+```{r}
 base.url <- "http://tutorials.iq.harvard.edu"
 baby.names.path <- "example_data/baby_names/US" 
 baby.names.url <- str_c(base.url, baby.names.path, sep = "/")
@@ -1012,7 +1012,7 @@ You are now a trained R programmer. Put your skills to use as follows
     reader.fun
     :   a function used to read the files
 
-```{R}
+```{r}
 ## 1. extract file names
 file.names <- na.omit(str_extract(baby.names.page, "[A-Z]+\\.csv"))
 file.locations <- str_c(baby.names.url, file.names, sep = "/")
@@ -1063,7 +1063,7 @@ US are ready to do some final data cleanup. First I'm going to drop the "Rank"
 variable since it only exists in the England and Wales data, and I don't really
 care about it anyway. We can drop elements by assigning `NULL` to them.
 
-```{R}
+```{r}
 baby.names[["Rank"]] <- NULL
 ```
 
@@ -1071,7 +1071,7 @@ Next we want to combine the two sets of baby names into a single data.frame.
 I'll also remove `us.baby.names` since it is quite large and we don't need it
 anymore.
 
-```{R}
+```{r}
 baby.names <- bind_rows(baby.names, us.baby.names)
 rm(us.baby.names)
 ```
@@ -1079,7 +1079,7 @@ rm(us.baby.names)
 Finally, since the England names are all uppercase and the US names are title
 case we need to make them the same.
 
-```{R}
+```{r}
 baby.names[["Name"]] <- str_to_lower(baby.names[["Name"]])
 ```
 
@@ -1118,7 +1118,7 @@ Now that we have the data read in and we know what is in each column, I want to
 know how many children were born each year. To one way to do that is to use the
 `group_by` and `summarize` functions from the *dplyr* package.
 
-```{R}
+```{r}
 ## make up some example data
 (example.df <- data.frame(id  = rep(letters[1:4], each = 4),
                           t   = rep(1:4, times = 4),
@@ -1127,14 +1127,14 @@ know how many children were born each year. To one way to do that is to use the
 ```
 
 Calculate the total sum of the `var1` column.
-```{R}
+```{r}
 ## summarize
 summarize(example.df,
           var1 = sum(var1))
 ```
 
 Calculate the sum of `var1` by `id`.
-```{R}
+```{r}
 ## summarize by id
 example.df %>%
   group_by(id) %>%
@@ -1142,7 +1142,7 @@ example.df %>%
 ```
 
 Calculate the sum of `var1` by `id` and `var2`.
-```{R}
+```{r}
 ## summarize by id and var2
 example.df %>%
   group_by(id, var2) %>%
@@ -1152,7 +1152,7 @@ example.df %>%
 Now that we know how to group by and summarize we can calculate the
 number of babies born each year
 
-```{R}
+```{r}
 group_by(baby.names, Year) %>%
   summarize(Total = sum(Count))
 ```
@@ -1160,7 +1160,7 @@ group_by(baby.names, Year) %>%
 We can also easily generalize this to other groupings, e.g., to
 calculate the number of boys and girls born each year:
 
-```{R}
+```{r}
 group_by(baby.names, Year, Sex) %>%
   summarize(Total = sum(Count))
 ```
@@ -1181,7 +1181,7 @@ In order to identify the most popular names it will be useful to learn a
 few new tools. You already know how `group_by` and `summarize` work. The
 following example shows how `mutate`, `arrange` and `slice` work.
 
-```{R}
+```{r}
 ## add new columns using mutate
 (example.df <- example.df %>%
    mutate(n1 = n(),
@@ -1189,7 +1189,7 @@ following example shows how `mutate`, `arrange` and `slice` work.
           var3 = var1/n1))
 ```
 
-```{R}
+```{r}
 ## combine with group_by
 (example.df <- example.df %>%
    group_by(id) %>%
@@ -1197,31 +1197,31 @@ following example shows how `mutate`, `arrange` and `slice` work.
           var4 = var1/n3))
 ```
 
-```{R}
+```{r}
 ## summarize by id and var2
 (example.df.2 <- example.df %>%
    group_by(id, var2) %>%
    summarize(var1 = sum(var1)))
 ```
 
-```{R}
+```{r}
 ## sort by var1
 example.df.2 %>%
   arrange(var1)
 ```
 
-```{R}
+```{r}
 example.df.2 %>%
   arrange(desc(var1))
 ```
 
-```{R}
+```{r}
 ## sort by var1 within id
 (example.df.2 <- example.df.2 %>%
    arrange(id, desc(var1)))
 ```
 
-```{R}
+```{r}
 ## select the top 2 var1's within each id group
 example.df.2 %>%
   group_by(id) %>%
@@ -1231,7 +1231,7 @@ example.df.2 %>%
 Now that we know how to group, mutate, summarize, arrange, and slice we
 can use these tools to identify the most popular boy and girl names.
 
-```{R}
+```{r}
 ## create a percent column
 baby.names <- baby.names %>%
   group_by(Location, Year, Sex) %>%
@@ -1256,7 +1256,7 @@ Finally, I want to examine how the distribution of names has changed
 over time. This doesn't require learning any new tools, we just need to
 combine the tools we already know to produce the desired result.
 
-```{R}
+```{r}
 baby.names.sex.decade <- baby.names %>%
   ## aggregate Year to Decade
   mutate(Decade = str_c(floor(Year/10)*10, "'s")) %>%
@@ -1313,7 +1313,7 @@ detecting words that sound alike; many of them (including the *nysiis*
 and *metaphone* algorithms) are provided in R by the *phonics* package.
 Here is how it works:
 
-```{R}
+```{r}
 ##install.packages("phonics")
 library(phonics)
 spelling <- c(
@@ -1333,7 +1333,7 @@ spelling <- c(
 Once we have identified which words are the same (but spelled
 differently) we can combine those words.
 
-```{R}
+```{r}
 (spelling.data <- spelling.data %>%
    group_by(Sounds.like) %>%
    mutate(Alternative.spellings = str_c(sort(original), collapse = "/")))
@@ -1343,7 +1343,7 @@ We can use this technique to identify and group names with alternative
 spellings. Since any one algorithm tends to group two aggressively we'll
 require multiple algorithms to agree.
 
-```{R}
+```{r}
 library(phonics)
 baby.names <- baby.names %>%
   group_by(Sex) %>%
@@ -1363,7 +1363,7 @@ Not only do the most popular names change over time, but the most
 popular first and last letters also display temporal trends. We can
 extract the first/last n letters using `str_sub`, like this:
 
-```{R}
+```{r}
 month.name
 str_sub(month.name, 1, 1)
 str_sub(month.name, 1, 3)
@@ -1374,7 +1374,7 @@ str_sub(month.name, -3, -1)
 We can use this to create new columns with just the first/last **n**
 letters of each name
 
-```{R}
+```{r}
 
 baby.names[["First.1"]] <- str_sub(baby.names[["Name"]], 1, 1)
 baby.names[["First.2"]] <- str_sub(baby.names[["Name"]], 1, 2)
@@ -1390,7 +1390,7 @@ Length of names
 The `str_length` function can be used to count the number of letters in
 each name
 
-```{R}
+```{r}
 baby.names$Name.length <- str_length(baby.names$Name)
 ```
 
@@ -1447,13 +1447,13 @@ discussion please see
 
 Floating point arithmetic is not exact:
 
-```{R}
+```{r}
 .1 == .3/3
 ```
 
 Solution: `use all.equal()`:
 
-```{R}
+```{r}
 all.equal(.1, .3/3)
 ```
 
@@ -1462,7 +1462,7 @@ all.equal(.1, .3/3)
 R does not exclude missing values by default -- a single missing value
 in a vector means that many thing are unknown:
 
-```{R}
+```{r}
 x <- c(1:10, NA, 12:20)
 c(mean(x), sd(x), median(x), min(x), sd(x))
 ```
@@ -1481,7 +1481,7 @@ for missing
 Automatic type conversion happens a lot which is often useful, but makes
 it easy to miss mistakes
 
-```{R}
+```{r}
 # combining values coereces them to the most general type
 (x <- c(TRUE, FALSE, 1, 2, "a", "b"))
 str(x)
@@ -1496,14 +1496,14 @@ Maybe this is what you expect... I would like to at least get a warning!
 
 Functions you might expect to work similarly don't always:
 
-```{R}
+```{r}
 mean(1, 2, 3, 4, 5)*5
 sum(1, 2, 3, 4, 5)
 ```
 
 Why are these different?!?
 
-```{R}
+```{r}
 args(mean)
 args(sum)
 ```
@@ -1515,7 +1515,7 @@ Ouch. That is not nice at all!
 Factors sometimes behave as numbers, and sometimes as characters, which
 can be confusing!
 
-```{R}
+```{r}
 (x <- factor(c(5, 5, 6, 6), levels = c(6, 5)))
 
 str(x)
