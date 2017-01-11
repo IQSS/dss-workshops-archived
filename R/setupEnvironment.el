@@ -1,5 +1,5 @@
 ;; make R save and restore instead of using sessions; this gives the input and output as displayed by the R console
-(setq-local org-babel-R-command "R --silent --save --restore")
+;; (setq-local org-babel-R-command "R --silent --save --restore")
 
 ;; don't let orgmode resize images (this means you must set them to the correct size when generating!)
 (setq-local org-latex-image-default-option "")

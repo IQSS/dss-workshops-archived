@@ -17,15 +17,19 @@ running R in your browser using a remote Jupyter server)
 
 You should have R installed --if not:
 
--   Open a web browser and go to <http://cran.r-project.org> and
-    download and install it
--   Also helpful to install RStudio (download from <http://rstudio.com>)
+-   Download and install R from http://cran.r-project.org
+-   Download and install RStudio from https://www.rstudio.com/products/rstudio/download/#download
 
-Download workshop materials:
+Start RStudio and open a new R script:
+- On Windows click the start button and search for rstudio. On Mac RStudio will be in your applications folder.
+- In Rstudio go to `File -> New file -> R script`.
 
--   Download materials from
-    <http://tutorials.iq.harvard.edu/R/Rintro.zip>
--   Extract the zip file containing the materials to your desktop
+Group chat and notes:
+
+- Group chat / collaborative note taking for this workshop is available at https://etherpad.wikimedia.org/p/cf-2017-rintro
+- Instructor's live code available at http://tutorials-live.iq.harvard.edu/workshop_notes/Rintro.R
+- Full notes available at http://tutorials.iq.harvard.edu/R/Rintro/Rintro.html
+
 
 What is R?
 ----------
@@ -613,13 +617,13 @@ Exercise 2 solution<span class="tag" data-tag-name="prototype"></span>
 ```{r, results = 'hide', purl = FALSE}
 ## read ?read_csv
 ## limit rows with n_max argument
-read_csv("dataSets/babyNames.csv", n_max = 10)
+read_csv("http://tutorials.iq.harvard.edu/R/Rintro/dataSets/babyNames.csv", n_max = 10)
 
 ## specify column types in the col_types argument
-read_csv("dataSets/babyNames.csv", n_max = 10, col_types = "??c????")
+read_csv("http://tutorials.iq.harvard.edu/R/Rintro/dataSets/babyNames.csv", n_max = 10, col_types = "??c????")
 
 ## read all the data
-baby.names <- read_csv("dataSets/babyNames.csv", col_types = "??c????")
+baby.names <- read_csv("http://tutorials.iq.harvard.edu/R/Rintro/dataSets/babyNames.csv", col_types = "??c????")
 ```
 
 Checking imported data
@@ -812,7 +816,7 @@ Exercise 3: Data manipulation
 -----------------------------
 
 Read in the "babyNames.csv" file if you have not already done so,
-assigning the result to `baby.names`.
+assigning the result to `baby.names`. The file is located at "http://tutorials.iq.harvard.edu/R/Rintro/dataSets/babyNames.csv"
 
 1.  Filter `baby.names` to show only names given to at least 5 percent
     of boys.
