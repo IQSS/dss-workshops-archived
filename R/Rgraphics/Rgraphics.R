@@ -53,7 +53,7 @@
 ##   • Relatively fast-paced
 ##   • Focus is on `ggplot2' graphics–other packages will not be covered
 
-## Starting A The End
+## Starting At The End
 ## ──────────────────
 
 ##   My goal: by the end of the workshop you will be able to reproduce this
@@ -104,11 +104,6 @@ head(housing[1:5])
 ##   (Data from
 ##   [https://www.lincolninst.edu/subcenters/land-values/land-prices-by-state.asp])
 
-housing <- read.csv("dataSets/landdata-states.csv")
-housing$Year <- as.numeric(substr(housing$Date, 1, 4))
-housing$Qrtr <- as.numeric(substr(housing$Date, 5, 5))
-housing$Date <- housing$Year + housing$Qrtr/4
-
 ## `ggplot2' VS Base Graphics
 ## ──────────────────────────
 
@@ -142,7 +137,7 @@ plot(Home.Value ~ Date,
      data=subset(housing, State == "MA"))
 points(Home.Value ~ Date, col="red",
        data=subset(housing, State == "TX"))
-legend(19750, 400000,
+legend(1975, 400000,
        c("MA", "TX"), title="State",
        col=c("black", "red"),
        pch=c(1, 1))

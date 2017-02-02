@@ -103,7 +103,7 @@ This is an intermediate R course:
 - Focus is on =ggplot2= graphics--other packages will not be covered
 
 
-** Starting A The End
+** Starting At The End
 My goal: by the end of the workshop you will be able to reproduce this graphic from the Economist:
 
 [[file:images/Economist1.png]]
@@ -148,25 +148,14 @@ Let's look at housing prices.
 #+begin_example
 > housing <- read.csv("dataSets/landdata-states.csv")
 > head(housing[1:5])
-  State region  Date Home.Value Structure.Cost
-1    AK   West 20101     224952         160599
-2    AK   West 20102     225511         160252
-3    AK   West 20093     225820         163791
-4    AK   West 20094     224994         161787
-5    AK   West 20074     234590         155400
-6    AK   West 20081     233714         157458
-> 
+  State region    Date Home.Value Structure.Cost
+1    AK   West 2010.25     224952         160599
+2    AK   West 2010.50     225511         160252
+3    AK   West 2009.75     225820         163791
+4    AK   West 2010.00     224994         161787
+5    AK   West 2008.00     234590         155400
+6    AK   West 2008.25     233714         157458 
 #+end_example
-
-(Data from https://www.lincolninst.edu/subcenters/land-values/land-prices-by-state.asp)
-
-#+BEGIN_SRC R
-  housing <- read.csv("dataSets/landdata-states.csv")
-  housing$Year <- as.numeric(substr(housing$Date, 1, 4))
-  housing$Qrtr <- as.numeric(substr(housing$Date, 5, 5))
-  housing$Date <- housing$Year + housing$Qrtr/4
-
-#+END_SRC
 
 ** =ggplot2= VS Base Graphics
 Compared to base graphics, =ggplot2=
@@ -215,7 +204,7 @@ Base colored scatter plot example:
        data=subset(housing, State == "MA"))
   points(Home.Value ~ Date, col="red",
          data=subset(housing, State == "TX"))
-  legend(19750, 400000,
+  legend(1975, 400000,
          c("MA", "TX"), title="State",
          col=c("black", "red"),
          pch=c(1, 1))
