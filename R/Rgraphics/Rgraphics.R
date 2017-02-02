@@ -303,7 +303,7 @@ ggplot(dat, aes(x = CPI, y = HDI, size = HDI.Rank)) + geom_point()
 ##     predicted values
 
 ##   Each `geom' has a default statistic, but these can be changed. For
-##   example, the default statistic for `geom_bar' is `stat_count':
+##   example, the default statistic for `geom_bar' is `stat_bin':
 args(geom_histogram)
 args(stat_bin)
 

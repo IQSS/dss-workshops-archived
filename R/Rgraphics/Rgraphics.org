@@ -412,12 +412,12 @@ These data consist of /Human Development Index/ and /Corruption Perception Index
   ggplot(dat, aes(x = CPI, y = HDI)) +
     geom_point(aes(color = Region))
 #+END_SRC
-4. [@4] Create boxplots of CPI by Region
+4. [@4] Make the points bigger by setting size to 2
 #+BEGIN_SRC R :results silent
   ggplot(dat, aes(x = CPI, y = HDI)) +
     geom_point(aes(color = Region), size = 2)
 #+END_SRC
-5. [@5] Overlay points on top of the box plots
+5. [@5] Make the points bigger by setting size to 2
 #+BEGIN_SRC R :results silent
     ggplot(dat, aes(x = CPI, y = HDI)) +
     geom_point(aes(color = Region, size =  HDI.Rank))
@@ -429,7 +429,7 @@ Some plot types (such as scatterplots) do not require transformations--each poin
 - for a boxplot the y values must be transformed to the median and 1.5(IQR)
 - for a smoother smother the y values must be transformed into predicted values
 
-Each =geom= has a default statistic, but these can be changed. For example, the default statistic for =geom_bar= is =stat_count=:
+Each =geom= has a default statistic, but these can be changed. For example, the default statistic for =geom_bar= is =stat_bin=:
 #+name: geomHistorgramArgs
 #+begin_src R
   args(geom_histogram)
@@ -530,9 +530,9 @@ What is the problem with the previous plot? Basically we take binned and summari
 ** Exercise II
 
 1. Re-create a scatter plot with CPI on the x axis and HDI on the y axis (as you did in the previous exercise).
-2. Overlay a smoothing line on top of the scatter plot using geom_smooth.
-3. Overlay a smoothing line on top of the scatter plot using geom_smooth, but use a linear model for the predictions. Hint: see =?stat_smooth=.
-4. Overlay a smoothling line on top of the scatter plot using geom_line. Hint: change the statistical transformation.
+2. Overlay a smoothing line on top of the scatter plot using =geom_smooth=.
+3. Overlay a smoothing line on top of the scatter plot using =geom_smooth=, but use a linear model for the predictions. Hint: see =?stat_smooth=.
+4. Overlay a smoothing line on top of the scatter plot using =geom_line=. Hint: change the statistical transformation.
 5. BONUS: Overlay a smoothing line on top of the scatter plot using the default /loess/ method, but make it less smooth. Hint: see =?loess=.
 
 ** Exercise II prototype                                         :prototype:
@@ -542,19 +542,19 @@ What is the problem with the previous plot? Basically we take binned and summari
   ggplot(dat, aes(x = CPI, y = HDI)) +
     geom_point()
 #+END_SRC
-2. [@2] Overlay a smoothing line on top of the scatter plot using geom_smooth
+2. [@2] Overlay a smoothing line on top of the scatter plot using =geom_smooth=
 #+BEGIN_SRC R :results silent
   ggplot(dat, aes(x = CPI, y = HDI)) +
     geom_point() +
     geom_smooth()
 #+END_SRC
-3. [@3] Overlay a smoothing line on top of the scatter plot using geom_smooth, but use a linear model for the predictions. Hint: see =?stat_smooth=.
+3. [@3] Overlay a smoothing line on top of the scatter plot using =geom_smooth=, but use a linear model for the predictions. Hint: see =?stat_smooth=.
 #+BEGIN_SRC R :results silent
   ggplot(dat, aes(x = CPI, y = HDI)) +
     geom_point() +
     geom_smooth(method = "lm")
 #+END_SRC
-4. [@4] Overlay a loess (method = "loess") smoothling line on top of the scatter plot using geom_line. Hint: change the statistical transformation.
+4. [@4] Overlay a loess (method = "loess") smoothling line on top of the scatter plot using =geom_line=. Hint: change the statistical transformation.
 #+BEGIN_SRC R :results silent
   ggplot(dat, aes(x = CPI, y = HDI)) +
     geom_point() +
@@ -671,23 +671,24 @@ ggplot2 has a wide variety of color scales; here is an example using =scale_colo
 
 ** Available Scales
 - Partial combination matrix of available scales
-| *Scale*         | *Types*    | *Examples*               |
-|-----------------+------------+--------------------------|
-| scale_color_    | identity   | scale_fill_continuous    |
-| scale_fill_     | manual     | scale_color_discrete     |
-| scale_size_     | continuous | scale_size_manual        |
-|                 | discrete   | scale_size_discrete      |
-|                 |            |                          |
-| scale_shape_    | discrete   | scale_shape_discrete     |
-| scale_linetype_ | identity   | scale_shape_manual       |
-|                 | manual     | scale_linetype_discrete  |
-|                 |            |                          |
-| scale_x_        | continuous | scale_x_continuous       |
-| scale_y_        | discrete   | scale_y_discrete         |
-|                 | reverse    | scale_x_log              |
-|                 | log        | scale_y_reverse          |
-|                 | date       | scale_x_date             |
-|                 | datetime   | scale_y_datetime         |
+| *Scale*           | *Types*      | *Examples*                |
+|-------------------+--------------+---------------------------|
+| =scale_color_=    | =identity=   | =scale_fill_continuous=   |
+| =scale_fill_=     | =manual=     | =scale_color_discrete=    |
+| =scale_size_=     | =continuous= | =scale_size_manual=       |
+|                   | =discrete=   | =scale_size_discrete=     |
+|                   |              |                           |
+| =scale_shape_=    | =discrete=   | =scale_shape_discrete=    |
+| =scale_linetype_= | =identity=   | =scale_shape_manual=      |
+|                   | =manual=     | =scale_linetype_discrete= |
+|                   |              |                           |
+| =scale_x_=        | =continuous= | =scale_x_continuous=      |
+| =scale_y_=        | =discrete=   | =scale_y_discrete=        |
+|                   | =reverse=    | =scale_x_log=             |
+|                   | =log=        | =scale_y_reverse=         |
+|                   | =date=       | =scale_x_date=            |
+|                   | =datetime=   | =scale_y_datetime=        |
+|                   |              |                           |
 
 Note that in RStudio you can type =scale_= followed by TAB to get the whole list of available scales.
 
@@ -775,9 +776,9 @@ The ~ggplot2~ theme system handles non-data plot elements such as
 - Facet label backround
 - Legend appearance
 Built-in themes include:
-  - ~theme_gray()~ (default)
-  - ~theme_bw()~
-  - ~theme_classc()~
+  - =theme_gray()= (default)
+  - =theme_bw()=
+  - =theme_classc()=
 #+name: themex1
 #+begin_src R :results output graphics :file images/themeex1.png :width 800 :height 650
   p5 + theme_linedraw()
@@ -981,7 +982,7 @@ This one is tricky in a couple of ways. First, there is no attribute in the data
                      "Afghanistan", "Congo", "Greece", "Argentina", "Brazil",
                      "India", "Italy", "China", "South Africa", "Spane",
                      "Botswana", "Cape Verde", "Bhutan", "Rwanda", "France",
-                     "United States", "Germany", "Britain", "Barbados", "Norway", "Japan",
+                     "United States", "Germany", "Britain", "Barbados", "Norway", "Japan",hh
                      "New Zealand", "Singapore")
 #+END_SRC
 

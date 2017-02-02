@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2017-02-02 Thu 09:44 -->
+<!-- 2017-02-02 Thu 10:12 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Introduction to R Graphics with <code>ggplot2</code></title>
@@ -68,88 +68,88 @@ for the JavaScript code in this tag.
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org386da65">Introduction</a>
+<li><a href="#org93999d8">Introduction</a>
 <ul>
-<li><a href="#org3849fc4">Materials and setup</a>
+<li><a href="#org4a4e9e0">Materials and setup</a>
 <ul>
-<li><a href="#org41efde8">Laptop users: You should have R installed &#x2013;if not:</a></li>
-<li><a href="#org589bde8">Everyone: Download workshop materials:</a></li>
+<li><a href="#org43e8f7c">Laptop users: You should have R installed &#x2013;if not:</a></li>
+<li><a href="#orgb78ead2">Everyone: Download workshop materials:</a></li>
 </ul>
 </li>
-<li><a href="#org8e8233e">Workshop Overview</a></li>
-<li><a href="#org0b656f3">Starting At The End</a></li>
-<li><a href="#org8132c73">Why <code>ggplot2</code>?</a></li>
-<li><a href="#org5225286">What Is The Grammar Of Graphics?</a></li>
-<li><a href="#org835c487">Example Data: <code>Housing prices</code></a></li>
-<li><a href="#org6529c69"><code>ggplot2</code> VS Base Graphics</a></li>
-<li><a href="#orgfd56549"><code>ggplot2</code> VS Base for simple graphs</a></li>
-<li><a href="#org47083ec"><code>ggplot2</code> Base graphics VS <code>ggplot</code> for more complex graphs:</a></li>
+<li><a href="#org2fa5252">Workshop Overview</a></li>
+<li><a href="#orgf5ba41e">Starting At The End</a></li>
+<li><a href="#org58e6457">Why <code>ggplot2</code>?</a></li>
+<li><a href="#orged7ff0b">What Is The Grammar Of Graphics?</a></li>
+<li><a href="#org7628198">Example Data: <code>Housing prices</code></a></li>
+<li><a href="#orgcd710b8"><code>ggplot2</code> VS Base Graphics</a></li>
+<li><a href="#orge631fcd"><code>ggplot2</code> VS Base for simple graphs</a></li>
+<li><a href="#orgc353281"><code>ggplot2</code> Base graphics VS <code>ggplot</code> for more complex graphs:</a></li>
 </ul>
 </li>
-<li><a href="#org5642c89">Geometric Objects And Aesthetics</a>
+<li><a href="#orgc674d95">Geometric Objects And Aesthetics</a>
 <ul>
-<li><a href="#orgd1456e2">Aesthetic Mapping</a></li>
-<li><a href="#orgbebefed">Geometic Objects (<code>geom</code>)</a></li>
-<li><a href="#org69d1984">Points (Scatterplot)</a></li>
-<li><a href="#org9c9b69b">Lines (Prediction Line)</a></li>
-<li><a href="#org86c5ccc">Smoothers</a></li>
-<li><a href="#orge4141fd">Text (Label Points)</a></li>
-<li><a href="#orgca84dd3">Aesthetic Mapping VS Assignment</a></li>
-<li><a href="#org27a36cb">Mapping Variables To Other Aesthetics</a></li>
-<li><a href="#org3e89000">Exercise I</a></li>
+<li><a href="#org150d4bc">Aesthetic Mapping</a></li>
+<li><a href="#org026ada1">Geometic Objects (<code>geom</code>)</a></li>
+<li><a href="#org3a1a6d3">Points (Scatterplot)</a></li>
+<li><a href="#org616a2d9">Lines (Prediction Line)</a></li>
+<li><a href="#orgc8f4b3a">Smoothers</a></li>
+<li><a href="#orgf27f368">Text (Label Points)</a></li>
+<li><a href="#orgad9ca4c">Aesthetic Mapping VS Assignment</a></li>
+<li><a href="#org4f5d3d5">Mapping Variables To Other Aesthetics</a></li>
+<li><a href="#orga80a4d4">Exercise I</a></li>
 </ul>
 </li>
-<li><a href="#org7e519d3">Statistical Transformations</a>
+<li><a href="#org62fb6d5">Statistical Transformations</a>
 <ul>
-<li><a href="#orgfeae2a6">Statistical Transformations</a></li>
-<li><a href="#orgcd61519">Setting Statistical Transformation Arguments</a></li>
-<li><a href="#orgbba20c9">Changing The Statistical Transformation</a></li>
-<li><a href="#org89b1be2">Exercise II</a></li>
+<li><a href="#orged1c5d3">Statistical Transformations</a></li>
+<li><a href="#org247194c">Setting Statistical Transformation Arguments</a></li>
+<li><a href="#org561818d">Changing The Statistical Transformation</a></li>
+<li><a href="#org2e1d343">Exercise II</a></li>
 </ul>
 </li>
-<li><a href="#orgcf263bb">Scales</a>
+<li><a href="#org9900582">Scales</a>
 <ul>
-<li><a href="#org08764e1">Scales: Controlling Aesthetic Mapping</a></li>
-<li><a href="#org9a476f2">Common Scale Arguments</a></li>
-<li><a href="#orgfa8898d">Scale Modification Examples</a></li>
-<li><a href="#orgd2618b8">Using different color scales</a></li>
-<li><a href="#org831f297">Available Scales</a></li>
-<li><a href="#org8792341">Exercise III</a></li>
+<li><a href="#orgdef12d2">Scales: Controlling Aesthetic Mapping</a></li>
+<li><a href="#org2635fb6">Common Scale Arguments</a></li>
+<li><a href="#orgd75959a">Scale Modification Examples</a></li>
+<li><a href="#org8897b05">Using different color scales</a></li>
+<li><a href="#org1ee858e">Available Scales</a></li>
+<li><a href="#org229c308">Exercise III</a></li>
 </ul>
 </li>
-<li><a href="#org9c1116d">Faceting</a>
+<li><a href="#org01640c8">Faceting</a>
 <ul>
-<li><a href="#org24b9c73">Faceting</a></li>
-<li><a href="#org52327d6">What is the trend in housing prices in each state?</a></li>
-<li><a href="#orgf489a1a">Faceting to the rescue</a></li>
+<li><a href="#org6741736">Faceting</a></li>
+<li><a href="#org2fa4eb1">What is the trend in housing prices in each state?</a></li>
+<li><a href="#orga7b717b">Faceting to the rescue</a></li>
 </ul>
 </li>
-<li><a href="#orgaff2159">Themes</a>
+<li><a href="#org584235c">Themes</a>
 <ul>
-<li><a href="#org9178038">Themes</a></li>
-<li><a href="#org35902b1">Overriding theme defaults</a></li>
-<li><a href="#orgf6d587d">Creating and saving new themes</a></li>
+<li><a href="#orgbdb2c0f">Themes</a></li>
+<li><a href="#orgbde6c11">Overriding theme defaults</a></li>
+<li><a href="#org51dab38">Creating and saving new themes</a></li>
 </ul>
 </li>
-<li><a href="#org54bebcc">The #1 FAQ</a>
+<li><a href="#orgec97f0d">The #1 FAQ</a>
 <ul>
-<li><a href="#orgc54a0b4">Map Aesthetic To Different Columns</a>
+<li><a href="#orga59feae">Map Aesthetic To Different Columns</a>
 <ul>
-<li><a href="#orga8aded2">Wrong</a></li>
-<li><a href="#org74a903b">Right</a></li>
+<li><a href="#org29cf64b">Wrong</a></li>
+<li><a href="#orgbea53b7">Right</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li><a href="#orgb8da2b1">Putting It All Together</a>
+<li><a href="#org653ff8e">Putting It All Together</a>
 <ul>
-<li><a href="#orgf06e672">Challenge: Recreate This <code>Economist</code> Graph</a></li>
+<li><a href="#org5a4914d">Challenge: Recreate This <code>Economist</code> Graph</a></li>
 </ul>
 </li>
-<li><a href="#orgde5be17">Wrap-up</a>
+<li><a href="#orgbe01a81">Wrap-up</a>
 <ul>
-<li><a href="#org1326f2c">Help Us Make This Workshop Better!</a></li>
-<li><a href="#org4ceb183">Additional resources</a></li>
+<li><a href="#org5c1a35b">Help Us Make This Workshop Better!</a></li>
+<li><a href="#org3d96f9d">Additional resources</a></li>
 </ul>
 </li>
 </ul>
@@ -159,7 +159,7 @@ for the JavaScript code in this tag.
 
 
 <div class="org-src-container">
-<pre class="src src-R" id="org77ca900">rm(list=ls())
+<pre class="src src-R" id="org90a16d7">rm(list=ls())
 <span style="color: #0000ff;">.First</span> <span style="color: #008b8b;">&lt;-</span> <span style="color: #a020f0;">function</span>() {
   options(width=70)
   options(useFancyQuotes=<span style="color: #228b22;">FALSE</span>)
@@ -176,29 +176,29 @@ for the JavaScript code in this tag.
 </div>
 
 <div class="org-src-container">
-<pre class="src src-emacs-lisp" id="orgbcbd7cf">(load-file <span style="color: #8b2252;">"../setupEnvironment.el"</span>)
+<pre class="src src-emacs-lisp" id="org83725c9">(load-file <span style="color: #8b2252;">"../setupEnvironment.el"</span>)
 </pre>
 </div>
 
-<div id="outline-container-org386da65" class="outline-2">
-<h2 id="org386da65">Introduction</h2>
-<div class="outline-text-2" id="text-org386da65">
-</div><div id="outline-container-org3849fc4" class="outline-3">
-<h3 id="org3849fc4">Materials and setup</h3>
-<div class="outline-text-3" id="text-org3849fc4">
-</div><div id="outline-container-org41efde8" class="outline-4">
-<h4 id="org41efde8">Laptop users: You should have R installed &#x2013;if not:</h4>
-<div class="outline-text-4" id="text-org41efde8">
-</div><ul class="org-ul"><li><a id="orgf6d8e41"></a>Open a web browser and go to <a href="http://cran.r-project.org">http://cran.r-project.org</a> and download and install it<br /></li>
-<li><a id="orga6e4bab"></a>Also helpful to install RStudio (download from <a href="http://rstudio.com">http://rstudio.com</a>)<br /></li>
-<li><a id="orgc99e8d8"></a>In R, type <code>install.packages("ggplot2")</code> to install the ggplot2 package.<br /></li></ul>
+<div id="outline-container-org93999d8" class="outline-2">
+<h2 id="org93999d8">Introduction</h2>
+<div class="outline-text-2" id="text-org93999d8">
+</div><div id="outline-container-org4a4e9e0" class="outline-3">
+<h3 id="org4a4e9e0">Materials and setup</h3>
+<div class="outline-text-3" id="text-org4a4e9e0">
+</div><div id="outline-container-org43e8f7c" class="outline-4">
+<h4 id="org43e8f7c">Laptop users: You should have R installed &#x2013;if not:</h4>
+<div class="outline-text-4" id="text-org43e8f7c">
+</div><ul class="org-ul"><li><a id="org98f3151"></a>Open a web browser and go to <a href="http://cran.r-project.org">http://cran.r-project.org</a> and download and install it<br /></li>
+<li><a id="org759c80e"></a>Also helpful to install RStudio (download from <a href="http://rstudio.com">http://rstudio.com</a>)<br /></li>
+<li><a id="orgdd4c2a1"></a>In R, type <code>install.packages("ggplot2")</code> to install the ggplot2 package.<br /></li></ul>
 </div>
 
-<div id="outline-container-org589bde8" class="outline-4">
-<h4 id="org589bde8">Everyone: Download workshop materials:</h4>
-<div class="outline-text-4" id="text-org589bde8">
-</div><ul class="org-ul"><li><a id="org8e418ca"></a>Download materials from <a href="http://tutorials.iq.harvard.edu/R/Rgraphics.zip">http://tutorials.iq.harvard.edu/R/Rgraphics.zip</a><br /></li>
-<li><a id="orgc97a606"></a>Extract the zip file containing the materials to your desktop<br /><div class="outline-text-5" id="text-orgc97a606">
+<div id="outline-container-orgb78ead2" class="outline-4">
+<h4 id="orgb78ead2">Everyone: Download workshop materials:</h4>
+<div class="outline-text-4" id="text-orgb78ead2">
+</div><ul class="org-ul"><li><a id="orgd989b9c"></a>Download materials from <a href="http://tutorials.iq.harvard.edu/R/Rgraphics.zip">http://tutorials.iq.harvard.edu/R/Rgraphics.zip</a><br /></li>
+<li><a id="org4d0c9e8"></a>Extract the zip file containing the materials to your desktop<br /><div class="outline-text-5" id="text-org4d0c9e8">
 <p>
 Workshop notes are available in .hmtl format. Open a file browser, navigate to your desktop and open Rgraphics.html
 </p>
@@ -207,9 +207,9 @@ Workshop notes are available in .hmtl format. Open a file browser, navigate to y
 </div>
 
 
-<div id="outline-container-org8e8233e" class="outline-3">
-<h3 id="org8e8233e">Workshop Overview</h3>
-<div class="outline-text-3" id="text-org8e8233e">
+<div id="outline-container-org2fa5252" class="outline-3">
+<h3 id="org2fa5252">Workshop Overview</h3>
+<div class="outline-text-3" id="text-org2fa5252">
 <p>
 Class Structure and Organization:
 </p>
@@ -231,9 +231,9 @@ This is an intermediate R course:
 </div>
 
 
-<div id="outline-container-org0b656f3" class="outline-3">
-<h3 id="org0b656f3">Starting At The End</h3>
-<div class="outline-text-3" id="text-org0b656f3">
+<div id="outline-container-orgf5ba41e" class="outline-3">
+<h3 id="orgf5ba41e">Starting At The End</h3>
+<div class="outline-text-3" id="text-orgf5ba41e">
 <p>
 My goal: by the end of the workshop you will be able to reproduce this graphic from the Economist:
 </p>
@@ -247,9 +247,9 @@ My goal: by the end of the workshop you will be able to reproduce this graphic f
 </div>
 
 
-<div id="outline-container-org8132c73" class="outline-3">
-<h3 id="org8132c73">Why <code>ggplot2</code>?</h3>
-<div class="outline-text-3" id="text-org8132c73">
+<div id="outline-container-org58e6457" class="outline-3">
+<h3 id="org58e6457">Why <code>ggplot2</code>?</h3>
+<div class="outline-text-3" id="text-org58e6457">
 <p>
 Advantages of ggplot2
 </p>
@@ -274,9 +274,9 @@ That said, there are some things you cannot (or should not) do With ggplot2:
 </div>
 
 
-<div id="outline-container-org5225286" class="outline-3">
-<h3 id="org5225286">What Is The Grammar Of Graphics?</h3>
-<div class="outline-text-3" id="text-org5225286">
+<div id="outline-container-orged7ff0b" class="outline-3">
+<h3 id="orged7ff0b">What Is The Grammar Of Graphics?</h3>
+<div class="outline-text-3" id="text-orged7ff0b">
 <p>
 The basic idea: independently specify plot building blocks and combine them to create just about any kind of graphical display you want. Building blocks of a graph include:
 </p>
@@ -293,14 +293,14 @@ The basic idea: independently specify plot building blocks and combine them to c
 </div>
 </div>
 
-<div id="outline-container-org835c487" class="outline-3">
-<h3 id="org835c487">Example Data: <code>Housing prices</code></h3>
-<div class="outline-text-3" id="text-org835c487">
+<div id="outline-container-org7628198" class="outline-3">
+<h3 id="org7628198">Example Data: <code>Housing prices</code></h3>
+<div class="outline-text-3" id="text-org7628198">
 <p>
 Let's look at housing prices.
 </p>
 <div class="org-src-container">
-<pre class="src src-R" id="org9f34f81">housing <span style="color: #008b8b;">&lt;-</span> read.csv(<span style="color: #8b2252;">"dataSets/landdata-states.csv"</span>)
+<pre class="src src-R" id="org51f1498">housing <span style="color: #008b8b;">&lt;-</span> read.csv(<span style="color: #8b2252;">"dataSets/landdata-states.csv"</span>)
 head(housing[1:5])
 </pre>
 </div>
@@ -319,9 +319,9 @@ head(housing[1:5])
 </div>
 </div>
 
-<div id="outline-container-org6529c69" class="outline-3">
-<h3 id="org6529c69"><code>ggplot2</code> VS Base Graphics</h3>
-<div class="outline-text-3" id="text-org6529c69">
+<div id="outline-container-orgcd710b8" class="outline-3">
+<h3 id="orgcd710b8"><code>ggplot2</code> VS Base Graphics</h3>
+<div class="outline-text-3" id="text-orgcd710b8">
 <p>
 Compared to base graphics, <code>ggplot2</code>
 </p>
@@ -335,15 +335,15 @@ Compared to base graphics, <code>ggplot2</code>
 </div>
 
 
-<div id="outline-container-orgfd56549" class="outline-3">
-<h3 id="orgfd56549"><code>ggplot2</code> VS Base for simple graphs</h3>
-<div class="outline-text-3" id="text-orgfd56549">
+<div id="outline-container-orge631fcd" class="outline-3">
+<h3 id="orge631fcd"><code>ggplot2</code> VS Base for simple graphs</h3>
+<div class="outline-text-3" id="text-orge631fcd">
 <p>
 Base graphics histogram example:
 </p>
 
 <div class="org-src-container">
-<pre class="src src-R" id="org131c015">hist(housing$Home.Value)
+<pre class="src src-R" id="org95410a9">hist(housing$Home.Value)
 </pre>
 </div>
 
@@ -359,7 +359,7 @@ Base graphics histogram example:
 </p>
 
 <div class="org-src-container">
-<pre class="src src-R" id="org111ddc1"><span style="color: #008b8b;">library</span>(ggplot2)
+<pre class="src src-R" id="org903fb0f"><span style="color: #008b8b;">library</span>(ggplot2)
 ggplot(housing, aes(x = Home.Value)) +
   geom_histogram()
 </pre>
@@ -374,15 +374,15 @@ Base wins!
 </div>
 
 
-<div id="outline-container-org47083ec" class="outline-3">
-<h3 id="org47083ec"><code>ggplot2</code> Base graphics VS <code>ggplot</code> for more complex graphs:</h3>
-<div class="outline-text-3" id="text-org47083ec">
+<div id="outline-container-orgc353281" class="outline-3">
+<h3 id="orgc353281"><code>ggplot2</code> Base graphics VS <code>ggplot</code> for more complex graphs:</h3>
+<div class="outline-text-3" id="text-orgc353281">
 <p>
 Base colored scatter plot example:
 </p>
 
 <div class="org-src-container">
-<pre class="src src-R" id="org42a2f5b">plot(Home.Value ~ Date,
+<pre class="src src-R" id="org5b84edb">plot(Home.Value ~ Date,
      data=subset(housing, State == <span style="color: #8b2252;">"MA"</span>))
 points(Home.Value ~ Date, col=<span style="color: #8b2252;">"red"</span>,
        data=subset(housing, State == <span style="color: #8b2252;">"TX"</span>))
@@ -405,7 +405,7 @@ legend(1975, 400000,
 </p>
 
 <div class="org-src-container">
-<pre class="src src-R" id="orgf60526a">ggplot(subset(housing, State <span style="color: #008b8b;">%in%</span> c(<span style="color: #8b2252;">"MA"</span>, <span style="color: #8b2252;">"TX"</span>)),
+<pre class="src src-R" id="orgb36be69">ggplot(subset(housing, State <span style="color: #008b8b;">%in%</span> c(<span style="color: #8b2252;">"MA"</span>, <span style="color: #8b2252;">"TX"</span>)),
        aes(x=Date,
            y=Home.Value,
            color=State))+
@@ -428,12 +428,12 @@ legend(1975, 400000,
 </div>
 </div>
 
-<div id="outline-container-org5642c89" class="outline-2">
-<h2 id="org5642c89">Geometric Objects And Aesthetics</h2>
-<div class="outline-text-2" id="text-org5642c89">
-</div><div id="outline-container-orgd1456e2" class="outline-3">
-<h3 id="orgd1456e2">Aesthetic Mapping</h3>
-<div class="outline-text-3" id="text-orgd1456e2">
+<div id="outline-container-orgc674d95" class="outline-2">
+<h2 id="orgc674d95">Geometric Objects And Aesthetics</h2>
+<div class="outline-text-2" id="text-orgc674d95">
+</div><div id="outline-container-org150d4bc" class="outline-3">
+<h3 id="org150d4bc">Aesthetic Mapping</h3>
+<div class="outline-text-3" id="text-org150d4bc">
 <p>
 In ggplot land <i>aesthetic</i> means "something you can see". Examples include:
 </p>
@@ -452,9 +452,9 @@ Each type of geom accepts only a subset of all aesthetics&#x2013;refer to the ge
 </div>
 </div>
 
-<div id="outline-container-orgbebefed" class="outline-3">
-<h3 id="orgbebefed">Geometic Objects (<code>geom</code>)</h3>
-<div class="outline-text-3" id="text-orgbebefed">
+<div id="outline-container-org026ada1" class="outline-3">
+<h3 id="org026ada1">Geometic Objects (<code>geom</code>)</h3>
+<div class="outline-text-3" id="text-org026ada1">
 <p>
 Geometric objects are the actual marks we put on a plot. Examples include:
 </p>
@@ -471,7 +471,7 @@ A plot must have at least one geom; there is no upper limit. You can add a geom 
 You can get a list of available geometric objects using the code below:
 </p>
 <div class="org-src-container">
-<pre class="src src-R" id="org0b23e51">help.search(<span style="color: #8b2252;">"geom_"</span>, package = <span style="color: #8b2252;">"ggplot2"</span>)
+<pre class="src src-R" id="org542682d">help.search(<span style="color: #8b2252;">"geom_"</span>, package = <span style="color: #8b2252;">"ggplot2"</span>)
 </pre>
 </div>
 <p>
@@ -480,15 +480,15 @@ or simply type <code>geom_&lt;tab&gt;</code> in any good R IDE (such as Rstudio 
 </div>
 </div>
 
-<div id="outline-container-org69d1984" class="outline-3">
-<h3 id="org69d1984">Points (Scatterplot)</h3>
-<div class="outline-text-3" id="text-org69d1984">
+<div id="outline-container-org3a1a6d3" class="outline-3">
+<h3 id="org3a1a6d3">Points (Scatterplot)</h3>
+<div class="outline-text-3" id="text-org3a1a6d3">
 <p>
 Now that we know about geometric objects and aesthetic mapping, we can make a ggplot. <code>geom_point</code> requires mappings for x and y, all others are optional.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-R" id="org278d017">hp2001Q1 <span style="color: #008b8b;">&lt;-</span> subset(housing, Date == 2001.25) 
+<pre class="src src-R" id="orgd42af56">hp2001Q1 <span style="color: #008b8b;">&lt;-</span> subset(housing, Date == 2001.25) 
 ggplot(hp2001Q1,
        aes(y = Structure.Cost, x = Land.Value)) +
   geom_point()
@@ -503,7 +503,7 @@ ggplot(hp2001Q1,
 </div>
 
 <div class="org-src-container">
-<pre class="src src-R" id="org04afaa9">ggplot(hp2001Q1,
+<pre class="src src-R" id="orgf5a4534">ggplot(hp2001Q1,
        aes(y = Structure.Cost, x = log(Land.Value))) +
   geom_point()
 </pre>
@@ -517,15 +517,15 @@ ggplot(hp2001Q1,
 </div>
 </div>
 
-<div id="outline-container-org9c9b69b" class="outline-3">
-<h3 id="org9c9b69b">Lines (Prediction Line)</h3>
-<div class="outline-text-3" id="text-org9c9b69b">
+<div id="outline-container-org616a2d9" class="outline-3">
+<h3 id="org616a2d9">Lines (Prediction Line)</h3>
+<div class="outline-text-3" id="text-org616a2d9">
 <p>
 A plot constructed with <code>ggplot</code> can have more than one geom. In that case the mappings established in the <code>ggplot()</code> call are plot defaults that can be added to or overridden. Our plot could use a regression line:
 </p>
 
 <div class="org-src-container">
-<pre class="src src-R" id="org09f676b">hp2001Q1$pred.SC <span style="color: #008b8b;">&lt;-</span> predict(lm(Structure.Cost ~ log(Land.Value), data = hp2001Q1))
+<pre class="src src-R" id="orgaaeae8c">hp2001Q1$pred.SC <span style="color: #008b8b;">&lt;-</span> predict(lm(Structure.Cost ~ log(Land.Value), data = hp2001Q1))
 
 p1 <span style="color: #008b8b;">&lt;-</span> ggplot(hp2001Q1, aes(x = log(Land.Value), y = Structure.Cost))
 
@@ -543,15 +543,15 @@ p1 + geom_point(aes(color = Home.Value)) +
 </div>
 </div>
 
-<div id="outline-container-org86c5ccc" class="outline-3">
-<h3 id="org86c5ccc">Smoothers</h3>
-<div class="outline-text-3" id="text-org86c5ccc">
+<div id="outline-container-orgc8f4b3a" class="outline-3">
+<h3 id="orgc8f4b3a">Smoothers</h3>
+<div class="outline-text-3" id="text-orgc8f4b3a">
 <p>
 Not all geometric objects are simple shapes&#x2013;the smooth geom includes a line and a ribbon.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-R" id="org0784c45">p1 +
+<pre class="src src-R" id="orgdb74b6a">p1 +
   geom_point(aes(color = Home.Value)) +
   geom_smooth()
 </pre>
@@ -566,15 +566,15 @@ Not all geometric objects are simple shapes&#x2013;the smooth geom includes a li
 </div>
 </div>
 
-<div id="outline-container-orge4141fd" class="outline-3">
-<h3 id="orge4141fd">Text (Label Points)</h3>
-<div class="outline-text-3" id="text-orge4141fd">
+<div id="outline-container-orgf27f368" class="outline-3">
+<h3 id="orgf27f368">Text (Label Points)</h3>
+<div class="outline-text-3" id="text-orgf27f368">
 <p>
 Each <code>geom</code> accepts a particualar set of mappings&#x2013;for example <code>geom_text()</code> accepts a <code>labels</code> mapping.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-R" id="org1c1d721">p1 + 
+<pre class="src src-R" id="org29a4b2d">p1 + 
   geom_text(aes(label=State), size = 3)
 </pre>
 </div>
@@ -588,7 +588,7 @@ Each <code>geom</code> accepts a particualar set of mappings&#x2013;for example 
 
 
 <div class="org-src-container">
-<pre class="src src-R" id="org2ff8205"><span style="color: #b22222;">## </span><span style="color: #b22222;">install.packages("ggrepel") </span>
+<pre class="src src-R" id="org8666912"><span style="color: #b22222;">## </span><span style="color: #b22222;">install.packages("ggrepel") </span>
 <span style="color: #008b8b;">library</span>(<span style="color: #8b2252;">"ggrepel"</span>)
 p1 + 
   geom_point() + 
@@ -604,15 +604,15 @@ p1 +
 </div>
 </div>
 
-<div id="outline-container-orgca84dd3" class="outline-3">
-<h3 id="orgca84dd3">Aesthetic Mapping VS Assignment</h3>
-<div class="outline-text-3" id="text-orgca84dd3">
+<div id="outline-container-orgad9ca4c" class="outline-3">
+<h3 id="orgad9ca4c">Aesthetic Mapping VS Assignment</h3>
+<div class="outline-text-3" id="text-orgad9ca4c">
 <p>
 Note that variables are mapped to aesthetics with the <code>aes()</code> function, while fixed aesthetics are set outside the <code>aes()</code> call. This sometimes leads to confusion, as in this example:
 </p>
 
 <div class="org-src-container">
-<pre class="src src-R" id="org0eb1fcb">p1 +
+<pre class="src src-R" id="orgf0fe94c">p1 +
   geom_point(aes(size = 2),<span style="color: #b22222;"># </span><span style="color: #b22222;">incorrect! 2 is not a variable</span>
              color=<span style="color: #8b2252;">"red"</span>) <span style="color: #b22222;"># </span><span style="color: #b22222;">this is fine -- all points red</span>
 </pre>
@@ -627,15 +627,15 @@ Note that variables are mapped to aesthetics with the <code>aes()</code> functio
 </div>
 
 
-<div id="outline-container-org27a36cb" class="outline-3">
-<h3 id="org27a36cb">Mapping Variables To Other Aesthetics</h3>
-<div class="outline-text-3" id="text-org27a36cb">
+<div id="outline-container-org4f5d3d5" class="outline-3">
+<h3 id="org4f5d3d5">Mapping Variables To Other Aesthetics</h3>
+<div class="outline-text-3" id="text-org4f5d3d5">
 <p>
 Other aesthetics are mapped in the same way as x and y in the previous example.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-R" id="org32a9bc6">p1 +
+<pre class="src src-R" id="org43fab8e">p1 +
   geom_point(aes(color=Home.Value, shape = region))
 </pre>
 </div>
@@ -649,9 +649,9 @@ Other aesthetics are mapped in the same way as x and y in the previous example.
 </div>
 </div>
 
-<div id="outline-container-org3e89000" class="outline-3">
-<h3 id="org3e89000">Exercise I</h3>
-<div class="outline-text-3" id="text-org3e89000">
+<div id="outline-container-orga80a4d4" class="outline-3">
+<h3 id="orga80a4d4">Exercise I</h3>
+<div class="outline-text-3" id="text-orga80a4d4">
 <p>
 The data for the exercises is available in the <code>dataSets/EconomistData.csv</code> file. Read it in with 
 </p>
@@ -688,12 +688,12 @@ These data consist of <i>Human Development Index</i> and <i>Corruption Perceptio
 </div>
 </div>
 </div>
-<div id="outline-container-org7e519d3" class="outline-2">
-<h2 id="org7e519d3">Statistical Transformations</h2>
-<div class="outline-text-2" id="text-org7e519d3">
-</div><div id="outline-container-orgfeae2a6" class="outline-3">
-<h3 id="orgfeae2a6">Statistical Transformations</h3>
-<div class="outline-text-3" id="text-orgfeae2a6">
+<div id="outline-container-org62fb6d5" class="outline-2">
+<h2 id="org62fb6d5">Statistical Transformations</h2>
+<div class="outline-text-2" id="text-org62fb6d5">
+</div><div id="outline-container-orged1c5d3" class="outline-3">
+<h3 id="orged1c5d3">Statistical Transformations</h3>
+<div class="outline-text-3" id="text-orged1c5d3">
 <p>
 Some plot types (such as scatterplots) do not require transformations&#x2013;each point is plotted at x and y coordinates equal to the original value. Other plots, such as boxplots, histograms, prediction lines etc. require statistical transformations:
 </p>
@@ -703,10 +703,10 @@ Some plot types (such as scatterplots) do not require transformations&#x2013;eac
 </ul>
 
 <p>
-Each <code>geom</code> has a default statistic, but these can be changed. For example, the default statistic for <code>geom_bar</code> is <code>stat_count</code>:
+Each <code>geom</code> has a default statistic, but these can be changed. For example, the default statistic for <code>geom_bar</code> is <code>stat_bin</code>:
 </p>
 <div class="org-src-container">
-<pre class="src src-R" id="org83f8a35">args(geom_histogram)
+<pre class="src src-R" id="orgec2e3cf">args(geom_histogram)
 args(stat_bin)
 </pre>
 </div>
@@ -728,9 +728,9 @@ NULL
 </div>
 </div>
 
-<div id="outline-container-orgcd61519" class="outline-3">
-<h3 id="orgcd61519">Setting Statistical Transformation Arguments</h3>
-<div class="outline-text-3" id="text-orgcd61519">
+<div id="outline-container-org247194c" class="outline-3">
+<h3 id="org247194c">Setting Statistical Transformation Arguments</h3>
+<div class="outline-text-3" id="text-org247194c">
 <p>
 Arguments to <code>stat_</code> functions can be passed through <code>geom_</code> functions. This can be slightly annoying because in order to change it you have to first determine which stat the geom uses, then determine the arguments to that stat. 
 </p>
@@ -739,7 +739,7 @@ Arguments to <code>stat_</code> functions can be passed through <code>geom_</cod
 For example, here is the default histogram of Home.Value:
 </p>
 <div class="org-src-container">
-<pre class="src src-R" id="orga987356">p2 <span style="color: #008b8b;">&lt;-</span> ggplot(housing, aes(x = Home.Value))
+<pre class="src src-R" id="org56f4fd4">p2 <span style="color: #008b8b;">&lt;-</span> ggplot(housing, aes(x = Home.Value))
 p2 + geom_histogram()
 </pre>
 </div>
@@ -750,7 +750,7 @@ p2 + geom_histogram()
 The binwidth looks reasonable by default, but we can change it by passing the <code>binwidth</code> argument to the <code>stat_bin</code> function:
 </p>
 <div class="org-src-container">
-<pre class="src src-R" id="org72db2d6">p2 + geom_histogram(stat = <span style="color: #8b2252;">"bin"</span>, binwidth=4000)
+<pre class="src src-R" id="orgfe2b7de">p2 + geom_histogram(stat = <span style="color: #8b2252;">"bin"</span>, binwidth=4000)
 </pre>
 </div>
 
@@ -763,14 +763,14 @@ The binwidth looks reasonable by default, but we can change it by passing the <c
 </div>
 </div>
 
-<div id="outline-container-orgbba20c9" class="outline-3">
-<h3 id="orgbba20c9">Changing The Statistical Transformation</h3>
-<div class="outline-text-3" id="text-orgbba20c9">
+<div id="outline-container-org561818d" class="outline-3">
+<h3 id="org561818d">Changing The Statistical Transformation</h3>
+<div class="outline-text-3" id="text-org561818d">
 <p>
 Sometimes the default statistical transformation is not what you need. This is often the case with pre-summarized data:
 </p>
 <div class="org-src-container">
-<pre class="src src-R" id="org76b98b5">housing.sum <span style="color: #008b8b;">&lt;-</span> aggregate(housing[<span style="color: #8b2252;">"Home.Value"</span>], housing[<span style="color: #8b2252;">"State"</span>], FUN=mean)
+<pre class="src src-R" id="org805e4c5">housing.sum <span style="color: #008b8b;">&lt;-</span> aggregate(housing[<span style="color: #8b2252;">"Home.Value"</span>], housing[<span style="color: #8b2252;">"State"</span>], FUN=mean)
 rbind(head(housing.sum), tail(housing.sum))
 </pre>
 </div>
@@ -810,7 +810,7 @@ Error: stat_count() must not be used with a y aesthetic.
 What is the problem with the previous plot? Basically we take binned and summarized data and ask ggplot to bin and summarize it again (remember, <code>geom_bar</code> defaults to <code>stat = stat_count</code>); obviously this will not work. We can fix it by telling <code>geom_bar</code> to use a different statistical transformation function:
 </p>
 <div class="org-src-container">
-<pre class="src src-R" id="orgc5af785">ggplot(housing.sum, aes(x=State, y=Home.Value)) + 
+<pre class="src src-R" id="org549a31a">ggplot(housing.sum, aes(x=State, y=Home.Value)) + 
   geom_bar(stat=<span style="color: #8b2252;">"identity"</span>)
 </pre>
 </div>
@@ -824,26 +824,26 @@ What is the problem with the previous plot? Basically we take binned and summari
 </div>
 </div>
 
-<div id="outline-container-org89b1be2" class="outline-3">
-<h3 id="org89b1be2">Exercise II</h3>
-<div class="outline-text-3" id="text-org89b1be2">
+<div id="outline-container-org2e1d343" class="outline-3">
+<h3 id="org2e1d343">Exercise II</h3>
+<div class="outline-text-3" id="text-org2e1d343">
 <ol class="org-ol">
 <li>Re-create a scatter plot with CPI on the x axis and HDI on the y axis (as you did in the previous exercise).</li>
-<li>Overlay a smoothing line on top of the scatter plot using geom<sub>smooth</sub>.</li>
-<li>Overlay a smoothing line on top of the scatter plot using geom<sub>smooth</sub>, but use a linear model for the predictions. Hint: see <code>?stat_smooth</code>.</li>
-<li>Overlay a smoothling line on top of the scatter plot using geom<sub>line</sub>. Hint: change the statistical transformation.</li>
+<li>Overlay a smoothing line on top of the scatter plot using <code>geom_smooth</code>.</li>
+<li>Overlay a smoothing line on top of the scatter plot using <code>geom_smooth</code>, but use a linear model for the predictions. Hint: see <code>?stat_smooth</code>.</li>
+<li>Overlay a smoothing line on top of the scatter plot using <code>geom_line</code>. Hint: change the statistical transformation.</li>
 <li>BONUS: Overlay a smoothing line on top of the scatter plot using the default <i>loess</i> method, but make it less smooth. Hint: see <code>?loess</code>.</li>
 </ol>
 </div>
 </div>
 </div>
 
-<div id="outline-container-orgcf263bb" class="outline-2">
-<h2 id="orgcf263bb">Scales</h2>
-<div class="outline-text-2" id="text-orgcf263bb">
-</div><div id="outline-container-org08764e1" class="outline-3">
-<h3 id="org08764e1">Scales: Controlling Aesthetic Mapping</h3>
-<div class="outline-text-3" id="text-org08764e1">
+<div id="outline-container-org9900582" class="outline-2">
+<h2 id="org9900582">Scales</h2>
+<div class="outline-text-2" id="text-org9900582">
+</div><div id="outline-container-orgdef12d2" class="outline-3">
+<h3 id="orgdef12d2">Scales: Controlling Aesthetic Mapping</h3>
+<div class="outline-text-3" id="text-orgdef12d2">
 <p>
 Aesthetic mapping (i.e., with <code>aes()</code>) only says that a variable should be mapped to an aesthetic. It doesn't say <i>how</i> that should happen. For example, when mapping a variable to <i>shape</i> with <code>aes(shape = x)</code> you don't say <i>what</i> shapes should be used. Similarly, <code>aes(color = z)</code> doesn't say <i>what</i> colors should be used. Describing what colors/shapes/sizes etc. to use is done by modifying the corresponding <i>scale</i>. In <code>ggplot2</code> scales include
 </p>
@@ -860,9 +860,9 @@ Scales are modified with a series of functions using a <code>scale_&lt;aesthetic
 </div>
 </div>
 
-<div id="outline-container-org9a476f2" class="outline-3">
-<h3 id="org9a476f2">Common Scale Arguments</h3>
-<div class="outline-text-3" id="text-org9a476f2">
+<div id="outline-container-org2635fb6" class="outline-3">
+<h3 id="org2635fb6">Common Scale Arguments</h3>
+<div class="outline-text-3" id="text-org2635fb6">
 <p>
 The following arguments are common to most scales in ggplot2:
 </p>
@@ -879,15 +879,15 @@ Specific scale functions may have additional arguments; for example, the <code>s
 </div>
 </div>
 
-<div id="outline-container-orgfa8898d" class="outline-3">
-<h3 id="orgfa8898d">Scale Modification Examples</h3>
-<div class="outline-text-3" id="text-orgfa8898d">
+<div id="outline-container-orgd75959a" class="outline-3">
+<h3 id="orgd75959a">Scale Modification Examples</h3>
+<div class="outline-text-3" id="text-orgd75959a">
 <p>
 Start by constructing a dotplot showing the distribution of home values by Date and State.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-R" id="org1a05eb1">p3 <span style="color: #008b8b;">&lt;-</span> ggplot(housing,
+<pre class="src src-R" id="orgc1e76eb">p3 <span style="color: #008b8b;">&lt;-</span> ggplot(housing,
              aes(x = State,
                  y = Home.Price.Index)) + 
         theme(legend.position=<span style="color: #8b2252;">"top"</span>,
@@ -911,7 +911,7 @@ Now modify the breaks for the x axis and color scales
 </p>
 
 <div class="org-src-container">
-<pre class="src src-R" id="orgfaa6e23">p4 + scale_x_discrete(name=<span style="color: #8b2252;">"State Abbreviation"</span>) +
+<pre class="src src-R" id="orgffec877">p4 + scale_x_discrete(name=<span style="color: #8b2252;">"State Abbreviation"</span>) +
   scale_color_continuous(name=<span style="color: #8b2252;">""</span>,
                          breaks = c(1976, 1994, 2013),
                          labels = c(<span style="color: #8b2252;">"'76"</span>, <span style="color: #8b2252;">"'94"</span>, <span style="color: #8b2252;">"'13"</span>))
@@ -929,7 +929,7 @@ Now modify the breaks for the x axis and color scales
 Next change the low and high values to blue and red:
 </p>
 <div class="org-src-container">
-<pre class="src src-R" id="orgc31e0d4">p4 +
+<pre class="src src-R" id="org8a105b8">p4 +
   scale_x_discrete(name=<span style="color: #8b2252;">"State Abbreviation"</span>) +
   scale_color_continuous(name=<span style="color: #8b2252;">""</span>,
                          breaks = c(1976, 1994, 2013),
@@ -946,7 +946,7 @@ Next change the low and high values to blue and red:
 </div>
 
 <div class="org-src-container">
-<pre class="src src-R" id="org9a9aec5">p4 +
+<pre class="src src-R" id="org6445def">p4 +
   scale_color_continuous(name=<span style="color: #8b2252;">""</span>,
                          breaks = c(1976, 1994, 2013),
                          labels = c(<span style="color: #8b2252;">"'76"</span>, <span style="color: #8b2252;">"'94"</span>, <span style="color: #8b2252;">"'13"</span>),
@@ -962,14 +962,14 @@ Next change the low and high values to blue and red:
 </div>
 </div>
 
-<div id="outline-container-orgd2618b8" class="outline-3">
-<h3 id="orgd2618b8">Using different color scales</h3>
-<div class="outline-text-3" id="text-orgd2618b8">
+<div id="outline-container-org8897b05" class="outline-3">
+<h3 id="org8897b05">Using different color scales</h3>
+<div class="outline-text-3" id="text-org8897b05">
 <p>
 ggplot2 has a wide variety of color scales; here is an example using <code>scale_color_gradient2</code> to interpolate between three different colors.
 </p>
 <div class="org-src-container">
-<pre class="src src-R" id="org26494b6">p4 +
+<pre class="src src-R" id="org4c52726">p4 +
   scale_color_gradient2(name=<span style="color: #8b2252;">""</span>,
                         breaks = c(1976, 1994, 2013),
                         labels = c(<span style="color: #8b2252;">"'76"</span>, <span style="color: #8b2252;">"'94"</span>, <span style="color: #8b2252;">"'13"</span>),
@@ -989,9 +989,9 @@ ggplot2 has a wide variety of color scales; here is an example using <code>scale
 </div>
 </div>
 
-<div id="outline-container-org831f297" class="outline-3">
-<h3 id="org831f297">Available Scales</h3>
-<div class="outline-text-3" id="text-org831f297">
+<div id="outline-container-org1ee858e" class="outline-3">
+<h3 id="org1ee858e">Available Scales</h3>
+<div class="outline-text-3" id="text-org1ee858e">
 <ul class="org-ul">
 <li>Partial combination matrix of available scales</li>
 </ul>
@@ -1014,51 +1014,27 @@ ggplot2 has a wide variety of color scales; here is an example using <code>scale
 </thead>
 <tbody>
 <tr>
-<td class="org-left">scale<sub>color</sub>_</td>
-<td class="org-left">identity</td>
-<td class="org-left">scale<sub>fill</sub><sub>continuous</sub></td>
+<td class="org-left"><code>scale_color_</code></td>
+<td class="org-left"><code>identity</code></td>
+<td class="org-left"><code>scale_fill_continuous</code></td>
 </tr>
 
 <tr>
-<td class="org-left">scale<sub>fill</sub>_</td>
-<td class="org-left">manual</td>
-<td class="org-left">scale<sub>color</sub><sub>discrete</sub></td>
+<td class="org-left"><code>scale_fill_</code></td>
+<td class="org-left"><code>manual</code></td>
+<td class="org-left"><code>scale_color_discrete</code></td>
 </tr>
 
 <tr>
-<td class="org-left">scale<sub>size</sub>_</td>
-<td class="org-left">continuous</td>
-<td class="org-left">scale<sub>size</sub><sub>manual</sub></td>
-</tr>
-
-<tr>
-<td class="org-left">&#xa0;</td>
-<td class="org-left">discrete</td>
-<td class="org-left">scale<sub>size</sub><sub>discrete</sub></td>
+<td class="org-left"><code>scale_size_</code></td>
+<td class="org-left"><code>continuous</code></td>
+<td class="org-left"><code>scale_size_manual</code></td>
 </tr>
 
 <tr>
 <td class="org-left">&#xa0;</td>
-<td class="org-left">&#xa0;</td>
-<td class="org-left">&#xa0;</td>
-</tr>
-
-<tr>
-<td class="org-left">scale<sub>shape</sub>_</td>
-<td class="org-left">discrete</td>
-<td class="org-left">scale<sub>shape</sub><sub>discrete</sub></td>
-</tr>
-
-<tr>
-<td class="org-left">scale<sub>linetype</sub>_</td>
-<td class="org-left">identity</td>
-<td class="org-left">scale<sub>shape</sub><sub>manual</sub></td>
-</tr>
-
-<tr>
-<td class="org-left">&#xa0;</td>
-<td class="org-left">manual</td>
-<td class="org-left">scale<sub>linetype</sub><sub>discrete</sub></td>
+<td class="org-left"><code>discrete</code></td>
+<td class="org-left"><code>scale_size_discrete</code></td>
 </tr>
 
 <tr>
@@ -1068,39 +1044,69 @@ ggplot2 has a wide variety of color scales; here is an example using <code>scale
 </tr>
 
 <tr>
-<td class="org-left">scale<sub>x</sub>_</td>
-<td class="org-left">continuous</td>
-<td class="org-left">scale<sub>x</sub><sub>continuous</sub></td>
+<td class="org-left"><code>scale_shape_</code></td>
+<td class="org-left"><code>discrete</code></td>
+<td class="org-left"><code>scale_shape_discrete</code></td>
 </tr>
 
 <tr>
-<td class="org-left">scale<sub>y</sub>_</td>
-<td class="org-left">discrete</td>
-<td class="org-left">scale<sub>y</sub><sub>discrete</sub></td>
-</tr>
-
-<tr>
-<td class="org-left">&#xa0;</td>
-<td class="org-left">reverse</td>
-<td class="org-left">scale<sub>x</sub><sub>log</sub></td>
+<td class="org-left"><code>scale_linetype_</code></td>
+<td class="org-left"><code>identity</code></td>
+<td class="org-left"><code>scale_shape_manual</code></td>
 </tr>
 
 <tr>
 <td class="org-left">&#xa0;</td>
-<td class="org-left">log</td>
-<td class="org-left">scale<sub>y</sub><sub>reverse</sub></td>
+<td class="org-left"><code>manual</code></td>
+<td class="org-left"><code>scale_linetype_discrete</code></td>
 </tr>
 
 <tr>
 <td class="org-left">&#xa0;</td>
-<td class="org-left">date</td>
-<td class="org-left">scale<sub>x</sub><sub>date</sub></td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>scale_x_</code></td>
+<td class="org-left"><code>continuous</code></td>
+<td class="org-left"><code>scale_x_continuous</code></td>
+</tr>
+
+<tr>
+<td class="org-left"><code>scale_y_</code></td>
+<td class="org-left"><code>discrete</code></td>
+<td class="org-left"><code>scale_y_discrete</code></td>
 </tr>
 
 <tr>
 <td class="org-left">&#xa0;</td>
-<td class="org-left">datetime</td>
-<td class="org-left">scale<sub>y</sub><sub>datetime</sub></td>
+<td class="org-left"><code>reverse</code></td>
+<td class="org-left"><code>scale_x_log</code></td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left"><code>log</code></td>
+<td class="org-left"><code>scale_y_reverse</code></td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left"><code>date</code></td>
+<td class="org-left"><code>scale_x_date</code></td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left"><code>datetime</code></td>
+<td class="org-left"><code>scale_y_datetime</code></td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
 </tr>
 </tbody>
 </table>
@@ -1111,9 +1117,9 @@ Note that in RStudio you can type <code>scale_</code> followed by TAB to get the
 </div>
 </div>
 
-<div id="outline-container-org8792341" class="outline-3">
-<h3 id="org8792341">Exercise III</h3>
-<div class="outline-text-3" id="text-org8792341">
+<div id="outline-container-org229c308" class="outline-3">
+<h3 id="org229c308">Exercise III</h3>
+<div class="outline-text-3" id="text-org229c308">
 <ol class="org-ol">
 <li>Create a scatter plot with CPI on the x axis and HDI on the y axis. Color the points to indicate region.</li>
 <li>Modify the x, y, and color scales so that they have more easily-understood names (e.g., spell out "Human development Index" instead of "HDI").</li>
@@ -1123,12 +1129,12 @@ Note that in RStudio you can type <code>scale_</code> followed by TAB to get the
 </div>
 </div>
 
-<div id="outline-container-org9c1116d" class="outline-2">
-<h2 id="org9c1116d">Faceting</h2>
-<div class="outline-text-2" id="text-org9c1116d">
-</div><div id="outline-container-org24b9c73" class="outline-3">
-<h3 id="org24b9c73">Faceting</h3>
-<div class="outline-text-3" id="text-org24b9c73">
+<div id="outline-container-org01640c8" class="outline-2">
+<h2 id="org01640c8">Faceting</h2>
+<div class="outline-text-2" id="text-org01640c8">
+</div><div id="outline-container-org6741736" class="outline-3">
+<h3 id="org6741736">Faceting</h3>
+<div class="outline-text-3" id="text-org6741736">
 <ul class="org-ul">
 <li>Faceting is <code>ggplot2</code> parlance for <b>small multiples</b></li>
 <li>The idea is to create separate graphs for subsets of data</li>
@@ -1143,14 +1149,14 @@ Note that in RStudio you can type <code>scale_</code> followed by TAB to get the
 </div>
 
 
-<div id="outline-container-org52327d6" class="outline-3">
-<h3 id="org52327d6">What is the trend in housing prices in each state?</h3>
-<div class="outline-text-3" id="text-org52327d6">
+<div id="outline-container-org2fa4eb1" class="outline-3">
+<h3 id="org2fa4eb1">What is the trend in housing prices in each state?</h3>
+<div class="outline-text-3" id="text-org2fa4eb1">
 <ul class="org-ul">
 <li>Start by using a technique we already know&#x2013;map State to color:</li>
 </ul>
 <div class="org-src-container">
-<pre class="src src-R" id="orgeaf4e78">p5 <span style="color: #008b8b;">&lt;-</span> ggplot(housing, aes(x = Date, y = Home.Value))
+<pre class="src src-R" id="org589f42b">p5 <span style="color: #008b8b;">&lt;-</span> ggplot(housing, aes(x = Date, y = Home.Value))
 p5 + geom_line(aes(color = State))
 </pre>
 </div>
@@ -1168,15 +1174,15 @@ There are two problems here&#x2013;there are too many states to distinguish each
 </div>
 </div>
 
-<div id="outline-container-orgf489a1a" class="outline-3">
-<h3 id="orgf489a1a">Faceting to the rescue</h3>
-<div class="outline-text-3" id="text-orgf489a1a">
+<div id="outline-container-orga7b717b" class="outline-3">
+<h3 id="orga7b717b">Faceting to the rescue</h3>
+<div class="outline-text-3" id="text-orga7b717b">
 <p>
 We can remedy the deficiencies of the previous plot by faceting by state rather than mapping state to color.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-R" id="orgf97e19f">(p5 <span style="color: #008b8b;">&lt;-</span> p5 + geom_line() +
+<pre class="src src-R" id="orgce8403d">(p5 <span style="color: #008b8b;">&lt;-</span> p5 + geom_line() +
    facet_wrap(~State, ncol = 10))
 </pre>
 </div>
@@ -1195,12 +1201,12 @@ There is also a <code>facet_grid()</code> function for faceting in two dimension
 </div>
 </div>
 
-<div id="outline-container-orgaff2159" class="outline-2">
-<h2 id="orgaff2159">Themes</h2>
-<div class="outline-text-2" id="text-orgaff2159">
-</div><div id="outline-container-org9178038" class="outline-3">
-<h3 id="org9178038">Themes</h3>
-<div class="outline-text-3" id="text-org9178038">
+<div id="outline-container-org584235c" class="outline-2">
+<h2 id="org584235c">Themes</h2>
+<div class="outline-text-2" id="text-org584235c">
+</div><div id="outline-container-orgbdb2c0f" class="outline-3">
+<h3 id="orgbdb2c0f">Themes</h3>
+<div class="outline-text-3" id="text-orgbdb2c0f">
 <p>
 The <code>ggplot2</code> theme system handles non-data plot elements such as
 </p>
@@ -1219,7 +1225,7 @@ Built-in themes include:
 <li><code>theme_classc()</code></li>
 </ul>
 <div class="org-src-container">
-<pre class="src src-R" id="org861dae7">p5 + theme_linedraw()
+<pre class="src src-R" id="org33e23d7">p5 + theme_linedraw()
 </pre>
 </div>
 
@@ -1231,7 +1237,7 @@ Built-in themes include:
 
 
 <div class="org-src-container">
-<pre class="src src-R" id="orgfe0d1b4">p5 + theme_light()
+<pre class="src src-R" id="orgd97e12d">p5 + theme_light()
 </pre>
 </div>
 
@@ -1243,14 +1249,14 @@ Built-in themes include:
 </div>
 </div>
 
-<div id="outline-container-org35902b1" class="outline-3">
-<h3 id="org35902b1">Overriding theme defaults</h3>
-<div class="outline-text-3" id="text-org35902b1">
+<div id="outline-container-orgbde6c11" class="outline-3">
+<h3 id="orgbde6c11">Overriding theme defaults</h3>
+<div class="outline-text-3" id="text-orgbde6c11">
 <p>
 Specific theme elements can be overridden using <code>theme()</code>. For example:
 </p>
 <div class="org-src-container">
-<pre class="src src-R" id="org9d57091">p5 + theme_minimal() +
+<pre class="src src-R" id="orgaee98a2">p5 + theme_minimal() +
   theme(text = element_text(color = <span style="color: #8b2252;">"turquoise"</span>))
 </pre>
 </div>
@@ -1268,15 +1274,15 @@ All theme options are documented in <code>?theme</code>.
 </div>
 </div>
 
-<div id="outline-container-orgf6d587d" class="outline-3">
-<h3 id="orgf6d587d">Creating and saving new themes</h3>
-<div class="outline-text-3" id="text-orgf6d587d">
+<div id="outline-container-org51dab38" class="outline-3">
+<h3 id="org51dab38">Creating and saving new themes</h3>
+<div class="outline-text-3" id="text-org51dab38">
 <p>
 You can create new themes, as in the following example:
 </p>
 
 <div class="org-src-container">
-<pre class="src src-R" id="orga788bc3">theme_new <span style="color: #008b8b;">&lt;-</span> theme_bw() +
+<pre class="src src-R" id="org68108f1">theme_new <span style="color: #008b8b;">&lt;-</span> theme_bw() +
   theme(plot.background = element_rect(size = 1, color = <span style="color: #8b2252;">"blue"</span>, fill = <span style="color: #8b2252;">"black"</span>),
         text=element_text(size = 12, family = <span style="color: #8b2252;">"Serif"</span>, color = <span style="color: #8b2252;">"ivory"</span>),
         axis.text.y = element_text(colour = <span style="color: #8b2252;">"purple"</span>),
@@ -1299,21 +1305,21 @@ p5 + theme_new
 </div>
 </div>
 
-<div id="outline-container-org54bebcc" class="outline-2">
-<h2 id="org54bebcc">The #1 FAQ</h2>
-<div class="outline-text-2" id="text-org54bebcc">
-</div><div id="outline-container-orgc54a0b4" class="outline-3">
-<h3 id="orgc54a0b4">Map Aesthetic To Different Columns</h3>
-<div class="outline-text-3" id="text-orgc54a0b4">
+<div id="outline-container-orgec97f0d" class="outline-2">
+<h2 id="orgec97f0d">The #1 FAQ</h2>
+<div class="outline-text-2" id="text-orgec97f0d">
+</div><div id="outline-container-orga59feae" class="outline-3">
+<h3 id="orga59feae">Map Aesthetic To Different Columns</h3>
+<div class="outline-text-3" id="text-orga59feae">
 <p>
 The most frequently asked question goes something like this: <i>I have two variables in my data.frame, and I'd like to plot them as separate points, with different color depending on which variable it is. How do I do that?</i>
 </p>
 </div>
-<div id="outline-container-orga8aded2" class="outline-4">
-<h4 id="orga8aded2">Wrong</h4>
-<div class="outline-text-4" id="text-orga8aded2">
+<div id="outline-container-org29cf64b" class="outline-4">
+<h4 id="org29cf64b">Wrong</h4>
+<div class="outline-text-4" id="text-org29cf64b">
 <div class="org-src-container">
-<pre class="src src-R" id="org21325cf">housing.byyear <span style="color: #008b8b;">&lt;-</span> aggregate(cbind(Home.Value, Land.Value) ~ Date, data = housing, mean)
+<pre class="src src-R" id="org68782f5">housing.byyear <span style="color: #008b8b;">&lt;-</span> aggregate(cbind(Home.Value, Land.Value) ~ Date, data = housing, mean)
 ggplot(housing.byyear,
        aes(x=Date)) +
   geom_line(aes(y=Home.Value), color=<span style="color: #8b2252;">"red"</span>) +
@@ -1334,11 +1340,11 @@ ggplot(housing.byyear,
 </div>
 </div>
 
-<div id="outline-container-org74a903b" class="outline-4">
-<h4 id="org74a903b">Right</h4>
-<div class="outline-text-4" id="text-org74a903b">
+<div id="outline-container-orgbea53b7" class="outline-4">
+<h4 id="orgbea53b7">Right</h4>
+<div class="outline-text-4" id="text-orgbea53b7">
 <div class="org-src-container">
-<pre class="src src-R" id="orgbca53b1"><span style="color: #008b8b;">library</span>(tidyr)
+<pre class="src src-R" id="org970ed84"><span style="color: #008b8b;">library</span>(tidyr)
 home.land.byyear <span style="color: #008b8b;">&lt;-</span> gather(housing.byyear,
                            value = <span style="color: #8b2252;">"value"</span>,
                            key = <span style="color: #8b2252;">"type"</span>,
@@ -1363,12 +1369,12 @@ ggplot(home.land.byyear,
 </div>
 </div>
 
-<div id="outline-container-orgb8da2b1" class="outline-2">
-<h2 id="orgb8da2b1">Putting It All Together</h2>
-<div class="outline-text-2" id="text-orgb8da2b1">
-</div><div id="outline-container-orgf06e672" class="outline-3">
-<h3 id="orgf06e672">Challenge: Recreate This <code>Economist</code> Graph</h3>
-<div class="outline-text-3" id="text-orgf06e672">
+<div id="outline-container-org653ff8e" class="outline-2">
+<h2 id="org653ff8e">Putting It All Together</h2>
+<div class="outline-text-2" id="text-org653ff8e">
+</div><div id="outline-container-org5a4914d" class="outline-3">
+<h3 id="org5a4914d">Challenge: Recreate This <code>Economist</code> Graph</h3>
+<div class="outline-text-3" id="text-org5a4914d">
 <p>
 <a href="images/Economist1.pdf">images/Economist1.pdf</a>
 </p>
@@ -1393,12 +1399,12 @@ Building off of the graphics you created in the previous exercises, put the fini
 
 
 
-<div id="outline-container-orgde5be17" class="outline-2">
-<h2 id="orgde5be17">Wrap-up</h2>
-<div class="outline-text-2" id="text-orgde5be17">
-</div><div id="outline-container-org1326f2c" class="outline-3">
-<h3 id="org1326f2c">Help Us Make This Workshop Better!</h3>
-<div class="outline-text-3" id="text-org1326f2c">
+<div id="outline-container-orgbe01a81" class="outline-2">
+<h2 id="orgbe01a81">Wrap-up</h2>
+<div class="outline-text-2" id="text-orgbe01a81">
+</div><div id="outline-container-org5c1a35b" class="outline-3">
+<h3 id="org5c1a35b">Help Us Make This Workshop Better!</h3>
+<div class="outline-text-3" id="text-org5c1a35b">
 <ul class="org-ul">
 <li>Please take a moment to fill out a very short feedback form</li>
 <li>These workshops exist for you &#x2013; tell us what you need!</li>
@@ -1407,9 +1413,9 @@ Building off of the graphics you created in the previous exercises, put the fini
 </div>
 </div>
 
-<div id="outline-container-org4ceb183" class="outline-3">
-<h3 id="org4ceb183">Additional resources</h3>
-<div class="outline-text-3" id="text-org4ceb183">
+<div id="outline-container-org3d96f9d" class="outline-3">
+<h3 id="org3d96f9d">Additional resources</h3>
+<div class="outline-text-3" id="text-org3d96f9d">
 <ul class="org-ul">
 <li>ggplot2 resources
 <ul class="org-ul">
