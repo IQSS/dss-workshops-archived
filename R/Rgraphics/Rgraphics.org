@@ -918,15 +918,14 @@ To complete this graph we need to:
 
 ** Adding the trend line
 
-Adding the trend line is not too difficult, though we need to guess at the model being displyed on the graph. A little bit of trial and error leds to 
+Adding the trend line is not too difficult, though we need to guess at the model being displyed on the graph. A little bit of trial and error leads to 
 #+name: econDatScatter2
 #+begin_src R :results output graphics :file images/econScatter2.png 
   (pc2 <- pc1 +
-     geom_smooth(aes(group = 1),
-                 method = "lm",
-                 formula = y ~ log(x),
-                 se = FALSE,
-                 color = "red")) +
+    geom_smooth(mapping = aes(linetype = "r2"),
+                method = "lm",
+                formula = y ~ x + log(x), se = FALSE,
+                color = "red")
      geom_point()
 #+end_src
 
@@ -1103,12 +1102,12 @@ Our graph is almost there. To finish up, we need to adjust some of the theme ele
 ** Add model R^2 and source note
 The last bit of information that we want to have on the graph is the variance explained by the model represented by the trend line. Lets fit that model and pull out the R^2 first, then think about how to get it onto the graph.
 #+BEGIN_SRC R
-  (mR2 <- summary(lm(HDI ~ log(CPI), data = dat))$r.squared)
+  (mR2 <- summary(lm(HDI ~ CPI + log(CPI), data = dat))$r.squared)
 #+END_SRC
 
 #+RESULTS:
 #+begin_example
-> (mR2 <- summary(lm(HDI ~ log(CPI), data = dat))$r.squared)
+> (mR2 <- round(summary(lm(HDI ~ log(CPI), data = dat))$r.squared), digits = 2)
 [1] 0.5212859
 > 
 #+end_example
@@ -1118,25 +1117,82 @@ OK, now that we've calculated the values, let's think about how to get them on t
 And here it is, our final version!
 
 #+BEGIN_SRC R :results silent
-  library(grid)
   png(file = "images/econScatter10.png", width = 800, height = 600)
-  pc6 
-  grid.text("Sources: Transparency International; UN Human Development Report",
-           x = .02, y = .03,
-           just = "left",
-           draw = TRUE)
-  grid.segments(x0 = 0.81, x1 = 0.825,
-                y0 = 0.90, y1 = 0.90,
-                gp = gpar(col = "red"),
-                draw = TRUE)
-  grid.text(paste0("R² = ",
-                   as.integer(mR2*100),
-                   "%"),
-            x = 0.835, y = 0.90,
-            gp = gpar(col = "gray20"),
-            draw = TRUE,
-            just = "left")
 
+p <- ggplot(econ.data,
+            mapping = aes(x = CPI, y = HDI)) +
+    geom_point(mapping = aes(color = Region),
+               shape = 1,
+               size = 4,
+               stroke = 1.5) +
+    geom_smooth(mapping = aes(linetype = "r2"),
+                method = "lm",
+                formula = y ~ x + log(x), se = FALSE,
+                color = "red") +
+geom_text_repel(mapping = aes(label = Country, alpha = labels),
+                data = transform(econ.data,
+                                 labels = Country %in% c("Russia",
+                                                         "Venezuela",
+                                                         "Iraq",
+                                                         "Mayanmar",
+                                                         "Sudan",
+                                                         "Afghanistan",
+                                                         "Congo",
+                                                         "Greece",
+                                                         "Argentinia",
+                                                         "Italy",
+                                                         "Brazil",
+                                                         "India",
+                                                         "China",
+                                                         "South Africa",
+                                                         "Spain",
+                                                         "Cape Verde",
+                                                         "Bhutan",
+                                                         "Rwanda",
+                                                         "France",
+                                                         "Botswana",
+                                                         "France",
+                                                         "US",
+                                                         "Germany",
+                                                         "Britain",
+                                                         "Barbados",
+                                                         "Japan",
+                                                         "Norway",
+                                                         "New Zealand",
+                                                         "Sigapore"))) +
+scale_x_continuous(name = "Corruption Perception Index, 2011 (10=least corrupt)",
+                   limits = c(1.0, 10.0),
+                   breaks = 1:10) +
+    scale_y_continuous(name = "Human Development Index, 2011 (1=best)",
+                       limits = c(0.2, 1.0),
+                       breaks = seq(0.2, 1.0, by = 0.1)) +
+    scale_color_manual(name = "",
+                       values = c("Americas" = "#25A9DD",
+                                  "Asia Pacific" = "#AFE5F8",
+                                  "East EU Cemt Asia" = "#33988D",
+                                  "EU W. Europe" = "#22526c",
+                                  "MENA" = "#EF4F37",
+                                  "SSA" = "#7C250E"),
+                       guide = guide_legend(nrow = 1)) +
+    scale_alpha_discrete(range = c(0, 1),
+                         guide = FALSE) +
+    scale_linetype(name = "",
+                   breaks = "r2",
+                   labels = expression(R^2==mR2*"%"),
+                   guide = guide_legend(override.aes = list(linetype = 1, size = 2, color = "red"))) +
+    ggtitle("Corruption and human development") +
+    theme_bw() +
+    theme(panel.border = element_blank(),
+          panel.grid = element_blank(),
+          panel.grid.major.y = element_line(color = "gray"),
+          axis.line.x = element_line(color = "gray"),
+          axis.text = element_text(face = "italic"),
+          legend.position = "top",
+          legend.direction = "horizontal",
+          legend.box = "horizontal",
+          legend.text = element_text(size = 12),
+          plot.title = element_text(size = 16, face = "bold"))
+p
   dev.off()
 #+END_SRC
 
