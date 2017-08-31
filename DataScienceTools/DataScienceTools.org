@@ -1,0 +1,294 @@
+# -*- eval: (save-excursion (org-babel-goto-named-src-block "workshopPreamble") (org-babel-execute-src-block)) -*-
+#+TITLE:     Data Science Tools
+#+AUTHOR:    
+#+EMAIL:     help@iq.harvard.edu
+#+DATE:      
+
+# NOTE: refer to the README file if you are unfamiliar with emacs or orgmode.
+
+# Customize the PROPERTY and EXCLUDE_TAGS below depending on the type
+# of export (see the README file for details). After setting the exports 
+# property and/or the EXCLUDE_TAGS, place the curser on the poperty line 
+# and press C-c C-c
+
+#+PROPERTY: exports both
+#+EXCLUDE_TAGS: noexport mitsetup
+
+
+
+
+
+
+#+SETUPFILE: ../R/workshopPreamble.org
+
+#+HTML: <a href="https://github.com/IQSS/workshops"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/38ef81f8aca64bb9a64448d0d70f1308ef5341ab/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png"></a>
+
+#+name: workshopPreamble
+#+begin_src emacs-lisp :exports none :results silent :tangle no
+  (load-file "../R/setupEnvironment.el")
+#+end_src
+
+#+OPTIONS: toc:nil
+
+
+#+name: setupR
+#+begin_src R :exports none :tangle no :results silent
+  rm(list=ls())
+  .First <- function() {
+    options(width=70)
+    options(useFancyQuotes=FALSE)
+    options(show.signif.stars=FALSE)
+    options(scipen = 10)
+    options(digits = 3)
+  }
+#+end_src
+
+* Tools for working with data
+
+Working with data effectively requires learning at least one programming or scripting language. You can get by without this, but it would be like trying to cook with only a butter knife; not recommended! Compared to using a menu-driven interface (e.g., SPSS or SAS) or a spreadsheet (e.g., Excel), using a programming language allows you to:
+- reproduce results,
+- correct errors and update output,
+- reuse code,
+- collaborate with others,
+- automate repetitive tasks, and
+- generate manuscripts, reports, and other documents from your code.
+
+So, you need to learn a programming language for working with data, but which one should you learn? Since you'll be writing code you'll want to set up a comfortable environment for writing and editing that code. Which text editors are good for this? You'll probably also want to learn at least one markup language (e.g., LaTeX, Markdown) so that you can create reproducible manuscripts. What tools are good for this? These questions will guide our discussion, the goal of which is to help you decide which tools you should invest time in learning.
+
+
+* The puzzle pieces
+
+As we've noted, working effectively with data requires using a number of tools. The basic pieces are:
+- a data storage and retrieval system,
+- an editor for writing code,
+- an interpreter or compiler for executing that code,
+- a system for presenting results, and
+- some "glue" to make all the pieces work together.
+
+Now that we've identified the pieces we can talk about how to put them together. There are a lot of possible combinations, ranging from choosing separate individual programs for each task to using an Integrated Development Environment (IDE) or Notebook system that integrates all of these tasks into a single environment.
+
+
+** Old-school example
+In this example we're going to process data in a text file in a way that would be familiar to a statistician working forty years ago. While the tools are old, the basic pieces remain unchanged. Programs come and go, but the basic ideas remain pretty much the same!
+
+Specifically, we'll process the data in =1980_census.txt= by writing *fortran* code in the *vi* text editor and running it through the *fortran* compiler. Then we'll take the results and put them in to a *TeX* file, again using the *vi* editor to create the report. For "glue" we will use a terminal emulator running the bash shell. All of these tools were available in 1980, though some features have been added since that time.
+
+OLD SCHOOL DEMO:
+
+| example    | data storage    | editor | program | report tool | glue                      |
+|------------+-----------------+--------+---------+-------------+---------------------------|
+| old school | ASCII text file | vi     | fortran | TeX         | Bourne (compatable) shell |
+|            |                 |        |         |             |                           |
+
+** Something old and something new
+
+Next we're going to do the same basic process, this time using a modern text editor (*Atom*), a different programming language (*Python*), and a modern report generation system (*Markdown* processed via *pandoc*). For the glue we're still going to use a shell.
+
+OLD AND NEW DEMO:
+
+| example     | data storage    | editor | program | report tool | glue                      |
+|-------------+-----------------+--------+---------+-------------+---------------------------|
+| old school  | ASCII text file | vi     | fortran | TeX         | Bourne (compatable) shell |
+| old and new | ASCII text file | Atom   | python  | LaTeX       | Bash shell                |
+
+
+** A modern version
+Finally, we'll produce the same report using modern tools. Remember, the process is basically the same: we're just using different tools.
+
+MODERN DEMO:
+
+| example     | data storage    | editor  | program | report tool | glue                      |
+|-------------+-----------------+---------+---------+-------------+---------------------------|
+| old school  | ASCII text file | vi      | fortran | TeX         | Bourne (compatable) shell |
+| old and new | ASCII text file | Atom    | python  | LaTeX       | Bash shell                |
+| modern      | SQLite database | Rstudio | R       | R Markdown  | Rstudio                   |
+
+
+* Programming languages and statistics packages
+
+There are tens of programs for statistics and data science available. Here we will focus only on the more popular programs that offer a wide range of features. Note that for specific applications a specialized program may be better, e.g., many people use Mplus for structural equation models and another program for everything else.
+
+** What do we want a programming language or stats package to do?
+
+Here are some of the things we want a statistics program to do:
+- read/write data from/to a variety of data storage systems,
+- manipulate data,
+- perform statistical methods,
+- visualize data and results,
+- export results in a variety of formats,
+- be easy to use,
+- be well documented,
+- have a large user community.
+
+Note that this list is deceptively simple; each item may include a diversity of complicated features. For example,"read/write data from/to a variety of data storage systems" may include reading from databases, image files, .pdf files, .html and .xml files from a website, and any number of proprietary data storage formats.
+
+** Program comparison
+
+See [[http://r4stats.com/articles/popularity/]] for some data on statistical software popularity.
+
+| Program | Statistics | Visualization | Machine learning | Ease of use | Power/flexibility | Fun  |
+|---------+------------+---------------+------------------+-------------+-------------------+------|
+| Stata   | Good       | Servicable    | Limited          | Very easy   | Low               | Some |
+| SPSS    | OK         | Servicable    | Limited          | Easy        | Low               | None |
+| SAS     | Good       | Not great     | Good             | Moderate    | Moderate          | None |
+| Matlab  | Good       | Good          | Good             | Moderate    | Good              | Some |
+| R       | Excellent  | Excellent     | Good             | Moderate    | Excellent         | Yes  |
+| Python  | Good       | Good          | Excellent        | Moderate    | Excellent         | Yes  |
+| Julia   | OK         | Excellent     | Good             | Hard        | Excellent         | Yes  |
+|         |            |               |                  |             |                   |      |
+
+*** Read data from a file and summarize
+In this example we will compare the syntax for reading and summarizing data stored in a file.
+
+#+BEGIN_SRC stata :session *stata*
+  import delimited using "http://tutorials.iq.harvard.edu/R/Rgraphics/dataSets/EconomistData.csv"
+  sum
+#+END_SRC
+
+#+BEGIN_SRC R :session *r*
+  cpi <- read.csv("http://tutorials.iq.harvard.edu/R/Rgraphics/dataSets/EconomistData.csv")
+  summary(cpi)
+#+END_SRC
+
+#+BEGIN_SRC matlab :session *matlab* 
+  tmpfile = websave(tempname(), 'http://tutorials.iq.harvard.edu/R/Rgraphics/dataSets/EconomistData.csv');
+  cpi = readtable(tmpfile);
+  summary(cpi)
+#+END_SRC
+
+#+BEGIN_SRC python :session *python*
+  import pandas as pd
+  cpi = pd.read_csv('http://tutorials.iq.harvard.edu/R/Rgraphics/dataSets/EconomistData.csv')
+  cpi.describe(include = 'all')
+#+END_SRC
+
+*** Fit a linear regression
+
+Fitting statistical models is pretty straight-forward in all popular programs.
+
+#+BEGIN_SRC stata :session *stata*
+  regress hdi cpi
+#+END_SRC
+
+#+BEGIN_SRC R :session *r*
+  summary(lm(HDI ~ CPI, data = cpi))
+#+END_SRC
+
+#+BEGIN_SRC matlab :session *matlab*
+  fitlm(cpi, 'HDI~CPI')
+#+END_SRC
+
+#+BEGIN_SRC python :session *python*
+  import statsmodels.formula.api as model
+  X = cpi[['CPI']]
+  Y = cpi[['HDI']]
+  model.OLS(Y, X).fit().summary()
+#+END_SRC
+
+*** Extract links for .html file
+
+Retrieving data from a website is a common task. Here we parse a simple web page containing links to files we wish to download.
+
+#+BEGIN_SRC stata :session *stata*
+  disp "Ha ha ha! No, you do not want to use Stata for this!"
+#+END_SRC
+
+#+BEGIN_SRC R :session *r*
+  library(xml2)
+  index_page <- read_html("http://tutorials.iq.harvard.edu/example_data/baby_names/EW/")
+  all_anchors <- xml_find_all(index_page, "//a")
+  all_hrefs <- xml_attr(all_anchors, "href")
+  data_hrefs <- grep("\\.csv$", all_hrefs, value = TRUE)
+  data_links <- paste0("http://tutorials.iq.harvard.edu/example_data/baby_names/EW/", data_hrefs)
+  data_links
+#+END_SRC
+
+#+RESULTS:
+
+#+BEGIN_SRC matlab :session *matlab*
+  index_page = urlread('http://tutorials.iq.harvard.edu/example_data/baby_names/EW/');
+  all_hrefs = regexp(index_page, '<a href="([^"]*\.csv)">', 'tokens')';
+  all_hrefs = [all_hrefs{:}]';
+  all_links = strcat('http://tutorials.iq.harvard.edu/example_data/baby_names/EW/', all_hrefs)
+#+END_SRC
+
+
+#+BEGIN_SRC python :session *python*
+  from lxml import etree
+  import requests
+
+  index_text = requests.get('http://tutorials.iq.harvard.edu/example_data/baby_names/EW/').text
+  index_page = etree.HTML(index_text)
+  all_hrefs = [a.values() for a in index_page.findall(".//a")]
+  data_links = ['http://tutorials.iq.harvard.edu/example_data/baby_names/EW/' +
+                href[0] for href in all_hrefs if 'csv' in href[0]]
+  for link in data_links:
+      print(link)
+#+END_SRC
+
+* Creating reports
+Once you've analyzed your data you'll most likely want to communicate your results. For short informal projects this might take the form of a blog post or an email to your colleagues. For larger more formal projects you'll likely want to prepare a substantial report or manuscript for disseminating your findings via a journal publication or other means. Other common means of reporting research findings include posters or slides for a conference talk.
+
+Regardless of the type of report, you may choose to use either a /markup language/ or a WYSIWYG application like Microsoft Word/Powerpoint of a desktop publishing application such as Adobe InDesign. 
+ 
+** Markup languages
+A markup language is a system for producing a formatted document from a text file using information by the markup. A major advantage of markup languages is that the formatting instructions can be easily generated by the program you use for analyzing your data.
+
+Markup languages include /HTML/, /LaTeX/, /Markdown/ and many others. /LaTeX/ and /Markdown/ are currently popular among data scientists, although others are used as well.
+
+/Markdown/ is easy to write and designed to be human-readable. It is newer and somewhat less feature-full compared to LaTeX. It's main advantage is simplicity. /LaTeX/ is more verbose but provides for just about any feature you'll ever need.
+
+MARKDOWN DEMO
+LATEX DEMO
+
+** Word processors
+Modern word processors are largely just graphical user interfaces that write a markup language (usually XML) for you. They are commonly used for creating reports, but care must be taken when doing so. 
+
+If you use a word processor to produce your reports you should
+- use the structured outline feature,
+- link rather than embed external resources (figures, tables, etc.),
+- use cross-referencing features, and
+- use a bibliography management system.
+
+WORD PROCESSOR DEMO
+
+* Text editors and Integrated Development Environments
+A text editor edits text obviously. But that is not all! At a minimum, a text editor will also have a mechanism for reading and writing text files. Most text editors do much more than this.
+
+An IDE provides tools for working with code, such as syntax highlighting, code completion, jump-to-definition, execute/compile, package management, refactoring, etc. Of course an IDE includes a text editor.
+
+Editors and IDE's are not really separate categories -- as you add features to a text editor it becomes more like an IDE, and a simple IDE may provide little more than a text editor. For example, Emacs is commonly referred to as a text editor, but it provides nearly every feature you would expect an IDE to have.
+
+A more useful distinction is between language-specific editors/IDEs and general purpose editors/IDEs. The former are typically easier to set up since they come pre-configured for use with a specific language. General purpose editors/IDEs typically provide language support via /plugins/ and may require extensive configuration for each language.
+
+** Language specific 
+
+| Editor               | Features  | Ease of use | Language |
+|----------------------+-----------+-------------+----------|
+| RStudio              | Excellent | Easy        | R        |
+| Spyder               | Excellent | Easy        | Python   |
+| Stata do file editor | OK        | Easy        | Stata    |
+| SPSS syntax editor   | OK        | Easy        | SPSS     |
+| ...                  |           |             |          |
+
+LANGUAGE SPECIFIC IDE DEMO
+
+** General purpose
+
+| Editor       | Features  | Ease of use | Language support |
+|--------------+-----------+-------------+------------------|
+| Vim          | Excellent | Hard        | Good             |
+| Emacs        | Excellent | Hard        | Excellent        |
+| Atom         | Good      | Moderate    | Good             |
+| Eclipse      | Excellent | Easy        | Good             |
+| Sublime Text | Good      | Easy        | Good             |
+| Notepad++    | OK        | Easy        | OK               |
+| Textmate     | Good      | Moderate    | Good             |
+| Kate         | OK        | Easy        | Good             |
+
+GENERAL PURPOSE EDITOR DEMO
+
+* Literate programming and notebooks
+
+
+* Wrap up
