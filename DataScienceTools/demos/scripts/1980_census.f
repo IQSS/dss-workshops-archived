@@ -2,10 +2,10 @@
 
       PROGRAM sum1980
 
-      INTEGER: spop,tpop
+      INTEGER spop,tpop
 
       
-      OPEN(UNIT=1,FILE="data/1980_census.txt",FORM="FORMATTED",STATUS="OLD",ACTION="READ")
+      OPEN(UNIT=1,FILE="../data/1980_census.txt",ACTION="READ")
       
       tpop=0
 
