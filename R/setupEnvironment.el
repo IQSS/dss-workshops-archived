@@ -33,7 +33,7 @@
  'org-babel-load-languages
  '(;(stata . t) ;; requires custom ob-stata.el
    (emacs-lisp . t)
-   (sh . t)
+   (shell . t)
    (R . t)
    (latex . t)
    (octave . t)

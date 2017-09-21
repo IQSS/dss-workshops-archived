@@ -12,16 +12,16 @@
 # and press C-c C-c
 
 #+PROPERTY: exports both
-#+EXCLUDE_TAGS: noexport mitsetup
+#+PROPERTY: header-args:R  :session *R*
 
+#+EXCLUDE_TAGS: noexport mitsetup
+#+OPTIONS: toc:nil
 
 
 
 
 
 #+SETUPFILE: ../workshopPreamble.org
-
-#+HTML: <a class="github-fork-ribbon right-top" href="https://github.com/izahn/workshops" title="Fork me on GitHub">Fork me on GitHub</a>
 
 #+name: workshopPreamble
 #+begin_src emacs-lisp :exports none :results silent :tangle no
@@ -109,12 +109,6 @@ It is often helpful to start your R session by setting your working directory so
 #+end_src
 
 #+RESULTS: setwed
-#+begin_example
-> # set the working directory
-> # setwd("~/Desktop/Rstatistics")
-> # setwd("C:/Users/dataclass/Desktop/Rstatistics")
-> 
-#+end_example
 
 You might also start by listing the files in your working directory
 #+name: listFiles
@@ -125,12 +119,9 @@ You might also start by listing the files in your working directory
 
 #+RESULTS: listFiles
 #+begin_example
-> getwd() # where am I?
-[1] "/home/izahn/Documents/Work/IQSS/Classes/IQSS_Stats_Workshops/R/Rstatistics"
-> list.files("dataSets") # files in the dataSets folder
+[1] "/home/izahn/Documents/Work/Classes/IQSS_Stats_Workshops/R/Rstatistics"
 [1] "Exam.rds"          "NatHealth2008MI"   "NatHealth2011.rds"
-[4] "states.dta"        "states.rds"       
-> 
+[4] "states.dta"        "states.rds"
 #+end_example
 
 ** Load the states data
@@ -148,12 +139,6 @@ The /states.dta/ data comes from [[http://anawida.de/teach/SS14/anawida/4.linReg
 
 #+RESULTS: loadStates
 #+begin_example
-> # read the states data
-> states.data <- readRDS("dataSets/states.rds") 
-> #get labels
-> states.info <- data.frame(attributes(states.data)[c("names", "var.labels")])
-> #look at last few labels
-> tail(states.info, 8)
      names                      var.labels
 14    csat        Mean composite SAT score
 15    vsat           Mean verbal SAT score
@@ -163,7 +148,6 @@ The /states.dta/ data comes from [[http://anawida.de/teach/SS14/anawida/4.linReg
 19  income Median household income, $1,000
 20    high             % adults HS diploma
 21 college         % adults college degree
-> 
 #+end_example
 
 
@@ -182,22 +166,16 @@ Start by examining the data to check for problems.
 
 #+RESULTS:
 #+begin_example
-> # summary of expense and csat columns, all rows
-> sts.ex.sat <- subset(states.data, select = c("expense", "csat"))
-> summary(sts.ex.sat)
-    expense          csat     
- Min.   :2960   Min.   : 832  
- 1st Qu.:4352   1st Qu.: 888  
- Median :5000   Median : 926  
- Mean   :5236   Mean   : 944  
- 3rd Qu.:5794   3rd Qu.: 997  
- Max.   :9259   Max.   :1093  
-> # correlation between expense and csat
-> cor(sts.ex.sat) 
-        expense   csat
-expense   1.000 -0.466
-csat     -0.466  1.000
-> 
+    expense          csat       
+ Min.   :2960   Min.   : 832.0  
+ 1st Qu.:4352   1st Qu.: 888.0  
+ Median :5000   Median : 926.0  
+ Mean   :5236   Mean   : 944.1  
+ 3rd Qu.:5794   3rd Qu.: 997.0  
+ Max.   :9259   Max.   :1093.0
+           expense       csat
+expense  1.0000000 -0.4662978
+csat    -0.4662978  1.0000000
 #+end_example
 
 ** Plot the data before fitting models
@@ -231,29 +209,24 @@ Plot the data to look for multivariate outliers, non-linear relationships etc.
 
 #+RESULTS:
 #+begin_example
-> # Fit our regression model
-> sat.mod <- lm(csat ~ expense, # regression formula
-+               data=states.data) # data set
-> # Summarize and print the results
-> summary(sat.mod) # show regression coefficients table
 
 Call:
 lm(formula = csat ~ expense, data = states.data)
 
 Residuals:
-    Min      1Q  Median      3Q     Max 
--131.81  -38.08    5.61   37.85  136.50 
+     Min       1Q   Median       3Q      Max 
+-131.811  -38.085    5.607   37.852  136.495 
 
 Coefficients:
-              Estimate Std. Error t value Pr(>|t|)
-(Intercept) 1060.73244   32.70090   32.44  < 2e-16
-expense       -0.02228    0.00604   -3.69  0.00056
+              Estimate Std. Error t value Pr(>|t|)    
+(Intercept)  1.061e+03  3.270e+01   32.44  < 2e-16 ***
+expense     -2.228e-02  6.037e-03   -3.69 0.000563 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 
-Residual standard error: 59.8 on 49 degrees of freedom
-Multiple R-squared:  0.217,	Adjusted R-squared:  0.201 
-F-statistic: 13.6 on 1 and 49 DF,  p-value: 0.000563
-
-> 
+Residual standard error: 59.81 on 49 degrees of freedom
+Multiple R-squared:  0.2174,	Adjusted R-squared:  0.2015 
+F-statistic: 13.61 on 1 and 49 DF,  p-value: 0.0005631
 #+end_example
 
 ** Why is the association between expense and SAT scores /negative/?
@@ -266,26 +239,25 @@ Many people find it surprising that the per-capita expenditure on students is ne
 
 #+RESULTS:
 #+begin_example
-> summary(lm(csat ~ expense + percent, data = states.data))
 
 Call:
 lm(formula = csat ~ expense + percent, data = states.data)
 
 Residuals:
-   Min     1Q Median     3Q    Max 
--62.92 -24.32   1.74  15.50  75.62 
+    Min      1Q  Median      3Q     Max 
+-62.921 -24.318   1.741  15.502  75.623 
 
 Coefficients:
-            Estimate Std. Error t value Pr(>|t|)
-(Intercept) 989.8074    18.3958   53.81  < 2e-16
-expense       0.0086     0.0042    2.05    0.046
-percent      -2.5377     0.2249  -11.28  4.2e-15
+              Estimate Std. Error t value Pr(>|t|)    
+(Intercept) 989.807403  18.395770  53.806  < 2e-16 ***
+expense       0.008604   0.004204   2.046   0.0462 *  
+percent      -2.537700   0.224912 -11.283 4.21e-15 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 
-Residual standard error: 31.6 on 48 degrees of freedom
-Multiple R-squared:  0.786,	Adjusted R-squared:  0.777 
-F-statistic:   88 on 2 and 48 DF,  p-value: <2e-16
-
-> 
+Residual standard error: 31.62 on 48 degrees of freedom
+Multiple R-squared:  0.7857,	Adjusted R-squared:  0.7768 
+F-statistic: 88.01 on 2 and 48 DF,  p-value: < 2.2e-16
 #+end_example
 
 ** The lm class and methods
@@ -302,19 +274,15 @@ OK, we fit our model. Now what?
 
 #+RESULTS: checkModelObject
 #+begin_example
-> class(sat.mod)
 [1] "lm"
-> names(sat.mod)
  [1] "coefficients"  "residuals"     "effects"       "rank"         
  [5] "fitted.values" "assign"        "qr"            "df.residual"  
- [9] "xlevels"       "call"          "terms"         "model"        
-> methods(class = class(sat.mod))[1:9]
+ [9] "xlevels"       "call"          "terms"         "model"
 [1] "add1.lm"                   "alias.lm"                 
 [3] "anova.lm"                  "case.names.lm"            
 [5] "coerce,oldClass,S3-method" "confint.lm"               
 [7] "cooks.distance.lm"         "deviance.lm"              
-[9] "dfbeta.lm"                
-> 
+[9] "dfbeta.lm"
 #+end_example
 
 - Use function methods to get more information about the fit
@@ -327,12 +295,9 @@ OK, we fit our model. Now what?
 
 #+RESULTS: confInt
 #+begin_example
-> confint(sat.mod)
-               2.5 %    97.5 %
-(Intercept) 995.0175 1126.4474
-expense      -0.0344   -0.0101
-> # hist(residuals(sat.mod))
-> 
+                   2.5 %        97.5 %
+(Intercept) 995.01753164 1126.44735626
+expense      -0.03440768   -0.01014361
 #+end_example
 
 
@@ -365,26 +330,20 @@ Do congressional voting patterns predict SAT scores over and above expense? Fit 
 
 #+RESULTS: m1demogOnly
 #+begin_example
-> # fit another model, adding house and senate as predictors
-> sat.voting.mod <-  lm(csat ~ expense + house + senate,
-+                       data = na.omit(states.data))
-> sat.mod <- update(sat.mod, data=na.omit(states.data))
-> # compare using the anova() function
-> anova(sat.mod, sat.voting.mod)
 Analysis of Variance Table
 
 Model 1: csat ~ expense
 Model 2: csat ~ expense + house + senate
-  Res.Df    RSS Df Sum of Sq    F Pr(>F)
-1     46 169050                         
-2     44 149284  2     19766 2.91  0.065
-> coef(summary(sat.voting.mod))
-             Estimate Std. Error t value Pr(>|t|)
-(Intercept) 1082.9344   38.63381   28.03 1.07e-29
-expense       -0.0187    0.00969   -1.93 6.00e-02
-house         -1.4424    0.60048   -2.40 2.06e-02
-senate         0.4982    0.51356    0.97 3.37e-01
-> 
+  Res.Df    RSS Df Sum of Sq      F  Pr(>F)  
+1     46 169050                              
+2     44 149284  2     19766 2.9128 0.06486 .
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+                 Estimate   Std. Error    t value     Pr(>|t|)
+(Intercept) 1082.93438041 38.633812740 28.0307405 1.067795e-29
+expense       -0.01870832  0.009691494 -1.9303852 6.001998e-02
+house         -1.44243754  0.600478382 -2.4021473 2.058666e-02
+senate         0.49817861  0.513561356  0.9700469 3.373256e-01
 #+end_example
 
 
@@ -412,17 +371,11 @@ Interactions allow us assess the extent to which the association between one pre
 
 #+RESULTS: fitModel2
 #+begin_example
->   #Add the interaction to the model
-> sat.expense.by.percent <- lm(csat ~ expense*income,
-+                              data=states.data) 
-> #Show the results
->   coef(summary(sat.expense.by.percent)) # show regression coefficients table
-                 Estimate Std. Error t value       Pr(>|t|)
-(Intercept)    1380.36423 172.086252    8.02 0.000000000237
-expense          -0.06384   0.032701   -1.95 0.056878369245
-income          -10.49785   4.991463   -2.10 0.040832525071
-expense:income    0.00138   0.000864    1.60 0.115539488253
-> 
+                    Estimate   Std. Error   t value     Pr(>|t|)
+(Intercept)     1.380364e+03 1.720863e+02  8.021351 2.367069e-10
+expense        -6.384067e-02 3.270087e-02 -1.952262 5.687837e-02
+income         -1.049785e+01 4.991463e+00 -2.103161 4.083253e-02
+expense:income  1.384647e-03 8.635529e-04  1.603431 1.155395e-01
 #+end_example
 
 ** Regression with categorical predictors
@@ -441,28 +394,20 @@ Let's try to predict SAT scores from region, a categorical variable. Note that y
 
 #+RESULTS:
 #+begin_example
-> # make sure R knows region is categorical
-> str(states.data$region)
  Factor w/ 4 levels "West","N. East",..: 3 1 1 3 1 1 2 3 NA 3 ...
-> states.data$region <- factor(states.data$region)
-> #Add region to the model
-> sat.region <- lm(csat ~ region,
-+                  data=states.data) 
-> #Show the results
-> coef(summary(sat.region)) # show regression coefficients table
-              Estimate Std. Error t value Pr(>|t|)
-(Intercept)      946.3       14.8  63.958 1.35e-46
-regionN. East    -56.8       23.1  -2.453 1.80e-02
-regionSouth      -16.3       19.9  -0.819 4.17e-01
-regionMidwest     63.8       21.4   2.986 4.51e-03
-> anova(sat.region) # show ANOVA table
+               Estimate Std. Error    t value     Pr(>|t|)
+(Intercept)   946.30769   14.79582 63.9577807 1.352577e-46
+regionN. East -56.75214   23.13285 -2.4533141 1.800383e-02
+regionSouth   -16.30769   19.91948 -0.8186806 4.171898e-01
+regionMidwest  63.77564   21.35592  2.9863209 4.514152e-03
 Analysis of Variance Table
 
 Response: csat
-          Df Sum Sq Mean Sq F value   Pr(>F)
-region     3  82049   27350    9.61 0.000049
-Residuals 46 130912    2846                 
-> 
+          Df Sum Sq Mean Sq F value    Pr(>F)    
+region     3  82049 27349.8  9.6102 4.859e-05 ***
+Residuals 46 130912  2845.9                      
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 #+end_example
 
 Again, *make sure to tell R which variables are categorical by converting them to factors!*
@@ -484,30 +429,21 @@ In the previous example we use the default contrasts for region. The default in 
 
 #+RESULTS: getContrasts
 #+begin_example
-> # print default contrasts
-> contrasts(states.data$region)
         N. East South Midwest
 West          0     0       0
 N. East       1     0       0
 South         0     1       0
 Midwest       0     0       1
-> # change the reference group
-> coef(summary(lm(csat ~ C(region, base=4),
-+                 data=states.data)))
-                     Estimate Std. Error t value Pr(>|t|)
-(Intercept)            1010.1       15.4   65.59 4.30e-47
-C(region, base = 4)1    -63.8       21.4   -2.99 4.51e-03
-C(region, base = 4)2   -120.5       23.5   -5.12 5.80e-06
-C(region, base = 4)3    -80.1       20.4   -3.93 2.83e-04
-> # change the coding scheme
-> coef(summary(lm(csat ~ C(region, contr.helmert),
-+                 data=states.data)))
-                          Estimate Std. Error t value Pr(>|t|)
-(Intercept)                 943.99       7.71 122.498 1.69e-59
-C(region, contr.helmert)1   -28.38      11.57  -2.453 1.80e-02
-C(region, contr.helmert)2     4.02       5.88   0.684 4.98e-01
-C(region, contr.helmert)3    22.03       4.45   4.955 1.02e-05
-> 
+                       Estimate Std. Error   t value     Pr(>|t|)
+(Intercept)          1010.08333   15.39998 65.589930 4.296307e-47
+C(region, base = 4)1  -63.77564   21.35592 -2.986321 4.514152e-03
+C(region, base = 4)2 -120.52778   23.52385 -5.123641 5.798399e-06
+C(region, base = 4)3  -80.08333   20.37225 -3.931000 2.826007e-04
+                            Estimate Std. Error     t value     Pr(>|t|)
+(Intercept)               943.986645   7.706155 122.4977451 1.689670e-59
+C(region, contr.helmert)1 -28.376068  11.566423  -2.4533141 1.800383e-02
+C(region, contr.helmert)2   4.022792   5.884552   0.6836191 4.976450e-01
+C(region, contr.helmert)3  22.032229   4.446777   4.9546509 1.023364e-05
 #+end_example
 
 See also =?contrasts=, =?contr.treatment=, and =?relevel=.
@@ -540,11 +476,6 @@ Load the National Health Interview Survey data:
 #+end_src
 
 #+RESULTS: NHSdescription
-#+begin_example
-> NH11 <- readRDS("dataSets/NatHealth2011.rds")
-> labs <- attributes(NH11)$labels
-> 
-#+end_example
 
 ** Logistic regression example
 
@@ -564,24 +495,15 @@ Let's predict the probability of being diagnosed with hypertension based on age,
 
 #+RESULTS: logit1
 #+begin_example
-> str(NH11$hypev) # check stucture of hypev
  Factor w/ 5 levels "1 Yes","2 No",..: 2 2 1 2 2 1 2 2 1 2 ...
-> levels(NH11$hypev) # check levels of hypev
 [1] "1 Yes"             "2 No"              "7 Refused"        
-[4] "8 Not ascertained" "9 Don't know"     
-> # collapse all missing values to NA
-> NH11$hypev <- factor(NH11$hypev, levels=c("2 No", "1 Yes"))
-> # run our regression model
-> hyp.out <- glm(hypev~age_p+sex+sleep+bmi,
-+               data=NH11, family="binomial")
-> coef(summary(hyp.out))
-            Estimate Std. Error z value Pr(>|z|)
-(Intercept) -4.26947   0.056495  -75.57 0.00e+00
-age_p        0.06070   0.000823   73.78 0.00e+00
-sex2 Female -0.14403   0.026798   -5.37 7.68e-08
-sleep       -0.00704   0.001640   -4.29 1.78e-05
-bmi          0.01857   0.000951   19.53 6.49e-85
-> 
+[4] "8 Not ascertained" "9 Don't know"
+                Estimate   Std. Error    z value     Pr(>|z|)
+(Intercept) -4.269466028 0.0564947294 -75.572820 0.000000e+00
+age_p        0.060699303 0.0008227207  73.778743 0.000000e+00
+sex2 Female -0.144025092 0.0267976605  -5.374540 7.677854e-08
+sleep       -0.007035776 0.0016397197  -4.290841 1.779981e-05
+bmi          0.018571704 0.0009510828  19.526906 6.485172e-85
 #+end_example
 
 ** Logistic regression coefficients
@@ -598,16 +520,13 @@ One solution is to transform the coefficients to make them easier to interpret
 
 #+RESULTS: logitcoef2
 #+begin_example
-> hyp.out.tab <- coef(summary(hyp.out))
-> hyp.out.tab[, "Estimate"] <- exp(coef(hyp.out))
-> hyp.out.tab
-            Estimate Std. Error z value Pr(>|z|)
-(Intercept)    0.014   0.056495  -75.57 0.00e+00
-age_p          1.063   0.000823   73.78 0.00e+00
-sex2 Female    0.866   0.026798   -5.37 7.68e-08
-sleep          0.993   0.001640   -4.29 1.78e-05
-bmi            1.019   0.000951   19.53 6.49e-85
-> 
+ 
+             Estimate   Std. Error    z value     Pr(>|z|)
+(Intercept) 0.01398925 0.0564947294 -75.572820 0.000000e+00
+age_p       1.06257935 0.0008227207  73.778743 0.000000e+00
+sex2 Female 0.86586602 0.0267976605  -5.374540 7.677854e-08
+sleep       0.99298892 0.0016397197  -4.290841 1.779981e-05
+bmi         1.01874523 0.0009510828  19.526906 6.485172e-85
 #+end_example
 
 ** Generating predicted values
@@ -630,20 +549,9 @@ In addition to transforming the log-odds produced by =glm= to odds, we can use t
 
 #+RESULTS: predDat1
 #+begin_example
-> # Create a dataset with predictors set at desired levels
-> predDat <- with(NH11,
-+                 expand.grid(age_p = c(33, 63),
-+                             sex = "2 Female",
-+                             bmi = mean(bmi, na.rm = TRUE),
-+                             sleep = mean(sleep, na.rm = TRUE)))
-> # predict hypertension at those levels
-> cbind(predDat, predict(hyp.out, type = "response",
-+                        se.fit = TRUE, interval="confidence",
-+                        newdata = predDat))
-  age_p      sex  bmi sleep   fit  se.fit residual.scale
-1    33 2 Female 29.9  7.86 0.129 0.00285              1
-2    63 2 Female 29.9  7.86 0.478 0.00482              1
-> 
+  age_p      sex      bmi   sleep       fit      se.fit residual.scale
+1    33 2 Female 29.89565 7.86221 0.1289227 0.002849622              1
+2    63 2 Female 29.89565 7.86221 0.4776303 0.004816059              1
 #+end_example
 
 This tells us that a 33 year old female has a 13% probability of having been diagnosed with hypertension, while and 63 year old female has a 48% probability of having been diagnosed.
@@ -694,8 +602,7 @@ Note that the data is not perfectly clean and ready to be modeled. You will need
 
 #+RESULTS: loadlme4Package
 #+begin_example
-> library(lme4)
-> 
+Loading required package: Matrix
 #+end_example
 
 
@@ -713,18 +620,6 @@ Note that the data is not perfectly clean and ready to be modeled. You will need
 #+end_src
 
 #+RESULTS: setupR3
-#+begin_example
-> .First <- function() {
-+   library(Amelia, quietly=TRUE)
-+   library(lme4, quietly=TRUE)
-+   options(width=70)
-+   options(useFancyQuotes=FALSE)
-+   options(show.signif.stars=FALSE)
-+   options(scipen = 10)
-+   options(digits = 3)
-+ }
-> 
-#+end_example
 
 
 ** The Exam data
@@ -749,10 +644,6 @@ The Exam data set contans exam scores of 4,059 students from 65 schools in Inner
 #+end_src
 
 #+RESULTS: tasdf
-#+begin_example
-> Exam <- readRDS("dataSets/Exam.rds")
-> 
-#+end_example
 
 
 ** The null model and ICC
@@ -769,31 +660,26 @@ As a preliminary step it is often useful to partition the variance in the depend
 
 #+RESULTS: mixedModel1
 #+begin_example
-> # null model, grouping by school but not fixed effects.
-> Norm1 <-lmer(normexam ~ 1 + (1|school),
-+               data=Exam, REML = FALSE)
-> summary(Norm1)
 Linear mixed model fit by maximum likelihood  ['lmerMod']
 Formula: normexam ~ 1 + (1 | school)
    Data: Exam
 
      AIC      BIC   logLik deviance df.resid 
-   10826    10844    -5410    10820     3984 
+ 10825.5  10844.4  -5409.8  10819.5     3984 
 
 Scaled residuals: 
-   Min     1Q Median     3Q    Max 
--3.902 -0.646  0.003  0.698  3.636 
+    Min      1Q  Median      3Q     Max 
+-3.9022 -0.6463  0.0028  0.6981  3.6364 
 
 Random effects:
  Groups   Name        Variance Std.Dev.
- school   (Intercept) 0.169    0.412   
- Residual             0.848    0.921   
+ school   (Intercept) 0.1695   0.4117  
+ Residual             0.8482   0.9210  
 Number of obs: 3987, groups:  school, 65
 
 Fixed effects:
             Estimate Std. Error t value
-(Intercept)  -0.0141     0.0538   -0.26
-> 
+(Intercept) -0.01415    0.05378  -0.263
 #+end_example
 
 The is .169/(.169 + .848) = .17: 17% of the variance is at the school level.
@@ -810,36 +696,31 @@ Predict exam scores from student's standardized tests scores
 
 #+RESULTS: mixedModel2
 #+begin_example
-> Norm2 <-lmer(normexam~standLRT + (1|school),
-+              data=Exam,
-+              REML = FALSE) 
-> summary(Norm2) 
 Linear mixed model fit by maximum likelihood  ['lmerMod']
 Formula: normexam ~ standLRT + (1 | school)
    Data: Exam
 
      AIC      BIC   logLik deviance df.resid 
-    9143     9168    -4568     9135     3954 
+  9143.4   9168.5  -4567.7   9135.4     3954 
 
 Scaled residuals: 
-   Min     1Q Median     3Q    Max 
--3.700 -0.625  0.024  0.678  3.262 
+    Min      1Q  Median      3Q     Max 
+-3.7002 -0.6252  0.0238  0.6776  3.2617 
 
 Random effects:
  Groups   Name        Variance Std.Dev.
- school   (Intercept) 0.0919   0.303   
- Residual             0.5670   0.753   
+ school   (Intercept) 0.09193  0.3032  
+ Residual             0.56701  0.7530  
 Number of obs: 3958, groups:  school, 65
 
 Fixed effects:
             Estimate Std. Error t value
-(Intercept)  0.00121    0.04004     0.0
-standLRT     0.56559    0.01265    44.7
+(Intercept) 0.001211   0.040038    0.03
+standLRT    0.565588   0.012647   44.72
 
 Correlation of Fixed Effects:
          (Intr)
-standLRT 0.007 
-> 
+standLRT 0.007
 #+end_example
 
 
@@ -852,6 +733,10 @@ As with =lm= and =glm= models, you can compare the two =lmer= models using the =
 #+end_src
 
 #+RESULTS: mixedModelAnova
+#+begin_example
+Error in anova.merMod(Norm1, Norm2) : 
+  models were not all fitted to the same size of dataset
+#+end_example
 
 
 ** Random slopes 
@@ -866,36 +751,32 @@ Add a random effect of students' standardized test scores as well. Now in additi
 
 #+RESULTS: mixedModelRandSlope
 #+begin_example
-> Norm3 <- lmer(normexam~standLRT + (standLRT|school), data=Exam,
-+                REML = FALSE) 
-> summary(Norm3) 
 Linear mixed model fit by maximum likelihood  ['lmerMod']
 Formula: normexam ~ standLRT + (standLRT | school)
    Data: Exam
 
      AIC      BIC   logLik deviance df.resid 
-    9108     9146    -4548     9096     3952 
+  9108.4   9146.1  -4548.2   9096.4     3952 
 
 Scaled residuals: 
-   Min     1Q Median     3Q    Max 
--3.813 -0.634  0.033  0.673  3.452 
+    Min      1Q  Median      3Q     Max 
+-3.8129 -0.6336  0.0331  0.6734  3.4521 
 
 Random effects:
  Groups   Name        Variance Std.Dev. Corr
- school   (Intercept) 0.0899   0.300        
-          standLRT    0.0141   0.119    0.51
- Residual             0.5552   0.745        
+ school   (Intercept) 0.08985  0.2998       
+          standLRT    0.01415  0.1189   0.51
+ Residual             0.55516  0.7451       
 Number of obs: 3958, groups:  school, 65
 
 Fixed effects:
             Estimate Std. Error t value
-(Intercept)  -0.0122     0.0397   -0.31
-standLRT      0.5586     0.0199   28.08
+(Intercept) -0.01224    0.03972  -0.308
+standLRT     0.55863    0.01989  28.080
 
 Correlation of Fixed Effects:
          (Intr)
-standLRT 0.371 
-> 
+standLRT 0.371
 #+end_example
 
 ** Test the significance of the random slope
@@ -908,15 +789,15 @@ To test the significance of a random slope just compare models with and without 
 
 #+RESULTS: mixedModelAnova2
 #+begin_example
-> anova(Norm2, Norm3) 
 Data: Exam
 Models:
 Norm2: normexam ~ standLRT + (1 | school)
 Norm3: normexam ~ standLRT + (standLRT | school)
-      Df  AIC  BIC logLik deviance Chisq Chi Df   Pr(>Chisq)
-Norm2  4 9143 9169  -4568     9135                          
-Norm3  6 9108 9146  -4548     9096    39      2 0.0000000035
-> 
+      Df    AIC    BIC  logLik deviance  Chisq Chi Df Pr(>Chisq)    
+Norm2  4 9143.4 9168.5 -4567.7   9135.4                             
+Norm3  6 9108.4 9146.1 -4548.2   9096.4 38.954      2  3.477e-09 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 #+end_example
 
 
@@ -1111,10 +992,6 @@ Use the /states.rds/ data set.
 #+END_SRC
 
 #+RESULTS:
-#+begin_example
-> states <- readRDS("dataSets/states.rds")
-> 
-#+end_example
 
 Fit a model predicting  energy consumed per capita (energy) from the percentage of residents living in metropolitan areas (metro). Be sure to 
 1. [@1] Examine/plot the data before fitting the model
@@ -1127,22 +1004,18 @@ Fit a model predicting  energy consumed per capita (energy) from the percentage 
 
 #+RESULTS:
 #+begin_example
-> states.en.met <- subset(states, select = c("metro", "energy"))
-> summary(states.en.met)
-     metro           energy   
- Min.   : 20.4   Min.   :200  
- 1st Qu.: 47.0   1st Qu.:285  
- Median : 67.5   Median :320  
- Mean   : 64.1   Mean   :354  
- 3rd Qu.: 81.6   3rd Qu.:372  
- Max.   :100.0   Max.   :991  
- NA's   :1       NA's   :1    
-> plot(states.en.met)
-> cor(states.en.met, use="pairwise")
-       metro energy
-metro   1.00  -0.34
-energy -0.34   1.00
-> 
+     metro            energy     
+ Min.   : 20.40   Min.   :200.0  
+ 1st Qu.: 46.98   1st Qu.:285.0  
+ Median : 67.55   Median :320.0  
+ Mean   : 64.07   Mean   :354.5  
+ 3rd Qu.: 81.58   3rd Qu.:371.5  
+ Max.   :100.00   Max.   :991.0  
+ NA's   :1        NA's   :1
+ 
+           metro     energy
+metro   1.0000000 -0.3397445
+energy -0.3397445  1.0000000
 #+end_example
 
 2. [@2] Print and interpret the model =summary=
@@ -1153,27 +1026,25 @@ energy -0.34   1.00
 
 #+RESULTS:
 #+begin_example
-> mod.en.met <- lm(energy ~ metro, data = states)
-> summary(mod.en.met)
 
 Call:
 lm(formula = energy ~ metro, data = states)
 
 Residuals:
-   Min     1Q Median     3Q    Max 
--215.5  -64.5  -30.9   18.7  584.0 
+    Min      1Q  Median      3Q     Max 
+-215.51  -64.54  -30.87   18.71  583.97 
 
 Coefficients:
-            Estimate Std. Error t value      Pr(>|t|)
-(Intercept)  501.029     61.814    8.11 0.00000000015
-metro         -2.287      0.914   -2.50         0.016
+            Estimate Std. Error t value Pr(>|t|)    
+(Intercept) 501.0292    61.8136   8.105 1.53e-10 ***
+metro        -2.2871     0.9139  -2.503   0.0158 *  
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 
-Residual standard error: 140 on 48 degrees of freedom
+Residual standard error: 140.2 on 48 degrees of freedom
   (1 observation deleted due to missingness)
-Multiple R-squared:  0.115,	Adjusted R-squared:  0.097 
-F-statistic: 6.26 on 1 and 48 DF,  p-value: 0.0158
-
-> 
+Multiple R-squared:  0.1154,	Adjusted R-squared:  0.097 
+F-statistic: 6.263 on 1 and 48 DF,  p-value: 0.01578
 #+end_example
 
 3. [@3] =plot= the model to look for deviations from modeling assumptions
@@ -1197,54 +1068,47 @@ Select one or more additional predictors to add to your model and repeat steps 1
 
 #+RESULTS:
 #+begin_example
-> states.en.met.pop.wst <- subset(states, select = c("energy", "metro", "pop", "waste"))
-> summary(states.en.met.pop.wst)
-     energy        metro            pop               waste      
- Min.   :200   Min.   : 20.4   Min.   :  454000   Min.   :0.540  
- 1st Qu.:285   1st Qu.: 47.0   1st Qu.: 1299750   1st Qu.:0.822  
- Median :320   Median : 67.5   Median : 3390500   Median :0.960  
- Mean   :354   Mean   : 64.1   Mean   : 4962040   Mean   :0.989  
- 3rd Qu.:372   3rd Qu.: 81.6   3rd Qu.: 5898000   3rd Qu.:1.145  
- Max.   :991   Max.   :100.0   Max.   :29760000   Max.   :1.510  
- NA's   :1     NA's   :1       NA's   :1          NA's   :1      
-> plot(states.en.met.pop.wst)
-> cor(states.en.met.pop.wst, use = "pairwise")
-       energy  metro    pop  waste
-energy  1.000 -0.340 -0.184 -0.253
-metro  -0.340  1.000  0.565  0.488
-pop    -0.184  0.565  1.000  0.526
-waste  -0.253  0.488  0.526  1.000
-> mod.en.met.pop.waste <- lm(energy ~ metro + pop + waste, data = states)
-> summary(mod.en.met.pop.waste)
+     energy          metro             pop               waste       
+ Min.   :200.0   Min.   : 20.40   Min.   :  454000   Min.   :0.5400  
+ 1st Qu.:285.0   1st Qu.: 46.98   1st Qu.: 1299750   1st Qu.:0.8225  
+ Median :320.0   Median : 67.55   Median : 3390500   Median :0.9600  
+ Mean   :354.5   Mean   : 64.07   Mean   : 4962040   Mean   :0.9888  
+ 3rd Qu.:371.5   3rd Qu.: 81.58   3rd Qu.: 5898000   3rd Qu.:1.1450  
+ Max.   :991.0   Max.   :100.00   Max.   :29760000   Max.   :1.5100  
+ NA's   :1       NA's   :1        NA's   :1          NA's   :1
+           energy      metro        pop      waste
+energy  1.0000000 -0.3397445 -0.1840357 -0.2526499
+metro  -0.3397445  1.0000000  0.5653562  0.4877881
+pop    -0.1840357  0.5653562  1.0000000  0.5255713
+waste  -0.2526499  0.4877881  0.5255713  1.0000000
 
 Call:
 lm(formula = energy ~ metro + pop + waste, data = states)
 
 Residuals:
-   Min     1Q Median     3Q    Max 
--224.6  -67.5  -31.8   12.7  589.5 
+    Min      1Q  Median      3Q     Max 
+-224.62  -67.48  -31.76   12.65  589.48 
 
 Coefficients:
-                Estimate   Std. Error t value  Pr(>|t|)
-(Intercept) 561.66773812  99.04681924    5.67 0.0000009
-metro        -2.07914840   1.16786868   -1.78     0.082
-pop           0.00000165   0.00000481    0.34     0.733
-waste       -83.07494970 104.21963267   -0.80     0.429
+              Estimate Std. Error t value Pr(>|t|)    
+(Intercept)  5.617e+02  9.905e+01   5.671    9e-07 ***
+metro       -2.079e+00  1.168e+00  -1.780   0.0816 .  
+pop          1.649e-06  4.809e-06   0.343   0.7332    
+waste       -8.307e+01  1.042e+02  -0.797   0.4295    
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 
-Residual standard error: 142 on 46 degrees of freedom
+Residual standard error: 142.2 on 46 degrees of freedom
   (1 observation deleted due to missingness)
-Multiple R-squared:  0.128,	Adjusted R-squared:  0.0707 
-F-statistic: 2.24 on 3 and 46 DF,  p-value: 0.096
-
-> anova(mod.en.met, mod.en.met.pop.waste)
+Multiple R-squared:  0.1276,	Adjusted R-squared:  0.07067 
+F-statistic: 2.242 on 3 and 46 DF,  p-value: 0.09599
 Analysis of Variance Table
 
 Model 1: energy ~ metro
 Model 2: energy ~ metro + pop + waste
-  Res.Df    RSS Df Sum of Sq    F Pr(>F)
-1     48 943103                         
-2     46 930153  2     12949 0.32   0.73
-> 
+  Res.Df    RSS Df Sum of Sq      F Pr(>F)
+1     48 943103                           
+2     46 930153  2     12949 0.3202 0.7276
 #+end_example
 
 ** Exercise 1: prototype
@@ -1257,10 +1121,6 @@ Use the states data set.
 #+END_SRC
 
 #+RESULTS:
-#+begin_example
-> mod.en.metro.by.waste <- lm(energy ~ metro * waste, data = states)
-> 
-#+end_example
 
 2. Try adding a region to the model. Are there significant differences across the four regions?
 #+BEGIN_SRC R
@@ -1270,18 +1130,17 @@ Use the states data set.
 
 #+RESULTS:
 #+begin_example
-> mod.en.region <- lm(energy ~ metro * waste + region, data = states)
-> anova(mod.en.region)
 Analysis of Variance Table
 
 Response: energy
-            Df Sum Sq Mean Sq F value Pr(>F)
-metro        1 123064  123064    6.44  0.015
-waste        1  10572   10572    0.55  0.461
-region       3 111128   37043    1.94  0.137
-metro:waste  1    156     156    0.01  0.928
-Residuals   43 821247   19099               
-> 
+            Df Sum Sq Mean Sq F value  Pr(>F)  
+metro        1 123064  123064  6.4435 0.01484 *
+waste        1  10572   10572  0.5535 0.46093  
+region       3 111128   37043  1.9395 0.13749  
+metro:waste  1    156     156  0.0082 0.92835  
+Residuals   43 821247   19099                  
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 #+end_example
 
 ** Exercise 2 prototype
@@ -1304,16 +1163,15 @@ Use the NH11 data set that we loaded earlier. Note that the data is not perfectl
 
 #+RESULTS:
 #+begin_example
-> nh11.wrk.age.mar <- subset(NH11, select = c("everwrk", "age_p", "r_maritl"))
-> summary(nh11.wrk.age.mar)
-              everwrk          age_p     
- 1 Yes            :12153   Min.   :18.0  
- 2 No             : 1887   1st Qu.:33.0  
- 7 Refused        :   17   Median :47.0  
- 8 Not ascertained:    0   Mean   :48.1  
- 9 Don't know     :    8   3rd Qu.:62.0  
- NA's             :18949   Max.   :85.0  
-                                         
+ 
+             everwrk          age_p      
+ 1 Yes            :12153   Min.   :18.00  
+ 2 No             : 1887   1st Qu.:33.00  
+ 7 Refused        :   17   Median :47.00  
+ 8 Not ascertained:    0   Mean   :48.11  
+ 9 Don't know     :    8   3rd Qu.:62.00  
+ NA's             :18949   Max.   :85.00  
+                                          
                             r_maritl    
  1 Married - spouse in household:13943  
  7 Never married                : 7763  
@@ -1321,46 +1179,39 @@ Use the NH11 data set that we loaded earlier. Note that the data is not perfectl
  4 Widowed                      : 3069  
  8 Living with partner          : 2002  
  6 Separated                    : 1121  
- (Other)                        :  605  
-> NH11 <- transform(NH11,
-+                   everwrk = factor(everwrk,
-+                       levels = c("1 Yes", "2 No")),
-+                   r_maritl = droplevels(r_maritl))
-> 
-> mod.wk.age.mar <- glm(everwrk ~ age_p + r_maritl, data = NH11,
-+                       family = "binomial")
-> 
-> summary(mod.wk.age.mar)
+ (Other)                        :  605
 
 Call:
 glm(formula = everwrk ~ age_p + r_maritl, family = "binomial", 
     data = NH11)
 
 Deviance Residuals: 
-   Min      1Q  Median      3Q     Max  
--1.044  -0.565  -0.439  -0.337   2.731  
+    Min       1Q   Median       3Q      Max  
+-1.0436  -0.5650  -0.4391  -0.3370   2.7308  
 
 Coefficients:
-                                            Estimate Std. Error
-(Intercept)                                 -0.44025    0.09354
-age_p                                       -0.02981    0.00165
-r_maritl2 Married - spouse not in household  0.04968    0.21731
-r_maritl4 Widowed                            0.68362    0.08434
-r_maritl5 Divorced                          -0.73011    0.11168
-r_maritl6 Separated                         -0.12809    0.15137
-r_maritl7 Never married                      0.34361    0.06922
-r_maritl8 Living with partner               -0.44358    0.13777
-r_maritl9 Unknown marital status             0.39548    0.49297
-                                            z value Pr(>|z|)
-(Intercept)                                   -4.71  2.5e-06
-age_p                                        -18.12  < 2e-16
-r_maritl2 Married - spouse not in household    0.23   0.8192
-r_maritl4 Widowed                              8.11  5.2e-16
-r_maritl5 Divorced                            -6.54  6.3e-11
-r_maritl6 Separated                           -0.85   0.3974
-r_maritl7 Never married                        4.96  6.9e-07
-r_maritl8 Living with partner                 -3.22   0.0013
-r_maritl9 Unknown marital status               0.80   0.4224
+                                             Estimate Std. Error z value
+(Intercept)                                 -0.440248   0.093538  -4.707
+age_p                                       -0.029812   0.001645 -18.118
+r_maritl2 Married - spouse not in household  0.049675   0.217310   0.229
+r_maritl4 Widowed                            0.683618   0.084335   8.106
+r_maritl5 Divorced                          -0.730115   0.111681  -6.538
+r_maritl6 Separated                         -0.128091   0.151366  -0.846
+r_maritl7 Never married                      0.343611   0.069222   4.964
+r_maritl8 Living with partner               -0.443583   0.137770  -3.220
+r_maritl9 Unknown marital status             0.395480   0.492967   0.802
+                                            Pr(>|z|)    
+(Intercept)                                 2.52e-06 ***
+age_p                                        < 2e-16 ***
+r_maritl2 Married - spouse not in household  0.81919    
+r_maritl4 Widowed                           5.23e-16 ***
+r_maritl5 Divorced                          6.25e-11 ***
+r_maritl6 Separated                          0.39742    
+r_maritl7 Never married                     6.91e-07 ***
+r_maritl8 Living with partner                0.00128 ** 
+r_maritl9 Unknown marital status             0.42241    
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 
 (Dispersion parameter for binomial family taken to be 1)
 
@@ -1370,8 +1221,6 @@ Residual deviance: 10309  on 14031  degrees of freedom
 AIC: 10327
 
 Number of Fisher Scoring iterations: 5
-
-> 
 #+end_example
 
 2. [@2] Predict the probability of working for each level of marital status.
@@ -1382,18 +1231,24 @@ Number of Fisher Scoring iterations: 5
 
 #+RESULTS:
 #+begin_example
-> library(effects)
-> data.frame(Effect("r_maritl", mod.wk.age.mar))
-                             r_maritl    fit     se  lower  upper
-1     1 Married - spouse in household 0.1082 0.0441 0.1001 0.1169
-2 2 Married - spouse not in household 0.1131 0.2133 0.0775 0.1623
-3                           4 Widowed 0.1938 0.0681 0.1738 0.2155
-4                          5 Divorced 0.0552 0.1027 0.0456 0.0667
-5                         6 Separated 0.0965 0.1458 0.0743 0.1244
-6                     7 Never married 0.1461 0.0598 0.1321 0.1613
-7               8 Living with partner 0.0722 0.1329 0.0566 0.0918
-8            9 Unknown marital status 0.1527 0.4910 0.0644 0.3206
-> 
+                             r_maritl        fit         se      lower
+1     1 Married - spouse in household 0.10822000 0.04413754 0.10014980
+2 2 Married - spouse not in household 0.11310823 0.21326041 0.07746061
+3                           4 Widowed 0.19381087 0.06806325 0.17381358
+4                          5 Divorced 0.05524394 0.10272953 0.04562877
+5                         6 Separated 0.09646417 0.14579706 0.07426824
+6                     7 Never married 0.14611000 0.05978759 0.13208775
+7               8 Living with partner 0.07224958 0.13285112 0.05662466
+8            9 Unknown marital status 0.15270076 0.49100994 0.06440837
+       upper
+1 0.11685606
+2 0.16227532
+3 0.21550873
+4 0.06674358
+5 0.12440219
+6 0.16134411
+7 0.09176661
+8 0.32055728
 #+end_example
 
 
@@ -1407,8 +1262,8 @@ Use the dataset, bh1996:
 
 #+RESULTS:
 #+begin_example
-> data(bh1996, package="multilevel")
-> 
+Error in find.package(package, lib.loc, verbose = verbose) : 
+  there is no package called ‘multilevel’
 #+end_example
 
 From the data documentation:
@@ -1431,29 +1286,8 @@ Note that the group identifier is named "GRP".
 
 #+RESULTS:
 #+begin_example
-> library(lme4)
-> mod.grp0 <- lmer(WBEING ~ 1 + (1 | GRP), data = bh1996)
-> summary(mod.grp0)
-Linear mixed model fit by REML ['lmerMod']
-Formula: WBEING ~ 1 + (1 | GRP)
-   Data: bh1996
-
-REML criterion at convergence: 19347
-
-Scaled residuals: 
-   Min     1Q Median     3Q    Max 
--3.322 -0.648  0.031  0.718  2.667 
-
-Random effects:
- Groups   Name        Variance Std.Dev.
- GRP      (Intercept) 0.0358   0.189   
- Residual             0.7895   0.889   
-Number of obs: 7382, groups:  GRP, 99
-
-Fixed effects:
-            Estimate Std. Error t value
-(Intercept)   2.7743     0.0222     125
-> 
+Error: 'data' not found, and some variables missing from formula environment
+Error in summary(mod.grp0) : object 'mod.grp0' not found
 #+end_example
 => library(lme4)
 > mod.grp0 <- lmer(WBEING ~ 1 + (1 | GRP), data = bh1996)
@@ -1488,35 +1322,8 @@ Fixed effects:
 
 #+RESULTS:
 #+begin_example
-> mod.grp1 <- lmer(WBEING ~ HRS + LEAD + (1 | GRP), data = bh1996)
-> summary(mod.grp1)
-Linear mixed model fit by REML ['lmerMod']
-Formula: WBEING ~ HRS + LEAD + (1 | GRP)
-   Data: bh1996
-
-REML criterion at convergence: 17860
-
-Scaled residuals: 
-   Min     1Q Median     3Q    Max 
--3.919 -0.659  0.038  0.704  3.644 
-
-Random effects:
- Groups   Name        Variance Std.Dev.
- GRP      (Intercept) 0.0193   0.139   
- Residual             0.6467   0.804   
-Number of obs: 7382, groups:  GRP, 99
-
-Fixed effects:
-            Estimate Std. Error t value
-(Intercept)  1.68616    0.06770    24.9
-HRS         -0.03162    0.00438    -7.2
-LEAD         0.50074    0.01281    39.1
-
-Correlation of Fixed Effects:
-     (Intr) HRS   
-HRS  -0.800       
-LEAD -0.635  0.121
-> 
+Error: 'data' not found, and some variables missing from formula environment
+Error in summary(mod.grp1) : object 'mod.grp1' not found
 #+end_example
 
 4. [@4] Now, add a random effect of average number of hours worked ("HRS") to the model and interpret your output.  Test the significance of this random term.
@@ -1527,16 +1334,8 @@ LEAD -0.635  0.121
 
 #+RESULTS:
 #+begin_example
-> mod.grp2 <- lmer(WBEING ~ HRS + LEAD + (1 + HRS | GRP), data = bh1996)
-> anova(mod.grp1, mod.grp2)
-Data: bh1996
-Models:
-mod.grp1: WBEING ~ HRS + LEAD + (1 | GRP)
-mod.grp2: WBEING ~ HRS + LEAD + (1 + HRS | GRP)
-         Df   AIC   BIC logLik deviance Chisq Chi Df Pr(>Chisq)
-mod.grp1  5 17848 17882  -8919    17838                        
-mod.grp2  7 17851 17899  -8918    17837  1.22      2       0.54
-> 
+Error: 'data' not found, and some variables missing from formula environment
+Error in anova(mod.grp1, mod.grp2) : object 'mod.grp1' not found
 #+end_example
 
 
@@ -1566,8 +1365,4 @@ feedback form
 #+end_src
 
 #+RESULTS: cleanitallup
-#+begin_example
-> rm(list=ls())
-> 
-#+end_example
 

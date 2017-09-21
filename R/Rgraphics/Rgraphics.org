@@ -13,7 +13,8 @@
 
 #+PROPERTY: exports code
 #+EXCLUDE_TAGS: noexport mitsetup labsetup prototype
-
+#+PROPERTY: header-args:R  :session *R*
+#+OPTIONS: toc:nil
 
 
 
@@ -22,8 +23,6 @@
 
 
 #+SETUPFILE: ../workshopPreamble.org
-
-#+HTML: <a class="github-fork-ribbon right-top" href="https://github.com/izahn/workshops" title="Fork me on GitHub">Fork me on GitHub</a>
 
 
 #+name: setUp
@@ -146,15 +145,13 @@ Let's look at housing prices.
 
 #+RESULTS: housingData
 #+begin_example
-> housing <- read.csv("dataSets/landdata-states.csv")
-> head(housing[1:5])
   State region    Date Home.Value Structure.Cost
 1    AK   West 2010.25     224952         160599
 2    AK   West 2010.50     225511         160252
 3    AK   West 2009.75     225820         163791
 4    AK   West 2010.00     224994         161787
 5    AK   West 2008.00     234590         155400
-6    AK   West 2008.25     233714         157458 
+6    AK   West 2008.25     233714         157458
 #+end_example
 
 ** =ggplot2= VS Base Graphics
@@ -380,8 +377,13 @@ The data for the exercises is available in the ~dataSets/EconomistData.csv~ file
 
 #+RESULTS:
 #+begin_example
-> dat <- read.csv("dataSets/EconomistData.csv")
-> 
+  X     Country HDI.Rank   HDI CPI            Region
+1 1 Afghanistan      172 0.398 1.5      Asia Pacific
+2 2     Albania       70 0.739 3.1 East EU Cemt Asia
+3 3     Algeria       96 0.698 2.9              MENA
+4 4      Angola      148 0.486 2.0               SSA
+5 5   Argentina       45 0.797 3.0          Americas
+6 6     Armenia       86 0.716 2.6 East EU Cemt Asia
 #+end_example
 
 Original sources for these data are
@@ -438,18 +440,15 @@ Each =geom= has a default statistic, but these can be changed. For example, the 
 
 #+RESULTS: geomHistorgramArgs
 #+begin_example
-> args(geom_histogram)
-function (mapping = NULL, data = NULL, stat = "bin", binwidth = NULL, 
-    bins = NULL, origin = NULL, right = FALSE, position = "stack", 
-    na.rm = FALSE, show.legend = NA, inherit.aes = TRUE, ...) 
+function (mapping = NULL, data = NULL, stat = "bin", position = "stack", 
+    ..., binwidth = NULL, bins = NULL, na.rm = FALSE, show.legend = NA, 
+    inherit.aes = TRUE) 
 NULL
-> args(stat_bin)
 function (mapping = NULL, data = NULL, geom = "bar", position = "stack", 
-    width = 0.9, drop = FALSE, right = FALSE, binwidth = NULL, 
-    bins = NULL, origin = NULL, breaks = NULL, na.rm = FALSE, 
-    show.legend = NA, inherit.aes = TRUE, ...) 
+    ..., binwidth = NULL, bins = NULL, center = NULL, boundary = NULL, 
+    breaks = NULL, closed = c("right", "left"), pad = FALSE, 
+    na.rm = FALSE, show.legend = NA, inherit.aes = TRUE) 
 NULL
-> 
 #+end_example
 
 ** Setting Statistical Transformation Arguments
@@ -485,22 +484,19 @@ Sometimes the default statistical transformation is not what you need. This is o
 
 #+RESULTS: summarizeMTC
 #+begin_example
-> housing.sum <- aggregate(housing["Home.Value"], housing["State"], FUN=mean)
-> rbind(head(housing.sum), tail(housing.sum))
    State Home.Value
-1     AK     147385
-2     AL      92545
-3     AR      82077
-4     AZ     140756
-5     CA     282808
-6     CO     158176
-46    VA     155391
-47    VT     132395
-48    WA     178523
-49    WI     108359
-50    WV      77162
-51    WY     122897
-> 
+1     AK  147385.14
+2     AL   92545.22
+3     AR   82076.84
+4     AZ  140755.59
+5     CA  282808.08
+6     CO  158175.99
+46    VA  155391.44
+47    VT  132394.60
+48    WA  178522.58
+49    WI  108359.45
+50    WV   77161.71
+51    WY  122897.25
 #+end_example
 
 #+begin_src R
@@ -509,6 +505,9 @@ Sometimes the default statistical transformation is not what you need. This is o
 #+end_src
 
 #+RESULTS:
+#+begin_example
+Error: stat_count() must not be used with a y aesthetic.
+#+end_example
 
 #+begin_example
   ggplot(housing.sum, aes(x=State, y=Home.Value)) + 
@@ -640,6 +639,7 @@ Next change the low and high values to blue and red:
 
 #+name: modifyScales3b
 #+begin_src R :results output graphics :file images/modifyScales3b.png :width 800
+  library(scales)
   p4 +
     scale_color_continuous(name="",
                            breaks = c(1976, 1994, 2013),
@@ -925,8 +925,8 @@ Adding the trend line is not too difficult, though we need to guess at the model
     geom_smooth(mapping = aes(linetype = "r2"),
                 method = "lm",
                 formula = y ~ x + log(x), se = FALSE,
-                color = "red")
-     geom_point()
+                color = "red") +
+     geom_point())
 #+end_src
 
 
@@ -1107,9 +1107,7 @@ The last bit of information that we want to have on the graph is the variance ex
 
 #+RESULTS:
 #+begin_example
-> (mR2 <- round(summary(lm(HDI ~ log(CPI), data = dat))$r.squared), digits = 2)
-[1] 0.5212859
-> 
+[1] 0.521297
 #+end_example
 
 OK, now that we've calculated the values, let's think about how to get them on the graph. ggplot2 has an =annotate= function, but this is not convenient for adding elements outside the plot area. The =grid= package has nice functions for doing this, so we'll use those.
