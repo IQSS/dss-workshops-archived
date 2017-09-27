@@ -80,7 +80,7 @@
 #' those files. The URLs we need are right there as links in the web page. All we
 #' need to do is extract them.
 #' 
-#' Introduction to the tidyverse
+#' String manipulatio packages
 #' -----------------------------
 #' 
 #' In order extract the data URls from the website we will use functions for
@@ -106,53 +106,20 @@
 #' the [tidyverse](https://cran.r-project.org/web/packages/tidyverse/index.html)
 #' package which provides more modern versions of many basic functions in R.
 #' 
-## ------------------------------------------------------------------------
-## install.packages("tidyverse")
-library(tidyverse)
-library(stringr)
-
 #' 
-#' Packages in the tidyverse are often more convenient to use with pipes rather
-#' than nested function calls. The pipe operator looks like `%>%` and it inserts
-#' the value on the left as the first argument to the function on the right. It
-#' looks like this:
-#' 
-## ------------------------------------------------------------------------
-(x <- rnorm(5)) # extra parens around expression is a shortcut to assign and print
-
-## nested function calls to sort and round
-round(sort(x), digits = 2)
-
-## pipeline that does the same thing
-x %>%
-sort() %>%
-round(digits = 2)
-
-## nested function calls to sample letters, convert to uppercase and sort.
-sort(
-  str_to_upper(
-    sample(letters,
-           5,
-           replace = TRUE)))
-
-## pipeline that does the same thing:
-letters %>%
-  sample(5, replace = TRUE) %>%
-  str_to_upper() %>%
-  sort()
-
-#' 
-#' The examples in this workshop use the pipe when it makes examples easier to
-#' follow.
-#' 
-#' Reading text over http
-#' ----------------------
+#' Reading text into R
+#' -------------------
 #' 
 #' Our first task is to read the web page into R. Most of the file IO functions in
 #' R can read either from a local path or from internet URLS. We can read text into
 #' R line-by-line using the `read_lines` function.
 #' 
 ## ------------------------------------------------------------------------
+## install.packages(c("readr", "stringr"))
+library(readr)
+library(stringr)
+
+
 base.url <- "http://tutorials.iq.harvard.edu"
 baby.names.path <- "example_data/baby_names/EW" 
 baby.names.url <- str_c(base.url, baby.names.path, sep = "/")
@@ -160,54 +127,18 @@ baby.names.url <- str_c(base.url, baby.names.path, sep = "/")
 baby.names.page <- read_lines(baby.names.url)
 
 #' 
-#' Now that we have some values to play with lets look closer. R has nice tools for
-#' inspecting the object attributes such as the storage `type`, `length`, and
-#' `class`.
+#' Now that we have some values to play with lets look closer.
 #' 
-## ------------------------------------------------------------------------
-## whate is base.url?
-c(type = typeof(base.url),
-  length = length(base.url),
-  class = class(base.url))
+## ---- echo=FALSE, results="hide"-----------------------------------------
+oldwidth <- options(width = 130)
 
 #' 
-#' ```{r
-#' c(type = typeof(baby.names.page),
-#'   length = length(baby.names.page),
-#'   class = class(baby.names.page))
-#' ```
-#' 
-#'  The `str` (structure) and `glimpse` function
-#' gives a nice overview.
-#' 
 ## ------------------------------------------------------------------------
-str(baby.names.page)
+print(baby.names.page)
 
 #' 
-#' The *S3* class system in R allows functions to define methods for specific
-#' classes. If we know the class of an object we can see what functions have
-#' methods specific to that class.
-#' 
-## ------------------------------------------------------------------------
-methods(class = class(base.url))
-
-#' 
-#' Note that these methods are not exhaustive -- we can do other things with these
-#' objects as well. `methods(class = )` just tells you which functions have
-#' specific methods for working with objects of that class.
-#' 
-#' The `typeof` function tells us how the object is stored in memory. "Character"
-#' is one of the six *atomic* modes in R. The others are "logical", "integer",
-#' "numeric (double)", "complex", and "raw". Objects reporting their `mode` as one
-#' of these are *atomic vectors*; they are the building blocks of most data
-#' structures in R.
-#' 
-#' Now that we know what we're working with we can proceed to find and extract all
-#' the links in the page. Lets start by printing the last few lines of
-#' `baby.names.page`.
-#' 
-## ------------------------------------------------------------------------
-cat(tail(baby.names.page), sep = "\n")
+## ---- echo = FALSE, results="hide"---------------------------------------
+options(width = oldwidth[[1]])
 
 #' 
 #' We want to extract the "href" attributes, i.e., "`girls_2014.csv`" and
@@ -295,9 +226,9 @@ str_replace(user.info, email.regex, "<a href='mailto:\\1'>\\1</a>")
 #'     string into the "Text" box (in the lower right-hand section of the
 #'     page):
 #' 
-## ----engine="example"----------------------------------------------------
-<tr><td valign="top"><img src="/icons/unknown.gif" alt="[   ]"></td><td><a href="girls_2014.csv">girls_2014.csv</a></td><td align="right">06-Oct-2016 13:12  </td><td align="right">144K</td></tr>
-
+#' ```{.example}
+#' <tr><td valign="top"><img src="/icons/unknown.gif" alt="[   ]"></td><td><a href="girls_2014.csv">girls_2014.csv</a></td><td align="right">06-Oct-2016 13:12  </td><td align="right">144K</td></tr>
+#' ```
 #' 
 #' 2.  Find a regular expression that matches '`girls_2014.csv`' and
 #'     nothing else.
@@ -455,95 +386,7 @@ example.int.2
 #' 
 #' List elements can be extracted and replaced in the same way as elements of
 #' atomic vectors. In addition, `[[` can be used to extract or replace the contents
-#' of a list element. Here is how it works:
-#' 
-## ------------------------------------------------------------------------
-## make up an example list
-example.list.1 <- list(a1 = c(a = 1, b = 2, c = 3),
-                     a2 = c(4, 5, 6),
-                     b1 = c("a", "b", "c", "d"),
-                     b2 = c("e", "f", "g", "h"))
-str(example.list.1)
-
-#' 
-#' Extract by position.
-## ------------------------------------------------------------------------
-str(example.list.1[c(1, 3)])
-
-#' 
-## ------------------------------------------------------------------------
-str(example.list.1[1])
-
-#' 
-#' ```{r
-#' str(example.list.1[[1]]) # note the difference between [ and [[
-#' ```
-#' 
-#' Extract by name.
-#' 
-#' ```{r
-#' str(example.list.1[c("a1", "a2")])
-#' ```
-#' 
-## ------------------------------------------------------------------------
-(a.names <- str_detect(names(example.list.1), "a"))
-
-#' 
-## ------------------------------------------------------------------------
-str(example.list.1[a.names])
-
-#' 
-#' Bracket extraction can be chained to extract a nested element.
-#' 
-## ------------------------------------------------------------------------
-str(example.list.1[["a1"]][c("a", "c")])
-
-#' 
-#' Logical extraction.
-#' 
-## ------------------------------------------------------------------------
-(el.length <- map_int(example.list.1, length))
-
-#' 
-## ------------------------------------------------------------------------
-(el.length4 <- el.length == 4)
-
-#' 
-## ------------------------------------------------------------------------
-str(example.list.1[el.length4])
-
-#' 
-#' As with vectors, replacement works by assigning a value to an
-#' extraction.
-#' 
-## ------------------------------------------------------------------------
-example.list.2 <- example.list.1
-
-## replace by position
-example.list.2[[1]] <- c(a = 11, b = 12, c = 13)
-
-## replace by name
-example.list.2[["a2"]] <- c(10, 20, 30)
-
-## iterate and replace by name
-example.list.2[c("a1", "a2")] <- map(example.list.2[c("a1", "a2")],
-                                        function(x) x * 100)
-
-## logical replacement with iteration
-(el.length <- map(example.list.2, length))
-(el.length4 <- el.length == 4)
-example.list.2[el.length4] <- map(example.list.2[el.length4],
-                                     function(x) str_c("letter", x, sep = "_"))
-
-## "replace" non-existing element
-example.list.2[["c"]] <- list(x = letters[1:5], y = 1:5)
-
-#' 
-## ------------------------------------------------------------------------
-## compare lists to see the changes we made
-str(example.list.1)
-str(example.list.2)
-
+#' of a list element.
 #' 
 #' Back to the problem at hand: reading data into a list
 #' -----------------------------------------------------
@@ -638,6 +481,8 @@ list.1 <- list(a = sample(1:5, 20, replace = TRUE),
 #' 
 #' Calculate the mean of every entry
 ## ------------------------------------------------------------------------
+library(purrr)
+
 map.1 <- map(list.1, mean)
 str(map.1)
 
@@ -963,6 +808,8 @@ str(example.list.4)
 #' list. We can do that using the `bind_rows` function.
 #' 
 ## ------------------------------------------------------------------------
+library(dplyr)
+
 boys.data <- bind_rows(boys.data)
 girls.data <- bind_rows(girls.data)
 
@@ -1323,6 +1170,8 @@ baby.names.sex.decade <- baby.names %>%
   mutate(Name = reorder(Name, -1*Percent))
 
 ## plot
+library(ggplot2)
+
 ggplot(baby.names.sex.decade, aes(x = Name, y = Percent, fill = Sex, color = Sex)) +
   geom_bar(stat = "identity") +
   facet_grid(Decade ~ Sex, scales = "free_x") +
