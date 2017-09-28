@@ -272,15 +272,15 @@ div.tocify {
 <div id="example-project-overview" class="section level2">
 <h2>Example project overview</h2>
 <p>It is common for data to be made available on a website somewhere, either by a government agency, research group, or other organizations and entities. Often the data you want is spread over many files, and retrieving it all one file at a time is tedious and time consuming. Such is the case with the baby names data we will be using today.</p>
-<p>The UK <a href="https://www.ons.gov.uk">Office for National Statistics</a> provides yearly data on the most popular baby names going back to 1996. The data is provided separately for boys and girls. These data have been cleaned up and copied to <a href="http://tutorials.iq.harvard.edu/example_data/baby_names/" class="uri">http://tutorials.iq.harvard.edu/example_data/baby_names/</a>. Although we could open a web browser and download files one at a time, it will be faster and easier to instruct R to do that for us. Doing it this way will also give us an excuse to talk about iteration, text processing, and other useful techniques.</p>
+<p>The UK <a href="https://www.ons.gov.uk">Office for National Statistics</a> provides yearly data on the most popular baby names going back to 1996. The data is provided separately for boys and girls. These data have been cleaned up and copied to <example_data baby_names></example_data>. Although we could open a web browser and download files one at a time, it will be faster and easier to instruct R to do that for us. Doing it this way will also give us an excuse to talk about iteration, text processing, and other useful techniques.</p>
 </div>
 </div>
 <div id="extracting-information-from-a-text-file-string-manipulation" class="section level1">
 <h1>Extracting information from a text file (string manipulation)</h1>
-<p>Our first goal is to download all the .csv files from <a href="http://tutorials.iq.harvard.edu/example_data/baby_names/EW" class="uri">http://tutorials.iq.harvard.edu/example_data/baby_names/EW</a>.</p>
+<p>Our first goal is to download all the .csv files from <example_data baby_names EW>.</p>
 <p>In order to do that we need a list of the Uniform Resource Locators (URLs) of those files. The URLs we need are right there as links in the web page. All we need to do is extract them.</p>
-<div id="string-manipulatio-packages" class="section level2">
-<h2>String manipulatio packages</h2>
+<div id="string-manipulation-packages" class="section level2">
+<h2>String manipulation packages</h2>
 <p>In order extract the data URls from the website we will use functions for manipulating strings<a href="#fn1" class="footnoteRef" id="fnref1"><sup>1</sup></a>. What functions or packages should we use? Here are some tools to help us decide.</p>
 <dl>
 <dt>Task views</dt>
@@ -302,10 +302,8 @@ div.tocify {
 <span class="kw">library</span>(readr)
 <span class="kw">library</span>(stringr)
 
-
-base.url &lt;-<span class="st"> &quot;http://tutorials.iq.harvard.edu&quot;</span>
 baby.names.path &lt;-<span class="st"> &quot;example_data/baby_names/EW&quot;</span> 
-baby.names.url &lt;-<span class="st"> </span><span class="kw">str_c</span>(base.url, baby.names.path, <span class="dt">sep =</span> <span class="st">&quot;/&quot;</span>)
+baby.names.url &lt;-<span class="st"> </span><span class="kw">str_c</span>(baby.names.path, <span class="st">&quot;index.html&quot;</span>, <span class="dt">sep =</span> <span class="st">&quot;/&quot;</span>)
 
 baby.names.page &lt;-<span class="st"> </span><span class="kw">read_lines</span>(baby.names.url)</code></pre></div>
 <p>Now that we have some values to play with lets look closer.</p>
@@ -440,7 +438,7 @@ email.regex &lt;-<span class="st"> &quot;([a-z0-9]+@[a-z0-9]+</span><span class=
 </ol>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## write your answer here</code></pre></div>
 <ol start="6" style="list-style-type: decimal">
-<li>Use the <code>str_c</code> function to prepend <code>baby.names.url</code> to <code>girl.file.names</code> and <code>boy.file.names</code>. Make sure to separate with a forward slash (“/”).</li>
+<li>Use the <code>str_c</code> function to prepend <code>baby.names.path</code> to <code>girl.file.names</code> and <code>boy.file.names</code>. Make sure to separate with a forward slash (“/”).</li>
 </ol>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## write your answer here</code></pre></div>
 <p><br />
@@ -469,8 +467,8 @@ boy.file.names &lt;-<span class="st"> </span>baby.names.page <span class="op">%&
 <span class="st">  </span><span class="kw">str_extract</span>(<span class="dt">pattern =</span> boy.file.regex)
 
 ## 5. construct URLs
-(girl.file.names &lt;-<span class="st"> </span><span class="kw">str_c</span>(baby.names.url, girl.file.names, <span class="dt">sep =</span> <span class="st">&quot;/&quot;</span>))
-(boy.file.names &lt;-<span class="st"> </span><span class="kw">str_c</span>(baby.names.url, boy.file.names, <span class="dt">sep =</span> <span class="st">&quot;/&quot;</span>))</code></pre></div>
+(girl.file.names &lt;-<span class="st"> </span><span class="kw">str_c</span>(baby.names.path, girl.file.names, <span class="dt">sep =</span> <span class="st">&quot;/&quot;</span>))
+(boy.file.names &lt;-<span class="st"> </span><span class="kw">str_c</span>(baby.names.path, boy.file.names, <span class="dt">sep =</span> <span class="st">&quot;/&quot;</span>))</code></pre></div>
 </div>
 </div>
 <div id="reading-all-the-files-iteration-functions" class="section level1">
@@ -706,20 +704,20 @@ list.<span class="dv">1</span> &lt;-<span class="st"> </span><span class="kw">li
 map.<span class="dv">1</span> &lt;-<span class="st"> </span><span class="kw">map</span>(list.<span class="dv">1</span>, mean)
 <span class="kw">str</span>(map.<span class="dv">1</span>)</code></pre></div>
 <pre><code>## List of 3
-##  $ a: num 3.45
+##  $ a: num 3
 ##  $ b: num NA
-##  $ c: num 12.2</code></pre>
+##  $ c: num 12.1</code></pre>
 <p>Calculate the mean of every entry, passing <code>na.rm</code> argument.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">map.<span class="dv">1</span> &lt;-<span class="st"> </span><span class="kw">map</span>(list.<span class="dv">1</span>, mean, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)
 <span class="kw">str</span>(map.<span class="dv">1</span>)</code></pre></div>
 <pre><code>## List of 3
-##  $ a: num 3.45
-##  $ b: num 6.8
-##  $ c: num 12.2</code></pre>
+##  $ a: num 3
+##  $ b: num 5.2
+##  $ c: num 12.1</code></pre>
 <p>Calculate the mean of every entry, returning a numberic vector instead of a list.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">map.<span class="dv">2</span> &lt;-<span class="st"> </span><span class="kw">map_dbl</span>(list.<span class="dv">1</span>, mean)
 <span class="kw">str</span>(map.<span class="dv">2</span>)</code></pre></div>
-<pre><code>##  Named num [1:3] 3.45 NA 12.25
+<pre><code>##  Named num [1:3] 3 NA 12.1
 ##  - attr(*, &quot;names&quot;)= chr [1:3] &quot;a&quot; &quot;b&quot; &quot;c&quot;</code></pre>
 <p>Calculate the mean of every entry, returning a character vector.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">map.<span class="dv">3</span> &lt;-<span class="st"> </span><span class="kw">map_chr</span>(list.<span class="dv">1</span>, mean)</code></pre></div>
@@ -727,11 +725,11 @@ map.<span class="dv">1</span> &lt;-<span class="st"> </span><span class="kw">map
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">map.<span class="dv">4</span> &lt;-<span class="st"> </span><span class="kw">map</span>(list.<span class="dv">1</span>, summary)
 <span class="kw">str</span>(map.<span class="dv">4</span>)</code></pre></div>
 <pre><code>## List of 3
-##  $ a:Classes 'summaryDefault', 'table'  Named num [1:6] 1 2 4 3.45 5 5
+##  $ a:Classes 'summaryDefault', 'table'  Named num [1:6] 1 2 3 3 4 5
 ##   .. ..- attr(*, &quot;names&quot;)= chr [1:6] &quot;Min.&quot; &quot;1st Qu.&quot; &quot;Median&quot; &quot;Mean&quot; ...
-##  $ b:Classes 'summaryDefault', 'table'  Named num [1:7] 1 5 7 6.8 10 10 1
+##  $ b:Classes 'summaryDefault', 'table'  Named num [1:7] 1 2.75 5.5 5.2 7.25 9 1
 ##   .. ..- attr(*, &quot;names&quot;)= chr [1:7] &quot;Min.&quot; &quot;1st Qu.&quot; &quot;Median&quot; &quot;Mean&quot; ...
-##  $ c:Classes 'summaryDefault', 'table'  Named num [1:6] 10 11.8 12 12.2 13 ...
+##  $ c:Classes 'summaryDefault', 'table'  Named num [1:6] 10 10.8 12 12.1 13.2 ...
 ##   .. ..- attr(*, &quot;names&quot;)= chr [1:6] &quot;Min.&quot; &quot;1st Qu.&quot; &quot;Median&quot; &quot;Mean&quot; ...</code></pre>
 </div>
 <div id="writing-your-own-functions" class="section level2">
@@ -748,12 +746,12 @@ my.summary &lt;-<span class="st"> </span><span class="cf">function</span>(x) {
 ## test it out
 <span class="kw">my.summary</span>(list.<span class="dv">1</span>[[<span class="dv">1</span>]])</code></pre></div>
 <pre><code>##                  N               Mean Standard.Deviation 
-##          20.000000           3.450000           1.571958</code></pre>
+##          20.000000           3.000000           1.376494</code></pre>
 <p>Our new function can be used just like any other function in R. For example, we can iterate over <code>list.1</code> and apply our new function to each element.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">map</span>(list.<span class="dv">1</span>, my.summary)</code></pre></div>
 <pre><code>## $a
 ##                  N               Mean Standard.Deviation 
-##          20.000000           3.450000           1.571958 
+##          20.000000           3.000000           1.376494 
 ## 
 ## $b
 ##                  N               Mean Standard.Deviation 
@@ -761,7 +759,7 @@ my.summary &lt;-<span class="st"> </span><span class="cf">function</span>(x) {
 ## 
 ## $c
 ##                  N               Mean Standard.Deviation 
-##          20.000000          12.250000           1.332785</code></pre>
+##          20.000000          12.050000           1.637553</code></pre>
 <p>Note that you can use the special <code>...</code> notation to pass named arguments without needing to define them all. For example:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## improve our function by allowing arbitrary arguments to be passed into the body
 my.summary &lt;-<span class="st"> </span><span class="cf">function</span>(x, ...) {
@@ -773,7 +771,7 @@ my.summary &lt;-<span class="st"> </span><span class="cf">function</span>(x, ...
 <p>Now we can try out the new version of our summary function. Calling it without any additional arguments works fine for the first element of the list:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">my.summary</span>(list.<span class="dv">1</span>[[<span class="dv">1</span>]])</code></pre></div>
 <pre><code>##                  N               Mean Standard.Deviation 
-##          20.000000           3.450000           1.571958</code></pre>
+##          20.000000           3.000000           1.376494</code></pre>
 <p>However, it doesn’t work so well on elements containing missing values:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">my.summary</span>(list.<span class="dv">1</span>[[<span class="dv">2</span>]])</code></pre></div>
 <pre><code>##                  N               Mean Standard.Deviation 
@@ -781,7 +779,7 @@ my.summary &lt;-<span class="st"> </span><span class="cf">function</span>(x, ...
 <p>Even though our function does not have an na.rm argument we, can pass it to mean and sd via <code>...</code></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">my.summary</span>(list.<span class="dv">1</span>[[<span class="dv">2</span>]], <span class="dt">na.rm =</span> <span class="ot">TRUE</span>) </code></pre></div>
 <pre><code>##                  N               Mean Standard.Deviation 
-##          21.000000           6.800000           2.948684</code></pre>
+##          21.000000           5.200000           2.820974</code></pre>
 <p>Often when writing functions you want to skip some part of the function body under some conditions. For example, we might want omit missing values only if they exist:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## improve our function by removing missing values if they exist.
 my.summary &lt;-<span class="st"> </span><span class="cf">function</span>(x, ...) {
@@ -811,27 +809,27 @@ my.summary &lt;-<span class="st"> </span><span class="cf">function</span>(x, ...
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">map</span>(list.<span class="dv">1</span>, my.summary)</code></pre></div>
 <pre><code>## $a
 ##                  N               Mean Standard.Deviation 
-##          20.000000           3.450000           1.571958 
+##          20.000000           3.000000           1.376494 
 ## 
 ## $b
 ##                  N               Mean Standard.Deviation 
-##          20.000000           6.800000           2.948684 
+##          20.000000           5.200000           2.820974 
 ## 
 ## $c
 ##                  N               Mean Standard.Deviation 
-##          20.000000          12.250000           1.332785</code></pre>
+##          20.000000          12.050000           1.637553</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">map</span>(list.<span class="dv">1</span>, my.summary, <span class="dt">mean.only =</span> <span class="ot">TRUE</span>)</code></pre></div>
 <pre><code>## $a
-##     N  Mean 
-## 20.00  3.45 
+##    N Mean 
+##   20    3 
 ## 
 ## $b
 ##    N Mean 
-## 20.0  6.8 
+## 20.0  5.2 
 ## 
 ## $c
 ##     N  Mean 
-## 20.00 12.25</code></pre>
+## 20.00 12.05</code></pre>
 <p>OK, now that we know how to write functions lets get back to the problem at hand. We want to read each file in the <code>girl.file.names</code> and <code>boy.file.names</code> vectors.</p>
 </div>
 <div id="exercise-3-iteration-file-io-functions" class="section level2">
@@ -1199,24 +1197,23 @@ list.info &lt;-<span class="st"> </span><span class="cf">function</span>(x) <spa
 ##  [25] dim            dimnames       dimnames&lt;-     distinct_     
 ##  [29] distinct       do_            do             droplevels    
 ##  [33] duplicated     edit           filter_        filter        
-##  [37] format         formula        fortify        full_join     
-##  [41] ggplot         glimpse        group_by_      group_by      
-##  [45] group_indices_ group_indices  group_size     groups        
-##  [49] head           initialize     inner_join     intersect     
-##  [53] is.na          knit_print     left_join      Math          
-##  [57] merge          mutate_        mutate         n_groups      
-##  [61] na.exclude     na.omit        Ops            plot          
-##  [65] print          prompt         pull           rbind         
-##  [69] rename_        rename         right_join     row.names     
-##  [73] row.names&lt;-    rowsum         same_src       sample_frac   
-##  [77] sample_n       select_        select         semi_join     
-##  [81] setdiff        setequal       show           slice_        
-##  [85] slice          slotsFromS3    split          split&lt;-       
-##  [89] stack          str            subset         summarise_    
-##  [93] summarise      summary        Summary        t             
-##  [97] tail           tbl_vars       transform      type_sum      
-## [101] ungroup        union_all      union          unique        
-## [105] unstack        within        
+##  [37] format         formula        full_join      glimpse       
+##  [41] group_by_      group_by       group_indices_ group_indices 
+##  [45] group_size     groups         head           initialize    
+##  [49] inner_join     intersect      is.na          left_join     
+##  [53] Math           merge          mutate_        mutate        
+##  [57] n_groups       na.exclude     na.omit        Ops           
+##  [61] plot           print          prompt         pull          
+##  [65] rbind          rename_        rename         right_join    
+##  [69] row.names      row.names&lt;-    rowsum         same_src      
+##  [73] sample_frac    sample_n       select_        select        
+##  [77] semi_join      setdiff        setequal       show          
+##  [81] slice_         slice          slotsFromS3    split         
+##  [85] split&lt;-        stack          str            subset        
+##  [89] summarise_     summarise      summary        Summary       
+##  [93] t              tail           tbl_vars       transform     
+##  [97] type_sum       ungroup        union_all      union         
+## [101] unique         unstack        within        
 ## see '?methods' for accessing help and source code</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">list</span>(<span class="dt">dim =</span> <span class="kw">dim</span>(girls.data.<span class="dv">1</span>),
      <span class="dt">rows =</span> <span class="kw">nrow</span>(girls.data.<span class="dv">1</span>),
@@ -1388,15 +1385,14 @@ baby.names<span class="op">$</span>Location &lt;-<span class="st"> &quot;England
 <p>So far we’ve read in and cleaned up baby name data from England and Wales. The next task is to do the same for US baby name data. The US baby name data is stored in a slightly different way: there are separate files for each Stata, and each file contains columns indicating the state, sex, year, name, and count. Note that these files do <strong>not</strong> have names in the first row.</p>
 <p>Your mission, should you choose to accept it, is to read in all the US baby name data and combine them with the England and Wales data we read in earlier. To succeed you will need to use all your wits and avail yourself of any resources at your disposal (such as the R help system, <a href="http://stackoverflow.com/" class="uri">http://stackoverflow.com/</a>, discussing with your colleagues, or asking the instructor).</p>
 <p>Here is the index page to get you started.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">base.url &lt;-<span class="st"> &quot;http://tutorials.iq.harvard.edu&quot;</span>
-baby.names.path &lt;-<span class="st"> &quot;example_data/baby_names/US&quot;</span> 
-baby.names.url &lt;-<span class="st"> </span><span class="kw">str_c</span>(base.url, baby.names.path, <span class="dt">sep =</span> <span class="st">&quot;/&quot;</span>)
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">baby.names.path &lt;-<span class="st"> &quot;example_data/baby_names/US&quot;</span> 
+baby.names.url &lt;-<span class="st"> </span><span class="kw">str_c</span>(baby.names.path, <span class="st">&quot;index.html&quot;</span>, <span class="dt">sep =</span> <span class="st">&quot;/&quot;</span>)
 baby.names.page &lt;-<span class="st"> </span><span class="kw">read_lines</span>(baby.names.url)</code></pre></div>
 <div id="exercise-5-strings-iteration-functions-recap" class="section level2">
 <h2>Exercise 5: strings, iteration, functions recap</h2>
 <p>You are now a trained R programmer. Put your skills to use as follows</p>
 <ol style="list-style-type: decimal">
-<li>Extract the file names from baby.names.page and combine them with <code>baby.names.url</code> to create a vector of file locations.</li>
+<li>Extract the file names from baby.names.page and combine them with <code>baby.names.path</code> to create a vector of file locations.</li>
 </ol>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## write your answer here</code></pre></div>
 <ol start="2" style="list-style-type: decimal">
@@ -1432,7 +1428,7 @@ baby.names.page &lt;-<span class="st"> </span><span class="kw">read_lines</span>
  </p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## 1. extract file names
 file.names &lt;-<span class="st"> </span><span class="kw">na.omit</span>(<span class="kw">str_extract</span>(baby.names.page, <span class="st">&quot;[A-Z]+</span><span class="ch">\\</span><span class="st">.csv&quot;</span>))
-file.locations &lt;-<span class="st"> </span><span class="kw">str_c</span>(baby.names.url, file.names, <span class="dt">sep =</span> <span class="st">&quot;/&quot;</span>)
+file.locations &lt;-<span class="st"> </span><span class="kw">str_c</span>(baby.names.path, file.names, <span class="dt">sep =</span> <span class="st">&quot;/&quot;</span>)
 
 ## 2. read in the data
 us.baby.names &lt;-<span class="st"> </span><span class="kw">map</span>(file.locations,
@@ -1453,7 +1449,7 @@ read.linked.files &lt;-<span class="st"> </span><span class="cf">function</span>
                               <span class="dt">reader.fun =</span> read_csv) {
   ## extract file names
   file.names &lt;-<span class="st"> </span><span class="kw">na.omit</span>(<span class="kw">str_extract</span>(<span class="kw">read_lines</span>(url), pattern))
-  file.locations &lt;-<span class="st"> </span><span class="kw">str_c</span>(url, file.names, <span class="dt">sep =</span> <span class="st">&quot;/&quot;</span>)
+  file.locations &lt;-<span class="st"> </span><span class="kw">str_c</span>(<span class="kw">dirname</span>(url), file.names, <span class="dt">sep =</span> <span class="st">&quot;/&quot;</span>)
   
   ## read in the data
   the.data &lt;-<span class="st"> </span><span class="kw">map</span>(file.locations,
@@ -1464,7 +1460,7 @@ read.linked.files &lt;-<span class="st"> </span><span class="cf">function</span>
 }
 
 ## test it out.
-test &lt;-<span class="st"> </span><span class="kw">read.linked.files</span>(<span class="st">&quot;http://tutorials.iq.harvard.edu/example_data/baby_names/US&quot;</span>,
+test &lt;-<span class="st"> </span><span class="kw">read.linked.files</span>(<span class="st">&quot;example_data/baby_names/US/index.html&quot;</span>,
                           <span class="dt">pattern =</span> <span class="st">&quot;[A-Z]+</span><span class="ch">\\</span><span class="st">.csv&quot;</span>,
                           <span class="dt">reader.fun =</span> <span class="cf">function</span>(x) {
                             <span class="kw">read_csv</span>(x, <span class="dt">col_names =</span> <span class="ot">FALSE</span>, <span class="dt">na =</span> <span class="st">&quot;&quot;</span>, <span class="dt">col_types =</span> <span class="st">&quot;ccici&quot;</span>)
@@ -1505,28 +1501,28 @@ test &lt;-<span class="st"> </span><span class="kw">read.linked.files</span>(<sp
                           <span class="dt">var1 =</span> <span class="kw">runif</span>(<span class="dv">16</span>),
                           <span class="dt">var2 =</span> <span class="kw">sample</span>(letters[<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>], <span class="dv">16</span>, <span class="dt">replace =</span> <span class="ot">TRUE</span>)))</code></pre></div>
 <pre><code>##    id t       var1 var2
-## 1   a 1 0.35935717    b
-## 2   a 2 0.61446202    c
-## 3   a 3 0.75521341    a
-## 4   a 4 0.93579401    a
-## 5   b 1 0.49001908    c
-## 6   b 2 0.09751417    a
-## 7   b 3 0.61613080    c
-## 8   b 4 0.44105147    b
-## 9   c 1 0.04617331    a
-## 10  c 2 0.56974141    c
-## 11  c 3 0.06793015    c
-## 12  c 4 0.61930714    b
-## 13  d 1 0.43171613    b
-## 14  d 2 0.50118572    b
-## 15  d 3 0.94388502    a
-## 16  d 4 0.91828029    a</code></pre>
+## 1   a 1 0.74848770    a
+## 2   a 2 0.70072311    c
+## 3   a 3 0.79545891    a
+## 4   a 4 0.65376500    b
+## 5   b 1 0.38309421    b
+## 6   b 2 0.39341192    b
+## 7   b 3 0.17887697    a
+## 8   b 4 0.32339374    a
+## 9   c 1 0.05517172    a
+## 10  c 2 0.95755038    b
+## 11  c 3 0.37135849    b
+## 12  c 4 0.33677308    b
+## 13  d 1 0.60157546    b
+## 14  d 2 0.40583495    c
+## 15  d 3 0.79885191    b
+## 16  d 4 0.34344869    a</code></pre>
 <p>Calculate the total sum of the <code>var1</code> column.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## summarize
 <span class="kw">summarize</span>(example.df,
           <span class="dt">var1 =</span> <span class="kw">sum</span>(var1))</code></pre></div>
 <pre><code>##       var1
-## 1 8.407761</code></pre>
+## 1 8.047776</code></pre>
 <p>Calculate the sum of <code>var1</code> by <code>id</code>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## summarize by id
 example.df <span class="op">%&gt;%</span>
@@ -1535,30 +1531,29 @@ example.df <span class="op">%&gt;%</span>
 <pre><code>## # A tibble: 4 x 2
 ##       id     var1
 ##   &lt;fctr&gt;    &lt;dbl&gt;
-## 1      a 2.664827
-## 2      b 1.644716
-## 3      c 1.303152
-## 4      d 2.795067</code></pre>
+## 1      a 2.898435
+## 2      b 1.278777
+## 3      c 1.720854
+## 4      d 2.149711</code></pre>
 <p>Calculate the sum of <code>var1</code> by <code>id</code> and <code>var2</code>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## summarize by id and var2
 example.df <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">group_by</span>(id, var2) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">summarize</span>(<span class="dt">var1 =</span> <span class="kw">sum</span>(var1))</code></pre></div>
-<pre><code>## # A tibble: 11 x 3
+<pre><code>## # A tibble: 10 x 3
 ## # Groups:   id [?]
 ##        id   var2       var1
 ##    &lt;fctr&gt; &lt;fctr&gt;      &lt;dbl&gt;
-##  1      a      a 1.69100742
-##  2      a      b 0.35935717
-##  3      a      c 0.61446202
-##  4      b      a 0.09751417
-##  5      b      b 0.44105147
-##  6      b      c 1.10614988
-##  7      c      a 0.04617331
-##  8      c      b 0.61930714
-##  9      c      c 0.63767156
-## 10      d      a 1.86216531
-## 11      d      b 0.93290185</code></pre>
+##  1      a      a 1.54394661
+##  2      a      b 0.65376500
+##  3      a      c 0.70072311
+##  4      b      a 0.50227071
+##  5      b      b 0.77650613
+##  6      c      a 0.05517172
+##  7      c      b 1.66568194
+##  8      d      a 0.34344869
+##  9      d      b 1.40042737
+## 10      d      c 0.40583495</code></pre>
 <p>Now that we know how to group by and summarize we can calculate the number of babies born each year</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">group_by</span>(baby.names, Year) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">summarize</span>(<span class="dt">Total =</span> <span class="kw">sum</span>(Count))</code></pre></div>
@@ -1612,22 +1607,22 @@ example.df <span class="op">%&gt;%</span>
           <span class="dt">n2 =</span> <span class="kw">length</span>(var1),
           <span class="dt">var3 =</span> var1<span class="op">/</span>n1))</code></pre></div>
 <pre><code>##    id t       var1 var2 n1 n2        var3
-## 1   a 1 0.35935717    b 16 16 0.022459823
-## 2   a 2 0.61446202    c 16 16 0.038403876
-## 3   a 3 0.75521341    a 16 16 0.047200838
-## 4   a 4 0.93579401    a 16 16 0.058487125
-## 5   b 1 0.49001908    c 16 16 0.030626193
-## 6   b 2 0.09751417    a 16 16 0.006094636
-## 7   b 3 0.61613080    c 16 16 0.038508175
-## 8   b 4 0.44105147    b 16 16 0.027565717
-## 9   c 1 0.04617331    a 16 16 0.002885832
-## 10  c 2 0.56974141    c 16 16 0.035608838
-## 11  c 3 0.06793015    c 16 16 0.004245634
-## 12  c 4 0.61930714    b 16 16 0.038706696
-## 13  d 1 0.43171613    b 16 16 0.026982258
-## 14  d 2 0.50118572    b 16 16 0.031324108
-## 15  d 3 0.94388502    a 16 16 0.058992814
-## 16  d 4 0.91828029    a 16 16 0.057392518</code></pre>
+## 1   a 1 0.74848770    a 16 16 0.046780481
+## 2   a 2 0.70072311    c 16 16 0.043795194
+## 3   a 3 0.79545891    a 16 16 0.049716182
+## 4   a 4 0.65376500    b 16 16 0.040860312
+## 5   b 1 0.38309421    b 16 16 0.023943388
+## 6   b 2 0.39341192    b 16 16 0.024588245
+## 7   b 3 0.17887697    a 16 16 0.011179811
+## 8   b 4 0.32339374    a 16 16 0.020212109
+## 9   c 1 0.05517172    a 16 16 0.003448232
+## 10  c 2 0.95755038    b 16 16 0.059846899
+## 11  c 3 0.37135849    b 16 16 0.023209906
+## 12  c 4 0.33677308    b 16 16 0.021048317
+## 13  d 1 0.60157546    b 16 16 0.037598466
+## 14  d 2 0.40583495    c 16 16 0.025364684
+## 15  d 3 0.79885191    b 16 16 0.049928245
+## 16  d 4 0.34344869    a 16 16 0.021465543</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## combine with group_by
 (example.df &lt;-<span class="st"> </span>example.df <span class="op">%&gt;%</span>
 <span class="st">   </span><span class="kw">group_by</span>(id) <span class="op">%&gt;%</span>
@@ -1637,110 +1632,106 @@ example.df <span class="op">%&gt;%</span>
 ## # Groups:   id [4]
 ##        id     t       var1   var2    n1    n2        var3    n3       var4
 ##    &lt;fctr&gt; &lt;int&gt;      &lt;dbl&gt; &lt;fctr&gt; &lt;int&gt; &lt;int&gt;       &lt;dbl&gt; &lt;int&gt;      &lt;dbl&gt;
-##  1      a     1 0.35935717      b    16    16 0.022459823     4 0.08983929
-##  2      a     2 0.61446202      c    16    16 0.038403876     4 0.15361551
-##  3      a     3 0.75521341      a    16    16 0.047200838     4 0.18880335
-##  4      a     4 0.93579401      a    16    16 0.058487125     4 0.23394850
-##  5      b     1 0.49001908      c    16    16 0.030626193     4 0.12250477
-##  6      b     2 0.09751417      a    16    16 0.006094636     4 0.02437854
-##  7      b     3 0.61613080      c    16    16 0.038508175     4 0.15403270
-##  8      b     4 0.44105147      b    16    16 0.027565717     4 0.11026287
-##  9      c     1 0.04617331      a    16    16 0.002885832     4 0.01154333
-## 10      c     2 0.56974141      c    16    16 0.035608838     4 0.14243535
-## 11      c     3 0.06793015      c    16    16 0.004245634     4 0.01698254
-## 12      c     4 0.61930714      b    16    16 0.038706696     4 0.15482679
-## 13      d     1 0.43171613      b    16    16 0.026982258     4 0.10792903
-## 14      d     2 0.50118572      b    16    16 0.031324108     4 0.12529643
-## 15      d     3 0.94388502      a    16    16 0.058992814     4 0.23597126
-## 16      d     4 0.91828029      a    16    16 0.057392518     4 0.22957007</code></pre>
+##  1      a     1 0.74848770      a    16    16 0.046780481     4 0.18712193
+##  2      a     2 0.70072311      c    16    16 0.043795194     4 0.17518078
+##  3      a     3 0.79545891      a    16    16 0.049716182     4 0.19886473
+##  4      a     4 0.65376500      b    16    16 0.040860312     4 0.16344125
+##  5      b     1 0.38309421      b    16    16 0.023943388     4 0.09577355
+##  6      b     2 0.39341192      b    16    16 0.024588245     4 0.09835298
+##  7      b     3 0.17887697      a    16    16 0.011179811     4 0.04471924
+##  8      b     4 0.32339374      a    16    16 0.020212109     4 0.08084843
+##  9      c     1 0.05517172      a    16    16 0.003448232     4 0.01379293
+## 10      c     2 0.95755038      b    16    16 0.059846899     4 0.23938759
+## 11      c     3 0.37135849      b    16    16 0.023209906     4 0.09283962
+## 12      c     4 0.33677308      b    16    16 0.021048317     4 0.08419327
+## 13      d     1 0.60157546      b    16    16 0.037598466     4 0.15039387
+## 14      d     2 0.40583495      c    16    16 0.025364684     4 0.10145874
+## 15      d     3 0.79885191      b    16    16 0.049928245     4 0.19971298
+## 16      d     4 0.34344869      a    16    16 0.021465543     4 0.08586217</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## summarize by id and var2
 (example.df.<span class="dv">2</span> &lt;-<span class="st"> </span>example.df <span class="op">%&gt;%</span>
 <span class="st">   </span><span class="kw">group_by</span>(id, var2) <span class="op">%&gt;%</span>
 <span class="st">   </span><span class="kw">summarize</span>(<span class="dt">var1 =</span> <span class="kw">sum</span>(var1)))</code></pre></div>
-<pre><code>## # A tibble: 11 x 3
+<pre><code>## # A tibble: 10 x 3
 ## # Groups:   id [?]
 ##        id   var2       var1
 ##    &lt;fctr&gt; &lt;fctr&gt;      &lt;dbl&gt;
-##  1      a      a 1.69100742
-##  2      a      b 0.35935717
-##  3      a      c 0.61446202
-##  4      b      a 0.09751417
-##  5      b      b 0.44105147
-##  6      b      c 1.10614988
-##  7      c      a 0.04617331
-##  8      c      b 0.61930714
-##  9      c      c 0.63767156
-## 10      d      a 1.86216531
-## 11      d      b 0.93290185</code></pre>
+##  1      a      a 1.54394661
+##  2      a      b 0.65376500
+##  3      a      c 0.70072311
+##  4      b      a 0.50227071
+##  5      b      b 0.77650613
+##  6      c      a 0.05517172
+##  7      c      b 1.66568194
+##  8      d      a 0.34344869
+##  9      d      b 1.40042737
+## 10      d      c 0.40583495</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## sort by var1
 example.df.<span class="dv">2</span> <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">arrange</span>(var1)</code></pre></div>
-<pre><code>## # A tibble: 11 x 3
+<pre><code>## # A tibble: 10 x 3
 ## # Groups:   id [4]
 ##        id   var2       var1
 ##    &lt;fctr&gt; &lt;fctr&gt;      &lt;dbl&gt;
-##  1      c      a 0.04617331
-##  2      b      a 0.09751417
-##  3      a      b 0.35935717
-##  4      b      b 0.44105147
-##  5      a      c 0.61446202
-##  6      c      b 0.61930714
-##  7      c      c 0.63767156
-##  8      d      b 0.93290185
-##  9      b      c 1.10614988
-## 10      a      a 1.69100742
-## 11      d      a 1.86216531</code></pre>
+##  1      c      a 0.05517172
+##  2      d      a 0.34344869
+##  3      d      c 0.40583495
+##  4      b      a 0.50227071
+##  5      a      b 0.65376500
+##  6      a      c 0.70072311
+##  7      b      b 0.77650613
+##  8      d      b 1.40042737
+##  9      a      a 1.54394661
+## 10      c      b 1.66568194</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">example.df.<span class="dv">2</span> <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">arrange</span>(<span class="kw">desc</span>(var1))</code></pre></div>
-<pre><code>## # A tibble: 11 x 3
+<pre><code>## # A tibble: 10 x 3
 ## # Groups:   id [4]
 ##        id   var2       var1
 ##    &lt;fctr&gt; &lt;fctr&gt;      &lt;dbl&gt;
-##  1      d      a 1.86216531
-##  2      a      a 1.69100742
-##  3      b      c 1.10614988
-##  4      d      b 0.93290185
-##  5      c      c 0.63767156
-##  6      c      b 0.61930714
-##  7      a      c 0.61446202
-##  8      b      b 0.44105147
-##  9      a      b 0.35935717
-## 10      b      a 0.09751417
-## 11      c      a 0.04617331</code></pre>
+##  1      c      b 1.66568194
+##  2      a      a 1.54394661
+##  3      d      b 1.40042737
+##  4      b      b 0.77650613
+##  5      a      c 0.70072311
+##  6      a      b 0.65376500
+##  7      b      a 0.50227071
+##  8      d      c 0.40583495
+##  9      d      a 0.34344869
+## 10      c      a 0.05517172</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## sort by var1 within id
 (example.df.<span class="dv">2</span> &lt;-<span class="st"> </span>example.df.<span class="dv">2</span> <span class="op">%&gt;%</span>
 <span class="st">   </span><span class="kw">arrange</span>(id, <span class="kw">desc</span>(var1)))</code></pre></div>
-<pre><code>## # A tibble: 11 x 3
+<pre><code>## # A tibble: 10 x 3
 ## # Groups:   id [4]
 ##        id   var2       var1
 ##    &lt;fctr&gt; &lt;fctr&gt;      &lt;dbl&gt;
-##  1      a      a 1.69100742
-##  2      a      c 0.61446202
-##  3      a      b 0.35935717
-##  4      b      c 1.10614988
-##  5      b      b 0.44105147
-##  6      b      a 0.09751417
-##  7      c      c 0.63767156
-##  8      c      b 0.61930714
-##  9      c      a 0.04617331
-## 10      d      a 1.86216531
-## 11      d      b 0.93290185</code></pre>
+##  1      a      a 1.54394661
+##  2      a      c 0.70072311
+##  3      a      b 0.65376500
+##  4      b      b 0.77650613
+##  5      b      a 0.50227071
+##  6      c      b 1.66568194
+##  7      c      a 0.05517172
+##  8      d      b 1.40042737
+##  9      d      c 0.40583495
+## 10      d      a 0.34344869</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## select the top 2 var1's within each id group
 example.df.<span class="dv">2</span> <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">group_by</span>(id) <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">slice</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">2</span>)</code></pre></div>
 <pre><code>## # A tibble: 8 x 3
 ## # Groups:   id [4]
-##       id   var2      var1
-##   &lt;fctr&gt; &lt;fctr&gt;     &lt;dbl&gt;
-## 1      a      a 1.6910074
-## 2      a      c 0.6144620
-## 3      b      c 1.1061499
-## 4      b      b 0.4410515
-## 5      c      c 0.6376716
-## 6      c      b 0.6193071
-## 7      d      a 1.8621653
-## 8      d      b 0.9329019</code></pre>
+##       id   var2       var1
+##   &lt;fctr&gt; &lt;fctr&gt;      &lt;dbl&gt;
+## 1      a      a 1.54394661
+## 2      a      c 0.70072311
+## 3      b      b 0.77650613
+## 4      b      a 0.50227071
+## 5      c      b 1.66568194
+## 6      c      a 0.05517172
+## 7      d      b 1.40042737
+## 8      d      c 0.40583495</code></pre>
 <p>Now that we know how to group, mutate, summarize, arrange, and slice we can use these tools to identify the most popular boy and girl names.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## create a percent column
 baby.names &lt;-<span class="st"> </span>baby.names <span class="op">%&gt;%</span>

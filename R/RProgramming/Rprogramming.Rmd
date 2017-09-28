@@ -65,7 +65,7 @@ will be using today.
 The UK [Office for National Statistics](https://www.ons.gov.uk) provides yearly
 data on the most popular baby names going back to 1996. The data is provided
 separately for boys and girls. These data have been cleaned up and copied
-to <http://tutorials.iq.harvard.edu/example_data/baby_names/>. Although we could
+to <example_data/baby_names/>. Although we could
 open a web browser and download files one at a time, it will be faster and
 easier to instruct R to do that for us. Doing it this way will also give us an
 excuse to talk about iteration, text processing, and other useful techniques.
@@ -74,13 +74,13 @@ Extracting information from a text file (string manipulation)
 =============================================================
 
 Our first goal is to download all the .csv files from
-<http://tutorials.iq.harvard.edu/example_data/baby_names/EW>.
+<example_data/baby_names/EW>.
 
 In order to do that we need a list of the Uniform Resource Locators (URLs) of
 those files. The URLs we need are right there as links in the web page. All we
 need to do is extract them.
 
-String manipulatio packages
+String manipulation packages
 -----------------------------
 
 In order extract the data URls from the website we will use functions for
@@ -119,10 +119,8 @@ R line-by-line using the `read_lines` function.
 library(readr)
 library(stringr)
 
-
-base.url <- "http://tutorials.iq.harvard.edu"
 baby.names.path <- "example_data/baby_names/EW" 
-baby.names.url <- str_c(base.url, baby.names.path, sep = "/")
+baby.names.url <- str_c(baby.names.path, "index.html", sep = "/")
 
 baby.names.page <- read_lines(baby.names.url)
 ```
@@ -250,7 +248,7 @@ expression that works.
 ## write your answer here
 
 ```
-6.  Use the `str_c` function to prepend `baby.names.url` to
+6.  Use the `str_c` function to prepend `baby.names.path` to
     `girl.file.names` and `boy.file.names`. Make sure to separate with a
     forward slash ("/").
 ```{r}
@@ -290,8 +288,8 @@ boy.file.names <- baby.names.page %>%
   str_extract(pattern = boy.file.regex)
 
 ## 5. construct URLs
-(girl.file.names <- str_c(baby.names.url, girl.file.names, sep = "/"))
-(boy.file.names <- str_c(baby.names.url, boy.file.names, sep = "/"))
+(girl.file.names <- str_c(baby.names.path, girl.file.names, sep = "/"))
+(boy.file.names <- str_c(baby.names.path, boy.file.names, sep = "/"))
 ```
 
 Reading all the files (iteration, functions)
@@ -928,9 +926,8 @@ discussing with your colleagues, or asking the instructor).
 Here is the index page to get you started.
 
 ```{r}
-base.url <- "http://tutorials.iq.harvard.edu"
 baby.names.path <- "example_data/baby_names/US" 
-baby.names.url <- str_c(base.url, baby.names.path, sep = "/")
+baby.names.url <- str_c(baby.names.path, "index.html", sep = "/")
 baby.names.page <- read_lines(baby.names.url)
 ```
 
@@ -940,7 +937,7 @@ Exercise 5: strings, iteration, functions recap
 You are now a trained R programmer. Put your skills to use as follows
 
 1.  Extract the file names from baby.names.page and combine them with
-    `baby.names.url` to create a vector of file locations.
+    `baby.names.path` to create a vector of file locations.
 ```{r}
 ## write your answer here
 
@@ -991,7 +988,7 @@ You are now a trained R programmer. Put your skills to use as follows
 ```{r}
 ## 1. extract file names
 file.names <- na.omit(str_extract(baby.names.page, "[A-Z]+\\.csv"))
-file.locations <- str_c(baby.names.url, file.names, sep = "/")
+file.locations <- str_c(baby.names.path, file.names, sep = "/")
 
 ## 2. read in the data
 us.baby.names <- map(file.locations,
@@ -1012,7 +1009,7 @@ read.linked.files <- function(url,
                               reader.fun = read_csv) {
   ## extract file names
   file.names <- na.omit(str_extract(read_lines(url), pattern))
-  file.locations <- str_c(url, file.names, sep = "/")
+  file.locations <- str_c(dirname(url), file.names, sep = "/")
   
   ## read in the data
   the.data <- map(file.locations,
@@ -1023,7 +1020,7 @@ read.linked.files <- function(url,
 }
 
 ## test it out.
-test <- read.linked.files("http://tutorials.iq.harvard.edu/example_data/baby_names/US",
+test <- read.linked.files("example_data/baby_names/US/index.html",
                           pattern = "[A-Z]+\\.csv",
                           reader.fun = function(x) {
                             read_csv(x, col_names = FALSE, na = "", col_types = "ccici")
