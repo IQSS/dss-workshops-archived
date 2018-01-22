@@ -232,37 +232,12 @@ Data sets
 
 The examples in this workshop use the baby names data provided by the
 governments of the United States and the United Kingdom. A cleaned and
-merged version of these data is in `dataSets/babyNames.csv`.
+merged version of these data is available at
+`http://tutorials.iq.harvard.edu/R/Rintro/dataSets/babyNames.csv`.
 
 
 Getting data into R
 ===================
-
-The "working directory" and listing files
------------------------------------------
-
-R knows the directory it was started in, and refers to this as the
-"working directory". Since our workshop examples are in the Rintro folder, we
-should all take a moment to set that as our working directory.
-
-
-```{r eval=FALSE}
-getwd() # what is my current working directory?
-# setwd("~/Desktop/Rintro") # change directory
-```
-
-Note that "`~`" means "my home directory" but that this can mean
-different things on different operating systems. You can also use the
-Files tab in Rstudio to navigate to a directory, then click "More -&gt;
-Set as working directory".
-
----------------------------------------------------
-
-It can be convenient to list files in a directory without leaving R
-
-```{r}
-list.files("dataSets") # list files in the dataSets folder
-```
 
 Readers for common file types
 -----------------------------
@@ -284,9 +259,7 @@ file formats.
 Exercise 2
 ----------
 
-The purpose of this exercise is to practice reading data into R. The
-data in "`dataSets/babyNames.csv`" is moderately tricky to read, making
-it a good data set to practice on.
+The purpose of this exercise is to practice reading data into R.
 
 0.  Install and attach the `tidyverse` package if you have not yet done so. 
 
@@ -296,7 +269,8 @@ it a good data set to practice on.
 ## write your answer here
 
 ```    
-2.  Read just the first 10 rows of "`dataSets/babyNames.csv`".
+2.  Read just the first 10 rows of
+"`"http://tutorials.iq.harvard.edu/R/Rintro/dataSets/babyNames.csv`".
 ```{r}
 ## write your answer here
 
@@ -319,7 +293,7 @@ Exercise 2 solution<span class="tag" data-tag-name="prototype"></span>
 read_csv("http://tutorials.iq.harvard.edu/R/Rintro/dataSets/babyNames.csv", n_max = 10)
 
 ## read all the data
-baby.names <- read_csv("http://tutorials.iq.harvard.edu/R/Rintro/dataSets/babyNames.csv", col_types = "??c????")
+baby.names <- read_csv("http://tutorials.iq.harvard.edu/R/Rintro/dataSets/babyNames.csv")
 ```
 
 Checking imported data
@@ -362,26 +336,18 @@ number and `filter` to select rows that match some condition. It works
 like this:
 
 ```{r}
-## make up some example data
-(example.df <- data.frame(id  = rep(letters[1:4], each = 4),
-                          t   = rep(1:4, times = 4),
-                          var1 = runif(16),
-                          var2 = sample(letters[1:3], 16, replace = TRUE)))
-```
-
-```{r}
 ## rows 2 and 4
-slice(example.df, c(2, 4))
+slice(baby.names, 1:3) ## first three rows
 ```
 
 ```{r}
-## rows where id == "a"
-filter(example.df, id == "a")
+## rows where Name == "jill"
+filter(baby.names, Year == 1996 & Name == "jill")
 ```
 
 ```{r}
-## rows where id is either "a" or "b"
-filter(example.df, id %in% c("a", "b"))
+## rows where Name is either "jack" or "jill"
+filter(baby.names, Year == 1996, Name %in% c("jack", "jill"))
 ```
 
 Select data.frame columns
@@ -391,30 +357,17 @@ Select data.frame columns
 extract columns
 
 ```{r}
-select(example.df, id, var1)
-```
-
-```{r}
-select(example.df, id, t, var1)
+select(slice(baby.names, 1:10), c(Name, Count))
 ```
 
 You can also conveniently select a single column using `$`, like this:
 
 ```{r}
-example.df$t
+mean(baby.names$Count)
 ```
 
-Data manipulation commands can be combined:
-
-```{r}
-filter(select(example.df,
-              id,
-              var1),
-       id == "a")
-```
-
-In the previous example we used == to filter rows where id was "a".
-Other relational and logical operators are listed below.
+In the previous example we used == to filter rows. Other relational
+and logical operators are listed below.
 
   Operator   Meaning
   ---------- --------------------------
@@ -435,23 +388,22 @@ You can modify data.frames using the `mutate()` function. It works like
 this:
 
 ```{r}
-example.df
+## modify example.df and assign the modified data.frame the name example.df
+baby.names <- mutate(baby.names,
+                     Thousands = Count/1000)
+glimpse(baby.names)
 ```
+
+Often one needs to replace values conditionally. The `case_when` function can be used for this purpose:
 
 ```{r}
 ## modify example.df and assign the modified data.frame the name example.df
-example.df <- mutate(example.df,
-       var2 = var1/t, # replace the values in var2
-       var3 = 1:length(t), # create a new column named var3
-       var4 = factor(letters[t]),
-       t = NULL # delete the column named t
-       )
+baby.names <- mutate(baby.names,
+                     Country = case_when(Location == "England and Wales" ~ "UK",
+                                         Location != "England and Wales" ~ "US"))
+glimpse(baby.names)
 ```
 
-```{r}
-## examine our changes
-example.df
-```
 
 Exporting Data
 --------------
@@ -461,14 +413,14 @@ save those changes to a file.
 
 ```{r}
 # write data to a .csv file
-write_csv(example.df, path = "example.csv")
+write_csv(baby.names, path = "babyNames.csv")
 
 # write data to an R file
-write_rds(example.df, path = "example.rds")
+write_rds(baby.names, path = "babyNames.rds")
 
-# write data to a Stata file
+# write data to a spss file
 library(haven)
-write_dta(example.df, path = "example.dta")
+write_sav(baby.names, path = "babyNames.dta")
 ```
 
 Saving and loading R workspaces
@@ -497,36 +449,36 @@ Exercise 3: Data manipulation
 Read in the "babyNames.csv" file if you have not already done so,
 assigning the result to `baby.names`. The file is located at "http://tutorials.iq.harvard.edu/R/Rintro/dataSets/babyNames.csv"
 
-1.  Filter `baby.names` to show only names given to at least 5 percent
-    of boys.
+1.  Create a column named "Proportion" equal to Percent divided by 100.
 ```{r}
 ## write your answer here
 
 ```
-2.  Create a column named "Proportion" equal to Percent divided by 100.
+
+2.  Filter `baby.names` to include only names given to at least 3
+    percent of Girls. Save this to a SPSS data set
+    named "popularGirlNames.sav")
 ```{r}
 ## write your answer here
 
 ```
-3.  Filter `baby.names` to include only names given to at least 3
-    percent of Girls. Save this to a Stata data set
-    named "popularGirlNames.dta")
-```{r}
-## write your answer here
 
-```
+3.  (Bonus) if you look at `unique(baby.names$Sex)` you'll notice that some records indicate Male with `"M"`, while other records use `"Male"`. Correct this by replacing `"M"` with `"Male"`.
 
 Exercise 3 solution<span class="tag" data-tag-name="prototype"></span>
 ----------------------------------------------------------------------
 
 ```{r, purl = FALSE}
-filter(baby.names, Sex == "M" & Percent >= 5)
-
 baby.names <- mutate(baby.names, Proportion = Percent/100)
 
 popular.girl.names <- filter(baby.names, Sex == "F" & Percent >= 3)
 
-write_csv(popular.girl.names, path = "popularGirlNames.dta")
+library(haven)
+write_sav(popular.girl.names, path = "popularGirlNames.sav")
+
+baby.names <- mutate(baby.names,
+                     Sex = case_when(Sex == "M" ~ "Male",
+                                     TRUE ~ Sex))
 ```
 
 Basic Statistics and Graphs
@@ -538,28 +490,19 @@ Basic statistics
 Descriptive statistics of single variables are straightforward:
 
 ```{r}
-sum(example.df$var1) # calculate sum of var 1
-mean(example.df$var1)
-median(example.df$var1)
-```
-
-```{r}
-sd(example.df$var1) # calculate standard deviation of var1
-var(example.df$var1)
+mean(baby.names$Name.length)
+median(baby.names$Name.length)
+sd(baby.names$Name.length)
 ```
 
 ```{r}
 ## summaries of individual columns
-summary(example.df$var1)
-```
-
-```{r}
-summary(example.df$var2)
+summary(baby.names$Name.length)
 ```
 
 ```{r}
 ## summary of whole data.frame
-summary(example.df)
+summary(baby.names)
 ```
 
 Some of these functions (e.g., summary) will also work with data.frames
@@ -572,13 +515,13 @@ The `summarize` function can be used to calculate statistics by grouping
 variable. Here is how it works.
 
 ```{r}
-summarize(group_by(example.df, id), mean(var1), sd(var1))
+summarize(group_by(baby.names, Country), mean(Name.length), sd(Name.length))
 ```
 
 You can group by multiple variables:
 
 ```{r}
-summarize(group_by(example.df, id, var3), mean(var1), sd(var1))
+summarize(group_by(baby.names, Country, Sex), mean(Name.length), sd(Name.length))
 ```
 
 Save R output to a file
@@ -590,8 +533,8 @@ the output of `summary`? For that we can use the `sink()` function:
 
 ```{r}
 sink(file="output.txt", split=TRUE) # start logging
-print("This is the summary of example.df \n")
-print(summary(example.df))
+print("This is the summary of baby.names \n")
+print(summary(baby.names))
 sink() ## sink with no arguments turns logging off
 ```
 
@@ -637,45 +580,11 @@ births.by.year <- summarize(group_by(baby.names, Year), sum(Count))
 
 mean(baby.names$Name.length)
 
+
 name.length.by.location <- summarize(group_by(baby.names, Location), mean(Name.length))
+name.length.by.location
 ```
 
-Basic graphics: Frequency bars
-------------------------------
-
-Thanks to classes and methods, you can `plot()` many kinds of objects:
-
-```{r}
-plot(example.df$var4)
-```
-
-Basic graphics: Boxplots by group
----------------------------------
-
-Thanks to classes and methods, you can `plot()` many kinds of objects:
-
-```{r}
-plot(select(example.df, id, var1))
-```
-
-Basic graphics: Mosaic chart
-----------------------------
-
-Thanks to classes and methods, you can `plot()` many kinds of objects:
-
-```{r}
-plot(select(example.df, id, var4))
-```
-
-Basic graphics: scatter plot
-----------------------------
-
-```{r}
-plot(select(example.df, var1, var2))
-```
-
-Exercise 5 TBD
---------------
 
 Wrap-up
 =======
