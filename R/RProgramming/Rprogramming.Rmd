@@ -65,25 +65,30 @@ will be using today.
 The UK [Office for National Statistics](https://www.ons.gov.uk) provides yearly
 data on the most popular baby names going back to 1996. The data is provided
 separately for boys and girls. These data have been cleaned up and copied
-to <example_data/baby_names/>. Although we could
-open a web browser and download files one at a time, it will be faster and
-easier to instruct R to do that for us. Doing it this way will also give us an
-excuse to talk about iteration, text processing, and other useful techniques.
+to <example_data/baby_names/>.
 
-Extracting information from a text file (string manipulation)
+Locating data in a nested directory structure (string manipulation)
 =============================================================
 
-Our first goal is to download all the .csv files from
-<example_data/baby_names/EW>.
+Our first goal is to locate all the all the .csv files from containing data from
+England and Wales. As a first step, we'll recursively list all the files in the `example_data/baby_names` directory.
 
-In order to do that we need a list of the Uniform Resource Locators (URLs) of
-those files. The URLs we need are right there as links in the web page. All we
-need to do is extract them.
+
+```{r}
+data_dir_files <- list.files("example_data/baby_names",
+                             recursive = TRUE,
+                             full.names = TRUE)
+
+head(data_dir_files)
+```
+
+Our next task is to filter this directory listing so that we have only the .csv
+files from England and Wales.
 
 String manipulation packages
 -----------------------------
 
-In order extract the data URls from the website we will use functions for
+In order extract the data files from the directory listings we will use functions for
 manipulating strings[^1]. What functions or packages should we use? Here are
 some tools to help us decide.
 
@@ -106,43 +111,6 @@ attaching packages we'll also attach
 the [tidyverse](https://cran.r-project.org/web/packages/tidyverse/index.html)
 package which provides more modern versions of many basic functions in R.
 
-
-Reading text into R
--------------------
-
-Our first task is to read the web page into R. Most of the file IO functions in
-R can read either from a local path or from internet URLS. We can read text into
-R line-by-line using the `read_lines` function.
-
-```{r}
-## install.packages(c("readr", "stringr"))
-library(readr)
-library(stringr)
-
-baby.names.path <- "example_data/baby_names/EW" 
-baby.names.url <- str_c(baby.names.path, "index.html", sep = "/")
-
-baby.names.page <- read_lines(baby.names.url)
-```
-
-Now that we have some values to play with lets look closer.
-
-```{r, echo=FALSE, results="hide"}
-oldwidth <- options(width = 130)
-```
-
-```{r}
-print(baby.names.page)
-```
-
-```{r, echo = FALSE, results="hide"}
-options(width = oldwidth[[1]])
-```
-
-We want to extract the "href" attributes, i.e., "`girls_2014.csv`" and
-"`girls_2015.csv`" in the above snippet. We can do that using the `str_extract`
-function, but in order to use it effectively we need to know something about
-regular expressions.
 
 String manipulation with the stringr package
 --------------------------------------------
@@ -225,37 +193,47 @@ expression that works.
     page):
 
 ```{.example}
-<tr><td valign="top"><img src="/icons/unknown.gif" alt="[   ]"></td><td><a href="girls_2014.csv">girls_2014.csv</a></td><td align="right">06-Oct-2016 13:12  </td><td align="right">144K</td></tr>
+example_data/baby_names/EW.1
+example_data/baby_names/EW/boys_1996.csv
+example_data/baby_names/EW/boys_1997.csv
+example_data/baby_names/EW/boys_1998.csv
+example_data/baby_names/EW/boys_1999.csv
+example_data/baby_names/EW/girls_1996.csv
+example_data/baby_names/EW/girls_1997.csv
+example_data/baby_names/EW/girls_1998.csv
+example_data/baby_names/EW/girls_1999.csv
+example_data/baby_names/EW/index.html
+example_data/baby_names/EW/index.html?C=D;O=A
+example_data/baby_names/EW/index.html?C=D;O=D
+example_data/baby_names/EW/index.html?C=M;O=A
+example_data/baby_names/EW/index.html?C=M;O=D
+example_data/baby_names/EW/index.html?C=N;O=A
+example_data/baby_names/index.html?C=S;O=A
+example_data/baby_names/index.html?C=S;O=D
+example_data/baby_names/US/AK.csv
+example_data/baby_names/US/AL.csv
+example_data/baby_names/US/AR.csv
+example_data/baby_names/US/AZ.csv
+example_data/baby_names/US/CA.csv
+example_data/baby_names/US/CO.csv
+example_data/baby_names/US/CT.csv
 ```
 
-2.  Find a regular expression that matches '`girls_2014.csv`' and
-    nothing else.
+2.  Find a regular expression that matches lines corresponding to data files for
+    girls from England and Wales. Make sure that you have _not_ matched any
+    other lines.
 3.  Assign the regular expression you found to the name
     'girl.file.regex' in R. *Replace any backslashes with a double
     backslash*.
 ```{r}
-## write your answer here
 
 ```
-4.  Extract the girl file names from `baby.names.page` and assign
-    the values to the name '`girl.file.names`'
+4.  Extract the England and Wales data file names from the directory listing and
+    assign the values to the name '`girl.file.names`'
 ```{r}
-## write your answer here
 
 ```
-5.  Repeat steps 1:4 for boys.
-```{r}
-## write your answer here
-
-```
-6.  Use the `str_c` function to prepend `baby.names.path` to
-    `girl.file.names` and `boy.file.names`. Make sure to separate with a
-    forward slash ("/").
-```{r}
-## write your answer here
-
-```
-
+5.  Repeat steps 2-4 for the boys data.
 \
 
 \
@@ -273,23 +251,22 @@ Exercise 1 prototype
 ```{r, results = 'hide', purl = FALSE}
 ## 1. Make sure you replace whatever example text was presented in the regexr.com site.
 
-## 2. regular expression for girl csv files
-girl.file.regex <- "girls_[0-9]*\\.csv"
+## 2.  
+## 3.  Assign the regular expression you found to the name
+##    'girl.file.regex' in R. *Replace any backslashes with a double
+##     backslash*.
 
-## 3. extract girl file names
-girl.file.names <- baby.names.page %>%
-  str_subset(pattern = girl.file.regex) %>%
-  str_extract(pattern = girl.file.regex)
+girl.file.regex <- "EW.*girls.*\\.csv$"
 
-## 4. same thing for boys
-boy.file.regex <- "boys_[0-9]*\\.csv"
-boy.file.names <- baby.names.page %>%
-  str_subset(pattern = boy.file.regex) %>%
-  str_extract(pattern = boy.file.regex)
+## 4.  Extract the England and Wales data file names from the directory listing and
+##     assign the values to the name '`girl.file.names`'
+library(stringr)
 
-## 5. construct URLs
-(girl.file.names <- str_c(baby.names.path, girl.file.names, sep = "/"))
-(boy.file.names <- str_c(baby.names.path, boy.file.names, sep = "/"))
+girl.file.names <- str_subset(data_dir_files, girl.file.regex)
+
+## 5.  Repeat steps 3-4 for the boys data.
+boy.file.regex <- "EW.*boys.*\\.csv$"
+boy.file.names <- str_subset(data_dir_files, boy.file.regex)
 ```
 
 Reading all the files (iteration, functions)
@@ -298,10 +275,11 @@ Reading all the files (iteration, functions)
 Reading .csv files
 ------------------
 
-As mentioned earlier, we can read files directly from the internet. For example,
-we can read the first girls names file like this:
+we can read the first girls names data file like this:
 
 ```{r}
+library(tidyverse)
+
 girl.names.1 <- read_csv(girl.file.names[1], na = "")
 head(girl.names.1)
 ```
@@ -437,21 +415,18 @@ from `boy.file.names` and `girl.file.names` and assign then to the
 
 1.  Use the `list` function to create empty lists named `boys` and `girls`.
 ```{r}
-## write your answer here
 
 ```
 2.  Write a regular expression that matches digits 0-9 repeated one or
     more times and use it to extract the years from `boy.file.names` and
     `girl.file.names` (use `str_extract`).
 ```{r}
-## write your answer here
 
 ```
 3.  Use the assignment from of the `names` function to assign the years
     vectors from step one to the names of `boy.file.names` and
     `girl.file.names` respectively.
 ```{r}
-## write your answer here
 
 ```
 4.  Extract the element named "2015" from `girl.file.names` and pass it
@@ -459,7 +434,6 @@ from `boy.file.names` and `girl.file.names` and assign then to the
     of the `girls` list named "2015". Repeat for elements "2014"
     and "2013".
 ```{r}
-## write your answer here
 
 ```
 5.  Repeat step three using `boy.file.names` and the `boys` list.
@@ -675,24 +649,20 @@ using `map`. All we need to do now is put the two things together.
 1.  Use the `map` and `read_csv` functions to read all the girls data
     into an object named `girls.data`.
 ```{r}
-## write your answer here
 
 ```
 2.  Do the same thing for the boys data (name the object `boys.data`).
 ```{r}
-## write your answer here
 
 ```
 3.  Inspect the boys and girls data lists. How many elements do they
     have? What class are they?
 ```{r}
-## write your answer here
 
 ```
 4.  Write a function that returns the `class`, `typeof`, and `length` of
     its argument. `map` this function to `girls.data` and `boys.data`.
 ```{r}
-## write your answer here
 
 ```
 
@@ -831,20 +801,17 @@ need to do now is put the two things together.
 1.  Write a function named `add.year` that takes a data.frame and a vector as
     arguments and returns a data.frame with the vector included as a column.
 ```{r}
-## write your answer here
 
 ```
 2.  Test your function on the first elements of `girls.data` and
     `names(girls.data)` from step 1.
 ```{r}
-## write your answer here
 
 ```
 3.  Use the `map2` function to iterate over `girls.data` and insert the
     corresponding year from `names(girls.data)` using the function you
     wrote in step 1. Do the same for `boys.data`.
 ```{r}
-## write your answer here
 
 ```
 
@@ -939,27 +906,23 @@ You are now a trained R programmer. Put your skills to use as follows
 1.  Extract the file names from baby.names.page and combine them with
     `baby.names.path` to create a vector of file locations.
 ```{r}
-## write your answer here
 
 ```
 2.  Iterate over the vector of file names from step one and read each
     file, assigning the result to a list named `us.baby.names`. Note
     that column names are not present in these data files.
 ```{r}
-## write your answer here
 
 ```
 3.  Use `bind_rows` to combine your list of 51 data.frames into a
     single data.frame.
 ```{r}
-## write your answer here
 
 ```
 4.  Use the assignment form of the `names` function to name the columns
     in your US baby names data set "Location", "Sex", "Year",
     and "Count".
 ```{r}
-## write your answer here
 
 ```
 5.  Write a function named `read.linked.files` that wraps steps 1-3.
@@ -1275,7 +1238,6 @@ and use the `baby.names` data together with your mastery of R to answer
 it.
 
 ```{r}
-## write your answer here
 
 ```
 
