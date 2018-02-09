@@ -1,7 +1,7 @@
 !     Calculate the total number of people in the US reported by the 1980 census.
 
       PROGRAM sum1980
-
+!     declare variable types
       INTEGER spop,tpop
 
       
