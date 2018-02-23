@@ -308,8 +308,8 @@ bysort marital: sum educ
 *   1. Use the dataset, gss.dta
 *   2. Examine a few selected variables using the describe, sum and
 *      codebook commands
-*   3. Tabulate the variable, "marital," with and without labels
-*   4. Summarize the variable, "income" separately participants based on
+*   3. Tabulate the variable, "marital" with and without labels
+*   4. Summarize the variable, "income" separately for each level of
 *      marital status
 *   5. Cross-tabulate marital with region and show gender percent by
 *      region
