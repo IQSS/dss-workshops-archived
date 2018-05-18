@@ -31,9 +31,9 @@ Notes and examples for this workshop are available at
 [](http://tutorials.iq.harvard.edu/R/Rintro/Rintro.html)
 
 Start RStudio and open a new R script:
-- On Windows click the start button and search for rstudio. On Mac
-  RStudio will be in your applications folder.
-- In Rstudio go to `File -> New File -> R Script`
+-   On Windows click the start button and search for rstudio. On Mac
+    RStudio will be in your applications folder.
+-   In Rstudio go to `File -> New File -> R Script`
 
 What is R?
 ----------
@@ -95,11 +95,11 @@ you are looking for should appear in a pop up!
 
 1.  Try to get R to add 2 plus 2.
 ```{r}
-
+##
 ```
 2.  Try to calculate the square root of 10.
 ```{r}
-
+##
 ```
 3.  R includes extensive documentation, including a file named "An
     introduction to R". Try to find this help file.
@@ -250,17 +250,17 @@ The purpose of this exercise is to practice reading data into R.
 1.  Open the help page for the `read_csv` function. How can you limit
     the number of rows to be read in?
 ```{r}
-
+##
 ```
 2.  Read just the first 10 rows of
 "`"http://tutorials.iq.harvard.edu/R/Rintro/dataSets/babyNames.csv`".
 ```{r}
-
+##
 ```
 3.  Once you have successfully read in the first 10 rows, read the whole
     file, assigning the result to the name `baby.names`.
 ```{r}
-
+##
 ```
 
 Exercise 2 solution<span class="tag" data-tag-name="prototype"></span>
@@ -366,12 +366,12 @@ assigning the result to `baby.names`. The file is located at "http://tutorials.i
 
 1.  Extract data for the name "ashley".  
 ```{r}
-
+##
 ```
 
 2.  Restrict the previous extraction to include only years between 2000 and 2004.
 ```{r}
-
+##
 ```
 
 
@@ -425,18 +425,18 @@ assigning the result to `baby.names`. The file is located at "http://tutorials.i
     records indicate Male with `"M"`, while other records use
     `"Male"`. Correct this by replacing `"M"` with `"Male"`.
 ```{r}
-
+##
 ```
 
 2.  Create a column named "Popular" containing a 1 in rows where Count
     is greater than 30000 and a 0 otherwise
 ```{r}
-
+##
 ```
 
 3.  Filter the baby names data to display only the popular names.
 ```{r}
-
+##
 ```
 
 Exercise 3 solution<span class="tag" data-tag-name="prototype"></span>
@@ -498,13 +498,13 @@ filter(group_by(bn.by.decade, Decade, Sex),
 ```
 
 In the previous example we used `sum` and `max`, two examples of basic statistics functions in R. Other basic statistics functions include:
-  * `mean`
-  * `median`
-  * `sd`
-  * `var`
-  * `min`
-  * `quantile`
-  * `length`
+-   `mean`
+-   `median`
+-   `sd`
+-   `var`
+-   `min`
+-   `quantile`
+-   `length`
 
 Exporting Data
 --------------
@@ -546,12 +546,12 @@ Exercise 4
 2.  Filter the data to extract data from 2004 and calculate the total
     number of children born in that year.
 ```{r}
-
+##
 ```
 3.  Calculate the number of boys and girls born each year. Assign the result
     to the name `births.by.year`.
 ```{r}
-
+##
 ```
 
 Exercise 4 solution<span class="tag" data-tag-name="prototype"></span>
@@ -614,21 +614,21 @@ Exercise 5
     calculate Proportion = Count/sum(Count) for each Year X Sex group.
 
 ```{r}
-
+##
 ```
 
 2.  Filter the baby.names data, retaining only the most popular girl
     and boy names for each year.
 
 ```{r}
-
+##
 ```
 
 3.  Plot proportion over time to see changes in the proportion of
     parents choosing the most popular name of the year.
 
 ```{r}
-
+##
 ```
 
 Exercise 5 solution<span class="tag" data-tag-name="prototype"></span>
