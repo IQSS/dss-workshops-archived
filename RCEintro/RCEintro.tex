@@ -1,28 +1,29 @@
-% Created 2015-04-27 Mon 17:20
+% Created 2017-09-01 Fri 12:45
+% Intended LaTeX compiler: pdflatex
 \documentclass[11pt]{article}
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
-\usepackage{fixltx2e}
 \usepackage{graphicx}
+\usepackage{grffile}
 \usepackage{longtable}
-\usepackage{float}
 \usepackage{wrapfig}
 \usepackage{rotating}
 \usepackage[normalem]{ulem}
 \usepackage{amsmath}
 \usepackage{textcomp}
-\usepackage{marvosym}
-\usepackage{wasysym}
 \usepackage{amssymb}
+\usepackage{capt-of}
 \usepackage{hyperref}
-\tolerance=1000
 \author{Ista Zahn}
 \date{}
 \title{RCE Quick-Start}
 \hypersetup{
-  pdfkeywords={},
-  pdfsubject={},
-  pdfcreator={Emacs 24.5.1 (Org mode 8.2.10)}}
+ pdfauthor={Ista Zahn},
+ pdftitle={RCE Quick-Start},
+ pdfkeywords={},
+ pdfsubject={},
+ pdfcreator={Emacs 26.0.50 (Org mode 9.0.10)}, 
+ pdflang={English}}
 \begin{document}
 
 \maketitle
@@ -30,10 +31,10 @@
 
 
 \section{What is the RCE?}
-\label{sec-1}
+\label{sec:org32671a0}
 The Research Computing Environment (RCE) is a large powerful computer cluster that you can use for computations that are too large to be conveniently done on a personal computer. The RCE is available to researchers at Harvard and MIT. 
 
-To obtain an RCE account send an email to \url{mailto:help@iq.harvard.edu}. You will receive a response asking you several questions about your requirements (e.g., if you need backups, how much data storage space you need). For details on the services provided and limitations and restrictions of the service refer to \url{http://projects.iq.harvard.edu/user-services/research-computing-environment-sla}
+To obtain an RCE account send an email to \url{mailto:help@iq.harvard.edu}. You will receive a response asking you several questions about your requirements (e.g., if you need backups, how much data storage space you need). For details on the services provided and limitations and restrictions of the service refer to \url{http://projects.iq.harvard.edu/user-services/research-computing-environment-sla}.
 
 You can use the RCE in one of two primary ways:
 \begin{description}
@@ -43,67 +44,87 @@ You can use the RCE in one of two primary ways:
 
 Interactive jobs are good for memory intensive computations that may be unfeasible on your personal computer due to hardware limitations. Batch jobs are good for computations that can be run in parallel and/or computations that you expect to run for long periods of time.
 
-
 \section{Accessing the RCE}
-\label{sec-2}
-You can access the RCE using the \href{http://projects.iq.harvard.edu/rce/nx4_installation}{nomachine} remote desktop software, or via the command line using \texttt{ssh}. If you are a command line wizard and only need to run batch jobs \texttt{ssh} is the way to go; for most of us however \texttt{nomachine} is a much more useful way to access the RCE. It allows you to interact with the applications on the cluster much as you interact with applications on your local computer. To get started, download the NoMachine client for your operating system: \href{http://downloads.hmdc.harvard.edu/nx/4/nomachine-client-windows-latest.zip}{Windows}, \href{http://downloads.hmdc.harvard.edu/nx/4/nomachine-client-osx-latest.dmg}{OSX}, \href{http://downloads.hmdc.harvard.edu/nx/4/nomachine-client-linux-latest.zip}{Linux}. 
+\label{sec:org16009a6}
+You can access the RCE using the \href{http://projects.iq.harvard.edu/rce/nx4\_installation}{nomachine} remote desktop software, or via the command line using \texttt{ssh}. If you are a command line wizard and only need to run batch jobs \texttt{ssh} is the way to go; for most of us however \texttt{nomachine} is a much more useful way to access the RCE. It allows you to interact with the applications on the cluster much as you interact with applications on your local computer. 
+
+To get started, download the NoMachine client for your operating system: 
+\begin{itemize}
+\item \href{http://downloads.hmdc.harvard.edu/nx/4/nomachine-client-windows-latest.zip}{Windows}
+\item \href{http://downloads.hmdc.harvard.edu/nx/4/nomachine-client-osx-latest.dmg}{OSX}
+\item \href{http://downloads.hmdc.harvard.edu/nx/4/nomachine-client-linux-latest.zip}{Linux}
+\end{itemize}
 
 After downloading, Windows users should right-click on the \texttt{nomachine-client-windows-latest.zip} file and choose \texttt{Extract to here}. Open the \texttt{NoMachine Client} folder and double-click on the .Exe files to start the installation\footnote{Note: The Windows zipfile contains the NX client, plus optional font packages. HMDC recommends installing all font packages, though this is not required.}. Mac users should double-click on the \texttt{nomachine-client-osx-latest.dmg} and double-click on the installer package to begin the installation.
 
-Once you have installed the NoMachine software you should launch the NoMachine application and set up your login credentials. Once the application launches click \texttt{Continue}, then click \texttt{Click here to create a new connection}. Keep clicking \texttt{Continue} until you get to the Hosts screen. Fill in the Host field with \texttt{rce.hmdc.harvard.edu}. Keep clicking \texttt{Continue} until you get to the Name screen. fill in the Name field with \texttt{RCE6} and click \texttt{Done}.
+Once you have installed the NoMachine software you should launch the NoMachine application and set up your login credentials. 
 
-Once you have configured NoMachine you should test it out to make sure you can connect to the RCE. Click on the \texttt{RCE6} entry and then click \texttt{Connect}. Fill in the user name and password fields with your RCE user name and password. On the following screen click on \texttt{New virtual desktop or custom session}, then click on \texttt{Create a new virtual desktop} and click \texttt{Continue}. You should see an instruction screen; click \texttt{OK} and you should see your RCE desktop, which will look something like this:
+Once the application launches:
+\begin{itemize}
+\item Click \texttt{Continue}.
+\item Click \texttt{Click here to create a new connection}.
+\item Keep clicking \texttt{Continue} until you get to the Hosts screen.
+\item Fill in the Host field with \texttt{rce.hmdc.harvard.edu}.
+\item Keep clicking \texttt{Continue} until you get to the Name screen.
+\item Fill in the Name field with \texttt{RCE6} and click \texttt{Done}.
+\end{itemize}
 
+Once you have configured NoMachine you should test it out to make sure you can connect to the RCE: 
+\begin{itemize}
+\item Click on the \texttt{RCE6} entry and then click \texttt{Connect}.
+\item Fill in the user name and password fields with your RCE user name and password.
+\item On the following screen click on \texttt{New virtual desktop or custom session}.
+\item Click on \texttt{Create a new virtual desktop} and click \texttt{Continue}.
+\end{itemize}
+
+After completing these steps you should see an instruction screen; click \texttt{OK} and you should see your RCE desktop, which will look something like this:
+
+\begin{center}
 \includegraphics[width=.9\linewidth]{images/rceDesktop.png}
+\end{center}
 
-If you have any difficulties installing NoMachine, detailed documentation is available at \url{http://projects.iq.harvard.edu/rce/nx4}; if you do not find a solution there send and email to \url{mailto:help@iq.harvard.edu} and someone will assist you.
+If you have any difficulties installing NoMachine, detailed documentation is available at \url{http://projects.iq.harvard.edu/rce/nx4}; if you do not find a solution there send and email to \href{mailto:help@iq.harvard.edu}{help@iq.harvard.edu} and someone will assist you.
 
 \section{Power at your fingertips}
-\label{sec-3}
+\label{sec:org85e2aa8}
 
-You can run applications on the RCE \emph{interactively} or using the \emph{batch} system. Often the first thing you will want to determine before using the RCE for a particular computation is whether your computation is more suitable for running in the interactive nodes or on the batch nodes. If you simply want a more powerful version of your PC (e.g., more memory, more CPUs) then the interactive nodes are what you want. If you want to split your task up into hundreds of pieces and run each piece simultaneously, then you want the batch modes.
+You can run applications on the RCE \emph{interactively} or using the \emph{batch} system. If you simply want a more powerful version of your PC (e.g., more memory, more CPUs) then the interactive nodes are what you want. If you want to split your task up into hundreds of pieces and run each piece simultaneously, then you want the batch modes.
 
 More specifically, the RCE provides three levels of service:
 \begin{description}
-\item[{Login nodes}] Provides access to a desktop environment (similar to Remote Desktop) from which you can launch applications. The login nodes should not be used for computationally intensive jobs; the main function of the login nodes is to provide access to the interactive and batch nodes. You access the login nodes using the NoMachine client, as described in \hyperref[sec-2]{Accessing the RCE}.
+\item[{Login nodes}] Provides access to a desktop environment (similar to Remote Desktop) from which you can launch applications. The login nodes should not be used for computationally intensive jobs; the main function of the login nodes is to provide access to the interactive and batch nodes. You access the login nodes using the NoMachine client, as described in \hyperref[sec:org16009a6]{Accessing the RCE}.
 \item[{Interactive nodes}] Interactive nodes allow you to run applications on very powerful computers. You can launch applications on the interactive nodes from the login node desktop using the \texttt{Applications -{}-> RCE Powered Applications} menu. Applications launched from this menu will run on more powerful machines with large memory resources (up to 256GB) and up to 24 CPU cores.
 \item[{Batch nodes}] Where interactive nodes give you access to a single very powerful computer, batch nodes provide a swarm of hundreds of small computers. You can run your computation in parallel on each of them, which can provide dramatically reduced compute time for many applications. You access the batch nodes using the \emph{command line} which you can access by starting a terminal application from the  \texttt{Applications -{}-> Accessories -{}-> terminal} menu.
 \end{description}
 
 \section{Project folders \& shared space}
-\label{sec-4}
-When your RCE account was created a home folder was set up for you, with \emph{Documents}, \emph{Downloads}, \emph{Desktop} and other common sub-directories. However you can only store a maximum of 5Gb in your home folder. For larger projects you should use a \emph{project folder}; one was probably set up for you when your account was activated. There is a shortcut in your home directory named \emph{shared\_space}, which will contain any project folders you have access to. You should store large data sets and other large or numerous files in these project folders.
+\label{sec:orgfa75bf1}
+When your RCE account was created a home folder was set up for you, with \emph{Documents}, \emph{Downloads}, \emph{Desktop} and other common sub-directories. However you can only store a maximum of 5Gb in your home folder. For larger projects you should use a \emph{project folder}; one was probably set up for you when your account was activated. There is a shortcut in your home directory named \emph{shared\(_{\text{space}}\)}, which will contain any project folders you have access to. You should store large data sets and other large or numerous files in these project folders.
 
-Project space can be used privately, or shared with collaborators (hence the name, "shared space"). Because our researchers bring confidential data to the RCE, we keep all project space separate from your home directory. There are four types of project space:
-\begin{itemize}
-\item Project space with long-term backups
-\item Project space without long-term backups
-\item Confidential project space with long-term backups
-\item Confidential project space without long-term backups
-\end{itemize}
-When you apply for an RCE account, you are asked which category would best suit your needs. Therefore, you should know ahead of time if your data is rated as confidential information by your IRB.
-
-For more details on project folders refer to \url{http://projects.iq.harvard.edu/rce/book/projects-and-shared-space} and \url{http://projects.iq.harvard.edu/rce/book/project-space-collaboration}.
+Project space can be used privately, or shared with collaborators (hence the name, "shared space"). For more details on project folders refer to \url{http://projects.iq.harvard.edu/rce/book/projects-and-shared-space} and \url{http://projects.iq.harvard.edu/rce/book/project-space-collaboration}.
 
 \section{Getting your data on and off the RCE}
-\label{sec-5}
-People often use the RCE for memory or CPU intensive data analysis projects. If this is your intention as well, chances are that you have one or more (potentially large) data files that you will need to copy to the RCE. Remember that disk space in your home directory is limited, so if you have a large amount of data make sure to transfer it directly to your project space folder.
+\label{sec:orgdea8c49}
+People often use the RCE for memory or CPU intensive data analysis projects. If this is your intention as well, chances are that you have one or more (potentially large) data files that you will need to copy to the RCE. Remember that disk space in your home directory is limited, so if you have a large amount of data make sure to \emph{transfer data directly to your \hyperref[sec:orgfa75bf1]{project space folder}}.
 
 The simplest approach is to use the NoMachine client to transfer data from your local machine to the RCE (and from the RCE to your local machine). Click on the red \texttt{!M} icon in the upper right-hand corner and select the \texttt{Send a file from the client} menu, as shown below.
+
+\begin{center}
 \includegraphics[width=.9\linewidth]{images/NoMachineMenu.png}
+\end{center}
 
 If you prefer to transfer files using another file transfer client, anything that uses ssh (e.g., \href{http://filezilla-project.org/}{FileZilla}) should work. Just point your favorite client to \texttt{rce.hmdc.harvard.edu}.
 
 \section{Interactive jobs}
-\label{sec-6}
+\label{sec:orgbb95ba7}
 When you first log on to the RCE you are on a \emph{login node}. The login nodes are not designed for intensive computation; the purpose of the login nodes is to provide access to the \emph{interactive nodes} and the \emph{batch nodes}. Interactive jobs are useful when a) you need a lot of memory (e.g., because you need to load a large dataset into memory), and/or b) you want to use multiple cores to speed up your computation.
 
 \subsection{Launching applications on the interactive nodes}
-\label{sec-6-1}
-Running applications on the interactive nodes is very easy; just log in \hyperref[sec-2]{using NoMachine} and launch your application from the \texttt{Application -{}-> RCE Powered} menu. A dialog will open asking you how much memory you need and how many CPUs, and then your application will open. That's all there is to it! Well, we should say that the RCE is a shared resource, so please try not to request more memory or CPUs than you need. Also, applications running on the interactive nodes will expire after five days; you can request an extension, but if you fail to do so your job will be terminated 120 hours after it starts. For details refer to \url{http://projects.iq.harvard.edu/rce/book/extending-rce-powered-application}.
+\label{sec:orgbd5cc30}
+Running applications on the interactive nodes is very easy; just log in \hyperref[sec:org16009a6]{using NoMachine} and launch your application from the \texttt{Application -{}-> RCE Powered} menu. A dialog will open asking you how much memory you need and how many CPUs, and then your application will open. That's all there is to it! Well, we should say that the RCE is a shared resource, so please \emph{try not to request more memory or CPUs than you need}. Also, applications running on the interactive nodes will expire after five days; you can request an extension, but if you fail to do so your job will be terminated 120 hours after it starts. For details refer to \url{http://projects.iq.harvard.edu/rce/book/extending-rce-powered-application}.
 
 \subsection{Available RCE powered applications}
-\label{sec-6-2}
+\label{sec:org34674cd}
 
 Available RCE powered applications include:
 \begin{itemize}
@@ -120,14 +141,16 @@ Other applications (e.g., Python/IPython, perl, tesseract, various Unix programs
 
 If you are using the interactive nodes primarily for the large memory they provide you should have all the information you need to begin taking advantage of the RCE. If you are also interested in using multiple CPU cores to speed up your computations, read on! The following sections contain examples illustrating techniques for utilizing multiple cores on the RCE.
 
-\subsection{Using multiple CPUs in R}
-\label{sec-6-3}
-This section illustrates how to take advantage of multiple cores when running interactive jobs on the RCE. Since memory requirements are easy to satisfy (just specify how much you need when you launch and application via the \texttt{Application -{}-> RCE Powered} menu), the examples presented here will focus on utilizing multiple CPUs. 
+\subsection{Using multiple CPUs in interactive jobs}
+\label{sec:orgd1025e7}
+This section illustrates how to take advantage of multiple cores when running interactive jobs on the RCE, with the goal of getting CPU intensive tasks to run faster. \textbf{If you are not interested in running parallel processes in interactive jobs feel free to skip to the \hyperref[sec:org4d3b0d6]{next section}}.
 
-There are many different packages for utilizing multiple cores in R, but one of the simplest is the \href{https://stat.ethz.ch/R-manual/R-devel/library/parallel/doc/parallel.pdf}{parallel} package\footnote{For additional packages useful for parallel computing see the \href{http://cran.r-project.org/web/views/HighPerformanceComputing.html}{HPC task view}.}. To use it load the parallel package and use the \texttt{parLapply} function or the \texttt{mclapply} function. 
+\subsubsection{Using multiple CPUs in interactive R programs}
+\label{sec:org24e6108}
 
-\subsubsection{Using multiple cores to speed up simulations}
-\label{sec-6-3-1}
+\begin{enumerate}
+\item Using multiple cores to speed up simulations
+\label{sec:org81b679a}
 Running computations in parallel on multiple cores is often an effective way to speed up computations. This can be especially useful when doing simulations, or when using resampling methods such as bootstrap or permutation tests. In this example parallel processing is used to simulate the sampling distribution of the mean for samples of various sizes.
 
 We start by setting up a helper function to repeatedly generate a sample of a given size and calculate the sample mean.
@@ -139,6 +162,7 @@ meanDist <- function(n, nsamp = 5000) {
 
 ## range of sample sizes to iterate over
 sampSizes <- seq(10, 500, by = 5)
+
 \end{verbatim}
 
 Next iterate over a range of sample sizes, generating a distribution of means for each one. This can be slow because R normally uses only one core:
@@ -148,7 +172,7 @@ system.time(means <- lapply(sampSizes, meanDist))
 
 \begin{verbatim}
   user  system elapsed 
-33.270   0.020  33.295
+42.220   0.027  42.254
 \end{verbatim}
 
 The simulation can be carried out much more rapidly using \texttt{mclapply} instead:
@@ -158,8 +182,8 @@ system.time(means <- mclapply(sampSizes, meanDist, mc.cores = 7))
 \end{verbatim}
 
 \begin{verbatim}
- user  system elapsed 
-36.48    1.01    5.68
+  user  system elapsed 
+43.300   2.254   6.862
 \end{verbatim}
 
 Like \texttt{lapply} the \texttt{mclapply} function returns a list, which we can process as usual. For example, we can construct histograms of the sampling distributions of the mean that we simulated above:
@@ -175,11 +199,13 @@ for(i in 1:30) {
 }
 \end{verbatim}
 
+\begin{center}
 \includegraphics[width=.9\linewidth]{images/samplingDist.png}
+\end{center}
 
 
-\subsubsection{Using multiple cores to speed up computations}
-\label{sec-6-3-2}
+\item Using multiple cores to speed up computations
+\label{sec:orge9217b9}
 In the previous example we generated the data on each iteration. This kind of simulation can be useful, but often you want to parallelize a function that processes data from a (potentially large) number of files. This is also easy to do using the parallel package in R. In the following example we count number of characters in all the text files in the texlive directory.
 \begin{verbatim}
 ## List the files to iterate over
@@ -196,31 +222,24 @@ countChars <-  function(x) {
 }
 \end{verbatim}
 
-We have
-\begin{verbatim}
-length(textFiles)
-\end{verbatim}
-
-\begin{verbatim}
-[1] 2087
-\end{verbatim}
-text files to process. We can do this using a single core:
+We have text files to process. We can do this using a single core:
 \begin{verbatim}
 system.time(nchars <- unlist(lapply(textFiles, countChars)))
 \end{verbatim}
 
 \begin{verbatim}
- user  system elapsed 
-27.98    0.29   31.83
+  user  system elapsed 
+29.023   0.226  32.107
 \end{verbatim}
+
 but this is too slow. We can do the computation more quickly using multiple cores:
 \begin{verbatim}
 system.time(nchars <- unlist(mclapply(textFiles, countChars, mc.cores = 7)))
 \end{verbatim}
 
 \begin{verbatim}
- user  system elapsed 
-26.85    0.68    4.96
+  user  system elapsed 
+23.141   0.537   5.200
 \end{verbatim}
 and calculate the total number of characters in the text files by summing over the result
 \begin{verbatim}
@@ -228,27 +247,81 @@ sum(nchars, na.rm = TRUE)
 \end{verbatim}
 
 \begin{verbatim}
-[1] 31831896
+[1] 31617376
 \end{verbatim}
 
 For more details and examples using the parallel package, refer to the \href{https://stat.ethz.ch/R-manual/R-devel/library/parallel/doc/parallel.pdf}{parallel package documentation} or run \texttt{help(package = "parallel")} at the R prompt. For other ways of running computations in parallel refer to the \href{http://cran.r-project.org/web/views/HighPerformanceComputing.html}{HPC task view}.
+\end{enumerate}
 
-\subsection{{\bfseries\sffamily TODO} Parallel examples for python, matlab?}
-\label{sec-6-4}
-I don't know this well enough to write good examples. I tried with python, but couldn't come up with an example where multiple processes was actually faster. Contributions appreciated. --Ista
+\subsubsection{Using multiple CUPs in Python}
+\label{sec:org40a8c0e}
+Running computations in parallel on multiple cores is often an effective way to speed up computations. This can be useful when we want to iterate over a set of inputs, e.g., applying a function to each of a set of files. In this example we count the number of characters in all the files under the texlive directory. 
 
-\subsection{Using multiple CPUs in other programming languages and applications}
-\label{sec-6-5}
+\begin{verbatim}
+import os
+import fnmatch
+textFiles = []
+for root, dirnames, filenames in os.walk('/usr/share/texlive'):
+    for filename in fnmatch.filter(filenames, '*.tex') + fnmatch.filter(filenames, "*.txt"):
+        textFiles.append(os.path.join(root, filename))
+\end{verbatim}
+
+We have \texttt{2080} text files to process. We can do this using a single core:
+\begin{verbatim}
+import time
+start = time.time()
+
+num_chars = 0
+for fname in textFiles:
+    try:
+        with open(fname, 'r') as f:
+            for line in f:
+                num_chars += len(line)
+    except:
+        pass
+
+stop = time.time()
+\end{verbatim}
+. It takes around \texttt{1.2721843719482422} seconds to count the characters in these files, which is aleady pretty fast. But, for even more speed we can use the \texttt{multiprocessing} library to perform the operation using multiple cores:
+\begin{verbatim}
+import multiprocessing
+
+def f(fname):
+    num_chars = []
+    try:
+        with open(fname, 'r') as this_file:
+            for line in this_file:
+                num_chars.append(len(line))
+    except:
+        pass
+    return sum(num_chars)
+
+start = time.time()
+
+pool = multiprocessing.Pool(7)
+nchar = pool.map(f, textFiles)
+pool.close()
+pool.join()
+
+end = time.time()
+\end{verbatim}
+which reduces the time to \texttt{0.33490753173828125} seconds.
+
+
+
+
+\subsubsection{Using multiple CPUs in other programming languages and applications}
+\label{sec:orgf068a57}
 Using multiple CPU cores in Stata, Matlab and SAS does not require explicit activation -- many functions will automatically use multiple cores if available. For Matlab user-written code can also take advantage of multiple CPUs using the \texttt{parfor} command. Python uses can run multiple processes using the \href{https://docs.python.org/2/library/multiprocessing.html}{multiprocessing} library.
 
-\section{Batch jobs}
-\label{sec-7}
-The RCE also provides access to a \emph{batch nodes}, a cluster of many lower powered computers. While each individual batch node is not that powerful (each node has one CPU and 4 Gb of memory), there are hundreds of them, and combined they make for a very powerful system indeed. The batch nodes are good for jobs will run for a long time, and for groups of very similar jobs (e.g., simulations where a small number of parameters are varied).
+\section{Batch Jobs Overview}
+\label{sec:org4d3b0d6}
+The RCE provides access to \emph{batch nodes}, a cluster of many computers. The batch nodes are good for jobs will run for a long time, and for groups of very similar jobs (e.g., simulations where a number of parameters are varied).
 
-Running jobs on the batch nodes is somewhat more complicated than running interactive jobs on the RCE. The main access points are two \emph{command line} programs, \texttt{condor\_submit\_util} and \texttt{condor\_submit}. \texttt{condor\_submit\_util} prompts you for inputs and uses them to write and submit a \texttt{submit file}. Alternatively, you can write the submit file yourself and submit it using \texttt{condor\_submit}, as shown in the examples below. In this tutorial we focus on writing simple submit files and submitting them with \texttt{condor\_submit}. For more details on automatically generating and submitting using \texttt{condor\_submit\_util} refer to the main \href{http://projects.iq.harvard.edu/rce/book/batch-processing-basics}{RCE batch job documentation}. 
+Running jobs on the batch nodes is somewhat more complicated than running \hyperref[sec:orgbb95ba7]{interactive jobs} on the RCE. The main access points are two \emph{command line} programs, \texttt{condor\_submit\_util} and \texttt{condor\_submit}. In this tutorial we focus on writing simple submit files and submitting them with \texttt{condor\_submit}. For more details on automatically generating and submitting using \texttt{condor\_submit\_util} refer to the main \href{http://projects.iq.harvard.edu/rce/book/batch-processing-basics}{RCE batch job documentation}. 
 
 \subsection{Preparing for batch submission}
-\label{sec-7-1}
+\label{sec:org0e916d6}
 
 In practical terms, running in "batch" means that you will not be able to interact with the running process. This means that all the information your program needs to successfully complete needs to be specified ahead of time. You can pass arguments to your process so that each job gets different inputs, but the script must process these arguments and do the right thing without further instruction.
 
@@ -262,7 +335,7 @@ When you submit a job to the batch processing system each process will generate 
 When preparing your job for batch submission you usually need to figure out how to split up the computation, (with one piece going to each process), and how to tell each process which piece it is responsible for. The examples below illustrate how to do this.
 
 \subsection{Submit file overview}
-\label{sec-7-2}
+\label{sec:org7cbfb94}
 In order to run jobs in parallel on the batch nodes you need to create a \texttt{submit file} that describes the process to be run on each node. If creating these files by hand you may use any text editor (e.g., \texttt{gedit}, accessible though the \texttt{Applications -{}-> Accessories} menu on the RCE). 
 
 The submit file template below includes all required elements. (Note that this file is a template only -- see the next section for working examples.)
@@ -270,6 +343,13 @@ The submit file template below includes all required elements. (Note that this f
 # Universe whould always be 'vanilla'. This line MUST be 
 #included in your submit file, exactly as shown below.
 Universe = vanilla
+
+# The following arguments are _optional_. If included
+# they are used to specify the requirements for the
+# submission.
+request_cpus = 1
+request_disk = 4GB
+request_memory = 4GB
 
 # Enter the path to the program you wish to run.
 # The default runs the R program. To run another
@@ -295,15 +375,31 @@ Log = output/log
 # Enter the number of processes to request. This should 
 # always be the last part of your submit file.
 Queue 10
-\end{verbatim}
-This submit file instructs the scheduler to request 10 nodes (\texttt{Queue 10}), start R on each one (\texttt{Executable = /usr/local/bin/R}), run the code in example.R (\texttt{input = example.R}), write the output to files named out.0 -- out.9 in the output folder (\texttt{output = output/out.\$(Process)}), write any errors to files named out.0 -- out.9 in the output folder (\texttt{error = output/error.\$(Process)}), and write a log file in the output folder (\texttt{Log = output/log}). 
 
-\subsection{Batch example: Simple power simulation in R}
-\label{sec-7-3}
+\end{verbatim}
+This submit file instructs the scheduler to request 10 nodes (\texttt{Queue 10}), start R\footnote{We use R for this example because it is the most commonly used program by RCE users. If you use Stata, Matlab, or something else, don't worry, we will have examples for you!} on each one (\texttt{Executable = /usr/local/bin/R}), run the code in example.R (\texttt{input = example.R}), write the output to files named out.0 -- out.9 in the output folder (\texttt{output = output/out.\$(Process)}), write any errors to files named out.0 -- out.9 in the output folder (\texttt{error = output/error.\$(Process)}), and write a log file in the output folder (\texttt{Log = output/log}). Each of the 10 requested nodes must be able to provide at least one cpu (\texttt{request\_cpus = 1}), four Gb of disk space (\texttt{request\_disk = 4GB}) and four Gb of memory (\texttt{request\_memory = 4GB}).
+
+The elements included in the submit file template above should be suffucient for most jobs. You can \href{template.submit}{download this submit file template} and modify it to suit your needs. For a complete description of the Condor submit file syntax, including less commonly used elements not described here refer to the \href{http://research.cs.wisc.edu/htcondor/manual/current/condor\_submit.html}{official documentation}. 
+
+\section{Batch Job Examples}
+\label{sec:org6e78841}
+RCE users come from a variety of backgrounds and different people are more proficient with different software packages. Feel free to skip to the batch examples using the software you are most comfortable with:
+\begin{itemize}
+\item \ref{sec:orgd8e23df}
+\item \ref{sec:org7719f77}
+\item \ref{sec:org3a9fd7d}
+\item \ref{sec:org2438588}
+\end{itemize}
+
+\subsection{R Batch Examples}
+\label{sec:orgd8e23df}
+\subsubsection{Batch example: Simple power simulation in R}
+\label{sec:org2f67a27}
 The simplest kind of batch job is one for which you just want to run the same code multiple times, without varying any parameters. For example, suppose that we wish to run a power simulation for a t.test with unequal group sizes. 
 
-\subsubsection{R power simulation script}
-\label{sec-7-3-1}
+\begin{enumerate}
+\item R power simulation script
+\label{sec:orgbbfb2e6}
 The first step is to write a script or program to carry out the desired computation. The R script below simulates distributions with a specified mean difference, performs two-sample t-tests on the difference, and calculates the proportion of significant tests.
 \begin{verbatim}
 ## function to simulate data and perform a t.test
@@ -325,13 +421,9 @@ p <- replicate(10000,
 cat(length(p[p < .05])/length(p))
 \end{verbatim}
 
-\begin{verbatim}
-[1] 0.4392
-\end{verbatim}
-
-\subsubsection{Submit file}
-\label{sec-7-3-2}
-If we want to run this function one million times it may take a while, especially if our computer is an older less powerful model. So let's run it on 100 separate machines (each one will simulate the test 10000 times). To do that we need, in addition to the R script above, a submit file to request resources and run the computation. 
+\item Submit file
+\label{sec:org9e546de}
+If we want to run this function one million times it may take a while, especially if our computer is an older less powerful model. So let's run it on 100 separate machines (each one will simulate the test 10000 times). To do that we need, in addition to the R script above, a submit file to request resources and run the computation.  
 \begin{verbatim}
 # Universe whould always be 'vanilla'. This line MUST be 
 #included in your submit file, exactly as shown below.
@@ -340,9 +432,9 @@ Universe = vanilla
 # Enter the path to the R program.
 Executable = /usr/local/bin/R
 
-# Specify any arguments you want to pass to the executable
-# to make r not save or restore workspaces, and to 
-# run as quietly as possible
+# Specify any arguments you want to pass to the executable.
+# Here we pass arguments to make R not save or restore workspaces,
+# and to run as quietly as possible.
 Arguments = --no-save --no-restore --slave
 
 # Specify the relative path to the input file
@@ -354,7 +446,9 @@ output = output/out.$(Process)
 error = output/error.$(Process)
 # Specify where to save the log file.
 Log = output/log
+
 # Enter the number of processes to request.
+# This section should always come last.
 Queue 100
 \end{verbatim}
 
@@ -367,33 +461,9 @@ Now that we have our script and the submit file we can run submit the job as fol
 \item run \texttt{condor\_submit power.submit} to submit the jobs to the cluster
 \end{enumerate}
 
-\subsubsection{Monitoring submitted jobs}
-\label{sec-7-3-3}
-After submitting the jobs we may wish to monitor them, e.g. to check if they are running. You can do this by running \texttt{condor\_q <your\_user\_name>} in a terminal. If this returns nothing then you have no jobs in the queue. Otherwise you will see information for each request in the queue which will look something like this:
-\begin{verbatim}
--- Schedd: HMDC.batch@rce6-5.hmdc.harvard.edu : <10.0.0.10:9619?sock=7858_e19e_247>
- ID      OWNER            SUBMITTED     RUN_TIME ST PRI SIZE CMD               
- 200.0   izahn           4/27 11:45   0+00:00:04 R  0   0.0  R --no-save --no-r
- 200.1   izahn           4/27 11:45   0+00:00:04 R  0   0.0  R --no-save --no-r
- 200.2   izahn           4/27 11:45   0+00:00:04 R  0   0.0  R --no-save --no-r
- 200.3   izahn           4/27 11:45   0+00:00:04 R  0   0.0  R --no-save --no-r
- 200.4   izahn           4/27 11:45   0+00:00:04 R  0   0.0  R --no-save --no-r
- 200.5   izahn           4/27 11:45   0+00:00:04 R  0   0.0  R --no-save --no-r
- 200.6   izahn           4/27 11:45   0+00:00:04 R  0   0.0  R --no-save --no-r
- 200.7   izahn           4/27 11:45   0+00:00:04 R  0   0.0  R --no-save --no-r
- 200.8   izahn           4/27 11:45   0+00:00:04 R  0   0.0  R --no-save --no-r
- 200.9   izahn           4/27 11:45   0+00:00:04 R  0   0.0  R --no-save --no-r
- 200.10  izahn           4/27 11:45   0+00:00:04 R  0   0.0  R --no-save --no-r
- 200.11  izahn           4/27 11:45   0+00:00:04 R  0   0.0  R --no-save --no-r
- 200.12  izahn           4/27 11:45   0+00:00:04 R  0   0.0  R --no-save --no-r
-\end{verbatim}
-Perhaps the most important information returned by \texttt{condor\_q} is the program status (the \textbf{ST} column). Status \textbf{I} means your job is in the queue but has not yet started running, \textbf{R} means the job is currently running, and \textbf{H} means the job is on hold. If you job is on hold you can get more information about what the problem might be by running \texttt{condor\_q -hold}.
-
-You will know your job is finished when it is no longer listed in the \texttt{condor\_q} output. When it finishes you can examine the output and/or error files to see if the program exited successfully.
-
-\subsubsection{Aggregating results}
-\label{sec-7-3-4}
-When your batch job is finished you are usually left with multiple output files that need to be aggregated. In the case of our simulation example, we have files \texttt{output/out.0 -{}- output/out40}, each of which contains a single number representing the proportion of significant tests. We can aggregate them with a simple R script, like this:
+\item Aggregating results
+\label{sec:org9bac4d5}
+When your batch job is finished you are usually left with multiple output files that need to be aggregated. In the case of our simulation example, we have files \texttt{output/out.0 -{}- output/out99}, each of which contains a single number representing the proportion of significant tests. We can aggregate them with a simple R script, like this:
 \begin{verbatim}
 ## list all output files in the output directory
 output_files <- list.files("output",
@@ -407,17 +477,19 @@ mean(as.double(sapply(
                       warn = FALSE)))
 \end{verbatim}
 
-\subsubsection{Try it yourself!}
-\label{sec-7-3-5}
-Download the \href{examples/power1.zip}{power simulation example files}, to the RCE, extract the zip file and running \texttt{condor\_submit power.submit} in the \texttt{power1} directory.
+\item Try it yourself!
+\label{sec:org2236a4d}
+Download the \href{R\_examples/power1.zip}{power simulation example files}, to the RCE, extract the zip file and running \texttt{condor\_submit power.submit} in the \texttt{power1} directory.
+\end{enumerate}
 
-\subsection{Batch example: Power simulation in R with varying parameters}
-\label{sec-7-4}
+\subsubsection{Batch example: Power simulation in R with varying parameters}
+\label{sec:org0b3a0c0}
 The previous example was relatively simple, because we wanted to run exactly the same code on all 100 nodes. Often however you want each node to do something slightly different. For example, we may wish to vary the sample size from 100 -- 500 in increments of 10, to see how power changes as a function of that parameter. In that case we need to pass some additional information to each process, telling it which parameter space it is responsible for. 
 
 As it turns out, we almost already know how to do that: if you you look closely at the submit file in the previous example you will notice that we used \texttt{\$(Process)} to append the process number to the output and error files. 
-\subsubsection{Submit file passing process as an argument}
-\label{sec-7-4-1}
+\begin{enumerate}
+\item Submit file passing process as an argument
+\label{sec:org8e1de47}
 We can use the \texttt{\$(Process)} macro to pass information to our program, like this:
 \begin{verbatim}
 # Universe whould always be 'vanilla'. This line MUST be 
@@ -444,8 +516,8 @@ Queue 40
 \end{verbatim}
 Notice that we used \texttt{-{}-args \$(Process)} to pass the process number to the R program. \texttt{\$(Process)} will be an integer starting from \texttt{0}. 
 
-\subsubsection{R script argument processing}
-\label{sec-7-4-2}
+\item R script argument processing
+\label{sec:org4327834}
 Next we need to 1) retrieve the process number in our R program and 2) map it to the parameter space. We can retrieve the arguments in R like this:
 \begin{verbatim}
 ## retrieve arguments passed from the command line.
@@ -483,8 +555,8 @@ write.csv(data.frame(n = n, power = length(p[p < .05])/length(p)),
 
 Now we have all the required elements to submit out job, and can do so using \texttt{condor\_submit} as before. 
 
-\subsubsection{Aggregating results}
-\label{sec-7-4-3}
+\item Aggregating results
+\label{sec:org4724a75}
 Each of our 40 processes produced a file in the \texttt{output} directory name \texttt{out<process>csv}; our next task is to aggregate these results. The R script below reads each of these files, joins them together into a single data.frame, and plots the result.
 \begin{verbatim}
 ## list all output files in the output directory
@@ -500,26 +572,366 @@ plot(results)
 abline(h = 0.8)
 \end{verbatim}
 
+\begin{center}
 \includegraphics[width=.9\linewidth]{images/powerDist.png}
+\end{center}
 
+\item Try it yourself!
+\label{sec:orgd44097d}
+Download the \href{R\_examples/power2.zip}{power simulation example files}, to the RCE, extract the zip file, and run the example by calling \texttt{condor\_submit power.submit} from the \texttt{power2} directory.
+\end{enumerate}
+
+\subsection{Stata Batch Examples}
+\label{sec:org7719f77}
+In this example we use the batch system to bootstrap a distribution of means. Each process will calculate the mean for a single bootstrap sample and save the result. Since we need to give the output files unique names we will pass the batch process number to Stata and use it to construct the file names.
+\subsubsection{Stata bootstrap do-file}
+\label{sec:org4f91316}
+To use the batch system we need to write a do-file that does the calculation without further user input. The do-file below reads a Stata data set, sets a seed for random number generation, samples (with replacement) from the data, calculates the average value of the sampled data, and saves the result.
+\begin{verbatim}
+set more off
+
+// collect the arguments passed by submit file
+args process
+
+// load the dataset
+use "mydata", clear
+
+// set seed (shouldn't have to do this, but stata's
+// random bsample defaults to the same seed each time).
+// we nee to find a better way to do this.
+set seed `process'
+
+// sample with replacement
+bsample, cluster(id) idcluster(newid)
+
+// calculate the mean and standard deviation
+collapse (mean) mean_myvar = myvar (sd) sd_myvar = myvar
+
+// save the result, appending the process number to the file name
+save "output/output_`process'.dta", replace
+\end{verbatim}
+Note the use of \texttt{args process}, which retrieves the value of the process argument. The argument itself is specified in the \texttt{.submit} file (see below).
+\subsubsection{Submit file}
+\label{sec:org9dd35b6}
+The Stata code in the example above draws one bootstrap sample and calculates the mean. If we want to do this 1,000 times we could write a loop, but each iteration would be done sequentially. We can carry out this operation faster by running it simultaneously on hundreds of machines. We just need a \texttt{.submit} file like the one below:
+\begin{verbatim}
+# Universe whould always be 'vanilla'. This line MUST be 
+#included in your submit file, exactly as shown below.
+Universe = vanilla
+
+# Enter the path to the Stata program.
+Executable = /usr/local/bin/stata-mp
+
+# Specify any arguments you want to pass to the executable.
+# Here we pass arguments to make Stata run the bootstrap.do
+# file. We also pass the process number, which will be used
+# to append the process number to the output files.
+Arguments = -q do bootstrap.do $(Process)
+
+# Specify where to output any results printed by your program.
+output = output/bootstrap$(Process).out
+# Specify where to save any errors returned by your program.
+error = output/bootstrap$(Process).err
+# Specify where to save the log file.
+Log = output/bootstrap$(Process).log
+
+# Enter the number of processes to request.
+# This section should always come last.
+Queue 1000
+
+\end{verbatim}
+Notice that we passed the \texttt{\$(Process)} argument so that we can retrieve that value in the do-file and save each output to a unique file that includes the process name.
+
+To submit this job we open a terminal on the RCE, \texttt{cd} to the project folder and run \texttt{condor\_submit bootstrap.submit} to submit the jobs to the cluster. The \href{Stata\_examples/bootstrap.zip}{bootstrap example files are available for download} so you can try it yourself.
+
+\subsubsection{Aggregating results}
+\label{sec:org1f13dd6}
+Each of our 1000 processes produced a file in the \texttt{output} directory name \texttt{out<process>.dta}; our next task is to aggregate these results. The do-file below reads each of these files, joins them together, appends them, and plots the result.
+\begin{verbatim}
+clear
+set more off
+// change to the output directory
+cd output
+// get a list of the output files created by bootstrap.do
+local list: dir . files "output*.dta"
+//loop over the output files appending each one
+local f=1
+foreach file of local list {
+        di "`file"'
+        if `f'== 1 {
+                use `file', clear
+        }
+        else {
+                append using `file'
+        }
+        local ++f
+}
+// save the appended results
+saveold "mybootresults", replace
+
+// make a histogram
+hist(mean_myvar)
+
+// save the graph
+graph export "stata_bootstrap.eps", replace
+
+\end{verbatim}
+
+\begin{center}
+\includegraphics[width=.9\linewidth]{images/stata_bootstrap.png}
+\end{center}
 \subsubsection{Try it yourself!}
-\label{sec-7-4-4}
-Download the \href{examples/power2.zip}{power simulation example files}, to the RCE, extract the zip file, and run the example by calling \texttt{condor\_submit power.submit} from the \texttt{power2} directory.
+\label{sec:orgd88754e}
+Download the \href{Stata\_examples/bootstrap.zip}{bootstrap example files}, to the RCE, extract the zip file, and run the example by calling \texttt{condor\_submit bootstrap.submit} from the \texttt{bootstrap} directory.
+
+\subsection{Python Batch Examples}
+\label{sec:org3a9fd7d}
+\subsubsection{Batch example: Simple power simulation in python}
+\label{sec:org3bd8b19}
+The simplest kind of batch job is one for which you just want to run the same code multiple times, without varying any parameters. For example, suppose that we wish to run a power simulation for a t.test with unequal group sizes. 
+
+\begin{enumerate}
+\item python power simulation script
+\label{sec:org6274055}
+The first step is to write a script or program to carry out the desired computation. The python script below simulates distributions with a specified mean difference, performs two-sample t-tests on the difference, and calculates the proportion of significant tests.
+\begin{verbatim}
+import numpy as np
+from scipy import stats
+
+## function to simulate data and perform a t.test
+def sim_ttest(mu1, mu2, sd, n1, n2):
+    x = stats.norm.rvs(loc = mu1, scale = sd, size = n1)
+    y = stats.norm.rvs(loc = mu2, scale = sd, size = n2)
+    return(stats.ttest_ind(x, y)[1])
+
+##  run the function 10,000 times
+nsims = 10000
+p = [sim_ttest(1, 1.3, 1, 50, 150)  for x in range(nsims)]
+## calculate proportion of significant tests
+print(len([x for x in p if x < .05])/nsims)
+\end{verbatim}
+
+\begin{verbatim}
+
+
+
+
+....:    ....:    ....:    ....:
+
+
+
+
+0.4468
+
+
+\end{verbatim}
+
+\item Submit file
+\label{sec:org9376759}
+If we want to run this function one million times it may take a while, especially if our computer is an older less powerful model. So let's run it on 100 separate machines (each one will simulate the test 10000 times). To do that we need, in addition to the python script above, a submit file to request resources and run the computation.  
+\begin{verbatim}
+# Universe whould always be 'vanilla'. This line MUST be 
+#included in your submit file, exactly as shown below.
+Universe = vanilla
+
+# Enter the path to the python program.
+Executable = /usr/local/bin/python33
+
+# Specify any arguments you want to pass to the executable.
+# Here we pass arguments to make python not save or restore workspaces,
+# and to run as quietly as possible.
+Arguments = power.py
+
+# Note that unlike R batch job submission we pass the python script in
+# the Arguments section rather than in the "Input" section.
+# Specify the relative path to the input file
+
+# Specify where to output any results printed by your program.
+output = output/out.$(Process)
+# Specify where to save any errors returned by your program.
+error = output/error.$(Process)
+# Specify where to save the log file.
+Log = output/log
+
+# Enter the number of processes to request.
+# This section should always come last.
+Queue 100
+\end{verbatim}
+
+Now that we have our script and the submit file we can run submit the job as follows:
+\begin{enumerate}
+\item make a project folder for this run if it doesn't exist
+\item save the python script (as power.python) and the submit file (as power.submit) in the project folder
+\item make a sub folder named \texttt{output}
+\item open a terminal and \texttt{cd} to the project folder
+\item run \texttt{condor\_submit power.submit} to submit the jobs to the cluster
+\end{enumerate}
+
+\item Aggregating results
+\label{sec:org9b9ce6c}
+When your batch job is finished you are usually left with multiple output files that need to be aggregated. In the case of our simulation example, we have files \texttt{output/out.0 -{}- output/out99}, each of which contains a single number representing the proportion of significant tests. We can aggregate them with a simple python script, like this:
+\begin{verbatim}
+import numpy as np
+import glob
+## list all output files in the output directory
+output_files = glob.glob("output/out*")
+
+output_values = map(lambda f: np.float(open(f).read()), output_files)
+print(list(output_values))
+\end{verbatim}
+
+\item Try it yourself!
+\label{sec:org25f9c47}
+Download the \href{Python\_examples/power1.zip}{power simulation example files}, to the pythonCE, extract the zip file and running \texttt{condor\_submit power.submit} in the \texttt{power1} directory.
+\end{enumerate}
+
+\subsubsection{Batch example: Power simulation in python with varying parameters}
+\label{sec:org881926c}
+The previous example was relatively simple, because we wanted to run exactly the same code on all 100 nodes. Often however you want each node to do something slightly different. For example, we may wish to vary the sample size from 100 -- 500 in increments of 10, to see how power changes as a function of that parameter. In that case we need to pass some additional information to each process, telling it which parameter space it is responsible for. 
+
+As it turns out, we almost already know how to do that: if you you look closely at the submit file in the previous example you will notice that we used \texttt{\$(Process)} to append the process number to the output and error files. 
+\begin{enumerate}
+\item Submit file passing process as an argument
+\label{sec:org6fbe088}
+We can use the \texttt{\$(Process)} macro to pass information to our program, like this:
+\begin{verbatim}
+  # Universe whould always be 'vanilla'. This line MUST be 
+  #included in your submit file, exactly as shown below.
+  Universe = vanilla
+
+  # Enter the path to the python program.
+  Executable = /usr/local/bin/python33
+
+  # Specify any arguments you want to pass to the executable
+  Arguments = power.py $(Process)
+
+# Specify where to output any results printed by your program.
+  output = output/out.$(Process)
+
+  # Specify where to save any errors returned by your program.
+  error = output/error.$(Process)
+
+  Log = log.txt
+  # Enter the number of processes to request.
+  Queue 40
+\end{verbatim}
+
+Notice that we used \texttt{-{}-args \$(Process)} to pass the process number to the python program. \texttt{\$(Process)} will be an integer starting from \texttt{0}. 
+
+\item python script argument processing
+\label{sec:orgc4e23d0}
+Next we need to 1) retrieve the process number in our python program and 2) map it to the parameter space. We can retrieve the arguments in python like this:
+\begin{verbatim}
+import sys
+## retrieve arguments passed from the command line.
+process = int(sys.argv[1])
+\end{verbatim}
+We now have a variable in python that tells us which process we are. Now we need to map that to our parameter space; recall that we want to test sample sizes from 100 to 500, so we need to map \texttt{process 0} to \texttt{n = 100},  \texttt{process 1} to \texttt{n = 110}, \texttt{process 2} to \texttt{n = 120} and so on:
+\begin{verbatim}
+## map process to sample size parameter.
+n = (process + 100) + (process*10 - process)
+\end{verbatim}
+
+There is one additional complication we need to handle: in the previous example we did need to keep track of the parameters used by each process because the parameters did not vary. Now that they do, it would be nice if we had output that recorded the value of the varying parameter as well as the result. We could of course just print the \texttt{n} parameter we calculated from the process number along with the result, but it will be easier to combine the outputs if we write them to a machine-readable format (e.g., a comma-separated-values file). You may have noticed that in the submit file above I omitted the \texttt{output} directive: that is because we are going to explicitly save the results in the python script, so we don't need the batch scheduler to save those output files for us.
+
+Now we can set up the simulation as before, passing the \texttt{n} calculated above into our simulation function, writing the results to files. 
+\begin{verbatim}
+## function to simulate data and perform a t.test
+import numpy as np
+from scipy import stats
+
+## function to simulate data and perform a t.test
+def sim_ttest(mu1, mu2, sd, n1, n2):
+    x = stats.norm.rvs(loc = mu1, scale = sd, size = n1)
+    y = stats.norm.rvs(loc = mu2, scale = sd, size = n2)
+    return(stats.ttest_ind(x, y)[1])
+
+##  run the function 10,000 times
+nsims = 10000
+p = [sim_ttest(1, 1.3, 1, n, n)  for x in range(nsims)]
+print(len([x for x in p if x < .05])/nsims)
+print(n)
+\end{verbatim}
+
+Now we have all the required elements to submit out job, and can do so using \texttt{condor\_submit} as before. 
+
+\item Aggregating results
+\label{sec:org7935f72}
+Each of our 40 processes produced a file in the \texttt{output} directory name \texttt{out<process>csv}; our next task is to aggregate these results. The python script below reads each of these files, joins them together into a single array, and plots the result.
+\begin{verbatim}
+import numpy as np
+import glob
+import matplotlib.pyplot as plt
+## list all output files in the output directory
+output_files = glob.glob("output/out*")
+
+output_values = np.array([x.split("\n")[:2]
+                          for x in [open(f).read() for f in output_files]],
+                         dtype = "float")
+
+plt.plot(list(output_values[:, 1]), list(output_values[:, 0]), "bo")
+plt.xlabel("Sample Size")
+plt.ylabel("Power")
+plt.savefig("power.png")
+\end{verbatim}
+
+\begin{center}
+\includegraphics[width=.9\linewidth]{images/python_powerDist.png}
+\end{center}
+
+\item Try it yourself!
+\label{sec:org21e7359}
+Download the \href{Python\_examples/power2.zip}{power simulation example files}, to the pythonCE, extract the zip file, and run the example by calling \texttt{condor\_submit power.submit} from the \texttt{power2} directory.
+\end{enumerate}
+
+
+
+
+\section{Monitoring and manageing submitted batch jobs}
+\label{sec:org723073c}
+After submitting the jobs we may wish to monitor them, e.g. to check if they are running. You can do this by running \texttt{condor\_q <your\_user\_name>} in a terminal. If this returns nothing then you have no jobs in the queue. Otherwise you will see information for each request in the queue which will look something like this:
+\begin{verbatim}
+-- Schedd: HMDC.batch@rce6-5.hmdc.harvard.edu : <10.0.0.10:9619?sock=7858_e19e_247>
+ ID      OWNER            SUBMITTED     RUN_TIME ST PRI SIZE CMD               
+ 200.0   izahn           4/27 11:45   0+00:00:04 R  0   0.0  R --no-save --no-r
+ 200.1   izahn           4/27 11:45   0+00:00:04 R  0   0.0  R --no-save --no-r
+ 200.2   izahn           4/27 11:45   0+00:00:04 R  0   0.0  R --no-save --no-r
+ 200.3   izahn           4/27 11:45   0+00:00:04 R  0   0.0  R --no-save --no-r
+ 200.4   izahn           4/27 11:45   0+00:00:04 R  0   0.0  R --no-save --no-r
+ 200.5   izahn           4/27 11:45   0+00:00:04 R  0   0.0  R --no-save --no-r
+ 200.6   izahn           4/27 11:45   0+00:00:04 R  0   0.0  R --no-save --no-r
+ 200.7   izahn           4/27 11:45   0+00:00:04 R  0   0.0  R --no-save --no-r
+ 200.8   izahn           4/27 11:45   0+00:00:04 R  0   0.0  R --no-save --no-r
+ 200.9   izahn           4/27 11:45   0+00:00:04 R  0   0.0  R --no-save --no-r
+ 200.10  izahn           4/27 11:45   0+00:00:04 R  0   0.0  R --no-save --no-r
+ 200.11  izahn           4/27 11:45   0+00:00:04 R  0   0.0  R --no-save --no-r
+ 200.12  izahn           4/27 11:45   0+00:00:04 R  0   0.0  R --no-save --no-r
+\end{verbatim}
+Perhaps the most important information returned by \texttt{condor\_q} is the program status (the \textbf{ST} column). Status \textbf{I} means your job is in the queue but has not yet started running, \textbf{R} means the job is currently running, and \textbf{H} means the job is on hold. If you job is on hold you can get more information about what the problem might be by running \texttt{condor\_q -hold}.
+
+You will know your job is finished when it is no longer listed in the \texttt{condor\_q} output. When it finishes you can examine the output and/or error files to see if the program exited successfully.
+
+If you would like to remove a batch job from the queue you may do so using \texttt{condor\_rm}. For example \texttt{condor\_rm 200} will remove the jobs listed above.
+
+For more details on monitoring and manageing your batch jobs please refer to \url{http://projects.iq.harvard.edu/rce/book/checking-your-process-status}
+
+\subsubsection{{\bfseries\sffamily TODO} Matlab Batch Examples}
+\label{sec:org2438588}
+
 
 \section{{\bfseries\sffamily TODO} Installing custom packages on the RCE}
-\label{sec-8}
+\label{sec:orgc632e2a}
 
 
 \subsection{Installing R packages}
-\label{sec-8-1}
+\label{sec:org37a0da3}
 
 \subsection{Installing Python packages}
-\label{sec-8-2}
+\label{sec:org051c539}
 
 \subsection{Installing Stata packages}
-\label{sec-8-3}
+\label{sec:org36c940f}
 
 \section{{\bfseries\sffamily TODO} Getting help}
-\label{sec-9}
-% Emacs 24.5.1 (Org mode 8.2.10)
+\label{sec:orgf1f0a78}
 \end{document}

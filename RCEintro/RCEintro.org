@@ -18,10 +18,10 @@
 #+PROPERTY: session nil
 #+PROPERTY: comments no
 #+PROPERTY: header-args:R  :session *R*
-#+PROPERTY: header-args:python  :results output :session *Python*
+#+PROPERTY: header-args:python  :eval never-export :results output :session *Python*
 
 #+name: workshopPreamble
-#+begin_src emacs-lisp :exports none :results silent :tangle no
+#+begin_src emacs-lisp :exports none :eval never-export :results silent :tangle no
     (load-file "../Stata/setupEnvironment.el")
 #+end_src
 
