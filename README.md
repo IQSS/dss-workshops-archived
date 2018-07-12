@@ -1,1 +1,1 @@
-# public_cloud_computing
+# public_cloud_computing_for_social_scientists
