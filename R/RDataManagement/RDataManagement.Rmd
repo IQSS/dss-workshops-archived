@@ -163,7 +163,7 @@ boy.file.names[[1]]
 and we can use the `excel_sheets` function from the *readxl* package
 to list the worksheet names from this file.
 
-```{r
+```{r}
 library(readxl)
 
 excel_sheets(boy.file.names[[1]])
@@ -455,8 +455,8 @@ bind_rows(select(boysNames[[1]], Name, Count),
           select(boysNames[[1]], Name = Name__1, Count = Count__1))
 ```
 
-Exercise: Cleanup all the data
-=========================================
+Exercise 3: Cleanup all the data
+------------------------------
 
 In the previous examples we learned how to drop empty rows with
 `filter`, select only relevant columns with `select`, and re-arrange
@@ -472,7 +472,7 @@ Exercise prototype
 There are different ways you can go about it. Here is one:
 
 
-```{r}
+```{r, results = 'hide', purl = FALSE}
 
 ## write a function that does all the cleanup
 cleanupNamesData <- function(x) {
@@ -491,118 +491,51 @@ boysNames <- map(boysNames, cleanupNamesData)
 ```
 
 
-Adding derived columns
-======================
-
-It is often useful to add columns that are derived from one or more
-existing columns. For example, we may wish to add a column to store
-the length of each name:
-
-```{r}
-boysNames <- map(boysNames, mutate, Length = str_count(Name))
-```
-
-Exercise: Add a year column
-=========================================
-
-We originally read the data from each file listed in `boy.file.names`,
-and the data is still in that order. Use the information contained in
-`boy.file.names` to add a `Year` column to each table in `boysNames`.
-(Hint: see `?map2`.)
-
---------
---------
-
-Exercise prototype
-------------------
-There are different ways you can go about it. Here is one:
-
-
-```{r}
-## Extract years
-years <- as.integer(str_extract(boy.file.names, "[0-9]{4}"))
-
-## Insert year column in each table
-boysNames <- map2(boysNames, years, function(x, y) mutate(x, Year = y))
-```
-
-
 Data organization and storage
 =============================
 
 Now that we have the data cleaned up and augmented, we can turn our
 attention to organizing and storing the data.
 
-Right now we have a list of tables, one for each year. This is not a
-bad way to go. It has the advantage of making it easy to work with
-individual years without needing to load data from other years. We can
-store the data organized by year in `.csv` files, `.rds` files, or in
-database tables. 
-
 One table for each year
 -----------------------
 
 Right now we have a list of tables, one for each year. This is not a
 bad way to go. It has the advantage of making it easy to work with
-individual years without needing to load data from other years. It has
-the disadvantage of making it more difficult to examine questions the
-require data from multiple years.
-
-We can store the data organized by year in `.csv` files, `.rds` files,
-or in database tables. For now let's store these data in `.csv` files
-and then see how easy it is to work with them.
-
+individual years; it has the disadvantage of making it more difficult
+to examine questions that require data from multiple years. To make the
+arrangement of the data clearer it helps to name each element of the
+list with the year it corresponds too.
 
 ```{r}
-## make directory to store the data
-dir.create("./data/byyear", recursive = TRUE)
-## extract the years
-years <- map_int(boysNames, function(x) unique(x$Year))
-## construct paths
-paths <- str_c("data/byyear/boys_names_", years, ".csv", sep = "")
-## write out the data
-walk2(boysNames, paths, write_csv)
+glimpse(head(boysNames))
 
-## clear our workspace
-rm(list = ls())
-```
-
-Exercise: work with tables organized by year
--------------------------
-
-1. What where the five most popular names in 2013?
-2. How has the popularity of the name "ANDREW" changed over time?
-
--------------------
--------------------
-
-Exercise prototype
-------------------
-Number one is easy, number two is harder:
-
-```{r}
-## 1. What where the five most popular names in 2013?
-boys2013 <- read_csv("./data/byyear/boys_names_2013.csv")
-slice(arrange(boys2013, desc(Count)), 1:5)
-
-## 2. How has the popularity of the name "ANDREW" changed over time?
-boysNames <- map(list.files("./data/byyear", full.names = TRUE),
-                 read_csv)
-
-andrew <- map(boysNames, filter, Name == "ANDREW")
-andrew <- bind_rows(andrew)
-
-ggplot(andrew, aes(x = Year, y = Count)) +
-    geom_line() +
-    ggtitle("Popularity of \"Andrew\", over time")
+years <- str_extract(boy.file.names, "[0-9]{4}")
+boysNames <- setNames(boysNames, years)
+glimpse(head(boysNames))
 ```
 
 One big table
 -------------
 
-By far the easiest approach is to store the data in one big table.
-We've already seen how we can combine a list of tables into one big
-one.
+While storing the data in separate tables by year makes some sense,
+many operations will be easier if the data is simply stored in one big
+table. We've already seen how to turn a list of data.frames into a
+single data.frame using `bind_rows`, but there is a problem; The year
+information is stored in the names of the list elements, and so
+flattening the tables into one will result in losing the year
+information! Fortunately it is not too much trouble to add the year
+information to each table before flattening.
+
+```{r}
+boysNames <- imap(boysNames,
+                  function(data, name) {
+                      mutate(data, Year = as.integername)
+                      })
+boysNames <- bind_rows(boysNames)
+
+glimpse(boysNames)
+```
 
 
 Exercise: Make one big table
@@ -616,9 +549,6 @@ file.
 
 Finally, repeat the previous exercise, this time working with the data
 in one big table.
-
---------
---------
 
 Exercise prototype
 ------------------
