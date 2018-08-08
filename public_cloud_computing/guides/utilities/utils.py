@@ -66,7 +66,7 @@ def upload_file(STORAGE_NAME, STORAGE_KEY, NEW_CONTAINER_NAME, file, path, exten
         print("{} // BLOB upload status: failed".format(file))
 
 
-def upload_files_to_container(STORAGE_NAME, STORAGE_KEY, NEW_CONTAINER_NAME, DIR_FILES, CONTENT_TYPE):
+def upload_files_to_container(STORAGE_NAME, STORAGE_KEY, NEW_CONTAINER_NAME, DIR_FILES):
     """"create container, get files, and upload to storage"""
 
     #call funtion to make container
@@ -84,12 +84,30 @@ def upload_files_to_container(STORAGE_NAME, STORAGE_KEY, NEW_CONTAINER_NAME, DIR
     start = time.time()
 
 
-    #upload all files at once to the new container
+    # #upload all files at once to the new container
+    # count = 0
+    # for path, file, ext in zip(files_path, files_name, files_extension):
+    #     upload_file(STORAGE_NAME, STORAGE_KEY, NEW_CONTAINER_NAME, file, path, ext, CONTENT_TYPE)
+    #     count += 1
+    #     #add print only failed otherwise good to go
+
+
+    #set different content types
+    content_types = ['image/', 'audio/x-', 'text/']
+
+    #upload all remaining files having different format at once
     count = 0
     for path, file, ext in zip(files_path, files_name, files_extension):
-        upload_file(STORAGE_NAME, STORAGE_KEY, NEW_CONTAINER_NAME, file, path, ext, CONTENT_TYPE)
+        if ext == 'csv' or ext == 'txt':
+            upload_file(STORAGE_NAME, STORAGE_KEY, NEW_CONTAINER_NAME, file, path, ext, content_types[2])
+        elif ext == 'mp3' or ext == 'wav':
+            upload_file(STORAGE_NAME, STORAGE_KEY, NEW_CONTAINER_NAME, file, path, ext, content_types[1])
+        elif ext == 'jpg' or ext == 'jpeg' or ext == 'png':
+            upload_file(STORAGE_NAME, STORAGE_KEY, NEW_CONTAINER_NAME, file, path, ext, content_types[0])
+        else:
+            raise ValueError('This is not a valid extension. Go to documentation: \
+                             http://azure.github.io/azure-storage-python/ref/azure.storage.blob.models.html#azure.storage.blob.models.ContentSettings')
         count += 1
-        #add print only failed otherwise good to go
 
     #set procedure ending time
     end = time.time()
