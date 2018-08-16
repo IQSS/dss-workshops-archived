@@ -54,7 +54,7 @@ def make_public_container(STORAGE_NAME, STORAGE_KEY, NEW_CONTAINER_NAME):
         print('{} something went wrong: check parameters and subscription'.format(NEW_CONTAINER_NAME))
 
 def upload_file(STORAGE_NAME, STORAGE_KEY, NEW_CONTAINER_NAME, file, path, extension, content_type):
-    """"create blob service, and upload files to container"""
+    """create blob service, and upload files to container"""
     
     blob_service = BlockBlobService(account_name= STORAGE_NAME, account_key=STORAGE_KEY)
     
@@ -67,7 +67,7 @@ def upload_file(STORAGE_NAME, STORAGE_KEY, NEW_CONTAINER_NAME, file, path, exten
 
 
 def upload_files_to_container(STORAGE_NAME, STORAGE_KEY, NEW_CONTAINER_NAME, DIR_FILES):
-    """"create container, get files, and upload to storage"""
+    """create container, get files, and upload to storage"""
 
     #call funtion to make container
     make_public_container(STORAGE_NAME, STORAGE_KEY, NEW_CONTAINER_NAME)
