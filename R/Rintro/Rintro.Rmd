@@ -11,6 +11,7 @@ output:
 
 ```{r echo=FALSE, results='hide'}
 options(max.print = 100)
+knitr::opts_chunk$set(message = FALSE)
 ```
 
 Welcome
@@ -34,6 +35,32 @@ Start RStudio and open a new R script:
 -   On Windows click the start button and search for rstudio. On Mac
     RStudio will be in your applications folder.
 -   In Rstudio go to `File -> New File -> R Script`
+
+Download workshop materials
+
+Download the materials from http://tutorials.iq.harvard.edu/Python/PythonIntro.zip and extract the zipped directory (Right-click => Extract All on Windows, double-click on Mac).
+
+Workshop goals and approach
+---------------------------
+
+In this workshop you will
+
+-  learn R language basics and common idioms,
+-  learn about the R package ecosystem,
+-  practice reading files and manipulating data in R
+
+A more general goal is to get you comfortable with R so that it seems less scary and mystifying than it perhaps does now. Note that this is by no means a complete or thorough introduction to R! It's just enough to get you started.
+
+This workshop is relatively informal, example-oriented, and hands-on. We won't spend much time examining language features in detail. Instead we will work through an example, and learn some things about the R language and environment along the way.
+
+As an example project we will analyze the popularity of baby names in the US and the UK. Among the questions we will use R to answer are:
+
+-  How many children were named "Jack" or "Jill" in 1996?
+-  In which year was the name "Ashley" the most popular?
+-  What are the most popular names overall? For girls? For Boys?
+-  How many children were born each year?
+
+
 
 What is R?
 ----------
@@ -175,24 +202,6 @@ package by reading its documentation like this:
 help(package = "stats")
 ```
 
-Example project: baby names!
-===============
-
-General goals
---------------
-
-I would like to know what the most popular baby names are. In the course of
-answering this question we will learn to call R functions, install and load
-packages, assign values to names, read and write data, and more.
-
-Data sets
-----------
-
-The examples in this workshop use the baby names data provided by the
-governments of the United States and the United Kingdom. A cleaned and
-merged version of these data is available at
-`http://tutorials.iq.harvard.edu/R/Rintro/dataSets/babyNames.csv`.
-
 
 Getting data into R
 ===================
@@ -242,6 +251,15 @@ underscores in their names (e.g., `read_csv`) while the older
 functions us dots (e.g., `read.csv`). My advice is to use the more
 robust newer versions, i.e., the ones with underscores.
 
+Baby names data
+---------------
+
+The examples in this workshop use the baby names data provided by the
+governments of the United States and the United Kingdom. A cleaned and
+merged version of these data is available at
+`http://tutorials.iq.harvard.edu/R/Rintro/dataSets/babyNames.csv`.
+
+
 Exercise 2
 ----------
 
@@ -266,7 +284,7 @@ The purpose of this exercise is to practice reading data into R.
 Exercise 2 solution<span class="tag" data-tag-name="prototype"></span>
 ----------------------------------------------------------------------
 
-```{r, results = 'hide', purl = FALSE}
+```{r, results = FALSE, message = FALSE, purl = FALSE}
 ## read ?read_csv
 
 ## limit rows with nrows argument
@@ -290,7 +308,7 @@ Usually data read into R will be stored as a **data.frame**
     -   Each column can be a differnt type of vector
     -   Typically columns are variables and the rows are observations
 
-A data.frame has two dimensions corresponding the number of rows and the
+A data.frame has two dimensions corresponding to the number of rows and the
 number of columns (in that order)
 
 Tools for manipulating data.frame objects
@@ -337,9 +355,17 @@ meeting some condition.
 filter(baby.names, Name == "jill")
 ```
 
+It is often useful to `arrange` the data to make it easier to see patterns. For example, we can see which years saw the most babies named "Jill":
+
 ```{r}
-## rows where Year is 1996 and Name is either "jack" or "jill"
-filter(baby.names, Year == 1996 & Name %in% c("jack", "jill"))
+jill <- filter(baby.names, Name == "jill")
+arrange(jill, Count)
+```
+
+We can combine conditons usine `&` (AND) and `|` (OR). For example, to find the number of babies named "Jill" or "Jack" born in 1996:
+```{r}
+## rows where Year is 1996 and Name is either "jill" or "jack"
+filter(baby.names, Year == 1996 & (Name == "jill" | Name == "jack"))
 ```
 
 In the previous example we used `==` to filter rows. Other relational
@@ -369,7 +395,9 @@ assigning the result to `baby.names`. The file is located at "http://tutorials.i
 ##
 ```
 
-2.  Restrict the previous extraction to include only years between 2000 and 2004.
+2.  Arrange the "ashley" data you produced above by `Count`. In which year was Ashley most popular?
+
+3.  Restrict the previous extraction to include only years between 2000 and 2004.
 ```{r}
 ##
 ```
@@ -382,7 +410,12 @@ Exercise 2 solution<span class="tag" data-tag-name="prototype"></span>
 ## 1. Extract data for the name "ashley".
 filter(baby.names, Name == "ashley")
 
-## 2.  Restrict the previous extraction to include only years between 2000 and 2004.
+## 2. Arrange the "ashley" data you produced above by `Count` so that the year with the highest count is first. In which year was Ashley most popular?
+
+ashley <- filter(baby.names, Name == "ashley")
+arrange(ashley, desc(Count))
+
+## 3.  Restrict the previous extraction to include only years between 2000 and 2004.
 filter(baby.names,
        Year >= 2000 &
        Year <= 2004 &
@@ -402,17 +435,29 @@ baby.names
 Often one needs to replace values conditionally, as in the following example:
 
 ```{r}
-baby.names <- mutate(
-    baby.names,
-    Decade = case_when(Year < 2000                ~ "1990's",
-                       Year >= 2000 & Year < 2010 ~ "2000's",
-                       Year < 2020                ~ "2010's",
-                       TRUE                       ~ as.character(Year)))
+baby.names <- mutate(baby.names,
+                     Decade = case_when(Year < 2000 ~ "1990's",
+                                        Year < 2010 ~ "2000's",
+                                        Year < 2020 ~ "2010's"))
 
 head(baby.names)
 tail(baby.names)
 ```
 
+Operating by group
+---------------------
+It is often useful to perform operations on each group defined by one or more grouping variables. For example, if we wish to compare name popularity over time we may wish to compute the proportion of boys and girls given each name in each year. Using proportions instead of counts as a measure of popularity has the advantage of being independent of the number of children born in a particular year.
+
+The `dplyr` package makes it relatively easy to compute the proportion of boys and girls given each name in a particular year:
+
+```{r}
+baby.names <- mutate(group_by(baby.names, Year, Sex),
+                     Proportion = Count/sum(Count))
+```
+
+Note that the data remains grouped until you change the groups by
+running `group_by` again or remove grouping information with
+`ungroup`.
 
 Exercise 3: Data manipulation
 -----------------------------
@@ -420,78 +465,78 @@ Exercise 3: Data manipulation
 Read in the "babyNames.csv" file if you have not already done so,
 assigning the result to `baby.names`. The file is located at "http://tutorials.iq.harvard.edu/R/Rintro/dataSets/babyNames.csv"
 
-
-1.  Ifyou look at `unique(baby.names$Sex)` you'll notice that some
+1.  If you look at `unique(baby.names$Sex)` you'll notice that some
     records indicate Male with `"M"`, while other records use
     `"Male"`. Correct this by replacing `"M"` with `"Male"`.
 ```{r}
 ##
 ```
 
-2.  Create a column named "Popular" containing a 1 in rows where Count
-    is greater than 30000 and a 0 otherwise
+2.  Use `mutate` and `group_by` to create a column named "Proportion". Note that this step is exactly the same as shown in the demonstration. You can copy/paste that code if you like.
 ```{r}
 ##
 ```
 
-3.  Filter the baby names data to display only the popular names.
+3.  Create a column named "Popular" containing `TRUE` in rows where "Proportion" is greater than 0.02 and a `FALSE` otherwise.
+
 ```{r}
 ##
 ```
+
+4.  Filter the baby names data to display only the popular names.
+```{r}
+##
+```
+
 
 Exercise 3 solution<span class="tag" data-tag-name="prototype"></span>
 ----------------------------------------------------------------------
 
 ```{r, purl = FALSE}
-# 1
-baby.names <- mutate(baby.names,
+# 1.  If you look at `unique(baby.names$Sex)` you'll notice that some records indicate Male with `"M"`, while other records use `"Male"`. Correct this by replacing `"M"` with `"Male"`.
+
+baby.names <- mutate(ungroup(baby.names), 
                      Sex = case_when(Sex == "M" ~ "Male",
                                      TRUE ~ Sex))
 
-# 2
-baby.names <- mutate(baby.names,
-                     Popular = case_when(Count < 30000 ~ FALSE,
-                                         Count >= 30000 ~ TRUE))
+# 2.  Use `mutate` and `group_by` to create a column named "Proportion". Note that this step is exactly the same as shown in the demonstration. You can copy/paste that code if you like.
 
-# 3
+baby.names <- mutate(group_by(baby.names, Year, Sex),
+                     Proportion = Count/sum(Count))
+
+# 3.  Create a column named "Popular" containing `TRUE` in rows where "Proportion" is greater than 0.02 and a `FALSE` otherwise.
+
+baby.names <- mutate(baby.names, 
+                     Popular = case_when(Proportion > 0.02 ~ TRUE,
+                                         Proportion <= 0.02 ~ FALSE))
+## or more compactly and directly:
+baby.names <- mutate(baby.names,
+                     Popular = Proportion > 0.02)
+
+# 4.  Filter the baby names data to display only the popular names.
+
 filter(baby.names, Popular)
+
 ```
 
 Grouping and Aggregation
 --------------------------
 
-So far we've seen than "Jacob", "Matthew", and "Michael" tend to be
+So far we've seen that "Jacob" and "Michael" tend to be
 popular names. That isn't very satisfying, because it leaves us
 wanting to know which girls names are popular, and perhaps how
-popularity has changed over time. To answer these questions we need to
-operate on groups within the data rather than on the whole data
-structure at once. The `dplyr` package makes this easy to do using the
-`group_by` function.
-
-```{r}
-baby.names <- mutate(group_by(baby.names, Year, Sex),
-                     max_count = max(Count))
-head(baby.names)
-tail(baby.names)
-
-filter(baby.names,
-       Count == max_count)
-```
-
-Note that the data remains grouped until you change the groups by
-running `group_by` again or remove grouping information with
-`ungroup`.
+popularity has changed over time. To answer these questions we again
+need to operate on groups within the data rather than on the whole data
+structure at once. 
 
 Grouping can be useful when modifying a data.frame with `mutate` or
 extracting subsets with `filter`, but it really shines when combined
-with `summarize`. For example, suppose that we want the most popular
-girl and boy names for each decade. In this case we need to summarize
-the by summing the `Count` column for each `Sex X Decade` group.
+with `summarize`. For example, we can find the most popular names of
+each decade using `group_by`, `summarize`, and `filter`:
 
 ```{r}
 bn.by.decade <- summarize(group_by(baby.names, Decade, Sex, Name),
-                          Count = sum(Count),
-                          Thousands = sum(Thousands))
+                          Count = sum(Count))
 
 filter(group_by(bn.by.decade, Decade, Sex),
                      Count == max(Count))
@@ -543,17 +588,17 @@ Exercise 4
 1.  Calculate the total number of children born.
 ```{r}
 ```
-2.  Filter the data to extract data from 2004 and calculate the total
-    number of children born in that year.
-```{r}
-##
-```
-3.  Calculate the number of boys and girls born each year. Assign the result
+
+2.  Calculate the number of boys and girls born each year. Assign the result
     to the name `births.by.year`.
 ```{r}
 ##
 ```
 
+3.  How many children were born in 2004?
+```{r}
+##
+```
 Exercise 4 solution<span class="tag" data-tag-name="prototype"></span>
 ----------------------------------------------------------------------
 
@@ -562,15 +607,15 @@ Exercise 4 solution<span class="tag" data-tag-name="prototype"></span>
 baby.names <- ungroup(baby.names)
 summarize(baby.names, Total = sum(Count))
 
-## 2.  Filter the data to extract data from 2004 and calculate the total
-##     number of children born in that year.
-summarize(filter(baby.names, Year == 2004), Total = sum(Count))
-
-## 3.  Calculate the number of boys and girls born each year. Assign the result
+## 2.  Calculate the number of boys and girls born each year. Assign the result
 ##     to the name `births.by.year`.
 births.by.year <- summarize(group_by(baby.names, Year, Sex),
                             Count = sum(Count))
 births.by.year
+
+## 3. How many children were born in 2004?
+summarize(filter(births.by.year, Year == 2004),
+          total = sum(Count))
 ```
 
 Basic graphs
@@ -598,33 +643,27 @@ popularity over time.
 
 ```{r}
 popular.girls <- filter(group_by(baby.names, Year, Sex),
-                       Sex == "Female" & Count == max(Count))
+                       Sex == "Female" & Proportion == max(Proportion))
 
-qplot(Year, Count, color = Name,
+qplot(Year, Proportion, color = Name,
      geom = "line",
      data = filter(baby.names,
                    Sex == "Female" & Name %in% popular.girls$Name))
 ```
 
-Exercise 5
+Exercise 5: Popularity of the most popular names
 ----------
 
-1.  Add a new coloumn to the baby.names data equal to the proportion
-    of boys and girls born each year with each name. That is,
-    calculate Proportion = Count/sum(Count) for each Year X Sex group.
+In this exercise we will plot trends in the proportion of boys and girls given the most popular name each year.
 
-```{r}
-##
-```
-
-2.  Filter the baby.names data, retaining only the most popular girl
+1.  Filter the baby.names data, retaining only the most popular girl
     and boy names for each year.
 
 ```{r}
 ##
 ```
 
-3.  Plot proportion over time to see changes in the proportion of
+2.  Plot proportion over time to see changes in the proportion of
     parents choosing the most popular name of the year.
 
 ```{r}
@@ -635,24 +674,19 @@ Exercise 5 solution<span class="tag" data-tag-name="prototype"></span>
 ----------------------------------------------------------------------
 
 ```{r, purl = FALSE}
-## 1. Add a new coloumn to the baby.names data equal to the proportion
-## of boys and girls born each year with each name. That is, calculate
-## Proportion = Count/sum(Count) for each Year X Sex group.
+# 1.  Filter the baby.names data, retaining only the most popular girl and boy names for each year.
 
-baby.names <- mutate(group_by(baby.names, Year, Sex),
-                     Proportion = Count / sum(Count))
+most.popular <- filter(group_by(baby.names, Year, Sex),
+                       Proportion == max(Proportion))
 
-## 2. Filter the baby.names data, retaining only the most popular girl
-## and boy names for each year.
 
-bn.top.prop <- filter(group_by(baby.names, Year, Sex),
-                      Proportion == max(Proportion))
+# 2.  Plot proportion over time to see changes in the proportion of parents choosing the most popular name of the year.
 
-## 3. Plot proportion over time to see changes in the proportion of
-## parents choosing the most popular name of the year.
-qplot(Year, Proportion, color = Sex,
-      geom = "line",
-      data = bn.top.prop)
+qplot(data = most.popular, 
+      x = Year, 
+      y = Proportion, 
+      color = Sex, 
+      geom = "line")
 ```
 
 Wrap-up
