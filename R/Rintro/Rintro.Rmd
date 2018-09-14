@@ -274,7 +274,7 @@ merged version of these data is available at
 `http://tutorials.iq.harvard.edu/R/Rintro/dataSets/babyNames.csv`.
 
 
-Exercise 2
+Exercise 1: Reading data
 ----------
 
 The purpose of this exercise is to practice reading data into R.
@@ -285,7 +285,7 @@ The purpose of this exercise is to practice reading data into R.
 ##
 ```
 2.  Read just the first 10 rows of
-"`"http://tutorials.iq.harvard.edu/R/Rintro/dataSets/babyNames.csv`".
+`http://tutorials.iq.harvard.edu/data/babyNames.csv`.
 ```{r}
 ##
 ```
@@ -295,7 +295,7 @@ The purpose of this exercise is to practice reading data into R.
 ##
 ```
 
-Exercise 2 solution<span class="tag" data-tag-name="prototype"></span>
+Exercise 1 solution<span class="tag" data-tag-name="prototype"></span>
 ----------------------------------------------------------------------
 
 ```{r, results = FALSE, message = FALSE, purl = FALSE}
@@ -303,10 +303,10 @@ Exercise 2 solution<span class="tag" data-tag-name="prototype"></span>
 
 ## limit rows with nrows argument
 
-read_csv("http://tutorials.iq.harvard.edu/R/Rintro/dataSets/babyNames.csv",
+read_csv("http://tutorials.iq.harvard.edu/data/babyNames.csv",
          n_max = 10)
 ## read all the data
-baby.names <- read_csv("http://tutorials.iq.harvard.edu/R/Rintro/dataSets/babyNames.csv")
+baby.names <- read_csv("http://tutorials.iq.harvard.edu/data/babyNames.csv")
 ```
 
 Data Manipulation
@@ -596,7 +596,7 @@ load("myWorkspace.RData") # load myWorkspace.RData
 ls() # list objects
 ```
 
-Exercise 4
+Exercise 4: Group by and summarize
 ----------
 
 1.  Calculate the total number of children born.
