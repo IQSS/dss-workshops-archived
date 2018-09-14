@@ -1,0 +1,141 @@
+---
+title: "Exercise Solutions"
+output: ioslides_presentation
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, results = FALSE)
+library(readr)
+library(dplyr)
+library(ggplot2)
+```
+
+## Exercise 0
+
+```{r, purl = FALSE}
+## 1. 2 plus 2
+2 + 2
+## or
+sum(2, 2)
+
+## 2. square root of 10:
+sqrt(10)
+## or
+10^(1/2)
+
+
+## 3. Find "An Introduction to R".
+
+## Go to the main help page by running 'help.start() or using the GUI
+## menu, find and click on the link to "An Introduction to R".
+
+```
+
+## Exercise 1: Reading data
+```{r, results = FALSE, message = FALSE, purl = FALSE}
+## read ?read_csv
+
+## limit rows with nrows argument
+
+read_csv("http://tutorials.iq.harvard.edu/data/babyNames.csv",
+         n_max = 10)
+## read all the data
+baby.names <- read_csv("http://tutorials.iq.harvard.edu/data/babyNames.csv")
+```
+
+
+## Exercise 2: Data Extraction
+```{r, purl = FALSE}
+## 1. Extract data for the name "ashley".
+filter(baby.names, Name == "ashley")
+
+## 2. Arrange the "ashley" data you produced above by `Count` 
+##    so that the year with the highest count is first. In 
+##    which year was Ashley most popular?
+
+ashley <- filter(baby.names, Name == "ashley")
+arrange(ashley, desc(Count))
+
+## 3.  Restrict the previous extraction to include only 
+##     years between 2000 and 2004.
+filter(baby.names,
+       Year >= 2000 &
+       Year <= 2004 &
+       Name == "ashley")
+```
+
+## Exercise 3: Data manipulation
+```{r, purl = FALSE}
+## 1.  If you look at `unique(baby.names$Sex)` you'll notice 
+##     that some records indicate Male with `"M"`, while other 
+##     records use `"Male"`. Correct this by replacing `"M"` 
+##     with `"Male"`.
+
+baby.names <- mutate(ungroup(baby.names), 
+                     Sex = case_when(Sex == "M" ~ "Male",
+                                     TRUE ~ Sex))
+
+# 2.  Use `mutate` and `group_by` to create a column named
+##    "Proportion". Note that this step is exactly the same
+##    as shown in the demonstration. You can copy/paste that
+##    code if you like.
+
+baby.names <- mutate(group_by(baby.names, Year, Sex),
+                     Proportion = Count/sum(Count))
+
+## 3.  Create a column named "Popular" containing `TRUE` in 
+##     rows where "Proportion" is greater than 0.02 and a `FALSE` 
+##     otherwise.
+
+baby.names <- mutate(baby.names, 
+                     Popular = case_when(Proportion > 0.02 ~ TRUE,
+                                         Proportion <= 0.02 ~ FALSE))
+## or more compactly and directly:
+baby.names <- mutate(baby.names,
+                     Popular = Proportion > 0.02)
+
+# 4.  Filter the baby names data to display only the popular names.
+
+filter(baby.names, Popular)
+
+```
+
+## Exercise 4: Group by and summarize
+
+```{r, purl = FALSE}
+## 1.  Calculate the total number of children born.
+baby.names <- ungroup(baby.names)
+summarize(baby.names, Total = sum(Count))
+
+## 2.  Calculate the number of boys and girls born each year.
+##     Assign the result
+##     to the name `births.by.year`.
+births.by.year <- summarize(group_by(baby.names, Year, Sex),
+                            Count = sum(Count))
+births.by.year
+
+## 3. How many children were born in 2004?
+summarize(filter(births.by.year, Year == 2004),
+          total = sum(Count))
+```
+
+
+## Exercise 5: Popularity of the most popular names
+
+```{r, purl = FALSE}
+### 1.  Filter the baby.names data, retaining only the most 
+##      popular girl and boy names for each year.
+
+most.popular <- filter(group_by(baby.names, Year, Sex),
+                       Proportion == max(Proportion))
+
+
+## 2.  Plot proportion over time to see changes in the proportion
+##     who chose the most popular name of the year.
+
+qplot(data = most.popular, 
+      x = Year, 
+      y = Proportion, 
+      color = Sex, 
+      geom = "line")
+```

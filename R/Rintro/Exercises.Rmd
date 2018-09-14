@@ -1,0 +1,91 @@
+---
+title: "Exercises"
+output: ioslides_presentation
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+## Exercise 0
+
+The purpose of this exercise is to give you an opportunity to explore
+the interface provided by RStudio (or whichever GUI you've decided to
+use). You may not know how to do these things; that's fine! This is an
+opportunity to figure it out.
+
+Also keep in mind that we are living in a golden age of tab completion.
+If you don't know the name of an R function, try guessing the first two
+or three letters and pressing TAB. If you guessed correctly the function
+you are looking for should appear in a pop up!
+
+1.  Try to get R to add 2 plus 2.
+
+2.  Try to calculate the square root of 10.
+
+3.  R includes extensive documentation, including a file named "An
+    introduction to R". Try to find this help file.
+
+
+## Exercise 1: Reading data
+
+The purpose of this exercise is to practice reading data into R.
+
+1.  Open the help page for the `read_csv` function. How can you limit
+    the number of rows to be read in?
+```{r}
+##
+```
+2.  Read just the first 10 rows of
+`http://tutorials.iq.harvard.edu/data/babyNames.csv`
+
+3.  Once you have successfully read in the first 10 rows, read the whole
+    file, assigning the result to the name `baby.names`.
+
+
+## Exercise 2: Data Extraction
+
+Read in the "babyNames.csv" file if you have not already done so,
+assigning the result to `baby.names`. The file is located at "http://tutorials.iq.harvard.edu/data/babyNames.csv"
+
+1.  Extract data for the name "ashley".  
+
+2.  Arrange the "ashley" data you produced above by `Count`. In which year was Ashley most popular?
+
+3.  Restrict the previous extraction to include only years between 2000 and 2004.
+
+## Exercise 3: Data manipulation
+
+Read in the `http://tutorials.iq.harvard.edu/data/babyNames.csv` file if you have not already done so, assigning the result to
+`baby.names`.
+
+1.  If you look at `unique(baby.names$Sex)` you'll notice that some
+    records indicate Male with `"M"`, while other records use
+    `"Male"`. Correct this by replacing `"M"` with `"Male"`.
+
+2.  Use `mutate` and `group_by` to create a column named "Proportion". Note that this step is exactly the same as shown in the demonstration. You can copy/paste that code if you like.
+
+3.  Create a column named "Popular" containing `TRUE` in rows where "Proportion" is greater than 0.02 and a `FALSE` otherwise.
+
+4.  Filter the baby names data to display only the popular names.
+
+## Exercise 4: Group by and summarize
+
+1.  Calculate the total number of children born.
+
+2.  Calculate the number of boys and girls born each year. Assign the result
+    to the name `births.by.year`.
+
+3.  How many children were born in 2004?
+
+
+## Exercise 5: Popularity of the most popular names
+----------
+
+In this exercise we will plot trends in the proportion of boys and girls given the most popular name each year.
+
+1.  Filter the baby.names data, retaining only the most popular girl
+    and boy names for each year.
+
+2.  Plot proportion over time to see changes in the proportion of
+    who chose the most popular name of the year.
