@@ -29,45 +29,43 @@ you are looking for should appear in a pop up!
 
 ## Exercise 1: Reading data
 
-The purpose of this exercise is to practice reading data into R.
+The first step of our analysis of baby names is to read the data into R. 
 
-1.  Open the help page for the `read_csv` function. How can you limit
-    the number of rows to be read in?
-```{r}
-##
-```
-2.  Read just the first 10 rows of
-`http://tutorials.iq.harvard.edu/data/babyNames.csv`
+1. Start by opening the help page for the `read_csv` function so you can refer
+to the documentation if needed.
 
-3.  Once you have successfully read in the first 10 rows, read the whole
-    file, assigning the result to the name `baby.names`.
+2, Read the baby names using the `read_csv` function and assign the result 
+with the name `baby.names`.
 
+3. BONUS (optional): Using 
+https://github.com/rstudio/cheatsheets/raw/master/data-import.pdf 
+as a guide, save the `baby.names` data as a Stata data set `babynames.dta` 
+and as an R data set `babynames.rds`.
 
-## Exercise 2: Data Extraction
+## Exercise 2: Peak popularity of your name
 
 Read in the "babyNames.csv" file if you have not already done so,
 assigning the result to `baby.names`. The file is located at "http://tutorials.iq.harvard.edu/data/babyNames.csv"
 
-1.  Extract data for the name "ashley".  
+1.  Use `filter` to extract data for your name (or another name of your choice).  
 
-2.  Arrange the "ashley" data you produced above by `Count`. In which year was Ashley most popular?
+2.  Arrange the data you produced in step 1 above by `Count`. 
+    In which year was the name most popular?
 
-3.  Restrict the previous extraction to include only years between 2000 and 2004.
+3.  BONUS (optional): Identify the most popular boys name in 1999.
 
 ## Exercise 3: Data manipulation
 
-Read in the `http://tutorials.iq.harvard.edu/data/babyNames.csv` file if you have not already done so, assigning the result to
-`baby.names`.
+Our next goal is to identify the most popular names. Picking an arbitrary 
+cuttof of $2%$ we will filter the data to include only the most popular
+baby names.
 
-1.  If you look at `unique(baby.names$Sex)` you'll notice that some
-    records indicate Male with `"M"`, while other records use
-    `"Male"`. Correct this by replacing `"M"` with `"Male"`.
+1.  1.  Use `mutate` and `group_by` to create a column named "Proportion"
+    where `Proportion = Count/sum(Count)` for each `Year X Sex` group.
 
-2.  Use `mutate` and `group_by` to create a column named "Proportion". Note that this step is exactly the same as shown in the demonstration. You can copy/paste that code if you like.
+2.  Create a column named "Popular" containing `TRUE` in rows where "Proportion" is greater than 0.02 and a `FALSE` otherwise.
 
-3.  Create a column named "Popular" containing `TRUE` in rows where "Proportion" is greater than 0.02 and a `FALSE` otherwise.
-
-4.  Filter the baby names data to display only the popular names.
+3.  Filter the baby names data to display only the popular names.
 
 ## Exercise 4: Group by and summarize
 

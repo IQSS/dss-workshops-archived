@@ -33,68 +33,66 @@ sqrt(10)
 
 ## Exercise 1: Reading data
 ```{r, results = FALSE, message = FALSE, purl = FALSE}
-## read ?read_csv
+## The first step of our analysis of baby names is to read the data into R. 
 
-## limit rows with nrows argument
+## 1. Start by opening the help page for the `read_csv` function so you can refer
+## to the documentation if needed.
 
-read_csv("http://tutorials.iq.harvard.edu/data/babyNames.csv",
-         n_max = 10)
-## read all the data
+?read_csv
+
+## 2. Read the baby names using the `read_csv` function and assign the result 
+## with the name `baby.names`.
+
 baby.names <- read_csv("http://tutorials.iq.harvard.edu/data/babyNames.csv")
+
+## 3. BONUS (optional): Using 
+## https://github.com/rstudio/cheatsheets/raw/master/data-import.pdf 
+## as a guide, save the `baby.names` data as a Stata data set `babynames.dta` 
+## and as an R data set `babynames.rds`.
+
+# install.packages("haven")
+library(haven)
+write_dta(baby.names, "babynames.dta")
+
+write_rds(baby.names, "babynames.rds")
 ```
 
+## Exercise 2: Peak popularity of your name
 
-## Exercise 2: Data Extraction
 ```{r, purl = FALSE}
-## 1. Extract data for the name "ashley".
-filter(baby.names, Name == "ashley")
+# 1.  Use `filter` to extract data for your name (or another name of your choice).  
 
-## 2. Arrange the "ashley" data you produced above by `Count` 
-##    so that the year with the highest count is first. In 
-##    which year was Ashley most popular?
+george <- filter(baby.names, Name == "george")
 
-ashley <- filter(baby.names, Name == "ashley")
-arrange(ashley, desc(Count))
+# 2.  Arrange the data you produced in step 1 above by `Count`. 
+#     In which year was the name most popular?
 
-## 3.  Restrict the previous extraction to include only 
-##     years between 2000 and 2004.
-filter(baby.names,
-       Year >= 2000 &
-       Year <= 2004 &
-       Name == "ashley")
+arrange(george, desc(Count))
+ 
+# 3.  BONUS (optional): Identify the most popular boys name in 1999.
+
+arrange(filter(baby.names, Year == 1996 & Sex == "Male"),
+        desc(Count))
+
 ```
 
 ## Exercise 3: Data manipulation
 ```{r, purl = FALSE}
-## 1.  If you look at `unique(baby.names$Sex)` you'll notice 
-##     that some records indicate Male with `"M"`, while other 
-##     records use `"Male"`. Correct this by replacing `"M"` 
-##     with `"Male"`.
 
-baby.names <- mutate(ungroup(baby.names), 
-                     Sex = case_when(Sex == "M" ~ "Male",
-                                     TRUE ~ Sex))
-
-# 2.  Use `mutate` and `group_by` to create a column named
-##    "Proportion". Note that this step is exactly the same
-##    as shown in the demonstration. You can copy/paste that
-##    code if you like.
+# 1.  Use `mutate` and `group_by` to create a column named "Proportion"
+#     where `Proportion = Count/sum(Count)` for each `Year X Sex` group.
 
 baby.names <- mutate(group_by(baby.names, Year, Sex),
                      Proportion = Count/sum(Count))
 
-## 3.  Create a column named "Popular" containing `TRUE` in 
+## 2.  Create a column named "Popular" containing `TRUE` in 
 ##     rows where "Proportion" is greater than 0.02 and a `FALSE` 
 ##     otherwise.
 
-baby.names <- mutate(baby.names, 
-                     Popular = case_when(Proportion > 0.02 ~ TRUE,
-                                         Proportion <= 0.02 ~ FALSE))
-## or more compactly and directly:
 baby.names <- mutate(baby.names,
                      Popular = Proportion > 0.02)
 
-# 4.  Filter the baby names data to display only the popular names.
+# 3.  Filter the baby names data to display only the popular names.
 
 filter(baby.names, Popular)
 

@@ -3121,65 +3121,61 @@ sqrt(10)
 
 </article></slide><slide class=""><hgroup><h2>Exercise 1: Reading data</h2></hgroup><article  id="exercise-1-reading-data">
 
-<pre class = 'prettyprint lang-r'>## read ?read_csv
+<pre class = 'prettyprint lang-r'>## The first step of our analysis of baby names is to read the data into R. 
 
-## limit rows with nrows argument
+## 1. Start by opening the help page for the `read_csv` function so you can refer
+## to the documentation if needed.
 
-read_csv(&quot;http://tutorials.iq.harvard.edu/data/babyNames.csv&quot;,
-         n_max = 10)
-## read all the data
-baby.names &lt;- read_csv(&quot;http://tutorials.iq.harvard.edu/data/babyNames.csv&quot;)</pre>
+?read_csv
 
-</article></slide><slide class=""><hgroup><h2>Exercise 2: Data Extraction</h2></hgroup><article  id="exercise-2-data-extraction">
+## 2. Read the baby names using the `read_csv` function and assign the result 
+## with the name `baby.names`.
 
-<pre class = 'prettyprint lang-r'>## 1. Extract data for the name &quot;ashley&quot;.
-filter(baby.names, Name == &quot;ashley&quot;)
+baby.names &lt;- read_csv(&quot;http://tutorials.iq.harvard.edu/data/babyNames.csv&quot;)
 
-## 2. Arrange the &quot;ashley&quot; data you produced above by `Count` 
-##    so that the year with the highest count is first. In 
-##    which year was Ashley most popular?
+## 3. BONUS (optional): Using 
+## https://github.com/rstudio/cheatsheets/raw/master/data-import.pdf 
+## as a guide, save the `baby.names` data as a Stata data set `babynames.dta` 
+## and as an R data set `babynames.rds`.
 
-ashley &lt;- filter(baby.names, Name == &quot;ashley&quot;)
-arrange(ashley, desc(Count))
+# install.packages(&quot;haven&quot;)
+library(haven)
+write_dta(baby.names, &quot;babynames.dta&quot;)
 
-## 3.  Restrict the previous extraction to include only 
-##     years between 2000 and 2004.
-filter(baby.names,
-       Year &gt;= 2000 &amp;
-       Year &lt;= 2004 &amp;
-       Name == &quot;ashley&quot;)</pre>
+write_rds(baby.names, &quot;babynames.rds&quot;)</pre>
+
+</article></slide><slide class=""><hgroup><h2>Exercise 2: Peak popularity of your name</h2></hgroup><article  id="exercise-2-peak-popularity-of-your-name">
+
+<pre class = 'prettyprint lang-r'># 1.  Use `filter` to extract data for your name (or another name of your choice).  
+
+george &lt;- filter(baby.names, Name == &quot;george&quot;)
+
+# 2.  Arrange the data you produced in step 1 above by `Count`. 
+#     In which year was the name most popular?
+
+arrange(george, desc(Count))
+ 
+# 3.  BONUS (optional): Identify the most popular boys name in 1999.
+
+arrange(filter(baby.names, Year == 1996 &amp; Sex == &quot;Male&quot;),
+        desc(Count))</pre>
 
 </article></slide><slide class=""><hgroup><h2>Exercise 3: Data manipulation</h2></hgroup><article  id="exercise-3-data-manipulation">
 
-<pre class = 'prettyprint lang-r'>## 1.  If you look at `unique(baby.names$Sex)` you&#39;ll notice 
-##     that some records indicate Male with `&quot;M&quot;`, while other 
-##     records use `&quot;Male&quot;`. Correct this by replacing `&quot;M&quot;` 
-##     with `&quot;Male&quot;`.
-
-baby.names &lt;- mutate(ungroup(baby.names), 
-                     Sex = case_when(Sex == &quot;M&quot; ~ &quot;Male&quot;,
-                                     TRUE ~ Sex))
-
-# 2.  Use `mutate` and `group_by` to create a column named
-##    &quot;Proportion&quot;. Note that this step is exactly the same
-##    as shown in the demonstration. You can copy/paste that
-##    code if you like.
+<pre class = 'prettyprint lang-r'># 1.  Use `mutate` and `group_by` to create a column named &quot;Proportion&quot;
+#     where `Proportion = Count/sum(Count)` for each `Year X Sex` group.
 
 baby.names &lt;- mutate(group_by(baby.names, Year, Sex),
                      Proportion = Count/sum(Count))
 
-## 3.  Create a column named &quot;Popular&quot; containing `TRUE` in 
+## 2.  Create a column named &quot;Popular&quot; containing `TRUE` in 
 ##     rows where &quot;Proportion&quot; is greater than 0.02 and a `FALSE` 
 ##     otherwise.
 
-baby.names &lt;- mutate(baby.names, 
-                     Popular = case_when(Proportion &gt; 0.02 ~ TRUE,
-                                         Proportion &lt;= 0.02 ~ FALSE))
-## or more compactly and directly:
 baby.names &lt;- mutate(baby.names,
                      Popular = Proportion &gt; 0.02)
 
-# 4.  Filter the baby names data to display only the popular names.
+# 3.  Filter the baby names data to display only the popular names.
 
 filter(baby.names, Popular)</pre>
 

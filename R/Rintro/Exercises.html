@@ -3115,31 +3115,36 @@ if (document.readyState !== "loading" &&
 
 </article></slide><slide class=""><hgroup><h2>Exercise 1: Reading data</h2></hgroup><article  id="exercise-1-reading-data">
 
-<p>The purpose of this exercise is to practice reading data into R.</p>
+<p>The first step of our analysis of baby names is to read the data into R.</p>
 
 <ol>
-<li><p>Open the help page for the <code>read_csv</code> function. How can you limit the number of rows to be read in?</p></li>
-<li><p>Read just the first 10 rows of <code>http://tutorials.iq.harvard.edu/data/babyNames.csv</code></p></li>
-<li><p>Once you have successfully read in the first 10 rows, read the whole file, assigning the result to the name <code>baby.names</code>.</p></li>
+<li>Start by opening the help page for the <code>read_csv</code> function so you can refer to the documentation if needed.</li>
 </ol>
 
-</article></slide><slide class=""><hgroup><h2>Exercise 2: Data Extraction</h2></hgroup><article  id="exercise-2-data-extraction">
+<p>2, Read the baby names using the <code>read_csv</code> function and assign the result with the name <code>baby.names</code>.</p>
+
+<ol>
+<li>BONUS (optional): Using <a href='https://github.com/rstudio/cheatsheets/raw/master/data-import.pdf' title=''>https://github.com/rstudio/cheatsheets/raw/master/data-import.pdf</a> as a guide, save the <code>baby.names</code> data as a Stata data set <code>babynames.dta</code> and as an R data set <code>babynames.rds</code>.</li>
+</ol>
+
+</article></slide><slide class=""><hgroup><h2>Exercise 2: Peak popularity of your name</h2></hgroup><article  id="exercise-2-peak-popularity-of-your-name">
 
 <p>Read in the &ldquo;babyNames.csv&rdquo; file if you have not already done so, assigning the result to <code>baby.names</code>. The file is located at &ldquo;<a href='http://tutorials.iq.harvard.edu/data/babyNames.csv' title=''>http://tutorials.iq.harvard.edu/data/babyNames.csv</a>&rdquo;</p>
 
 <ol>
-<li><p>Extract data for the name &ldquo;ashley&rdquo;.</p></li>
-<li><p>Arrange the &ldquo;ashley&rdquo; data you produced above by <code>Count</code>. In which year was Ashley most popular?</p></li>
-<li><p>Restrict the previous extraction to include only years between 2000 and 2004.</p></li>
+<li><p>Use <code>filter</code> to extract data for your name (or another name of your choice).</p></li>
+<li><p>Arrange the data you produced in step 1 above by <code>Count</code>. In which year was the name most popular?</p></li>
+<li><p>BONUS (optional): Identify the most popular boys name in 1999.</p></li>
 </ol>
 
 </article></slide><slide class=""><hgroup><h2>Exercise 3: Data manipulation</h2></hgroup><article  id="exercise-3-data-manipulation">
 
-<p>Read in the <code>http://tutorials.iq.harvard.edu/data/babyNames.csv</code> file if you have not already done so, assigning the result to <code>baby.names</code>.</p>
+<p>Our next goal is to identify the most popular names. Picking an arbitrary cuttof of \(2%\) we will filter the data to include only the most popular baby names.</p>
 
 <ol>
-<li><p>If you look at <code>unique(baby.names$Sex)</code> you’ll notice that some records indicate Male with <code>&quot;M&quot;</code>, while other records use <code>&quot;Male&quot;</code>. Correct this by replacing <code>&quot;M&quot;</code> with <code>&quot;Male&quot;</code>.</p></li>
-<li><p>Use <code>mutate</code> and <code>group_by</code> to create a column named &ldquo;Proportion&rdquo;. Note that this step is exactly the same as shown in the demonstration. You can copy/paste that code if you like.</p></li>
+<li><ol>
+<li>Use <code>mutate</code> and <code>group_by</code> to create a column named &ldquo;Proportion&rdquo; where <code>Proportion = Count/sum(Count)</code> for each <code>Year X Sex</code> group.</li>
+</ol></li>
 <li><p>Create a column named &ldquo;Popular&rdquo; containing <code>TRUE</code> in rows where &ldquo;Proportion&rdquo; is greater than 0.02 and a <code>FALSE</code> otherwise.</p></li>
 <li><p>Filter the baby names data to display only the popular names.</p></li>
 </ol>
