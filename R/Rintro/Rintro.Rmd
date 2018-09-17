@@ -65,7 +65,7 @@ A more general goal is to get you comfortable with R so that it seems less scary
 
 This workshop is relatively informal, example-oriented, and hands-on. We won't spend much time examining language features in detail. Instead we will work through an example, and learn some things about the R language and environment along the way.
 
-As an example project we will analyze the popularity of baby names in the US from 1996 through 2015. Among the questions we will use R to answer are:
+As an example project we will analyze the popularity of baby names in the US from 1960 through 2017. Among the questions we will use R to answer are:
 
 -  How many children were named "Jack" or "Jill" in 1996?
 -  In which year was the name "Ashley" the most popular?
@@ -264,9 +264,9 @@ robust newer versions, i.e., the ones with underscores.
 Baby names data
 ---------------
 
-The examples in this workshop use the baby names data provided by the
-governments of the United States and the United Kingdom. A cleaned and
-merged version of these data is available at
+The examples in this workshop use US baby names data retrieved from
+https://catalog.data.gov/dataset/baby-names-from-social-security-card-applications-national-level-data
+A cleaned and merged version of these data is available at
 `http://tutorials.iq.harvard.edu/data/babyNames.csv`.
 
 
@@ -329,7 +329,7 @@ which name as more popular in 2000: Alex or Jim?
 
 ```{r}
 aj <- filter(baby.names, 
-             Year == 2000 & (Name == "alex" | Name == "jim"))
+             Year == 2000 & (Name == "Alex" | Name == "Jim"))
 arrange(aj, desc(Count))
 ```
 
@@ -383,7 +383,7 @@ Exercise 2 solution<span class="tag" data-tag-name="prototype"></span>
 ```{r, purl = FALSE}
 # 1.  Use `filter` to extract data for your name (or another name of your choice).  
 
-george <- filter(baby.names, Name == "george")
+george <- filter(baby.names, Name == "George")
 
 # 2.  Arrange the data you produced in step 1 above by `Count`. 
 #     In which year was the name most popular?
@@ -392,7 +392,7 @@ arrange(george, desc(Count))
  
 # 3.  BONUS (optional): Identify the most popular boys name in 1999.
 
-arrange(filter(baby.names, Year == 1996 & Sex == "Male"),
+arrange(filter(baby.names, Year == 1999 & Sex == "Boys"),
         desc(Count))
 
 ```
@@ -435,7 +435,7 @@ baby names.
 ##
 ```
 
-2.  Create a column named "Popular" containing `TRUE` in rows where "Proportion" is greater than 0.02 and a `FALSE` otherwise.
+2.  Create a column named "Popular" containing `TRUE` in rows where "Proportion" is greater than 0.04 and a `FALSE` otherwise.
 
 ```{r}
 ##
@@ -461,11 +461,11 @@ baby.names <- mutate(group_by(baby.names, Year, Sex),
                      Proportion = Count/sum(Count))
 
 ## 2.  Create a column named "Popular" containing `TRUE` in 
-##     rows where "Proportion" is greater than 0.02 and a `FALSE` 
+##     rows where "Proportion" is greater than 0.04 and a `FALSE` 
 ##     otherwise.
 
 baby.names <- mutate(baby.names,
-                     Popular = Proportion > 0.02)
+                     Popular = Proportion > 0.04)
 
 # 3.  Filter the baby names data to display only the popular names.
 
@@ -568,12 +568,12 @@ popularity over time.
 
 ```{r}
 popular.girls <- filter(group_by(baby.names, Year, Sex),
-                       Sex == "Female" & Proportion == max(Proportion))
+                       Sex == "Girls" & Proportion == max(Proportion))
 
 qplot(Year, Proportion, color = Name,
      geom = "line",
      data = filter(baby.names,
-                   Sex == "Female" & Name %in% popular.girls$Name))
+                   Sex == "Girls" & Name %in% popular.girls$Name))
 ```
 
 Exercise 5: Popularity of the most popular names
