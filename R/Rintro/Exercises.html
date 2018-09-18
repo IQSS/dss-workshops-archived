@@ -3137,34 +3137,33 @@ if (document.readyState !== "loading" &&
 <li><p>BONUS (optional): Identify the most popular boys name in 1999.</p></li>
 </ol>
 
-</article></slide><slide class=""><hgroup><h2>Exercise 3: Data manipulation</h2></hgroup><article  id="exercise-3-data-manipulation">
+</article></slide><slide class=""><hgroup><h2>Exercise 3: Most popular names</h2></hgroup><article  id="exercise-3-most-popular-names">
 
-<p>Our next goal is to identify the most popular names. Picking an arbitrary cut-off of \(2%\) we will filter the data to include only the most popular baby names.</p>
+<p>In this exercise your goal is to identify the most popular names for each year.</p>
 
 <ol>
-<li><ol>
-<li>Use <code>mutate</code> and <code>group_by</code> to create a column named &ldquo;Proportion&rdquo; where <code>Proportion = Count/sum(Count)</code> for each <code>Year X Sex</code> group.</li>
-</ol></li>
-<li><p>Create a column named &ldquo;Popular&rdquo; containing <code>TRUE</code> in rows where &ldquo;Proportion&rdquo; is greater than 0.02 and a <code>FALSE</code> otherwise.</p></li>
-<li><p>Filter the baby names data to display only the popular names.</p></li>
-<li><p>BONUS (optional): Compute the rank-order of each name within each Year X Sex group, and repeat steps 1-3 using Rank instead of Count. Why is rank a better measure of popularity?</p></li>
+<li><p>Use <code>mutate</code> and <code>group_by</code> to create a column named &ldquo;Proportion&rdquo; where <code>Proportion = Count/sum(Count)</code> for each <code>Year X Sex</code> group.</p></li>
+<li><p>Use <code>mutate</code> and <code>group_by</code> to create a column named &ldquo;Rank&rdquo; where <code>Rank = rank(count)</code> for each <code>Year X Sex</code> group.</p></li>
+<li><p>Filter the baby names data to display only the most popular name for each <code>Year X Sex</code> group.</p></li>
+<li><p>BONUS (optional): Which names are the most popular for both boys and girls?</p></li>
 </ol>
 
 </article></slide><slide class=""><hgroup><h2>Exercise 4: Group by and summarize</h2></hgroup><article  id="exercise-4-group-by-and-summarize">
 
 <ol>
-<li><p>Calculate the total number of children born.</p></li>
-<li><p>Calculate the number of boys and girls born each year. Assign the result to the name <code>births.by.year</code>.</p></li>
-<li><p>How many children were born in 2004?</p></li>
+<li><p>Calculate the proportion of girls and boys given one of the top 10 names each year. Does the proportion of babies given one of the top 10 names increase or decrease over time?</p></li>
+<li><p>Calculate the proportion of boys given one of the top 10 names each year. Does the proportion of babies given one of the top 10 names increase or decrease over time?</p></li>
+<li><p>Bonus (optional): Which name has increased (from 1960 to 2017) in popularity the most?</p></li>
 </ol>
 
-</article></slide><slide class=""><hgroup><h2>## Exercise 5: Popularity of the most popular names</h2></hgroup><article  id="exercise-5-popularity-of-the-most-popular-names">
+</article></slide><slide class=""><hgroup><h2>Exercise 5: Popularity of the most popular names</h2></hgroup><article  id="exercise-5-popularity-of-the-most-popular-names">
 
-<p>In this exercise we will plot trends in the proportion of boys and girls given the most popular name each year.</p>
+<p>In this exercise we will plot trends in the proportion of boys and girls given one of the 10 most popular names each year.</p>
 
 <ol>
-<li><p>Filter the baby.names data, retaining only the most popular girl and boy names for each year.</p></li>
-<li><p>Plot proportion over time to see changes in the proportion of who chose the most popular name of the year.</p></li>
+<li><p>Filter the baby.names data, retaining only the 10 most popular girl and boy names for each year.</p></li>
+<li><p>Summarize the data produced in step one to calculate the total Proportion of boys and girls given one of the top 10 names each year.</p></li>
+<li><p>Plot the data produced in step 2, with year on the x-axis and total proportion on the y axis. Color by sex.</p></li>
 </ol></article></slide>
 
 

@@ -54,40 +54,49 @@ assigning the result to `baby.names`. The file is located at "http://tutorials.i
 
 3.  BONUS (optional): Identify the most popular boys name in 1999.
 
-## Exercise 3: Data manipulation
+## Exercise 3: Most popular names
 
-Our next goal is to identify the most popular names. Picking an arbitrary 
-cut-off of $2%$ we will filter the data to include only the most popular
-baby names.
+In this exercise your goal is to identify the most popular names for each year.
 
-1.  1.  Use `mutate` and `group_by` to create a column named "Proportion"
+1.  Use `mutate` and `group_by` to create a column named "Proportion"
     where `Proportion = Count/sum(Count)` for each `Year X Sex` group.
 
-2.  Create a column named "Popular" containing `TRUE` in rows where "Proportion" is greater than 0.02 and a `FALSE` otherwise.
+2.  Use `mutate` and `group_by` to create a column named "Rank" where 
+    `Rank = rank(count)` for each `Year X Sex` group. 
 
-3.  Filter the baby names data to display only the popular names.
+3.  Filter the baby names data to display only the most popular name 
+    for each `Year X Sex` group.
 
-4. BONUS (optional): Compute the rank-order of each name within 
-each Year X Sex group, and repeat steps 1-3 using Rank instead of 
-Count. Why is rank a better measure of popularity?
+4. BONUS (optional): Which names are the most popular for both boys and girls?
+
 
 ## Exercise 4: Group by and summarize
 
-1.  Calculate the total number of children born.
+1.  Calculate the proportion of girls and boys given one of 
+    the top 10 names each year. Does the proportion
+    of babies given one of the top 10 names increase or
+    decrease over time?
 
-2.  Calculate the number of boys and girls born each year. Assign the result
-    to the name `births.by.year`.
+2.  Calculate the proportion of boys given one of 
+    the top 10 names each year. Does the proportion
+    of babies given one of the top 10 names increase or
+    decrease over time?
 
-3.  How many children were born in 2004?
+3.  Bonus (optional): Which name has increased (from 1960 to 2017) 
+                      in popularity the most?
 
 
 ## Exercise 5: Popularity of the most popular names
-----------
 
-In this exercise we will plot trends in the proportion of boys and girls given the most popular name each year.
+In this exercise we will plot trends in the proportion of boys and girls given one of the 10 most popular names each year.
 
-1.  Filter the baby.names data, retaining only the most popular girl
+1.  Filter the baby.names data, retaining only the 10 most popular girl
     and boy names for each year.
 
-2.  Plot proportion over time to see changes in the proportion of
-    who chose the most popular name of the year.
+2.  Summarize the data produced in step one to calculate the total
+    Proportion of boys and girls given one of the top 10 names
+    each year.
+
+3.  Plot the data produced in step 2, with year on the x-axis
+    and total proportion on the y axis. Color by sex.
+    
