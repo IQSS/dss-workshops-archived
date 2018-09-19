@@ -9,7 +9,7 @@ output:
       collapsed: true
 jupyter:
   jupytext_format_version: '1.0'
-  jupytext_formats: ipynb
+  jupytext_formats: ipynb,Rmd,R
   kernelspec:
     display_name: R
     language: R
@@ -21,6 +21,18 @@ jupyter:
     name: R
     pygments_lexer: r
     version: 3.5.1
+  toc:
+    base_numbering: 1
+    nav_menu: {}
+    number_sections: true
+    sideBar: true
+    skip_h1_title: false
+    title_cell: Table of Contents
+    title_sidebar: Contents
+    toc_cell: false
+    toc_position: {}
+    toc_section_display: true
+    toc_window_display: true
 ---
 
 ```{r echo=FALSE, results='hide'}
@@ -63,14 +75,13 @@ In this workshop you will
 
 A more general goal is to get you comfortable with R so that it seems less scary and mystifying than it perhaps does now. Note that this is by no means a complete or thorough introduction to R! It's just enough to get you started.
 
-This workshop is relatively informal, example-oriented, and hands-on. We won't spend much time examining language features in detail. Instead we will work through an example, and learn some things about the R language and environment along the way.
+This workshop is relatively informal, example-oriented, and hands-on. We won't spend much time examining language features in detail. Instead we will work through an example, and learn some things about the R language and environment along the way. The first hour or so will be spent learning some basics, with the remaining time used to work on an example project.
 
 As an example project we will analyze the popularity of baby names in the US from 1960 through 2017. Among the questions we will use R to answer are:
 
--  How many children were named "Jack" or "Jill" in 1996?
--  In which year was the name "Ashley" the most popular?
--  What are the most popular names overall? For girls? For Boys?
+-  In which year did your name achieve peak popularity?
 -  How many children were born each year?
+-  What are the most popular names overall? For girls? For Boys?
 
 What is R?
 ----------
@@ -138,15 +149,15 @@ you are looking for should appear in a pop up!
 ```{r}
 ##
 ```
-3.  R includes extensive documentation, including a file named "An
-    introduction to R". Try to find this help file.
+3.  R includes extensive documentation, including a manual named "An
+    introduction to R". Use the RStudio help pane. to locate this manual.
 
 
 Exercise 0 solution<span class="tag" data-tag-name="prototype"></span>
 ----------------------------------------------------------------------
 
 
-```{r, purl = FALSE}
+```{r purl=FALSE}
 ## 1. 2 plus 2
 2 + 2
 ## or
@@ -195,6 +206,35 @@ sqrt(10) ## calculate square root of 10; result is not stored anywhere
 x <- sqrt(10) # assign result to a variable named x
 ```
 
+Names should start with a letter, and contain only letters, numbers, underscores, and periods.
+
+Data structures
+---------------
+
+There are two basic data structures in R: *vectors* and *lists*.
+
+Vectors are of a  particular *type*, e.g., *integer*, *double*, or *character*.
+Vectors can be created using the `c` function, like this:
+
+```{r}
+x <- c(1, 2, 3) # numeric vector
+x
+```
+
+```{r}
+y <- c("1", "2", "3") # character vector
+y
+```
+
+Lists are not restricted to a single type and can be used to hold
+just about anything. They can be created using the `list` function, 
+like this:
+
+```{r}
+z <- list(1, c(1, 2, 3, 4), list(c(1, 2), c("a", "b")))
+z
+```
+
 Asking R for help
 ---------------------
 
@@ -208,7 +248,7 @@ The `help` function can be used to look up the documentation for a function, or
 to look up the documentation to a package. We can learn how to use the `stats`
 package by reading its documentation like this:
 
-```{r, eval=FALSE}
+```{r eval=FALSE}
 help(package = "stats")
 ```
 
@@ -272,27 +312,29 @@ A cleaned and merged version of these data is available at
 
 Exercise 1: Reading the baby names data
 ---------------------------------------
+Baby names data are available at `"http://tutorials.iq.harvard.edu/data/babyNames.csv"`.
+Note that **this data file does not include column names**. There are `4` columns
+that should be named `Name`, `Sex`, `Count`, and `Year`.
 
-The first step of our analysis of baby names is to read the data into R. 
+1. Open the `read_csv` help page to determine how to specify the column names. Remember that 
+you can create vectors using the `c` function.
 
-1. Start by opening the help page for the `read_csv` function so you can refer
-to the documentation if needed.
+2. Read the baby names data using the `read_csv` function and assign the result 
+with the name `baby.names`. Make sure you name the columns `Name`, `Sex`, 
+`Count`, and `Year`.
 
-2. Read the baby names using the `read_csv` function and assign the result 
-with the name `baby.names`.
-
-3. BONUS (optional): Using 
-https://github.com/rstudio/cheatsheets/raw/master/data-import.pdf 
-as a guide, save the `baby.names` data as a Stata data set `babynames.dta` 
+3. BONUS (optional): Save the `baby.names` data as a Stata data set `babynames.dta` 
 and as an R data set `babynames.rds`.
+
 
 Exercise 1 solution<span class="tag" data-tag-name="prototype"></span>
 ----------------------------------------------------------------------
 
-```{r, results = FALSE, message = FALSE, purl = FALSE}
+```{r results=FALSE, message=FALSE, purl=FALSE}
 ## read ?read_csv
 
-baby.names <- read_csv("http://tutorials.iq.harvard.edu/data/babyNames.csv")
+baby.names <- read_csv("http://tutorials.iq.harvard.edu/data/babyNames.csv",
+                       col_names = c("Name", "Sex", "Count", "Year"))
 ```
 
 Popularity of your name
@@ -385,7 +427,7 @@ assigning the result to `baby.names`. The file is located at
     In which year was the name most popular?
 ```{r}
 ##
-```    
+```
 
 3.  BONUS (optional): Identify the most popular boys name in 1999.
 ```{r}
@@ -396,7 +438,7 @@ assigning the result to `baby.names`. The file is located at
 Exercise 2 solution<span class="tag" data-tag-name="prototype"></span>
 ----------------------------------------------------------------------
 
-```{r, purl = FALSE}
+```{r purl=FALSE}
 # 1.  Use `filter` to extract data for your name (or another name of your choice).  
 
 george <- filter(baby.names, Sex == "Boys" & Name == "George")
@@ -411,6 +453,42 @@ arrange(george, desc(Count))
 arrange(filter(baby.names, Year == 1999 & Sex == "Boys"),
         desc(Count))
 
+```
+
+Plotting baby name trends over time
+===================================
+
+It can be difficult to spot trends when looking at summary tables.
+Plotting the data makes it easier to identify interesting patterns.
+
+R has decent plotting tools built-in -- see e.g., `help(plot)`.
+However, To make things easier on ourselves we will use a *contributed
+package* called `ggplot2` instead.
+
+```{r}
+## install.packages("ggplot2")
+library(ggplot2)
+```
+
+For quick and simple plots we can use the `qplot` function. For example,
+we can plot the number of babies given the name "Diana" over time like this:
+
+```{r}
+diana <- filter(baby.names, Name == "Diana" & Sex == "Girls")
+
+qplot(x = Year, y = Count,
+     data = diana)
+```
+
+Splitting these trends out by Sex is very easy:
+
+```{r}
+bn.by.year.sex <- summarize(group_by(baby.names, Year, Sex),
+                        Total = sum(Count))
+qplot(x = Year, y = Total, color = Sex,
+     geom = "line",
+     data = bn.by.year.sex) +
+     ylim(0, max(bn.by.year.sex$Total))
 ```
 
 
@@ -483,7 +561,7 @@ In this exercise your goal is to identify the most popular names for each year.
 Exercise 3 solution<span class="tag" data-tag-name="prototype"></span>
 ----------------------------------------------------------------------
 
-```{r, purl = FALSE}
+```{r purl=FALSE}
 ## 1.  Use `mutate` and `group_by` to create a column named "Proportion"
 ##     where `Proportion = Count/sum(Count)` for each `Year X Sex` group.
 
@@ -537,108 +615,7 @@ bn.by.year
 ```
 
 
-Exercise 4: Proportion choosing a top-10 name
-----------------------------------------------
-
-1.  Calculate the proportion of girls given one of 
-    the top 10 names each year. Does the proportion
-    of babies given one of the top 10 names increase or
-    decrease over time?
-```{r}
-```
-
-2.  Calculate the proportion of boys given one of 
-    the top 10 names each year. Does the proportion
-    of babies given one of the top 10 names increase or
-    decrease over time?
-```{r}
-##
-```
-
-3.  Bonus (optional): Which name has increased (from 1960 to 2017) 
-                      in popularity the most?
-```{r}
-##
-```
-Exercise 4 solution<span class="tag" data-tag-name="prototype"></span>
-----------------------------------------------------------------------
-
-```{r, purl = FALSE}
-## 1.  Calculate the proportion of girls given one of 
-##     the top 10 names each year. Does the proportion
-##     of babies given one of the top 10 names increase or
-##     decrease over time?
-top10girls <- summarize(group_by(filter(baby.names, Sex == "Girls", Rank <= 10),
-                            Year, Sex),
-                   Proportion = sum(Proportion))
-top10girls
-
-## 2.  Calculate the proportion of boys given one of 
-##     the top 10 names each year. Does the proportion
-##     of babies given one of the top 10 names increase or
-##     decrease over time?
-top10boys <- summarize(group_by(filter(baby.names, Sex == "Boys", Rank <= 10),
-                            Year, Sex),
-                   Proportion = sum(Proportion))
-top10boys
-
-## 3.  Bonus (optional): Which name has increased (from 1960 to 2017) 
-##                       in popularity the most?
-
-inboth <- inner_join(filter(baby.names, Year == 1960),
-                     filter(baby.names, Year == 2017),
-                     by = c("Name", "Sex"))
-
-inboth <- mutate(group_by(inboth, Sex), 
-                 Change = Proportion.y - Proportion.x,
-                 ChangeRank = rank(-Change))
-
-filter(inboth, ChangeRank == 1)
-
-```
-
-Plotting baby name trends over time
-===================================
-
-It can be difficult to spot trends when looking at summary tables.
-Plotting the data makes it easier to identify interesting patterns.
-Earlier we calculated the proportion of babies given one of the top
-10 names each year. Plotting these data will allow us to more easily
-spot changes in this index over time.
-
-R has decent plotting tools built-in -- see e.g., `help(plot)`.
-However, To make things easier on ourselves we will use a *contributed
-package* called `ggplot2` instead.
-
-```{r}
-## install.packages("ggplot2")
-library(ggplot2)
-```
-
-For quick and simple plots we can use the `qplot` function. For example,
-we can plot the number of babies born over time like this:
-
-```{r}
-bn.by.year <- summarize(group_by(baby.names, Year),
-                        Total = sum(Count))
-qplot(x = Year, y = Total,
-     geom = "line",
-     data = bn.by.year) +
-  ylim(0, max(bn.by.year$Total))
-```
-
-Splitting these trends out by Sex is very easy:
-
-```{r}
-bn.by.year.sex <- summarize(group_by(baby.names, Year, Sex),
-                        Total = sum(Count))
-qplot(x = Year, y = Total, color = Sex,
-     geom = "line",
-     data = bn.by.year.sex) +
-     ylim(0, max(bn.by.year.sex$Total))
-```
-
-Exercise 5: Popularity of the most popular names
+Exercise 4: Popularity of the most popular names
 ------------------------------------------------
 
 In this exercise we will plot trends in the proportion of boys and girls given one of the 10 most popular names each year.
@@ -662,10 +639,10 @@ In this exercise we will plot trends in the proportion of boys and girls given o
 ##
 ```
 
-Exercise 5 solution<span class="tag" data-tag-name="prototype"></span>
+Exercise 4 solution<span class="tag" data-tag-name="prototype"></span>
 ----------------------------------------------------------------------
 
-```{r, purl = FALSE}
+```{r purl=FALSE}
 ## 1.  Filter the baby.names data, retaining only the 10 most 
 ##     popular girl and boy names for each year.
 
