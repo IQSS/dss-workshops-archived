@@ -40,15 +40,12 @@ jupyter:
 ## Setup instructions
 
 ###  Install the Anaconda Python distribution
-If using your own computer please install the Anaconda Python distribution from [https://www.anaconda.com/download/](https://www.anaconda.com/download/). (Note that Python version $\leq$ 3.0 differs considerably from more recent releases. For this workshop you will need version $\geq$ 3.4.)
+If using your own computer please install the Anaconda Python distribution from [https://www.anaconda.com/download/](https://www.anaconda.com/download/). (Note that Python version$\leq$ 3.0 differs considerably from more recent releases. For this workshop you will need version$\geq$ 3.4.)
 
 Accepting the defaults proposed by the Anaconda installer is generally recommended. However, if it offers to install Microsoft Visual Studio Code you may safely skip this step.
 
 ### Download workshop materials
 Download the materials from [http://tutorials.iq.harvard.edu/Python/PythonIntro.zip](http://tutorials.iq.harvard.edu/Python/PythonIntro.zip) and extract the zipped directory (Right-click => Extract All on Windows, double-click on Mac).
-
-
-
 
 
 ## Workshop goals and approach
