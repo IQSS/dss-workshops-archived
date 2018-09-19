@@ -289,6 +289,9 @@ library(readr)
 
 #' Exercise 1: Reading the baby names data
 #' ---------------------------------------
+#'
+#' Make sure you have installed the `readr` package and attached it with `library(readr)`.
+#'
 #' Baby names data are available at `"http://tutorials.iq.harvard.edu/data/babyNames.csv"`.
 #' Note that **this data file does not include column names**. There are `4` columns
 #' that should be named `Name`, `Sex`, `Count`, and `Year`.
@@ -380,9 +383,13 @@ arrange(am, desc(Count))
 #' Exercise 2: Peak popularity of your name
 #' -----------------------------
 #'
+#' In this exercise you will discover the year your name reached its maximum popularity.
+#'
 #' Read in the "babyNames.csv" file if you have not already done so,
 #' assigning the result to `baby.names`. The file is located at 
 #' `"http://tutorials.iq.harvard.edu/data/babyNames.csv"`
+#'
+#' Make sure you have installed the `dplyr` package and attached it with `library(dplyr)`.
 #'
 #' 1.  Use `filter` to extract data for your name (or another name of your choice).  
 ##
