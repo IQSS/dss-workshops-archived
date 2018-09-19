@@ -23,24 +23,26 @@ you are looking for should appear in a pop up!
 
 2.  Try to calculate the square root of 10.
 
-3.  R includes extensive documentation, including a file named "An
-    introduction to R". Try to find this help file.
+3.  R includes extensive documentation, including a manual named "An
+    introduction to R". Use the RStudio help pane. to locate this manual.
 
 
-## Exercise 1: Reading data
+## Exercise 1: Import baby names data
 
-The first step of our analysis of baby names is to read the data into R. 
+Baby names data are available at `"http://tutorials.iq.harvard.edu/data/babyNames.csv"`.
+Note that **this data file does not include column names**. There are `4` columns
+that should be named `Name`, `Sex`, `Count`, and `Year`.
 
-1. Start by opening the help page for the `read_csv` function so you can refer
-to the documentation if needed.
+1. Open the `read_csv` help page to determine how to specify the column names. Remember that 
+you can create vectors using the `c` function.
 
-2, Read the baby names using the `read_csv` function and assign the result 
-with the name `baby.names`.
+2. Read the baby names data using the `read_csv` function and assign the result 
+with the name `baby.names`. Make sure you name the columns `Name`, `Sex`, 
+`Count`, and `Year`.
 
-3. BONUS (optional): Using 
-https://github.com/rstudio/cheatsheets/raw/master/data-import.pdf 
-as a guide, save the `baby.names` data as a Stata data set `babynames.dta` 
+3. BONUS (optional): Save the `baby.names` data as a Stata data set `babynames.dta` 
 and as an R data set `babynames.rds`.
+
 
 ## Exercise 2: Peak popularity of your name
 
@@ -52,9 +54,28 @@ assigning the result to `baby.names`. The file is located at "http://tutorials.i
 2.  Arrange the data you produced in step 1 above by `Count`. 
     In which year was the name most popular?
 
-3.  BONUS (optional): Identify the most popular boys name in 1999.
+3.  BONUS (optional): Filter the data to extract *only* the 
+     row containing the most popular boys name in 1999.
 
-## Exercise 3: Most popular names
+
+
+## Exercise 3: Plotting peak popularity of your name
+
+Make sure the `ggplot2` package is installed, and that you 
+have attached it using `library(ggplot2)`.
+
+1.  Use `filter` to extract data for your name (same as previous exercise)
+
+2.  Plot the data you produced in step 1 above, with `Year` on the x-axis
+    and `Count` on the y-axis.
+    
+3. Adjust the plot so that is shows boys and girls in different colors.
+
+4. BONUS (Optional): Adust the plot to use lines instead of points.   
+     
+     
+     
+## Exercise 4: Most popular names
 
 In this exercise your goal is to identify the most popular names for each year.
 
@@ -62,29 +83,17 @@ In this exercise your goal is to identify the most popular names for each year.
     where `Proportion = Count/sum(Count)` for each `Year X Sex` group.
 
 2.  Use `mutate` and `group_by` to create a column named "Rank" where 
-    `Rank = rank(count)` for each `Year X Sex` group. 
+    `Rank = rank(-Count)` for each `Year X Sex` group. 
 
 3.  Filter the baby names data to display only the most popular name 
     for each `Year X Sex` group.
 
-4. BONUS (optional): Which names are the most popular for both boys and girls?
-
-
-## Exercise 4: Group by and summarize
-
-1.  Calculate the proportion of girls and boys given one of 
-    the top 10 names each year. Does the proportion
-    of babies given one of the top 10 names increase or
-    decrease over time?
-
-2.  Calculate the proportion of boys given one of 
-    the top 10 names each year. Does the proportion
-    of babies given one of the top 10 names increase or
-    decrease over time?
-
-3.  Bonus (optional): Which name has increased (from 1960 to 2017) 
-                      in popularity the most?
-
+4. Plot the data produced in step 4, putting `Year` on the x-axis
+    and `Proportion` on the y-axis. How has the proportion of babies
+    given the most popular name changed over time?
+    
+5. BONUS (optional): Which names are the most popular for both boys and girls?
+    
 
 ## Exercise 5: Popularity of the most popular names
 

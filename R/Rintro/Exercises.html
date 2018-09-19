@@ -3110,21 +3110,17 @@ if (document.readyState !== "loading" &&
 <ol>
 <li><p>Try to get R to add 2 plus 2.</p></li>
 <li><p>Try to calculate the square root of 10.</p></li>
-<li><p>R includes extensive documentation, including a file named &ldquo;An introduction to R&rdquo;. Try to find this help file.</p></li>
+<li><p>R includes extensive documentation, including a manual named &ldquo;An introduction to R&rdquo;. Use the RStudio help pane. to locate this manual.</p></li>
 </ol>
 
-</article></slide><slide class=""><hgroup><h2>Exercise 1: Reading data</h2></hgroup><article  id="exercise-1-reading-data">
+</article></slide><slide class=""><hgroup><h2>Exercise 1: Import baby names data</h2></hgroup><article  id="exercise-1-import-baby-names-data">
 
-<p>The first step of our analysis of baby names is to read the data into R.</p>
-
-<ol>
-<li>Start by opening the help page for the <code>read_csv</code> function so you can refer to the documentation if needed.</li>
-</ol>
-
-<p>2, Read the baby names using the <code>read_csv</code> function and assign the result with the name <code>baby.names</code>.</p>
+<p>Baby names data are available at <code>&quot;http://tutorials.iq.harvard.edu/data/babyNames.csv&quot;</code>. Note that <strong>this data file does not include column names</strong>. There are <code>4</code> columns that should be named <code>Name</code>, <code>Sex</code>, <code>Count</code>, and <code>Year</code>.</p>
 
 <ol>
-<li>BONUS (optional): Using <a href='https://github.com/rstudio/cheatsheets/raw/master/data-import.pdf' title=''>https://github.com/rstudio/cheatsheets/raw/master/data-import.pdf</a> as a guide, save the <code>baby.names</code> data as a Stata data set <code>babynames.dta</code> and as an R data set <code>babynames.rds</code>.</li>
+<li><p>Open the <code>read_csv</code> help page to determine how to specify the column names. Remember that you can create vectors using the <code>c</code> function.</p></li>
+<li><p>Read the baby names data using the <code>read_csv</code> function and assign the result with the name <code>baby.names</code>. Make sure you name the columns <code>Name</code>, <code>Sex</code>, <code>Count</code>, and <code>Year</code>.</p></li>
+<li><p>BONUS (optional): Save the <code>baby.names</code> data as a Stata data set <code>babynames.dta</code> and as an R data set <code>babynames.rds</code>.</p></li>
 </ol>
 
 </article></slide><slide class=""><hgroup><h2>Exercise 2: Peak popularity of your name</h2></hgroup><article  id="exercise-2-peak-popularity-of-your-name">
@@ -3134,26 +3130,30 @@ if (document.readyState !== "loading" &&
 <ol>
 <li><p>Use <code>filter</code> to extract data for your name (or another name of your choice).</p></li>
 <li><p>Arrange the data you produced in step 1 above by <code>Count</code>. In which year was the name most popular?</p></li>
-<li><p>BONUS (optional): Identify the most popular boys name in 1999.</p></li>
+<li><p>BONUS (optional): Filter the data to extract <em>only</em> the row containing the most popular boys name in 1999.</p></li>
 </ol>
 
-</article></slide><slide class=""><hgroup><h2>Exercise 3: Most popular names</h2></hgroup><article  id="exercise-3-most-popular-names">
+</article></slide><slide class=""><hgroup><h2>Exercise 3: Plotting peak popularity of your name</h2></hgroup><article  id="exercise-3-plotting-peak-popularity-of-your-name">
+
+<p>Make sure the <code>ggplot2</code> package is installed, and that you have attached it using <code>library(ggplot2)</code>.</p>
+
+<ol>
+<li><p>Use <code>filter</code> to extract data for your name (same as previous exercise)</p></li>
+<li><p>Plot the data you produced in step 1 above, with <code>Year</code> on the x-axis and <code>Count</code> on the y-axis.</p></li>
+<li><p>Adjust the plot so that is shows boys and girls in different colors.</p></li>
+<li><p>BONUS (Optional): Adust the plot to use lines instead of points.</p></li>
+</ol>
+
+</article></slide><slide class=""><hgroup><h2>Exercise 4: Most popular names</h2></hgroup><article  id="exercise-4-most-popular-names">
 
 <p>In this exercise your goal is to identify the most popular names for each year.</p>
 
 <ol>
 <li><p>Use <code>mutate</code> and <code>group_by</code> to create a column named &ldquo;Proportion&rdquo; where <code>Proportion = Count/sum(Count)</code> for each <code>Year X Sex</code> group.</p></li>
-<li><p>Use <code>mutate</code> and <code>group_by</code> to create a column named &ldquo;Rank&rdquo; where <code>Rank = rank(count)</code> for each <code>Year X Sex</code> group.</p></li>
+<li><p>Use <code>mutate</code> and <code>group_by</code> to create a column named &ldquo;Rank&rdquo; where <code>Rank = rank(-Count)</code> for each <code>Year X Sex</code> group.</p></li>
 <li><p>Filter the baby names data to display only the most popular name for each <code>Year X Sex</code> group.</p></li>
+<li><p>Plot the data produced in step 4, putting <code>Year</code> on the x-axis and <code>Proportion</code> on the y-axis. How has the proportion of babies given the most popular name changed over time?</p></li>
 <li><p>BONUS (optional): Which names are the most popular for both boys and girls?</p></li>
-</ol>
-
-</article></slide><slide class=""><hgroup><h2>Exercise 4: Group by and summarize</h2></hgroup><article  id="exercise-4-group-by-and-summarize">
-
-<ol>
-<li><p>Calculate the proportion of girls and boys given one of the top 10 names each year. Does the proportion of babies given one of the top 10 names increase or decrease over time?</p></li>
-<li><p>Calculate the proportion of boys given one of the top 10 names each year. Does the proportion of babies given one of the top 10 names increase or decrease over time?</p></li>
-<li><p>Bonus (optional): Which name has increased (from 1960 to 2017) in popularity the most?</p></li>
 </ol>
 
 </article></slide><slide class=""><hgroup><h2>Exercise 5: Popularity of the most popular names</h2></hgroup><article  id="exercise-5-popularity-of-the-most-popular-names">

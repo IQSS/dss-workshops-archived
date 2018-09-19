@@ -429,7 +429,8 @@ assigning the result to `baby.names`. The file is located at
 ##
 ```
 
-3.  BONUS (optional): Identify the most popular boys name in 1999.
+3.  BONUS (optional): Filter the data to extract *only* the 
+     row containing the most popular boys name in 1999.
 ```{r}
 ##
 ```
@@ -441,18 +442,20 @@ Exercise 2 solution<span class="tag" data-tag-name="prototype"></span>
 ```{r purl=FALSE}
 # 1.  Use `filter` to extract data for your name (or another name of your choice).  
 
-george <- filter(baby.names, Sex == "Boys" & Name == "George")
+george <- filter(baby.names, Name == "George")
 
 # 2.  Arrange the data you produced in step 1 above by `Count`. 
 #     In which year was the name most popular?
 
 arrange(george, desc(Count))
  
-# 3.  BONUS (optional): Identify the most popular boys name in 1999.
+# 3.  BONUS (optional): Filter the data to extract _only_ the 
+#     row containing the most popular boys name in 1999.
 
-arrange(filter(baby.names, Year == 1999 & Sex == "Boys"),
-        desc(Count))
+boys.1999 <- filter(baby.names, 
+                    Year == 1999 & Sex == "Boys")
 
+filter(boys.1999, Count == max(Count))
 ```
 
 Plotting baby name trends over time
@@ -474,21 +477,67 @@ For quick and simple plots we can use the `qplot` function. For example,
 we can plot the number of babies given the name "Diana" over time like this:
 
 ```{r}
-diana <- filter(baby.names, Name == "Diana" & Sex == "Girls")
+diana <- filter(baby.names, Name == "Diana")
 
 qplot(x = Year, y = Count,
      data = diana)
 ```
 
-Splitting these trends out by Sex is very easy:
+Interetingly there are usually some gender-atypical names, even for very strongly 
+gendered names like "Diana". Splitting these trends out by Sex is very easy:
 
 ```{r}
-bn.by.year.sex <- summarize(group_by(baby.names, Year, Sex),
-                        Total = sum(Count))
-qplot(x = Year, y = Total, color = Sex,
-     geom = "line",
-     data = bn.by.year.sex) +
-     ylim(0, max(bn.by.year.sex$Total))
+qplot(x = Year, y = Count, color = Sex,
+      data = diana)
+```
+
+
+Exercise 3: Plotting peak popularity of your name
+-----------------------------
+
+Make sure the `ggplot2` package is installed, and that you 
+have attached it using `library(ggplot2)`.
+
+1.  Use `filter` to extract data for your name (same as previous exercise)
+```{r}
+##
+```
+
+2.  Plot the data you produced in step 1 above, with `Year` on the x-axis
+    and `Count` on the y-axis.
+```{r}
+##
+```
+
+3. Adjust the plot so that is shows boys and girls in different colors.
+```{r}
+##
+```
+
+4. BONUS (Optional): Adust the plot to use lines instead of points.
+
+
+Exercise 3 solution<span class="tag" data-tag-name="prototype"></span>
+----------------------------------------------------------------------
+
+```{r purl=FALSE}
+# 1. Use `filter` to extract data for your name (same as previous exercise)  
+
+george <- filter(baby.names, Name == "George")
+
+# 2.  Plot the data you produced in step 1 above, with `Year` on the x-axis
+#     and `Count` on the y-axis.
+
+qplot(x = Year, y = Count, data = george)
+
+# 3. Adjust the plot so that is shows boys and girls in different colors.
+
+qplot(x = Year, y = Count, color = Sex, data = george)
+ 
+# 4.  BONUS (Optional): Adust the plot to use lines instead of points.
+
+qplot(x = Year, y = Count, color = Sex, data = george, geom = "line")
+
 ```
 
 
@@ -530,7 +579,7 @@ Note that the data remains grouped until you change the groups by
 running `group_by` again or remove grouping information with
 `ungroup`.
 
-Exercise 3: Most popular names
+Exercise 4: Most popular names
 -----------------------------
 
 In this exercise your goal is to identify the most popular names for each year.
@@ -554,11 +603,16 @@ In this exercise your goal is to identify the most popular names for each year.
 ##
 ```
 
-4. BONUS (optional): Which names are the most popular for both boys and girls?
+4. Plot the data produced in step 4, putting `Year` on the x-axis
+    and `Proportion` on the y-axis. How has the proportion of babies
+    given the most popular name changed over time?
 ```{r}
 ##
 ```
-Exercise 3 solution<span class="tag" data-tag-name="prototype"></span>
+
+5. BONUS (optional): Which names are the most popular for both boys and girls?
+
+Exercise 4 solution<span class="tag" data-tag-name="prototype"></span>
 ----------------------------------------------------------------------
 
 ```{r purl=FALSE}
@@ -577,9 +631,17 @@ baby.names <- mutate(group_by(baby.names, Year, Sex),
 ## 3.  Filter the baby names data to display only the most popular name 
 ##     for each `Year X Sex` group.
 
-filter(baby.names, Rank == 1)
+top1 <- filter(baby.names, Rank == 1)
 
-## 4. BONUS (optional): Which names are the most popular for both boys 
+## 4. Plot the data produced in step 3, putting `Year` on the x-axis
+##    and `Proportion` on the y-axis. How has the proportion of babies
+##    given the most popular name changed over time?
+
+qplot(x = Year, y = Proportion, color = Sex, 
+      data = top1, 
+      geom = "line")
+
+## 5. BONUS (optional): Which names are the most popular for both boys 
 ##    and girls?
 
 girls.and.boys <- inner_join(filter(baby.names, Sex == "Boys"), 
@@ -599,7 +661,7 @@ Percent choosing one of the top 10 names
 You may have noticed that the percentage of babies given the most 
 popular name of the year appears to have decreases over time. We can
 compute a more robust measure of the popularity of the most popular
-name by calculating the number of babies given one of the top 10 girl
+names by calculating the number of babies given one of the top 10 girl
 or boy names of the year.
 
 In order to compute this measure we need to operate within goups, as
