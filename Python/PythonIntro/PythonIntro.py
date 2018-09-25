@@ -39,16 +39,13 @@
 # ## Setup instructions
 #
 # ###  Install the Anaconda Python distribution
-# If using your own computer please install the Anaconda Python distribution from [https://www.anaconda.com/download/](https://www.anaconda.com/download/). (Note that Python version $\leq$ 3.0 differs considerably from more recent releases. For this workshop you will need version $\geq$ 3.4.)
+# If using your own computer please install the Anaconda Python distribution from [https://www.anaconda.com/download/](https://www.anaconda.com/download/). (Note that Python version$\leq$ 3.0 differs considerably from more recent releases. For this workshop you will need version$\geq$ 3.4.)
 #
 # Accepting the defaults proposed by the Anaconda installer is generally recommended. However, if it offers to install Microsoft Visual Studio Code you may safely skip this step.
 #
 # ### Download workshop materials
 # Download the materials from [http://tutorials.iq.harvard.edu/Python/PythonIntro.zip](http://tutorials.iq.harvard.edu/Python/PythonIntro.zip) and extract the zipped directory (Right-click => Extract All on Windows, double-click on Mac).
-#
-#
 
-#
 # ## Workshop goals and approach
 # In this workshop you will
 # - learn about the python package and application ecosystem,
@@ -72,13 +69,14 @@
 # Like most popular open source programming languages, Python can be thought of as a *platform* that runs a huge number and variety of packages. The language itself is mostly valuable because it makes it easy to create and use a large number of useful packages.
 #
 # ## How can I interact with Python?
-# A number of interfaces designed to make it easy to interact with Python are available. The Anaconda distribution that we installed earlier includes both a web-based *Jupyter Notebook* and a more conventional Integrated Development Environment called *Spyder*. For this workshop I encourage you to use *Jupyter Notebook*. In real life you should experiment and choose the interface that you find most comfortable.
+# A number of interfaces designed to make it easy to interact with Python are available. The Anaconda distribution that we installed earlier includes both a web-based *Jupyter Notebook* and a more conventional Integrated Development Environment called *Spyder*. For this workshop I encourage you to use the *Spyder IDE*. In real life you should experiment and choose the interface that you find most comfortable.
 #
-# To get started, start the *Jupyter Notebook* application, and navigate to the *PythonIntro* directory you downloaded and extracted earlier. Start a new notebook by clicking `New => Python 3` as shown below.
+# To get started, start the *Spyder* application, and create a new project by clicking *Projects => New Project*. Select the `PythonIntro` folder you downloaded earlier, as shown below.
 #
-# ![notebook_new.png](./img/notebook_new.png)
+# ![new_project](./img/sypder_projects.png)
 #
-# A Jupyter Notebook contains one or more *cells* containing notes or code. To insert a new cell click the `+` button in the upper left. To execute a cell, select it and press `Control+Enter` or click the `Run` button at the top.
+# ![new_projects](./img/spyder_new_project.png)
+#
 
 # ## Reading the text of Alice in Wonderland from a file
 # Reading information from a file is the first step in many projects, so we'll start there. The workshop materials you downloaded earlier include a file named `Alice_in_wonderland.txt` which contains the text of Lewis Carroll's *Alice's Adventures in Wonderland*.
@@ -134,6 +132,19 @@ len(set(alice_words))
 
 # There are 5295 unique words in the text.
 
+# ## Exercise: Reading text from a file and splitting
+# *Alice's Adventures in Wonderland* is full of memorable characters. The main characters from the story are listed, one-per-line, in the file named `Characters.txt`.
+#
+# NOTE: we will not always explicitly demonstrate everything you need to know in order to complete an exercise. Instead we focus on teaching you how to discover available methods and how use the help function to learn how to use them. It is expected that you will spend some time during the exercises looking for appropriate methods and perhaps reading documentation.
+#
+
+# 1. Open the `Characters.txt` file and read its contents.
+
+
+# 2. Split text on newlines to produce a list with one element per line.
+#    Store the result as "alice_characters".
+
+
 # ### Working with lists
 # The `split` methods we used to break up the text of *Alice in Wonderland* into words produced a *list*. A lot of the techniques we'll use later to analyze this text also produce lists, so its worth taking a minute to learn more about them.
 #
@@ -186,22 +197,17 @@ print(last_10)
 # ### Counting chapters and paragraphs
 # Now that we know how to split a string and how to work with the resulting list, we can split on chapter markers to count the number of chapters. All we need to do is specify the string to split on. Since each chapter is marked with the string `'CHAPTER '` followed by the chapter number, we can split the text up into chapters using this as the separator.
 
-# + {"ein.hycell": false, "ein.tags": "worksheet-0", "hidden": true, "slideshow": {"slide_type": "-"}}
 alice_chapters = alice_txt.split("CHAPTER ")
 len(alice_chapters)
-# -
 
 # Since the first element contains the material *before* the first chapter, this tells us there are twelve chapters in the book.
 #
 # We can count paragraphs in a similar way. Paragraphs are indicated by a blank line, i.e., two newlines in a row. When working with strings we can represent newlines with `\n`, so our basic paragraph separator is `\n\n`.
 
-# + {"hidden": true}
 alice_paragraphs = alice_txt.split("\n\n")
-# -
 
 # Before counting the number of paragraphs, I want to inspect the result to see if it looks correct:
 
-# + {"hidden": true}
 print(alice_paragraphs[0], "\n==========")
 print(alice_paragraphs[1], "\n==========")
 print(alice_paragraphs[2], "\n==========")
@@ -209,36 +215,23 @@ print(alice_paragraphs[3], "\n==========")
 print(alice_paragraphs[4], "\n==========")
 print(alice_paragraphs[5], "\n==========")
 
-# -
 
 # We're counting the title, author, and chapter lines as paragraphs, but this will do for a rough count.
 
-# + {"hidden": true}
 len(alice_paragraphs)
-# -
 
 # ## Exercise: count the number of main characters
 # So far we've learned that there are 12 chapters, around 830 paragraphs, and about 26 thousand words in *Alice's Adventures in Wonderland*. Along the way we've also learned how to open a file and read its contents, split strings,  calculate the length of objects, discover methods for string and list objects, and index/subset lists in Python. Now it is time for you to put these skills to use to learn something about the main characters in the story.
-#
-# NOTE: we have not explicitly demonstrated everything you need to know in order to complete this exercise. Instead we have focused on teaching you how to discover available methods and how use the help function to learn how to use them. It is expected that you will spend some time during this exercise looking for appropriate methods and perhaps reading documentation.
-#
-# *Alice's Adventures in Wonderland* is full of memorable characters. The main characters from the story are listed, one-per-line, in the file named `Characters.txt`.
-#
-#
 
-# 1. Open the `Characters.txt` file and read its contents.
+# 1. Count the number of main characters in the story (i.e., get the length
+#    of the list you created in previous exercise).
 
 
-# 2. Split text into a list with one element per line and store the result.
+# 2. Extract and print just the first character from the list you created in
+#    the previous exercise.
 
 
-# 3. Count the number of characters (i.e., get the length of the list you created in step 2).
-
-
-# 4. Extract and print just the first character from the list you created in step 2.
-
-
-# 5. (BONUS, optional): Sort the list you created in step 2 alphabetically, and then extract the last element.
+# 3. (BONUS, optional): Sort the list you created in step 2 alphabetically, and then extract the last element.
 
 
 # ## Working with nested structures: words within paragraphs within chapters

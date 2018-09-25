@@ -72,13 +72,14 @@ Python is a relatively easy to learn general purpose programming language. Peopl
 Like most popular open source programming languages, Python can be thought of as a *platform* that runs a huge number and variety of packages. The language itself is mostly valuable because it makes it easy to create and use a large number of useful packages.
 
 ## How can I interact with Python?
-A number of interfaces designed to make it easy to interact with Python are available. The Anaconda distribution that we installed earlier includes both a web-based *Jupyter Notebook* and a more conventional Integrated Development Environment called *Spyder*. For this workshop I encourage you to use *Jupyter Notebook*. In real life you should experiment and choose the interface that you find most comfortable.
+A number of interfaces designed to make it easy to interact with Python are available. The Anaconda distribution that we installed earlier includes both a web-based *Jupyter Notebook* and a more conventional Integrated Development Environment called *Spyder*. For this workshop I encourage you to use the *Spyder IDE*. In real life you should experiment and choose the interface that you find most comfortable.
 
-To get started, start the *Jupyter Notebook* application, and navigate to the *PythonIntro* directory you downloaded and extracted earlier. Start a new notebook by clicking `New => Python 3` as shown below.
+To get started, start the *Spyder* application, and create a new project by clicking *Projects => New Project*. Select the `PythonIntro` folder you downloaded earlier, as shown below.
 
-![notebook_new.png](./img/notebook_new.png)
+![new_project](./img/sypder_projects.png)
 
-A Jupyter Notebook contains one or more *cells* containing notes or code. To insert a new cell click the `+` button in the upper left. To execute a cell, select it and press `Control+Enter` or click the `Run` button at the top.
+![new_projects](./img/spyder_new_project.png)
+
 
 
 ## Reading the text of Alice in Wonderland from a file

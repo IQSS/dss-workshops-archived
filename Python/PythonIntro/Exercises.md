@@ -50,6 +50,10 @@ NOTE: we will not always explicitly demonstrate everything you need to know in o
 ```
 
 
+```python
+alice_characters
+```
+
 ## Exercise: count the number of main characters
 So far we've learned that there are 12 chapters, around 830 paragraphs, and about 26 thousand words in *Alice's Adventures in Wonderland*. Along the way we've also learned how to open a file and read its contents, split strings,  calculate the length of objects, discover methods for string and list objects, and index/subset lists in Python. Now it is time for you to put these skills to use to learn something about the main characters in the story.
 
@@ -66,7 +70,7 @@ So far we've learned that there are 12 chapters, around 830 paragraphs, and abou
 ```
 
 ```python
-# 3. (BONUS, optional): Sort the list you created in step 2 alphabetically, and then extract the last element.
+# 3. (BONUS, optional): Which character is alphabetically second-to-last?
 
 ```
 
@@ -80,7 +84,6 @@ Now that we know how to iterate using for-loops and list comprehensions the poss
 # Open and read both "Alice_in_wonderland.txt" and
 # "Characters.txt" if you have not already done so.
 
-
 ```
 
 ```python
@@ -91,7 +94,6 @@ Now that we know how to iterate using for-loops and list comprehensions the poss
 # the chapters. For each chapter, split it into words and 
 # calculate the length.
 
-
 ```
 
 ```python
@@ -101,7 +103,6 @@ Now that we know how to iterate using for-loops and list comprehensions the poss
 # list comprehension. For each character, call the count method
 # with that character as the argument.
 
-
 ```
 
 ```python
@@ -109,13 +110,11 @@ Now that we know how to iterate using for-loops and list comprehensions the poss
 #    above in a dictionary with character names as the keys and 
 #    counts as the values.
 
-
 ```
 
 ```python
 # 5. (BONUS, optional): Use a nested for-loop or nested comprehension 
 #    to calculate the number of times each character is mentioned 
 #    in each chapter.
-
 
 ```
