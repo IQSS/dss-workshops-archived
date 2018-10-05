@@ -1,5 +1,5 @@
 #' ---
-#' title: "Introduction to R workshop notes"
+#' title: "R graphics with ggplot2 workshop notes"
 #' always_allow_html: yes
 #' output: 
 #'   html_document:
