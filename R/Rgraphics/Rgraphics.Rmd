@@ -9,7 +9,7 @@ output:
       collapsed: true
 jupyter:
   jupytext_format_version: '1.0'
-  jupytext_formats: ipynb,Rmd,R
+  jupytext_formats: ipynb,Rmd:rmarkdown,R
   kernelspec:
     display_name: R
     language: R
@@ -215,11 +215,13 @@ ggplot(hp2001Q1,
   geom_point()
 ```
 
+
 ```{r}
 ggplot(hp2001Q1,
        aes(y = Structure.Cost, x = log(Land.Value))) +
   geom_point()
 ```
+
 
 ## Lines (Prediction Line)
 
@@ -234,6 +236,7 @@ p1 + geom_point(aes(color = Home.Value)) +
   geom_line(aes(y = pred.SC))
 ```
 
+
 ## Smoothers
 
 Not all geometric objects are simple shapes&#x2013;the smooth geom includes a line and a ribbon.
@@ -244,6 +247,7 @@ p1 +
   geom_smooth()
 ```
 
+
 ## Text (Label Points)
 
 Each `geom` accepts a particualar set of mappings;for example `geom_text()` accepts a `labels` mapping.
@@ -253,6 +257,7 @@ p1 +
   geom_text(aes(label=State), size = 3)
 ```
 
+
 ```{r}
 ## install.packages("ggrepel") 
 library("ggrepel")
@@ -260,6 +265,7 @@ p1 +
   geom_point() + 
   geom_text_repel(aes(label=State), size = 3)
 ```
+
 
 ## Aesthetic Mapping VS Assignment
 
@@ -271,6 +277,7 @@ p1 +
              color="red") # this is fine -- all points red
 ```
 
+
 ## Mapping Variables To Other Aesthetics
 
 Other aesthetics are mapped in the same way as x and y in the previous example.
@@ -280,15 +287,13 @@ p1 +
   geom_point(aes(color=Home.Value, shape = region))
 ```
 
+
 ## Exercise I
 
 The data for the exercises is available in the `dataSets/EconomistData.csv` file. Read it in with
 
 ```{r}
 dat <- read_csv("dataSets/EconomistData.csv")
-head(dat)
-
-ggplot(dat, aes(x = CPI, y = HDI, size = HDI.Rank)) + geom_point()
 ```
 
 Original sources for these data are <http://www.transparency.org/content/download/64476/1031428> <http://hdrstats.undp.org/en/indicators/display_cf_xls_indicator.cfm?indicator_id=103106&lang=en>
@@ -338,6 +343,7 @@ ggplot(dat, aes(x = CPI, y = HDI)) +
 geom_point(aes(color = Region, size =  HDI.Rank))
 ```
 
+
 # Statistical Transformations
 
 ## Statistical Transformations
@@ -371,6 +377,7 @@ can change it by passing the `binwidth` argument to the `stat_bin` function:
 p2 + geom_histogram(stat = "bin", binwidth=4000)
 ```
 
+
 ## Changing The Statistical Transformation
 
 Sometimes the default statistical transformation is not what you need. This is often the case with pre-summarized data:
@@ -391,6 +398,7 @@ What is the problem with the previous plot? Basically we take binned and summari
 ggplot(housing.sum, aes(x=State, y=Home.Value)) + 
   geom_bar(stat="identity")
 ```
+
 
 ## Exercise II
 
@@ -441,6 +449,7 @@ ggplot(dat, aes(x = CPI, y = HDI)) +
   geom_smooth(span = .4)
 ```
 
+
 # Scales
 
 ## Scales: Controlling Aesthetic Mapping
@@ -482,6 +491,7 @@ p3 <- ggplot(housing,
                        position = position_jitter(width = 0.25, height = 0)))
 ```
 
+
 Now modify the breaks for the x axis and color scales
 
 ```{r}
@@ -490,6 +500,7 @@ p4 + scale_x_discrete(name="State Abbreviation") +
                          breaks = c(1976, 1994, 2013),
                          labels = c("'76", "'94", "'13"))
 ```
+
 
 Next change the low and high values to blue and red:
 
@@ -503,6 +514,7 @@ p4 +
 
 ```
 
+
 ```{r}
 library(scales)
 p4 +
@@ -512,6 +524,7 @@ p4 +
                          low = muted("blue"), high = muted("red"))
 
 ```
+
 
 ## Using different color scales
 
@@ -527,6 +540,7 @@ p4 +
                         mid = "gray60",
                         midpoint = 1994)
 ```
+
 
 ## Available Scales
 
@@ -594,6 +608,7 @@ scale_y_continuous(name = "Human Development Index") +
                                 "#96503F"))
 ```
 
+
 # Faceting
 
 ## Faceting
@@ -614,6 +629,7 @@ p5 <- ggplot(housing, aes(x = Date, y = Home.Value))
 p5 + geom_line(aes(color = State))  
 ```
 
+
 There are two problems here&#x2013;there are too many states to distinguish each one by color, and the lines obscure one another.
 
 ## Faceting to the rescue
@@ -624,6 +640,7 @@ We can remedy the deficiencies of the previous plot by faceting by state rather 
 (p5 <- p5 + geom_line() +
    facet_wrap(~State, ncol = 10))
 ```
+
 
 There is also a `facet_grid()` function for faceting in two dimensions.
 
@@ -648,9 +665,11 @@ Built-in themes include:
 p5 + theme_linedraw()
 ```
 
+
 ```{r}
 p5 + theme_light()
 ```
+
 
 ## Overriding theme defaults
 
@@ -660,6 +679,7 @@ Specific theme elements can be overridden using `theme()`. For example:
 p5 + theme_minimal() +
   theme(text = element_text(color = "turquoise"))
 ```
+
 
 All theme options are documented in `?theme`.
 
@@ -678,6 +698,7 @@ theme_new <- theme_bw() +
 
 p5 + theme_new
 ```
+
 
 # The #1 FAQ
 
@@ -711,6 +732,7 @@ ggplot(home.land.byyear,
            color=type)) +
   geom_line()
 ```
+
 
 # Putting It All Together
 
@@ -760,6 +782,7 @@ pc2 <- pc1 +
 pc2 + geom_point()
 ```
 
+
 Notice that we put the `geom_line` layer first so that it will be plotted underneath the points, as was done on the original graph.
 
 ## Use open points
@@ -780,6 +803,7 @@ s + geom_point(aes(shape = z), size = 4, colour = "Red", fill = "Black") +
 
 ```
 
+
 This shows us that *shape 1* is an open circle, so
 
 ```{r}
@@ -787,11 +811,13 @@ pc2 +
   geom_point(shape = 1, size = 4)
 ```
 
+
 That is better, but unfortunately the size of the line around the points is much narrower than on the original.
 
 ```{r}
 (pc3 <- pc2 + geom_point(shape = 1, size = 2.5, stroke = 1.25))
 ```
+
 
 ## Labelling points
 
@@ -815,6 +841,7 @@ Now we can label these points using `geom_text`, like this:
             data = filter(dat, Country %in% pointsToLabel)))
 ```
 
+
 This more or less gets the information across, but the labels overlap in a most unpleasing fashion. We can use the `ggrepel` package to make things better, but if you want perfection you will probably have to do some hand-adjustment.
 
 ```{r}
@@ -825,6 +852,7 @@ library("ggrepel")
                    data = filter(dat, Country %in% pointsToLabel),
                    force = 10))
 ```
+
 
 ## Change the region labels and order
 
@@ -856,6 +884,7 @@ pc4$data <- dat
 pc4
 ```
 
+
 ## Add title and format axes
 
 The next step is to add the title and format the axes. We do that using the `scales` system in ggplot2.
@@ -879,6 +908,7 @@ library(grid)
   ggtitle("Corruption and Human development"))
 
 ```
+
 
 ## Theme tweaks
 
@@ -904,6 +934,7 @@ library(grid) # for the 'unit' function
         ))
 
 ```
+
 
 ## Add model R<sup>2</sup> and source note
 
@@ -1001,6 +1032,7 @@ p
 
 dev.off()
 ```
+
 
 Comparing it to the original suggests that we've got most of the important elements. 
 

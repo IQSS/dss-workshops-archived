@@ -9,7 +9,7 @@
 #'       collapsed: true
 #' jupyter:
 #'   jupytext_format_version: '1.0'
-#'   jupytext_formats: ipynb,Rmd,R
+#'   jupytext_formats: ipynb,Rmd:rmarkdown,R:spin
 #'   kernelspec:
 #'     display_name: R
 #'     language: R
@@ -36,7 +36,7 @@
 #' ---
 
 #' ## Materials and setup
-
+#'
 #' ### Laptop users: You should have R installed; if not:
 #'
 #' 1.  Open a web browser and go to <http://cran.r-project.org> and download and install it
@@ -44,13 +44,13 @@
 #' 2.  Also helpful to install RStudio (download from <http://rstudio.com>)
 #'
 #' 3.  In R, type `install.packages("tidyverse")` to install a suite of usefull packages including `ggplot2`
-
+#'
 #' ### Everyone: Download workshop materials:
 #'
 #' 1.  Download materials from <http://tutorials.iq.harvard.edu/R/Rgraphics.zip>
 #'
 #' 2.  Extract the zip file containing the materials to your desktop
-
+#'
 #' ## Workshop Overview
 #'
 #' Class Structure and Organization:
@@ -64,13 +64,13 @@
 #' -   Assumes working knowledge of R
 #' -   Relatively fast-paced
 #' -   Focus is on `ggplot2` graphics&#x2013;other packages will not be covered
-
+#'
 #' ## Starting At The End
 #'
 #' My goal: by the end of the workshop you will be able to reproduce this graphic from the Economist:
 #'
 #' ![img](images/Economist1.png)
-
+#'
 #' ## Why `ggplot2`?
 #'
 #' Advantages of ggplot2
@@ -87,7 +87,7 @@
 #' -   3-dimensional graphics (see the rgl package)
 #' -   Graph-theory type graphs (nodes/edges layout; see the igraph package)
 #' -   Interactive graphics (see the ggvis package)
-
+#'
 #' ## What Is The Grammar Of Graphics?
 #'
 #' The basic idea: independently specify plot building blocks and combine them to create just about any kind of graphical display you want. Building blocks of a graph include:
@@ -112,8 +112,7 @@ library(tidyverse)
 #'
 #' Let's look at housing prices.
 
-#+ attributes={'classes': ['R'], 'id': ''}
-housing <- read.csv("dataSets/landdata-states.csv")
+housing <- read_csv("dataSets/landdata-states.csv")
 head(housing[1:5])
 
 #' ## `ggplot2` VS Base Graphics
@@ -124,18 +123,16 @@ head(housing[1:5])
 #' -   is less verbose for complex / custom graphics
 #' -   does not have methods (data should always be in a `data.frame`)
 #' -   uses a different system for adding plot elements
-
+#'
 #' ## `ggplot2` VS Base for simple graphs
 #'
 #' Base graphics histogram example:
 
-#+ attributes={'classes': ['R'], 'id': ''}
 hist(housing$Home.Value)
 
 
 #' `ggplot2` histogram example:
 
-#+ attributes={'classes': ['R'], 'id': ''}
 library(ggplot2)
 ggplot(housing, aes(x = Home.Value)) +
   geom_histogram()
@@ -161,9 +158,9 @@ ggplot(filter(housing, State %in% c("MA", "TX")),
   geom_point()
 
 #' `ggplot2` wins!
-
+#'
 #' # Geometric Objects And Aesthetics
-
+#'
 #' ## Aesthetic Mapping
 #'
 #' In ggplot land *aesthetic* means "something you can see". Examples include:
@@ -176,7 +173,7 @@ ggplot(filter(housing, State %in% c("MA", "TX")),
 #' -   size
 #'
 #' Each type of geom accepts only a subset of all aesthetics&#x2013;refer to the geom help pages to see what mappings each geom accepts. Aesthetic mappings are set with the `aes()` function.
-
+#'
 #' ## Geometic Objects (`geom`)
 #'
 #' Geometric objects are the actual marks we put on a plot. Examples include:
@@ -189,11 +186,10 @@ ggplot(filter(housing, State %in% c("MA", "TX")),
 #'
 #' You can get a list of available geometric objects using the code below:
 
-#+ attributes={'classes': ['R'], 'id': ''}
 help.search("geom_", package = "ggplot2")
 
 #' or simply type `geom_<tab>` in any good R IDE (such as Rstudio or ESS) to see a list of functions starting with `geom_`.
-
+#'
 #' ## Points (Scatterplot)
 #'
 #' Now that we know about geometric objects and aesthetic mapping, we can make a ggplot. `geom_point` requires mappings for x and y, all others are optional.
@@ -204,7 +200,6 @@ ggplot(hp2001Q1,
   geom_point()
 
 
-#+ attributes={'classes': ['R'], 'id': ''}
 ggplot(hp2001Q1,
        aes(y = Structure.Cost, x = log(Land.Value))) +
   geom_point()
@@ -214,7 +209,6 @@ ggplot(hp2001Q1,
 #'
 #' A plot constructed with `ggplot` can have more than one geom. In that case the mappings established in the `ggplot()` call are plot defaults that can be added to or overridden. Our plot could use a regression line:
 
-#+ attributes={'classes': ['R'], 'id': ''}
 hp2001Q1$pred.SC <- predict(lm(Structure.Cost ~ log(Land.Value), data = hp2001Q1))
 
 p1 <- ggplot(hp2001Q1, aes(x = log(Land.Value), y = Structure.Cost))
@@ -227,7 +221,6 @@ p1 + geom_point(aes(color = Home.Value)) +
 #'
 #' Not all geometric objects are simple shapes&#x2013;the smooth geom includes a line and a ribbon.
 
-#+ attributes={'classes': ['R'], 'id': ''}
 p1 +
   geom_point(aes(color = Home.Value)) +
   geom_smooth()
@@ -237,12 +230,10 @@ p1 +
 #'
 #' Each `geom` accepts a particualar set of mappings;for example `geom_text()` accepts a `labels` mapping.
 
-#+ attributes={'classes': ['R'], 'id': ''}
 p1 + 
   geom_text(aes(label=State), size = 3)
 
 
-#+ attributes={'classes': ['R'], 'id': ''}
 ## install.packages("ggrepel") 
 library("ggrepel")
 p1 + 
@@ -254,7 +245,6 @@ p1 +
 #'
 #' Note that variables are mapped to aesthetics with the `aes()` function, while fixed aesthetics are set outside the `aes()` call. This sometimes leads to confusion, as in this example:
 
-#+ attributes={'classes': ['R'], 'id': ''}
 p1 +
   geom_point(aes(size = 2),# incorrect! 2 is not a variable
              color="red") # this is fine -- all points red
@@ -264,7 +254,6 @@ p1 +
 #'
 #' Other aesthetics are mapped in the same way as x and y in the previous example.
 
-#+ attributes={'classes': ['R'], 'id': ''}
 p1 +
   geom_point(aes(color=Home.Value, shape = region))
 
@@ -273,11 +262,7 @@ p1 +
 #'
 #' The data for the exercises is available in the `dataSets/EconomistData.csv` file. Read it in with
 
-#+ attributes={'classes': ['R'], 'id': ''}
-dat <- read.csv("dataSets/EconomistData.csv")
-head(dat)
-
-ggplot(dat, aes(x = CPI, y = HDI, size = HDI.Rank)) + geom_point()
+dat <- read_csv("dataSets/EconomistData.csv")
 
 #' Original sources for these data are <http://www.transparency.org/content/download/64476/1031428> <http://hdrstats.undp.org/en/indicators/display_cf_xls_indicator.cfm?indicator_id=103106&lang=en>
 #'
@@ -288,42 +273,37 @@ ggplot(dat, aes(x = CPI, y = HDI, size = HDI.Rank)) + geom_point()
 #' 3.  Map the color of the the points to Region.
 #' 4.  Make the points bigger by setting size to 2
 #' 5.  Map the size of the points to HDI.Rank
-
+#'
 #' ## Exercise I prototype     :prototype:
 #'
 #' 1.  Create a scatter plot with CPI on the x axis and HDI on the y axis.
 
-#+ attributes={'classes': ['R'], 'id': ''}
 ggplot(dat, aes(x = CPI, y = HDI)) +
   geom_point()
 
 #' 2.  Color the points in the previous plot blue.
 
-#+ attributes={'classes': ['R'], 'id': ''}
 ggplot(dat, aes(x = CPI, y = HDI)) +
   geom_point(color = "blue")
 
 #' 3.  Color the points in the previous plot according to *Region*.
 
-#+ attributes={'classes': ['R'], 'id': ''}
 ggplot(dat, aes(x = CPI, y = HDI)) +
   geom_point(aes(color = Region))
 
 #' 4.  Make the points bigger by setting size to 2
 
-#+ attributes={'classes': ['R'], 'id': ''}
 ggplot(dat, aes(x = CPI, y = HDI)) +
   geom_point(aes(color = Region), size = 2)
 
 #' 5.  Make the points bigger by setting size to 2
 
-#+ attributes={'classes': ['R'], 'id': ''}
 ggplot(dat, aes(x = CPI, y = HDI)) +
 geom_point(aes(color = Region, size =  HDI.Rank))
 
 
 #' # Statistical Transformations
-
+#'
 #' ## Statistical Transformations
 #'
 #' Some plot types (such as scatterplots) do not require transformations&#x2013;each point is plotted at x and y coordinates equal to the original value. Other plots, such as boxplots, histograms, prediction lines etc. require statistical transformations:
@@ -333,7 +313,6 @@ geom_point(aes(color = Region, size =  HDI.Rank))
 #'
 #' Each `geom` has a default statistic, but these can be changed. For example, the default statistic for `geom_bar` is `stat_bin`:
 
-#+ attributes={'classes': ['R'], 'id': ''}
 args(geom_histogram)
 args(stat_bin)
 
@@ -343,13 +322,11 @@ args(stat_bin)
 #'
 #' For example, here is the default histogram of Home.Value:
 
-#+ attributes={'classes': ['R'], 'id': ''}
 p2 <- ggplot(housing, aes(x = Home.Value))
 p2 + geom_histogram()
 
 #' can change it by passing the `binwidth` argument to the `stat_bin` function:
 
-#+ attributes={'classes': ['R'], 'id': ''}
 p2 + geom_histogram(stat = "bin", binwidth=4000)
 
 
@@ -357,17 +334,15 @@ p2 + geom_histogram(stat = "bin", binwidth=4000)
 #'
 #' Sometimes the default statistical transformation is not what you need. This is often the case with pre-summarized data:
 
-#+ attributes={'classes': ['R'], 'id': ''}
 housing.sum <- aggregate(housing["Home.Value"], housing["State"], FUN=mean)
 rbind(head(housing.sum), tail(housing.sum))
 
-#+ error=TRUE, attributes={'classes': ['R'], 'id': ''}
+#+ error=TRUE
 ggplot(housing.sum, aes(x=State, y=Home.Value)) + 
   geom_bar()
 
 #' What is the problem with the previous plot? Basically we take binned and summarized data and ask ggplot to bin and summarize it again (remember, `geom_bar` defaults to `stat = stat_count`); obviously this will not work. We can fix it by telling `geom_bar` to use a different statistical transformation function:
 
-#+ attributes={'classes': ['R'], 'id': ''}
 ggplot(housing.sum, aes(x=State, y=Home.Value)) + 
   geom_bar(stat="identity")
 
@@ -379,46 +354,41 @@ ggplot(housing.sum, aes(x=State, y=Home.Value)) +
 #' 3.  Overlay a smoothing line on top of the scatter plot using `geom_smooth`, but use a linear model for the predictions. Hint: see `?stat_smooth`.
 #' 4.  Overlay a smoothing line on top of the scatter plot using `geom_line`. Hint: change the statistical transformation.
 #' 5.  BONUS: Overlay a smoothing line on top of the scatter plot using the default *loess* method, but make it less smooth. Hint: see `?loess`.
-
+#'
 #' ## Exercise II prototype     :prototype:
 #'
 #' 1.  Re-create a scatter plot with CPI on the x axis and HDI on the y axis (as you did in the previous exercise).
 
-#+ attributes={'classes': ['R'], 'id': ''}
 ggplot(dat, aes(x = CPI, y = HDI)) +
   geom_point()
 
 #' 2.  Overlay a smoothing line on top of the scatter plot using `geom_smooth`
 
-#+ attributes={'classes': ['R'], 'id': ''}
 ggplot(dat, aes(x = CPI, y = HDI)) +
   geom_point() +
   geom_smooth()
 
 #' 3.  Overlay a smoothing line on top of the scatter plot using `geom_smooth`, but use a linear model for the predictions. Hint: see `?stat_smooth`.
 
-#+ attributes={'classes': ['R'], 'id': ''}
 ggplot(dat, aes(x = CPI, y = HDI)) +
   geom_point() +
   geom_smooth(method = "lm")
 
 #' 4.  Overlay a loess (method = "loess") smoothling line on top of the scatter plot using `geom_line`. Hint: change the statistical transformation.
 
-#+ attributes={'classes': ['R'], 'id': ''}
 ggplot(dat, aes(x = CPI, y = HDI)) +
   geom_point() +
   geom_line(stat = "smooth", method = "loess")
 
 #' 4.  BONUS: Overlay a smoothing line on top of the scatter plot using the *loess* method, but make it less smooth. Hint: see `?loess`.
 
-#+ attributes={'classes': ['R'], 'id': ''}
 ggplot(dat, aes(x = CPI, y = HDI)) +
   geom_point() +
   geom_smooth(span = .4)
 
 
 #' # Scales
-
+#'
 #' ## Scales: Controlling Aesthetic Mapping
 #'
 #' Aesthetic mapping (i.e., with `aes()`) only says that a variable should be mapped to an aesthetic. It doesn't say *how* that should happen. For example, when mapping a variable to *shape* with `aes(shape = x)` you don't say *what* shapes should be used. Similarly, `aes(color = z)` doesn't say *what* colors should be used. Describing what colors/shapes/sizes etc. to use is done by modifying the corresponding *scale*. In `ggplot2` scales include
@@ -430,7 +400,7 @@ ggplot(dat, aes(x = CPI, y = HDI)) +
 #' -   line type
 #'
 #' Scales are modified with a series of functions using a `scale_<aesthetic>_<type>` naming scheme. Try typing `scale_<tab>` to see a list of scale modification functions.
-
+#'
 #' ## Common Scale Arguments
 #'
 #' The following arguments are common to most scales in ggplot2:
@@ -441,12 +411,11 @@ ggplot(dat, aes(x = CPI, y = HDI)) +
 #' -   **labels:** the labels that appear at each break
 #'
 #' Specific scale functions may have additional arguments; for example, the `scale_color_continuous` function has arguments `low` and `high` for setting the colors at the low and high end of the scale.
-
+#'
 #' ## Scale Modification Examples
 #'
 #' Start by constructing a dotplot showing the distribution of home values by Date and State.
 
-#+ attributes={'classes': ['R'], 'id': ''}
 p3 <- ggplot(housing,
              aes(x = State,
                  y = Home.Price.Index)) + 
@@ -460,7 +429,6 @@ p3 <- ggplot(housing,
 
 #' Now modify the breaks for the x axis and color scales
 
-#+ attributes={'classes': ['R'], 'id': ''}
 p4 + scale_x_discrete(name="State Abbreviation") +
   scale_color_continuous(name="",
                          breaks = c(1976, 1994, 2013),
@@ -469,7 +437,6 @@ p4 + scale_x_discrete(name="State Abbreviation") +
 
 #' Next change the low and high values to blue and red:
 
-#+ attributes={'classes': ['R'], 'id': ''}
 p4 +
   scale_x_discrete(name="State Abbreviation") +
   scale_color_continuous(name="",
@@ -479,7 +446,6 @@ p4 +
 
 
 
-#+ attributes={'classes': ['R'], 'id': ''}
 library(scales)
 p4 +
   scale_color_continuous(name="",
@@ -493,7 +459,6 @@ p4 +
 #'
 #' ggplot2 has a wide variety of color scales; here is an example using `scale_color_gradient2` to interpolate between three different colors.
 
-#+ attributes={'classes': ['R'], 'id': ''}
 p4 +
   scale_color_gradient2(name="",
                         breaks = c(1976, 1994, 2013),
@@ -528,24 +493,22 @@ p4 +
 #' |                   |              |                           |
 #'
 #' Note that in RStudio you can type `scale_` followed by TAB to get the whole list of available scales.
-
+#'
 #' ## Exercise III
 #'
 #' 1.  Create a scatter plot with CPI on the x axis and HDI on the y axis. Color the points to indicate region.
 #' 2.  Modify the x, y, and color scales so that they have more easily-understood names (e.g., spell out "Human development Index" instead of "HDI").
 #' 3.  Modify the color scale to use specific values of your choosing. Hint: see `?scale_color_manual`.
-
+#'
 #' ## Exercise III prototype     :prototype:
 #'
 #' 1.  Create a scatter plot with CPI on the x axis and HDI on the y axis. Color the points to indicate region.
 
-#+ attributes={'classes': ['R'], 'id': ''}
 ggplot(dat, aes(x = CPI, y = HDI, color = "Region")) +
   geom_point()
 
 #' 2.  Modify the x, y, and color scales so that they have more easily-understood names (e.g., spell out "Human development Index" instead of "HDI").
 
-#+ attributes={'classes': ['R'], 'id': ''}
 ggplot(dat, aes(x = CPI, y = HDI, color = "Region")) +
 geom_point() +
 scale_x_continuous(name = "Corruption Perception Index") +
@@ -554,7 +517,6 @@ scale_color_discrete(name = "Region of the world")
 
 #' 3.  Modify the color scale to use specific values of your choosing. Hint: see `?scale_color_manual`.
 
-#+ attributes={'classes': ['R'], 'id': ''}
 ggplot(dat, aes(x = CPI, y = HDI, color = "Region")) +
 geom_point() +
 scale_x_continuous(name = "Corruption Perception Index") +
@@ -569,7 +531,7 @@ scale_y_continuous(name = "Human Development Index") +
 
 
 #' # Faceting
-
+#'
 #' ## Faceting
 #'
 #' -   Faceting is `ggplot2` parlance for **small multiples**
@@ -578,31 +540,29 @@ scale_y_continuous(name = "Human Development Index") +
 #'     1.  `facet_wrap()`: define subsets as the levels of a single grouping variable
 #'     2.  `facet_grid()`: define subsets as the crossing of two grouping variables
 #' -   Facilitates comparison among plots, not just of geoms within a plot
-
+#'
 #' ## What is the trend in housing prices in each state?
 #'
 #' -   Start by using a technique we already know&#x2013;map State to color:
 
-#+ attributes={'classes': ['R'], 'id': ''}
 p5 <- ggplot(housing, aes(x = Date, y = Home.Value))
 p5 + geom_line(aes(color = State))  
 
 
 #' There are two problems here&#x2013;there are too many states to distinguish each one by color, and the lines obscure one another.
-
+#'
 #' ## Faceting to the rescue
 #'
 #' We can remedy the deficiencies of the previous plot by faceting by state rather than mapping state to color.
 
-#+ attributes={'classes': ['R'], 'id': ''}
 (p5 <- p5 + geom_line() +
    facet_wrap(~State, ncol = 10))
 
 
 #' There is also a `facet_grid()` function for faceting in two dimensions.
-
+#'
 #' # Themes
-
+#'
 #' ## Themes
 #'
 #' The `ggplot2` theme system handles non-data plot elements such as
@@ -618,11 +578,9 @@ p5 + geom_line(aes(color = State))
 #' -   `theme_bw()`
 #' -   `theme_classc()`
 
-#+ attributes={'classes': ['R'], 'id': ''}
 p5 + theme_linedraw()
 
 
-#+ attributes={'classes': ['R'], 'id': ''}
 p5 + theme_light()
 
 
@@ -630,18 +588,16 @@ p5 + theme_light()
 #'
 #' Specific theme elements can be overridden using `theme()`. For example:
 
-#+ attributes={'classes': ['R'], 'id': ''}
 p5 + theme_minimal() +
   theme(text = element_text(color = "turquoise"))
 
 
 #' All theme options are documented in `?theme`.
-
+#'
 #' ## Creating and saving new themes
 #'
 #' You can create new themes, as in the following example:
 
-#+ attributes={'classes': ['R'], 'id': ''}
 theme_new <- theme_bw() +
   theme(plot.background = element_rect(size = 1, color = "blue", fill = "black"),
         text=element_text(size = 12, family = "Serif", color = "ivory"),
@@ -654,27 +610,23 @@ p5 + theme_new
 
 
 #' # The #1 FAQ
-
+#'
 #' ## Map Aesthetic To Different Columns
 #'
 #' The most frequently asked question goes something like this: *I have two variables in my data.frame, and I'd like to plot them as separate points, with different color depending on which variable it is. How do I do that?*
-
+#'
 #' ### Wrong
 
-#+ attributes={'classes': ['R'], 'id': ''}
 housing.byyear <- aggregate(cbind(Home.Value, Land.Value) ~ Date, data = housing, mean)
 ggplot(housing.byyear,
        aes(x=Date)) +
   geom_line(aes(y=Home.Value), color="red") +
   geom_line(aes(y=Land.Value), color="blue")
 
-
 #
-
 
 #' ### Right
 
-#+ attributes={'classes': ['R'], 'id': ''}
 library(tidyr)
 home.land.byyear <- gather(housing.byyear,
                            value = "value",
@@ -688,7 +640,7 @@ ggplot(home.land.byyear,
 
 
 #' # Putting It All Together
-
+#'
 #' ## Challenge: Recreate This `Economist` Graph
 #'
 #' <images/Economist1.pdf>
@@ -696,17 +648,15 @@ ggplot(home.land.byyear,
 #' Graph source: <http://www.economist.com/node/21541178>
 #'
 #' Building off of the graphics you created in the previous exercises, put the finishing touches to make it as close as possible to the original economist graph.
-
+#'
 #' # Challenge Solution     :prototype:
 #'
 #' Lets start by creating the basic scatter plot, then we can make a list of things that need to be added or changed. The basic plot loogs like this:
 
-#+ attributes={'classes': ['R'], 'id': ''}
-dat <- read.csv("dataSets/EconomistData.csv")
+dat <- read_csv("dataSets/EconomistData.csv")
 
 pc1 <- ggplot(dat, aes(x = CPI, y = HDI, color = Region))
 pc1 + geom_point()
-
 
 #' To complete this graph we need to:
 #'
@@ -721,12 +671,11 @@ pc1 + geom_point()
 #' -   [ ] add model R<sup>2</sup> (hard)
 #' -   [ ] add sources note (hard)
 #' -   [ ] final touches to make it perfect (use image editor for this)
-
+#'
 #' ## Adding the trend line
 #'
 #' Adding the trend line is not too difficult, though we need to guess at the model being displyed on the graph. A little bit of trial and error leads to
 
-#+ attributes={'classes': ['R'], 'id': ''}
 pc2 <- pc1 +
   geom_smooth(mapping = aes(linetype = "r2"),
               method = "lm",
@@ -736,12 +685,11 @@ pc2 + geom_point()
 
 
 #' Notice that we put the `geom_line` layer first so that it will be plotted underneath the points, as was done on the original graph.
-
+#'
 #' ## Use open points
 #'
 #' This one is a little tricky. We know that we can change the shape with the `shape` argument, what what value do we set shape to? The example shown in `?shape` can help us:
 
-#+ attributes={'classes': ['R'], 'id': ''}
 ## A look at all 25 symbols
 df2 <- data.frame(x = 1:5 , y = 1:25, z = 1:25)
 s <- ggplot(df2, aes(x = x, y = y))
@@ -757,14 +705,12 @@ s + geom_point(aes(shape = z), size = 4, colour = "Red", fill = "Black") +
 
 #' This shows us that *shape 1* is an open circle, so
 
-#+ attributes={'classes': ['R'], 'id': ''}
 pc2 +
   geom_point(shape = 1, size = 4)
 
 
 #' That is better, but unfortunately the size of the line around the points is much narrower than on the original.
 
-#+ attributes={'classes': ['R'], 'id': ''}
 (pc3 <- pc2 + geom_point(shape = 1, size = 2.5, stroke = 1.25))
 
 
@@ -772,7 +718,6 @@ pc2 +
 #'
 #' This one is tricky in a couple of ways. First, there is no attribute in the data that separates points that should be labelled from points that should not be. So the first step is to identify those points.
 
-#+ attributes={'classes': ['R'], 'id': ''}
 pointsToLabel <- c("Russia", "Venezuela", "Iraq", "Myanmar", "Sudan",
                    "Afghanistan", "Congo", "Greece", "Argentina", "Brazil",
                    "India", "Italy", "China", "South Africa", "Spane",
@@ -804,7 +749,6 @@ library("ggrepel")
 #'
 #' Comparing our graph to the original we notice that the labels and order of the Regions in the color legend differ. To correct this we need to change both the labels and order of the Region variable. We can do this with the `factor` function.
 
-#+ attributes={'classes': ['R'], 'id': ''}
 dat$Region <- factor(dat$Region,
                      levels = c("EU W. Europe",
                                 "Americas",
@@ -822,7 +766,6 @@ dat$Region <- factor(dat$Region,
 
 #' Now when we construct the plot using these data the order should appear as it does in the original.
 
-#+ attributes={'classes': ['R'], 'id': ''}
 pc4$data <- dat
 pc4
 
@@ -831,7 +774,6 @@ pc4
 #'
 #' The next step is to add the title and format the axes. We do that using the `scales` system in ggplot2.
 
-#+ attributes={'classes': ['R'], 'id': ''}
 library(grid)
 (pc5 <- pc4 +
   scale_x_continuous(name = "Corruption Perceptions Index, 2011 (10=least corrupt)",
@@ -855,7 +797,6 @@ library(grid)
 #'
 #' Our graph is almost there. To finish up, we need to adjust some of the theme elements, and label the axes and legends. This part usually involves some trial and error as you figure out where things need to be positioned. To see what these various theme settings do you can change them and observe the results.
 
-#+ attributes={'classes': ['R'], 'id': ''}
 library(grid) # for the 'unit' function
 (pc6 <- pc5 +
   theme_minimal() + # start with a minimal theme and add what we need
@@ -880,7 +821,6 @@ library(grid) # for the 'unit' function
 #'
 #' The last bit of information that we want to have on the graph is the variance explained by the model represented by the trend line. Lets fit that model and pull out the R<sup>2</sup> first, then think about how to get it onto the graph.
 
-#+ attributes={'classes': ['R'], 'id': ''}
 mR2 <- summary(lm(HDI ~ CPI + log(CPI), data = dat))$r.squared
 mR2 <- paste0(format(mR2, digits = 2), "%")
 
@@ -888,7 +828,6 @@ mR2 <- paste0(format(mR2, digits = 2), "%")
 #'
 #' And here it is, our final version!
 
-#+ attributes={'classes': ['R'], 'id': ''}
 png(file = "images/econScatter10.png", width = 700, height = 500)
 p <- ggplot(dat,
             mapping = aes(x = CPI, y = HDI)) +
@@ -975,13 +914,13 @@ dev.off()
 #' Comparing it to the original suggests that we've got most of the important elements. 
 #'
 #' # Wrap-up
-
+#'
 #' ## Help Us Make This Workshop Better!
 #'
 #' -   Please take a moment to fill out a very short feedback form
 #' -   These workshops exist for you &#x2013; tell us what you need!
 #' -   <http://tinyurl.com/R-graphics-feedback>
-
+#'
 #' ## Additional resources
 #'
 #' -   ggplot2 resources
