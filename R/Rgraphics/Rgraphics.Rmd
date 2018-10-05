@@ -1,10 +1,44 @@
-# Introduction
-
+---
+title: "Introduction to R workshop notes"
+always_allow_html: yes
+output: 
+  html_document:
+    highlight: tango
+    toc: true
+    toc_float:
+      collapsed: true
+jupyter:
+  jupytext_format_version: '1.0'
+  jupytext_formats: ipynb,Rmd,R
+  kernelspec:
+    display_name: R
+    language: R
+    name: ir
+  language_info:
+    codemirror_mode: r
+    file_extension: .r
+    mimetype: text/x-r-source
+    name: R
+    pygments_lexer: r
+    version: 3.5.1
+  toc:
+    base_numbering: 1
+    nav_menu: {}
+    number_sections: true
+    sideBar: true
+    skip_h1_title: false
+    title_cell: Table of Contents
+    title_sidebar: Contents
+    toc_cell: false
+    toc_position: {}
+    toc_section_display: true
+    toc_window_display: true
+---
 
 ## Materials and setup
 
 
-### Laptop users: You should have R installed &#x2013;if not:
+### Laptop users: You should have R installed; if not:
 
 1.  Open a web browser and go to <http://cran.r-project.org> and download and install it
 
@@ -73,24 +107,23 @@ The basic idea: independently specify plot building blocks and combine them to c
 -   position adjustments
 -   faceting
 
+## Setup: install the tidyverse package
+
+The `ggplot2` packages is included in a popular collection of packages called "the *tidyverse*". Take a moment to ensure that it is installed, and that we have attached the `ggplot2` package.
+
+```{r}
+# install.packages("tidyverse")
+library(tidyverse)
+```
 
 ## Example Data: `Housing prices`
 
 Let's look at housing prices.
 
-```R
+```{r}
 housing <- read.csv("dataSets/landdata-states.csv")
 head(housing[1:5])
 ```
-
-      State region    Date Home.Value Structure.Cost
-    1    AK   West 2010.25     224952         160599
-    2    AK   West 2010.50     225511         160252
-    3    AK   West 2009.75     225820         163791
-    4    AK   West 2010.00     224994         161787
-    5    AK   West 2008.00     234590         155400
-    6    AK   West 2008.25     233714         157458
-
 
 ## `ggplot2` VS Base Graphics
 
@@ -106,52 +139,42 @@ Compared to base graphics, `ggplot2`
 
 Base graphics histogram example:
 
-```R
+```{r}
 hist(housing$Home.Value)
 
 ```
 
-![img](images/baseHist1.png)
-
 `ggplot2` histogram example:
 
-```R
+```{r}
 library(ggplot2)
 ggplot(housing, aes(x = Home.Value)) +
   geom_histogram()
 ```
 
-![img](images/ggplotHist1.png) Base wins!
-
-
 ## `ggplot2` Base graphics VS `ggplot` for more complex graphs:
 
-Base colored scatter plot example:
+Base graphics colored scatter plot example:
 
-```R
+```{r}
 plot(Home.Value ~ Date,
-     data=subset(housing, State == "MA"))
-points(Home.Value ~ Date, col="red",
-       data=subset(housing, State == "TX"))
-legend(1975, 400000,
-       c("MA", "TX"), title="State",
-       col=c("black", "red"),
-       pch=c(1, 1))
+     col = factor(State),
+     data = filter(housing, State %in% c("MA", "TX")))
+legend("topleft",
+       legend = c("MA", "TX"),
+       col = c("black", "red"),
+       pch = 1)
 ```
-
-![img](images/baseComplex1.png)
 
 `ggplot2` colored scatter plot example:
 
-```R
-ggplot(subset(housing, State %in% c("MA", "TX")),
+```{r}
+ggplot(filter(housing, State %in% c("MA", "TX")),
        aes(x=Date,
            y=Home.Value,
            color=State))+
   geom_point()
 ```
-
-![img](images/ggplotComplex1.png)
 
 `ggplot2` wins!
 
@@ -185,7 +208,7 @@ A plot must have at least one geom; there is no upper limit. You can add a geom 
 
 You can get a list of available geometric objects using the code below:
 
-```R
+```{r}
 help.search("geom_", package = "ggplot2")
 ```
 
@@ -196,29 +219,26 @@ or simply type `geom_<tab>` in any good R IDE (such as Rstudio or ESS) to see a 
 
 Now that we know about geometric objects and aesthetic mapping, we can make a ggplot. `geom_point` requires mappings for x and y, all others are optional.
 
-```R
-hp2001Q1 <- subset(housing, Date == 2001.25) 
+```{r}
+hp2001Q1 <- filter(housing, Date == 2001.25) 
 ggplot(hp2001Q1,
        aes(y = Structure.Cost, x = Land.Value)) +
   geom_point()
 ```
 
-![img](images/firstScatter.png)
 
-```R
+```{r}
 ggplot(hp2001Q1,
        aes(y = Structure.Cost, x = log(Land.Value))) +
   geom_point()
 ```
-
-![img](images/firstScatterLog.png)
 
 
 ## Lines (Prediction Line)
 
 A plot constructed with `ggplot` can have more than one geom. In that case the mappings established in the `ggplot()` call are plot defaults that can be added to or overridden. Our plot could use a regression line:
 
-```R
+```{r}
 hp2001Q1$pred.SC <- predict(lm(Structure.Cost ~ log(Land.Value), data = hp2001Q1))
 
 p1 <- ggplot(hp2001Q1, aes(x = log(Land.Value), y = Structure.Cost))
@@ -227,34 +247,29 @@ p1 + geom_point(aes(color = Home.Value)) +
   geom_line(aes(y = pred.SC))
 ```
 
-![img](images/housingLayers.png)
-
 
 ## Smoothers
 
 Not all geometric objects are simple shapes&#x2013;the smooth geom includes a line and a ribbon.
 
-```R
+```{r}
 p1 +
   geom_point(aes(color = Home.Value)) +
   geom_smooth()
 ```
 
-![img](images/housingLayers2.png)
-
 
 ## Text (Label Points)
 
-Each `geom` accepts a particualar set of mappings&#x2013;for example `geom_text()` accepts a `labels` mapping.
+Each `geom` accepts a particualar set of mappings;for example `geom_text()` accepts a `labels` mapping.
 
-```R
+```{r}
 p1 + 
   geom_text(aes(label=State), size = 3)
 ```
 
-![img](images/textGeomMapping.png)
 
-```R
+```{r}
 ## install.packages("ggrepel") 
 library("ggrepel")
 p1 + 
@@ -262,52 +277,38 @@ p1 +
   geom_text_repel(aes(label=State), size = 3)
 ```
 
-![img](images/textGeomMapping2.png)
-
 
 ## Aesthetic Mapping VS Assignment
 
 Note that variables are mapped to aesthetics with the `aes()` function, while fixed aesthetics are set outside the `aes()` call. This sometimes leads to confusion, as in this example:
 
-```R
+```{r}
 p1 +
   geom_point(aes(size = 2),# incorrect! 2 is not a variable
              color="red") # this is fine -- all points red
 ```
-
-![img](images/housing2.png)
 
 
 ## Mapping Variables To Other Aesthetics
 
 Other aesthetics are mapped in the same way as x and y in the previous example.
 
-```R
+```{r}
 p1 +
   geom_point(aes(color=Home.Value, shape = region))
 ```
-
-![img](images/addColorAndShapeMapping.png)
 
 
 ## Exercise I
 
 The data for the exercises is available in the `dataSets/EconomistData.csv` file. Read it in with
 
-```R
+```{r}
 dat <- read.csv("dataSets/EconomistData.csv")
 head(dat)
 
 ggplot(dat, aes(x = CPI, y = HDI, size = HDI.Rank)) + geom_point()
 ```
-
-      X     Country HDI.Rank   HDI CPI            Region
-    1 1 Afghanistan      172 0.398 1.5      Asia Pacific
-    2 2     Albania       70 0.739 3.1 East EU Cemt Asia
-    3 3     Algeria       96 0.698 2.9              MENA
-    4 4      Angola      148 0.486 2.0               SSA
-    5 5   Argentina       45 0.797 3.0          Americas
-    6 6     Armenia       86 0.716 2.6 East EU Cemt Asia
 
 Original sources for these data are <http://www.transparency.org/content/download/64476/1031428> <http://hdrstats.undp.org/en/indicators/display_cf_xls_indicator.cfm?indicator_id=103106&lang=en>
 
@@ -324,35 +325,35 @@ These data consist of *Human Development Index* and *Corruption Perception Index
 
 1.  Create a scatter plot with CPI on the x axis and HDI on the y axis.
 
-```R
+```{r}
 ggplot(dat, aes(x = CPI, y = HDI)) +
   geom_point()
 ```
 
 2.  Color the points in the previous plot blue.
 
-```R
+```{r}
 ggplot(dat, aes(x = CPI, y = HDI)) +
   geom_point(color = "blue")
 ```
 
 3.  Color the points in the previous plot according to *Region*.
 
-```R
+```{r}
 ggplot(dat, aes(x = CPI, y = HDI)) +
   geom_point(aes(color = Region))
 ```
 
 4.  Make the points bigger by setting size to 2
 
-```R
+```{r}
 ggplot(dat, aes(x = CPI, y = HDI)) +
   geom_point(aes(color = Region), size = 2)
 ```
 
 5.  Make the points bigger by setting size to 2
 
-```R
+```{r}
 ggplot(dat, aes(x = CPI, y = HDI)) +
 geom_point(aes(color = Region, size =  HDI.Rank))
 ```
@@ -370,21 +371,10 @@ Some plot types (such as scatterplots) do not require transformations&#x2013;eac
 
 Each `geom` has a default statistic, but these can be changed. For example, the default statistic for `geom_bar` is `stat_bin`:
 
-```R
+```{r}
 args(geom_histogram)
 args(stat_bin)
 ```
-
-    function (mapping = NULL, data = NULL, stat = "bin", position = "stack", 
-        ..., binwidth = NULL, bins = NULL, na.rm = FALSE, show.legend = NA, 
-        inherit.aes = TRUE) 
-    NULL
-    function (mapping = NULL, data = NULL, geom = "bar", position = "stack", 
-        ..., binwidth = NULL, bins = NULL, center = NULL, boundary = NULL, 
-        breaks = NULL, closed = c("right", "left"), pad = FALSE, 
-        na.rm = FALSE, show.legend = NA, inherit.aes = TRUE) 
-    NULL
-
 
 ## Setting Statistical Transformation Arguments
 
@@ -392,62 +382,38 @@ Arguments to `stat_` functions can be passed through `geom_` functions. This can
 
 For example, here is the default histogram of Home.Value:
 
-```R
+```{r}
 p2 <- ggplot(housing, aes(x = Home.Value))
 p2 + geom_histogram()
 ```
 
-![img](images/GeomBinDefaults.png) The binwidth looks reasonable by default, but we can change it by passing the `binwidth` argument to the `stat_bin` function:
+can change it by passing the `binwidth` argument to the `stat_bin` function:
 
-```R
+```{r}
 p2 + geom_histogram(stat = "bin", binwidth=4000)
 ```
-
-![img](images/ChangeStatBinArgs.png)
 
 
 ## Changing The Statistical Transformation
 
 Sometimes the default statistical transformation is not what you need. This is often the case with pre-summarized data:
 
-```R
+```{r}
 housing.sum <- aggregate(housing["Home.Value"], housing["State"], FUN=mean)
 rbind(head(housing.sum), tail(housing.sum))
 ```
 
-       State Home.Value
-    1     AK  147385.14
-    2     AL   92545.22
-    3     AR   82076.84
-    4     AZ  140755.59
-    5     CA  282808.08
-    6     CO  158175.99
-    46    VA  155391.44
-    47    VT  132394.60
-    48    WA  178522.58
-    49    WI  108359.45
-    50    WV   77161.71
-    51    WY  122897.25
-
-```R
+```{r, error=TRUE}
 ggplot(housing.sum, aes(x=State, y=Home.Value)) + 
   geom_bar()
 ```
 
-    Error: stat_count() must not be used with a y aesthetic.
-
-    ggplot(housing.sum, aes(x=State, y=Home.Value)) + 
-      geom_bar()
-    Error: stat_count() must not be used with a y aesthetic.
-
 What is the problem with the previous plot? Basically we take binned and summarized data and ask ggplot to bin and summarize it again (remember, `geom_bar` defaults to `stat = stat_count`); obviously this will not work. We can fix it by telling `geom_bar` to use a different statistical transformation function:
 
-```R
+```{r}
 ggplot(housing.sum, aes(x=State, y=Home.Value)) + 
   geom_bar(stat="identity")
 ```
-
-![img](images/ChangeStat.png)
 
 
 ## Exercise II
@@ -463,14 +429,14 @@ ggplot(housing.sum, aes(x=State, y=Home.Value)) +
 
 1.  Re-create a scatter plot with CPI on the x axis and HDI on the y axis (as you did in the previous exercise).
 
-```R
+```{r}
 ggplot(dat, aes(x = CPI, y = HDI)) +
   geom_point()
 ```
 
 2.  Overlay a smoothing line on top of the scatter plot using `geom_smooth`
 
-```R
+```{r}
 ggplot(dat, aes(x = CPI, y = HDI)) +
   geom_point() +
   geom_smooth()
@@ -478,7 +444,7 @@ ggplot(dat, aes(x = CPI, y = HDI)) +
 
 3.  Overlay a smoothing line on top of the scatter plot using `geom_smooth`, but use a linear model for the predictions. Hint: see `?stat_smooth`.
 
-```R
+```{r}
 ggplot(dat, aes(x = CPI, y = HDI)) +
   geom_point() +
   geom_smooth(method = "lm")
@@ -486,7 +452,7 @@ ggplot(dat, aes(x = CPI, y = HDI)) +
 
 4.  Overlay a loess (method = "loess") smoothling line on top of the scatter plot using `geom_line`. Hint: change the statistical transformation.
 
-```R
+```{r}
 ggplot(dat, aes(x = CPI, y = HDI)) +
   geom_point() +
   geom_line(stat = "smooth", method = "loess")
@@ -494,7 +460,7 @@ ggplot(dat, aes(x = CPI, y = HDI)) +
 
 4.  BONUS: Overlay a smoothing line on top of the scatter plot using the *loess* method, but make it less smooth. Hint: see `?loess`.
 
-```R
+```{r}
 ggplot(dat, aes(x = CPI, y = HDI)) +
   geom_point() +
   geom_smooth(span = .4)
@@ -533,7 +499,7 @@ Specific scale functions may have additional arguments; for example, the `scale_
 
 Start by constructing a dotplot showing the distribution of home values by Date and State.
 
-```R
+```{r}
 p3 <- ggplot(housing,
              aes(x = State,
                  y = Home.Price.Index)) + 
@@ -545,22 +511,20 @@ p3 <- ggplot(housing,
                        position = position_jitter(width = 0.25, height = 0)))
 ```
 
-![img](images/modifyScales1.png)
 
 Now modify the breaks for the x axis and color scales
 
-```R
+```{r}
 p4 + scale_x_discrete(name="State Abbreviation") +
   scale_color_continuous(name="",
                          breaks = c(1976, 1994, 2013),
                          labels = c("'76", "'94", "'13"))
 ```
 
-![img](images/modifyScales2.png)
 
 Next change the low and high values to blue and red:
 
-```R
+```{r}
 p4 +
   scale_x_discrete(name="State Abbreviation") +
   scale_color_continuous(name="",
@@ -570,9 +534,8 @@ p4 +
 
 ```
 
-![img](images/modifyScales3.png)
 
-```R
+```{r}
 library(scales)
 p4 +
   scale_color_continuous(name="",
@@ -582,14 +545,12 @@ p4 +
 
 ```
 
-![img](images/modifyScales3b.png)
-
 
 ## Using different color scales
 
 ggplot2 has a wide variety of color scales; here is an example using `scale_color_gradient2` to interpolate between three different colors.
 
-```R
+```{r}
 p4 +
   scale_color_gradient2(name="",
                         breaks = c(1976, 1994, 2013),
@@ -599,8 +560,6 @@ p4 +
                         mid = "gray60",
                         midpoint = 1994)
 ```
-
-![img](images/modifyScales4.png)
 
 
 ## Available Scales
@@ -640,14 +599,14 @@ Note that in RStudio you can type `scale_` followed by TAB to get the whole list
 
 1.  Create a scatter plot with CPI on the x axis and HDI on the y axis. Color the points to indicate region.
 
-```R
+```{r}
 ggplot(dat, aes(x = CPI, y = HDI, color = "Region")) +
   geom_point()
 ```
 
 2.  Modify the x, y, and color scales so that they have more easily-understood names (e.g., spell out "Human development Index" instead of "HDI").
 
-```R
+```{r}
 ggplot(dat, aes(x = CPI, y = HDI, color = "Region")) +
 geom_point() +
 scale_x_continuous(name = "Corruption Perception Index") +
@@ -657,7 +616,7 @@ scale_color_discrete(name = "Region of the world")
 
 3.  Modify the color scale to use specific values of your choosing. Hint: see `?scale_color_manual`.
 
-```R
+```{r}
 ggplot(dat, aes(x = CPI, y = HDI, color = "Region")) +
 geom_point() +
 scale_x_continuous(name = "Corruption Perception Index") +
@@ -689,12 +648,11 @@ scale_y_continuous(name = "Human Development Index") +
 
 -   Start by using a technique we already know&#x2013;map State to color:
 
-```R
+```{r}
 p5 <- ggplot(housing, aes(x = Date, y = Home.Value))
 p5 + geom_line(aes(color = State))  
 ```
 
-![img](images/housing1.png)
 
 There are two problems here&#x2013;there are too many states to distinguish each one by color, and the lines obscure one another.
 
@@ -703,12 +661,11 @@ There are two problems here&#x2013;there are too many states to distinguish each
 
 We can remedy the deficiencies of the previous plot by faceting by state rather than mapping state to color.
 
-```R
+```{r}
 (p5 <- p5 + geom_line() +
    facet_wrap(~State, ncol = 10))
 ```
 
-![img](images/housingfoo2.png)
 
 There is also a `facet_grid()` function for faceting in two dimensions.
 
@@ -731,29 +688,25 @@ Built-in themes include:
 -   `theme_bw()`
 -   `theme_classc()`
 
-```R
+```{r}
 p5 + theme_linedraw()
 ```
 
-![img](images/themeex1.png)
 
-```R
+```{r}
 p5 + theme_light()
 ```
-
-![img](images/themeex2.png)
 
 
 ## Overriding theme defaults
 
 Specific theme elements can be overridden using `theme()`. For example:
 
-```R
+```{r}
 p5 + theme_minimal() +
   theme(text = element_text(color = "turquoise"))
 ```
 
-![img](images/opts.png)
 
 All theme options are documented in `?theme`.
 
@@ -762,7 +715,7 @@ All theme options are documented in `?theme`.
 
 You can create new themes, as in the following example:
 
-```R
+```{r}
 theme_new <- theme_bw() +
   theme(plot.background = element_rect(size = 1, color = "blue", fill = "black"),
         text=element_text(size = 12, family = "Serif", color = "ivory"),
@@ -773,8 +726,6 @@ theme_new <- theme_bw() +
 
 p5 + theme_new
 ```
-
-![img](images/themes.png)
 
 
 # The #1 FAQ
@@ -787,7 +738,7 @@ The most frequently asked question goes something like this: *I have two variabl
 
 ### Wrong
 
-```R
+```{r}
 housing.byyear <- aggregate(cbind(Home.Value, Land.Value) ~ Date, data = housing, mean)
 ggplot(housing.byyear,
        aes(x=Date)) +
@@ -798,12 +749,10 @@ ggplot(housing.byyear,
 #
 ```
 
-![img](images/WrongWayNoMelt.png)
-
 
 ### Right
 
-```R
+```{r}
 library(tidyr)
 home.land.byyear <- gather(housing.byyear,
                            value = "value",
@@ -815,8 +764,6 @@ ggplot(home.land.byyear,
            color=type)) +
   geom_line()
 ```
-
-![img](images/meltingDataExe.png)
 
 
 # Putting It All Together
@@ -830,21 +777,18 @@ Graph source: <http://www.economist.com/node/21541178>
 
 Building off of the graphics you created in the previous exercises, put the finishing touches to make it as close as possible to the original economist graph.
 
-![img](images/Economist1.png)
-
 
 # Challenge Solution     :prototype:
 
 Lets start by creating the basic scatter plot, then we can make a list of things that need to be added or changed. The basic plot loogs like this:
 
-```R
+```{r}
 dat <- read.csv("dataSets/EconomistData.csv")
 
 pc1 <- ggplot(dat, aes(x = CPI, y = HDI, color = Region))
 pc1 + geom_point()
 ```
 
-![img](images/econScatter1.png)
 
 To complete this graph we need to:
 
@@ -865,7 +809,7 @@ To complete this graph we need to:
 
 Adding the trend line is not too difficult, though we need to guess at the model being displyed on the graph. A little bit of trial and error leads to
 
-```R
+```{r}
 pc2 <- pc1 +
   geom_smooth(mapping = aes(linetype = "r2"),
               method = "lm",
@@ -874,7 +818,6 @@ pc2 <- pc1 +
 pc2 + geom_point()
 ```
 
-![img](images/econScatter2.png)
 
 Notice that we put the `geom_line` layer first so that it will be plotted underneath the points, as was done on the original graph.
 
@@ -883,7 +826,7 @@ Notice that we put the `geom_line` layer first so that it will be plotted undern
 
 This one is a little tricky. We know that we can change the shape with the `shape` argument, what what value do we set shape to? The example shown in `?shape` can help us:
 
-```R
+```{r}
 ## A look at all 25 symbols
 df2 <- data.frame(x = 1:5 , y = 1:25, z = 1:25)
 s <- ggplot(df2, aes(x = x, y = y))
@@ -897,31 +840,27 @@ s + geom_point(aes(shape = z), size = 4, colour = "Red", fill = "Black") +
 
 ```
 
-![img](images/shapes.png)
 
 This shows us that *shape 1* is an open circle, so
 
-```R
+```{r}
 pc2 +
   geom_point(shape = 1, size = 4)
 ```
 
-![img](images/econScatter3.png)
 
 That is better, but unfortunately the size of the line around the points is much narrower than on the original.
 
-```R
+```{r}
 (pc3 <- pc2 + geom_point(shape = 1, size = 2.5, stroke = 1.25))
 ```
-
-![img](images/econScatter3b.png)
 
 
 ## Labelling points
 
 This one is tricky in a couple of ways. First, there is no attribute in the data that separates points that should be labelled from points that should not be. So the first step is to identify those points.
 
-```R
+```{r}
 pointsToLabel <- c("Russia", "Venezuela", "Iraq", "Myanmar", "Sudan",
                    "Afghanistan", "Congo", "Greece", "Argentina", "Brazil",
                    "India", "Italy", "China", "South Africa", "Spane",
@@ -932,27 +871,24 @@ pointsToLabel <- c("Russia", "Venezuela", "Iraq", "Myanmar", "Sudan",
 
 Now we can label these points using `geom_text`, like this:
 
-```R
+```{r}
 (pc4 <- pc3 +
   geom_text(aes(label = Country),
             color = "gray20",
-            data = subset(dat, Country %in% pointsToLabel)))
+            data = filter(dat, Country %in% pointsToLabel)))
 ```
 
-![img](images/econScatter4.png)
 
 This more or less gets the information across, but the labels overlap in a most unpleasing fashion. We can use the `ggrepel` package to make things better, but if you want perfection you will probably have to do some hand-adjustment.
 
-```R
+```{r}
 library("ggrepel")
 (pc4 <- pc3 +
    geom_text_repel(aes(label = Country),
                    color = "gray20",
-                   data = subset(dat, Country %in% pointsToLabel),
+                   data = filter(dat, Country %in% pointsToLabel),
                    force = 10))
 ```
-
-![img](images/econScatter4b.png)
 
 
 ## Change the region labels and order
@@ -961,7 +897,7 @@ Thinkgs are starting to come together. There are just a couple more things we ne
 
 Comparing our graph to the original we notice that the labels and order of the Regions in the color legend differ. To correct this we need to change both the labels and order of the Region variable. We can do this with the `factor` function.
 
-```R
+```{r}
 dat$Region <- factor(dat$Region,
                      levels = c("EU W. Europe",
                                 "Americas",
@@ -980,19 +916,17 @@ dat$Region <- factor(dat$Region,
 
 Now when we construct the plot using these data the order should appear as it does in the original.
 
-```R
+```{r}
 pc4$data <- dat
 pc4
 ```
-
-![img](images/econScatter6.png)
 
 
 ## Add title and format axes
 
 The next step is to add the title and format the axes. We do that using the `scales` system in ggplot2.
 
-```R
+```{r}
 library(grid)
 (pc5 <- pc4 +
   scale_x_continuous(name = "Corruption Perceptions Index, 2011 (10=least corrupt)",
@@ -1012,14 +946,12 @@ library(grid)
 
 ```
 
-![img](images/econScatter7.png)
-
 
 ## Theme tweaks
 
 Our graph is almost there. To finish up, we need to adjust some of the theme elements, and label the axes and legends. This part usually involves some trial and error as you figure out where things need to be positioned. To see what these various theme settings do you can change them and observe the results.
 
-```R
+```{r}
 library(grid) # for the 'unit' function
 (pc6 <- pc5 +
   theme_minimal() + # start with a minimal theme and add what we need
@@ -1040,14 +972,12 @@ library(grid) # for the 'unit' function
 
 ```
 
-![img](images/econScatter8.png)
-
 
 ## Add model R<sup>2</sup> and source note
 
 The last bit of information that we want to have on the graph is the variance explained by the model represented by the trend line. Lets fit that model and pull out the R<sup>2</sup> first, then think about how to get it onto the graph.
 
-```R
+```{r}
 mR2 <- summary(lm(HDI ~ CPI + log(CPI), data = dat))$r.squared
 mR2 <- paste0(format(mR2, digits = 2), "%")
 ```
@@ -1056,7 +986,7 @@ OK, now that we've calculated the values, let's think about how to get them on t
 
 And here it is, our final version!
 
-```R
+```{r}
 png(file = "images/econScatter10.png", width = 700, height = 500)
 p <- ggplot(dat,
             mapping = aes(x = CPI, y = HDI)) +
@@ -1140,10 +1070,8 @@ p
 dev.off()
 ```
 
-![img](images/econScatter10.png)
 
-Comparing it to the original suggests that we've got most of the important elements, though of course the two graphs are not identical. ![img](images/Economist1.png)
-
+Comparing it to the original suggests that we've got most of the important elements. 
 
 # Wrap-up
 
