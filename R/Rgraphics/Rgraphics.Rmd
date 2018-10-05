@@ -1,5 +1,5 @@
 ---
-title: "Introduction to R workshop notes"
+title: "R graphics with ggplot2 workshop notes"
 always_allow_html: yes
 output: 
   html_document:
@@ -44,7 +44,7 @@ jupyter:
 
 2.  Also helpful to install RStudio (download from <http://rstudio.com>)
 
-3.  In R, type `install.packages("ggplot2")` to install the ggplot2 package.
+3.  In R, type `install.packages("tidyverse")` to install a suite of usefull packages including `ggplot2`
 
 
 ### Everyone: Download workshop materials:
@@ -403,7 +403,7 @@ housing.sum <- aggregate(housing["Home.Value"], housing["State"], FUN=mean)
 rbind(head(housing.sum), tail(housing.sum))
 ```
 
-```{r, error=TRUE}
+```{r error=TRUE}
 ggplot(housing.sum, aes(x=State, y=Home.Value)) + 
   geom_bar()
 ```
