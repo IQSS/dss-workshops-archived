@@ -1,7 +1,15 @@
 #' ---
+#' title: "R regression models workshop notes"
+#' always_allow_html: yes
+#' output: 
+#'   html_document:
+#'     highlight: tango
+#'     toc: true
+#'     toc_float:
+#'       collapsed: true
 #' jupyter:
 #'   jupytext_format_version: '1.0'
-#'   jupytext_formats: ipynb,Rmd,R:spin
+#'   jupytext_formats: ipynb,Rmd:rmarkdown,R:spin
 #'   kernelspec:
 #'     display_name: R
 #'     language: R
@@ -33,41 +41,40 @@
 #' Workshop description
 #' --------------------
 #'
-#' -   This is an intermediate/advanced R course
-#' -   Appropriate for those with basic knowledge of R
-#' -   This is not a statistics course!
-#' -   Learning objectives:
-#'     -   Learn the R formula interface
-#'     -   Specify factor contrasts to test specific hypotheses
-#'     -   Perform model comparisons
-#'     -   Run and interpret variety of regression models in R
+#' - This is an intermediate/advanced R course
+#' - Appropriate for those with basic knowledge of R
+#' - This is not a statistics course!
+#' - Learning objectives:
+#'   - Learn the R formula interface
+#'   - Specify factor contrasts to test specific hypotheses
+#'   - Perform model comparisons
+#'   - Run and interpret variety of regression models in R
+#'   
 #'
-#' <div class="materials-no-ipynb">
-#'
-#' Materials and Setup<span class="tag" data-tag-name="labsetup"></span>
-#' ---------------------------------------------------------------------
+#' Materials and Setup 
+#' --------------------------
 #'
 #' Lab computer users: Log in using the user name and password on the board to your left.
 #'
 #' Laptop users:
 #'
-#' -   you should have R installed--if not, open a web browser and go to <http://cran.r-project.org> and download and install it
-#' -   also helpful to install RStudo (download from <http://rstudio.com>)
+#' - you should have R installed--if not, open a web browser and go to <http://cran.r-project.org> and download and install it
+#' - also helpful to install RStudo (download from <http://rstudio.com>)
 #'
 #' Everyone:
 #'
-#' -   Download materials from <http://tutorials.iq.harvard.edu/R/Rstatistics.zip>
-#' -   Extract materials from RStatistics.zip (on lab machines *right-click -&gt; WinZip -&gt; Extract to here*) and move to your desktop.
+#' - Download materials from <http://tutorials.iq.harvard.edu/R/Rstatistics.zip>
+#' - Extract materials from RStatistics.zip (on lab machines *right-click -&gt; WinZip -&gt; Extract to here*) and move to your desktop.
 #'
 #' Launch RStudio<span class="tag" data-tag-name="labsetup"></span>
 #' ----------------------------------------------------------------
 #'
-#' -   Open the RStudio program from the Windows start menu
-#' -   Open up today's R script
-#'     -   In RStudio, Go to **File =&gt; Open Script**
-#'     -   Locate and open the `Rstatistics.R` script in the Rstatistics folder on your desktop
-#' -   Go to **Tools =&gt; Set working directory =&gt; To source file location** (more on the working directory later)
-#' -   I encourage you to add your own notes to this file!
+#' - Open the RStudio program from the Windows start menu
+#' - Open up today's R script
+#'   - In RStudio, Go to **File =&gt; Open Script**
+#'   - Locate and open the `Rstatistics.R` script in the Rstatistics folder on your desktop
+#' - Go to **Tools =&gt; Set working directory =&gt; To source file location** (more on the working directory later)
+#' - I encourage you to add your own notes to this file!
 #'
 #' </div>
 #'
@@ -320,7 +327,7 @@
 #'
 #' Use the NH11 data set that we loaded earlier.
 #'
-#' 1.  Use glm to conduct a logistic regression to predict ever worked (everwrk) using age (age<sub>p</sub>) and marital status (r<sub>maritl</sub>).
+#' 1.  Use glm to conduct a logistic regression to predict ever worked (everwrk) using age (age_p) and marital status (r_maritl).
 #' 2.  Predict the probability of working for each level of marital status.
 #'
 #' Note that the data is not perfectly clean and ready to be modeled. You will need to clean up at least some of the variables before fitting the model.
@@ -331,14 +338,14 @@
 #' Multilevel modeling overview
 #' ----------------------------
 #'
-#' -   Multi-level (AKA hierarchical) models are a type of mixed-effects models
-#' -   Used to model variation due to group membership where the goal is to generalize to a population of groups
-#' -   Can model different intercepts and/or slopes for each group
-#' -   Mixed-effecs models include two types of predictors: fixed-effects and random effects
-#'     -   Fixed-effects -- observed levels are of direct interest (.e.g, sex, political party...)
-#'     -   Random-effects -- observed levels not of direct interest: goal is to make inferences to a population represented by observed levels
-#' -   In R the lme4 package is the most popular for mixed effects models
-#'     -   Use the `lmer` function for liner mixed models, `glmer` for generalized mixed models
+#' - Multi-level (AKA hierarchical) models are a type of mixed-effects models
+#' - Used to model variation due to group membership where the goal is to generalize to a population of groups
+#' - Can model different intercepts and/or slopes for each group
+#' - Mixed-effecs models include two types of predictors: fixed-effects and random effects
+#'   -   Fixed-effects -- observed levels are of direct interest (.e.g, sex, political party...)
+#'   -   Random-effects -- observed levels not of direct interest: goal is to make inferences to a population represented by observed levels
+#'   -   In R the lme4 package is the most popular for mixed effects models
+#'   -   Use the `lmer` function for liner mixed models, `glmer` for generalized mixed models
 
   library(lme4)
 
@@ -369,7 +376,7 @@
 
   # null model, grouping by school but not fixed effects.
   Norm1 <-lmer(normexam ~ 1 + (1|school),
-                data=Exam, REML = FALSE)
+                data=na.omit(Exam), REML = FALSE)
   summary(Norm1)
 
 #' The is .169/(.169 + .848) = .17: 17% of the variance is at the school level.
@@ -380,7 +387,7 @@
 #' Predict exam scores from student's standardized tests scores
 
   Norm2 <-lmer(normexam~standLRT + (1|school),
-               data=Exam,
+               data=na.omit(Exam),
                REML = FALSE) 
   summary(Norm2) 
 
@@ -396,8 +403,9 @@
 #'
 #' Add a random effect of students' standardized test scores as well. Now in addition to estimating the distribution of intercepts across schools, we also estimate the distribution of the slope of exam on standardized test.
 
-  Norm3 <- lmer(normexam~standLRT + (standLRT|school), data=Exam,
-                 REML = FALSE) 
+  Norm3 <- lmer(normexam~standLRT + (standLRT|school), 
+                data = na.omit(Exam),
+                REML = FALSE) 
   summary(Norm3) 
 
 #' Test the significance of the random slope
@@ -410,7 +418,7 @@
 #' Exercise 3: multilevel modeling
 #' -------------------------------
 #'
-#' Use the dataset, bh1996: src<sub>R</sub>\[\]{data(bh1996, package="multilevel")}
+#' Use the dataset, bh1996: `data(bh1996, package="multilevel")`
 #'
 #' From the data documentation:
 #'
@@ -433,19 +441,19 @@
 
 #' Fit a model predicting energy consumed per capita (energy) from the percentage of residents living in metropolitan areas (metro). Be sure to
 #'
-#' 1.  \[@1\] Examine/plot the data before fitting the model
+#' 1.  Examine/plot the data before fitting the model
 
   states.en.met <- subset(states, select = c("metro", "energy"))
   summary(states.en.met)
   plot(states.en.met)
   cor(states.en.met, use="pairwise")
 
-#' 1.  \[@2\] Print and interpret the model `summary`
+#' 2.  Print and interpret the model `summary`
 
   mod.en.met <- lm(energy ~ metro, data = states)
   summary(mod.en.met)
 
-#' 1.  \[@3\] `plot` the model to look for deviations from modeling assumptions
+#' 3.  `plot` the model to look for deviations from modeling assumptions
 
   plot(mod.en.met)
 
@@ -478,7 +486,7 @@
 #'
 #' Use the NH11 data set that we loaded earlier. Note that the data is not perfectly clean and ready to be modeled. You will need to clean up at least some of the variables before fitting the model.
 #'
-#' 1.  \[@1\] Use glm to conduct a logistic regression to predict ever worked (everwrk) using age (age<sub>p</sub>) and marital status (r<sub>maritl</sub>).
+#' 1.  Use glm to conduct a logistic regression to predict ever worked (everwrk) using age (age_p) and marital status (r_maritl).
 
   nh11.wrk.age.mar <- subset(NH11, select = c("everwrk", "age_p", "r_maritl"))
   summary(nh11.wrk.age.mar)
@@ -492,7 +500,7 @@
 
   summary(mod.wk.age.mar)
 
-#' 1.  \[@2\] Predict the probability of working for each level of marital status.
+#' 1.  Predict the probability of working for each level of marital status.
 
   library(effects)
   data.frame(Effect("r_maritl", mod.wk.age.mar))
@@ -502,6 +510,7 @@
 #'
 #' Use the dataset, bh1996:
 
+#+ eval=FALSE
   data(bh1996, package="multilevel")
 
 #' From the data documentation:
@@ -510,31 +519,22 @@
 #'
 #' Note that the group identifier is named "GRP".
 #'
-#' 1.  \[@1\] Create a null model predicting wellbeing ("WBEING")
+#' 1.  Create a null model predicting wellbeing ("WBEING")
 
+#+ eval=FALSE
   library(lme4)
   mod.grp0 <- lmer(WBEING ~ 1 + (1 | GRP), data = bh1996)
   summary(mod.grp0)
 
-#' `> library(lme4)
-#' > mod.grp0 <- lmer(WBEING ~ 1 + (1 | GRP), data ` bh1996) &gt; summary(mod.grp0) Linear mixed model fit by REML \['lmerMod'\] Formula: WBEING ~ 1 + (1 | GRP) Data: bh1996
-#'
-#' REML criterion at convergence: 19347
-#'
-#' Scaled residuals: Min 1Q Median 3Q Max -3.322 -0.648 0.031 0.718 2.667
-#'
-#' Random effects: Groups Name Variance Std.Dev. GRP (Intercept) 0.0358 0.189 Residual 0.7895 0.889 Number of obs: 7382, groups: GRP, 99
-#'
-#' Fixed effects: Estimate Std. Error t value (Intercept) 2.7743 0.0222 125 &gt; `2. [@2] Calculate the ICC for your null model
-#'  ~ICC ` .0358/(.0358 + .7895) = .04~
-#'
-#' 1.  \[@3\] Run a second multi-level model that adds two individual-level predictors, average number of hours worked ("HRS") and leadership skills ("LEAD") to the model and interpret your output.
+#' 3.  Run a second multi-level model that adds two individual-level predictors, average number of hours worked ("HRS") and leadership skills ("LEAD") to the model and interpret your output.
 
+#+ eval=FALSE
   mod.grp1 <- lmer(WBEING ~ HRS + LEAD + (1 | GRP), data = bh1996)
   summary(mod.grp1)
 
-#' 1.  \[@4\] Now, add a random effect of average number of hours worked ("HRS") to the model and interpret your output. Test the significance of this random term.
+#' 3.  Now, add a random effect of average number of hours worked ("HRS") to the model and interpret your output. Test the significance of this random term.
 
+#+ eval=FALSE
   mod.grp2 <- lmer(WBEING ~ HRS + LEAD + (1 + HRS | GRP), data = bh1996)
   anova(mod.grp1, mod.grp2)
 
