@@ -49,8 +49,7 @@
 #'   - Specify factor contrasts to test specific hypotheses
 #'   - Perform model comparisons
 #'   - Run and interpret variety of regression models in R
-#'   
-#'
+
 #' Materials and Setup 
 #' --------------------------
 #'
@@ -70,13 +69,8 @@
 #' ----------------------------------------------------------------
 #'
 #' - Open the RStudio program from the Windows start menu
-#' - Open up today's R script
-#'   - In RStudio, Go to **File =&gt; Open Script**
-#'   - Locate and open the `Rstatistics.R` script in the Rstatistics folder on your desktop
-#' - Go to **Tools =&gt; Set working directory =&gt; To source file location** (more on the working directory later)
-#' - I encourage you to add your own notes to this file!
-#'
-#' </div>
+#' - Create a project in the Rstatistics folder you downloaded earlier:
+#'   - `File => New Project => Existing Directory => Browse` and select the Rstatistics folder.
 #'
 #' Set working directory
 #' ---------------------
