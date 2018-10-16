@@ -1,5 +1,34 @@
 #' ---
-#' title: "R Data Management"
+#' jupyter:
+#'   jupytext_format_version: '1.0'
+#'   jupytext_formats: ipynb,Rmd,R:spin
+#'   kernelspec:
+#'     display_name: R
+#'     language: R
+#'     name: ir
+#'   language_info:
+#'     codemirror_mode: r
+#'     file_extension: .r
+#'     mimetype: text/x-r-source
+#'     name: R
+#'     pygments_lexer: r
+#'     version: 3.5.1
+#'   toc:
+#'     base_numbering: 1
+#'     nav_menu: {}
+#'     number_sections: true
+#'     sideBar: true
+#'     skip_h1_title: false
+#'     title_cell: Table of Contents
+#'     title_sidebar: Contents
+#'     toc_cell: false
+#'     toc_position: {}
+#'     toc_section_display: true
+#'     toc_window_display: false
+#' ---
+
+#' ---
+#' title: "R Data Wrangling"
 #' output: 
 #'   html_document:
 #'     highlight: tango
@@ -7,14 +36,12 @@
 #'     toc_float:
 #'       collapsed: true
 #' ---
-#' 
-#' 
-#' Workshop overview and materials
-#' ===============================
-#' 
+#'
+#'
+#'
 #' Workshop description
-#' --------------------
-#' 
+#' ====================
+#'
 #' Data scientists are known and celebrated for modeling and visually
 #' displaying information, but down in the data science engine room there
 #' is a lot of less glamorous work to be done. Before data can be used
@@ -22,288 +49,362 @@
 #' workshop introduces the basic tools needed to make your data behave,
 #' including data reshaping, regular expressions and other text
 #' manipulation tools.
-#' 
-#' Prerequisites and Preparation
-#' -----------------------------
-#' 
-#' Prior to the workshop you should:
-#' 
-#' - install R from <https://cran.r-project.org/>
-#' - install RStudio from <https://www.rstudio.com/products/rstudio/download/#download>
-#' - install the tidyverse package in R with `install.packages("tidyverse")`
-#' - download and extract the workshop materials from 
-#'   <https://github.com/izahn/R-data-cleaning/archive/messy_data_v1.zip>
-#' 
-#' The lesson notes are included in the download link above. You can also
-#' view the lesson notes at
-#' <https://rawgit.com/izahn/R-data-cleaning/master/dataCleaning.html>
-#' 
-#' A github repository containing the workshop materials is
-#' available <https://github.com/izahn/R-data-cleaning>.
-#' 
+#'
 #' This is an intermediate/advanced R course appropriate for those with
 #' basic knowledge of R. If you need a refresher we recommend the
-#' [Software Carpentry Introductory R material](https://swcarpentry.github.io/r-novice-gapminder/01-rstudio-intro/).
-#' 
+#' [the IQSS R intro](http://tutorials.iq.harvard.edu/R/Rintro/Rintro.html).
+#'
+#' The lesson notes are available at
+#' <http://tutorials.iq.harvard.edu/R/RDataManagement/RDataManagement.html>
+#'
+#' Prerequisites and Preparation
+#' =============================
+#'
+#' Prior to the workshop you should:
+#'
+#' - install R from <https://cran.r-project.org/>
+#' - install RStudio from <https://www.rstudio.com/products/rstudio/download/#download>
+#' - install the tidyverse package in R with `install.packages("tidyverse")` and attach it with `library(tidyverse)`
+#'
+#' To start the workshop:
+#' - Download and extract the materials from <http://tutorials.iq.harvard.edu/R/RDataManagement.zip>. 
+#' - Open Rstudio and create a new project (`File ==> New Project ==> Existing Directory` and select the `RDataManagement` folder you downloaded and extracted earlier. 
+#' - Open a new R script (`File ==> New File ==> R script`) and save it as `Notes.R`.
+#'
+#'
 #' Example project overview
-#' ------------------------
-#' 
+#' ========================
+#'
 #' It is common for data to be made available on a website somewhere, either by a
 #' government agency, research group, or other organizations and entities. Often
 #' the data you want is spread over many files, and retrieving it all one file at a
 #' time is tedious and time consuming. Such is the case with the baby names data we
 #' will be using today.
-#' 
+#'
 #' The UK [Office for National Statistics](https://www.ons.gov.uk) provides yearly
 #' data on the most popular baby names going back to 1996. The data is provided
 #' separately for boys and girls and is stored in Excel spreadsheets.
-#' 
-#' I have downloaded all the excel files containing boys names data from https://www.ons.gov.uk/peoplepopulationandcommunity/birthsdeathsandmarriages/livebirths/datasets/babynamesenglandandwalesbabynamesstatisticsboys. Our mission is
-#' to extract and graph the top 100 boys names in England and Wales for every year
-#' since 1996. There are several things that make this challenging.
-#' 
+#'
+#' I have downloaded all the excel files containing boys names data from
+#' https://www.ons.gov.uk/peoplepopulationandcommunity/birthsdeathsandmarriages/livebirths/datasets/babynamesenglandandwalesbabynamesstatisticsboys 
+#' and made them available at 
+#' http://tutorials.iq.harvard.edu/R/RDataManagement/data/boysNames.zip.
+#'
+#' Our mission is to extract and graph the **top 100** boys names in England
+#' and Wales for every year since 1996. There are several things that
+#' make this challenging.
+#'
 #' Problems with the data
-#' ----------------------
-#' 
-#' 1. The worksheet containing the data of interest is in different
-#'    positions and has different names from one year to the next. However,
-#'    it always includes "Table 1" in the worksheet name.
-#' 2. The data does not start on row one. Headers are on row 7, followed by a blank
-#'    line, followed by the actual data.
-#' 3. The data is stored in an inconvenient way, with ranks 1-50 in the first set
-#'    of columns and ranks 51-100 in a separate set of columns.
-#' 4. Some years include columns for "changes in rank", others do not.
-#' 5. There are notes below the data.
-#' 
+#' ======================
+#'
+#' While it was good of the UK Office for National Statistics to provide
+#' baby name data, they were not very diligent about arranging it in a
+#' convenient or consistent format.
+#'
+
+#' Exercise 0
+#' ----------
+#' Our mission is to extract and graph the **top 100** boys names in England and Wales for every year since 1996. There are several things that make this challenging.
+#'
+#' 1.  Locate the file named `1996boys_tcm77-254026.xlsx` and open it in
+#'     a spreadsheet. (If you don't have a spreadsheet program installed on
+#'     your computer you can downloads one from
+#'     https://www.libreoffice.org/download/download/). What issues can you
+#'     identify that might make working with these data more difficult?
+#'
+#' 2.  Locate the file named `2015boysnamesfinal.xlsx` and open it in a
+#'     spreadsheet. In what ways is the format different than the format
+#'     of `1996boys_tcm77-254026.xlsx`? How might these differences make
+#'     it more difficult to work with these data?
+#'
+
+#' Exercise 0 Prototype
+#' -------------------------------
+#'
+#' > 1.  Locate the file named `1996boys_tcm77-254026.xlsx` and open it in
+#' >     a spreadsheet. (If you don't have a spreadsheet program installed on
+#' >     your computer you can downloads one from
+#' >     https://www.libreoffice.org/download/download/). What issues can you
+#' >     identify that might make working with these data more difficult?
+#'
+#' The data does not start on row one. Headers are on row 7, followed by
+#' a blank line, followed by the actual data.
+#'
+#' The data is stored in an inconvenient way, with ranks 1-50 in the
+#' first set of columns and ranks 51-100 in a separate set of columns.
+#'
+#' There are notes below the data.
+#'
+#' > 3.  Locate the file named `2015boysnamesfinal.xlsx` and open it in a
+#' >     spreadsheet. In what ways is the format different than the format
+#' >     of `1996boys_tcm77-254026.xlsx`? How might these differences make
+#' >     it more difficult to work with these data?
+#'
+#' The worksheet containing the data of interest is in different
+#' positions and has different names from one year to the next. However,
+#' it always includes "Table 1" in the worksheet name.
+#'
+#' Some years include columns for "changes in rank", others do not.
+#'
+#' These differences will make it more difficult to automate
+#' re-arranging the data since we have to write code that can handle
+#' different input formats.
+#'
+
 #' Useful data manipulation packages
-#' ---------------------------------
-#' 
-#' As you can see, we have a lot of work to do. Let's get started by attaching some useful R packages.
-#' 
-## ----attach packages-----------------------------------------------------
-library(tidyverse) # data.frame manipulation
-library(stringr) # string processing
-library(readxl) # read excel files
-library(purrr) # work with lists
+#' =================================
+#'
+#' As you can see, the data is in quite a messy state. Note that this is
+#' not a contrived example; this is exactly the way the data came to us
+#' from the UK government website! Let's start cleaning and organizing
+#' it. The `tidyverse` suite of packages provides many modern
+#' conveniences that will make this job easier.
 
-#' 
-#' Iterating over a directory of files {.smaller}
-#' ================================================
-#' 
-#' Our first task is to iterate over all the data files and read the appropriate
-#' sheet from each one. As noted above, the appropriate sheet differs from year to
-#' year, but always has "Table 1" in the sheet name.
-#' 
-#' ---------
-#' 
+library(tidyverse)
+
+#' Working with Excel worksheets
+#' =============================
+#'
+#' Each Excel file contains a worksheet with the baby names data we want.
+#' Each file also contains additional supplemental worksheets that we are
+#' not currently interested in. As noted above, the worksheet of interest
+#' differs from year to year, but always has "Table 1" in the sheet name.
+#'
 #' The first step is to get a vector of file names.
-#' 
-## ----get list of data file names-----------------------------------------
-boy.file.names <- list.files("babyNamesData/boys", full.names = TRUE)
 
-#' 
-#' Now we can iterate over the file names and get the names of each worksheet. We
-#' could use a `for` loop, or `sapply`, but the `map` family of functions from the *purrr*
+boy.file.names <- list.files("data/boys", full.names = TRUE)
+
+#' Now that we've told R the names of the data files we can start working
+#' with them. For example, the first file is
+
+boy.file.names[[1]]
+
+#' and we can use the `excel_sheets` function from the *readxl* package
+#' to list the worksheet names from this file.
+
+library(readxl)
+
+excel_sheets(boy.file.names[[1]])
+
+#' Iterating over file names with `map`
+#' -----------------------------------
+#'
+#' Now that we know how to retrieve the names of the worksheets in an
+#' Excel file we could start writing code to extract the sheet names from
+#' each file, e.g.,
+
+excel_sheets(boy.file.names[[1]])
+excel_sheets(boy.file.names[[2]])
+## ...
+excel_sheets(boy.file.names[[20]])
+
+#' This is not a terrible idea for a small number of files, but it is
+#' more convenient to let R do the iteration for us. We could use a `for`
+#' loop, or `sapply`, but the `map` family of functions from the *purrr*
 #' package gives us a more consistent alternative, so we'll use that.
-#' 
-## ----iterate over file names using map-----------------------------------
+
+library(purrr)
 map(boy.file.names, excel_sheets)
 
-#' 
-#' Filtering strings using regular expressions {.smaller}
-#' ===========================================================
-#' 
-#' In order extract the correct worksheet names we will use functions for
-#' manipulating strings. Base R provides some string manipulation
+#' Filtering strings using regular expressions
+#' --------------------------------------------
+#'
+#' In order extract the correct worksheet names we need a way to extract
+#' strings containing "Table 1". Base R provides some string manipulation
 #' capabilities (see `?regex`, `?sub` and `?grep`), but we will use the
 #' *stringr* package because it is more user-friendly.
-#' 
-#' -----------
-#' 
+#'
 #' The *stringr* package provides functions to *detect*, *locate*,
 #' *extract*, *match*, *replace*, *combine* and *split* strings (among
 #' other things). 
-#' 
+#'
 #' Here we want to detect the pattern "Table 1", and only
 #' return elements with this pattern. We can do that using the
 #' `str_subset` function. The first argument to `str_subset` is character
 #' vector we want to search in. The second argument is a *regular
 #' expression* matching the pattern we want to retain.
-#' 
+#'
 #' If you are not familiar with regular expressions, <http://www.regexr.com/> is a
 #' good place to start.
-#' 
-#' ----------------
-#' 
+#'
 #' Now that we know how to filter character vectors using `str_subset` we can
-#' identify the correct sheets for each year.
-#' 
-## ----function to identify sheet with table 1 in the name-----------------
-findTable1 <- function(x) {
-  str_subset(excel_sheets(x), "Table 1")
+#' identify the correct sheet in a particular Excel file. For example,
+
+library(stringr)
+str_subset(excel_sheets(boy.file.names[[1]]), "Table 1")
+
+#' Writing your own functions
+#' --------------------------
+#'
+#' The `map*` functions are useful when you want to apply a function to a
+#' list or vector of inputs and obtain the return values. This is very
+#' convenient when a function already exists that does exactly what you
+#' want. In the examples above we mapped the `excel_sheets` function to
+#' the elements of a vector containing file names. But now there is no
+#' function that both retrieves worksheet names and subsets them.
+#' Fortunately, writing functions in R is easy.
+
+get.data.sheet.name <- function(file, pattern) {
+    str_subset(excel_sheets(file), pattern)
 }
 
-map(boy.file.names, findTable1)
+#' Now we can map this new function over our vector of file names.
 
-#' 
-#' Reading all the files
-#' =============================
-#' 
-#' Next we want to read the correct worksheet from each file. We already know how
-#' to iterate over a vector of file names with `map`, and we know how to identify
-#' the correct sheet. All we need to do next is read that sheet into R. We can do
-#' that using the `read_excel` function.
-#' 
-#' ----------
-#' 
-#' Recall that the actual data starts on row 7, so we want to skip the first 6
-#' rows.
-#' 
-## ----function to read table one from excel file--------------------------
-readTable1 <- function(file) {
-  read_excel(file, sheet = findTable1(file), skip = 6)
-}
+map(boy.file.names,
+    get.data.sheet.name,
+    pattern = "Table 1")
 
-boysNames <- map(boy.file.names, readTable1)
-glimpse(boysNames[[1]])
+#' Reading Excel data files
+#' ========================
+#'
+#' Now that we know the correct worksheet from each file we can actually
+#' read those data into R. We can do that using the `read_excel`
+#' function.
+#'
+#' We'll start by reading the data from the first file, just to check
+#' that it works. Recall that the actual data starts on row 7, so we want
+#' to skip the first 6 rows.
 
-#' 
-#' 
+tmp <- read_excel(
+    boy.file.names[1],
+    sheet = get.data.sheet.name(boy.file.names[1],
+                                pattern = "Table 1"),
+    skip = 6)
+
+library(dplyr, quietly=TRUE)
+glimpse(tmp)
+
+#' Exercise 1
+#' -----------
+#'
+#'   1. Write a function that takes a file name as an argument and reads
+#'      the worksheet containing "Table 1" from that file. Don't forget
+#'      to skip the first 6 rows.
+#'      
+#'   2. Test your function by using it to read *one* of the boys names
+#'      Excel files.
+#'      
+#'   3. Use the `map` function to read data from all the Excel files,
+#'      using the function you wrote in step 1.
+#'
+
+#'
+#' Exercise 1 solution
+#' ---------------------------
+
+  ## 1. Write a function that takes a file name as an argument and reads
+  ##    the worksheet containing "Table 1" from that file.
+  read.baby.names <- function(file) {
+      sheet.name <- str_subset(excel_sheets(file), "Table 1")
+      read_excel(file, sheet = sheet.name, skip = 6)
+  }
+  
+  ## 2. Test your function by using it to read *one* of the boys names
+  ##    Excel files.
+  glimpse(read.baby.names(boy.file.names[1]))
+     
+  ## 3. Use the `map` function to read data from all the Excel files,
+  ##    using the function you wrote in step 1.
+  boysNames <- map(boy.file.names, read.baby.names)
+
 #' Data cleanup
 #' ================
-#' 
-#' Now that we've read in the data we still have some cleanup to do. 
-#' 
-#' -----------
-#' 
+#'
+#' Now that we've read in the data we still have some cleanup to do.
 #' Specifically, we need to:
-#' 
+#'
 #' 1. fix column names
 #' 2. get rid of blank row and the top and the notes at the bottom
 #' 3. get rid of extraneous "changes in rank" columns if they exist
 #' 4. transform the side-by-side tables layout to a single table.
-#' 
-#' ----------
-#' 
+#'
 #' In short, we want to go from this:
-#' 
+#'
 #' ![messy](images/messy.png)
-#' 
-#' ----------
-#' 
+#'
 #' to this:
-#' 
+#'
 #' ![tidy](images/clean.png)
-#' 
-#' ----------
-#' 
-#' There are many ways to do this kind of data manipulation in R. We're going to
-#' use the *dplyr* and *tidyr* packages to make our lives easier. Both packages
-#' were attached along with the *tidyverse* package.
-#' 
-#' Fixing column names {.smaller}
-#' -------------------------
-#' The column names are in bad shape. In R we need column names to a) start with a
-#' letter, b) contain only letters, numbers, underscores and periods, and c)
-#' uniquely identify each column.
-#' 
-#' The actual column names look like this:
-## ----examine the names from the excel sheet------------------------------
-names(boysNames[[1]])
+#'
+#' There are many ways to do this kind of data manipulation in R. We're
+#' going to use the *dplyr* and *tidyr* packages to make our lives
+#' easier. (Both packages were installed as dependencies of the
+#' *tidyverse* package.)
+#'
 
-#' 
-#' So we need to a) make sure each column has a name, and b) distinguish between
-#' the first and second occurrences of "Name" and "Count". We could do this
-#' step-by-step, but there is a handy function in R called `make.names` that will
-#' do it for us.
-#' 
-## ----cleanup the names---------------------------------------------------
-names(boysNames[[1]])
-make.names(names(boysNames[[1]]), unique = TRUE)
-setNames(boysNames[[1]], make.names(names(boysNames[[1]]), unique = TRUE))
-names(boysNames[[1]])
-
-#' 
-#' 
-#' Fixing all the names
-#' --------------------
-#' 
-#' Of course we need to iterate over each data.frame in the `boysNames` list and to
-#' this for each one. Fortunately the `map` function makes this easy.
-#' 
-## ----use map to cleanup all the names------------------------------------
-boysNames <- map(boysNames,
-                 function(x) {
-                     setNames(x, make.names(names(x), unique = TRUE))
-                 })
-
-#' 
-#' Filtering rows
-#' ------------------
-#' 
-#' Next we want to remove blank rows and rows used for notes. An easy way to do
-#' that is to remove rows that don't have a name. We can filter on some condition
-#' using the `filter` function, like this:
-#' 
-## ----remove empty rows---------------------------------------------------
-boysNames[[1]]
-boysNames[[1]] <- filter(boysNames[[1]], !is.na(Name))
-boysNames[[1]]
-
-#' 
-#' Of course we need to do that for every data set in the `boysNames` list, but
-#' I'll leave that to you.
-#' 
 #' Selecting columns
-#' ----------------------
-#' 
-#' Next we want to retain just the `Name`, `Name__1` and `Count`, `Count__1` columns.
-#' We can do that using the `select` function:
-#' 
-#' 
-## ----select just the columns of interest---------------------------------
+#' ---------------
+#'
+#' Next we want to retain just the `Name`, `Name__1` and `Count`,
+#' `Count__1` columns. We can do that using the `select` function:
+
 boysNames[[1]]
+
 boysNames[[1]] <- select(boysNames[[1]], Name, Name__1, Count, Count__1)
 boysNames[[1]]
 
-#' 
-#' Again we will want to do this for all the elements in `boysNames`, a task I
-#' leave to you.
-#' 
+#' Dropping missing values
+#' -----------------------
+#'
+#' Next we want to remove blank rows and rows used for notes. An easy way
+#' to do that is to use `drop_na` to remove rows with missing values.
+
+boysNames[[1]]
+
+boysNames[[1]] <- drop_na(boysNames[[1]])
+boysNames[[1]]
+
+#' Finally, we will want to filter out missing do this for all the elements in `boysNames`, a
+#' task I leave to you.
+#'
+#' Exercise 2
+#' -----------
+#'
+#'   1. Write a function that takes a `data.frame` as an argument and
+#'      returns a modified version including only columns named "Name",
+#'      "Name\_\_1", "Count", or "Count\_\_1". 
+#'      
+#'   2. Test your function by using it to read *one* of the boys names
+#'      Excel files.
+#'      
+#'   3. Use the `map` function to read data from all the Excel files,
+#'      using the function you wrote in step 1.
+#'
+#'
+#' Exercise 2 solution<span class="tag" data-tag-name="prototype"></span>
+#'
+#'
+#'
+#'
 #' Re-arranging into a single table
 #' -----------------------------------------
-#' 
-#' Our final task is to re-arrange to data so that it is all in a single table
-#' instead of in two side-by-side tables. For many similar tasks the `gather`
-#' function in the *tidyr* package is useful, but in this case we will be better
-#' off using a combination of `select` and `bind_rows`.
-#' 
-## ----stack to two halves of the data-------------------------------------
+#'
+#' Our final task is to re-arrange to data so that it is all in a single
+#' table instead of in two side-by-side tables. For many similar tasks
+#' the `gather` function in the *tidyr* package is useful, but in this
+#' case we will be better off using a combination of `select` and
+#' `bind_rows`.
+
 boysNames[[1]]
 bind_rows(select(boysNames[[1]], Name, Count),
           select(boysNames[[1]], Name = Name__1, Count = Count__1))
 
-#' 
-#' Exercise: Cleanup all the data
-#' =========================================
-#' 
-#' In the previous examples we learned how to drop empty rows with `filter`, select
-#' only relevant columns with `select`, and re-arrange our data with `select` and
-#' `bind_rows`. In each case we applied the changes only to the first element of
-#' our `boysNames` list. 
-#' 
-#' Your task now is to use the `map` function to apply each
-#' of these transformations to all the elements in `boysNames`.
-#' 
-#' --------
-#' --------
-#' 
+#' Exercise 3: Cleanup all the data
+#' ------------------------------
+#'
+#' In the previous examples we learned how to drop empty rows with
+#' `filter`, select only relevant columns with `select`, and re-arrange
+#' our data with `select` and `bind_rows`. In each case we applied the
+#' changes only to the first element of our `boysNames` list.
+#'
+#' Your task now is to use the `map` function to apply each of these
+#' transformations to all the elements in `boysNames`.
+#'
+
 #' Exercise prototype
 #' ------------------
 #' There are different ways you can go about it. Here is one:
-#' 
-#' 
-## ------------------------------------------------------------------------
+#'
 
 ## write a function that does all the cleanup
 cleanupNamesData <- function(x) {
@@ -320,144 +421,58 @@ glimpse(cleanupNamesData(boysNames[[2]])) # after cleanup
 ## apply the cleanup function to all the data.frames in the list
 boysNames <- map(boysNames, cleanupNamesData)
 
-#' 
-#' 
-#' Adding derived columns
-#' ======================
-#' 
-#' It is often useful to add columns that are derived from one or more
-#' existing columns. For example, we may wish to add a column to store
-#' the length of each name:
-#' 
-## ------------------------------------------------------------------------
-boysNames <- map(boysNames, mutate, Length = str_count(Name))
-
-#' 
-#' Exercise: Add a year column
-#' =========================================
-#' 
-#' We originally read the data from each file listed in `boy.file.names`,
-#' and the data is still in that order. Use the information contained in
-#' `boy.file.names` to add a `Year` column to each table in `boysNames`.
-#' (Hint: see `?map2`.)
-#' 
-#' --------
-#' --------
-#' 
-#' Exercise prototype
-#' ------------------
-#' There are different ways you can go about it. Here is one:
-#' 
-#' 
-## ------------------------------------------------------------------------
-## Extract years
-years <- as.integer(str_extract(boy.file.names, "[0-9]{4}"))
-
-## Insert year column in each table
-boysNames <- map2(boysNames, years, function(x, y) mutate(x, Year = y))
-
-#' 
-#' 
 #' Data organization and storage
-#' =============================
-#' 
-#' Now that we have the data cleaned up and augmented, we can turn our
-#' attention to organizing and storing the data.
-#' 
-#' Right now we have a list of tables, one for each year. This is not a
-#' bad way to go. It has the advantage of making it easy to work with
-#' individual years without needing to load data from other years. We can
-#' store the data organized by year in `.csv` files, `.rds` files, or in
-#' database tables. 
-#' 
+#' ========================
+#' Now that we have the data cleaned up and augmented, we can turn our attention to organizing and storing the data.
+#'
+
 #' One table for each year
-#' -----------------------
-#' 
-#' Right now we have a list of tables, one for each year. This is not a
-#' bad way to go. It has the advantage of making it easy to work with
-#' individual years without needing to load data from other years. It has
-#' the disadvantage of making it more difficult to examine questions the
-#' require data from multiple years.
-#' 
-#' We can store the data organized by year in `.csv` files, `.rds` files,
-#' or in database tables. For now let's store these data in `.csv` files
-#' and then see how easy it is to work with them.
-#' 
-#' 
-## ------------------------------------------------------------------------
-## make directory to store the data
-dir.create("./data/byyear", recursive = TRUE)
-## extract the years
-years <- map_int(boysNames, function(x) unique(x$Year))
-## construct paths
-paths <- str_c("data/byyear/boys_names_", years, ".csv", sep = "")
-## write out the data
-walk2(boysNames, paths, write_csv)
+#' ----------------------
+#' Right now we have a list of tables, one for each year. This is not a bad way to go. It has the advantage of making it easy to work with individual years; it has the disadvantage of making it more difficult to examine questions that require data from multiple years. To make the arrangement of the data clearer it helps to name each element of the list with the year it corresponds too.
 
-## clear our workspace
-rm(list = ls())
+glimpse(head(boysNames))
 
-#' 
-#' Exercise: work with tables organized by year
-#' -------------------------
-#' 
-#' 1. What where the five most popular names in 2013?
-#' 2. How has the popularity of the name "ANDREW" changed over time?
-#' 
-#' -------------------
-#' -------------------
-#' 
-#' Exercise prototype
-#' ------------------
-#' Number one is easy, number two is harder:
-#' 
-## ------------------------------------------------------------------------
-## 1. What where the five most popular names in 2013?
-boys2013 <- read_csv("./data/byyear/boys_names_2013.csv")
-slice(arrange(boys2013, desc(Count)), 1:5)
+years <- str_extract(boy.file.names, "[0-9]{4}")
+boysNames <- setNames(boysNames, years)
+glimpse(head(boysNames))
 
-## 2. How has the popularity of the name "ANDREW" changed over time?
-boysNames <- map(list.files("./data/byyear", full.names = TRUE),
-                 read_csv)
-
-andrew <- map(boysNames, filter, Name == "ANDREW")
-andrew <- bind_rows(andrew)
-
-ggplot(andrew, aes(x = Year, y = Count)) +
-    geom_line() +
-    ggtitle("Popularity of \"Andrew\", over time")
-
-#' 
 #' One big table
 #' -------------
-#' 
-#' By far the easiest approach is to store the data in one big table.
-#' We've already seen how we can combine a list of tables into one big
-#' one.
-#' 
-#' 
+#'
+#' While storing the data in separate tables by year makes some sense,
+#' many operations will be easier if the data is simply stored in one big
+#' table. We've already seen how to turn a list of data.frames into a
+#' single data.frame using `bind_rows`, but there is a problem; The year
+#' information is stored in the names of the list elements, and so
+#' flattening the tables into one will result in losing the year
+#' information! Fortunately it is not too much trouble to add the year
+#' information to each table before flattening.
+
+boysNames <- imap(boysNames,
+                  function(data, name) {
+                      mutate(data, Year = as.integer(name))
+                      })
+boysNames <- bind_rows(boysNames)
+
+glimpse(boysNames)
+
 #' Exercise: Make one big table
 #' -------------------------
-#' 
+#'
 #' Turn the list of boys names data.frames into a single table. 
-#' 
+#'
 #' Create a directory under `data/all` and write the data to a `.csv`
 #' file.
-#' 
-#' 
+#'
+#'
 #' Finally, repeat the previous exercise, this time working with the data
 #' in one big table.
-#' 
-#' --------
-#' --------
-#' 
+#'
 #' Exercise prototype
 #' ------------------
-#' 
+#'
 #' Working with the data in one big table is often easier.
-#' 
-#' 
-## ------------------------------------------------------------------------
+
 boysNames <- bind_rows(boysNames)
 
 dir.create("data/all")
@@ -476,28 +491,26 @@ ggplot(andrew, aes(x = Year, y = Count)) +
     geom_line() +
     ggtitle("Popularity of \"Andrew\", over time")
 
-#' 
-#' 
 #' Additional reading and resources
 #' ================================
-#' 
+#'
 #' -   Learn from the best: <http://adv-r.had.co.nz/>;
 #'     <http://r4ds.had.co.nz/>
 #' -   R documentation: <http://cran.r-project.org/manuals.html>
 #' -   Collection of R tutorials:
 #'     <http://cran.r-project.org/other-docs.html>
-#' 
+#'
 #' -   R for Programmers (by Norman Matloff, UC--Davis)
-#' 
+#'
 #' <http://heather.cs.ucdavis.edu/~matloff/R/RProg.pdf>
-#' 
+#'
 #' -   Calling C and Fortran from R (by Charles Geyer, UMinn)
-#' 
+#'
 #' <http://www.stat.umn.edu/~charlie/rc/>
-#' 
+#'
 #' -   State of the Art in Parallel Computing with R (Schmidberger et al.)
-#' 
+#'
 #' <http://www.jstatso>|.org/v31/i01/paper
-#' 
+#'
 #' -   Institute for Quantitative Social Science: <http://iq.harvard.edu>
 #' -   IQSS Data Science Services: <http://dss.iq.harvard.edu/>
