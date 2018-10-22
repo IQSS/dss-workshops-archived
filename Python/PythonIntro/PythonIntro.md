@@ -1,7 +1,7 @@
 ---
 jupyter:
   jupytext_format_version: '1.0'
-  jupytext_formats: ipynb,md,py
+  jupytext_formats: ipynb,md:markdown,py
   kernelspec:
     display_name: Python 3
     language: python
@@ -42,10 +42,16 @@ jupyter:
 ###  Install the Anaconda Python distribution
 If using your own computer please install the Anaconda Python distribution from [https://www.anaconda.com/download/](https://www.anaconda.com/download/). (Note that Python version$\leq$ 3.0 differs considerably from more recent releases. For this workshop you will need version$\geq$ 3.4.)
 
-Accepting the defaults proposed by the Anaconda installer is generally recommended. However, if it offers to install Microsoft Visual Studio Code you may safely skip this step.
+Accepting the defaults proposed by the Anaconda installer is generally recommended.
 
 ### Download workshop materials
 Download the materials from [http://tutorials.iq.harvard.edu/Python/PythonIntro.zip](http://tutorials.iq.harvard.edu/Python/PythonIntro.zip) and extract the zipped directory (Right-click => Extract All on Windows, double-click on Mac).
+
+### Install and launch VSCode
+Start the `Anaconda Navigator` program in the usual way. Click the or `Launch` button under `VSCode`. (NOTE: you have have to first click `Install` and then `Launch`.)
+
+### Open the project folder
+In VSCode, click `File => Open Folder` and select the `PythonIntro` folder you downloaded and extracted previously.
 
 
 ## Workshop goals and approach

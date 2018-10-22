@@ -1,7 +1,7 @@
 # ---
 # jupyter:
-#   jupytext_format_version: '1.2'
-#   jupytext_formats: ipynb,md,py
+#   jupytext_format_version: '1.3'
+#   jupytext_formats: ipynb,md:markdown,py:light
 #   kernelspec:
 #     display_name: Python 3
 #     language: python
@@ -39,16 +39,19 @@
 # ## Setup instructions
 #
 # ###  Install the Anaconda Python distribution
-# If using your own computer please install the Anaconda Python distribution from [https://www.anaconda.com/download/](https://www.anaconda.com/download/). (Note that Python version $\leq$ 3.0 differs considerably from more recent releases. For this workshop you will need version $\geq$ 3.4.)
+# If using your own computer please install the Anaconda Python distribution from [https://www.anaconda.com/download/](https://www.anaconda.com/download/). (Note that Python version$\leq$ 3.0 differs considerably from more recent releases. For this workshop you will need version$\geq$ 3.4.)
 #
-# Accepting the defaults proposed by the Anaconda installer is generally recommended. However, if it offers to install Microsoft Visual Studio Code you may safely skip this step.
+# Accepting the defaults proposed by the Anaconda installer is generally recommended.
 #
 # ### Download workshop materials
 # Download the materials from [http://tutorials.iq.harvard.edu/Python/PythonIntro.zip](http://tutorials.iq.harvard.edu/Python/PythonIntro.zip) and extract the zipped directory (Right-click => Extract All on Windows, double-click on Mac).
 #
+# ### Install and launch VSCode
+# Start the `Anaconda Navigator` program in the usual way. Click the or `Launch` button under `VSCode`. (NOTE: you have have to first click `Install` and then `Launch`.)
 #
+# ### Open the project folder
+# In VSCode, click `File => Open Folder` and select the `PythonIntro` folder you downloaded and extracted previously.
 
-#
 # ## Workshop goals and approach
 # In this workshop you will
 # - learn about the python package and application ecosystem,
@@ -85,9 +88,7 @@
 #
 # We can open a connection to a file using the *open* function, and store the result using the `=` operator.
 
-# + {"ein.hycell": false, "ein.tags": "worksheet-0", "slideshow": {"slide_type": "-"}}
 alice_file = open("Alice_in_wonderland.txt")
-# -
 
 # The name on the left of the equals sign (`alice_file`) is one that we chose. When choosing names, *start with a letter*, and use only *letters*, *numbers* and *underscores*.
 #
@@ -101,10 +102,8 @@ help(alice_file.read)
 
 # Since `alice_file.read` looks promising, we will invoke this method and see what it does.
 
-# + {"ein.hycell": false, "ein.tags": "worksheet-0", "slideshow": {"slide_type": "-"}}
 alice_txt = alice_file.read()
 print(alice_txt[:500]) # the [:500] gets the first 500 character -- more on this later.
-# -
 
 # That's all there is to it! We've read the contents of `Alice_in_wonderland.txt` and stored this text in a Python object we named `alice_txt`. Now let's start to explore this object, and learn some more things about Python along the way.
 
@@ -133,6 +132,19 @@ len(alice_words)
 len(set(alice_words))
 
 # There are 5295 unique words in the text.
+
+# ## Exercise: Reading text from a file and splitting
+# *Alice's Adventures in Wonderland* is full of memorable characters. The main characters from the story are listed, one-per-line, in the file named `Characters.txt`.
+#
+# NOTE: we will not always explicitly demonstrate everything you need to know in order to complete an exercise. Instead we focus on teaching you how to discover available methods and how use the help function to learn how to use them. It is expected that you will spend some time during the exercises looking for appropriate methods and perhaps reading documentation.
+#
+
+# 1. Open the `Characters.txt` file and read its contents.
+
+
+# 2. Split text on newlines to produce a list with one element per line.
+#    Store the result as "alice_characters".
+
 
 # ### Working with lists
 # The `split` methods we used to break up the text of *Alice in Wonderland* into words produced a *list*. A lot of the techniques we'll use later to analyze this text also produce lists, so its worth taking a minute to learn more about them.
@@ -186,22 +198,17 @@ print(last_10)
 # ### Counting chapters and paragraphs
 # Now that we know how to split a string and how to work with the resulting list, we can split on chapter markers to count the number of chapters. All we need to do is specify the string to split on. Since each chapter is marked with the string `'CHAPTER '` followed by the chapter number, we can split the text up into chapters using this as the separator.
 
-# + {"ein.hycell": false, "ein.tags": "worksheet-0", "hidden": true, "slideshow": {"slide_type": "-"}}
 alice_chapters = alice_txt.split("CHAPTER ")
 len(alice_chapters)
-# -
 
 # Since the first element contains the material *before* the first chapter, this tells us there are twelve chapters in the book.
 #
 # We can count paragraphs in a similar way. Paragraphs are indicated by a blank line, i.e., two newlines in a row. When working with strings we can represent newlines with `\n`, so our basic paragraph separator is `\n\n`.
 
-# + {"hidden": true}
 alice_paragraphs = alice_txt.split("\n\n")
-# -
 
 # Before counting the number of paragraphs, I want to inspect the result to see if it looks correct:
 
-# + {"hidden": true}
 print(alice_paragraphs[0], "\n==========")
 print(alice_paragraphs[1], "\n==========")
 print(alice_paragraphs[2], "\n==========")
@@ -209,36 +216,23 @@ print(alice_paragraphs[3], "\n==========")
 print(alice_paragraphs[4], "\n==========")
 print(alice_paragraphs[5], "\n==========")
 
-# -
 
 # We're counting the title, author, and chapter lines as paragraphs, but this will do for a rough count.
 
-# + {"hidden": true}
 len(alice_paragraphs)
-# -
 
 # ## Exercise: count the number of main characters
 # So far we've learned that there are 12 chapters, around 830 paragraphs, and about 26 thousand words in *Alice's Adventures in Wonderland*. Along the way we've also learned how to open a file and read its contents, split strings,  calculate the length of objects, discover methods for string and list objects, and index/subset lists in Python. Now it is time for you to put these skills to use to learn something about the main characters in the story.
-#
-# NOTE: we have not explicitly demonstrated everything you need to know in order to complete this exercise. Instead we have focused on teaching you how to discover available methods and how use the help function to learn how to use them. It is expected that you will spend some time during this exercise looking for appropriate methods and perhaps reading documentation.
-#
-# *Alice's Adventures in Wonderland* is full of memorable characters. The main characters from the story are listed, one-per-line, in the file named `Characters.txt`.
-#
-#
 
-# 1. Open the `Characters.txt` file and read its contents.
+# 1. Count the number of main characters in the story (i.e., get the length
+#    of the list you created in previous exercise).
 
 
-# 2. Split text into a list with one element per line and store the result.
+# 2. Extract and print just the first character from the list you created in
+#    the previous exercise.
 
 
-# 3. Count the number of characters (i.e., get the length of the list you created in step 2).
-
-
-# 4. Extract and print just the first character from the list you created in step 2.
-
-
-# 5. (BONUS, optional): Sort the list you created in step 2 alphabetically, and then extract the last element.
+# 3. (BONUS, optional): Sort the list you created in step 2 alphabetically, and then extract the last element.
 
 
 # ## Working with nested structures: words within paragraphs within chapters
@@ -351,20 +345,16 @@ dict(zip(chapter_names,
 #
 # In order to use *numpy* or other packages, you must first import them. We can import numpy as follows:
 
-# + {"ein.hycell": false, "ein.tags": "worksheet-0", "slideshow": {"slide_type": "-"}}
 import numpy
-# -
 
 # The *numpy* package is very popular and includes a lot of useful functions. For example, we can use it to calculate means and standard deviations:
 
-# + {"ein.hycell": false, "ein.tags": "worksheet-0", "slideshow": {"slide_type": "-"}}
 print(numpy.mean(paragraphs_per_chapter))
 print(numpy.std(paragraphs_per_chapter))
-# -
 
 # and compute correlations:
 
-# + {"ein.hycell": false, "ein.tags": "worksheet-0", "slideshow": {"slide_type": "-"}}
+# +
 words_per_chapter = [len(chapter.split()) for chapter in alice_chapters]
 alices_per_chapter = [chapter.count("Alice") for chapter in alice_chapters]
 
