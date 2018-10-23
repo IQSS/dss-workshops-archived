@@ -69,26 +69,30 @@ pd.set_option('display.max_columns', 5)
 # If using your own computer please install the Anaconda Python
 # distribution from
 # [https://www.anaconda.com/download/](https://www.anaconda.com/download/).
-# (Note that Python version$\leq$ 3.0 differs considerably from more
-# recent releases. For this workshop you will need version$\geq$ 3.4.)
+# (Note that Python version $\leq$ 3.0 differs considerably from more
+# recent releases. For this workshop you will need version $\geq$ 3.4.)
 #
 # Accepting the defaults proposed by the Anaconda installer is generally
-# recommended. However, if it offers to install Microsoft Visual Studio
-# Code you may safely skip this step.
+# recommended.
 #
-# ### Download workshop materials
-# Download the materials from
-# [http://tutorials.iq.harvard.edu/Python/PythonWebScrape.zip](http://tutorials.iq.harvard.edu/Python/PythonWebScrape.zip)
-# and extract the zipped directory (Right-click => Extract All on
-# Windows, double-click on Mac).
+# ### Workshop notes
+# The class notes for this workshop are available on our website at
+# [dss.iq.harvard.edu](https://dss.iq.harvard.edu) under `Workshop
+# Materials ==> Python Workshop Materials => Python Web Scraping`. Click
+# the `All workshop materials` link to download the workshop materials.
 #
+# Extract the `PythonWebScraping.zip` directory (`Right-click => Extract All` on
+# Windows, `double-click` on Mac).
 #
-#
+# Start the `Jupyter Notebook` application and open the
+# `Exercises.ipynb` file in the `PythonWebScraping` folder you
+# downloaded previously. You may also wish to start a new notebook for
+# your own notes.
 
 # ## Workshop goals and approach
 # In this workshop you will
 # - learn basic web scraping principles and techniques,
-# - learn how to use the requests package in Python,
+# - learn how to use the `requests` package in Python,
 # - practice making requests and manipulating responses from the server.
 #
 # This workshop is relatively *informal*, *example-oriented*, and
@@ -102,15 +106,15 @@ pd.set_option('display.max_columns', 5)
 # [IQSS Introduction to Python](https://dss.iq.harvard.edu/workshop-materials#widget-0).
 #
 # Note also that this workshop will not teach you everything you need to
-# know in order to retrieve any data whatsoever from any webs service
-# whatsoever. This workshop will give you just enough to get started.
+# know in order to retrieve data from any web service you might wish to
+# scrape. You can expect to learn just enough to be dangerous.
 #
 # ## Preliminary questions
 #
 # ### What is web scraping?
-# Web scraping the activity of automating retrieval of information from
-# a web service designed for human interaction.
-
+# Web scraping is the activity of automating retrieval of information
+# from a web service designed for human interaction.
+#
 # ### Is web scraping legal? Is it ethical?
 # It depends. If you have legal questions seek legal counsel. You can
 # mitigate some ethical issues by building delays and restrictions into
@@ -127,7 +131,7 @@ pd.set_option('display.max_columns', 5)
 # the Harvard Art Museums website.
 #
 # The basic strategy is pretty much the same for most scraping projects.
-# We will use our web browser (Chrome or Firefox recommended) to examin
+# We will use our web browser (Chrome or Firefox recommended) to examine
 # the page you wish to retrieve data from, and copy/paste information
 # from your web browser into your scraping program.
 #
@@ -144,7 +148,8 @@ pd.set_option('display.max_columns', 5)
 
 # ### Examining the structure of our target web service
 #
-# We start by opening that page in a web browser and inspecting it.
+# We start by opening the exhibitions web page in a web browser and
+# inspecting it.
 #
 # ![](img/dev_tools.png)
 #
@@ -152,18 +157,19 @@ pd.set_option('display.max_columns', 5)
 #
 # If we scroll down to the bottom of the Exhibitions page, we'll see a
 # button that says "Load More Exhibitions". Let's see what happens when
-# we click on that button.To do so, click on "Network" in the developer
-# tools window,then click the button. You should see a list of requests
-# that were made as a result of clicking that button, as shown below.
+# we click on that button. To do so, click on "Network" in the developer
+# tools window, then click the "Load More Exhibitions" button. You
+# should see a list of requests that were made as a result of clicking
+# that button, as shown below.
 #
 # ![](img/dev_tools_network.png)
 
-# If we look at that second request, the one that to `load_next`, we'll
-# see that it returns all the information we need, in a convenient
-# format called `JSON`. All we need to retrieve exhibition data is call
-# make `GET` requests to
+# If we look at that second request, the one to a script named
+# `load_next`, we'll see that it returns all the information we need, in
+# a convenient format called `JSON`. All we need to retrieve exhibition
+# data is call make `GET` requests to
 # <https://www.harvardartmuseums.org/search/load_next> with the correct
-# parameters. 
+# parameters.
 #
 # ### Making requests using python
 # The URL we want to retrieve data from has the following structure
@@ -178,8 +184,8 @@ pd.set_option('display.max_columns', 5)
 # with `?`. If there are multiple parameters they are separated from
 # each other with a `&`.
 #
-# For example, we can retrieve the first set of exhibitions in Python as
-# follows:
+# For example, we can define the domain, path, and parameters of the
+# exhibitions URL as follows:
 
 # +
 museum_domain = 'https://www.harvardartmuseums.org'
@@ -499,11 +505,27 @@ print(all_event_values)
 #    level one. Use Python to extract the text from those `Xpath`s.
 # 4. Bonus (optional): Write a *loop* or *list comprehension* in Python
 #    to retrieve data for all the levels.
+#
 
-# ## Use a browser driver as a last resort
-#
-# TODO
-#
 # ## Use Scrapy for large or complicated projects
+# Scraping websites using the `requests` library to make GET and POST
+# requests, and the `lxml` library to process HTML is a good way to
+# learn basic web scraping techniques. It is a good choice for small to
+# medium size projects. For very large or complicated scraping tasks the
+# `scrapy` library offers a number of conveniences, including
+# asynchronously retrieval, session management, convenient methods for
+# extracting and storing values, and more. More information about
+# `scrapy` can be found at <https://doc.scrapy.org>.
 #
-# TODO
+# ## Use a browser driver as a last resort
+# It is sometimes necessary (or sometimes just easier) to use a web
+# browser as an intermediary rather than communicating directly with a
+# web service. This method has the advantage of being about to use the
+# javascript engine and session management features of a web browser;
+# the main disadvantage is that it is slower and tends to be more
+# fragile than using `requests` or `scrapy` to make requests directly
+# from python. For small scraping projects involving complicated sites
+# with CAPTHAs or lots of complicated javascript using a browser driver
+# can be a good option. More information is available at 
+# <https://www.seleniumhq.org/docs/03_webdriver.jsp>.
+#
