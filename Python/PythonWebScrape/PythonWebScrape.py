@@ -175,7 +175,7 @@ pd.set_option('display.max_columns', 5)
 # The URL we want to retrieve data from has the following structure
 #
 #     scheme                    domain              path                  parameters
-#      https www.harvardartmuseums.org  search/load_next type=past-exhibition&page=0
+#      https www.harvardartmuseums.org  search/load_next type=past-exhibition&page=1
 #
 # It is often convenient to create variables containing the domain(s)
 # and path(s) you'll be working with, as this allows you to swap out
@@ -207,22 +207,22 @@ print(exhibition_url)
 # +
 import requests
 
-exhibitions0 = requests.get(exhibition_url 
+exhibitions1 = requests.get(exhibition_url 
                             + '&'
-                            + 'page=0')
+                            + 'page=1')
 # -
 
 # ### Parsing JSON data
 # We already know from inspecting network traffic in our web
 # browser that this URL returns JSON, but we can use Python to verify
 # this assumption.
-exhibitions0.headers['Content-Type']
+exhibitions1.headers['Content-Type']
 
 # Since JSON is a structured data format, parsing it into python data
 # structures is easy. In fact, there's a method for that!
 
-exhibitions0 = exhibitions0.json()
-print(exhibitions0)
+exhibitions1 = exhibitions1.json()
+print(exhibitions1)
 
 # That's it. Really, we are done here. Everyone go home!
 #
@@ -241,9 +241,9 @@ print(exhibitions0)
 # `DataFrame`. First lets see what fields are available.
 #
 
-print(exhibitions0.keys())
+print(exhibitions1.keys())
 
-print(exhibitions0['records'][0].keys())
+print(exhibitions1['records'][0].keys())
 
 # Next we can specify the fields we are interested in and use a dict
 # comprehension to organize the values;
@@ -252,8 +252,8 @@ print(exhibitions0['records'][0].keys())
 fields_to_keep = ['title', 'poster', 'people',
                   'begindate', 'enddate']
 
-records0 = {k: [record.get(k, 'NA')
-                for record in exhibitions0['records']]
+records1 = {k: [record.get(k, 'NA')
+                for record in exhibitions1['records']]
             for k in fields_to_keep}
 
 # -
@@ -262,14 +262,14 @@ records0 = {k: [record.get(k, 'NA')
 # +
 import pandas as pd
 
-records0 = pd.DataFrame.from_dict(records0)
+records1 = pd.DataFrame.from_dict(records1)
 
-print(records0)
+print(records1)
 # -
 
 # and write the data to a file.
 
-records0.to_csv("records0.csv")
+records1.to_csv("records1.csv")
 
 # ### Iterating to retrieve all the data
 #
@@ -279,7 +279,7 @@ records0.to_csv("records0.csv")
 # The first page of JSON data we retrieved contains meta data about the
 # number of records, in the `info` field. It looks like this:
 
-print(exhibitions0['info'])
+print(exhibitions1['info'])
 
 # Now that we know how many pages there are we can iterate over them
 
@@ -287,7 +287,7 @@ records = [requests.get(exhibition_url
                         + '&'
                         + 'page='
                         + str(page)).json()['records']
-           for page in range(1, exhibitions0['info']['pages'] + 1)]
+           for page in range(1, exhibitions1['info']['pages'] + 1)]
 
 # For convenience we can flatten the records in each list into one long
 # `records` list

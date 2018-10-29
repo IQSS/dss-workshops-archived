@@ -86,7 +86,7 @@ pd.set_option('display.max_columns', 5)
 import requests
 
 museum_url = 'https://www.harvardartmuseums.org'
-museum_collection = '/browse?load_amount=12'
+museum_collection = '/browse?load_amount=10'
 
 collections0 = requests.get(museum_url
                             + museum_collection
@@ -105,7 +105,7 @@ collections = [requests.get(museum_url
                             + museum_collection
                             + '&offset='
                             + str(i)).json()
-               for i in range(5)]
+               for i in range(0, 50, 10)]
 print(collections)
 
 # 4. Bonus (optional): Arrange the data you retrieved into dict of
