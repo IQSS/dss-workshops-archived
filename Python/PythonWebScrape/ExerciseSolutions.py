@@ -62,78 +62,42 @@ pd.set_option('display.max_columns', 5)
 # -
 
 # ## Exercise: Retrieve exhibits data
+#
+# ## Exercise: Retrieve exhibits data {.smaller}
 # In this exercise you will retrieve information about the art
-# collections at Harvard Art Museums from
-# `https://www.harvardartmuseums.org/collections`
+# exhibitions at Harvard Art Museums from
+# `https://www.harvardartmuseums.org/visit/exhibitions`
 #
 # 1. Using a web browser (Firefox or Chrome recommended) inspect the
-#    page at `https://www.harvardartmuseums.org/collections`. Examine
+#    page at `https://www.harvardartmuseums.org/visit/exhibitions`. Examine
 #    the network traffic as you interact with the page. Try to find
 #    where the data displayed on that page comes from.
-#
 
-# Looking at 
-#
-# ![](./img/ex1_network.png)
-#
-# I see promising requests to
-# <https://www.harvardartmuseums.org/browse?load_amount=12&offset=24>
-#
+# +
+## TODO
+# -
+
 # 2. Make a `get` request in Python to retrieve the data from the URL
 #    identified in step1.
 
 # +
-import requests
-
-museum_url = 'https://www.harvardartmuseums.org'
-museum_collection = '/browse?load_amount=10'
-
-collections0 = requests.get(museum_url
-                            + museum_collection
-                            + '&offset=0').json()
-
+## TODO
 # -
 
-print(collections0['info'])
-
-print(collections0['records'])
-
 # 3. Write a *loop* or *list comprehension* in Python to retrieve data
-#    for the first 5 pages of collections data.
+#    for the first 5 pages of exhibitions data.
 
-collections = [requests.get(museum_url
-                            + museum_collection
-                            + '&offset='
-                            + str(i)).json()
-               for i in range(0, 50, 10)]
-print(collections)
+# +
+## TODO
+# -
 
 # 4. Bonus (optional): Arrange the data you retrieved into dict of
 #    lists. Convert it to a pandas `DataFrame` and save it to a `.csv`
 #    file.
 
 # +
-collection_records = []
-for collection in collections:
-    collection_records += collection['records']
-
-col_keys = []
-for collection in collection_records:
-    col_keys += list(collection.keys())
-col_keys = set(col_keys)
-
-collections_data = {k: [collection.get(k, "NA")
-                        for collection in collection_records]
-                    for k in col_keys}
-
-import pandas
-
-collections_data = pandas.DataFrame.from_dict(collections_data)
-collections_data.to_csv('collections.csv')
-
-print(collections_data)
+## TODO
 # -
-
 
 # ## Exercise: parsing HTML
 # In this exercise you will retrieve information about the physical

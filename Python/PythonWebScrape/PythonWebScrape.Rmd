@@ -127,8 +127,8 @@ the service provider.
 
 ## Example project overview and goals
 In this workshop I will demonstrate web scraping techniques using the
-Exhibitions page at
-<https://www.harvardartmuseums.org/visit/exhibitions> and let you use
+Collections page at
+<https://www.harvardartmuseums.org/collections> and let you use
 the skills you'll learn to retrieve information from other parts of
 the Harvard Art Museums website.
 
@@ -139,7 +139,7 @@ from your web browser into your scraping program.
 
 ## Take shortcuts if you can
 We wish to extract information from
-<https://www.harvardartmuseums.org/visit/exhibitions>. Like most
+<https://www.harvardartmuseums.org/collections>. Like most
 modern web pages, a lot goes on behind the scenes to produce the page
 we see in our browser. Our goal is to pull back the curtain to see
 what the website does when we interact with it. Once we see how the
@@ -151,35 +151,35 @@ structured format like [JSON](https://json.org/) or
 
 ### Examining the structure of our target web service
 
-We start by opening the exhibitions web page in a web browser and
+We start by opening the collections web page in a web browser and
 inspecting it.
 
 ![](img/dev_tools.png)
 
 ![](img/dev_tools_pane.png)
 
-If we scroll down to the bottom of the Exhibitions page, we'll see a
-button that says "Load More Exhibitions". Let's see what happens when
-we click on that button. To do so, click on "Network" in the developer
-tools window, then click the "Load More Exhibitions" button. You
-should see a list of requests that were made as a result of clicking
-that button, as shown below.
+If we scroll down to the bottom of the Collections page, we'll see a
+button that says "Load More". Let's see what happens when we click on
+that button. To do so, click on "Network" in the developer tools
+window, then click the "Load More Collections" button. You should see
+a list of requests that were made as a result of clicking that button,
+as shown below.
 
 ![](img/dev_tools_network.png)
 
 
 If we look at that second request, the one to a script named
-`load_next`, we'll see that it returns all the information we need, in
-a convenient format called `JSON`. All we need to retrieve exhibition
+`browse`, we'll see that it returns all the information we need, in
+a convenient format called `JSON`. All we need to retrieve collection
 data is call make `GET` requests to
-<https://www.harvardartmuseums.org/search/load_next> with the correct
+<https://www.harvardartmuseums.org/browse> with the correct
 parameters.
 
 ### Making requests using python
 The URL we want to retrieve data from has the following structure
 
-    scheme                    domain              path                  parameters
-     https www.harvardartmuseums.org  search/load_next type=past-exhibition&page=1
+    scheme                    domain    path  parameters
+     https www.harvardartmuseums.org  browse  load_amount=10&offset=0
 
 It is often convenient to create variables containing the domain(s)
 and path(s) you'll be working with, as this allows you to swap out
@@ -189,20 +189,20 @@ with `?`. If there are multiple parameters they are separated from
 each other with a `&`.
 
 For example, we can define the domain, path, and parameters of the
-exhibitions URL as follows:
+collections URL as follows:
 
 ```{python}
 museum_domain = 'https://www.harvardartmuseums.org'
-exhibition_path = 'search/load_next'
-exhibition_parameters = 'type=past-exhibition'
+collection_path = 'browse'
+collection_parameters = 'load_amount=10'
 
-exhibition_url = (museum_domain
+collection_url = (museum_domain
                   + "/"
-                  + exhibition_path
+                  + collection_path
                   + "?"
-                  + exhibition_parameters)
+                  + collection_parameters)
 
-print(exhibition_url)
+print(collection_url)
 ```
 
 Now that we've constructed the URL we wish interact with we're ready
@@ -211,9 +211,9 @@ to make our first request in Python.
 ```{python}
 import requests
 
-exhibitions1 = requests.get(exhibition_url 
+collections1 = requests.get(collection_url 
                             + '&'
-                            + 'page=1')
+                            + 'offset=0')
 ```
 
 ### Parsing JSON data
@@ -221,15 +221,15 @@ We already know from inspecting network traffic in our web
 browser that this URL returns JSON, but we can use Python to verify
 this assumption.
 ```{python}
-exhibitions1.headers['Content-Type']
+collections1.headers['Content-Type']
 ```
 
 Since JSON is a structured data format, parsing it into python data
 structures is easy. In fact, there's a method for that!
 
 ```{python}
-exhibitions1 = exhibitions1.json()
-print(exhibitions1)
+collections1 = collections1.json()
+print(collections1)
 ```
 
 That's it. Really, we are done here. Everyone go home!
@@ -243,30 +243,28 @@ but for some web scraping tasks this is really all you need to know.
 ### Organizing and saving the data
 
 The records we retrieved from
-`https://www.harvardartmuseums.org/museum_exhibitions/search/load_next`
-are arranged as a list of dictionaries. With only a little trouble we
-can select the fields of interest and arrange these data into a pandas
-`DataFrame`. First lets see what fields are available.
+`https://www.harvardartmuseums.org/browse` are arranged as a list of
+dictionaries. With only a little trouble we can select the fields of
+interest and arrange these data into a pandas `DataFrame`. First lets
+see what fields are available.
 
 
 ```{python}
-print(exhibitions1.keys())
+print(collections1.keys())
 ```
 
 ```{python}
-print(exhibitions1['records'][0].keys())
+record_keys = collections1['records'][0].keys()
+print(record_keys)
 ```
 
 Next we can specify the fields we are interested in and use a dict
 comprehension to organize the values;
 
 ```{python}
-fields_to_keep = ['title', 'poster', 'people',
-                  'begindate', 'enddate']
-
 records1 = {k: [record.get(k, 'NA')
-                for record in exhibitions1['records']]
-            for k in fields_to_keep}
+                for record in collections1['records']]
+            for k in record_keys}
 
 ```
 Finally we can convert the dict to a `DataFrame`
@@ -287,24 +285,18 @@ records1.to_csv("records1.csv")
 
 ### Iterating to retrieve all the data
 
-Of course we don't want just the first page of exhibitions. How can we
+Of course we don't want just the first page of collections. How can we
 retrieve all of them?
 
-The first page of JSON data we retrieved contains meta data about the
-number of records, in the `info` field. It looks like this:
+Now that we know the web service works, and how to make requests in
+Python, we can iterate in the usual way.
 
 ```{python}
-print(exhibitions1['info'])
-```
-
-Now that we know how many pages there are we can iterate over them
-
-```{python}
-records = [requests.get(exhibition_url
+records = [requests.get(collection_url
                         + '&'
-                        + 'page='
-                        + str(page)).json()['records']
-           for page in range(1, exhibitions1['info']['pages'] + 1)]
+                        + 'offset='
+                        + str(offset)).json()['records']
+           for offset in range(0, 50, 10)]
 ```
 
 For convenience we can flatten the records in each list into one long
@@ -322,7 +314,7 @@ difficulty:
 ```{python}
 records_final = {k: [record.get(k, 'NA')
                      for record in records_final]
-                 for k in fields_to_keep}
+                 for k in record_keys}
 
 ## convert the dict to a `DataFrame`
 records_final = pd.DataFrame.from_dict(records_final)
@@ -335,17 +327,17 @@ print(records_final)
 
 ### Exercise: Retrieve exhibits data
 In this exercise you will retrieve information about the art
-collections at Harvard Art Museums from
-`https://www.harvardartmuseums.org/collections`
+exhibitions at Harvard Art Museums from
+`https://www.harvardartmuseums.org/visit/exhibitions`
 
 1. Using a web browser (Firefox or Chrome recommended) inspect the
-   page at `https://www.harvardartmuseums.org/collections`. Examine
+   page at `https://www.harvardartmuseums.org/visit/exhibitions`. Examine
    the network traffic as you interact with the page. Try to find
    where the data displayed on that page comes from.
 2. Make a `get` request in Python to retrieve the data from the URL
    identified in step1.
 3. Write a *loop* or *list comprehension* in Python to retrieve data
-   for the first 5 pages of collections data.
+   for the first 5 pages of exhibitions data.
 4. Bonus (optional): Arrange the data you retrieved into dict of
    lists. Convert it to a pandas `DataFrame` and save it to a `.csv`
    file.
