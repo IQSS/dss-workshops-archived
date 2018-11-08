@@ -184,32 +184,35 @@ pd.set_option('display.max_columns', 5)
 # with `?`. If there are multiple parameters they are separated from
 # each other with a `&`.
 #
-# For example, we can define the domain, path, and parameters of the
-# collections URL as follows:
+# For example, we can define the domain and path of the collections URL
+# as follows:
 
 # +
 museum_domain = 'https://www.harvardartmuseums.org'
 collection_path = 'browse'
-collection_parameters = 'load_amount=10'
 
 collection_url = (museum_domain
                   + "/"
-                  + collection_path
-                  + "?"
-                  + collection_parameters)
+                  + collection_path)
 
 print(collection_url)
 # -
 
+# Note that we omit the parameters here because it is usually easier to
+# pass them as a `dict` when using the `requests` library in Python.
+# This will become clearer shortly.
+#
 # Now that we've constructed the URL we wish interact with we're ready
 # to make our first request in Python.
 
 # +
 import requests
 
-collections1 = requests.get(collection_url 
-                            + '&'
-                            + 'offset=0')
+collections1 = requests.get(
+    collection_url,
+    parameters = {'load_amount': 10,
+                  'offset': 0}
+)
 # -
 
 # ### Parsing JSON data
@@ -275,10 +278,9 @@ records1.to_csv("records1.csv")
 # Now that we know the web service works, and how to make requests in
 # Python, we can iterate in the usual way.
 
-records = [requests.get(collection_url
-                        + '&'
-                        + 'offset='
-                        + str(offset)).json()['records']
+records = [requests.get(collection_url,
+                        parameters = {'load_amount': 10,
+                                      'offset': str(offset)}).json()['records']
            for offset in range(0, 50, 10)]
 
 # For convenience we can flatten the records in each list into one long
@@ -334,7 +336,7 @@ print(records_final)
 # For example, when I inspected the network traffic while interacting
 # with <https://www.harvardartmuseums.org/visit/calendar> I didn't see
 # any requests that returned JSON data. The best we can do appears to be
-# <https://www.harvardartmuseums.org/visit/calendar?type=&date=>, which
+# <https://www.harvardartmuseums.org/visit/calendar?date=>, which
 # unfortunately returns  HTML. 
 #
 # ### Retrieving HTML
@@ -349,7 +351,7 @@ calendar_url = (museum_domain # recall that we defined museum_domain earlier
 
 print(calendar_url)
 
-events0 = requests.get(calendar_url)
+events0 = requests.get(calendar_url, parameters = {'date': '2018-11'})
 # -
 
 # As before we can check the headers to see what type of content we
