@@ -9,7 +9,7 @@ output:
       collapsed: true
 jupyter:
   jupytext_format_version: '1.0'
-  jupytext_formats: ipynb,md:markdown,py,Rmd:rmarkdown
+  jupytext_formats: ipynb,md:markdown,py
   kernelspec:
     display_name: Python 3
     language: python
@@ -96,7 +96,7 @@ Reading information from a file is the first step in many projects, so we'll sta
 
 We can open a connection to a file using the *open* function, and store the result using the `=` operator.
 
-```python
+```{python}
 alice_file = open("Alice_in_wonderland.txt")
 ```
 
@@ -108,13 +108,13 @@ The `alice_file` object provides *methods* that we can use to do things with it.
 
 Among the methods we have for doing things with our `alice_file` object is one named `read`. We can use the `help` function to learn more about it.
 
-```python
+```{python}
 help(alice_file.read)
 ```
 
 Since `alice_file.read` looks promising, we will invoke this method and see what it does.
 
-```python
+```{python}
 alice_txt = alice_file.read()
 print(alice_txt[:500]) # the [:500] gets the first 500 character -- more on this later.
 ```
@@ -128,7 +128,7 @@ Now that we have the text we can start answering some questions about it. To beg
 ### Splitting a string into a list of words
 How do we figure out how to split strings in Python? By asking Python what our `alice_txt` object is and what methods it provides. We can ask Python what things are using the `type` function, like this:
 
-```python
+```{python}
 type(alice_txt)
 ```
 
@@ -136,13 +136,13 @@ Python tells us that `alice_txt` is of type `str` (i.e., it is a string). We can
 ![](./img/notebook_string_completion.png) 
 To learn how to use this method we can check the documentation.
 
-```python
+```{python}
 help(alice_txt.split)
 ```
 
 Since the default is to split on whitespace (spaces, newlines, tabs) we can get a reasonable word count simply by calling the split method and counting the number of elements in the result.
 
-```python
+```{python}
 alice_words = alice_txt.split()
 len(alice_words)
 ```
@@ -150,7 +150,7 @@ len(alice_words)
 ### Using sets to calculate the number of unique words
 According to our computation above, there are about 26 thousand total words in *Alice's Adventures in Wonderland*. But how many *unique* words are there? Python has a special data structure called a *set* that makes it easy to find out. A *set* drops all duplicates, giving a collection of the unique elements.
 
-```python
+```{python}
 len(set(alice_words))
 ```
 
@@ -166,14 +166,14 @@ NOTE: we will not always explicitly demonstrate everything you need to know in o
 
 2. Split text on newlines to produce a list with one element per line. Store the result as "alice_characters".
 
-# ```
+```
 
 ### Working with lists
 The `split` methods we used to break up the text of *Alice in Wonderland* into words produced a *list*. A lot of the techniques we'll use later to analyze this text also produce lists, so its worth taking a minute to learn more about them.
 
 It is always a good idea to know what type of things you're working with in Python. As you gain experience, you won't have to look this things up as often, but even experienced Python programmers use the `type` function to learn about the objects they are working with.
 
-```python
+```{python}
 type(alice_words)
 ```
 
@@ -184,33 +184,33 @@ Among the things you can do with a list is extract subsets using bracket indexin
 
 The examples below show how indexing works in Python.
 
-```python
+```{python}
 alice_words[0] # first word (yes, we count from zero!)
 ```
 
-```python
+```{python}
 alice_words[1] # second word
 ```
 
-```python
+```{python}
 alice_words[:10] # first 10 words
 ```
 
-```python
+```{python}
 alice_words[10:20] # words 11 through 20
 ```
 
-```python
+```{python}
 alice_words[-1] # the last word
 ```
 
-```python
+```{python}
 alice_words[-10:] # the last 10 words
 ```
 
 Note that the displayed representation of lists and other data structures in python often closely matches the syntax used to create them. For example, we can create a list using square brackets, just as we see when we print a list:
 
-```python
+```{python}
 ['her',
  'own',
  'child-life,',
@@ -228,7 +228,7 @@ There are many other things we can do with lists besides extracting subsets usin
 
 Note that many methods modify the object *in place*. For example, if we wanted to sort the last 10 words in `alice_words` we would do it like this:
 
-```python
+```{python}
 last_10 = alice_words[-10:]
 print(last_10)
 last_10.sort()
@@ -238,7 +238,7 @@ print(last_10)
 ### Counting chapters and paragraphs
 Now that we know how to split a string and how to work with the resulting list, we can split on chapter markers to count the number of chapters. All we need to do is specify the string to split on. Since each chapter is marked with the string `'CHAPTER '` followed by the chapter number, we can split the text up into chapters using this as the separator.
 
-```python
+```{python}
 alice_chapters = alice_txt.split("CHAPTER ")
 len(alice_chapters)
 ```
@@ -247,13 +247,13 @@ Since the first element contains the material *before* the first chapter, this t
 
 We can count paragraphs in a similar way. Paragraphs are indicated by a blank line, i.e., two newlines in a row. When working with strings we can represent newlines with `\n`, so our basic paragraph separator is `\n\n`.
 
-```python
+```{python}
 alice_paragraphs = alice_txt.split("\n\n")
 ```
 
 Before counting the number of paragraphs, I want to inspect the result to see if it looks correct:
 
-```python
+```{python}
 print(alice_paragraphs[0], "\n==========")
 print(alice_paragraphs[1], "\n==========")
 print(alice_paragraphs[2], "\n==========")
@@ -265,7 +265,7 @@ print(alice_paragraphs[5], "\n==========")
 
 We're counting the title, author, and chapter lines as paragraphs, but this will do for a rough count.
 
-```python
+```{python}
 len(alice_paragraphs)
 ```
 
@@ -289,7 +289,7 @@ There are several ways to iterate in Python, of which we will focus on *for loop
 ### Iterating over paragraphs using for-loops
 A *for loop* is a way of cycling through the elements of a collection and doing something with each one. As a simple example, we can cycle through the first 6 paragraphs and print each one\. Cycling through with a loop makes it easy to insert a separator between the paragraphs, making it much easier to read the output.
 
-```python
+```{python}
 for paragraph in alice_paragraphs[:6]:
     print(paragraph)
     print('==================================')
@@ -310,7 +310,7 @@ Loops in Python are great because the syntax is relatively simple, and because t
 
 Here is one more example of a loop, this time iterating over all the chapters and calculating the number of paragraphs in each chapter.
 
-```python
+```{python}
 for chapter in alice_chapters[1:]:
     paragraphs = chapter.split("\n\n")
     print(len(paragraphs))
@@ -319,7 +319,7 @@ for chapter in alice_chapters[1:]:
 ### Iterating and collecting paragraphs per chapter using list comprehension
 We could use for-loops to fill in lists of values, but there is a special syntax in Python that is often better for this use case. This special syntax is called a *list comprehension* and it looks like this:
 
-```python
+```{python}
 paragraphs_per_chapter = [len(chapter.split("\n\n")) 
                           for chapter in alice_chapters[1:]]
 print(paragraphs_per_chapter)
@@ -329,7 +329,7 @@ Notice that *list comprehension* is very similar to a *for loop*, though the ord
 
 Here is another list comprehension that counts the number of times the name "Alice" appears in each chapter.
 
-```python
+```{python}
 alices_per_chapter = [chapter.count("Alice") for chapter in alice_chapters]
 print(alices_per_chapter)
 ```
@@ -339,14 +339,14 @@ Our code for calculating the number of of times "Alice" was mentioned per chapte
 
 First, we can iterate over each chapter and grab just the first line (that is, the chapter titles). These will become our keys.
 
-```python
+```{python}
 chapter_names = [chapter.splitlines()[0] for chapter in alice_chapters[1:]]
 print(chapter_names)
 ```
 
 Finally we can combine the chapter titles and counts and convert them to a dictionary.
 
-```python
+```{python}
 dict(zip(chapter_names, 
          [chapter.count("Alice") 
           for chapter in alice_chapters]))
@@ -388,20 +388,20 @@ When you find that something isn't available in Python itself, its time to look 
 
 In order to use *numpy* or other packages, you must first import them. We can import numpy as follows:
 
-```python
+```{python}
 import numpy
 ```
 
 The *numpy* package is very popular and includes a lot of useful functions. For example, we can use it to calculate means and standard deviations:
 
-```python
+```{python}
 print(numpy.mean(paragraphs_per_chapter))
 print(numpy.std(paragraphs_per_chapter))
 ```
 
 and compute correlations:
 
-```python
+```{python}
 words_per_chapter = [len(chapter.split()) for chapter in alice_chapters]
 alices_per_chapter = [chapter.count("Alice") for chapter in alice_chapters]
 
