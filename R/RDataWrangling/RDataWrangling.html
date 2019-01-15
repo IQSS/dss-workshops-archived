@@ -1514,7 +1514,7 @@ div.tocify {
 <h1>Workshop description</h1>
 <p>Data scientists are known and celebrated for modeling and visually displaying information, but down in the data science engine room there is a lot of less glamorous work to be done. Before data can be used effectively it must often be cleaned, corrected, and reformatted. This workshop introduces the basic tools needed to make your data behave, including data reshaping, regular expressions and other text manipulation tools.</p>
 <p>This is an intermediate/advanced R course appropriate for those with basic knowledge of R. If you need a refresher we recommend the <a href="http://tutorials.iq.harvard.edu/R/Rintro/Rintro.html">the IQSS R intro</a>.</p>
-<p>The lesson notes are available at <a href="http://tutorials.iq.harvard.edu/R/RDataManagement/RDataManagement.html" class="uri">http://tutorials.iq.harvard.edu/R/RDataManagement/RDataManagement.html</a></p>
+<p>The lesson notes are available at <a href="http://tutorials.iq.harvard.edu/R/RDataWrangling/RDataWrangling.html" class="uri">https://dss.iq.harvard.edu</a></p>
 </div>
 <div id="prerequisites-and-preparation" class="section level1">
 <h1>Prerequisites and Preparation</h1>
@@ -1524,13 +1524,13 @@ div.tocify {
 <li>install RStudio from <a href="https://www.rstudio.com/products/rstudio/download/#download" class="uri">https://www.rstudio.com/products/rstudio/download/#download</a></li>
 <li>install the tidyverse package in R with <code>install.packages(&quot;tidyverse&quot;)</code> and attach it with <code>library(tidyverse)</code></li>
 </ul>
-<p>To start the workshop: - Download and extract the materials from <a href="http://tutorials.iq.harvard.edu/R/RDataManagement.zip" class="uri">http://tutorials.iq.harvard.edu/R/RDataManagement.zip</a>. - Open Rstudio and create a new project (<code>File ==&gt; New Project ==&gt; Existing Directory</code> and select the <code>RDataManagement</code> folder you downloaded and extracted earlier. - Open a new R script (<code>File ==&gt; New File ==&gt; R script</code>) and save it as <code>Notes.R</code>.</p>
+<p>To start the workshop: - Download the 'R Data Wrangling` workshop materials from <a href="http://tutorials.iq.harvard.edu/R/RDataWrangling.zip" class="uri">http://tutorials.iq.harvard.edu/R/RDataWrangling.zip</a>. - Open Rstudio and create a new project (<code>File ==&gt; New Project ==&gt; Existing Directory</code> and select the <code>RDataWrangling</code> folder you downloaded and extracted earlier. - Open a new R script (<code>File ==&gt; New File ==&gt; R script</code>) and save it as <code>Notes.R</code>.</p>
 </div>
 <div id="example-project-overview" class="section level1">
 <h1>Example project overview</h1>
 <p>It is common for data to be made available on a website somewhere, either by a government agency, research group, or other organizations and entities. Often the data you want is spread over many files, and retrieving it all one file at a time is tedious and time consuming. Such is the case with the baby names data we will be using today.</p>
 <p>The UK <a href="https://www.ons.gov.uk">Office for National Statistics</a> provides yearly data on the most popular baby names going back to 1996. The data is provided separately for boys and girls and is stored in Excel spreadsheets.</p>
-<p>I have downloaded all the excel files containing boys names data from <a href="https://www.ons.gov.uk/peoplepopulationandcommunity/birthsdeathsandmarriages/livebirths/datasets/babynamesenglandandwalesbabynamesstatisticsboys" class="uri">https://www.ons.gov.uk/peoplepopulationandcommunity/birthsdeathsandmarriages/livebirths/datasets/babynamesenglandandwalesbabynamesstatisticsboys</a> and made them available at <a href="http://tutorials.iq.harvard.edu/R/RDataManagement/data/boysNames.zip" class="uri">http://tutorials.iq.harvard.edu/R/RDataManagement/data/boysNames.zip</a>.</p>
+<p>I have downloaded all the excel files containing boys names data from <a href="https://www.ons.gov.uk/peoplepopulationandcommunity/birthsdeathsandmarriages/livebirths/datasets/babynamesenglandandwalesbabynamesstatisticsboys" class="uri">https://www.ons.gov.uk/peoplepopulationandcommunity/birthsdeathsandmarriages/livebirths/datasets/babynamesenglandandwalesbabynamesstatisticsboys</a> and made them available at <a href="http://tutorials.iq.harvard.edu/R/RDataWrangling/data/boysNames.zip" class="uri">http://tutorials.iq.harvard.edu/R/RDataWrangling/data/boysNames.zip</a>.</p>
 <p>Our mission is to extract and graph the <strong>top 100</strong> boys names in England and Wales for every year since 1996. There are several things that make this challenging.</p>
 </div>
 <div id="problems-with-the-data" class="section level1">
