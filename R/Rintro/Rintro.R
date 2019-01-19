@@ -9,7 +9,7 @@
 #'       collapsed: true
 #' jupyter:
 #'   jupytext_format_version: '1.0'
-#'   jupytext_formats: ipynb,Rmd,R
+#'   jupytext_formats: ipynb,Rmd:rmarkdown,R:spin
 #'   kernelspec:
 #'     display_name: R
 #'     language: R
@@ -68,39 +68,20 @@ knitr::opts_chunk$set(message = FALSE)
 #'
 #' In this workshop you will
 #'
-#' -  learn R language basics and common idioms,
+#' -  learn R basics,
 #' -  learn about the R package ecosystem,
 #' -  practice reading files and manipulating data in R
 #'
 #' A more general goal is to get you comfortable with R so that it seems less scary and mystifying than it perhaps does now. Note that this is by no means a complete or thorough introduction to R! It's just enough to get you started.
 #'
-#' This workshop is relatively informal, example-oriented, and hands-on. We won't spend much time examining language features in detail. Instead we will work through an example, and learn some things about the R language and environment along the way. The first hour or so will be spent learning some basics, with the remaining time used to work on an example project.
+#' This workshop is relatively informal, example-oriented, and hands-on. We won't spend much time examining language features in detail. Instead we will work through an example, and learn some things about the R  along the way.
 #'
 #' As an example project we will analyze the popularity of baby names in the US from 1960 through 2017. Among the questions we will use R to answer are:
 #'
 #' -  In which year did your name achieve peak popularity?
 #' -  How many children were born each year?
 #' -  What are the most popular names overall? For girls? For Boys?
-#'
-#' What is R?
-#' ----------
-#'
-#' R is a *programming language designed for statistical computing*.
-#' Notable characteristics include:
-#'
-#' -   Vast capabilities, wide range of statistical and graphical
-#'     techniques
-#' -   Very popular in academia, growing popularity in business:
-#'     <http://r4stats.com/articles/popularity/>
-#' -   Written primarily by statisticians
-#' -   FREE (no monetary cost and open source)
-#' -   Excellent community support: mailing list, blogs, tutorials
-#' -   Easy to extend by writing new functions
-#'
-#' Whatever you're trying to do, you're probably not the first to try doing
-#' it R. Chances are good that someone has already written a package for
-#' that.
-#'
+
 #' Graphical User Interfaces (GUIs)
 #' ================================
 #'
@@ -196,27 +177,6 @@ sqrt(10) ## calculate square root of 10; result is not stored anywhere
 x <- sqrt(10) # assign result to a variable named x
 
 #' Names should start with a letter, and contain only letters, numbers, underscores, and periods.
-#'
-#' Data structures
-#' ---------------
-#'
-#' There are two basic data structures in R: *vectors* and *lists*.
-#'
-#' Vectors are of a  particular *type*, e.g., *integer*, *double*, or *character*.
-#' Vectors can be created using the `c` function, like this:
-
-x <- c(1, 2, 3) # numeric vector
-x
-
-y <- c("1", "2", "3") # character vector
-y
-
-#' Lists are not restricted to a single type and can be used to hold
-#' just about anything. They can be created using the `list` function, 
-#' like this:
-
-z <- list(1, c(1, 2, 3, 4), list(c(1, 2), c("a", "b")))
-z
 
 #' Asking R for help
 #' ---------------------
@@ -293,15 +253,11 @@ library(readr)
 #' Make sure you have installed the `readr` package and attached it with `library(readr)`.
 #'
 #' Baby names data are available at `"http://tutorials.iq.harvard.edu/data/babyNames.csv"`.
-#' Note that **this data file does not include column names**. There are `4` columns
-#' that should be named `Name`, `Sex`, `Count`, and `Year`.
 #'
-#' 1. Open the `read_csv` help page to determine how to specify the column names. Remember that 
-#' you can create vectors using the `c` function.
+#' 1. Open the `read_csv` help page to determine how to use it to read in data.
 #'
 #' 2. Read the baby names data using the `read_csv` function and assign the result 
-#' with the name `baby.names`. Make sure you name the columns `Name`, `Sex`, 
-#' `Count`, and `Year`.
+#' with the name `baby.names`.
 #'
 #' 3. BONUS (optional): Save the `baby.names` data as a Stata data set `babynames.dta` 
 #' and as an R data set `babynames.rds`.
@@ -312,8 +268,7 @@ library(readr)
 #+ results=FALSE, message=FALSE, purl=FALSE
 ## read ?read_csv
 
-baby.names <- read_csv("http://tutorials.iq.harvard.edu/data/babyNames.csv",
-                       col_names = c("Name", "Sex", "Count", "Year"))
+baby.names <- read_csv("http://tutorials.iq.harvard.edu/data/babyNames.csv")
 
 #' Popularity of your name
 #' =======================

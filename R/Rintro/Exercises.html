@@ -3067,6 +3067,10 @@ if (document.readyState !== "loading" &&
       font-style: italic;
     }
 
+    summary {
+      display: list-item;
+    }
+
     slides > slide {
       -webkit-transition: all 0.4s ease-in-out;
       -moz-transition: all 0.4s ease-in-out;
@@ -3117,10 +3121,9 @@ if (document.readyState !== "loading" &&
 
 <p>Make sure you have installed the <code>readr</code> package and attached it with <code>library(readr)</code>.</p>
 
-<p>Baby names data are available at <code>&quot;http://tutorials.iq.harvard.edu/data/babyNames.csv&quot;</code>. Note that <strong>this data file does not include column names</strong>. There are <code>4</code> columns that should be named <code>Name</code>, <code>Sex</code>, <code>Count</code>, and <code>Year</code>.</p>
+<p>Baby names data are available at <code>&quot;http://tutorials.iq.harvard.edu/data/babyNames.csv&quot;</code>. 1. Open the <code>read_csv</code> help page to determine how to use it to read in data.</p>
 
 <ol>
-<li><p>Open the <code>read_csv</code> help page to determine how to specify the column names. Remember that you can create vectors using the <code>c</code> function.</p></li>
 <li><p>Read the baby names data using the <code>read_csv</code> function and assign the result with the name <code>baby.names</code>. Make sure you name the columns <code>Name</code>, <code>Sex</code>, <code>Count</code>, and <code>Year</code>.</p></li>
 <li><p>BONUS (optional): Save the <code>baby.names</code> data as a Stata data set <code>babynames.dta</code> and as an R data set <code>babynames.rds</code>.</p></li>
 </ol>
