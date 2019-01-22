@@ -92,9 +92,10 @@ your own notes.
 
 ## Workshop goals and approach
 In this workshop you will
-- learn basic web scraping principles and techniques,
-- learn how to use the `requests` package in Python,
-- practice making requests and manipulating responses from the server.
+
+* learn basic web scraping principles and techniques,
+* learn how to use the `requests` package in Python,
+* practice making requests and manipulating responses from the server.
 
 This workshop is relatively *informal*, *example-oriented*, and
 *hands-on*. We will learn by working through an example web scraping
@@ -297,7 +298,7 @@ Python, we can iterate in the usual way.
 ```{python}
 records = [requests.get(collection_url,
                         params = {'load_amount': 10,
-                                      'offset': str(offset)}).json()['records']
+                                      'offset': offset}).json()['records']
            for offset in range(0, 50, 10)]
 ```
 

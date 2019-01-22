@@ -4661,7 +4661,7 @@ print(records1)</pre>
 
 <pre class = 'prettyprint lang-python'>records = [requests.get(collection_url,
                         params = {&#39;load_amount&#39;: 10,
-                                      &#39;offset&#39;: str(offset)}).json()[&#39;records&#39;]
+                                      &#39;offset&#39;: offset}).json()[&#39;records&#39;]
            for offset in range(0, 50, 10)]</pre>
 
 <p>For convenience we can flatten the records in each list into one long <code>records</code> list</p>

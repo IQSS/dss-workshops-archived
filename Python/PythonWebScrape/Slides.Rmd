@@ -291,7 +291,7 @@ Python, we can iterate in the usual way.
 ```{python}
 records = [requests.get(collection_url,
                         params = {'load_amount': 10,
-                                      'offset': str(offset)}).json()['records']
+                                      'offset': offset}).json()['records']
            for offset in range(0, 50, 10)]
 ```
 

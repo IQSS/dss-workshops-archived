@@ -9,7 +9,7 @@ output:
       collapsed: true       
 jupyter:
   jupytext_format_version: '1.0'
-  jupytext_formats: ipynb,Rmd:rmarkdown,py:light,md:markdown
+  jupytext_formats: ipynb,Rmd:rmarkdown,py,md:markdown
   kernelspec:
     display_name: Python 3
     language: python
@@ -69,28 +69,33 @@ pd.set_option('display.max_columns', 5)
 If using your own computer please install the Anaconda Python
 distribution from
 [https://www.anaconda.com/download/](https://www.anaconda.com/download/).
-(Note that Python version$\leq$ 3.0 differs considerably from more
-recent releases. For this workshop you will need version$\geq$ 3.4.)
+(Note that Python version $\leq$ 3.0 differs considerably from more
+recent releases. For this workshop you will need version $\geq$ 3.4.)
 
 Accepting the defaults proposed by the Anaconda installer is generally
-recommended. However, if it offers to install Microsoft Visual Studio
-Code you may safely skip this step.
+recommended.
 
-### Download workshop materials
-Download the materials from
-[http://tutorials.iq.harvard.edu/Python/PythonWebScrape.zip](http://tutorials.iq.harvard.edu/Python/PythonWebScrape.zip)
-and extract the zipped directory (Right-click => Extract All on
-Windows, double-click on Mac).
+### Workshop notes
+The class notes for this workshop are available on our website at
+[dss.iq.harvard.edu](https://dss.iq.harvard.edu) under `Workshop
+Materials ==> Python Workshop Materials => Python Web Scraping`. Click
+the `All workshop materials` link to download the workshop materials.
 
+Extract the `PythonWebScraping.zip` directory (`Right-click => Extract All` on
+Windows, `double-click` on Mac).
 
-
+Start the `Jupyter Notebook` application and open the
+`Exercises.ipynb` file in the `PythonWebScraping` folder you
+downloaded previously. You may also wish to start a new notebook for
+your own notes.
 
 
 ## Workshop goals and approach
 In this workshop you will
-- learn basic web scraping principles and techniques,
-- learn how to use the requests package in Python,
-- practice making requests and manipulating responses from the server.
+
+* learn basic web scraping principles and techniques,
+* learn how to use the `requests` package in Python,
+* practice making requests and manipulating responses from the server.
 
 This workshop is relatively *informal*, *example-oriented*, and
 *hands-on*. We will learn by working through an example web scraping
@@ -103,15 +108,14 @@ If you need an introduction to Python or a refresher, we recommend the
 [IQSS Introduction to Python](https://dss.iq.harvard.edu/workshop-materials#widget-0).
 
 Note also that this workshop will not teach you everything you need to
-know in order to retrieve any data whatsoever from any webs service
-whatsoever. This workshop will give you just enough to get started.
+know in order to retrieve data from any web service you might wish to
+scrape. You can expect to learn just enough to be dangerous.
 
 ## Preliminary questions
 
 ### What is web scraping?
-Web scraping the activity of automating retrieval of information from
-a web service designed for human interaction.
-
+Web scraping is the activity of automating retrieval of information
+from a web service designed for human interaction.
 
 ### Is web scraping legal? Is it ethical?
 It depends. If you have legal questions seek legal counsel. You can
@@ -124,19 +128,19 @@ the service provider.
 
 ## Example project overview and goals
 In this workshop I will demonstrate web scraping techniques using the
-Exhibitions page at
-<https://www.harvardartmuseums.org/visit/exhibitions> and let you use
+Collections page at
+<https://www.harvardartmuseums.org/collections> and let you use
 the skills you'll learn to retrieve information from other parts of
 the Harvard Art Museums website.
 
 The basic strategy is pretty much the same for most scraping projects.
-We will use our web browser (Chrome or Firefox recommended) to examin
+We will use our web browser (Chrome or Firefox recommended) to examine
 the page you wish to retrieve data from, and copy/paste information
 from your web browser into your scraping program.
 
 ## Take shortcuts if you can
 We wish to extract information from
-<https://www.harvardartmuseums.org/visit/exhibitions>. Like most
+<https://www.harvardartmuseums.org/collections>. Like most
 modern web pages, a lot goes on behind the scenes to produce the page
 we see in our browser. Our goal is to pull back the curtain to see
 what the website does when we interact with it. Once we see how the
@@ -148,33 +152,35 @@ structured format like [JSON](https://json.org/) or
 
 ### Examining the structure of our target web service
 
-We start by opening that page in a web browser and inspecting it.
+We start by opening the collections web page in a web browser and
+inspecting it.
 
 ![](img/dev_tools.png)
 
 ![](img/dev_tools_pane.png)
 
-If we scroll down to the bottom of the Exhibitions page, we'll see a
-button that says "Load More Exhibitions". Let's see what happens when
-we click on that button.To do so, click on "Network" in the developer
-tools window,then click the button. You should see a list of requests
-that were made as a result of clicking that button, as shown below.
+If we scroll down to the bottom of the Collections page, we'll see a
+button that says "Load More". Let's see what happens when we click on
+that button. To do so, click on "Network" in the developer tools
+window, then click the "Load More Collections" button. You should see
+a list of requests that were made as a result of clicking that button,
+as shown below.
 
 ![](img/dev_tools_network.png)
 
 
-If we look at that second request, the one that to `load_next`, we'll
-see that it returns all the information we need, in a convenient
-format called `JSON`. All we need to retrieve exhibition data is call
-make `GET` requests to
-<https://www.harvardartmuseums.org/search/load_next> with the correct
-parameters. 
+If we look at that second request, the one to a script named
+`browse`, we'll see that it returns all the information we need, in
+a convenient format called `JSON`. All we need to retrieve collection
+data is call make `GET` requests to
+<https://www.harvardartmuseums.org/browse> with the correct
+parameters.
 
 ### Making requests using python
 The URL we want to retrieve data from has the following structure
 
-    scheme                    domain              path                  parameters
-     https www.harvardartmuseums.org  search/load_next type=past-exhibition&page=0
+    scheme                    domain    path  parameters
+     https www.harvardartmuseums.org  browse  load_amount=10&offset=0
 
 It is often convenient to create variables containing the domain(s)
 and path(s) you'll be working with, as this allows you to swap out
@@ -183,22 +189,23 @@ the domain with `/` and the parameters are separated from the path
 with `?`. If there are multiple parameters they are separated from
 each other with a `&`.
 
-For example, we can retrieve the first set of exhibitions in Python as
-follows:
+For example, we can define the domain and path of the collections URL
+as follows:
 
 ```python
 museum_domain = 'https://www.harvardartmuseums.org'
-exhibition_path = 'search/load_next'
-exhibition_parameters = 'type=past-exhibition'
+collection_path = 'browse'
 
-exhibition_url = (museum_domain
+collection_url = (museum_domain
                   + "/"
-                  + exhibition_path
-                  + "?"
-                  + exhibition_parameters)
+                  + collection_path)
 
-print(exhibition_url)
+print(collection_url)
 ```
+
+Note that we omit the parameters here because it is usually easier to
+pass them as a `dict` when using the `requests` library in Python.
+This will become clearer shortly.
 
 Now that we've constructed the URL we wish interact with we're ready
 to make our first request in Python.
@@ -206,9 +213,11 @@ to make our first request in Python.
 ```python
 import requests
 
-exhibitions0 = requests.get(exhibition_url 
-                            + '&'
-                            + 'page=0')
+collections1 = requests.get(
+    collection_url,
+    params = {'load_amount': 10,
+                  'offset': 0}
+)
 ```
 
 ### Parsing JSON data
@@ -216,15 +225,15 @@ We already know from inspecting network traffic in our web
 browser that this URL returns JSON, but we can use Python to verify
 this assumption.
 ```python
-exhibitions0.headers['Content-Type']
+collections1.headers['Content-Type']
 ```
 
 Since JSON is a structured data format, parsing it into python data
 structures is easy. In fact, there's a method for that!
 
 ```python
-exhibitions0 = exhibitions0.json()
-print(exhibitions0)
+collections1 = collections1.json()
+print(collections1)
 ```
 
 That's it. Really, we are done here. Everyone go home!
@@ -238,30 +247,28 @@ but for some web scraping tasks this is really all you need to know.
 ### Organizing and saving the data
 
 The records we retrieved from
-`https://www.harvardartmuseums.org/museum_exhibitions/search/load_next`
-are arranged as a list of dictionaries. With only a little trouble we
-can select the fields of interest and arrange these data into a pandas
-`DataFrame`. First lets see what fields are available.
+`https://www.harvardartmuseums.org/browse` are arranged as a list of
+dictionaries. With only a little trouble we can select the fields of
+interest and arrange these data into a pandas `DataFrame`. First lets
+see what fields are available.
 
 
 ```python
-print(exhibitions0.keys())
+print(collections1.keys())
 ```
 
 ```python
-print(exhibitions0['records'][0].keys())
+record_keys = collections1['records'][0].keys()
+print(record_keys)
 ```
 
 Next we can specify the fields we are interested in and use a dict
 comprehension to organize the values;
 
 ```python
-fields_to_keep = ['title', 'poster', 'people',
-                  'begindate', 'enddate']
-
-records0 = {k: [record.get(k, 'NA')
-                for record in exhibitions0['records']]
-            for k in fields_to_keep}
+records1 = {k: [record.get(k, 'NA')
+                for record in collections1['records']]
+            for k in record_keys}
 
 ```
 Finally we can convert the dict to a `DataFrame`
@@ -269,37 +276,30 @@ Finally we can convert the dict to a `DataFrame`
 ```python
 import pandas as pd
 
-records0 = pd.DataFrame.from_dict(records0)
+records1 = pd.DataFrame.from_dict(records1)
 
-print(records0)
+print(records1)
 ```
 
 and write the data to a file.
 
 ```python
-records0.to_csv("records0.csv")
+records1.to_csv("records1.csv")
 ```
 
 ### Iterating to retrieve all the data
 
-Of course we don't want just the first page of exhibitions. How can we
+Of course we don't want just the first page of collections. How can we
 retrieve all of them?
 
-The first page of JSON data we retrieved contains meta data about the
-number of records, in the `info` field. It looks like this:
+Now that we know the web service works, and how to make requests in
+Python, we can iterate in the usual way.
 
 ```python
-print(exhibitions0['info'])
-```
-
-Now that we know how many pages there are we can iterate over them
-
-```python
-records = [requests.get(exhibition_url
-                        + '&'
-                        + 'page='
-                        + str(page)).json()['records']
-           for page in range(1, exhibitions0['info']['pages'] + 1)]
+records = [requests.get(collection_url,
+                        params = {'load_amount': 10,
+                                      'offset': offset}).json()['records']
+           for offset in range(0, 50, 10)]
 ```
 
 For convenience we can flatten the records in each list into one long
@@ -317,7 +317,7 @@ difficulty:
 ```python
 records_final = {k: [record.get(k, 'NA')
                      for record in records_final]
-                 for k in fields_to_keep}
+                 for k in record_keys}
 
 ## convert the dict to a `DataFrame`
 records_final = pd.DataFrame.from_dict(records_final)
@@ -330,17 +330,17 @@ print(records_final)
 
 ### Exercise: Retrieve exhibits data
 In this exercise you will retrieve information about the art
-collections at Harvard Art Museums from
-`https://www.harvardartmuseums.org/collections`
+exhibitions at Harvard Art Museums from
+`https://www.harvardartmuseums.org/visit/exhibitions`
 
 1. Using a web browser (Firefox or Chrome recommended) inspect the
-   page at `https://www.harvardartmuseums.org/collections`. Examine
+   page at `https://www.harvardartmuseums.org/visit/exhibitions`. Examine
    the network traffic as you interact with the page. Try to find
    where the data displayed on that page comes from.
 2. Make a `get` request in Python to retrieve the data from the URL
    identified in step1.
 3. Write a *loop* or *list comprehension* in Python to retrieve data
-   for the first 5 pages of collections data.
+   for the first 5 pages of exhibitions data.
 4. Bonus (optional): Arrange the data you retrieved into dict of
    lists. Convert it to a pandas `DataFrame` and save it to a `.csv`
    file.
@@ -357,7 +357,7 @@ information you need.
 For example, when I inspected the network traffic while interacting
 with <https://www.harvardartmuseums.org/visit/calendar> I didn't see
 any requests that returned JSON data. The best we can do appears to be
-<https://www.harvardartmuseums.org/visit/calendar?type=&date=>, which
+<https://www.harvardartmuseums.org/visit/calendar?date=>, which
 unfortunately returns  HTML. 
 
 ### Retrieving HTML
@@ -372,7 +372,7 @@ calendar_url = (museum_domain # recall that we defined museum_domain earlier
 
 print(calendar_url)
 
-events0 = requests.get(calendar_url)
+events0 = requests.get(calendar_url, params = {'date': '2018-11'})
 ```
 
 As before we can check the headers to see what type of content we
@@ -532,10 +532,26 @@ information in HTML from.
    to retrieve data for all the levels.
 
 
-## Use a browser driver as a last resort
-
-TODO
 
 ## Use Scrapy for large or complicated projects
+Scraping websites using the `requests` library to make GET and POST
+requests, and the `lxml` library to process HTML is a good way to
+learn basic web scraping techniques. It is a good choice for small to
+medium size projects. For very large or complicated scraping tasks the
+`scrapy` library offers a number of conveniences, including
+asynchronously retrieval, session management, convenient methods for
+extracting and storing values, and more. More information about
+`scrapy` can be found at <https://doc.scrapy.org>.
 
-TODO
+## Use a browser driver as a last resort
+It is sometimes necessary (or sometimes just easier) to use a web
+browser as an intermediary rather than communicating directly with a
+web service. This method has the advantage of being about to use the
+javascript engine and session management features of a web browser;
+the main disadvantage is that it is slower and tends to be more
+fragile than using `requests` or `scrapy` to make requests directly
+from python. For small scraping projects involving complicated sites
+with CAPTHAs or lots of complicated javascript using a browser driver
+can be a good option. More information is available at 
+<https://www.seleniumhq.org/docs/03_webdriver.jsp>.
+

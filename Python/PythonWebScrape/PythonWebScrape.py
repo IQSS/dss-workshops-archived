@@ -91,9 +91,10 @@ pd.set_option('display.max_columns', 5)
 
 # ## Workshop goals and approach
 # In this workshop you will
-# - learn basic web scraping principles and techniques,
-# - learn how to use the `requests` package in Python,
-# - practice making requests and manipulating responses from the server.
+#
+# * learn basic web scraping principles and techniques,
+# * learn how to use the `requests` package in Python,
+# * practice making requests and manipulating responses from the server.
 #
 # This workshop is relatively *informal*, *example-oriented*, and
 # *hands-on*. We will learn by working through an example web scraping
@@ -210,7 +211,7 @@ import requests
 
 collections1 = requests.get(
     collection_url,
-    parameters = {'load_amount': 10,
+    params = {'load_amount': 10,
                   'offset': 0}
 )
 # -
@@ -279,8 +280,8 @@ records1.to_csv("records1.csv")
 # Python, we can iterate in the usual way.
 
 records = [requests.get(collection_url,
-                        parameters = {'load_amount': 10,
-                                      'offset': str(offset)}).json()['records']
+                        params = {'load_amount': 10,
+                                      'offset': offset}).json()['records']
            for offset in range(0, 50, 10)]
 
 # For convenience we can flatten the records in each list into one long
@@ -351,7 +352,7 @@ calendar_url = (museum_domain # recall that we defined museum_domain earlier
 
 print(calendar_url)
 
-events0 = requests.get(calendar_url, parameters = {'date': '2018-11'})
+events0 = requests.get(calendar_url, params = {'date': '2018-11'})
 # -
 
 # As before we can check the headers to see what type of content we
