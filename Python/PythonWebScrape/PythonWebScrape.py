@@ -240,32 +240,14 @@ print(collections1)
 #
 # The records we retrieved from
 # `https://www.harvardartmuseums.org/browse` are arranged as a list of
-# dictionaries. With only a little trouble we can select the fields of
-# interest and arrange these data into a pandas `DataFrame`. First lets
-# see what fields are available.
-#
+# dictionaries. We can easily select the fields of arrange these data 
+# into a pandas `DataFrame` to facilitate subsequent analysis.
 
-print(collections1.keys())
-
-record_keys = collections1['records'][0].keys()
-print(record_keys)
-
-# Next we can specify the fields we are interested in and use a dict
-# comprehension to organize the values;
-
-records1 = {k: [record.get(k, 'NA')
-                for record in collections1['records']]
-            for k in record_keys}
-
-# Finally we can convert the dict to a `DataFrame`
-
-# +
 import pandas as pd
 
-records1 = pd.DataFrame.from_dict(records1)
+records1 = pd.DataFrame.from_records(collections1['records'])
 
 print(records1)
-# -
 
 # and write the data to a file.
 
@@ -279,34 +261,19 @@ records1.to_csv("records1.csv")
 # Now that we know the web service works, and how to make requests in
 # Python, we can iterate in the usual way.
 
-records = [requests.get(collection_url,
-                        params = {'load_amount': 10,
-                                      'offset': offset}).json()['records']
-           for offset in range(0, 50, 10)]
+records = []
+for offset in range(0, 50, 10):
+    param_values = {'load_amount': 10, 'offset': offset}
+    current_request = requests.get(collection_url, params = param_values)
+    records += current_request.json()['records']
 
-# For convenience we can flatten the records in each list into one long
-# `records` list
-
-records_final = []
-for record in records:
-    records_final += record
-
-# As before, we can write the data to a .csv file without too much
-# difficulty:
-
-# +
-records_final = {k: [record.get(k, 'NA')
-                     for record in records_final]
-                 for k in record_keys}
-
-## convert the dict to a `DataFrame`
-records_final = pd.DataFrame.from_dict(records_final)
+## convert list of dicts to a `DataFrame`
+records_final = pd.DataFrame.from_records(records)
 
 # write the data to a file.
 records_final.to_csv("records_final.csv")
 
 print(records_final)
-# -
 
 # ### Exercise: Retrieve exhibits data
 # In this exercise you will retrieve information about the art
@@ -321,9 +288,10 @@ print(records_final)
 #    identified in step1.
 # 3. Write a *loop* or *list comprehension* in Python to retrieve data
 #    for the first 5 pages of exhibitions data.
-# 4. Bonus (optional): Arrange the data you retrieved into dict of
-#    lists. Convert it to a pandas `DataFrame` and save it to a `.csv`
-#    file.
+# 4. Bonus (optional): Convert the data you retrieved into a pandas 
+#   `DataFrame` and save it to a `.csv` file.
+# 
+# 
 #    
 # ## Parse html if you have to
 # As we've seen, you can often inspect network traffic or other sources
@@ -437,9 +405,10 @@ elements_we_want = {'figcaption': 'div/figure/div/figcaption',
 # Finally, we can iterate over the elements we want and extract them.
 
 # +
-first_event_values = {key: first_event_html.xpath(
-    elements_we_want[key])[0].text_content().strip()
-                      for key in elements_we_want.keys()}
+first_event_values = {}
+for key in elements_we_want.keys():
+    element = first_event_html.xpath(elements_we_want[key])[0]
+    first_event_values[key] = element.text_content().strip()
 
 print(first_event_values)
 # -
@@ -466,9 +435,12 @@ def get_event_info(event, path):
 # Armed with this function we can iterate over the list of events and
 # extract the available information for each one.
 
-all_event_values = {key: [get_event_info(event, elements_we_want[key])
-                        for event in events_list_html]
-                    for key in elements_we_want.keys()}
+all_event_values = {}
+for key in elements_we_want.keys():
+    key_values = []
+    for event in events_list_html: 
+        key_values.append(get_event_info(event, elements_we_want[key]))
+    all_event_values[key] = key_values
 
 # For convenience we can arrange these values in a pandas `DataFrame`
 # and save them as .csv files, just as we did with our exhibitions data earlier.
