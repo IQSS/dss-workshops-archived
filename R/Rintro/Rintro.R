@@ -20,7 +20,7 @@
 #'     mimetype: text/x-r-source
 #'     name: R
 #'     pygments_lexer: r
-#'     version: 3.5.1
+#'     version: 3.5.2
 #'   toc:
 #'     base_numbering: 1
 #'     nav_menu: {}
@@ -370,7 +370,7 @@ george <- filter(baby.names, Name == "George")
 #     In which year was the name most popular?
 
 arrange(george, desc(Count))
- 
+
 # 3.  BONUS (optional): Filter the data to extract _only_ the 
 #     row containing the most popular boys name in 1999.
 
@@ -441,7 +441,7 @@ qplot(x = Year, y = Count, data = george)
 # 3. Adjust the plot so that is shows boys and girls in different colors.
 
 qplot(x = Year, y = Count, color = Sex, data = george)
- 
+
 # 4.  BONUS (Optional): Adust the plot to use lines instead of points.
 
 qplot(x = Year, y = Count, color = Sex, data = george, geom = "line")
@@ -603,7 +603,7 @@ most.popular <- filter(group_by(baby.names, Year, Sex),
 
 top10 <- summarize(group_by(most.popular, Year, Sex),
                    TotalProportion = sum(Proportion))
- 
+
 ## 3.  Plot the data produced in step 2, with year on the x-axis
 ##     and total proportion on the y axis. Color by sex.
 
